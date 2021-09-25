@@ -1,0 +1,65 @@
+.features {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	margin: 0 auto;
+}
+
+.featuresContainer {
+	display: flex;
+	justify-content: center;
+	width: 80%;
+	margin: 0 auto;
+}
+
+$iconSize: 80px;
+.featureSvg {
+	height:	$iconSize;
+	width:	$iconSize;
+}
+
+////////////////////////
+// White mode
+////////////////////////
+
+.pageCard
+{
+
+	cursor: pointer;
+	padding: 20px 0 !important;
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+	
+	.pageCardSvg {
+		text-align: center;
+		margin-bottom: 10px;
+	}
+	
+	.pageCardText {
+		text-align: center;
+		color: black;
+		padding: 0 120px;
+	}
+}
+
+////////////////////////
+// Dark mode
+////////////////////////
+html[data-theme='dark']
+{
+
+
+.pageCard {
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+	}
+
+	.pageCardText {
+		color: white;
+	}
+}
+
+
+}
