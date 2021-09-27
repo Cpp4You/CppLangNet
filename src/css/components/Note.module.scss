@@ -1,0 +1,31 @@
+$defaultColor:		gray;
+$infoColor:			lightblue;
+$importantColor:	orange;
+$errorColor:		red;
+
+.note {
+	padding: 10px 15px;
+	border-left: 4px solid $defaultColor;
+
+	margin-bottom: 10px;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+.title {
+	font-size: 120%;
+	line-height: 100%;
+	margin-bottom: 0.7em;
+}
+
+@mixin generateVariant($name, $color) {
+	.note[variant=#{$name}] {
+		.title {
+			color: $color;
+		}
+		border-color: $color;
+	}
+}
+
+@include generateVariant("info",		$infoColor);
+@include generateVariant("important",	$importantColor);
+@include generateVariant("error",		$errorColor);
+

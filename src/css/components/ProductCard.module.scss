@@ -1,0 +1,94 @@
+.productCard {
+	display: grid;
+
+	grid-template-columns: minmax(0, 128px) 1fr;
+	grid-template-rows: auto 1fr;
+	// Additional row when has actions:
+	&[withactions="true"] {
+		grid-template-columns: minmax(0, 128px) 5fr 2fr;
+	}
+
+	grid-template-areas:
+		"icon	title	actions"
+		"icon	desc	actions";
+	
+	border: 1px solid rgba(black, 0.2);
+
+	background-color: rgba(black, 0.05);
+	transition: 0.2s;
+	&:hover {
+		background-color: rgba(white, 0.1);
+	}
+
+	margin-bottom: 10px;
+
+	&>figure {
+		padding: 10px 20px;
+		grid-area: icon;
+		margin: 0;
+		.productIcon {
+			padding-top: 10px;
+			width: 100%;
+			height: auto;
+		}
+		// box-sizing: border-box;
+		border-right: 1px solid rgb(black, 0.2);
+	}
+
+	&>header {
+		padding: 10px 20px 0px 20px;
+		grid-area: title;
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.productDesc {
+		padding: 0px 20px 0px 20px;
+		grid-area: desc;
+		margin-bottom: 20px;
+	}
+
+	.actions {
+		grid-area: actions;
+		padding: 10px;
+		border-left: 1px solid rgb(black, 0.2);
+	}
+
+	.author {
+		margin-left: 0.5em;
+		font-size: 60%;
+		font-weight: normal;
+		position: relative;
+		top: -0.3em;
+	}
+
+	details {
+		margin-bottom: 0;
+	}
+}
+
+.starRating {
+	filter: brightness(-100%);
+}
+
+/////////////////////////
+// DARK THEME
+/////////////////////////
+html[data-theme="dark"]
+{
+
+.productCard {
+	background-color: rgba(white, 0.05);
+	transition: 0.2s;
+	&:hover {
+		background-color: rgba(white, 0.1);
+	}
+}
+
+.starRating {
+	filter: none;
+}
+
+}
