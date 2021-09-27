@@ -1,30 +1,30 @@
 {
   "link.title.Shortcut": {
-    "message": "Shortcut",
+    "message": "Na skróty",
     "description": "The title of the footer links column with title=Shortcut in the footer"
   },
   "link.title.Community": {
-    "message": "Community",
+    "message": "Społeczności",
     "description": "The title of the footer links column with title=Community in the footer"
   },
   "link.title.More": {
-    "message": "More",
+    "message": "Więcej",
     "description": "The title of the footer links column with title=More in the footer"
   },
   "link.item.label.Learn C++": {
-    "message": "Learn C++",
+    "message": "Nauka",
     "description": "The label of footer link with label=Learn C++ linking to /learn/intro"
   },
   "link.item.label.Documentation": {
-    "message": "Documentation",
+    "message": "Dokumentacja",
     "description": "The label of footer link with label=Documentation linking to /docs/intro"
   },
   "link.item.label.Features": {
-    "message": "Features",
+    "message": "Możliwości",
     "description": "The label of footer link with label=Features linking to /features/intro"
   },
   "link.item.label.Tools": {
-    "message": "Tools",
+    "message": "Narzędzia",
     "description": "The label of footer link with label=Tools linking to /tools/intro"
   },
   "link.item.label.Stack Overflow": {

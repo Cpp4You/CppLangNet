@@ -19,11 +19,11 @@
     "description": "The ARIA label for close button of announcement bar"
   },
   "theme.blog.archive.title": {
-    "message": "Zarchiwizuj",
+    "message": "Archiwum",
     "description": "The page & hero title of the blog archive page"
   },
   "theme.blog.archive.description": {
-    "message": "Archive",
+    "message": "Archiwum",
     "description": "The page & hero description of the blog archive page"
   },
   "theme.blog.paginator.navAriaLabel": {
@@ -59,7 +59,7 @@
     "description": "The blog post button label to navigate to the older/next post"
   },
   "theme.blog.sidebar.navAriaLabel": {
-    "message": "Blog recent posts navigation",
+    "message": "Nawigacja ostatnich postów na blogu",
     "description": "The ARIA label for recent posts in the blog sidebar"
   },
   "theme.CodeBlock.copyButtonAriaLabel": {
@@ -115,11 +115,11 @@
     "description": "The title attribute for collapse button of doc sidebar"
   },
   "theme.docs.tagDocListPageTitle.nDocsTagged": {
-    "message": "One doc tagged|{count} docs tagged",
+    "message": "Jeden dokument otagowany|{count} dokumentów otagowanych",
     "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.docs.tagDocListPageTitle": {
-    "message": "{nDocsTagged} with \"{tagName}\"",
+    "message": "{nDocsTagged} w \"{tagName}\"",
     "description": "The title of the page for a docs tag"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
@@ -159,11 +159,11 @@
     "description": "The sentence used to display when a page has been last updated, and by who"
   },
   "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
-    "message": "← Back to main menu",
+    "message": "← Powrót do menu głównego",
     "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
   },
   "theme.navbar.mobileVersionsDropdown.label": {
-    "message": "Versions",
+    "message": "Wersje",
     "description": "The label for the navbar versions dropdown on mobile view"
   },
   "theme.common.skipToMainContent": {
@@ -175,11 +175,29 @@
     "description": "The label alongside a tag list"
   },
   "theme.TOCCollapsible.toggleButtonLabel": {
-    "message": "On this page",
+    "message": "Na tej stronie",
     "description": "The label used by the button on the collapsible TOC component"
   },
   "theme.tags.tagsPageTitle": {
     "message": "Tagi",
     "description": "The title of the tag list page"
+  },
+  "C++ Programming Language": {
+    "message": "Język C++"
+  },
+  "Learn how to build blazing fast software": {
+    "message": "Naucz się budować piekielnie szybkie aplikacje"
+  },
+  "langFeature.Learn": {
+    "message": "Nauka"
+  },
+  "langFeature.Docs": {
+    "message": "Dokumentacja"
+  },
+  "langFeature.Features": {
+    "message": "Możliwości"
+  },
+  "langFeature.Tools": {
+    "message": "Narzędzia"
   }
 }

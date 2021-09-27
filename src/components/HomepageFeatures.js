@@ -2,6 +2,8 @@ import React			from 'react';
 import clsx				from 'clsx';
 import styles			from './HomepageFeatures.module.scss';
 
+import { translate }	from '@docusaurus/Translate';
+
 const VscIconsFolder = '../../static/img/icons/vscode/dark';
 const vscIcon = (name) => `${VscIconsFolder}/${name}.svg`;
 
@@ -9,7 +11,7 @@ const vscIcon = (name) => `${VscIconsFolder}/${name}.svg`;
 
 const FeatureList = [
 	{
-		title:		'Learn',
+		title:		translate({ message: 'Learn', id: 'langFeature.Learn' }),
 		url:		'/learn/intro',
 		svgPath:	vscIcon('book'),
 		description: (
@@ -20,7 +22,7 @@ const FeatureList = [
 		),
 	},
 	{
-		title:		'Docs',
+		title:		translate({ message: 'Docs', id: 'langFeature.Docs' }),
 		svgPath:	vscIcon('repo'),
 		url:		'/docs/intro',
 		description: (
@@ -31,7 +33,7 @@ const FeatureList = [
 		),
 	},
 	{
-		title:		'Features',
+		title:		translate({ message: 'Features', id: 'langFeature.Features' }),
 		url:		'/features/intro',
 		svgPath:	vscIcon('extensions'),
 		description: (
@@ -42,7 +44,7 @@ const FeatureList = [
 		),
 	},
 	{
-		title:		'Tools',
+		title:		translate({ message: 'Tools', id: 'langFeature.Tools' }),
 		url:		'/tools/intro',
 		svgPath:	vscIcon('tools'),
 		description: (

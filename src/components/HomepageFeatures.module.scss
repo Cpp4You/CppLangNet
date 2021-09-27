@@ -16,6 +16,7 @@ $iconSize: 80px;
 .featureSvg {
 	height:	$iconSize;
 	width:	$iconSize;
+	filter: brightness(40%);
 }
 
 ////////////////////////
@@ -27,20 +28,25 @@ $iconSize: 80px;
 
 	cursor: pointer;
 	padding: 20px 0 !important;
-
-	&:hover {
-		background-color: rgba(0, 0, 0, 0.1);
-	}
 	
 	.pageCardSvg {
 		text-align: center;
 		margin-bottom: 10px;
+		padding: 0 120px;
 	}
 	
 	.pageCardText {
 		text-align: center;
 		color: black;
-		padding: 0 120px;
+	}
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.1);
+		text-decoration: none;
+
+		.pageCardText {
+			color: var(--ifm-color-primary-darkest);
+		}
 	}
 }
 
@@ -52,14 +58,22 @@ html[data-theme='dark']
 
 
 .pageCard {
-	&:hover {
-		background-color: rgba(255, 255, 255, 0.1);
-	}
-
 	.pageCardText {
 		color: white;
 	}
+
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.1);
+		.pageCardText {
+			color: var(--ifm-color-primary);
+		}
+	}
+
 }
 
+
+.featureSvg {
+	filter: none;
+}
 
 }
