@@ -1,0 +1,30 @@
+{
+  "title": {
+    "message": "C++ Language",
+    "description": "The title in the navbar"
+  },
+  "item.label.Learn": {
+    "message": "Nauka",
+    "description": "Navbar item with label Learn"
+  },
+  "item.label.Docs": {
+    "message": "Dokumentacja",
+    "description": "Navbar item with label Docs"
+  },
+  "item.label.Features": {
+    "message": "Możliwości",
+    "description": "Navbar item with label Features"
+  },
+  "item.label.Tools": {
+    "message": "Narzędzia",
+    "description": "Navbar item with label Tools"
+  },
+  "item.label.Blog": {
+    "message": "Blog",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}

@@ -1,0 +1,70 @@
+---
+sidebar_position: 2
+---
+
+import Columns from '@site/src/components/mdx/Columns'
+
+# Zmienne
+
+W poprzedniej lekcji mówiliśmy o automatyzacji i pokazywaliśmy jak wykonać pewne obliczenia.
+
+## Do czego to potrzebne?
+
+Napiszmy program, który podnosi pewną liczbę do potęgi trzeciej, a następnie ją wyświetla:
+
+<Columns spacing={40} columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp | Potęga trzecia"
+#include <iostream>
+
+int main()
+{
+	std::cout << 212 * 212 * 212;
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik"
+9528128
+```
+
+</div>
+</Columns>
+
+Jeśli teraz będziemy chcieli podnieść do trzeciej potęgi inną liczbę, będziemy
+musieli zmieniać trzy miejsca w kodzie. Jest to uciążliwe.
+
+## Zmienne przychodzą na pomoc
+
+Żeby nie zmieniać za każdym razem tylu rzeczy, załóżmy na chwilę, że liczba, którą podnosimy
+do potęgi nazywa się `x`. Jak wtedy będzie wyglądał kod?
+
+```cpp
+#include <iostream>
+int main()
+{
+	std::cout << x * x * x;
+}
+```
+
+Powyższy program na tym etapie, **nie skompiluje się**. Żeby użyć `x` w obliczeniu, musimy napierw **zmienną**
+właśnie o nazwie `x`:
+
+```cpp
+#include <iostream>
+int main()
+{
+	int x = 212;
+	std::cout << x * x * x;
+}
+```
+
+Powyższy program skompiluje się i zadziała poprawnie.
+
+:::important Zmienna
+**Zmienna** to pojemnik na dane.
+:::

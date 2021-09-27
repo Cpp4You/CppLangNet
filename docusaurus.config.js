@@ -14,6 +14,11 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	organizationName:		'PoetaKodu', // Usually your GitHub org/user name.
 	projectName:			'CppLangNet', // Usually your repo name.
 
+	i18n: {
+		defaultLocale: 'en',
+		locales: [ 'en', 'pl' ]
+	},
+
 	plugins: [
 		'docusaurus-plugin-sass',
 
@@ -86,11 +91,15 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					{ to: '/learn/intro', label: 'Learn', position: 'left' },
 					{ to: '/docs/intro', label: 'Docs', position: 'left' },
 					{ to: '/features/intro', label: 'Features', position: 'left' },
-					{ to: '/tools/intro', label: 'Tools', position: 'left' },
+					{ to: '/tools/index', label: 'Tools', position: 'left' },
 					{ to: '/blog', label: 'Blog', position: 'left'},
 					{
 						href: 'https://github.com/PoetaKodu/CppLangNet',
 						label: 'GitHub',
+						position: 'right',
+					},
+					{
+						type: 'localeDropdown',
 						position: 'right',
 					},
 				],

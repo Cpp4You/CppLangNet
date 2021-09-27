@@ -1,0 +1,214 @@
+---
+sidebar_position: 1
+---
+
+import Columns from '@site/src/components/mdx/Columns';
+
+# Pierwszy program
+
+## Kod programu
+
+Poprzednią lekcję skończyliśmy na następującym kodzie:
+
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Witaj, świecie!";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+Witaj, świecie!
+```
+
+</div>
+</Columns>
+
+Który wyświetla tekst podany powyżej w okienku "Wynik".
+
+
+## Omówienie
+
+### Funkcja główna
+
+Zacznijmy od serca naszej aplikacji, czyli tzw. *funkcji głównej* (ang.: `main`):
+
+```cpp title="Fragment kodu main.cpp"
+int main()
+{
+
+}
+```
+
+Tak jak wspominaliśmy we <a href="./programming-intro">wstępie</a>, komputer wykonuje program linijka po linijce.
+Gdy uruchamia aplikację, zaczyna wykonywać po kolei instrukcje z **bloku kodu** `main`-a.
+
+**Blok kodu** w C++, to zbiór instrukcji zawartych wewnątrz nawiasów klamrowych:
+
+```cpp
+{
+
+}
+```
+
+Funkcja główna `main` ma swój blok kodu i wszystko co znajdzie się pomiędzy tymi nawiasami zostanie wykonane po kolei.
+
+### Biblioteka `iostream`
+
+Na samym początku kodu, znajduje się linijka:
+
+```cpp
+#include <iostream>
+```
+
+Pozwoli ona nam dalej korzystać z funkcjonalności **wejścia** (ang.: *input*) i **wyjścia** (ang.: *output*) (stąd `iostream` - od *input/output stream*).
+W praktyce oznacza to, że będziemy mogli napisać coś w konsoli oraz pozwolić użytkownikowi wpisać coś do konsoli i to przechwycić.
+O samym `#include` powiemy sobie w przyszłości więcej. Na ten moment wystarczy.
+
+### Wypisywanie do konsoli
+
+Użyliśmy wewnątrz bloku `main-a` takiej instrukcji:
+
+```cpp
+std::cout << "Witaj, świecie!";
+```
+
+`cout` jest tzw. strumieniem wyjścia znaków (ang.: <i><b>c</b>haracter <b>out</b>put</i>), jednak na ten moment zapamiętaj, że po prostu
+wyświetla on podany **w cudzysłowie** tekst do konsoli.
+
+Jeśli teraz skopiuję tą linijkę kilka razy:
+
+```cpp
+std::cout << "Witaj, świecie!1";
+std::cout << "Witaj, świecie!2";
+std::cout << "Witaj, świecie!3";
+```
+
+to dostanę następujący efekt:
+
+```
+Witaj, świecie!1Witaj, świecie!2Witaj, świecie!3
+```
+
+:::caution Średnik na końcu instrukcji!
+Średnik (`;`) oddziela od siebie instrukcję. Kompilator nie patrzy czy instrukcje są napisane w osobnych liniach.
+Średnik jest traktowany jak koniec instrukcji. Z tego powodu taki kod:
+```cpp
+std::cout << "Witaj, świecie!1"; std::cout << "Witaj, świecie!2"; std::cout << "Witaj, świecie!3";
+```
+
+jest **akceptowalny**, jednak bardzo nieczytelny.
+:::
+
+### Przedrostek przestrzeni nazw
+
+`std::` to przedrostek tzw. **biblioteki standardowej**, z której pochodzi `cout`.
+
+:::important Pomijanie przedrostka `std::`
+
+<details>
+<summary>Rozwiń ciekawostkę</summary>
+<div>
+
+Przedrostek `std::` można pominąć, jeśli damy wcześniej odpowiednią linijkę kodu:
+```cpp
+#include <iostream>
+int main()
+{
+	using namespace std;
+	cout << "Witaj, świecie!";
+}
+```
+Natomiast wielu doświadczonych programistów zaleca pisanie `std::`.
+
+### Dla ciekawskich (tych bardziej zaawansowanych)
+
+Biblioteka standardowa jest bardzo obszerna, posiada bardzo dużo użytych nazw.
+Użycie `using namespace std;` sprawia, że wszystkie te nazwy są jakby "rozpakowywane"
+do globalnej przestrzeni nazw, przez co możemy się zdziwić, jeśli będziemy chcieli
+użyć nazw takich jak `left`, `right`, `precision`, itp.
+
+Używanie `using namespace std;` gdzie indziej niż lokalnie wewnątrz bloku kodu funkcji
+jest uznawane za **złą praktykę programistyczną** i jest odradzane.
+</div>
+</details>
+
+:::
+
+## Wykonywanie obliczeń
+
+Programowanie służy do automatyzacji pewnych czynności. Na przykład, możemy zlecić komputerowi
+wykonanie obliczenia matematycznego za nas.
+
+Użyj następującego kodu:
+
+<Columns spacing={40} columns={['7fr', '5fr']}>
+<div>
+
+```cpp title="main.cpp"
+#include <iostream>
+int main()
+{
+	std::cout << "120 * 120 + 540";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Wynik (konsola)"
+120 * 120 + 540
+```
+
+</div>
+</Columns>
+
+Zwróć uwagę na wynik powyższego programu.
+
+:::caution Uwaga
+Wszystko zawarte w cudzysłowie jest traktowane jako tekst, a nie instrukcje.
+:::
+
+Dlatego właśnie zamiast wyświetlić wynik obliczenia, dostaliśmy to co wpisaliśmy do cudzysłowu.
+
+Żeby oznajmić, że chcemy wykonać pewne obliczenie musimy usunąć cudzysłów:
+
+<Columns spacing={40} columns={['7fr', '5fr']}>
+<div>
+
+```cpp title="main.cpp"
+#include <iostream>
+int main()
+{
+	std::cout << 120 * 120 + 540;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Wynik (konsola)"
+14940
+```
+
+</div>
+</Columns>
+
+Po uruchomieniu programu dostaniemy prawidłowy wynik obliczenia znajdującego się w kodzie.
+
+:::important Operatory matematyczne
+- `+` dodaje do siebie dwie liczby
+- `-` odejmuje od siebie dwie liczby
+- `*` mnoży przez siebie dwie liczby
+- `/` dzieli przez siebie dwie liczby
+:::

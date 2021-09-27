@@ -1,0 +1,238 @@
+---
+site-position: 1
+---
+
+# Narzędzia programistyczne
+
+<!-- Components -->
+import ProductCard		from '@site/src/components/mdx/ProductCard';
+import Button			from '@site/src/components/mdx/Button';
+
+<!-- Icons -->
+import VSCodeIcon		from '@site/static/img/icons/products/vscode_1_35.svg';
+import VS2019Icon		from '@site/static/img/icons/products/vs_2019.svg';
+import CLionIcon		from '@site/static/img/icons/products/clion.svg';
+import QtCreatorIcon	from '@site/static/img/icons/products/qtcreator.svg';
+import CodeBlocksIcon	from '@site/static/img/icons/products/codeblocks.png';
+import CppBuilderIcon	from '@site/static/img/icons/products/cppbuilder.png';
+import DevCppIcon		from '@site/static/img/icons/products/devcpp.png';
+
+import Download			from '@site/static/mui-icons/Download.svg';
+
+
+Aby programować w języku C++ potrzebujesz przynajmniej dwóch narzędzi:
+
+- edytora kodu
+- kompilatora
+
+W skrócie:
+
+- **edytor kodu** pozwala nam... edytować kod programu, zarządzać strukturą plików w projekcie
+i zwykle posiada też wiele innych przydatnych funkcji
+- **kompilator** tłumaczy kod programu na format zrozumiały dla komputera, <u>tylko</u> jeśli kod jest poprawny
+tj. napisany zgodnie ze składnią języka C++
+
+Połączenie tych dwóch rzeczy w jedno narzędzie jest nazywane **środowiskiem** (ang.: *IDE - integrated development environment*).
+
+## 🚀 Zacznij od
+
+... środowiska online! Na początku nauki nie powinieneś się przejmować konfiguracją narzędzi, tylko nauką samego języka.
+Przez pierwsze kilka lekcji skorzystaj ze środowiska online, które zrobi całą konfigurację za Ciebie.
+Dopiero gdy uznasz, że chcesz mieć środowisko na swoim komputerze, przejdź do sekcji [Dostępne środowiska](#dostępne-środowiska)
+
+Na ten moment zdecydowanie najbardziej polecamy stronę: [**Repl.it**](https://repl.it).
+Po zalogowaniu się będziesz mógł korzystać z ich narzędzi **za darmo**.
+Zapoznaj się też z artykułem [Tworzenie projektu C++ w Repl.it](./online/create-project-with-repl-it).
+
+
+Inne, godne polecenia:
+
+- [wandbox.org](https://wandbox.org)
+- [godbolt.org](https://godbolt.org) (dla bardziej zaawansowanych)
+- [ideone.com](https://ideone.com)
+
+:::note Zobacz
+[Porównanie środowisk online](./online/comparison)
+:::
+
+## Dostępne środowiska
+
+Jeśli jednak chcesz mieć własne środowisko na komputerze to nic nie stoi na przeszkodzie.
+Poniżej znajdziesz listę środowisk programistycznych podzielonych na polecane oraz niepolecane, oraz krótkie wyjaśnienie.
+
+### Polecane
+
+export const MoreInfoNotice = ({more}) => (
+	<p>
+		Zwróć uwagę, że jest to jedynie skrót z najważniejszych informacji dla początkujących programistów.
+		Po pełne podsumowanie narzędzia zajrzyj <a href={more}>tutaj</a>.
+	</p>
+);
+
+<ProductCard img={VSCodeIcon} title="Visual Studio Code" rating={9} author="Microsoft">
+	<ProductCard.Desc>
+		Edytor kodu, który po skonfigurowaniu przekształca się w pełnoprawne środowisko,
+		które pozwala na bardzo efektywną pracę.
+		<br/><br/>
+		<details>
+			<summary>Szczegóły</summary>
+			<div>
+				<h3>Zalety</h3>
+				<ul>
+					<li>Niewielki rozmiar instalacji</li>
+					<li>Fenomenalna modularność</li>
+					<li>Bardzo szybka i płynna edycja kodu</li>
+				</ul>
+				<h3>Wady</h3>
+				<ul>
+					<li>Kompilator trzeba skonfigurować oddzielnie</li>
+				</ul>
+				<MoreInfoNotice more="./standalone/vscode-summary"/>
+			</div>
+		</details>
+	</ProductCard.Desc>
+	<ProductCard.Actions>
+		{/* <Button fullWidth><Download /> Pobierz</Button> */}
+		<ul style={ { listStyle: "none" } }>
+			<li><a href="https://code.visualstudio.com/">Strona projektu</a></li>
+			<li><a href="./standalone/setup-vscode">Zobacz jak skonfigurować</a></li>
+			<li>Galeria (TODO)</li>
+		</ul>
+	</ProductCard.Actions>
+</ProductCard>
+
+<ProductCard img={VS2019Icon} title="Visual Studio" rating={8} author="Microsoft">
+	<ProductCard.Desc>
+		Potężne narzędzie zawierające wszystko czego potrzebujesz, między innymi edytor kodu
+		oraz kompilator, który wspiera najnowszy standard C++20.
+		<br/><br/>
+		<details>
+			<summary>Szczegóły</summary>
+			<div>
+				<h3>Zalety</h3>
+				<ul>
+					<li>Wszystko zawarte w jednym</li>
+					<li>Prosta instalacja i konfiguracja</li>
+					<li>Dostęp do najnowszego standardu C++20</li>
+					<li>Najlepszy dostępny debugger</li>
+				</ul>
+				<h3>Wady</h3>
+				<ul>
+					<li>Stosunkowo duży rozmiar instalacji (do pobrania ~2 GB, po instalacji ~7 GB)</li>
+					<li>Mało przenośny</li>
+					<li>Jedynie system Windows</li>
+				</ul>
+				<MoreInfoNotice more="./standalone/vs2019-summary"/>
+			</div>
+		</details>
+	</ProductCard.Desc>
+	<ProductCard.Actions>
+		{/* <Button fullWidth><Download /> Pobierz</Button> */}
+		<ul style={ { listStyle: "none" } }>
+			<li><a href="https://visualstudio.com/">Strona projektu</a></li>
+			<li><a href="./standalone/setup-vs2019">Zobacz jak skonfigurować</a></li>
+			<li>Galeria (TODO)</li>
+		</ul>
+	</ProductCard.Actions>
+</ProductCard>
+
+<ProductCard img={CLionIcon} title="CLion" rating={8} author="Jetbrains">
+	<ProductCard.Desc>
+		Środowisko o dużej liczbie przydatnych narzędzi, które przyspieszają edycję kodu
+		(refactoring, dbanie o poprawne nazewnictwo itp.).
+		<br/><br/>
+		<details>
+			<summary>Szczegóły</summary>
+			<div>
+				<h3>Zalety</h3>
+				<ul>
+					<li>Bardzo dobre podpowiadanie</li>
+					<li>Dużo narzędzi do refactoringu</li>
+					<li>Przenośny</li>
+				</ul>
+				<h3>Wady</h3>
+				<ul>
+					<li>Może być zbyt skomplikowany dla początkujących przez zastosowanie CMake jako domyślnego systemu budowania</li>
+					<li>Kompilator trzeba skonfigurować oddzielnie</li>
+					<li>Duży rozmiar instalacji</li>
+				</ul>
+				<MoreInfoNotice more="./standalone/clion-summary"/>
+			</div>
+		</details>
+	</ProductCard.Desc>
+	<ProductCard.Actions>
+		{/* <Button fullWidth><Download /> Pobierz</Button> */}
+		<ul style={ { listStyle: "none" } }>
+			<li><a href="https://www.jetbrains.com/clion/">Strona projektu</a></li>
+			<li><a href="./standalone/setup-clion">Zobacz jak skonfigurować</a></li>
+			<li>Galeria (TODO)</li>
+		</ul>
+	</ProductCard.Actions>
+</ProductCard>
+
+### Inne
+
+<ProductCard img={QtCreatorIcon} title="QtCreator" rating={7} author="The Qt Company">
+	<ProductCard.Desc>
+		Środowisko twórców biblioteki Qt dobre do tworzenia aplikacji z użyciem jej,
+		jednak w pozostałych sytuacjach przegrywa z aplikacjami z sekcji polecane.
+	</ProductCard.Desc>
+	<ProductCard.Actions>
+		{/* <Button fullWidth><Download /> Pobierz</Button> */}
+		<ul style={ { listStyle: "none" } }>
+			<li><a href="https://www.qt.io/product/development-tools/">Strona projektu</a></li>
+			<li><a href="./standalone/setup-qtcreator">Zobacz jak skonfigurować</a></li>
+			<li>Galeria (TODO)</li>
+		</ul>
+	</ProductCard.Actions>
+</ProductCard>
+
+### Niepolecane
+
+<ProductCard img={CodeBlocksIcon} title="Code Blocks" rating={5} author="The Code::Blocks team">
+	<ProductCard.Desc>
+		Łatwe do skonfigurowania środowisko, z podstawowymi narzędziami do edycji kodu.
+		Brak niektórych najbardziej podstawowych funkcji jak ciemny motyw, czy 
+		podświetlanie błędów składniowych w trakcie pisania. Kolorowanie składni
+		występuje tylko w formie podstawowej.
+	</ProductCard.Desc>
+	<ProductCard.Actions>
+		{/* <Button fullWidth><Download /> Pobierz</Button> */}
+		<ul style={ { listStyle: "none" } }>
+			<li><a href="https://www.codeblocks.org/">Strona projektu</a></li>
+			<li>Galeria (TODO)</li>
+		</ul>
+	</ProductCard.Actions>
+</ProductCard>
+
+<ProductCard img={CppBuilderIcon} title="C++ Builder" rating={4} author="Embarcadero">
+	<ProductCard.Desc>
+		Środowisko głównie przeznaczone do tworzenia aplikacji okienkowych.
+		Od lat pozostaje znacznie z tyłu względem aktualnych technologii, jest bardzo nieintuicyjne
+		dla początkujących i propaguje niepoprawne korzystanie z języka C++.
+	</ProductCard.Desc>
+	<ProductCard.Actions>
+		<ul style={ { listStyle: "none" } }>
+			<li><a href="https://www.embarcadero.com/products/cbuilder">Strona projektu</a></li>
+			<li>Galeria (TODO)</li>
+		</ul>
+	</ProductCard.Actions>
+</ProductCard>
+
+<ProductCard img={DevCppIcon} title="Dev-C++" rating={3} author="Bloodshed">
+	<ProductCard.Desc>
+		Łatwe do skonfigurowania środowisko, które od ponad 10 lat nie jest aktywnie rozwijane.
+		Brakuje najbardziej podstawowych narzędzi.
+	</ProductCard.Desc>
+	<ProductCard.Actions>
+		<ul style={ { listStyle: "none" } }>
+			<li><a href="https://www.bloodshed.net/">Strona projektu</a></li>
+			<li>Galeria (TODO)</li>
+		</ul>
+	</ProductCard.Actions>
+</ProductCard>
+
+:::important Uwaga
+To porównanie zawiera moje subiektywne odczucia, które nabyłem przez ponad 12 lat
+styczności z podanymi narzędziami.
+:::
