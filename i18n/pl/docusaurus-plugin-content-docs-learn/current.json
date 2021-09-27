@@ -3,16 +3,20 @@
     "message": "Następny",
     "description": "The label for version current"
   },
-  "sidebar.tutorialSidebar.category.Basics": {
+  "sidebar.defaultSidebar.category.Basics": {
     "message": "Podstawy",
-    "description": "The label for category Basics in sidebar tutorialSidebar"
+    "description": "The label for category Basics in sidebar defaultSidebar"
   },
-  "sidebar.tutorialSidebar.category.Intermediate": {
+  "sidebar.defaultSidebar.category.Intermediate": {
     "message": "Poziom średni",
-    "description": "The label for category Intermediate in sidebar tutorialSidebar"
+    "description": "The label for category Intermediate in sidebar defaultSidebar"
   },
-  "sidebar.tutorialSidebar.category.Advanced": {
+  "sidebar.defaultSidebar.category.Advanced": {
     "message": "Poziom zaawansowany",
-    "description": "The label for category Advanced in sidebar tutorialSidebar"
+    "description": "The label for category Advanced in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Articles": {
+    "message": "Artykuły",
+    "description": "The label for category Articles in sidebar defaultSidebar"
   }
 }

@@ -87,9 +87,9 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					src: 'img/cpp.svg',
 				},
 				items: [
-					{ to: '/learn/intro', label: 'Learn', position: 'left' },
-					{ to: '/docs/intro', label: 'Docs', position: 'left' },
-					{ to: '/features/intro', label: 'Features', position: 'left' },
+					{ to: '/learn/index', label: 'Learn', position: 'left' },
+					{ to: '/docs/index', label: 'Docs', position: 'left' },
+					{ to: '/features/index', label: 'Features', position: 'left' },
 					{ to: '/tools/index', label: 'Tools', position: 'left' },
 					{ to: '/blog', label: 'Blog', position: 'left'},
 					{
@@ -111,19 +111,19 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						items: [
 							{
 								label: 'Learn C++',
-								to: '/learn/intro',
+								to: '/learn/index',
 							},
 							{
 								label: 'Documentation',
-								to: '/docs/intro',
+								to: '/docs/index',
 							},
 							{
 								label: 'Features',
-								to: '/features/intro',
+								to: '/features/index',
 							},
 							{
 								label: 'Tools',
-								to: '/tools/intro',
+								to: '/tools/index',
 							},
 						],
 					},

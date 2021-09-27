@@ -12,7 +12,7 @@ const vscIcon = (name) => `${VscIconsFolder}/${name}.svg`;
 const FeatureList = [
 	{
 		title:		translate({ message: 'Learn', id: 'langFeature.Learn' }),
-		url:		'/learn/intro',
+		url:		'./learn/index',
 		svgPath:	vscIcon('book'),
 		description: (
 			<>
@@ -24,7 +24,7 @@ const FeatureList = [
 	{
 		title:		translate({ message: 'Docs', id: 'langFeature.Docs' }),
 		svgPath:	vscIcon('repo'),
-		url:		'/docs/intro',
+		url:		'./docs/index',
 		description: (
 			<>
 				Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
@@ -34,7 +34,7 @@ const FeatureList = [
 	},
 	{
 		title:		translate({ message: 'Features', id: 'langFeature.Features' }),
-		url:		'/features/intro',
+		url:		'./features/index',
 		svgPath:	vscIcon('extensions'),
 		description: (
 			<>
@@ -45,7 +45,7 @@ const FeatureList = [
 	},
 	{
 		title:		translate({ message: 'Tools', id: 'langFeature.Tools' }),
-		url:		'/tools/intro',
+		url:		'./tools/index',
 		svgPath:	vscIcon('tools'),
 		description: (
 			<>

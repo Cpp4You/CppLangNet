@@ -3,12 +3,12 @@
     "message": "Next",
     "description": "The label for version current"
   },
-  "sidebar.tutorialSidebar.category.Tutorial - Basics": {
+  "sidebar.defaultSidebar.category.Tutorial - Basics": {
     "message": "Tutorial - Basics",
-    "description": "The label for category Tutorial - Basics in sidebar tutorialSidebar"
+    "description": "The label for category Tutorial - Basics in sidebar defaultSidebar"
   },
-  "sidebar.tutorialSidebar.category.Tutorial - Extras": {
+  "sidebar.defaultSidebar.category.Tutorial - Extras": {
     "message": "Tutorial - Extras",
-    "description": "The label for category Tutorial - Extras in sidebar tutorialSidebar"
+    "description": "The label for category Tutorial - Extras in sidebar defaultSidebar"
   }
 }
