@@ -29,6 +29,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				path: 'docs/learn',
 				routeBasePath: 'learn',
 				sidebarPath: require.resolve('./sidebars.js'),
+				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+				editLocalizedFiles: true,
 			}, 
 		],
 		[
@@ -38,6 +40,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				path: 'docs/tools',
 				routeBasePath: 'tools',
 				sidebarPath: require.resolve('./sidebars.js'),
+				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+				editLocalizedFiles: true,
 			}, 
 		],
 		[
@@ -47,6 +51,8 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				path: 'docs/features',
 				routeBasePath: 'features',
 				sidebarPath: require.resolve('./sidebars.js'),
+				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+				editLocalizedFiles: true,
 			}, 
 		],
 	],
@@ -61,6 +67,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					sidebarPath: require.resolve('./sidebars.js'),
 					// Please change this to your repo.
 					editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+					editLocalizedFiles: true,
 				},
 				blog: {
 					showReadingTime: true,

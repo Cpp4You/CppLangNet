@@ -2,5 +2,13 @@
   "version.label": {
     "message": "Next",
     "description": "The label for version current"
+  },
+  "sidebar.defaultSidebar.category.Online tools": {
+    "message": "Online tools",
+    "description": "The label for category Online tools in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Standalone tools": {
+    "message": "Standalone tools",
+    "description": "The label for category Standalone tools in sidebar defaultSidebar"
   }
 }

@@ -199,5 +199,17 @@
   },
   "langFeature.Tools": {
     "message": "Narzędzia"
+  },
+  "tool.projectWebsite": {
+    "message": "Strona narzędzia"
+  },
+  "tool.howToUse": {
+    "message": "Zobacz jak skonfigurować"
+  },
+  "Gallery": {
+    "message": "Galeria"
+  },
+  "Details": {
+    "message": "Szczegóły"
   }
 }
