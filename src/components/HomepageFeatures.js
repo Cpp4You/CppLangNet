@@ -4,7 +4,7 @@ import styles			from './HomepageFeatures.module.scss';
 
 import { translate }	from '@docusaurus/Translate';
 
-const VscIconsFolder = '../../static/img/icons/vscode/dark';
+const VscIconsFolder = '@site/static/img/icons/vscode/dark';
 const vscIcon = (name) => `${VscIconsFolder}/${name}.svg`;
 
 

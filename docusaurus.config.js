@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	tagline:				'Learn how to build blazing fast software',
 	url:					'https://cpp-lang.net',
 	baseUrl:				'/',
-	onBrokenLinks:			'throw',
+	onBrokenLinks:			'warn',
 	onBrokenMarkdownLinks:	'warn',
 	favicon:				'img/favicon.png',
 	organizationName:		'PoetaKodu', // Usually your GitHub org/user name.
