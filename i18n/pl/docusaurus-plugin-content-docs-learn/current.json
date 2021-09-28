@@ -18,5 +18,17 @@
   "sidebar.defaultSidebar.category.Articles": {
     "message": "Artykuły",
     "description": "The label for category Articles in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Compilation": {
+    "message": "Kompilacja kodu",
+    "description": "The label for category Compilation in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Editing code": {
+    "message": "Edytowanie kodu",
+    "description": "The label for category Editing code in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.C++ Course": {
+    "message": "Kurs C++",
+    "description": "The label for category C++ Course in sidebar defaultSidebar"
   }
 }

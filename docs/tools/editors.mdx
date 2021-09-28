@@ -1,0 +1,140 @@
+---
+sidebar_position: 2
+---
+
+# Wybór edytora/środowiska
+
+<!-- Components -->
+import ToolCard			from '@site/src/components/mdx/ToolsSummary';
+
+Jeśli jesteś początkującym programistą, zacznij od **środowiska online**.
+Na początku nauki nie powinieneś się przejmować konfiguracją narzędzi, tylko nauką samego języka.
+Przez pierwsze kilka lekcji skorzystaj ze środowiska online, które zrobi całą konfigurację za Ciebie.
+Dopiero gdy uznasz, że chcesz mieć środowisko na swoim komputerze, przejdź do sekcji [Dostępne środowiska](#dostępne-środowiska)
+
+## Środowiska online
+
+Na ten moment zdecydowanie najbardziej polecamy stronę: [**Replit.com**](https://replit.com).  
+Po zalogowaniu się będziesz mógł korzystać z ich narzędzi **za darmo**.
+Zapoznaj się też z artykułem [Tworzenie projektu C++ w Repl.it](./online/create-project-with-repl-it).
+
+<ToolCard toolId="replit">
+	Środowisko online, dzięki któremu od razu możesz przejść do nauki, nie martwiąc się o konfigurację.
+	Posiada <b>interaktywną konsolę</b>, która daje podobne doświadczenie do korzystania
+	ze środowiska zainstalowanego lokalnie na komputerze.
+</ToolCard>
+
+Inne, godne polecenia:
+
+- [wandbox.org](https://wandbox.org)
+- [godbolt.org](https://godbolt.org) (dla bardziej zaawansowanych)
+- [ideone.com](https://ideone.com)
+
+:::note Zobacz
+[Porównanie środowisk online](./online/comparison)
+:::
+
+## Dostępne środowiska
+
+Jeśli jednak chcesz mieć własne środowisko na komputerze to nic nie stoi na przeszkodzie.
+Poniżej znajdziesz listę środowisk programistycznych podzielonych na polecane oraz niepolecane, oraz krótkie wyjaśnienie.
+
+:::important Uwaga
+To porównanie zawiera moje subiektywne odczucia, które nabyłem przez ponad 12 lat
+styczności z podanymi narzędziami.
+:::
+
+### Polecane
+
+export const MoreInfoNotice = ({more}) => (
+	<p>
+		Zwróć uwagę, że jest to jedynie skrót z najważniejszych informacji dla początkujących programistów.
+		Po pełne podsumowanie narzędzia zajrzyj <a href={more}>tutaj</a>.
+	</p>
+);
+
+<ToolCard toolId="vscode" setupLink="./standalone/setup-vscode">
+	Edytor kodu, który po skonfigurowaniu przekształca się w pełnoprawne środowisko,
+	które pozwala na bardzo efektywną pracę.
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Niewielki rozmiar instalacji</li>
+			<li>Fenomenalna modularność</li>
+			<li>Bardzo szybka i płynna edycja kodu</li>
+		</ul>
+		<h3>Wady</h3>
+		<ul>
+			<li>Kompilator trzeba skonfigurować oddzielnie</li>
+		</ul>
+		<MoreInfoNotice more="./standalone/vscode-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+
+<ToolCard toolId="vs2019" setupLink="./standalone/setup-vs2019">
+	Potężne narzędzie zawierające wszystko czego potrzebujesz, między innymi edytor kodu
+	oraz kompilator, który wspiera najnowszy standard C++20.
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Wszystko zawarte w jednym</li>
+			<li>Prosta instalacja i konfiguracja</li>
+			<li>Dostęp do najnowszego standardu C++20</li>
+			<li>Najlepszy dostępny debugger</li>
+		</ul>
+		<h3>Wady</h3>
+		<ul>
+			<li>Stosunkowo duży rozmiar instalacji (do pobrania ~2 GB, po instalacji ~7 GB)</li>
+			<li>Mało przenośny</li>
+			<li>Jedynie system Windows</li>
+		</ul>
+		<MoreInfoNotice more="./standalone/vs2019-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+
+<ToolCard toolId="clion" setupLink="./standalone/setup-clion">
+	Środowisko o dużej liczbie przydatnych narzędzi, które przyspieszają edycję kodu
+	(refactoring, dbanie o poprawne nazewnictwo itp.).
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Bardzo dobre podpowiadanie</li>
+			<li>Dużo narzędzi do refactoringu</li>
+			<li>Przenośny</li>
+		</ul>
+		<h3>Wady</h3>
+		<ul>
+			<li>Może być zbyt skomplikowany dla początkujących przez zastosowanie CMake jako domyślnego systemu budowania</li>
+			<li>Kompilator trzeba skonfigurować oddzielnie</li>
+			<li>Duży rozmiar instalacji</li>
+		</ul>
+		<MoreInfoNotice more="./standalone/clion-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+
+### Inne
+
+<ToolCard toolId="qtcreator" setupLink="./standalone/setup-qtcreator">
+	Środowisko twórców biblioteki Qt dobre do tworzenia aplikacji z użyciem jej,
+	jednak w pozostałych sytuacjach przegrywa z aplikacjami z sekcji polecane.
+</ToolCard>
+
+### Niepolecane
+
+<ToolCard toolId="codeblocks">
+	Łatwe do skonfigurowania środowisko, z podstawowymi narzędziami do edycji kodu.
+	Brak niektórych najbardziej podstawowych funkcji jak ciemny motyw, czy 
+	podświetlanie błędów składniowych w trakcie pisania. Kolorowanie składni
+	występuje tylko w formie podstawowej.
+</ToolCard>
+
+<ToolCard toolId="cppbuilder">
+	Środowisko głównie przeznaczone do tworzenia aplikacji okienkowych.
+	Od lat pozostaje znacznie z tyłu względem aktualnych technologii, jest bardzo nieintuicyjne
+	dla początkujących i propaguje niepoprawne korzystanie z języka C++.
+</ToolCard>
+
+<ToolCard toolId="devcpp">
+	Łatwe do skonfigurowania środowisko, które od ponad 10 lat nie jest aktywnie rozwijane.
+	Brakuje najbardziej podstawowych narzędzi.
+</ToolCard>

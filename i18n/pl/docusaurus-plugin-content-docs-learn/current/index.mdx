@@ -1,63 +1,110 @@
 ---
 sidebar_position: 1
 ---
-import CodeBlock from '@theme/CodeBlock'
 
-import Columns from '@site/src/components/mdx/Columns'
+# Wstęp do programowania
 
-# Naucz się C++
+import CustomCodeBlock from '@site/src/components/mdx/CustomCodeBlock';
 
-:::caution Zanim zaczniesz naukę
-Będziesz potrzebował(a) narzędzi do edycji kodu.
-<b>Zapoznaj się z <a href="./programming-intro">Wstęp do programowania</a></b>
+Jesteś w dziale nauki programowania. Znajdziesz tutaj kurs języka C++, oraz inne materiały,
+których tematyka krąży właśnie wokoło programowania w nim.
+
+Zanim przejdziesz do kursu C++, zapoznaj się z tym, czym w ogóle jest programowanie?
+
+## Czym jest programowanie
+
+Programowanie służy do automatyzacji zadań za pomocą maszyny, która wykonuje polecenia.
+W kursie C++ nauczysz się jak tworzyć programy, które można uruchomić z komputera.
+Dzięki temu będziesz w stanie stworzyć aplikacje, która na przykład:
+
+- wykona za Ciebie pewne obliczenia ➕ ➖ ✖ ➗
+- jest grą komputerową 🎮 😄
+- wyręczy Cię w jakiejś rutynowej, monotonnej komputerowej pracy 🖨 ☕
+
+:::tip Gry komputerowe 🎮
+Kilka słów od autora tej strony: uwielbiam tworzyć gry komputerowe. Bardzo lubię uczyć programowania
+używając przykładów z gier. Uważam to za świetną formę nauki, która łączy wiedzę z przyjemnością! 
 :::
 
-## Pierwszy program
+### Jak to wygląda
 
-Jeśli masz już gotowy swój edytor kodu, możesz przystąpić do napisania pierwszego programu.
+Programista pisze kod. Pokażemy Ci jak robić to w taki sposób, żeby był zgodny
+z zasadami języka C++ i nauczymy Cię dobrych praktyk w programowaniu.
 
-Przyjęło się, że podczas nauki nowego języka programowania, pierwszą rzeczą, którą się robi
-to prosta aplikacja wyświetlająca **"Witaj, świecie!"** ("Hello, World!" po angielsku).
+Oto prosty kod w języku C++, który liczy za Ciebie pole trapezu:
 
-### Kod aplikacji
-
-Wklej następujący kod i go uruchom:
-
-
-
-
-<Columns spacing={40} columns={['8fr', '4fr']}>
-<div>
+<CustomCodeBlock lineNumbers maxLines={15} withTitle resizable>
 
 ```cpp title="main.cpp"
 #include <iostream>
 
 int main()
 {
-	std::cout << "Witaj, świecie!";
+	float a = 15;
+	float b = 10;
+	float h = 5;
+
+	std::cout << "PROGRAM OBLICZAJĄCY POLE TRAPEZU\n";
+
+	std::cout << "Podaj wartość a: ";
+	std::cin >> a;
+
+	std::cout << "Podaj wartość b: ";
+	std::cin >> b;
+
+	std::cout << "Podaj wartość h: ";
+	std::cin >> h;
+
+	if (a > 0 and b > 0 and h > 0)
+	{
+		std::cout << "Pole trapezu o:\n";
+		std::cout << "a = " << a << "\n";
+		std::cout << "b = " << b << "\n";
+		std::cout << "h = " << h << "\n";
+		std::cout << "wynosi: ";
+		std::cout << (a + b) * h / 2;
+	}
+	else
+	{
+		std::cout << "Wszystkie wartości muszą być dodatnie!\n";
+	}
 }
 ```
 
-</div>
+</CustomCodeBlock>
 
-<div>
+Jeśli chcesz się dowiedzieć jak to działa, **odpowiedź znajdziesz w kursie**!
 
-```plaintext title="Wynik (konsola)"
-Witaj, świecie!
-```
+Kod C++ nie jest bezpośrednio zrozumiały dla komputera. Zanim będziemy mogli go uruchomić,
+trzeba przepuścić kod przez tzw. **kompilator** (o tym później), który najpierw sprawdzi
+czy kod jest zgodny z zasadami języka C++, i jeśli tak, to potem przetłumaczy go na taki,
+który jest rozumiany przez komputery.
 
-</div>
-</Columns>
+### Do czego służy C++
 
+C++ jest językiem programowania **ogólnego przeznaczenia**. Możesz używać go do stworzenia
+tak naprawdę czegokolwiek co wpadnie Ci na myśl. Warto jednak wiedzieć, gdzie C++
+sprawdza się najlepiej:
 
-Powinieneś zaobserwować efekt taki jak powyżej.
+- w branży gier komputerowych (np. z użyciem silnika Unreal Engine 4)
+- w tworzeniu aplikacji komputerowych (tych, w których wydajność jest kluczowa)
+- w tworzeniu serwerów
+- w programowaniu mikrokontrolerów
 
-:::important Polskie znaki
-Jeśli używasz systemu Windows i korzystasz ze środowiska zainstalowanego na własnym komputerze
-to najprawdopodobniej zamiast polskich znaków pojawią się różne "krzaczki".
-Jest to znany problem, jednak nie przejmuj się nim na tym etapie nauki.
-Zamiast tego napisz **"Witaj, swiecie!"** - bez polskich znaków.
-:::
+Aktualnie C++ nie jest najlepszym rozwiązaniem jeśli chcesz:
 
-Omówienie podanego wyżej kodu znajdziesz w następnej części kursu 🙂
+- tworzyć strony internetowe (wtedy wybierz Javascript)
+- aplikacje mobilne i biurowe, które nie wymagają bardzo dużej wydajności
 
+### O czym warto pamiętać
+
+Nauka języka programowania to proces długotrwały, a język C++ jest **bardzo** obszerny i rozbudowany.
+Nie oznacza to, że uczenie się go musi być trudne - wręcz przeciwnie! Ta strona powstała głównie
+po to, by przełamać myślenie o C++ jak o języku, który jest postrachem uczniów lub studentów.
+
+Rozbudowany nie musi oznaczać trudny!
+
+## Naukę czas zacząć
+
+Życzę Ci cierpliwości i wytrwałości w nauce, zobaczysz że może być to bardzo ciekawe
+i satysfakcjonujące.

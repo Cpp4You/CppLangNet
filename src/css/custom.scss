@@ -28,3 +28,26 @@
 html[data-theme='dark'] .docusaurus-highlight-code-line {
 	background-color: rgba(0, 0, 0, 0.3);
 }
+
+/*
+* Reset the line-number counter for each .prism-code scope
+*/
+.prism-code {
+counter-reset: line-number;
+}
+
+/*
+* Notice the chained .language-ts class name to .prism-code
+* You can chain more languages in order to add line numbers
+*/
+*[line-numbers="true"] .prism-code[class*=language-] .token-line::before {
+	counter-increment: line-number;
+	content: counter(line-number);
+	margin-right: calc(var(--ifm-pre-padding) * 1.5);
+	text-align: right;
+	min-width: 1.5rem;
+	display: inline-block;
+	opacity: .3;
+	position: sticky;
+	left: var(--ifm-pre-padding);
+}

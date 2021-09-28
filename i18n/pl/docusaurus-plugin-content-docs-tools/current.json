@@ -4,11 +4,11 @@
     "description": "The label for version current"
   },
   "sidebar.defaultSidebar.category.Online tools": {
-    "message": "Online tools",
+    "message": "Narzędzia online",
     "description": "The label for category Online tools in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.Standalone tools": {
-    "message": "Standalone tools",
+    "message": "Narzędzia do pobrania",
     "description": "The label for category Standalone tools in sidebar defaultSidebar"
   }
 }
