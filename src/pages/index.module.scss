@@ -6,6 +6,25 @@
 $bgcDarkMode: rgb(15, 15, 15);
 $bgcLightMode: rgb(250, 250, 250);
 
+.bgImage {
+	z-index: -1;
+	box-sizing: border-box;
+	position: absolute;
+	left: 0;
+	top: 0;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	filter: blur(4px);
+	>img {
+		height: 100%;
+		width: auto;
+		display: block;
+	}
+}
+
 .heroBanner {
 	padding: 4rem 0;
 	text-align: center;
@@ -13,8 +32,8 @@ $bgcLightMode: rgb(250, 250, 250);
 	overflow: hidden;
 
 	// background-color: $bgcLightMode;
-	background-image: url("../../static/img/coding-bg-white.jpg");
 	background-size: 0 0;
+	transition: 0.01s;
 
 	.textPart {
 		background-color: rgba(white, 0.8);
@@ -55,23 +74,6 @@ $bgcLightMode: rgb(250, 250, 250);
 	}
 }
 
-.heroBanner::before {
-	content: " "; /* Important */
-	z-index: -1; /* Important */
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	box-sizing: border-box;
-	background-image: inherit;
-	background-repeat: repeat-x;
-	background-size: contain;
-	background-position: center;
-	filter: blur(5px);
-}
-
-
 @media screen and (max-width: 1400px) {
 
 .heroBanner {
@@ -91,8 +93,10 @@ $bgcLightMode: rgb(250, 250, 250);
 		grid-template-columns: 1fr;
 		grid-gap: 1em;
 	}
+}
 
-	background-image: none;
+.bgImage {
+	display: none;
 }
 
 }
@@ -123,8 +127,6 @@ html[data-theme="dark"]
 {
 
 .heroBanner {
-	background-image: url("../../static/img/coding-bg-dark.jpg");
-	background-color: $bgcDarkMode;
 
 	.textPart {
 		background-color: rgba(black, 0.8);

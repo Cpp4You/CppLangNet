@@ -5,13 +5,24 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import styles from './index.module.scss';
 import HomepageFeatures from '../components/HomepageFeatures';
+import useThemeContext from '@theme/hooks/useThemeContext';
 
 import Translate, { translate } from '@docusaurus/Translate';
 
 function HomepageHeader() {
 	const {siteConfig} = useDocusaurusContext();
+	const {isDarkTheme} = useThemeContext();
+
+	const backgroundImages = {
+		'white': 'img/coding-bg-white.jpg',
+		'dark': 'img/coding-bg-dark.jpg'
+	};
+
 	return (
 		<header className={styles.heroBanner}>
+			<div className={styles.bgImage}>
+				<img src={ backgroundImages[isDarkTheme ? 'dark' : 'white'] }/>
+			</div>
 			<div className={styles.container}>
 				<div className={styles.textPart}>
 					<h1 className={styles.title}><Translate>C++ Programming Language</Translate></h1>
@@ -34,9 +45,13 @@ function HomepageHeader() {
 
 export default function Home() {
 	const {siteConfig} = useDocusaurusContext();
+
 	return (
 		<Layout
 			description="Description will go into a meta tag in <head />">
+				
+			<link rel="preload" as="image" href="img/coding-bg-dark.jpg"/>
+			<link rel="preload" as="image" href="img/coding-bg-white.jpg"/>
 			<HomepageHeader />
 			<main>
 				<HomepageFeatures />
