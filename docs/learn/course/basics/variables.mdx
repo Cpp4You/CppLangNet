@@ -3,3 +3,72 @@ sidebar_position: 2
 ---
 
 # Variables
+
+import Columns from '@site/src/components/mdx/Columns'
+import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+
+<NotFinished/>
+
+In the previous lesson, we talked about automation and showed you how to do some calculations.
+
+## What is it for?
+
+Let's write a program that raises a certain number to the power of three and then displays it:
+
+<Columns spacing={40} columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp | Power of three"
+#include <iostream>
+
+int main()
+{
+	std::cout << 212 * 212 * 212;
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result (console)"
+9528128
+```
+
+</div>
+</Columns>
+
+If we now want to raise a different number to the third power, we will have
+to change three places in the code. It is tedious.
+
+## Variables come to the rescue
+
+In order not to change so many things every time, let's assume for a moment
+that the number we are raising to the power of three is called `x`.
+What will the code look like then?
+
+```cpp
+#include <iostream>
+int main()
+{
+	std::cout << x * x * x;
+}
+```
+
+The above program at this stage **will not compile**. To use `x` in a calculation,
+we first need to create a **variable** named `x`:
+
+```cpp
+#include <iostream>
+int main()
+{
+	int x = 212;
+	std::cout << x * x * x;
+}
+```
+
+The above program will compile and run correctly.
+
+:::important Variable definition
+A **variable** is a data container.
+:::

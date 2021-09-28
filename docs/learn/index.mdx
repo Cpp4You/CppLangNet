@@ -2,29 +2,110 @@
 sidebar_position: 1
 ---
 
-# Programming introduction
+# Introduction to programming
 
-To start learning **C++** you'll have to use a *code editor*.
+import CustomCodeBlock from '@site/src/components/mdx/CustomCodeBlock';
 
-## Selecting a code editor
+You are in the C++ learning sub-site. Here you will find a C++ language course
+and other materials that revolve around programming in it.
 
-We recommend you to use an online code editor for the first few lessons. It will be easy and won't require any additional setup.
+Before you move on to the C++ course, you'll have to learn what programming is about.
 
-Recommended online C++ editors:
+## What is programming
 
-- [Repl.it](http://repl.it)
+Programming is used to automate tasks that will be later executed on a machine.
+In the C++ course, you will learn how to create programs that can run on a computer.
+Thanks to this, you will be able to develop applications that, for example:
 
-## Writing your first application
+- can do calculations for you ➕ ➖ ✖ ➗
+- are video games 🎮 😄
+- will do your routine, monotonous computer chores 🖨 ☕
 
-Open a code editor, then type the following code
+:::tip Video games 🎮
+A few words from the author of this website: I love creating computer games.
+I really like teaching programming using examples that involve game development.
+I consider it a great form of learning that combines knowledge with fun!
+:::
 
-```cpp
+### What programmers do
+
+Programmers write code. We will show you how to do it in a way that complies
+with the rules of the C++ language and we will teach you good programming practices.
+
+Here's a simple C++ code that computes the area of a trapezoid for you:
+
+<CustomCodeBlock lineNumbers maxLines={15} withTitle resizable>
+
+```cpp title="main.cpp"
 #include <iostream>
 
 int main()
 {
-	std::cout << "Hello, world!";
+	float a = 15;
+	float b = 10;
+	float h = 5;
+
+	std::cout << "TRAPEZOID AREA CALCULATOR\n";
+
+	std::cout << "Provide length of base a: ";
+	std::cin >> a;
+
+	std::cout << "Provide length of base b: ";
+	std::cin >> b;
+
+	std::cout << "Provide height h: ";
+	std::cin >> h;
+
+	if (a > 0 and b > 0 and h > 0)
+	{
+		std::cout << "Area of the trapezoid with:\n";
+		std::cout << "a = " << a << "\n";
+		std::cout << "b = " << b << "\n";
+		std::cout << "h = " << h << "\n";
+		std::cout << "equals: ";
+		std::cout << (a + b) * h / 2;
+	}
+	else
+	{
+		std::cout << "Each length has to be greater than 0!\n";
+	}
 }
 ```
 
-Congratulations! You've printed your first `Hello, World!`
+</CustomCodeBlock>
+
+If you want to know how it works, **the answer is in the course**!
+
+The C++ code is not directly understood by the computer. Before we can run it,
+we need to pass the code through the **compiler** (more on that later),
+which will first check that the code is valid in the C++ language,
+and if so, then translate it into one that is understood by computers.
+
+### What is C++ for
+
+C++ is a **general purpose** programming language. You can use it to create
+anything you can really think of. However, it's worth knowing where C++
+works best:
+
+- in the computer games industry (e.g. using Unreal Engine 4)
+- in creating desktop applications (those where performance is important)
+- in creating servers
+- in programming microcontrollers
+
+Currently C++ is not the best solution if you want to:
+
+- create web pages (use Javascript instead)
+- develop mobile and office applications that do not require very high performance
+
+### Things worth remembering
+
+Learning a programming language is a long process, and C++ is **very** extensive.
+This does not mean that learning it has to be difficult - quite the contrary!
+This site is mainly designed to break down thinking of C++ as a language that is a fear for students.
+
+Extensive doesn't have to mean difficult!
+
+## It's time to start learning
+
+I wish you patience and perseverance in learning, you will see that
+it can be very interesting and rewarding.

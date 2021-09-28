@@ -1,140 +1,148 @@
 ---
 sidebar_position: 2
+title: 🎯 Choose an editor
 ---
 
-# Wybór edytora/środowiska
+# Choose an editor/IDE
 
 <!-- Components -->
 import ToolCard			from '@site/src/components/mdx/ToolsSummary';
 
-Jeśli jesteś początkującym programistą, zacznij od **środowiska online**.
-Na początku nauki nie powinieneś się przejmować konfiguracją narzędzi, tylko nauką samego języka.
-Przez pierwsze kilka lekcji skorzystaj ze środowiska online, które zrobi całą konfigurację za Ciebie.
-Dopiero gdy uznasz, że chcesz mieć środowisko na swoim komputerze, przejdź do sekcji [Dostępne środowiska](#dostępne-środowiska)
+If you are a novice developer, start with **an online IDE**.
+At the beginning of learning, you should not worry about setting up the tools, but just learning the language itself.
+For the first few lessons, use the online environment that will do all the setup for you.
+You will also not need to download or manually configure the compiler.
+Only when you decide that you want the environment on your computer, go to the [Available IDEs](#available-ides) section.
 
-## Środowiska online
+## Online IDEs
 
-Na ten moment zdecydowanie najbardziej polecamy stronę: [**Replit.com**](https://replit.com).  
-Po zalogowaniu się będziesz mógł korzystać z ich narzędzi **za darmo**.
-Zapoznaj się też z artykułem [Tworzenie projektu C++ w Repl.it](./online/create-project-with-repl-it).
+At the moment, we definitely recommend the website: [**Replit.com**](https://replit.com).  
+After logging in, you will be able to use their tools **for free**.
+See also the article [Creating a C++ project with Repl.it](./online/create-project-with-repl-it).
 
 <ToolCard toolId="replit">
-	Środowisko online, dzięki któremu od razu możesz przejść do nauki, nie martwiąc się o konfigurację.
-	Posiada <b>interaktywną konsolę</b>, która daje podobne doświadczenie do korzystania
-	ze środowiska zainstalowanego lokalnie na komputerze.
+	An online environment where you can jump right to learning without having to worry about setup.
+	It has an <b>interactive console</b> that gives you a similar experience to use
+	from an environment installed locally on the computer.
 </ToolCard>
 
-Inne, godne polecenia:
+Others, worth recommending:
 
 - [wandbox.org](https://wandbox.org)
-- [godbolt.org](https://godbolt.org) (dla bardziej zaawansowanych)
+- [godbolt.org](https://godbolt.org) (for more advanced programmers)
 - [ideone.com](https://ideone.com)
 
-:::note Zobacz
-[Porównanie środowisk online](./online/comparison)
+:::note See
+[Online IDEs comparison](./online/comparison)
 :::
 
-## Dostępne środowiska
+## Available IDEs
 
-Jeśli jednak chcesz mieć własne środowisko na komputerze to nic nie stoi na przeszkodzie.
-Poniżej znajdziesz listę środowisk programistycznych podzielonych na polecane oraz niepolecane, oraz krótkie wyjaśnienie.
+If you want to have your own IDE on the computer, there is nothing to stop you.
+Below you will find a list of IDEs divided into recommended and not recommended, and a brief explanation.
 
-:::important Uwaga
-To porównanie zawiera moje subiektywne odczucia, które nabyłem przez ponad 12 lat
-styczności z podanymi narzędziami.
+:::important
+This comparison includes my subjective impressions that I have acquired over 12 years
+of contact with the given tools.
 :::
 
-### Polecane
+### Recommended
 
 export const MoreInfoNotice = ({more}) => (
 	<p>
-		Zwróć uwagę, że jest to jedynie skrót z najważniejszych informacji dla początkujących programistów.
-		Po pełne podsumowanie narzędzia zajrzyj <a href={more}>tutaj</a>.
+		Note that this is only a summary of the most important information for novice programmers.
+		For a full summary of the tool, please see <a href={more}>this article</a>.
 	</p>
 );
 
 <ToolCard toolId="vscode" setupLink="./standalone/setup-vscode">
-	Edytor kodu, który po skonfigurowaniu przekształca się w pełnoprawne środowisko,
-	które pozwala na bardzo efektywną pracę.
+	A code editor that, after configuration, transforms into a fully-fledged
+	IDE that allows for very effective work.
 	<ToolCard.Details>
-		<h3>Zalety</h3>
+		<h3>Pros</h3>
 		<ul>
-			<li>Niewielki rozmiar instalacji</li>
-			<li>Fenomenalna modularność</li>
-			<li>Bardzo szybka i płynna edycja kodu</li>
+			<li>Small installation size</li>
+			<li>Phenomenal modularity</li>
+			<li>Very fast and smooth code editing</li>
 		</ul>
-		<h3>Wady</h3>
+		<h3>Cons</h3>
 		<ul>
-			<li>Kompilator trzeba skonfigurować oddzielnie</li>
+			<li>The compiler must be configured separately</li>
 		</ul>
 		<MoreInfoNotice more="./standalone/vscode-summary"/>
 	</ToolCard.Details>
 </ToolCard>
 
 <ToolCard toolId="vs2019" setupLink="./standalone/setup-vs2019">
-	Potężne narzędzie zawierające wszystko czego potrzebujesz, między innymi edytor kodu
-	oraz kompilator, który wspiera najnowszy standard C++20.
+	A powerful tool with everything you need, including a code editor
+	and a compiler that supports the latest C++ 20 standard.
 	<ToolCard.Details>
-		<h3>Zalety</h3>
+		<h3>Pros</h3>
 		<ul>
-			<li>Wszystko zawarte w jednym</li>
-			<li>Prosta instalacja i konfiguracja</li>
-			<li>Dostęp do najnowszego standardu C++20</li>
-			<li>Najlepszy dostępny debugger</li>
+			<li>All in one</li>
+			<li>Simple installation and configuration</li>
+			<li>Access to the latest C++ 20 standard</li>
+			<li>The best debugger available</li>
 		</ul>
-		<h3>Wady</h3>
+		<h3>Cons</h3>
 		<ul>
-			<li>Stosunkowo duży rozmiar instalacji (do pobrania ~2 GB, po instalacji ~7 GB)</li>
-			<li>Mało przenośny</li>
-			<li>Jedynie system Windows</li>
+			<li>Relatively big installation size (download ~2 GB, after installation ~7 GB)</li>
+			<li>Not portable</li>
+			<li>Windows only</li>
 		</ul>
 		<MoreInfoNotice more="./standalone/vs2019-summary"/>
 	</ToolCard.Details>
 </ToolCard>
 
 <ToolCard toolId="clion" setupLink="./standalone/setup-clion">
-	Środowisko o dużej liczbie przydatnych narzędzi, które przyspieszają edycję kodu
-	(refactoring, dbanie o poprawne nazewnictwo itp.).
+	An IDE with a large number of useful tools that speed up code editing
+	(refactoring, taking care of the correct naming, etc.).
 	<ToolCard.Details>
-		<h3>Zalety</h3>
+		<h3>Pros</h3>
 		<ul>
-			<li>Bardzo dobre podpowiadanie</li>
-			<li>Dużo narzędzi do refactoringu</li>
-			<li>Przenośny</li>
+			<li>Very good prompting</li>
+			<li>Lots of refactoring tools</li>
+			<li>Portable</li>
 		</ul>
-		<h3>Wady</h3>
+		<h3>Cons</h3>
 		<ul>
-			<li>Może być zbyt skomplikowany dla początkujących przez zastosowanie CMake jako domyślnego systemu budowania</li>
-			<li>Kompilator trzeba skonfigurować oddzielnie</li>
-			<li>Duży rozmiar instalacji</li>
+			<li>It can be too complicated for beginners to use CMake as the default build system</li>
+			<li>The compiler must be configured separately</li>
+			<li>Big installation size</li>
 		</ul>
 		<MoreInfoNotice more="./standalone/clion-summary"/>
 	</ToolCard.Details>
 </ToolCard>
 
-### Inne
+### Others
 
 <ToolCard toolId="qtcreator" setupLink="./standalone/setup-qtcreator">
-	Środowisko twórców biblioteki Qt dobre do tworzenia aplikacji z użyciem jej,
-	jednak w pozostałych sytuacjach przegrywa z aplikacjami z sekcji polecane.
+	The IDE of the creators of the Qt library. Good for creating applications
+	using it, but in other situations it loses with the IDEs from the recommended section.
 </ToolCard>
 
-### Niepolecane
+### Not recommended
+
+:::danger
+Using the tools listed below may result in the code provided on the website not working.
+You also run the risk of using C++ incorrectly, as well as
+unnecessary headaches and wasting valuable time.
+:::
 
 <ToolCard toolId="codeblocks">
-	Łatwe do skonfigurowania środowisko, z podstawowymi narzędziami do edycji kodu.
-	Brak niektórych najbardziej podstawowych funkcji jak ciemny motyw, czy 
-	podświetlanie błędów składniowych w trakcie pisania. Kolorowanie składni
-	występuje tylko w formie podstawowej.
+	An easy-to-set-up environment with basic code editing tools.
+	Some of the most basic features are missing, such as dark theme
+	or syntax highlighting as you type.
+	The syntax coloring occurs only in the basic form.
 </ToolCard>
 
 <ToolCard toolId="cppbuilder">
-	Środowisko głównie przeznaczone do tworzenia aplikacji okienkowych.
-	Od lat pozostaje znacznie z tyłu względem aktualnych technologii, jest bardzo nieintuicyjne
-	dla początkujących i propaguje niepoprawne korzystanie z języka C++.
+	An environment mainly intended for creating window applications.
+	It has lagged behind current technologies for years, is very unintuitive for beginners,
+	and promotes the incorrect use of C++.
 </ToolCard>
 
 <ToolCard toolId="devcpp">
-	Łatwe do skonfigurowania środowisko, które od ponad 10 lat nie jest aktywnie rozwijane.
-	Brakuje najbardziej podstawowych narzędzi.
+	An easy-to-configure environment that has not been actively developed in over 10 years.
+	The most basic tools are missing.
 </ToolCard>

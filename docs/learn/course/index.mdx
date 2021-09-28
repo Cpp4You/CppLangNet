@@ -1,30 +1,58 @@
 ---
 sidebar_position: 1
 ---
+import CodeBlock from '@theme/CodeBlock'
+
+import Columns from '@site/src/components/mdx/Columns'
 
 # Introduction to C++
 
-To start learning **C++** you'll have to use a *code editor*.
+:::important Before you start
+You will need programmer tools for code editing.
+<b>Visit <a href="/tools/index">Development tools</a></b>
+:::
 
-## Selecting a code editor
+## The first program
 
-We recommend you to use an online code editor for the first few lessons. It will be easy and won't require any additional setup.
+Once you have your code editor ready, you can start writing your first program.
 
-Recommended online C++ editors:
+When learning a new programming language, the first thing you do
+is a simple application that displays the following text: **"Hello, World!"**.
 
-- [Repl.it](http://repl.it)
+After creating the project, in your environment, a file with the extension `.cpp` has probably been automatically added.
+Most often it is called `main.cpp` (sometimes `Source.cpp` or `ProjectName.cpp`).
+If there is none, create one and name it `main.cpp`.
+It is in it that we will save all the code for now.
 
-## Writing your first application
+### Application code
 
-Open a code editor, then type the following code
+Paste the following code and run it:
 
-```cpp
+<Columns spacing={40} columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp"
 #include <iostream>
 
 int main()
 {
-	std::cout << "Hello, world!";
+	std::cout << "Hello, World!";
 }
 ```
 
-Congratulations! You've printed your first `Hello, World!`
+</div>
+
+<div>
+
+```plaintext title="Result (console)"
+Hello, World!
+```
+
+</div>
+</Columns>
+
+
+You should see an effect like the one above.
+
+You will find an explanation of the above code in the next part of the course 🙂
+

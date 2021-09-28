@@ -3,3 +3,216 @@ sidebar_position: 1
 ---
 
 # First program
+
+import Columns from '@site/src/components/mdx/Columns';
+import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+
+<NotFinished/>
+
+## Application code
+
+We finished the previous lesson with the following code:
+
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Hello, World!";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result (console)"
+Hello, World!
+```
+
+</div>
+</Columns>
+
+Which displays the text given above in the "Result" box.
+
+
+## Explaination
+
+### The main function
+
+Let's start with the heart of our application, *the main function*
+
+```cpp title="Part of main.cpp"
+int main()
+{
+
+}
+```
+
+As we mentioned in the <a href="../index">introduction</a>, the computer runs the program line by line.
+When it starts the application, it executes the instructions in the `main` code block sequentially.
+
+A **code block** in C++, is a set of instructions contained inside curly braces:
+
+```cpp
+{
+
+}
+```
+
+The function `main` has a block of code, and everything between the parentheses will be executed sequentially.
+
+### The `iostream` library
+
+At the very beginning of the code there is a line:
+
+```cpp
+#include <iostream>
+```
+
+It will allow us to continue using the input and output functions (hence `iostream` - from *input/output stream*).
+In practice, this means that we will be able to write something in the console and let the user type something into the console and intercept it.
+We'll tell more about `#include` itself in the future. Enough for the moment.
+
+### Printing text to the console
+
+We used this statement inside a `main` block:
+
+```cpp
+std::cout << "Hello, World!";
+```
+
+`cout` is the a **c**haracter **out**put stream, however, for the moment,
+remember that it just displays the quoted text to the console.
+
+If I now copy this line several times:
+
+```cpp
+std::cout << "Hello, World!1";
+std::cout << "Hello, World!2";
+std::cout << "Hello, World!3";
+```
+
+then I will get the following effect:
+
+```
+Hello, World!1Hello, World!2Hello, World!3
+```
+
+:::caution Semicolon at the end of instructions!
+A semicolon (`;`) separates instructions. The compiler doesn't care about instructions being written on separate lines.
+The semicolon is treated as the end of the statement. For this reason, such a code:
+```cpp
+std::cout << "Hello, World!1"; std::cout << "Hello, World!2"; std::cout << "Hello, World!3";
+```
+
+it is **acceptable** but very illegible.
+:::
+
+### Prefix of the standard namespace
+
+`std::` is the prefix of the **standard library** from which `cout` comes.
+
+:::important Omiting the `std::` prefix
+
+<details>
+<summary>Expand the trivia</summary>
+<div>
+
+The prefix `std::` can be omitted if we give the appropriate line of code beforehand:
+
+```cpp
+#include <iostream>
+int main()
+{
+	using namespace std;
+	cout << "Hello, World!";
+}
+```
+However, many experienced programmers recommend writing `std::`.
+
+### For the curious (those more advanced)
+
+The standard library is very extensive, it has a lot of names used.
+Using `using namespace std;` unpacks all these names to the global namespace.
+which may be surprising if we want to use names like `left`,` right`, `precision`, etc.
+
+Using `using namespace std;` elsewhere than locally inside a function code block
+is considered **bad programming practice** and is strongly discouraged.
+</div>
+</details>
+
+:::
+
+## Performing calculations
+
+Programming is used to automate certain activities.
+For example, we can have a computer do a mathematical calculation for us.
+
+Use the following code:
+
+<Columns spacing={40} columns={['7fr', '5fr']}>
+<div>
+
+```cpp title="main.cpp"
+#include <iostream>
+int main()
+{
+	std::cout << "120 * 120 + 540";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+120 * 120 + 540
+```
+
+</div>
+</Columns>
+
+Pay attention to the result of the above program.
+
+:::caution
+Everything in quotation marks is treated as text, not instructions.
+:::
+
+Therefore, instead of displaying the result of the calculation,
+we got what we entered in the quotation marks.
+
+To say that we want to perform some calculation, we need to remove the quotes:
+
+<Columns spacing={40} columns={['7fr', '5fr']}>
+<div>
+
+```cpp title="main.cpp"
+#include <iostream>
+int main()
+{
+	std::cout << 120 * 120 + 540;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+14940
+```
+
+</div>
+</Columns>
+
+After starting the program, we will get the correct result of the calculation in the code.
+
+:::important Mathematical operators
+- `+` adds two numbers together
+- `-` subtracts two numbers from each other
+- `*` multiplies two numbers by itself
+- `/` divides two numbers by itself
+:::
