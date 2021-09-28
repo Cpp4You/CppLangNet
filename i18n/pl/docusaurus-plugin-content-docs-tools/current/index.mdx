@@ -5,20 +5,15 @@ sidebar_position: 1
 # Narzędzia programistyczne
 
 <!-- Components -->
-import ProductCard		from '@site/src/components/mdx/ProductCard';
 import ToolCard			from '@site/src/components/mdx/ToolsSummary';
 import Button			from '@site/src/components/mdx/Button';
 
-<!-- Icons -->
-import VSCodeIcon		from '@site/static/img/icons/products/vscode_1_35.svg';
-import VS2019Icon		from '@site/static/img/icons/products/vs_2019.svg';
-import CLionIcon		from '@site/static/img/icons/products/clion.svg';
-import QtCreatorIcon	from '@site/static/img/icons/products/qtcreator.svg';
-import CodeBlocksIcon	from '@site/static/img/icons/products/codeblocks.png';
-import CppBuilderIcon	from '@site/static/img/icons/products/cppbuilder.png';
-import DevCppIcon		from '@site/static/img/icons/products/devcpp.png';
-
 import Download			from '@site/static/mui-icons/Download.svg';
+
+
+import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+
+<NotFinished/>
 
 
 Aby programować w języku C++ potrzebujesz przynajmniej dwóch narzędzi:
@@ -41,10 +36,15 @@ Połączenie tych dwóch rzeczy w jedno narzędzie jest nazywane **środowiskiem
 Przez pierwsze kilka lekcji skorzystaj ze środowiska online, które zrobi całą konfigurację za Ciebie.
 Dopiero gdy uznasz, że chcesz mieć środowisko na swoim komputerze, przejdź do sekcji [Dostępne środowiska](#dostępne-środowiska)
 
-Na ten moment zdecydowanie najbardziej polecamy stronę: [**Repl.it**](https://repl.it).
+Na ten moment zdecydowanie najbardziej polecamy stronę: [**Replit.com**](https://replit.com).  
 Po zalogowaniu się będziesz mógł korzystać z ich narzędzi **za darmo**.
 Zapoznaj się też z artykułem [Tworzenie projektu C++ w Repl.it](./online/create-project-with-repl-it).
 
+<ToolCard toolId="replit">
+	Środowisko online, dzięki któremu od razu możesz przejść do nauki, nie martwiąc się o konfigurację.
+	Posiada <b>interaktywną konsolę</b>, która daje podobne doświadczenie do korzystania
+	ze środowiska zainstalowanego lokalnie na komputerze.
+</ToolCard>
 
 Inne, godne polecenia:
 
@@ -160,8 +160,3 @@ export const MoreInfoNotice = ({more}) => (
 	Łatwe do skonfigurowania środowisko, które od ponad 10 lat nie jest aktywnie rozwijane.
 	Brakuje najbardziej podstawowych narzędzi.
 </ToolCard>
-
-
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
-
-<NotFinished/>

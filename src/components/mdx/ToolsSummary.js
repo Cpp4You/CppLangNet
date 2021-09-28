@@ -10,6 +10,8 @@ import CodeBlocksIcon	from '@site/static/img/icons/products/codeblocks.png';
 import CppBuilderIcon	from '@site/static/img/icons/products/cppbuilder.png';
 import DevCppIcon		from '@site/static/img/icons/products/devcpp.png';
 
+import ReplitIcon		from '@site/static/img/icons/products/replit.svg';
+
 import Details			from '@theme/Details'
 
 import Translate		from '@docusaurus/Translate';
@@ -63,6 +65,13 @@ export const ToolSummaryInfo = {
 		icon:		DevCppIcon,
 		rating:		3,
 		site:		"https://www.bloodshed.net/",
+	},
+	"replit": {
+		author:		"The Replit Team",
+		title:		"Repl.it",
+		icon:		ReplitIcon,
+		rating:		8,
+		site:		"https://www.replit.com/",
 	},
 };
 
