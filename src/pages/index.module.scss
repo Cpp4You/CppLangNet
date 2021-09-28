@@ -3,20 +3,29 @@
  * and scoped locally.
  */
 
+$bgcDarkMode: rgb(15, 15, 15);
+$bgcLightMode: rgb(250, 250, 250);
+
 .heroBanner {
 	padding: 4rem 0;
 	text-align: center;
 	position: relative;
 	overflow: hidden;
 
-	background-color: rgb(201, 240, 250);
+	// background-color: $bgcLightMode;
+	background-image: url("../../static/img/coding-bg-white.jpg");
+	background-size: 0 0;
 
 	.textPart {
-		
+		background-color: rgba(white, 0.8);
+		border: 1px solid lightgray;
+		box-sizing: border-box;
+		box-shadow: 2px 2px 2px 2px gray;
+		padding: 40px 10px;
 	}
 
 	.title {
-		margin-top: 100px;
+		margin-top: 60px;
 		font-size: 300%;
 	}
 	.subtitle {
@@ -28,7 +37,7 @@
 		display: grid;
 		grid-template-columns: 5fr 7fr;
 		width: 70%;
-		grid-gap: 1em;
+		grid-gap: 4em;
 		// align-items: center;
 		&>* {
 			box-sizing: border-box;
@@ -41,10 +50,37 @@
 			width: 100%;	
 			height: 100%;	
 		}
-		box-shadow: 5px 5px 15px 5px #000000;
+		background-color: rgba(white, 0.8);
+		box-shadow: 2px 2px 2px 2px gray;
 	}
 }
 
+.heroBanner::before {
+	content: " "; /* Important */
+	z-index: -1; /* Important */
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	background-image: inherit;
+	background-repeat: repeat-x;
+	background-size: contain;
+	background-position: center;
+	filter: blur(3px);
+}
+
+
+@media screen and (max-width: 1400px) {
+
+.heroBanner {
+	.container {
+		grid-gap: 1em;
+	}
+}
+
+}
 
 @media screen and (max-width: 966px) {
 
@@ -53,7 +89,10 @@
 
 	.container {
 		grid-template-columns: 1fr;
+		grid-gap: 1em;
 	}
+
+	background-image: none;
 }
 
 }
@@ -66,6 +105,7 @@
 	.interactiveEditor {
 		display: none;
 	}
+
 }
 
 }
@@ -83,7 +123,18 @@ html[data-theme="dark"]
 {
 
 .heroBanner {
-	background-color: rgb(4, 8, 20);
+	background-image: url("../../static/img/coding-bg-dark.jpg");
+	background-color: $bgcDarkMode;
+
+	.textPart {
+		background-color: rgba(black, 0.8);
+		box-shadow: 2px 2px 2px 2px black;
+	}
+
+	.interactiveEditor {
+		background-color: rgba(black, 0.8);
+		box-shadow: 2px 2px 2px 2px black;
+	}
 }
 
 }

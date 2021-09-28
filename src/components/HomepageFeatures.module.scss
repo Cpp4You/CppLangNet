@@ -3,6 +3,7 @@
 	align-items: center;
 	width: 100%;
 	margin: 0 auto;
+	border-top: 1px solid gray;
 }
 
 .featuresContainer {
@@ -28,11 +29,11 @@ $iconSize: 80px;
 
 	cursor: pointer;
 	padding: 20px 0 !important;
+	min-width: calc(min(250px,25vw));
 	
 	.pageCardSvg {
 		text-align: center;
 		margin-bottom: 10px;
-		padding: 0 120px;
 	}
 	
 	.pageCardText {
@@ -48,6 +49,17 @@ $iconSize: 80px;
 			color: var(--ifm-color-primary-darkest);
 		}
 	}
+}
+
+@media (max-width: 900px) {
+.featuresContainer {
+	flex-wrap: wrap;
+}
+.pageCard {
+	min-width: 0;
+	width: 100%;
+}
+
 }
 
 ////////////////////////
