@@ -139,16 +139,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						items: [
 							{
 								label: 'Stack Overflow',
-								href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+								href: 'https://stackoverflow.com/questions/tagged/cpp',
 							},
 							{
 								label: 'Discord',
-								href: 'https://discordapp.com/invite/docusaurus',
-							},
-							{
-								label: 'Twitter',
-								href: 'https://twitter.com/docusaurus',
-							},
+								href: 'https://discord.gg/3MeXQ8TvBw',
+							}
 						],
 					},
 					{
