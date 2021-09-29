@@ -29,7 +29,7 @@ First of all thank you for your will to help with the Cpp-Lang.net project!
 If you have any questions regarding contributing, please visit our [Discord server](https://discord.gg/3MeXQ8TvBw)!
 
 <a href="https://discord.gg/3MeXQ8TvBw">
-	<img src="resources/DiscordHelpDev.png" alt="Join our Discord Server">
+	<img width="300px" src="resources/DiscordHelpDev.png" alt="Join our Discord Server">
 </a>
 
 ## Creating your local copy of the site
