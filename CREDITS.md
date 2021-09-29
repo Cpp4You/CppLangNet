@@ -1,4 +1,4 @@
-# Complete credit information | cpp-lang.net
+# 💗 Complete credit information | cpp-lang.net
 
 You can add your name to the end of the list here.
 
