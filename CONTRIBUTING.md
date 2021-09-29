@@ -16,9 +16,10 @@
 			- [Write simple](#write-simple)
 			- [Use images, GIFs, video links](#use-images-gifs-video-links)
 			- [Add tags](#add-tags)
+			- [Use admonitions (notes, tips, cautions, dangers)](#use-admonitions-notes-tips-cautions-dangers)
 	- [Translating existing documentation](#translating-existing-documentation)
 		- [Translating to an existing locale](#translating-to-an-existing-locale)
-			- [Translating pages](#translating-pages)
+			- [Translating page texts](#translating-page-texts)
 			- [Translating documents](#translating-documents)
 		- [Adding new language support](#adding-new-language-support)
 
@@ -38,6 +39,23 @@ To efficiently edit the website, you'll have to create a personal fork,
 of the repository.
 
 Make sure that you have [Node.js](https://nodejs.org) installed.
+
+Once you've cloned the repo, run following commands:
+
+```bash
+npm install
+```
+
+To start a site in the default locale (English):
+```bash
+npm start
+```
+
+To start a site in an other locale, for example Polish:
+
+```bash
+npm start -- --locale pl
+```
 
 ## Folder structure
 
@@ -153,6 +171,32 @@ Prefer showing, not only talking about it.
 Tags help people find the topic they're interested in.
 Please add tags to the document metadata.
 
+#### Use admonitions (notes, tips, cautions, dangers)
+
+To create a fancy looking admonition, use the following syntax:
+
+```mdx
+:::tip Title
+This is my tip
+:::
+
+:::note Title
+This is my note
+:::
+
+:::important Title
+This is a important note
+:::
+
+:::caution Title
+This is a caution note
+:::
+
+:::danger Title
+This is a danger note
+:::
+```
+
 <hr/>
 
 **TODO: expand it.**
@@ -163,7 +207,17 @@ Please add tags to the document metadata.
 
 ### Translating to an existing locale
 
-#### Translating pages
+#### Translating page texts
+
+You can translate individual page texts by editing `code.json` files
+in the `i18n/<locale>` directory.
+To generate missing texts, please use (`pl` locale as an example):
+
+```bash
+npm run write-translations -- --locale pl
+```
+
+See [official docusaurus tutorial](https://docusaurus.io/docs/i18n/tutorial).
 
 #### Translating documents
 
