@@ -95,12 +95,12 @@ template Markdown files (that can be later reused, imported across other MDX doc
 
 Each language has the following folders inside (each prefixed with `docusaurus-plugin-content-` ):
 
-- blog - translated blog posts
-- docs - translated C++ docs that reflect the `/docs/cpp-docs/` folder.
-- docs-features - translated C++ feature docs that reflect the `/docs/features/` folder
-- docs-learn - translated C++ course docs that reflect the `/docs/learn/` folder
-- docs-tools - translated C++ tool docs that reflect the `/docs/tools/` folder
-- presets - translated versions of preset Markdown files, that can be later reused in other Markdown documents.
+- `blog` - translated blog posts
+- `docs` - translated C++ docs that reflect the `/docs/cpp-docs/` folder.
+- `docs-features` - translated C++ feature docs that reflect the `/docs/features/` folder
+- `docs-learn` - translated C++ course docs that reflect the `/docs/learn/` folder
+- `docs-tools` - translated C++ tool docs that reflect the `/docs/tools/` folder
+- `presets` - translated versions of preset Markdown files, that can be later reused in other Markdown documents.
 
 ## Writing a new article or editing C++ course
 
