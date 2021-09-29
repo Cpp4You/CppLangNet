@@ -1,33 +1,82 @@
-# Website
+# The C++ programming language website
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+<p align=center>
+	<a href="https://cpp-lang.net">
+		<img src="resources/KeyArt.png" />
+	</a>
+</p>
 
-### Installation
+This is the official repo of [cpp-lang.net](https://cpp-lang.net) website.
 
-```
-$ yarn
-```
+It was originally created and is maintained by Paweł Syska (@PoetaKodu).
 
-### Local Development
+## ⚽ Goals
 
-```
-$ yarn start
-```
+The main goal is to finally give C++ a proper, well designed
+and open-source website with a modern learning course,
+a good and readable documentation that uses modern technology.
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+### 🚀 [The learning course](https://cpp-lang.net/learn)
 
-### Build
+We focus on simplicity. The teaching that people can't understand
+is a bad teaching.
 
-```
-$ yarn build
-```
+### 📚 [The documentation](https://cpp-lang.net/docs)
 
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
+Documentation that contains **facts** presented in a way
+that people can understand it. We want to pack the documentation
+full of examples.
 
-### Deployment
+### 🛠 [The tool knowledge base](https://cpp-lang.net/tools)
 
-```
-$ GIT_USER=<Your GitHub username> USE_SSH=true yarn deploy
-```
+Picking the best programming tool should not involve days
+of searching. We provide a summary of available C++ programming tools.
 
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+### 🧱 [The features knowledge base](https://cpp-lang.net/features)
+
+We want programmers to know what C++ is capable of.
+You'll find here the traits that define the language.
+The most modern ways to code.
+
+## 💻 Our tech
+
+The website is powered by [Docusaurus](https://docusaurus.io).
+
+We use React to design compontents and pages, and Markdown React (`.mdx`)
+to write course lessons, articles, docs etc.
+
+<p align=center>
+	<a href="https://cpp-lang.net">
+		<img src="resources/Website.jpg" />
+	</a>
+</p>
+
+Docusaurus is a fantastic tool that we, as C++ programmers should leverage.
+
+## 📖 Our methodology
+
+We teach things using examples from the real world.
+We provide graphs, images, presentations and videos that
+help understand the learning material. 
+## 😎 Get involved!
+
+Do you want to help with building the best C++ website?
+
+Everyone can help!
+We search for people that can:
+- improve the courses
+- translate courses, docs, articles, etc.
+- ... or help promote the website. Tell your friends about it 😄
+
+Please visit the [Contributing guide](CONTRIBUTING.md).
+
+<a href="https://discord.gg/3MeXQ8TvBw">
+	<img src="resources/DiscordHelpDev.png" alt="Join our Discord Server" width="300px">
+</a>
+
+## 💗 Credits
+
+For complete credit information, [see this document](CREDITS.md).
+
+
+
