@@ -48,7 +48,7 @@ export default function Home() {
 
 	return (
 		<Layout
-			description="Description will go into a meta tag in <head />">
+			description="An ultimate C++ language wiki">
 				
 			<link rel="preload" as="image" href="img/coding-bg-dark.jpg"/>
 			<link rel="preload" as="image" href="img/coding-bg-white.jpg"/>
