@@ -144,6 +144,12 @@ For complete metadata list, please visit [this page](https://docusaurus.io/docs/
 
 ### Improving existing documents
 
+<hr/>
+
+**Note**: this section is not finished yet. Please come back later.
+
+<hr/>
+
 ### Correcting grammar and other simple problems
 
 This can be done by simple file editing on GitHub directly.
