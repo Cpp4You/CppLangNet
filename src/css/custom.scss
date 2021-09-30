@@ -7,15 +7,16 @@
 
  /* You can override the default Infima variables here. */
 :root {
-	--ifm-color-primary: #12dbff;
-	--ifm-color-primary-dark: #00d0f6;
-	--ifm-color-primary-darker: #00c5e8;
-	--ifm-color-primary-darkest: #00a2bf;
-	--ifm-color-primary-light: #2ddfff;
-	--ifm-color-primary-lighter: #3be1ff;
-	--ifm-color-primary-lightest: #64e7ff;
+	--ifm-color-primary: #003082;
+	--ifm-color-primary-dark: #002b75;
+	--ifm-color-primary-darker: #00296e;
+	--ifm-color-primary-darkest: #00225b;
+	--ifm-color-primary-light: #00358f;
+	--ifm-color-primary-lighter: #003796;
+	--ifm-color-primary-lightest: #003ea9;
 	
 	--ifm-code-font-size: 95%;
+	font-variant-ligatures: none;
 }
 
 .docusaurus-highlight-code-line {
@@ -25,15 +26,25 @@
 	padding: 0 var(--ifm-pre-padding);
 }
 
-html[data-theme='dark'] .docusaurus-highlight-code-line {
-	background-color: rgba(0, 0, 0, 0.3);
+html[data-theme='dark'] {
+	--ifm-color-primary: #12dbff;
+	--ifm-color-primary-dark: #00d0f6;
+	--ifm-color-primary-darker: #00c5e8;
+	--ifm-color-primary-darkest: #00a2bf;
+	--ifm-color-primary-light: #2ddfff;
+	--ifm-color-primary-lighter: #3be1ff;
+	--ifm-color-primary-lightest: #64e7ff;
+
+	.docusaurus-highlight-code-line {
+		background-color: rgba(0, 0, 0, 0.3);
+	}
 }
 
 /*
 * Reset the line-number counter for each .prism-code scope
 */
 .prism-code {
-counter-reset: line-number;
+	counter-reset: line-number;
 }
 
 /*
