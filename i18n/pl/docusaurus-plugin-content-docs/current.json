@@ -6,5 +6,73 @@
   "sidebar.defaultSidebar.category.Standard library": {
     "message": "Biblioteka standardowa",
     "description": "The label for category Standard library in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Math": {
+    "message": "Matematyka",
+    "description": "The label for category Math in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Input and output": {
+    "message": "Wejście i wyjście (IO)",
+    "description": "The label for category Input and output in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Containers": {
+    "message": "Kontenery",
+    "description": "The label for category Containers in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Arrays": {
+    "message": "Tablice",
+    "description": "The label for category Arrays in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Strings": {
+    "message": "Napisy",
+    "description": "The label for category Strings in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Queues": {
+    "message": "Kolejki",
+    "description": "The label for category Queues in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Maps and dictionaries": {
+    "message": "Mapy i słowniki",
+    "description": "The label for category Maps and dictionaries in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Sets": {
+    "message": "Zbiory",
+    "description": "The label for category Sets in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Other": {
+    "message": "Inne",
+    "description": "The label for category Other in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Algorithms": {
+    "message": "Algorytmy",
+    "description": "The label for category Algorithms in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Iterators": {
+    "message": "Iteratory",
+    "description": "The label for category Iterators in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Ranges": {
+    "message": "Zasięgi (Ranges)",
+    "description": "The label for category Ranges in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Concepts": {
+    "message": "Koncepty",
+    "description": "The label for category Concepts in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Language support": {
+    "message": "Wsparcie języka",
+    "description": "The label for category Language support in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Memory management": {
+    "message": "Zarządzanie pamięcią",
+    "description": "The label for category Memory management in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Date and time": {
+    "message": "Data i czas",
+    "description": "The label for category Date and time in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Utility": {
+    "message": "Pomocnicze",
+    "description": "The label for category Utility in sidebar defaultSidebar"
   }
 }
