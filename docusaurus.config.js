@@ -13,6 +13,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 	favicon:				'img/favicon.png',
 	organizationName:		'PoetaKodu', // Usually your GitHub org/user name.
 	projectName:			'CppLangNet', // Usually your repo name.
+	trailingSlash: 			true,
 
 	i18n: {
 		defaultLocale: 'en',
@@ -26,34 +27,40 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 			'@docusaurus/plugin-content-docs',
 			{
 				id: 'learn',
-				path: 'docs/learn',
+				path: 'content/learn',
 				routeBasePath: 'learn',
 				sidebarPath: require.resolve('./sidebars.js'),
 				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
+				showLastUpdateTime: true,
+				showLastUpdateAuthor: true,
 			}, 
 		],
 		[
 			'@docusaurus/plugin-content-docs',
 			{
 				id: 'tools',
-				path: 'docs/tools',
+				path: 'content/tools',
 				routeBasePath: 'tools',
 				sidebarPath: require.resolve('./sidebars.js'),
 				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
-			}, 
+				showLastUpdateTime: true,
+				showLastUpdateAuthor: true,
+			},
 		],
 		[
 			'@docusaurus/plugin-content-docs',
 			{
 				id: 'features',
-				path: 'docs/features',
+				path: 'content/features',
 				routeBasePath: 'features',
 				sidebarPath: require.resolve('./sidebars.js'),
 				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
-			}, 
+				showLastUpdateTime: true,
+				showLastUpdateAuthor: true,
+			},
 		],
 	],
 
@@ -63,11 +70,13 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
 				docs: {
-					path: 'docs/cpp-docs',
+					path: 'content/docs',
 					sidebarPath: require.resolve('./sidebars.js'),
 					// Please change this to your repo.
 					editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
 					editLocalizedFiles: true,
+					showLastUpdateTime: true,
+					showLastUpdateAuthor: true,
 				},
 				blog: {
 					showReadingTime: true,
@@ -94,10 +103,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					src: 'img/cpp.svg',
 				},
 				items: [
-					{ to: '/learn/index', label: 'Learn', position: 'left' },
-					{ to: '/docs/index', label: 'Docs', position: 'left' },
-					{ to: '/features/index', label: 'Features', position: 'left' },
-					{ to: '/tools/index', label: 'Tools', position: 'left' },
+					{ to: '/learn', label: 'Learn', position: 'left' },
+					{ to: '/docs', label: 'Docs', position: 'left' },
+					{ to: '/features', label: 'Features', position: 'left' },
+					{ to: '/tools', label: 'Tools', position: 'left' },
 					{ to: '/blog', label: 'Blog', position: 'left'},
 					{
 						href: 'https://github.com/PoetaKodu/CppLangNet',
@@ -118,19 +127,19 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 						items: [
 							{
 								label: 'Learn C++',
-								to: '/learn/index',
+								to: '/learn',
 							},
 							{
 								label: 'Documentation',
-								to: '/docs/index',
+								to: '/docs',
 							},
 							{
 								label: 'Features',
-								to: '/features/index',
+								to: '/features',
 							},
 							{
 								label: 'Tools',
-								to: '/tools/index',
+								to: '/tools',
 							},
 						],
 					},
