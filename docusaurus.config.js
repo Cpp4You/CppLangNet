@@ -62,6 +62,19 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				showLastUpdateAuthor: true,
 			},
 		],
+		[
+			'@docusaurus/plugin-content-docs',
+			{
+				id: 'contributing',
+				path: 'content/contributing',
+				routeBasePath: 'contributing',
+				sidebarPath: require.resolve('./sidebars.js'),
+				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+				editLocalizedFiles: true,
+				showLastUpdateTime: true,
+				showLastUpdateAuthor: true,
+			},
+		],
 	],
 
 	presets: [
@@ -104,11 +117,12 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					src: 'img/cpp.svg',
 				},
 				items: [
-					{ to: '/learn', label: 'Learn', position: 'left' },
-					{ to: '/docs', label: 'Docs', position: 'left' },
-					{ to: '/features', label: 'Features', position: 'left' },
-					{ to: '/tools', label: 'Tools', position: 'left' },
-					{ to: '/blog', label: 'Blog', position: 'left'},
+					{ to: '/learn',			label: 'Learn',			position: 'left' },
+					{ to: '/docs',			label: 'Docs',			position: 'left' },
+					{ to: '/features',		label: 'Features',		position: 'left' },
+					{ to: '/tools',			label: 'Tools',			position: 'left' },
+					{ to: '/blog',			label: 'Blog',			position: 'left'},
+					{ to: '/contributing',	label: 'Contributing',	position: 'right'},
 					{
 						href: 'https://github.com/PoetaKodu/CppLangNet',
 						label: 'GitHub',
@@ -141,6 +155,10 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 							{
 								label: 'Tools',
 								to: '/tools',
+							},
+							{
+								label: 'Contributing',
+								to: '/contributing',
 							},
 						],
 					},
