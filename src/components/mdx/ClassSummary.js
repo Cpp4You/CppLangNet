@@ -106,7 +106,7 @@ ClassSummary.Symbol = function(props) {
 	let nameElem = props.name;
 
 	if (props.link || props.autoLink)
-		nameElem = <a href={props.link || `./${ctx.folder}/${(props.linkName || props.name)}`}>{nameElem}</a>;
+		nameElem = <a href={props.link || `${(props.linkName || props.name)}`}>{nameElem}</a>;
 
 	const mapAccess = props => {
 		const a = readAccess(props);

@@ -80,6 +80,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				},
 				blog: {
 					showReadingTime: true,
+					path: "content/blog",
 					// Please change this to your repo.
 					editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/blog/',
 				},
