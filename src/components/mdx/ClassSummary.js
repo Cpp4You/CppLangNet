@@ -136,14 +136,4 @@ ClassSummary.Symbol = function(props) {
 	);
 };
 
-ClassSummary.TypeName = function(props) {
-	return (<ClassSummary.Symbol {...props}>{props.children}</ClassSummary.Symbol>);
-};
-ClassSummary.DataMember = function(props) {
-	return (<ClassSummary.Symbol {...props}>{props.children}</ClassSummary.Symbol>);
-};
-ClassSummary.Method = function(props) {
-	return (<ClassSummary.Symbol {...props}>{props.children}</ClassSummary.Symbol>);
-};
-
 ClassSummary.isMDXComponent = true;

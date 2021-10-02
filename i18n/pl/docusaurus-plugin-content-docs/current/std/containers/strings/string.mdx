@@ -47,16 +47,16 @@ many different character types.
 	<summary>Available <code>std::basic_string</code> aliases</summary>
 	<div>
 		<Class.SymbolTable noTraits>
-			<Class.TypeName name="std::string"			desc={<code>std::basic_string&lt;char&gt;</code>}/>
-			<Class.TypeName name="std::wstring" 		desc={<code>std::basic_string&lt;wchar_t&gt;</code>}/>
-			<Class.TypeName name="std::u8string"		desc={<code>std::basic_string&lt;char8_t&gt;</code>}/>
-			<Class.TypeName name="std::u16string"		desc={<code>std::basic_string&lt;char16_t&gt;</code>}/>
-			<Class.TypeName name="std::u32string"		desc={<code>std::basic_string&lt;char32_t&gt;</code>}/>
-			<Class.TypeName name="std::pmr::string"		desc={<code>std::pmr::basic_string&lt;char&gt;</code>}/>
-			<Class.TypeName name="std::pmr::wstring" 	desc={<code>std::pmr::basic_string&lt;wchar_t&gt;</code>}/>
-			<Class.TypeName name="std::pmr::u8string"	desc={<code>std::pmr::basic_string&lt;char8_t&gt;</code>}/>
-			<Class.TypeName name="std::pmr::u16string"	desc={<code>std::pmr::basic_string&lt;char16_t&gt;</code>}/>
-			<Class.TypeName name="std::pmr::u32string"	desc={<code>std::pmr::basic_string&lt;char32_t&gt;</code>}/>
+			<Class.Symbol name="std::string"			desc={<code>std::basic_string&lt;char&gt;</code>}/>
+			<Class.Symbol name="std::wstring" 			desc={<code>std::basic_string&lt;wchar_t&gt;</code>}/>
+			<Class.Symbol name="std::u8string"			desc={<code>std::basic_string&lt;char8_t&gt;</code>}/>
+			<Class.Symbol name="std::u16string"			desc={<code>std::basic_string&lt;char16_t&gt;</code>}/>
+			<Class.Symbol name="std::u32string"			desc={<code>std::basic_string&lt;char32_t&gt;</code>}/>
+			<Class.Symbol name="std::pmr::string"		desc={<code>std::pmr::basic_string&lt;char&gt;</code>}/>
+			<Class.Symbol name="std::pmr::wstring" 		desc={<code>std::pmr::basic_string&lt;wchar_t&gt;</code>}/>
+			<Class.Symbol name="std::pmr::u8string"		desc={<code>std::pmr::basic_string&lt;char8_t&gt;</code>}/>
+			<Class.Symbol name="std::pmr::u16string"	desc={<code>std::pmr::basic_string&lt;char16_t&gt;</code>}/>
+			<Class.Symbol name="std::pmr::u32string"	desc={<code>std::pmr::basic_string&lt;char32_t&gt;</code>}/>
 		</Class.SymbolTable>
 	</div>
 </details>
@@ -69,45 +69,45 @@ many different character types.
 ## Template parameters
 
 <Class.SymbolTable noTraits>
-	<Class.TypeName name="CharT"		desc="character type"/>
-	<Class.TypeName name="Traits" 		desc="traits class specifying the operations on the character type"/>
-	<Class.TypeName name="Allocator"	desc={<><a href="/docs/named_req/allocator">Allocator</a> type used to allocate internal storage</>}/>
+	<Class.Symbol name="CharT"		desc="character type"/>
+	<Class.Symbol name="Traits" 		desc="traits class specifying the operations on the character type"/>
+	<Class.Symbol name="Allocator"	desc={<><a href="/docs/named_req/allocator">Allocator</a> type used to allocate internal storage</>}/>
 </Class.SymbolTable>
 
 ## Type names
 
 <Class.SymbolTable>
-	<Class.TypeName pub name="traits_type"				desc={<code>Traits</code>}/>
-	<Class.TypeName pub name="value_type" 				desc={<code>CharT</code>}/>
-	<Class.TypeName pub name="allocator_type"			desc={<code>Allocator</code>}/>
-	<Class.TypeName pub name="size_type"				desc={<code>std::allocator_traits&lt;Allocator&gt;::size_type</code>}/>
-	<Class.TypeName pub name="difference_type"			desc={<code>std::allocator_traits&lt;Allocator&gt;::difference_type</code>}/>
-	<Class.TypeName pub name="reference"				desc={<code>value_type</code>}/>
-	<Class.TypeName pub name="const_reference"			desc={<code>value_type const&amp;</code>}/>
-	<Class.TypeName pub name="pointer"					desc={<code>std::allocator_traits&lt;Allocator&gt;::pointer</code>}/>
-	<Class.TypeName pub name="const_pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code>}/>
-	<Class.TypeName pub name="iterator"					desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type</code></>}/>
-	<Class.TypeName pub name="const_iterator"			desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type const</code></>}/>
-	<Class.TypeName pub name="reverse_iterator"			desc={<><a href="#"><code>std::reverse_iterator&lt;iterator&gt;</code></a></>}/>
-	<Class.TypeName pub name="const_reverse_iterator"	desc={<><a href="#"><code>std::reverse_iterator&lt;const_iterator&gt;</code></a></>}/>
+	<Class.Symbol pub name="traits_type"			desc={<code>Traits</code>}/>
+	<Class.Symbol pub name="value_type" 			desc={<code>CharT</code>}/>
+	<Class.Symbol pub name="allocator_type"			desc={<code>Allocator</code>}/>
+	<Class.Symbol pub name="size_type"				desc={<code>std::allocator_traits&lt;Allocator&gt;::size_type</code>}/>
+	<Class.Symbol pub name="difference_type"		desc={<code>std::allocator_traits&lt;Allocator&gt;::difference_type</code>}/>
+	<Class.Symbol pub name="reference"				desc={<code>value_type</code>}/>
+	<Class.Symbol pub name="const_reference"		desc={<code>value_type const&amp;</code>}/>
+	<Class.Symbol pub name="pointer"				desc={<code>std::allocator_traits&lt;Allocator&gt;::pointer</code>}/>
+	<Class.Symbol pub name="const_pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code>}/>
+	<Class.Symbol pub name="iterator"				desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type</code></>}/>
+	<Class.Symbol pub name="const_iterator"			desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type const</code></>}/>
+	<Class.Symbol pub name="reverse_iterator"		desc={<><a href="#"><code>std::reverse_iterator&lt;iterator&gt;</code></a></>}/>
+	<Class.Symbol pub name="const_reverse_iterator"	desc={<><a href="#"><code>std::reverse_iterator&lt;const_iterator&gt;</code></a></>}/>
 </Class.SymbolTable>
 
 ## Member functions
 
 <Class.SymbolTable>	
-	<Class.Method pub autoLink linkName="constructor" name="(constructor)">
+	<Class.Symbol pub autoLink linkName="constructor" name="(constructor)">
 		Constructs a <code>basic_string</code>
-	</Class.Method>
-	<Class.Method pub autoLink linkName="destructor" name="(destructor)">
+	</Class.Symbol>
+	<Class.Symbol pub autoLink linkName="destructor" name="(destructor)">
 		Destroys the string, deallocating internal storage if used
-	</Class.Method>
-	<Class.Method pub autoLink linkName="operator_assign" name="operator="
+	</Class.Symbol>
+	<Class.Symbol pub autoLink linkName="operator_assign" name="operator="
 			desc="Assigns values to the string"
 		/>
-	<Class.Method pub autoLink name="assign"
+	<Class.Symbol pub autoLink name="assign"
 			desc="Assigns characters to the string"
 		/>
-	<Class.Method pub autoLink name="get_allocator"
+	<Class.Symbol pub autoLink name="get_allocator"
 			desc="Returns the associated allocator"
 		/>
 </Class.SymbolTable>
@@ -115,25 +115,25 @@ many different character types.
 ### Element access
 
 <Class.SymbolTable>	
-	<Class.Method pub autoLink name="at"
+	<Class.Symbol pub autoLink name="at"
 			desc={<>Accesses the specified character <b>with bounds checking</b></>}
 		/>
-	<Class.Method pub autoLink linkName="operator_index" name="operator[]"
+	<Class.Symbol pub autoLink linkName="operator_index" name="operator[]"
 			desc={<>Accesses the specified character</>}
 		/>
-	<Class.Method pub autoLink name="front"
+	<Class.Symbol pub autoLink name="front"
 			desc="Returns the first character"
 		/>
-	<Class.Method pub autoLink name="back"
+	<Class.Symbol pub autoLink name="back"
 			desc="Returns the last character"
 		/>
-	<Class.Method pub autoLink name="data"
+	<Class.Symbol pub autoLink name="data"
 			desc="Returns a pointer to the first character of a string"
 		/>
-	<Class.Method pub autoLink name="c_str"
+	<Class.Symbol pub autoLink name="c_str"
 			desc="Returns a non-modifiable standard C character array version of the string"
 		/>
-	<Class.Method pub autoLink linkName="operator_basic_string_view" name="operator basic_string_view"
+	<Class.Symbol pub autoLink linkName="operator_basic_string_view" name="operator basic_string_view"
 			desc={<>returns a non-modifiable <code>string_view</code> into the entire string</>}
 		/>
 </Class.SymbolTable>
@@ -141,16 +141,16 @@ many different character types.
 ### Iterators
 
 <Class.SymbolTable>	
-	<Class.Method pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}
+	<Class.Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}
 			desc={<>Returns an <code>iterator/const_iterator</code> to the beginning</>}
 		/>
-	<Class.Method pub autoLink linkName="end" name={<>end<br/>cend</>}
+	<Class.Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}
 			desc={<>Returns an <code>iterator/const_iterator</code> to the end</>}
 		/>
-	<Class.Method pub autoLink linkName="rbegin" name={<>rbegin<br/>crbegin</>}
+	<Class.Symbol pub autoLink linkName="rbegin" name={<>rbegin<br/>crbegin</>}
 			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the beginning</>}
 		/>
-	<Class.Method pub autoLink linkName="rend" name={<>rend<br/>crend</>}
+	<Class.Symbol pub autoLink linkName="rend" name={<>rend<br/>crend</>}
 			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the end</>}
 		/>
 </Class.SymbolTable>
@@ -158,22 +158,22 @@ many different character types.
 ### Capacity
 
 <Class.SymbolTable>	
-	<Class.Method pub autoLink name="empty">
+	<Class.Symbol pub autoLink name="empty">
 		Returns <code>true</code> if the string is empty, otherwise <code>false</code>.
-	</Class.Method>
-	<Class.Method pub autoLink linkName="size" name={<>size<br/>length</>}
+	</Class.Symbol>
+	<Class.Symbol pub autoLink linkName="size" name={<>size<br/>length</>}
 			desc="Returns the number of characters"
 		/>
-	<Class.Method pub autoLink name="max_size"
+	<Class.Symbol pub autoLink name="max_size"
 			desc="Returns the maximum number of characters"
 		/>
-	<Class.Method pub autoLink name="reserve"
+	<Class.Symbol pub autoLink name="reserve"
 			desc="Reserves storage"
 		/>
-	<Class.Method pub autoLink name="capacity"
+	<Class.Symbol pub autoLink name="capacity"
 			desc="Returns the number of characters that can be held in currently allocated storage"
 		/>
-	<Class.Method pub autoLink name="shrink_to_fit"
+	<Class.Symbol pub autoLink name="shrink_to_fit"
 			desc="Reduces memory usage by freeing unused memory"
 		/>
 </Class.SymbolTable>
@@ -181,52 +181,52 @@ many different character types.
 ### Operations
 
 <Class.SymbolTable>
-	<Class.Method pub autoLink name="clear"
+	<Class.Symbol pub autoLink name="clear"
 			desc="Clears the contents"
 		/>
-	<Class.Method pub autoLink name="insert"
+	<Class.Symbol pub autoLink name="insert"
 			desc="Inserts characters"
 		/>
-	<Class.Method pub autoLink name="erase"
+	<Class.Symbol pub autoLink name="erase"
 			desc="Removes characters"
 		/>
-	<Class.Method pub autoLink name="push_back"
+	<Class.Symbol pub autoLink name="push_back"
 			desc="Appends a character to the end"
 		/>
-	<Class.Method pub autoLink name="pop_back"
+	<Class.Symbol pub autoLink name="pop_back"
 			desc="Removes the last character"
 		/>
-	<Class.Method pub autoLink name="append"
+	<Class.Symbol pub autoLink name="append"
 			desc="Appends characters to the end"
 		/>
-	<Class.Method pub autoLink linkName="operator_addeq" name="operator+="
+	<Class.Symbol pub autoLink linkName="operator_addeq" name="operator+="
 			desc="Appends characters to the end"
 		/>
-	<Class.Method pub autoLink name="compare"
+	<Class.Symbol pub autoLink name="compare"
 			desc="Compares two strings"
 		/>
-	<Class.Method pub autoLink name="starts_with"
+	<Class.Symbol pub autoLink name="starts_with"
 			desc="Checks if the string starts with the given prefix"
 		/>
-	<Class.Method pub autoLink name="ends_with"
+	<Class.Symbol pub autoLink name="ends_with"
 			desc="Checks if the string ends with the given suffix"
 		/>
-	<Class.Method pub autoLink name="contains"
+	<Class.Symbol pub autoLink name="contains"
 			desc="Checks if the string contains the given substring or character"
 		/>
-	<Class.Method pub autoLink name="replace"
+	<Class.Symbol pub autoLink name="replace"
 			desc="Replaces specified portion of a string"
 		/>
-	<Class.Method pub autoLink name="substr"
+	<Class.Symbol pub autoLink name="substr"
 			desc="Returns a substring"
 		/>
-	<Class.Method pub autoLink name="copy"
+	<Class.Symbol pub autoLink name="copy"
 			desc="Copies characters"
 		/>
-	<Class.Method pub autoLink name="resize"
+	<Class.Symbol pub autoLink name="resize"
 			desc="Changes the number of characters stored"
 		/>
-	<Class.Method pub autoLink name="swap"
+	<Class.Symbol pub autoLink name="swap"
 			desc="Swaps the contents"
 		/>
 </Class.SymbolTable>
@@ -234,22 +234,22 @@ many different character types.
 ### Search
 
 <Class.SymbolTable>
-	<Class.Method pub autoLink name="find"
+	<Class.Symbol pub autoLink name="find"
 			desc="Find characters in the string"
 		/>
-	<Class.Method pub autoLink name="rfind"
+	<Class.Symbol pub autoLink name="rfind"
 			desc="Find the last occurrence of a substring"
 		/>
-	<Class.Method pub autoLink name="find_first_of"
+	<Class.Symbol pub autoLink name="find_first_of"
 			desc="Find first occurrence of characters"
 		/>
-	<Class.Method pub autoLink name="find_first_not_of"
+	<Class.Symbol pub autoLink name="find_first_not_of"
 			desc="Find first absence of characters"
 		/>
-	<Class.Method pub autoLink name="find_last_of"
+	<Class.Symbol pub autoLink name="find_last_of"
 			desc="Find last occurrence of characters"
 		/>
-	<Class.Method pub autoLink name="find_last_not_of"
+	<Class.Symbol pub autoLink name="find_last_not_of"
 			desc="Find last absence of characters"
 		/>
 </Class.SymbolTable>
@@ -265,10 +265,10 @@ many different character types.
 ## Non-member functions
 
 <Class.SymbolTable noTraits>
-	<Class.Method name="operator+"
+	<Class.Symbol name="operator+"
 			desc="Concatenates two strings or a string and a char"
 		/>
-	<Class.Method name={<>
+	<Class.Symbol name={<>
 				operator==<br/>
 				operator!=<br/>
 				operator&lt;<br/>
@@ -279,10 +279,10 @@ many different character types.
 			</>}
 			desc="Lexicographically compares two strings"
 		/>
-	<Class.Method name={<>std::swap <small>(std::basic_string)</small></>}
+	<Class.Symbol name={<>std::swap <small>(std::basic_string)</small></>}
 			desc={<>Specializes the <a href="#">std::swap</a> algorithm</>}
 		/>
-	<Class.Method name={<>
+	<Class.Symbol name={<>
 				erase <small>(std::basic_string)</small><br/>
 				erase_if <small>(std::basic_string)</small>
 			</>}
@@ -293,13 +293,13 @@ many different character types.
 ### Input/output
 
 <Class.SymbolTable noTraits>
-	<Class.Method name={<>
+	<Class.Symbol name={<>
 				operator&lt;&lt;<br/>
 				operator&gt;&gt;
 			</>}
 			desc="Performs stream input and output on strings"
 		/>
-	<Class.Method name="getline"
+	<Class.Symbol name="getline"
 			desc="read data from an I/O stream into a string"
 		/>
 </Class.SymbolTable>
@@ -307,31 +307,31 @@ many different character types.
 ### Numeric conversions
 
 <Class.SymbolTable noTraits>
-	<Class.Method name={<>
+	<Class.Symbol name={<>
 				stoi<br/>
 				stol<br/>
 				stoll
 			</>}
 			desc="Converts a string to a signed integer"
 		/>
-	<Class.Method name={<>
+	<Class.Symbol name={<>
 				stoui<br/>
 				stoul<br/>
 				stoull
 			</>}
 			desc="Converts a string to an unsigned integer"
 		/>
-	<Class.Method name={<>
+	<Class.Symbol name={<>
 				stof<br/>
 				stod<br/>
 				stold
 			</>}
 			desc="Converts a string to a floating point value"
 		/>
-	<Class.Method name="to_string"
+	<Class.Symbol name="to_string"
 			desc={<>Converts an integral or floating point value to <code>std::string</code></>}
 		/>
-	<Class.Method name="to_wstring"
+	<Class.Symbol name="to_wstring"
 			desc={<>Converts an integral or floating point value to <code>std::wstring</code></>}
 		/>
 </Class.SymbolTable>
@@ -340,7 +340,7 @@ many different character types.
 
 <small>Defined in inline namespace <code>std::literals::string_literals</code></small>
 <Class.SymbolTable noTraits>
-	<Class.Method name='operator ""s'
+	<Class.Symbol name='operator ""s'
 			desc={<>Converts a character array literal to <code>std::string</code></>}
 		/>
 </Class.SymbolTable>
@@ -348,7 +348,7 @@ many different character types.
 ## Helper classes
 
 <Class.SymbolTable noTraits>
-	<Class.Method name={<>
+	<Class.Symbol name={<>
 				std::hash<small>&lt;std::string&gt;</small><br/>
 				std::hash<small>&lt;std::u8string&gt;</small><br/>
 				std::hash<small>&lt;std::u16string&gt;</small><br/>
