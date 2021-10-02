@@ -16,7 +16,8 @@
 		"i18n/*/docusaurus-plugin-content-docs-learn": true,
 		"i18n/*/docusaurus-plugin-content-docs-tools": true,
 		"i18n/*/docusaurus-theme-classic": true,
-		"build": true
+		"build": true,
+		".vscode-template": false
 	},
 	"explorerExclude.backup": null
 }
