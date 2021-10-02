@@ -13,19 +13,19 @@
   },
   "link.item.label.Learn C++": {
     "message": "Nauka",
-    "description": "The label of footer link with label=Learn C++ linking to /learn/index"
+    "description": "The label of footer link with label=Learn C++ linking to /learn"
   },
   "link.item.label.Documentation": {
     "message": "Dokumentacja",
-    "description": "The label of footer link with label=Documentation linking to /docs/index"
+    "description": "The label of footer link with label=Documentation linking to /docs"
   },
   "link.item.label.Features": {
     "message": "Możliwości",
-    "description": "The label of footer link with label=Features linking to /features/index"
+    "description": "The label of footer link with label=Features linking to /features"
   },
   "link.item.label.Tools": {
     "message": "Narzędzia",
-    "description": "The label of footer link with label=Tools linking to /tools/index"
+    "description": "The label of footer link with label=Tools linking to /tools"
   },
   "link.item.label.Stack Overflow": {
     "message": "Stack Overflow",
