@@ -8,8 +8,8 @@ export default function Columns(props) {
 
 	style.display = "grid";
 	
-	if (props.spacing)
-		style.gridGap = props.spacing;
+	style.gridGap = props.spacing || 20;
+	
 
 	if (!props.columns)
 		style.gridTemplateColumns = `repeat(${props.columns || 2}, 1fr)`;
