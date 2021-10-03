@@ -16,23 +16,23 @@ The main goal is to finally give C++ a proper, well designed
 and open-source website with a modern learning course,
 a good and readable documentation that uses modern technology.
 
-### 🚀 [The learning course](https://cpp-lang.net/learn/index)
+### 🚀 [The learning course](https://cpp-lang.net/learn/)
 
 We focus on simplicity. The teaching that people can't understand
 is a bad teaching.
 
-### 📚 [The documentation](https://cpp-lang.net/docs/index)
+### 📚 [The documentation](https://cpp-lang.net/docs/)
 
 Documentation that contains **facts** presented in a way
 that people can understand it. We want to pack the documentation
 full of examples.
 
-### 🛠 [The tool knowledge base](https://cpp-lang.net/tools/index)
+### 🛠 [The tool knowledge base](https://cpp-lang.net/tools/)
 
 Picking the best programming tool should not involve days
 of searching. We provide a summary of available C++ programming tools.
 
-### 🧱 [The features knowledge base](https://cpp-lang.net/features/index)
+### 🧱 [The features knowledge base](https://cpp-lang.net/features/)
 
 We want programmers to know what C++ is capable of.
 You'll find here the traits that define the language.
