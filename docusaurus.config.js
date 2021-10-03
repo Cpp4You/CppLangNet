@@ -12,6 +12,31 @@ const remarkConfig = [
 		]
 	];
 
+
+function filterSidebarItems(items)
+{
+	const result = [];
+
+	for(let key in items)
+	{
+		if (items[key].type === 'category')
+		{
+			if (items[key].label === '_codes')
+				continue;
+			else
+			{
+				result[key] = items[key];
+				result[key].items = filterSidebarItems(result[key].items);
+			}
+		}
+		else {
+			result[key] = items[key];
+		}
+	}
+
+	return result;
+}
+
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
@@ -106,6 +131,14 @@ const remarkConfig = [
 					showLastUpdateTime: true,
 					showLastUpdateAuthor: true,
 					remarkPlugins: remarkConfig,
+					exclude: [ "**/codes/**.{mdx}" ],
+					sidebarItemsGenerator: async function ({
+						defaultSidebarItemsGenerator,
+						...args
+						}) {
+						const sidebarItems = await defaultSidebarItemsGenerator(args);
+						return filterSidebarItems(sidebarItems);
+					},
 				},
 				blog: {
 					showReadingTime: true,
