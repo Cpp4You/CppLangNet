@@ -76,7 +76,7 @@ export const ToolSummaryInfo = {
 export default function ToolCard(props)
 {
 	const tool = ToolSummaryInfo[props.toolId];
-
+	console.log(tool.icon);
 	return (
 		<ProductCard title={tool.title} img={tool.icon} author={tool.author} rating={tool.rating}>
 			<ProductCard.Desc>
@@ -96,5 +96,5 @@ export default function ToolCard(props)
 		</ProductCard>
 	);
 };
-
+ToolCard.Details = ProductCard.Details;
 ToolCard.isMDXComponent = true;
