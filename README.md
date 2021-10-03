@@ -71,7 +71,7 @@ We search for people that can:
 Please visit the [Contributing guide](CONTRIBUTING.md).
 
 <a href="https://discord.gg/3MeXQ8TvBw">
-	<img src="resources/DiscordHelpDev.png" alt="Join our Discord Server" width="300px">
+	<img src="static/img/DiscordHelpDev.png" alt="Join our Discord Server" width="300px">
 </a>
 
 ## 💗 Credits
