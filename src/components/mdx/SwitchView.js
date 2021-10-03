@@ -29,6 +29,7 @@ langs.set('since-cpp03', <Translate>since C++03</Translate>);
 langs.set('since-cpp11', <Translate>since C++11</Translate>);
 langs.set('since-cpp14', <Translate>since C++14</Translate>);
 langs.set('since-cpp17', <Translate>since C++17</Translate>);
+langs.set('since-cpp20', <Translate>since C++20</Translate>);
 langs.set('since-cpp23', <Translate>since C++23</Translate>);
 
 export default function SwitchView(props) {
