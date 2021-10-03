@@ -1,0 +1,12 @@
+```cpp
+// 1)
+constexpr basic_string() noexcept(noexcept( Allocator() ))
+    : basic_string( Allocator() )
+{
+}
+
+// 2)
+explicit constexpr basic_string( const Allocator& alloc ) noexcept;
+```
+
+<!-- Optional description here  -->

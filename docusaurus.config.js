@@ -1,6 +1,17 @@
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
+const remarkDisableTokenizers = require('remark-disable-tokenizers');
+
+const remarkConfig = [
+		[
+			remarkDisableTokenizers,
+			{
+				"block": ['indentedCode']
+			}
+		]
+	];
+
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
@@ -34,6 +45,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
+				remarkPlugins: remarkConfig,
 			}, 
 		],
 		[
@@ -47,6 +59,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
+				remarkPlugins: remarkConfig,
 			},
 		],
 		[
@@ -60,6 +73,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
+				remarkPlugins: remarkConfig,
 			},
 		],
 		[
@@ -73,6 +87,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
+				remarkPlugins: remarkConfig,
 			},
 		],
 	],
@@ -90,12 +105,14 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 					editLocalizedFiles: true,
 					showLastUpdateTime: true,
 					showLastUpdateAuthor: true,
+					remarkPlugins: remarkConfig,
 				},
 				blog: {
 					showReadingTime: true,
 					path: "content/blog",
 					// Please change this to your repo.
 					editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/blog/',
+					remarkPlugins: remarkConfig,
 				},
 				theme: {
 					customCss: require.resolve('./src/css/custom.scss'),

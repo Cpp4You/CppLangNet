@@ -1,0 +1,13 @@
+```cpp
+// 1)
+basic_string()
+    : basic_string( Allocator() )
+{
+}
+
+// 2)
+explicit basic_string( const Allocator& alloc );
+```
+
+- constructor 1) is `noexcept` if constructor of the `Allocator` is `noexcept` as well
+- constructor 2) is `noexcept`, because `Allocator` was constructed before

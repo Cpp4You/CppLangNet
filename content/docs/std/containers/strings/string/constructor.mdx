@@ -1,0 +1,38 @@
+---
+sidebar_position: 1
+title: Constructors
+---
+
+# `std::string` constructors
+
+import CodeBlock	from '@theme/CodeBlock';
+import Tabs 		from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
+import SwitchView	from '@site/src/components/mdx/SwitchView';
+
+<!-- Codes -->
+import CtorDefault_UntilCpp17_Simple			from "./codes/ctor-default-until-cpp17-simple.mdx"
+
+import CtorDefault_Cpp17_Detailed 				from "./codes/ctor-default-cpp17-detailed.mdx"
+import CtorDefault_Cpp20_Detailed 				from "./codes/ctor-default-cpp20-detailed.mdx"
+
+import CtorDefault_Cpp17_Simple 				from "./codes/ctor-default-cpp17-simple.mdx"
+import CtorDefault_Cpp20_Simple 				from "./codes/ctor-default-cpp20-simple.mdx"
+
+
+## Default constructor
+
+<SwitchView content={{
+		'cpp20': {
+			simplified:	<CtorDefault_Cpp20_Simple/>,
+			detailed: 	<CtorDefault_Cpp20_Detailed/>,
+		},
+		'cpp17': {
+			simplified:	<CtorDefault_Cpp17_Simple/>,
+			detailed:	<CtorDefault_Cpp17_Detailed/>,
+		},
+		'until-cpp17':	<CtorDefault_UntilCpp17_Simple/>,
+	}}/>
+
+
+

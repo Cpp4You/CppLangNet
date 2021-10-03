@@ -1,8 +1,6 @@
 import React from 'react';
 import styles from '@site/src/css/components/ClassSummary.module.scss'
 
-import SymbolTable from './SymbolTable';
-
 import { ClassContext } from './ClassContext';
 export default function ClassSummary(props)
 {
