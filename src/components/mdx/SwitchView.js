@@ -38,7 +38,7 @@ export default function SwitchView(props) {
 	return (
 		<Tabs>
 			{Object.entries(content).map(([key, value], index) => (
-				Object.getPrototypeOf(value) === Object.prototype
+				(value.value || value.simplified || value.detailed)
 					?
 					(
 						<TabItem value={key} label={langs.get(key)} default={value.default || index == 0}>

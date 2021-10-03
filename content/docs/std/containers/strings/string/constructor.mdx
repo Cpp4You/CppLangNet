@@ -11,28 +11,80 @@ import TabItem		from '@theme/TabItem';
 import SwitchView	from '@site/src/components/mdx/SwitchView';
 
 <!-- Codes -->
-import CtorDefault_UntilCpp17_Simple			from "./codes/ctor-default-until-cpp17-simple.mdx"
 
-import CtorDefault_Cpp17_Detailed 				from "./codes/ctor-default-cpp17-detailed.mdx"
-import CtorDefault_Cpp20_Detailed 				from "./codes/ctor-default-cpp20-detailed.mdx"
+<!-- Ctor Default -->
+import Ctor_Default_UntilCpp17_Simple			from "./codes/ctor-default/until-cpp17-simple.mdx";
+import Ctor_Default_Cpp17_Detailed 				from "./codes/ctor-default/cpp17-detailed.mdx";
+import Ctor_Default_Cpp20_Detailed 				from "./codes/ctor-default/cpp20-detailed.mdx";
+import Ctor_Default_Cpp17_Simple 				from "./codes/ctor-default/cpp17-simple.mdx";
+import Ctor_Default_Cpp20_Simple 				from "./codes/ctor-default/cpp20-simple.mdx";
 
-import CtorDefault_Cpp17_Simple 				from "./codes/ctor-default-cpp17-simple.mdx"
-import CtorDefault_Cpp20_Simple 				from "./codes/ctor-default-cpp20-simple.mdx"
+<!-- Ctor Repeat Char -->
+import Ctor_RepeatChar_UntilCpp20				from "./codes/ctor-repeat-char-until-cpp20.mdx";
+import Ctor_RepeatChar_Cpp20 					from "./codes/ctor-repeat-char-cpp20.mdx";
 
+<!-- Ctor Copy Substr (Unbound) -->
+import Ctor_CopySubstrUnbound_UntilCpp20		from "./codes/ctor-copy-substr/unbound-until-cpp20.mdx";
+import Ctor_CopySubstrUnbound_Cpp20 			from "./codes/ctor-copy-substr/unbound-cpp20.mdx";
+
+<!-- Ctor Copy Substr (Bound) -->
+import Ctor_CopySubstrBound_UntilCpp20			from "./codes/ctor-copy-substr/bound-until-cpp20.mdx";
+import Ctor_CopySubstrBound_Cpp20 				from "./codes/ctor-copy-substr/bound-cpp20.mdx";
 
 ## Default constructor
 
 <SwitchView content={{
 		'cpp20': {
-			simplified:	<CtorDefault_Cpp20_Simple/>,
-			detailed: 	<CtorDefault_Cpp20_Detailed/>,
+			simplified:	<Ctor_Default_Cpp20_Simple/>,
+			detailed: 	<Ctor_Default_Cpp20_Detailed/>,
 		},
 		'cpp17': {
-			simplified:	<CtorDefault_Cpp17_Simple/>,
-			detailed:	<CtorDefault_Cpp17_Detailed/>,
+			simplified:	<Ctor_Default_Cpp17_Simple/>,
+			detailed:	<Ctor_Default_Cpp17_Detailed/>,
 		},
-		'until-cpp17':	<CtorDefault_UntilCpp17_Simple/>,
+		'until-cpp17':	<Ctor_Default_UntilCpp17_Simple/>,
+	}}/>
+
+Default constructor. Constructs empty string (zero size and unspecified capacity).
+If no allocator is supplied, allocator is obtained from a default-constructed instance.
+
+## Repeat character constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_RepeatChar_Cpp20 />,
+		'until-cpp20':	<Ctor_RepeatChar_UntilCpp20 />,
+	}}/>
+
+Constructs the string with `count` copies of character `ch`.
+
+<details>
+	<summary>Deduction guide <small>(since C++17)</small></summary>
+	<div>
+
+		This constructor is not used for class template argument deduction
+		if the `Allocator` type that would be deduced does not qualify as an allocator.
+
+	</div>
+</details>
+
+## Copy substring constructor (unbound)
+
+<SwitchView content={{
+		'cpp20':		<Ctor_CopySubstrUnbound_Cpp20 />,
+		'until-cpp20':	<Ctor_CopySubstrUnbound_UntilCpp20 />,
 	}}/>
 
 
+Constructs the string with a substring `[pos, other.size())` of `other`.  
+Other words, copies the `other` string starting from element at `pos` index.
 
+## Copy substring constructor (bound)
+
+<SwitchView content={{
+		'cpp20':		<Ctor_CopySubstrBound_Cpp20 />,
+		'until-cpp20':	<Ctor_CopySubstrBound_UntilCpp20 />,
+	}}/>
+
+Constructs the string with a substring `[pos, pos+count)` of `other`.
+If `count == npos`, or if the requested substring lasts past the end of the string,
+the resulting substring is `[pos, other.size())`.
