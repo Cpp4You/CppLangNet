@@ -1,0 +1,35 @@
+---
+sidebar_position: 6
+---
+
+# Translating documents
+
+import ImproveSection from "@site/i18n/en/presets/ImproveSection.mdx";
+
+## Translating to an existing locale
+
+### Translating page texts
+
+You can translate individual page texts by editing `code.json` files
+in the `i18n/<locale>` directory.
+To generate missing texts, please use (`pl` locale as an example):
+
+```bash
+npm run write-translations -- --locale pl
+```
+
+See [official docusaurus tutorial](https://docusaurus.io/docs/i18n/tutorial).
+
+### Translating documents
+
+Create a doc with the same name and in the appropriate i18n folder,
+then translate it.
+
+See [official docusaurus tutorial](https://docusaurus.io/docs/i18n/tutorial).
+
+### Adding new language support
+
+<ImproveSection />
+
+New language has to be added to `docusaurus.config.js`.
+

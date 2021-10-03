@@ -1,0 +1,238 @@
+---
+sidebar_position: 9
+---
+
+# Using components
+
+import ClassSummary from "@site/src/components/mdx/ClassSummary";
+import ProductCard from '@site/src/components/mdx/ProductCard';
+
+We provide a few custom components that you can use inside documents.
+
+To import a component, use an `import` statement from the component's description.
+Put the import on the top of a document, right after the main heading:
+
+```md
+---
+sidebar_position: 1
+---
+
+# The document heading
+
+<!-- PUT IMPORTS HERE -->
+```
+
+Here's the list of our custom components.
+
+## `Columns`
+
+Importing:
+
+```js
+import Columns from '@site/src/components/mdx/Columns';
+```
+
+:::caution
+TODO: description
+:::
+
+## `CustomCodeBlock`
+
+Importing:
+
+```js
+import CustomCodeBlock from '@site/src/components/mdx/CustomCodeBlock';
+```
+
+:::caution
+TODO: description
+:::
+
+## `ClassSummary`
+
+Importing:
+
+```js
+import ClassSummary from "@site/src/components/mdx/ClassSummary";
+```
+
+Usage:
+
+```jsx
+<ClassSummary name="string" namespaces="std">
+
+### Methods
+
+<ClassSummary.SymbolTable>
+	<ClassSummary.Symbol pub autoLink name="contains" desc="Checks if the string contains the given substring or character"/>
+	<ClassSummary.Symbol pub autoLink name="substr" desc="Returns a substring"/>
+	<ClassSummary.Symbol pub autoLink name="empty">
+		Returns <code>true</code> if the string is empty, otherwise <code>false</code>.
+	</ClassSummary.Symbol>
+</ClassSummary.SymbolTable>
+
+</ClassSummary>
+```
+
+Result:
+
+<img style={{border: "1px solid gray"}} alt="Class Summary" src="/img/component-overview/class-summary.png" />
+
+
+### `ClassSummary` Fields
+
+<ClassSummary.SymbolTable noTraits>
+	<ClassSummary.Symbol name="name" desc="(required) The name of the class"/>
+	<ClassSummary.Symbol name="namespaces" desc={<>A string, or a list of namespaces, for example:<br/> <code>namespaces="std"</code> or <code>namespaces=&#123;["std", "chrono"]&#125;</code></>}/>
+</ClassSummary.SymbolTable>
+
+### `ClassSummary.SymbolTable` fields
+
+<ClassSummary.SymbolTable noTraits>
+	<ClassSummary.Symbol name="noTraits" desc="Whether to hide the left-most column with symbol traits (const, static, etc.)"/>
+</ClassSummary.SymbolTable>
+
+### `ClassSummary.Symbol` fields
+
+<ClassSummary.SymbolTable noTraits>
+
+<ClassSummary.Symbol name="name" desc="(required) Name of the symbol"/>
+<ClassSummary.Symbol name="desc">
+
+Description of the symbol. You can also specify it as a children:
+
+```jsx
+<ClassSummary.Symbol name="symbol">
+	This will be considered a description
+</ClassSummary.Symbol>
+```
+
+:::caution
+Due to rules of MDX formatter, if you want to use Markdown elements inside the JSX element, **you have to**
+remove the indentation, otherwise it will be recognized as a code block.
+:::
+
+</ClassSummary.Symbol>
+<ClassSummary.Symbol name="autoLink"	desc="Auto-generate the link"/>
+<ClassSummary.Symbol name="link"		desc="Custom link"/>
+<ClassSummary.Symbol name="linkName"	desc="URL-compliant name used when autoLink=true"/>
+
+</ClassSummary.SymbolTable>
+
+#### `ClassSummary.Symbol` trait fields:
+
+<ClassSummary.SymbolTable noTraits>
+	<ClassSummary.Symbol name="pub"				desc='Adds a "public" trait to the symbol'/>
+	<ClassSummary.Symbol name="priv"			desc='Adds a "private" trait to the symbol'/>
+	<ClassSummary.Symbol name="prot"			desc='Adds a "protected" trait to the symbol'/>
+	<ClassSummary.Symbol name="volatile"		desc='Adds a "volatile" trait to the symbol'/>
+	<ClassSummary.Symbol name="const"			desc='Adds a "const" trait to the symbol'/>
+	<ClassSummary.Symbol name="constexpr"		desc='Adds a "constexpr" trait to the symbol'/>
+	<ClassSummary.Symbol name="virtual"			desc='Adds a "virtual" trait to the symbol'/>
+	<ClassSummary.Symbol name="static"			desc='Adds a "static" trait to the symbol'/>
+</ClassSummary.SymbolTable>
+
+## `ProductCard`
+
+Importing:
+
+```jsx
+import ProductCard from '@site/src/components/mdx/ProductCard';
+```
+
+Usage:
+
+```jsx
+<ProductCard title="Visual Studio Code" author="Microsoft" img="/img/icons/products/vscode_1_35.svg" rating={9}>
+	<ProductCard.Desc>
+		A powerful tool with everything you need, including a code editor
+		and a compiler that supports the latest C++20 standard.
+		<ProductCard.Details>
+			<h3>Pros</h3>
+			<ul>
+				<li>All in one</li>
+				<li>Simple installation and configuration</li>
+				<li>Access to the latest C++20 standard</li>
+				<li>The best debugger available</li>
+			</ul>
+			<h3>Cons</h3>
+			<ul>
+				<li>Relatively big installation size (download ~2 GB, after installation ~7 GB)</li>
+				<li>Not portable</li>
+				<li>Windows only</li>
+			</ul>
+		</ProductCard.Details>
+	</ProductCard.Desc>
+	<ProductCard.Actions>
+		<a href="https://code.visualstudio.com">Product website</a>
+	</ProductCard.Actions>
+</ProductCard>
+```
+
+Result:
+
+<div style={{ border: "1px solid gray", padding: 20, marginBottom: 20 }}>
+
+<ProductCard title="Visual Studio Code" author="Microsoft" img="/img/icons/products/vscode_1_35.svg" rating={9}>
+	<ProductCard.Desc>
+		A powerful tool with everything you need, including a code editor
+		and a compiler that supports the latest C++20 standard.
+		<ProductCard.Details>
+			<h3>Pros</h3>
+			<ul>
+				<li>All in one</li>
+				<li>Simple installation and configuration</li>
+				<li>Access to the latest C++20 standard</li>
+				<li>The best debugger available</li>
+			</ul>
+			<h3>Cons</h3>
+			<ul>
+				<li>Relatively big installation size (download ~2 GB, after installation ~7 GB)</li>
+				<li>Not portable</li>
+				<li>Windows only</li>
+			</ul>
+		</ProductCard.Details>
+	</ProductCard.Desc>
+	<ProductCard.Actions>
+		<a href="https://code.visualstudio.com">Product website</a>
+	</ProductCard.Actions>
+</ProductCard>
+
+</div>
+
+### `ProductCard` Fields
+
+<ClassSummary.SymbolTable noTraits>
+	<ClassSummary.Symbol name="title"		desc="(required) The name of the class"/>
+	<ClassSummary.Symbol name="img"			desc="(required) A string containing an URL of an image, or a SVG element"/>
+	<ClassSummary.Symbol name="author"		desc="The author of the product"/>
+	<ClassSummary.Symbol name="rating"		desc="The rating of the product, showed using 5-stars. Use values between 0 and 10."/>
+</ClassSummary.SymbolTable>
+
+### `ProductCard.Desc`
+
+It is a subcomponent of the `ProductCard` used to add the product's description.
+
+### `ProductCard.Actions`
+
+It is a subcomponent of the `ProductCard` used to add actions content to the product.
+
+### `ProductCard.Details`
+
+It is a subcomponent of the `ProductCard` used to add details to the product's description.
+
+:::caution
+`ProductCard.Details` is only allowed inside a `ProductCard.Desc` element.
+:::
+
+## `ToolCard`
+
+Importing:
+
+```js
+import ToolCard from '@site/src/components/mdx/ToolsSummary';
+```
+
+:::caution
+TODO: description
+:::

@@ -126,7 +126,8 @@ ClassSummary.Symbol = function(props) {
 				{mapModifier(props.static,		'modStatic',	'static')}
 				{mapModifier(props.constexpr,	'modConstexpr',	'constexpr')}
 				{mapModifier(props.const,		'modConst',		'const')}
-				{mapModifier(props.const,		'modVolatile',	'volatile')}
+				{mapModifier(props.volatile,	'modVolatile',	'volatile')}
+				{mapModifier(props.virtual,		'modVirtual',	'virtual')}
 			</td>
 			<td className={styles.symbolName}>
 				{nameElem}

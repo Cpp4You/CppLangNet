@@ -1,0 +1,27 @@
+---
+sidebar_position: 7
+---
+
+# Default documents
+
+When creating a new folder, for example:
+
+```
+/docs/std/math
+```
+
+you'll have to create a **default document** named `index.mdx` inside that directory.
+This document will be then loaded when you visit [https://cpp-lang.net/docs/std/math/](https://cpp-lang.net/docs/std/math/)
+You have to add a following metadata to the top of the `index.mdx` document:
+
+```mdx
+---
+sidebar_position: 1
+slug: /std/math
+---
+```
+
+:::caution
+Make sure that you added slash at the beginning!  
+Notice that we **intentionally** omitted the `docs` from the `slug` (do the same when editing other categories - learn, features, tools, etc.).
+:::

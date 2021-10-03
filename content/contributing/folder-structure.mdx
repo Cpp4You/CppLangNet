@@ -1,0 +1,54 @@
+---
+sidebar_position: 3
+---
+
+# Folder structure
+
+## Source code
+
+The site source code, that is edited by programmers
+is located inside `src/` directory. It contains pages
+and useful components that we can later use in articles, docs, etc.
+
+## Site docs
+
+Every doc, article and course lesson is located
+inside `content/` subdirectory. Those are original articles,
+written in English. They should be treated as a reference
+when creating translations.
+
+If you want to create a doc in other language, you'll
+have to provide an english version of it. Don't worry,
+we will help you with that when you'll create a pull request.
+
+## Blog posts
+
+Every blog post is located inside `content/blog/` subdirectory.
+Adding blog posts is restricted. Only site maintainer
+is allowed to create blog posts.
+
+## Translated docs
+
+There is `i18n` subdirectory (i18n - internationalization).
+Inside that, there's a folder for each locale.
+
+Right now we support the following locales:
+- **en** - English language  
+**Note**: this directory contains only a localized version of
+template Markdown files (that can be later reused, imported across other MDX documents).
+- **pl** - Polish language
+
+Each language has the following folders inside.
+
+- `blog` - translated blog posts
+- `docs` - translated C++ docs that reflect the `/content/docs/` folder.
+- `features` - translated C++ feature docs that reflect the `/content/features/` folder
+- `learn` - translated C++ course docs that reflect the `/content/learn/` folder
+- `tools` - translated C++ tool docs that reflect the `/content/tools/` folder
+- `contributing` - translated docs that reflect the `/content/contributing/` folder
+- `presets` - translated versions of preset Markdown files, that can be later reused in other Markdown documents.
+
+:::caution
+There are also other folders, like `docusaurus-plugin-content-docs-features` but you should ignore them.
+Use the convinient shortcuts listed above.
+:::

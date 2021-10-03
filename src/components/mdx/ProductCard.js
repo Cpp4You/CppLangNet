@@ -4,6 +4,8 @@ import Star			from '@site/static/mui-icons/Star.svg';
 import StarHalf		from '@site/static/mui-icons/StarHalf.svg';
 import StarBorder	from '@site/static/mui-icons/StarBorder.svg';
 
+import Details		from '@theme/Details'
+import Translate	from '@docusaurus/Translate';
 
 import styles from '@site/src/css/components/ProductCard.module.scss'
 
@@ -60,6 +62,14 @@ ProductCard.Desc = (props) => {
 ProductCard.Actions = (props) => {
 	return (
 		<div className={styles.actions} {...props}>{props.children}</div>
+	);
+};
+
+ProductCard.Details = (props) => {
+	return (
+		<Details style={ { marginTop: "15px" } } summary={<summary>{props.title || (<Translate>Details</Translate>)}</summary>}>
+			{props.children}
+		</Details>
 	);
 };
 

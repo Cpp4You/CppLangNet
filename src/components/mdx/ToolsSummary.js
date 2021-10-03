@@ -12,8 +12,6 @@ import DevCppIcon		from '@site/static/img/icons/products/devcpp.png';
 
 import ReplitIcon		from '@site/static/img/icons/products/replit.svg';
 
-import Details			from '@theme/Details'
-
 import Translate		from '@docusaurus/Translate';
 
 export const ToolSummaryInfo = {
@@ -96,14 +94,6 @@ export default function ToolCard(props)
 				</ul>
 			</ProductCard.Actions>
 		</ProductCard>
-	);
-};
-
-ToolCard.Details = (props) => {
-	return (
-		<Details style={ { marginTop: "15px" } } summary={<summary>{props.title || (<Translate>Details</Translate>)}</summary>}>
-				{props.children}
-		</Details>
 	);
 };
 
