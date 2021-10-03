@@ -1,9 +1,14 @@
 ---
-sidebar_position: 1
-title: Constructors
+sidebar_position:	1
+title:				std::string constructors
+sidebar_label:		Constructors
+description:		std::string constructors C++ documentation
+hide_title:			true
 ---
 
-# `std::string` constructors
+[Back to `std::string` class reference.](..)
+
+# std::string constructors
 
 import CodeBlock					from '@theme/CodeBlock';
 import Tabs 						from '@theme/Tabs';
@@ -15,55 +20,55 @@ import SymbolTable, { Symbol }		from '@site/src/components/mdx/SymbolTable';
 <!----------------- Codes ---------------------->
 
 <!-- Ctor Default -->
-import Ctor_Default_UntilCpp17_Simple			from "./_codes/ctor-default/until-cpp17-simple.mdx";
-import Ctor_Default_Cpp17_Detailed 				from "./_codes/ctor-default/cpp17-detailed.mdx";
-import Ctor_Default_Cpp20_Detailed 				from "./_codes/ctor-default/cpp20-detailed.mdx";
-import Ctor_Default_Cpp17_Simple 				from "./_codes/ctor-default/cpp17-simple.mdx";
-import Ctor_Default_Cpp20_Simple 				from "./_codes/ctor-default/cpp20-simple.mdx";
+import Ctor_Default_UntilCpp17_Simple			from "./_codes/ctor/default/until-cpp17-simple.mdx";
+import Ctor_Default_Cpp17_Detailed 				from "./_codes/ctor/default/cpp17-detailed.mdx";
+import Ctor_Default_Cpp20_Detailed 				from "./_codes/ctor/default/cpp20-detailed.mdx";
+import Ctor_Default_Cpp17_Simple 				from "./_codes/ctor/default/cpp17-simple.mdx";
+import Ctor_Default_Cpp20_Simple 				from "./_codes/ctor/default/cpp20-simple.mdx";
 
 <!-- Ctor repeat char -->
-import Ctor_RepeatChar_UntilCpp20				from "./_codes/ctor-repeat-char-until-cpp20.mdx";
-import Ctor_RepeatChar_Cpp20 					from "./_codes/ctor-repeat-char-cpp20.mdx";
+import Ctor_RepeatChar_UntilCpp20				from "./_codes/ctor/repeat-char-until-cpp20.mdx";
+import Ctor_RepeatChar_Cpp20 					from "./_codes/ctor/repeat-char-cpp20.mdx";
 
 <!-- Ctor copy substr (Unbound) -->
-import Ctor_CopySubstrUnbound_UntilCpp20		from "./_codes/ctor-copy-substr/unbound-until-cpp20.mdx";
-import Ctor_CopySubstrUnbound_Cpp20 			from "./_codes/ctor-copy-substr/unbound-cpp20.mdx";
+import Ctor_CopySubstrUnbound_UntilCpp20		from "./_codes/ctor/copy-substr/unbound-until-cpp20.mdx";
+import Ctor_CopySubstrUnbound_Cpp20 			from "./_codes/ctor/copy-substr/unbound-cpp20.mdx";
 
 <!-- Ctor copy substr (Bound) -->
-import Ctor_CopySubstrBound_UntilCpp20			from "./_codes/ctor-copy-substr/bound-until-cpp20.mdx";
-import Ctor_CopySubstrBound_Cpp20 				from "./_codes/ctor-copy-substr/bound-cpp20.mdx";
+import Ctor_CopySubstrBound_UntilCpp20			from "./_codes/ctor/copy-substr/bound-until-cpp20.mdx";
+import Ctor_CopySubstrBound_Cpp20 				from "./_codes/ctor/copy-substr/bound-cpp20.mdx";
 
 <!-- Ctor copy char range (Unbound) -->
-import Ctor_CopyCharRangeUnbound_UntilCpp20		from "./_codes/ctor-copy-char-range/unbound-until-cpp20.mdx";
-import Ctor_CopyCharRangeUnbound_Cpp20 			from "./_codes/ctor-copy-char-range/unbound-cpp20.mdx";
+import Ctor_CopyCharRangeUnbound_UntilCpp20		from "./_codes/ctor/copy-char-range/unbound-until-cpp20.mdx";
+import Ctor_CopyCharRangeUnbound_Cpp20 			from "./_codes/ctor/copy-char-range/unbound-cpp20.mdx";
 
 <!-- Ctor copy char range (Bound) -->
-import Ctor_CopyCharRangeBound_UntilCpp20		from "./_codes/ctor-copy-char-range/bound-until-cpp20.mdx";
-import Ctor_CopyCharRangeBound_Cpp20 			from "./_codes/ctor-copy-char-range/bound-cpp20.mdx";
+import Ctor_CopyCharRangeBound_UntilCpp20		from "./_codes/ctor/copy-char-range/bound-until-cpp20.mdx";
+import Ctor_CopyCharRangeBound_Cpp20 			from "./_codes/ctor/copy-char-range/bound-cpp20.mdx";
 
 <!-- Ctor copy from iterator range -->
-import Ctor_CopyItRange_UntilCpp20				from "./_codes/ctor-copy-it-range/until-cpp20.mdx";
-import Ctor_CopyItRange_Cpp20 					from "./_codes/ctor-copy-it-range/cpp20.mdx";
+import Ctor_CopyItRange_UntilCpp20				from "./_codes/ctor/copy-it-range/until-cpp20.mdx";
+import Ctor_CopyItRange_Cpp20 					from "./_codes/ctor/copy-it-range/cpp20.mdx";
 
 <!-- Ctor copy other string -->
-import Ctor_CopyOtherString_UntilCpp20			from "./_codes/ctor-copy-other-string/until-cpp20.mdx";
-import Ctor_CopyOtherString_Cpp20 				from "./_codes/ctor-copy-other-string/cpp20.mdx";
+import Ctor_CopyOtherString_UntilCpp20			from "./_codes/ctor/copy-other-string/until-cpp20.mdx";
+import Ctor_CopyOtherString_Cpp20 				from "./_codes/ctor/copy-other-string/cpp20.mdx";
 
 <!-- Ctor move other string -->
-import Ctor_MoveOtherString_UntilCpp20			from "./_codes/ctor-move-other-string/until-cpp20.mdx";
-import Ctor_MoveOtherString_Cpp20 				from "./_codes/ctor-move-other-string/cpp20.mdx";
+import Ctor_MoveOtherString_UntilCpp20			from "./_codes/ctor/move-other-string/until-cpp20.mdx";
+import Ctor_MoveOtherString_Cpp20 				from "./_codes/ctor/move-other-string/cpp20.mdx";
 
 <!-- Ctor init list -->
-import Ctor_InitList_UntilCpp20					from "./_codes/ctor-init-list/until-cpp20.mdx";
-import Ctor_InitList_Cpp20 						from "./_codes/ctor-init-list/cpp20.mdx";
+import Ctor_InitList_UntilCpp20					from "./_codes/ctor/init-list/until-cpp20.mdx";
+import Ctor_InitList_Cpp20 						from "./_codes/ctor/init-list/cpp20.mdx";
 
 <!-- Ctor copy from view (unbound) -->
-import Ctor_CopyFromViewUnbound_SinceCpp17		from "./_codes/ctor-view/unbound-since-cpp17.mdx";
-import Ctor_CopyFromViewUnbound_Cpp20 			from "./_codes/ctor-view/unbound-cpp20.mdx";
+import Ctor_CopyFromViewUnbound_SinceCpp17		from "./_codes/ctor/view/unbound-since-cpp17.mdx";
+import Ctor_CopyFromViewUnbound_Cpp20 			from "./_codes/ctor/view/unbound-cpp20.mdx";
 
 <!-- Ctor copy from view (bound) -->
-import Ctor_CopyFromViewBound_SinceCpp17		from "./_codes/ctor-view/bound-since-cpp17.mdx";
-import Ctor_CopyFromViewBound_Cpp20 			from "./_codes/ctor-view/bound-cpp20.mdx";
+import Ctor_CopyFromViewBound_SinceCpp17		from "./_codes/ctor/view/bound-since-cpp17.mdx";
+import Ctor_CopyFromViewBound_Cpp20 			from "./_codes/ctor/view/bound-cpp20.mdx";
 
 <!----------------- End of codes ---------------------->
 
