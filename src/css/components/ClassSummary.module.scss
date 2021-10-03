@@ -12,81 +12,12 @@
 	vertical-align: middle;
 }
 
-.summarySection {
-	margin-bottom: 20px;
+.meta {
 
-	border: none;
-	>tr {
-		
+	td {
+		padding: 5px 10px;
 	}
-	.symbolName {
-		font-family: "Jetbrains Mono", Consolas, monospace;
-		padding: 3px 15px;
-		min-width: 200px;
-		small {
-			font-size: 60%;
-		}
-	}
-	.symbolDesc {
-		padding: 3px 15px;
-	}
-}
-
-*[no-traits="true"] {
-	.symbolProp {
-		display: none;
-	}
-}
-
-.symbolProp {	
-	padding: 3px 10px;
-	>span {
-		display: inline-block;
-		width: 40px;
-		text-align: center;
-		font-size: 75%;
-		// border: 1px solid ;
-		border-radius: 20px;
-		&:not(:last-child) {
-			margin-right: 5px;
-		}
-
-		&.accessPublic {
-			color: black;
-			background-color: rgb(43, 235, 85);
-		}
-		&.accessProtected {
-			color: black;
-			background-color: rgb(32, 125, 187);
-		}
-		&.accessPrivate {
-			color: white;
-			background-color: rgb(83, 35, 35);
-		}
-
-		&.modStatic {
-			color: black;
-			background-color: rgb(131, 225, 248);
-		}
-
-		&.modConstexpr {
-			width: 65px;
-			color: black;
-			background-color: rgb(255, 214, 126);
-		}
-		&.modConst {
-			color: black;
-			background-color: rgb(236, 255, 126);
-		}
-		&.modVolatile {
-			width: 55px;
-			color: white;
-			background-color: rgb(71, 24, 146);
-		}
-		&.modVirtual {
-			width: 55px;
-			color: white;
-			background-color: rgb(145, 76, 151);
-		}
+	td:not(:first-child) {
+		min-width: 250px;
 	}
 }
