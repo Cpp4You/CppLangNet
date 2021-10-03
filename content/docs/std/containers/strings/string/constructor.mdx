@@ -5,12 +5,14 @@ title: Constructors
 
 # `std::string` constructors
 
-import CodeBlock	from '@theme/CodeBlock';
-import Tabs 		from '@theme/Tabs';
-import TabItem		from '@theme/TabItem';
-import SwitchView	from '@site/src/components/mdx/SwitchView';
+import CodeBlock					from '@theme/CodeBlock';
+import Tabs 						from '@theme/Tabs';
+import TabItem						from '@theme/TabItem';
+import SwitchView					from '@site/src/components/mdx/SwitchView';
+import Columns						from '@site/src/components/mdx/Columns';
+import SymbolTable, { Symbol }		from '@site/src/components/mdx/SymbolTable';
 
-<!-- Codes -->
+<!----------------- Codes ---------------------->
 
 <!-- Ctor Default -->
 import Ctor_Default_UntilCpp17_Simple			from "./_codes/ctor-default/until-cpp17-simple.mdx";
@@ -19,18 +21,68 @@ import Ctor_Default_Cpp20_Detailed 				from "./_codes/ctor-default/cpp20-detaile
 import Ctor_Default_Cpp17_Simple 				from "./_codes/ctor-default/cpp17-simple.mdx";
 import Ctor_Default_Cpp20_Simple 				from "./_codes/ctor-default/cpp20-simple.mdx";
 
-<!-- Ctor Repeat Char -->
+<!-- Ctor repeat char -->
 import Ctor_RepeatChar_UntilCpp20				from "./_codes/ctor-repeat-char-until-cpp20.mdx";
 import Ctor_RepeatChar_Cpp20 					from "./_codes/ctor-repeat-char-cpp20.mdx";
 
-<!-- Ctor Copy Substr (Unbound) -->
+<!-- Ctor copy substr (Unbound) -->
 import Ctor_CopySubstrUnbound_UntilCpp20		from "./_codes/ctor-copy-substr/unbound-until-cpp20.mdx";
 import Ctor_CopySubstrUnbound_Cpp20 			from "./_codes/ctor-copy-substr/unbound-cpp20.mdx";
 
-<!-- Ctor Copy Substr (Bound) -->
+<!-- Ctor copy substr (Bound) -->
 import Ctor_CopySubstrBound_UntilCpp20			from "./_codes/ctor-copy-substr/bound-until-cpp20.mdx";
 import Ctor_CopySubstrBound_Cpp20 				from "./_codes/ctor-copy-substr/bound-cpp20.mdx";
 
+<!-- Ctor copy char range (Unbound) -->
+import Ctor_CopyCharRangeUnbound_UntilCpp20		from "./_codes/ctor-copy-char-range/unbound-until-cpp20.mdx";
+import Ctor_CopyCharRangeUnbound_Cpp20 			from "./_codes/ctor-copy-char-range/unbound-cpp20.mdx";
+
+<!-- Ctor copy char range (Bound) -->
+import Ctor_CopyCharRangeBound_UntilCpp20		from "./_codes/ctor-copy-char-range/bound-until-cpp20.mdx";
+import Ctor_CopyCharRangeBound_Cpp20 			from "./_codes/ctor-copy-char-range/bound-cpp20.mdx";
+
+<!-- Ctor copy from iterator range -->
+import Ctor_CopyItRange_UntilCpp20				from "./_codes/ctor-copy-it-range/until-cpp20.mdx";
+import Ctor_CopyItRange_Cpp20 					from "./_codes/ctor-copy-it-range/cpp20.mdx";
+
+<!-- Ctor copy other string -->
+import Ctor_CopyOtherString_UntilCpp20			from "./_codes/ctor-copy-other-string/until-cpp20.mdx";
+import Ctor_CopyOtherString_Cpp20 				from "./_codes/ctor-copy-other-string/cpp20.mdx";
+
+<!-- Ctor move other string -->
+import Ctor_MoveOtherString_UntilCpp20			from "./_codes/ctor-move-other-string/until-cpp20.mdx";
+import Ctor_MoveOtherString_Cpp20 				from "./_codes/ctor-move-other-string/cpp20.mdx";
+
+<!-- Ctor init list -->
+import Ctor_InitList_UntilCpp20					from "./_codes/ctor-init-list/until-cpp20.mdx";
+import Ctor_InitList_Cpp20 						from "./_codes/ctor-init-list/cpp20.mdx";
+
+<!-- Ctor copy from view (unbound) -->
+import Ctor_CopyFromViewUnbound_SinceCpp17		from "./_codes/ctor-view/unbound-since-cpp17.mdx";
+import Ctor_CopyFromViewUnbound_Cpp20 			from "./_codes/ctor-view/unbound-cpp20.mdx";
+
+<!-- Ctor copy from view (bound) -->
+import Ctor_CopyFromViewBound_SinceCpp17		from "./_codes/ctor-view/bound-since-cpp17.mdx";
+import Ctor_CopyFromViewBound_Cpp20 			from "./_codes/ctor-view/bound-cpp20.mdx";
+
+<!----------------- End of codes ---------------------->
+
+`std::basic_string` class can be constructed in many different ways.
+Use the table of contents to navigate for convenience.
+
+:::note
+`std::basic_string` is a **class template**, with following type parameters,
+that are used within constructors:
+
+<SymbolTable noTraits>
+	<Symbol name="CharT"		desc="character type"/>
+	<Symbol name="Traits" 		desc="traits class specifying the operations on the character type"/>
+	<Symbol name="Allocator"	desc={<><a href="/docs/named_req/allocator">Allocator</a> type used to allocate internal storage</>}/>
+</SymbolTable>
+
+:::
+
+<!-------------------------------------------------------------------------------------->
 ## Default constructor
 
 <SwitchView content={{
@@ -48,6 +100,42 @@ import Ctor_CopySubstrBound_Cpp20 				from "./_codes/ctor-copy-substr/bound-cpp2
 Default constructor. Constructs empty string (zero size and unspecified capacity).
 If no allocator is supplied, allocator is obtained from a default-constructed instance.
 
+
+### Example
+
+
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+#include <cassert>
+
+int main() {
+	// Default constructed string:
+	std::string s;
+
+	// This assertion has to pass:
+	assert(s.empty() && (s.length() == 0) && (s.size() == 0));
+
+	// Capacity is unspecified:
+    std::cout << "s.capacity(): " << s.capacity() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+s.capacity(): 15
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
 ## Repeat character constructor
 
 <SwitchView content={{
@@ -60,13 +148,40 @@ Constructs the string with `count` copies of character `ch`.
 <details>
 	<summary>Deduction guide <small>(since C++17)</small></summary>
 	<div>
-
 		This constructor is not used for class template argument deduction
-		if the `Allocator` type that would be deduced does not qualify as an allocator.
-
+		if the <code>Allocator</code> type that would be deduced does not qualify as an allocator.
 	</div>
 </details>
 
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+#include <iomanip> // for std::quoted
+
+int main() {
+	std::string s(4, '=');
+
+	std::cout << std::quoted(s) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+"===="
+```
+
+</div>
+</Columns>
+
+
+<!-------------------------------------------------------------------------------------->
 ## Copy substring constructor (unbound)
 
 <SwitchView content={{
@@ -78,6 +193,9 @@ Constructs the string with `count` copies of character `ch`.
 Constructs the string with a substring `[pos, other.size())` of `other`.  
 Other words, copies the `other` string starting from element at `pos` index.
 
+
+
+<!-------------------------------------------------------------------------------------->
 ## Copy substring constructor (bound)
 
 <SwitchView content={{
@@ -88,3 +206,204 @@ Other words, copies the `other` string starting from element at `pos` index.
 Constructs the string with a substring `[pos, pos+count)` of `other`.
 If `count == npos`, or if the requested substring lasts past the end of the string,
 the resulting substring is `[pos, other.size())`.
+
+
+
+<!-------------------------------------------------------------------------------------->
+## Copy character range constructor (unbound)
+
+<SwitchView content={{
+		'cpp20':		<Ctor_CopyCharRangeUnbound_Cpp20 />,
+		'until-cpp20':	<Ctor_CopyCharRangeUnbound_UntilCpp20 />,
+	}}/>
+
+Constructs the string with the contents initialized with a copy
+of the **null-terminated** character string pointed to by `s`.
+The length of the string is determined by the first null character.
+The behavior is undefined if `[s, s + Traits::length(s))` is not a valid range
+(for example, if `s` is a null pointer).
+
+<details>
+	<summary>Deduction guide <small>since C++17</small></summary>
+	<div>
+		This constructor is not used for class template argument deduction if the <code>Allocator</code> type
+		that would be deduced does not qualify as an allocator. (since C++17)
+	</div>
+</details>
+
+
+
+<!-------------------------------------------------------------------------------------->
+## Copy character range constructor (bound)
+
+<SwitchView content={{
+		'cpp20':		<Ctor_CopyCharRangeBound_Cpp20 />,
+		'until-cpp20':	<Ctor_CopyCharRangeBound_UntilCpp20 />,
+	}}/>
+
+Constructs the string with the first `count` characters of character string pointed to by `s`.
+`s` can contain null characters. The length of the string is `count`.
+The behavior is undefined if `[s, s + count)` is not a valid range.
+
+
+
+<!-------------------------------------------------------------------------------------->
+## Copy from iterator-range constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_CopyItRange_Cpp20 />,
+		'until-cpp20':	<Ctor_CopyItRange_UntilCpp20 />,
+	}}/>
+
+Constructs the string with the contents of the range `[first, last)`.
+
+<details>
+	<summary>Details</summary>
+	<div>
+		<SwitchView content={{
+				'cpp11':
+					<>
+						Only if <code>InputIt</code> is an integral type, equivalent to overload (2), as if by<br/>
+						<code>basic_string(static_cast&lt;size_type&gt;(first), static_cast&lt;value_type&gt;(last), alloc)</code>
+					</>,
+				'until-cpp11':
+					<>
+						This constructor only participates in overload resolution
+						if <code>InputIt</code> satisfies <a href="/docs/named_req/InputIterator">LegacyInputIterator</a>.
+					</>,
+			}}/>
+	</div>
+</details>
+
+<!-------------------------------------------------------------------------------------->
+## Copy constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_CopyOtherString_Cpp20 />,
+		'since-cpp11':	<Ctor_CopyOtherString_UntilCpp20 />,
+	}}/>
+
+Constructs the string with a copy of the contents of `other`.
+
+You can optionally specify a custom allocator (2).
+
+
+
+<!-------------------------------------------------------------------------------------->
+## Move constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_MoveOtherString_Cpp20 />,
+		'since-cpp11':	<Ctor_MoveOtherString_UntilCpp20 />,
+	}}/>
+
+<!-- TODO: create a course lesson about move semantics -->
+
+Constructs the string with the contents of `other` using [move semantics](/learn/intermediate/move-semantics/).
+`other` is left in valid, but unspecified state.
+
+You can optionally specify a custom allocator (2).
+
+
+
+<!-------------------------------------------------------------------------------------->
+## Initializer-list constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_InitList_Cpp20 />,
+		'since-cpp11':	<Ctor_InitList_UntilCpp20 />,
+	}}/>
+
+Constructs the string with the contents of the [initializer list](/docs/std/lang-support/initializer-list) `ilist`.
+
+
+<!-------------------------------------------------------------------------------------->
+## Copy from `string_view`-like type constructor (unbound)
+
+<SwitchView content={{
+		'cpp20':		<Ctor_CopyFromViewUnbound_Cpp20 />,
+		'since-cpp17':	<Ctor_CopyFromViewUnbound_SinceCpp17 />,
+	}}/>
+
+Constructs the string from contents copied from object `t` of a `string_view`-like type `T`.
+
+<details>
+	<summary>How does it work</summary>
+	<div>
+		Implicitly converts <code>t</code> to a string view <code>sv</code> as if by
+		<CodeBlock className="language-cpp">
+			std::basic_string_view&lt;CharT, Traits&gt; sv = t;
+		</CodeBlock>
+		then initializes the string with the contents of <code>sv</code>, as if by
+		<CodeBlock className="language-cpp">
+			basic_string(sv.data(), sv.size(), alloc)
+		</CodeBlock>
+	</div>
+</details>
+
+<details>
+	<summary>Overload resolution</summary>
+	<div>
+		This overload participates in overload resolution only if
+		<CodeBlock className="language-cpp">
+			std::is_convertible_v&lt; const T&amp;, std::basic_string_view&lt;CharT, Traits&gt; &gt;
+		</CodeBlock>
+		is <code>true</code> and
+		<CodeBlock className="language-cpp">
+			std::is_convertible_v&lt;const T&amp;, const CharT*&gt;
+		</CodeBlock>
+		is <code>false</code>.
+	</div>
+</details>
+
+
+
+
+<!-------------------------------------------------------------------------------------->
+## Copy from `string_view`-like type constructor (bound)
+
+<SwitchView content={{
+		'cpp20':		<Ctor_CopyFromViewBound_Cpp20 />,
+		'since-cpp17':	<Ctor_CopyFromViewBound_SinceCpp17 />,
+	}}/>
+
+
+
+Constructs the string from subrange `[pos, pos + n)` of contents copied from object `t` of a `string_view`-like type `T`.
+
+<details>
+	<summary>How does it work</summary>
+	<div>
+		Implicitly converts <code>t</code> to a string view <code>sv</code> as if by
+		<CodeBlock className="language-cpp">
+			std::basic_string_view&lt;CharT, Traits&gt; sv = t;
+		</CodeBlock>
+		then initializes the string with the subrange <code>[pos, pos + n)</code> of <code>sv</code> as if by
+		<CodeBlock className="language-cpp">
+			basic_string(sv.data(), sv.size(), alloc)
+		</CodeBlock>
+	</div>
+</details>
+
+<details>
+	<summary>Overload resolution</summary>
+	<div>
+		This overload participates in overload resolution only if
+		<CodeBlock className="language-cpp">
+			std::is_convertible_v&lt; const T&amp;, std::basic_string_view&lt;CharT, Traits&gt; &gt;
+		</CodeBlock>
+		is <code>true</code>.
+	</div>
+</details>
+
+
+## Deleted `std::nullptr_t` constructor
+
+<SwitchView content={{
+		'since-cpp23':
+			<CodeBlock className="language-cpp">
+				constexpr basic_string( std::nullptr_t ) = delete;
+			</CodeBlock>,
+	}}/>
+
+`basic_string` cannot be constructed from `nullptr`.
