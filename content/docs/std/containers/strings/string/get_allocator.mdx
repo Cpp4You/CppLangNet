@@ -1,0 +1,63 @@
+---
+sidebar_position:	3
+title:				std::string::get_allocator method
+sidebar_label:		get_allocator( )
+description:		std::string::get_allocator C++ documentation
+hide_title:			true
+---
+
+[Back to `std::string` class reference.](..)
+
+import Columns					from "@site/src/components/mdx/Columns";
+import SymbolTable, { Symbol }	from "@site/src/components/mdx/SymbolTable";
+import SwitchView				from "@site/src/components/mdx/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- get_allocator() -->
+import Method_get_allocator_UntilCpp20	from './_codes/get_allocator/until-cpp20.mdx';
+import Method_get_allocator_SinceCpp20	from './_codes/get_allocator/since-cpp20.mdx';
+
+<SwitchView content={{
+		'since-cpp20': <Method_get_allocator_SinceCpp20 />,
+		'until-cpp20': <Method_get_allocator_UntilCpp20 />,
+	}}/>
+
+Returns the allocator associated with the string.
+
+:::note
+The `allocator_type` is explained in
+[std::string class reference](../#type-names)
+:::
+
+### Parameters
+
+None.
+
+### Return value
+
+The associated allocator.
+
+### Complexity
+
+Constant.
+
+### Example
+
+:::caution
+This page lacks example.
+:::
+
+### See also
+
+<SymbolTable noTraits>
+	<Symbol name="allocator" 		link="/docs/std/memory/allocator">
+		the default allocator
+	</Symbol>
+	<Symbol name="allocator_traits"	link="/docs/std/memory/allocator_traits">
+		provides information about allocator types
+	</Symbol>
+	<Symbol name="uses_allocator"	link="/docs/std/memory/uses_allocator">
+		checks if the specified type supports uses-allocator construction
+	</Symbol>
+</SymbolTable>
