@@ -1,0 +1,61 @@
+---
+sidebar_position: 2
+---
+
+# Komentarze
+
+import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+
+<NotFinished/>
+
+Komentarze służą do dodawania opisów i wyjaśnień do kodu.
+
+## Rodzaje komentarzy
+
+W C++ znajdziesz komentarze jednolinijkowe
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	// to jest komentarz jednoliniowy
+	// zaczyna się od "//"
+	// i trwa do końca linii
+	std::cout << "Hello, World!";
+}
+```
+
+... oraz wielolinijkowe:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	/*	to jest komentarz wieloliniowy
+		który trwa aż do znaku:			"*",
+		który ma za sobą bezpośrednio:	"/"
+	*/
+	std::cout << "Hello, World!";
+}
+```
+
+## Po co one są
+
+Komentarze często pozwalają pokazać intencje programisty, gdy kod jest skomplikowany.
+Są też bardzo przydatne w takiej sytuacji jak teraz, gdy czytasz ten kurs
+a ja mogę za ich pomocą pisać wyjaśnienia różnych rzeczy 😄
+
+Komentarzy należy używać, gdy stwierdzimy, że nasz kod w niewystarczający sposób
+prezentuje swoje działanie. Zrozumiesz o co chodzi wraz z nauką nowych rzeczy
+z języka C++.
+
+:::tip
+Najlepiej używaj języka angielskiego do pisania komentarzy.
+Na początku nie ma to większego znaczenia, ale zdecydowanie
+warto wyrobić w sobie nawyk pisania po angielsku, bo
+w przyszłości z Twojego kodu może skorzysta również ktoś inny 😃
+:::
+
+**Komentuj swój kod, ale nie przesadź.**
