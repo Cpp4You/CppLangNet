@@ -1,0 +1,4 @@
+root = true
+[*]
+# Most of the standard properties are supported
+indent_size=4
