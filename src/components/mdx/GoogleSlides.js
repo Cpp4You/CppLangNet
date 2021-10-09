@@ -45,11 +45,11 @@ export default function GoogleSlides(props)
 	return (
 		<ParentComp>
 			<iframe
-				className				={styles.slideShow}
-				style					={style}
-				src						={url}
-				frameBorder				={0}
-				allowFullScreen			={true}>
+				className		={styles.slideShow}
+				style			={style}
+				src				={url}
+				frameBorder		={0}
+				allowFullScreen	={true}>
 			</iframe>
 		</ParentComp>
 	);
