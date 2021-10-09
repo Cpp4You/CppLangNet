@@ -54,6 +54,13 @@ function filterSidebarItems(items)
 	projectName:			'CppLangNet', // Usually your repo name.
 	trailingSlash: 			true,
 
+	scripts: [
+		{
+			src: "https://tenor.com/embed.js",
+			async: true,
+		}
+	],
+
 	i18n: {
 		defaultLocale: 'en',
 		locales: [ 'en', 'pl' ]
