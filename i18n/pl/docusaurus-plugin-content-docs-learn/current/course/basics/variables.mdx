@@ -4,9 +4,10 @@ sidebar_position: 3
 
 # Zmienne
 
-import Columns from '@site/src/components/mdx/Columns'
-import CustomCodeBlock from '@site/src/components/mdx/CustomCodeBlock'
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+import Columns			from '@site/src/components/mdx/Columns'
+import GoogleSlides		from '@site/src/components/mdx/GoogleSlides'
+import CustomCodeBlock	from '@site/src/components/mdx/CustomCodeBlock'
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
 
 <NotFinished/>
 
@@ -347,9 +348,73 @@ Za 30 lat, będziesz mieć: 50 lat
 </div>
 </Columns>
 
-:::important Przebieg programu
+#### Przebieg programu
+
 Zmienna `age`:
 - podczas wykonania linii `11` ma wartość `20`.
 - w linii `12` zmienia wartość na `20 + 30` czyli `50`
 - w linii `13` jest już wyświetlana z wartością `50`
-:::
+
+### Modyfikowanie zmiennych
+
+Poza wyżej przedstawionym operatorem `+=`, jest jeszcze wiele innych
+dostępnych operatorów, które modyfikują zawartość zmiennych.
+
+Najprościej będzie je pokazać na przykładzie:
+
+<CustomCodeBlock lineNumbers withTitle maxLines={15}>
+
+```cpp title="main.cpp"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Podaj jakąś liczbę: ";
+
+	int number;
+	std::cin >> number;
+
+	// Zwiększ "value" o 5:
+	number += 5;
+	std::cout << "Po zwiększeniu o 5: " << number << '\n';
+
+	// Zmniejsz "value" o 10:
+	number -= 10;
+	std::cout << "Teraz, po zmniejszeniu o 10: " << number << '\n';
+
+	// Pomnóz trzykrotnie:
+	number *= 3;
+	std::cout << "Teraz, po pomnożeniu razy 3: " << number << '\n';
+
+	// Podziel na 2:
+	number /= 2;
+	std::cout << "Teraz, po podzieleniu przez 2: " << number << '\n';
+
+	// Zwiększ wartość o 1 (inkrementacja):
+	number++;
+	std::cout << "Teraz, po zinkrementowaniu: " << number << '\n';
+
+	// Zmniejsz wartość o 1 (dekrementacja):
+	number--;
+	std::cout << "Teraz, po zdekrementowaniu: " << number << '\n';
+}
+```
+
+</CustomCodeBlock>
+
+Poniżej prezentacja działania programu, po wpisaniu liczby `20`.
+
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vRH7tM4FmZbwqsVz2kpMKONgv-uLfkaRQqmCBYhxlDcFEoIQNBYQgZQK_y6uDRPQrVuwOt3lN8CwH0b/embed"
+		aspectRatio={12 / 9}
+		delay={800}
+		centered
+		fullWidth
+	/>
+
+Zwróć uwagę na operator **inkrementacji** i **dekrementacji**:
+
+```cpp
+value++; // inkrementacja czyli zwiększ o 1
+value--; // dekrementacja czyli zmniejsz o 1
+```
