@@ -23,5 +23,39 @@
 			"",
 			"<NotFinished />"
 		]
+	},
+	"Add \"Details\" section to MDX": {
+		"scope": "markdown react,markdown",
+		"prefix": "details",
+		"body": [
+			"<details>",
+			"\t<summary>${1:Details}</summary>",
+			"\t<div>",
+			"\t\t$2",
+			"\t</div>",
+			"</details>"
+		]
+	},
+	"Add code with a result section to MDX": {
+		"scope": "markdown react,markdown",
+		"prefix": "coderesult",
+		"body": [
+			"<Columns columns={['8fr', '4fr']}>",
+			"<div>",
+			"",
+			"```cpp",
+			"code",
+			"```",
+			"",
+			"</div>",
+			"<div>",
+			"",
+			"```plaintext title=\"Result\"",
+			"result",
+			"```",
+			"",
+			"</div>",
+			"</Columns>"
+		]
 	}
 }
