@@ -8,6 +8,7 @@
 		"**/Thumbs.db": true,
 		"blog": false,
 		".vscode": true,
+		".github": true,
 		".docusaurus": true,
 		"node_modules": false,
 		"i18n/*/docusaurus-plugin-content-blog": true,
