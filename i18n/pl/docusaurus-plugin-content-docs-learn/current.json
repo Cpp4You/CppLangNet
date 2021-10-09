@@ -3,16 +3,16 @@
     "message": "Następny",
     "description": "The label for version current"
   },
-  "sidebar.defaultSidebar.category.👶 Basics": {
-    "message": "👶 Podstawy",
+  "sidebar.defaultSidebar.category.🟢 Basics": {
+    "message": "🟢 Podstawy",
     "description": "The label for category Basics in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.👨‍🏫 Intermediate": {
-    "message": "👨‍🏫 Poziom średni",
+  "sidebar.defaultSidebar.category.🟡 Intermediate": {
+    "message": "🟡 Poziom średni",
     "description": "The label for category Intermediate in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.💪 Advanced": {
-    "message": "💪 Poziom zaawansowany",
+  "sidebar.defaultSidebar.category.🟠 Advanced": {
+    "message": "🟠 Poziom zaawansowany",
     "description": "The label for category Advanced in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.📰 Articles": {
