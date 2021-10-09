@@ -6,7 +6,125 @@ description:		"Lekcja: instrukcje warunkowe w języku C++"
 
 # Instrukcje warunkowe (if, else)
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+import TenorGIF		from '@site/src/components/mdx/TenorGIF';
+import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
 
 <NotFinished/>
+
+Do tej pory tworzyliśmy program, który za każdym razem działa tak samo.
+Jest to nudne. Niech nasz program reaguje na to, co wpisze użytkownik.
+
+Zrobimy aplikacje, która sprawdza czy użytkownik jest pełnoletni 😎
+
+## Przygotowanie kodu
+
+Na sam początek poprośmy o podanie roku swojego urodzenia:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "PROGRAM SPRAWDZAJĄCY PEŁNOLETNOŚĆ\n";
+
+	std::cout << "Podaj swój wiek: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// Rok 2021 - na moment pisanie tego artykułu
+	int age = 2021 - yearOfBirth;
+
+	// highlight-start
+	// Sytuacja A:
+	std::cout << "Jesteś pełnoletni/a";
+	// highlight-end
+
+	// highlight-start
+	// Sytuacja B:
+	std::cout << "Nie jesteś pełnoletni/a";
+	// highlight-end
+}
+```
+
+Wyżej oznaczyłem dwa fragmenty kodu, które powinny się wykonywać w zależności
+od wartości zmiennej `age`.
+
+- sytuacja A (pełnoletni/a) - gdy `age` jest większe lub równe `18`
+- sytuacja B (niepełnoletni/a) - gdy `age` jest mniejsze od `18`
+
+Jak to zrobić w języku C++?
+
+## Instrukcje warunkowe
+
+W C++ mamy kilka rodzajów instrukcji warunkowych. Na ten moment skupimy się na
+najprostszych i najbardziej podstawowych z nich:
+
+- `if` (jeżeli)
+- `else` (w przeciwnym wypadku)
+
+Zobaczmy jak to działa na przykładzie wyżej przygotowanego kodu:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "PROGRAM SPRAWDZAJĄCY PEŁNOLETNOŚĆ\n";
+
+	std::cout << "Podaj swój wiek: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// Rok 2021 - na moment pisanie tego artykułu
+	int age = 2021 - yearOfBirth;
+
+	// highlight-start	
+	if (age >= 18) 
+	{
+		// Sytuacja A:
+		std::cout << "Jesteś pełnoletni/a";
+	}
+	else
+	{
+		// Sytuacja B:
+		std::cout << "Nie jesteś pełnoletni/a";
+	}
+	// highlight-end
+}
+```
+
+Po słowie kluczowym `if`, **w nawiasie okrągłym** piszemy warunek.
+Następnie tworzymy **blok kodu**, który wykona się, jeśli warunek zostanie <u>spełniony</u>.
+
+Po tym, <u>opcjonalnie</u> możemy umieścić `else` wraz z blokiem kodu,
+który wykona się, gdy warunek z `if`-a <u>nie zostanie spełniony</u>.
+
+:::danger Uwaga - brak średnika `;`
+Zauważ, że po nawiasie przy `if` i po `else` **nie stawiamy średnika**:
+
+```cpp
+if (age >= 18) 
+{
+	// Sytuacja A:
+	std::cout << "Jesteś pełnoletni/a";
+}
+else
+{
+	// Sytuacja B:
+	std::cout << "Nie jesteś pełnoletni/a";
+}
+```
+:::
+
+Jeśli `if` lub `else` ma wykonać **tylko jedną** instrukcję, możemy użyć zapisu
+bez bloku kodu - czyli nie piszemy wtedy klamer `{` i `}`:
+
+```cpp
+if (age >= 18) 
+	std::cout << "Jesteś pełnoletni/a"; // Sytuacja A
+else
+	std::cout << "Nie jesteś pełnoletni/a"; // Sytuacja B
+```
 
