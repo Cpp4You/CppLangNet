@@ -4,8 +4,9 @@ sidebar_position: 1
 
 # Pierwszy program
 
-import Columns from '@site/src/components/mdx/Columns';
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+import Columns		from '@site/src/components/mdx/Columns';
+import GoogleSlides	from '@site/src/components/mdx/GoogleSlides';
+import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
 
 <NotFinished/>
 
@@ -66,6 +67,7 @@ Gdy uruchamia aplikację, zaczyna wykonywać po kolei instrukcje z **bloku kodu*
 
 Funkcja główna `main` ma swój blok kodu i wszystko co znajdzie się pomiędzy tymi nawiasami zostanie wykonane po kolei.
 
+
 ### Biblioteka `iostream`
 
 Na samym początku kodu, znajduje się linijka:
@@ -103,6 +105,15 @@ to dostanę następujący efekt:
 Witaj, świecie!1Witaj, świecie!2Witaj, świecie!3
 ```
 
+Prezentacja działania wyżej stworzonego programu (w wersji angielskiej):
+
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vTsdQPMXKN90rcz4i515JK-rpUHjHTc5xIjGVtNJS8XSbloMNObHEBUSszvYi9I7tuKBNIdEKNFh1jk/embed"
+		aspectRatio={960 / 500}
+		delay={500}
+		centered
+	/>
+
 :::caution Średnik na końcu instrukcji!
 Średnik (`;`) oddziela od siebie instrukcje. Kompilator nie patrzy czy instrukcje są napisane w osobnych liniach.
 Średnik jest traktowany jak koniec instrukcji. Z tego powodu taki kod:
@@ -111,6 +122,36 @@ std::cout << "Witaj, świecie!1"; std::cout << "Witaj, świecie!2"; std::cout <<
 ```
 
 jest **akceptowalny**, jednak bardzo nieczytelny.
+:::
+
+Zwróć uwagę, że tekst wypisał się do konsoli bez żadnych odstępów,
+w jednej linii i zawinął się, dopiero pod koniec dostępnego miejsca.
+
+Program robi **dokładnie** to, co ma napisane w kodzie - nie więcej, nie mniej.
+Powyższy kod mówi tyle, że ma wyświetlić podane znaki i on to robi.
+Musimy "złamać linię" w odpowiednim miejscu. Sprawi to, że następne
+znaki będą wyświetlane w następnej linii, od samego początku.
+Aby to zrobić należy **wewnątrz tekstu** umieścić **specjalny znak**
+nowej linii: `\n`, w ten sposób:
+
+```cpp
+std::cout << "Witaj, świecie!\n";
+```
+
+Działanie programu po dodaniu znaków nowej linii:
+
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vRtT6R8wewyaM8WZRUP-KIREO_1HEdReq-BhpmUYKsVWRm5VbRRn7jZbhZyMIZMVzarQ1xkGrjS2eoM/embed"
+		aspectRatio={960 / 500}
+		delay={500}
+		centered
+	/>
+
+:::important Uwaga
+`\n` jest **pojedynczym znakiem**, mimo że żeby go uzyskać musimy napisać <u>w kodzie</u> dwa znaki.
+Jest tak ze względu na to, że wewnątrz tekstu w kodzie, nie możemy dać entera.
+Znak backslash (`\`) informuje, że **następujący** po nim znak, oznacza coś specjalnego
+(tzw. *escape sequence*, o tym kiedy indziej).
 :::
 
 ### Przedrostek przestrzeni nazw
