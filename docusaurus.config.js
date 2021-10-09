@@ -32,6 +32,9 @@ function filterSidebarItems(items)
 		else {
 			result[key] = items[key];
 		}
+
+		// if (result[key].label)
+		// 	result[key].label = `${key}. ${result[key].label}`; 
 	}
 
 	return result;

@@ -74,5 +74,9 @@
   "sidebar.defaultSidebar.category.Utility": {
     "message": "Pomocnicze",
     "description": "The label for category Utility in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Members of string": {
+    "message": "Members of string",
+    "description": "The label for category Members of string in sidebar defaultSidebar"
   }
 }

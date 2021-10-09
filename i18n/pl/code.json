@@ -211,5 +211,47 @@
   },
   "Details": {
     "message": "Szczegóły"
+  },
+  "until C++98": {
+    "message": "do C++98"
+  },
+  "until C++03": {
+    "message": "do C++03"
+  },
+  "until C++11": {
+    "message": "do C++11"
+  },
+  "until C++14": {
+    "message": "do C++14"
+  },
+  "until C++17": {
+    "message": "do C++17"
+  },
+  "until C++20": {
+    "message": "do C++20"
+  },
+  "until C++23": {
+    "message": "do C++23"
+  },
+  "since C++98": {
+    "message": "od C++98"
+  },
+  "since C++03": {
+    "message": "od C++03"
+  },
+  "since C++11": {
+    "message": "od C++11"
+  },
+  "since C++14": {
+    "message": "od C++14"
+  },
+  "since C++17": {
+    "message": "od C++17"
+  },
+  "since C++20": {
+    "message": "od C++20"
+  },
+  "since C++23": {
+    "message": "od C++23"
   }
 }

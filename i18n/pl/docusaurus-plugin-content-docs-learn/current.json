@@ -3,20 +3,20 @@
     "message": "Następny",
     "description": "The label for version current"
   },
-  "sidebar.defaultSidebar.category.Basics": {
-    "message": "Podstawy",
+  "sidebar.defaultSidebar.category.👶 Basics": {
+    "message": "👶 Podstawy",
     "description": "The label for category Basics in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.Intermediate": {
-    "message": "Poziom średni",
+  "sidebar.defaultSidebar.category.👨‍🏫 Intermediate": {
+    "message": "👨‍🏫 Poziom średni",
     "description": "The label for category Intermediate in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.Advanced": {
-    "message": "Poziom zaawansowany",
+  "sidebar.defaultSidebar.category.💪 Advanced": {
+    "message": "💪 Poziom zaawansowany",
     "description": "The label for category Advanced in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.Articles": {
-    "message": "Artykuły",
+  "sidebar.defaultSidebar.category.📰 Articles": {
+    "message": "📰 Artykuły",
     "description": "The label for category Articles in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.Compilation": {
@@ -30,5 +30,9 @@
   "sidebar.defaultSidebar.category.C++ Course": {
     "message": "Kurs C++",
     "description": "The label for category C++ Course in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.💻 Example programs": {
+    "message": "💻 Przykładowe programy",
+    "description": "The label for category Example programs in sidebar defaultSidebar"
   }
 }
