@@ -8,8 +8,8 @@ import Columns			from '@site/src/components/mdx/Columns'
 import GoogleSlides		from '@site/src/components/mdx/GoogleSlides'
 import CustomCodeBlock	from '@site/src/components/mdx/CustomCodeBlock'
 import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
-
-<NotFinished/>
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
 
 W poprzedniej lekcji mówiliśmy o automatyzacji i pokazywaliśmy jak wykonać pewne obliczenia.
 
@@ -109,9 +109,89 @@ Na tym etapie powinieneś zapamiętać następujące typy zmiennych:
 Wyżej wymienione typy zmiennych zawsze piszemy **małą literą**. Ma to znaczenie.
 :::
 
-Przykłady tworzenia zmiennych wyżej wymienionych typów:
+#### Przykłady tworzenia zmiennych:
+
+<hr/>
+
+<Tabs>
+	<TabItem value="int" label={<code>int</code>} default>
+
+```cpp
+// Bez przypisania początkowej wartości
+// Zmienna będzie posiadać przypadkową wartość
+int x;
+
+// Tworzymy zmienną i przypisujemy jej wartość 30
+int y = 30;
+```
 
 
+	</TabItem>
+	<TabItem value="float" label={<code>float</code>}>
+
+```cpp
+// Bez przypisania początkowej wartości
+// Zmienna będzie posiadać przypadkową wartość
+float x;
+
+// Tworzymy zmienną i przypisujemy jej wartość 30
+float y = 30;
+
+// Tworzymy zmienną i przypisujemy jej wartość 1.234
+float z = 1.234f;
+```
+
+:::caution Część ułamkowa
+Gdy zmiennej typu `float` przypisujemy wartość z częścią ułamkową,
+musimy zakończyć tą wartość znakiem `f`:
+- ✔ `12.45f`
+- ❌ `12.45`
+
+Ma to swoje uzasadnienie, ale o tym kiedy indziej.
+:::
+
+	</TabItem>
+	<TabItem value="char" label={<code>char</code>}>
+
+```cpp
+// Bez przypisania początkowej wartości
+// Zmienna będzie posiadać przypadkową wartość
+char x;
+
+// Tworzymy zmienną i przypisujemy jej znak 'j'
+char y = 'j';
+```
+
+:::danger Znaki
+Pojedyncze znaki zapisujemy **zawsze** między <u>pojedynczymi
+apostrofami</u>.
+- znak: `'c'`
+- ciąg znaków, składający się z jednego znaku: `"c"`
+
+Zatem:
+- ✔ `char x = 'c';`
+- ❌ `char x = "c";`
+:::
+
+	</TabItem>
+	<TabItem value="bool" label={<code>bool</code>}>
+
+```cpp
+// Bez przypisania początkowej wartości
+// Zmienna będzie posiadać przypadkową wartość
+bool x;
+
+// Tworzymy zmienną i przypisujemy jej wartość "prawda"
+bool y = true;
+
+// Tworzymy zmienną i przypisujemy jej wartość "fałsz"
+bool z = false;
+```
+
+	</TabItem>
+</Tabs>
+
+<hr/>
 
 ### Nazwa zmiennej
 
@@ -124,8 +204,6 @@ Nazwa może być dowolna, z pewnymi istotnymi ograniczeniami:
 	- ✔ podkreślnika `_`
 
 Możesz utworzyć tyle zmiennych ile tylko chcesz, jednak muszą one różnić się nazwami.
-
-:::caution Uwaga
 Nazwa zmiennej jest jej unikalnym identyfikatorem (z pewnymi wyjątkami, ale o nich kiedy indziej).
 
 Wielkość liter ma znaczenie:
@@ -136,7 +214,6 @@ float X = 12.34f;
 ```
 
 W wyżej przedstawionym kodzie, zmienne `x` oraz `X` to dwie różne zmienne!
-:::
 
 :::tip Dobra praktyka
 Najlepiej korzystaj z **tylko** angielskich nazw, czyli np:
@@ -167,6 +244,16 @@ int x = 30;
 ```
 
 Uwaga, słowo to: "inicjalizacja" ✔, nie "inicjacja" ❌
+
+:::caution Brak inicjalizacji
+Niezainicjalizowana zmienna, wewnątrz bloku funkcji (np. wewnątrz `main`-a)
+będzie na początku posiadała przypadkową wartość, **nie będzie wyzerowana**.
+
+Zostawienie zmiennej bez wartości początkowej **może powodować problemy**
+w dalszej części kodu. Czasami jednak intencjonalnie możemy to pomijać,
+ale o tym później.
+:::
+
 
 ### Średnik na końcu
 
@@ -213,6 +300,10 @@ po czym zapisuje ową wartość do zmiennej.
 Zwróć uwagę, że:
 - `cout` używa operatora `<<`
 - `cin` używa operatora `>>`
+
+Oprócz tego, możesz zobaczyć, że **nie przypisaliśmy zmiennej `age` wartości początkowej.**
+Nie jest to potrzebne, bo od razu po jej stworzeniu, używamy `std::cin` aby zapisać
+do niej wartość taką, jaką użytkownik wpisze z klawiatury.
 
 :::tip Zapamiętaj
 Możesz zapamiętać kierunek znaczków w tym operatorze w prosty sposób
@@ -416,9 +507,4 @@ Poniżej prezentacja działania programu, po wpisaniu liczby `20`.
 		fullWidth
 	/>
 
-Zwróć uwagę na operator **inkrementacji** i **dekrementacji**:
-
-```cpp
-value++; // inkrementacja czyli zwiększ o 1
-value--; // dekrementacja czyli zmniejsz o 1
-```
+Więcej o możliwościach zmiennych dowiesz się z następnych części kursu 😊
