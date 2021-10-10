@@ -10,3 +10,107 @@ description: 		"Lekcja: wstęp do vectora w języku C++"
 import NotFinished from "@site/i18n/pl/presets/NotFinished.mdx";
 
 <NotFinished />
+
+W tej lekcji pokażę Ci czym są i do czego służą tablice, w ich
+najprostszej formie, z użyciem narzędzia `std::vector`.
+
+
+## Do czego to potrzebne
+
+Załóżmy, że chcemy przechowywać nicki graczy, którzy są na serwerze.
+Nick jest tekstem, który będziemy zapisywać w zmiennej typu `std::string`.
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string playerName1;
+	std::string playerName2;
+	std::string playerName3;
+
+	std::cout << "Podaj nick gracza 1: ";
+	std::cin >> playerName1;
+
+	std::cout << "Podaj nick gracza 2: ";
+	std::cin >> playerName2;
+
+	std::cout << "Podaj nick gracza 3: ";
+	std::cin >> playerName3;
+}
+```
+
+Zakładając, że mamy 3 graczy na serwerze, możemy skonstruować
+taki kod jak wyżej. W sytuacji, gdy będziemy chcieli mieć
+5 graczy, będziemy musieli bawić się komendą "Kopiuj" -> "Wklej"
+dodatkowe kilka razy.
+
+Bardzo szybko robienie tego traci sens. Czy istnieje narzędzie,
+które pozwoli nam skrócić ten kod i nie używać tyle razy
+kopiuj-wklej?
+
+Pomogą nam w tym tablice.
+
+## Czym jest tablica
+
+Tablica to kontener, który może przechowywać wewnątrz *ileś* elementów
+jakiegoś określonego typu. Bardzo szybko można zauważyć, że nasze 3 zmienne:
+
+```cpp
+std::string playerName1;
+std::string playerName2;
+std::string playerName3;
+```
+
+są tego samego typu. Zamiast robić trzy osobne zmienne, możemy stworzyć
+**tablicę**, która zawiera trzy elementy:
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector> // niezbędne do korzystania z std::vector
+
+int main()
+{
+	std::vector< std::string > playerNames(3);
+	// ...
+}
+```
+
+Żeby użyć typu `std::vector`, musimy dodać kolejnego `#include`, tym razem:
+```cpp
+#include <vector>
+```
+
+`vector` jest tzw. szablonem, a to oznacza, że można go użyć z różnymi typami,
+które podajemy w nawiasie ostrym, zaraz po `std::vector`:
+
+```cpp
+std::vector< int >
+std::vector< float >
+std::vector< char >
+std::vector< std::string >
+std::vector< /*cokolwiek*/ >
+```
+
+Ale co to oznacza "*vector danego typu*"? Należy rozumieć przez to tyle,
+że `std::vector<T>` przechowuje elementy typu `T`.
+
+Zapis:
+```cpp
+std::vector< std::string > playerNames(3);
+```
+
+oznacza, że tworzymy *zmienną typu tablicowego* o nazwie `playerNames`,
+która przechowuje teksty (`std::string`).
+
+Nawias z trójką w środku na końcu tego zapisu:
+
+```cpp
+playerNames(3)
+```
+
+sprawi, że przy utworzeniu tej tablicy, zostaną utworzone
+automatycznie wewnątrz niej `3` zmienne typu `std::string`.
+
