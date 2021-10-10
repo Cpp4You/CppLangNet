@@ -196,7 +196,36 @@ int main() {
 Constructs the string with a substring `[pos, other.size())` of `other`.  
 Other words, copies the `other` string starting from element at `pos` index.
 
+### Example
 
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+
+	// |01234567....|
+	// |-------+++++|
+	// "Hello, World"
+	std::string hw = "Hello, World";
+	std::string s(hw, 7);
+
+	std::cout << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+World
+```
+
+</div>
+</Columns>
 
 <!-------------------------------------------------------------------------------------->
 ## Copy substring constructor (bound)
@@ -210,7 +239,36 @@ Constructs the string with a substring `[pos, pos+count)` of `other`.
 If `count == npos`, or if the requested substring lasts past the end of the string,
 the resulting substring is `[pos, other.size())`.
 
+### Example
 
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+	
+	// |012345......|
+	// |--++++------|
+	// "Hello, World"
+	std::string hw = "Hello, World";
+	std::string s(hw, 2, 4);
+
+	std::cout << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+llo,
+```
+
+</div>
+</Columns>
 
 <!-------------------------------------------------------------------------------------->
 ## Copy character range constructor (unbound)
@@ -234,7 +292,31 @@ The behavior is undefined if `[s, s + Traits::length(s))` is not a valid range
 	</div>
 </details>
 
+### Example
 
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string s("Hello, World!");
+
+	std::cout << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Hello, World!
+```
+
+</div>
+</Columns>
 
 <!-------------------------------------------------------------------------------------->
 ## Copy character range constructor (bound)
@@ -248,7 +330,35 @@ Constructs the string with the first `count` characters of character string poin
 `s` can contain null characters. The length of the string is `count`.
 The behavior is undefined if `[s, s + count)` is not a valid range.
 
+### Example
 
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+	
+	// |01234.......|
+	// |+++++-------|
+	// "Hello, World"
+	std::string s("Hello, World", 5);
+
+	std::cout << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Hello
+```
+
+</div>
+</Columns>
 
 <!-------------------------------------------------------------------------------------->
 ## Copy from iterator-range constructor
@@ -278,6 +388,35 @@ Constructs the string with the contents of the range `[first, last)`.
 	</div>
 </details>
 
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+#include <array>
+
+int main() {
+	std::array<char, 6> chars{ "Hello" };
+
+	std::string s(chars.begin(), chars.end());
+
+	std::cout << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Hello
+```
+
+</div>
+</Columns>
+
 <!-------------------------------------------------------------------------------------->
 ## Copy constructor
 
@@ -290,7 +429,33 @@ Constructs the string with a copy of the contents of `other`.
 
 You can optionally specify a custom allocator (2).
 
+### Example
 
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string hw = "Hello, World";
+	// Uses copy constructor, not assignment operator
+	std::string s = hw;
+
+	std::cout << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Hello World
+```
+
+</div>
+</Columns>
 
 <!-------------------------------------------------------------------------------------->
 ## Move constructor
@@ -307,7 +472,34 @@ Constructs the string with the contents of `other` using [move semantics](/learn
 
 You can optionally specify a custom allocator (2).
 
+### Example
 
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string hw = "Hello, World";
+	// Uses move constructor, not assignment operator
+	std::string s = std::move(hw);
+	// hw has unspecified state right now
+
+	std::cout << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Hello, World
+```
+
+</div>
+</Columns>
 
 <!-------------------------------------------------------------------------------------->
 ## Initializer-list constructor
@@ -319,6 +511,35 @@ You can optionally specify a custom allocator (2).
 
 Constructs the string with the contents of the [initializer list](/docs/std/lang-support/initializer-list) `ilist`.
 
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string s = { "Hello" };
+	// Same as:
+	// std::string s = { 'H', 'e', 'l', 'l', 'o', '\0' };
+
+	std::cout << s << '\n';
+	std::cout << s.size() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Hello
+5
+```
+
+</div>
+</Columns>
 
 <!-------------------------------------------------------------------------------------->
 ## Copy from `string_view`-like type constructor (unbound)
