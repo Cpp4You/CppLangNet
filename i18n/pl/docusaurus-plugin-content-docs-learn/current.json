@@ -5,19 +5,19 @@
   },
   "sidebar.defaultSidebar.category.🟢 Basics": {
     "message": "🟢 Podstawy",
-    "description": "The label for category Basics in sidebar defaultSidebar"
+    "description": "The label for category 🟢 Basics in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.🟡 Intermediate": {
     "message": "🟡 Poziom średni",
-    "description": "The label for category Intermediate in sidebar defaultSidebar"
+    "description": "The label for category 🟡 Intermediate in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.🟠 Advanced": {
     "message": "🟠 Poziom zaawansowany",
-    "description": "The label for category Advanced in sidebar defaultSidebar"
+    "description": "The label for category 🟠 Advanced in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.📰 Articles": {
     "message": "📰 Artykuły",
-    "description": "The label for category Articles in sidebar defaultSidebar"
+    "description": "The label for category 📰 Articles in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.Compilation": {
     "message": "Kompilacja kodu",
@@ -33,6 +33,10 @@
   },
   "sidebar.defaultSidebar.category.💻 Example programs": {
     "message": "💻 Przykładowe programy",
-    "description": "The label for category Example programs in sidebar defaultSidebar"
+    "description": "The label for category 💻 Example programs in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.5. Arrays": {
+    "message": "5. Tablice",
+    "description": "The label for category Arrays in sidebar defaultSidebar"
   }
 }
