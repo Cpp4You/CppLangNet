@@ -128,3 +128,261 @@ else
 	std::cout << "Nie jesteś pełnoletni/a"; // Sytuacja B
 ```
 
+## Wyrażenia logiczne
+
+Wewnątrz nawiasu okrągłego przy `if` wpisujemy **wyrażenie logiczne**, czyli takie,
+którego wynik jest wartością prawda (`true`) lub fałsz (`false`).
+
+`age >= 18` jest wyrażeniem logicznym, które ma wartość `true`, gdy `age` jest
+**większe lub równe** 18.
+
+### Operatory logiczne
+
+Wyżej użyliśmy **operatora logicznego** `>=`. Oprócz niego w C++ mamy też inne.
+
+Używają one zapisu prawie identycznego do matematycznego, z tą różnicą,
+że *lub równe*, uzyskujemy przez dodanie `=` po **prawej stronie** od `>` lub `<`.
+Oto ważniejsze z nich:
+
+- `a > b` - `a` większe od `b`
+- `a < b` - `a` mniejsze od `b`
+- `a >= b` - `a` większe lub równe `b`
+- `a <= b` - `a` mniejsze lub równe `b`
+
+Oraz dwa jeszcze istotniejsze operatory:
+
+- `a == b` - `a` **równe** `b`
+- `a != b` - `a` **różne od** `b`
+
+:::danger Uwaga
+W `if` do sprawdzenia czy `a` jest równe `b` używamy **podwójnego znaku równa się**: `==`
+
+Zapis:
+```cpp
+if (a = b)
+{
+	// ...
+}
+```
+**NIE DZIAŁA** tak jak Ci się wydaje. Powiemy o tym kiedy indziej, na ten moment **zawsze** upewniaj
+się, że używasz:
+- ✔ `if (a == b)`
+- ❌ `if (a = b)`
+:::
+
+#### Operator negacji
+
+Ciekawym przypadkiem jest operator negacji, który jest **jednoargumentowy**.
+To oznacza, że operuje tylko na jednym wyrażeniu. Zobaczmy to na przykładzie:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "PROGRAM SPRAWDZAJĄCY PEŁNOLETNOŚĆ\n";
+
+	std::cout << "Podaj swój wiek: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// Rok 2021 - na moment pisanie tego artykułu
+	int age = 2021 - yearOfBirth;
+
+	// highlight-next-line
+	if (!(age >= 18)) 
+		std::cout << "Nie jesteś pełnoletni/a"; // Sytuacja B
+	else
+		std::cout << "Jesteś pełnoletni/a"; // Sytuacja A
+}
+```
+
+Negacja powoduje zmianę wartości wyrażenia z prawdy na fałsz lub z fałszu na prawdę.
+Wzieliśmy wyżej całe wyrażenie `age >= 18` w nawias i wykonaliśmy negację, za pomocą
+wykrzyknika **przed** wyrażeniem:
+
+```cpp
+!(age >= 18)
+```
+
+W efekcie, ten zapis jest równoważny z
+```cpp
+age < 18
+```
+
+### Łączenie warunków
+
+Możemy również połączyć kilka warunków ze sobą:
+
+```cpp
+if (age >= 18 and age <= 30)
+{
+	std::cout << "Jesteś pełnoletni, ale nie masz więcej niż 30 lat";
+}
+```
+
+```cpp
+if (age <= 6 or age > 60)
+{
+	std::cout << "Dla dzieci do 6 roku życia i osób po 60-tce bilet bezpłatny - wchodzisz za darmo";
+}
+```
+
+- `and` - wymaga, aby **obydwa** wyrażenia - po jego lewej i prawej stronie, były prawdziwe
+- `or` - wymaga, aby **przynajmniej jedno** wyrażenie - po jego lewej lub prawej stronie, było prawdziwe
+
+
+<!-- Ta notka być może do wywalenia -->
+Powyższe wytłumaczenie jest uproszczeniem. W języku formalnym powiedzielibyśmy, że:
+:::note Zapamiętaj
+Jeśli `L` i `P` to wyrażenia logiczne, stojące odpowiednio po lewej i prawej stronie operatora `and`/`or` to:
+- `L and P` jest prawdziwe wtedy i tylko wtedy, gdy `L` jest prawdziwe **oraz** `P` jest prawdziwe.  
+- `L or P` jest prawdziwe wtedy i tylko wtedy, gdy `L` jest prawdziwe **lub** `P` jest prawdziwe.
+:::
+
+Możesz też w ten sposób łączyć więcej wyrażeń logicznych:
+
+```cpp
+if (age > 5 and age < 15 or age > 60)
+{
+
+}
+```
+
+Wtedy musisz wziąć pod uwagę **priorytet operatorów**, czyli to w jakiej kolejności
+zostanie to sprawdzone.
+
+Operator `and` ma większy priorytet niż `or`, więc analizując to wyrażenie
+komputer najpierw bierze pod uwagę właśnie jego, dopiero później `or`.
+Jeśli masz problem ze zrozumieniem tego, możesz wyobrazić sobie,
+że komputer jakby *dodaje nawiasy* wokoło wyrażeń `L and P`,
+a jak wiadomo, **to co w nawiasie ma większy priorytet**.
+
+Wyżej przedstawiony kod zadziała tak samo jak ten:
+
+```cpp
+if ( (age > 5 and age < 15) or age > 60 )
+{
+
+}
+```
+
+... czyli sprawdzi czy:
+
+- wiek mieści się w zakresie (5, 15)
+
+**lub**
+
+- wiek jest większy od 60
+
+:::caution Uwaga
+W programowaniu słownie zapisanych `and` i `or` używa się rzadko.
+Programiści częściej używają ich odpowiedników w postaci:
+
+- `&&` zamiast `and`
+- `||` zamiast `or`
+
+Ich zachowanie jest identyczne i w dalszej części kursu będziemy się właśnie nimi posługiwać.
+:::
+
+### Typ `bool`
+
+Typ danych `bool` służy do przechowywania wartości logicznych
+prawda (`true`) lub fałsz (`false`).
+
+Przykład:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "Podaj swój rok urodzenia: ";
+	std::cin >> yearOfBirth;
+
+	int age = 2021 - yearOfBirth;
+
+	// highlight-next-line
+	bool isAdult = age >= 18;
+
+	// highlight-next-line
+	if (isAdult)
+		std::cout << "Jesteś pełnoletni/a";
+	else
+		std::cout << "Jesteś niepełnoletni/a";
+}
+```
+
+Wynik wyrażenia `age >= 18` (prawda/fałsz) zapisujemy do zmiennej `isAdult`.
+Następnie, jeśli `isAdult` jest prawdą, to zobaczymy w konsoli:
+
+```
+Jesteś pełnoletni/a
+```
+
+w przeciwnym wypadku:
+
+```
+Jesteś niepełnoletni/a
+```
+
+Używając operatora negacji na zmiennej `bool`, możemy łatwo przełączać jej stan
+na zmianę:
+
+```cpp
+// Przycisk wciśnięty?
+bool isButtonPressed = true;
+
+isButtonPressed = !isButtonPressed; // zmiana z true na false
+isButtonPressed = !isButtonPressed; // teraz zmiana z false na true
+
+isButtonPressed = !!isButtonPressed; // podwójne zaprzeczenie -> brak efektu
+```
+
+## Złożone instrukcje warunkowe
+
+Załóżmy, że chcemy sprzedawać bilety na basen po różnych
+cenach, w zależności od wieku. Oto kryteria:
+
+- dzieci poniżej 6 lat: za darmo
+- osoby w wieku 6 do 17 lat włącznie: 10zł
+- osoby dorosłe do 59 lat włącznie: 18zł
+- osoby od 60 lat: 15zł
+
+Użyjemy w tym celu konstrukcji `else if`, by sprawdzać kolejne warunki:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "BASEN - ZAKUP BILETÓW\n";
+	std::cout << "Podaj swój wiek: ";
+
+	int age;
+	std::cin >> age;
+
+	if (age < 6)
+		std::cout << "Wchodzisz za darmo";
+	// highlight-next-line
+	else if (age <= 17)
+		std::cout << "Cena biletu: 10zł";
+	// highlight-next-line
+	else if (age <= 59)
+		std::cout << "Cena biletu: 18zł";
+	else
+		std::cout << "Cena biletu: 15zł";
+
+}
+```
+
+Spełnienie warunku w którymkolwiek z `if`-ów (wliczając `else if`) sprawia,
+że dalsze sprawdzanie łańcuszka `else if`-ów **zostaje przerwane**. 
+
+:::important Uwaga
+`else if`, ani `else` nie jest w ogóle brany pod uwagę, gdy jeden z poprzednich `if` lub `else if`
+w łańcuszku został spełniony.
+:::
+
+<!-- TODO: prezentacja działania -->
