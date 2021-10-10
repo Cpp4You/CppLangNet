@@ -119,7 +119,7 @@ Wyżej wymienione typy zmiennych zawsze piszemy **małą literą**. Ma to znacze
 	<TabItem value="int" label={<code>int</code>} default>
 
 ```cpp
-// Bez przypisania początkowej wartości
+// Bez inicjalizacji
 // Zmienna będzie posiadać przypadkową wartość
 int x;
 
@@ -132,7 +132,7 @@ int y = 30;
 	<TabItem value="float" label={<code>float</code>}>
 
 ```cpp
-// Bez przypisania początkowej wartości
+// Bez inicjalizacji
 // Zmienna będzie posiadać przypadkową wartość
 float x;
 
@@ -145,7 +145,7 @@ float z = 1.234f;
 
 :::caution Część ułamkowa
 Gdy zmiennej typu `float` przypisujemy wartość z częścią ułamkową,
-musimy zakończyć tą wartość znakiem `f`:
+musimy zakończyć tą liczbę znakiem `f`:
 - ✔ `12.45f`
 - ❌ `12.45`
 
@@ -156,7 +156,7 @@ Ma to swoje uzasadnienie, ale o tym kiedy indziej.
 	<TabItem value="char" label={<code>char</code>}>
 
 ```cpp
-// Bez przypisania początkowej wartości
+// Bez inicjalizacji
 // Zmienna będzie posiadać przypadkową wartość
 char x;
 
@@ -179,7 +179,7 @@ Zatem:
 	<TabItem value="bool" label={<code>bool</code>}>
 
 ```cpp
-// Bez przypisania początkowej wartości
+// Bez inicjalizacji
 // Zmienna będzie posiadać przypadkową wartość
 bool x;
 
@@ -201,12 +201,12 @@ Nazwa może być dowolna, z pewnymi istotnymi ograniczeniami:
 
 - ❌ nie może posiadać spacji (zabronione: ❌ `abc def`)
 - ✔ może składać się z:
-	- ✔ znaków `a-z` oraz `A-Z`
+	- ✔ znaków od `a`-`z` oraz `A`-`Z`
 	- ✔ cyfr, ale nie na początku (zabronione: ❌ `932abc`)
 	- ✔ podkreślnika `_`
 
-Możesz utworzyć tyle zmiennych ile tylko chcesz, jednak muszą one różnić się nazwami.
-Nazwa zmiennej jest jej unikalnym identyfikatorem (z pewnymi wyjątkami, ale o nich kiedy indziej).
+Możesz utworzyć tyle zmiennych ile tylko chcesz, jednak muszą one różnić się nazwami,
+bo są one ich unikalnymi identyfikatorami (z pewnymi wyjątkami, ale o nich kiedy indziej).
 
 Wielkość liter ma znaczenie:
 
@@ -275,7 +275,7 @@ porównywać itp.
 
 Nasze programy będą nieco ciekawsze, gdy pozwolimy użytkownikowi
 wpisać coś do konsoli.  
-Zrobimy to za pomocą instrukcji `cin` (ang: *character input*):
+Zrobimy to za pomocą instrukcji `cin` (ang: <i>**c**haracter **in**put</i>):
 
 ```cpp
 #include <iostream>
@@ -296,7 +296,7 @@ int main()
 do zmiennej, którą podajemy po znakach `>>`.
 
 O standardowym wejściu powiemy kiedy indziej, na razie zapamiętaj, że
-`cin` pozwala użytkownikowi programu wpisać coś od konsoli,
+`cin` umożliwia użytkownikowi programu wpisać coś od konsoli,
 po czym zapisuje ową wartość do zmiennej.
 
 Zwróć uwagę, że:
