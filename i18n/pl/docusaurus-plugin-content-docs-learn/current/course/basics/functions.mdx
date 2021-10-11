@@ -6,6 +6,283 @@ description:		"Lekcja: funkcje w języku C++"
 
 # Funkcje
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
+import CustomCodeBlock	from '@site/src/components/mdx/CustomCodeBlock';
+import GoogleSlides		from '@site/src/components/mdx/GoogleSlides';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
 
 <NotFinished/>
+
+Nieodłącznym elementem każdego programu, który do tej pory pisaliśmy
+była **funkcja `main`**:
+
+```cpp
+int main()
+{
+
+}
+```
+
+W tej lekcji dowiesz się więcej o tym, czym w ogóle są funkcje.
+
+## Po co funkcje
+
+Dzięki funkcjom, możesz jakby **nauczyć** komputer wykonywania pewnych akcji.
+Pomyśl o tym w ten sposób: gdy rodzic prosi:
+
+> Kup w sklepie 10 jajek
+
+to nie musi Ci tłumaczyć krok po kroku, że:
+
+- masz się ubrać
+- wziąć pieniądze
+- iść zgodnie z trasą do odpowiednie sklepu
+- otworzyć drzwi do sklepu
+- itd...
+
+Nie musi tego robić, bo nauczyłeś/aś się już, co się kryję pod pewnym stwierdzeniem
+"kup w sklepie XYZ". Jaki jest plus tego? Że zaoszczędzacie mnóstwo czasu
+i wysiłku, bo **nie musicie** się za każdym razem **powtarzać**.
+
+Z komputerem jest podobnie. Możemy go raz nauczyć pewnego postępowania,
+a potem wielokrotnie korzystać z tego, nie musząc powtarzać za każdym razem detali.
+
+## Naiwne podejście
+
+Zróbmy program, który pozwoli nam zarządzać graczami.
+Ma mieć on takie opcje:
+
+1. ⚠ Wyświetlanie listy graczy
+2. Dodawanie gracza (po czym ⚠ wyświetlana jest lista obecnych graczy)
+3. Usuwanie gracza (po czym ⚠ wyświetlana jest lista obecnych graczy)
+4. Zmiana nicku gracza
+
+Po przeanalizowaniu tych punktów, można zauważyć, że będziemy musieli
+w trzech różnych miejscach użyć dokładnie tego samego kodu.
+Oznaczyłem je znacznikiem ⚠.
+
+Poniżej przykład, jak mógłby wyglądać ten program. Zaznaczyłem w nim
+fragmenty, które kilkukrotnie się powtarzają, są identyczne.
+
+<Tabs>
+<TabItem value="code" label="Pełen kod" default>
+
+<CustomCodeBlock lineNumbers maxLines={25} resizable>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+int main()
+{
+	std::vector< std::string > players;
+
+	int choice = 0;
+	do
+	{
+		std::cout	<< "--- MENU GRY ---\n";
+					<< "1) Lista graczy\n"
+					<< "2) Dodaj gracza\n"
+					<< "3) Usuń gracza\n"
+					<< "4) Zmień nick gracza\n";
+					<< "5) Wyjdź\n";
+					<< "Twój wybór: ";
+
+		std::cin >> choice;
+
+		if (choice == 1) // WYŚWIETLANIE LISTY GRACZY
+		{
+			// highlight-start
+			// ❌ Powtórzenie tego samego kodu ❌
+			std::cout << "\n-----Lista graczy-----\n";
+			for (int i = 0; i < players.size(); i++)
+			{
+				std::cout << "[" << i << "]: " << players[i] << "\n";
+			}
+			// highlight-end
+		}
+		else if (choice == 2) // DODAWANIE NOWEGO GRACZA
+		{
+			std::cout << "Podaj nick dla nowego gracza: ";
+
+			std::string newPlayerName;
+			std::cin >> newPlayerName;
+			
+			players.push_back(newPlayerName);
+
+			std::cout << "Dodano gracza: " << newPlayerName << "\n";
+
+			// highlight-start
+			// ❌ Powtórzenie tego samego kodu ❌
+			std::cout << "\n-----Lista graczy-----\n";
+			for (int i = 0; i < players.size(); i++)
+			{
+				std::cout << "[" << i << "]: " << players[i] << "\n";
+			}
+			// highlight-end
+		}
+		else if (choice == 3) // USUWANIE GRACZA
+		{
+			std::cout << "Podaj indeks gracza do usunięcia: ";
+
+			int playerIndex;
+			std::cin >> playerIndex;
+
+			if (playerIndex >= 0 && playerIndex < players.size())
+			{
+				std::cout	<< "Usuwam gracza " << players[playerIndex]
+							<< " (indeks: " << playerIndex << ")\n"; 
+
+				players.erase(players.begin() + playerIndex);
+
+				// highlight-start
+				// ❌ Powtórzenie tego samego kodu ❌
+				std::cout << "\n-----Lista graczy-----\n";
+				for (int i = 0; i < players.size(); i++)
+				{
+					std::cout << "[" << i << "]: " << players[i] << "\n";
+				}
+				// highlight-end
+			}
+			else
+			{
+				std::cout << "Niepoprawny indeks gracza!\n";
+			}
+		}
+		else if (choice == 4) // ZMIANA NAZWY GRACZA
+		{
+			std::cout << "Podaj indeks gracza do zmiany nazwy: ";
+
+			int playerIndex;
+			std::cin >> playerIndex;
+
+			if (playerIndex >= 0 && playerIndex < players.size())
+			{
+				std::cout << "Podaj nową nazwę gracza: ";
+
+				std::string newPlayerName;
+				std::cin >> newPlayerName;
+
+				std::cout	<< "Zmieniam nazwę gracza z " << players[playerIndex]
+							<< " na " << newPlayerName
+							<< " (indeks: " << playerIndex << ")\n"; 
+
+				players[playerIndex] = newPlayerName;
+			}
+		}
+
+		std::cout << '\n';
+
+	} while(choice >= 1 && choice <= 4);
+}
+```
+
+</CustomCodeBlock>
+
+</TabItem>
+<TabItem value="instruction" label="Instrukcja">
+	{/* DO ZMIANY */}
+	<GoogleSlides
+			src="https://docs.google.com/presentation/d/e/2PACX-1vTsdQPMXKN90rcz4i515JK-rpUHjHTc5xIjGVtNJS8XSbloMNObHEBUSszvYi9I7tuKBNIdEKNFh1jk/embed"
+			aspectRatio={960 / 500}
+			delay={500}
+			centered
+			fullWidth
+		/>
+</TabItem>
+<TabItem value="result" label="Wynik">
+	{/* DO ZMIANY */}
+	<GoogleSlides
+			src="https://docs.google.com/presentation/d/e/2PACX-1vTsdQPMXKN90rcz4i515JK-rpUHjHTc5xIjGVtNJS8XSbloMNObHEBUSszvYi9I7tuKBNIdEKNFh1jk/embed"
+			aspectRatio={960 / 500}
+			delay={500}
+			centered
+			fullWidth
+		/>
+</TabItem>
+
+
+</Tabs>
+
+Ten kod jest spory. Mamy jedną, gigantyczną funkcję `main`, wiele powtórzeń tych samych instrukcji:
+```cpp
+std::cout << "\n-----Lista graczy-----\n";
+for (int i = 0; i < players.size(); i++)
+{
+	std::cout << "[" << i << "]: " << players[i] << "\n";
+}
+```
+
+My jako programiści, chcemy sobie pracę **ułatwiać**.
+
+## Tworzenie funkcji
+
+Musimy "nauczyć" program, wyświetlać listę graczy za pomocą jednego prostego polecenia.
+Nazwijmy to polecenie:
+
+```cpp
+showPlayerList
+```
+
+Aby stworzyć najprostszą funkcję o tej nazwie, musimy napisać podany poniżej kod.  
+Musi on:
+- ✔ być poza kodem funkcji `main`
+- ✔ znaleźć się przed funkcją `main`
+
+```cpp
+void showPlayerList()
+{
+	// Kod funkcji, tak jak przy mainie
+}
+```
+
+Ten zapis zaraz zostanie dokładnie wyjaśniony. Na tą chwilę pójdźmy jeszcze troszkę dalej.
+Żeby program **wywołał** funkcję, a więc wykonał kod, który się wewnątrz tej funkcji znajduje
+musimy użyć zapisu:
+
+```cpp
+showPlayerList();
+```
+
+:::danger Uwaga
+Zwróć uwagę na średnik `;` na końcu wywołania!
+:::
+
+### Kod funkcji
+
+Nasza funkcja jest na ten moment całkowicie pusta, więc nie robi nic.
+Przeklejmy tam kod, który wcześniej się powtarzał.
+Początek kodu teraz wygląda tak:
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+
+void showPlayerList()
+{
+	// ❌ Nie wiadomo czym jest "players" ❌
+
+	std::cout << "\n-----Lista graczy-----\n";
+	for (int i = 0; i < players.size(); i++) // ❌
+	{
+		std::cout << "[" << i << "]: " << players[i] << "\n"; // ❌
+	}
+}
+
+int main()
+{
+	// highlight-start
+	// Dopiero tutaj wprowadzamy zmienną "players" ✅
+	std::vector< std::string > players;
+	// highlight-end
+
+	// ... cała reszta main-a 
+}
+```
+
+:::caution Uwaga
+Powyższy kod na tym etapie jeszcze się ❌ **nie skompiluje**!
+:::
