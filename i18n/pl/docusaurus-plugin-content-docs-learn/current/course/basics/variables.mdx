@@ -459,7 +459,24 @@ dostępnych operatorów, które modyfikują zawartość zmiennych.
 
 Najprościej będzie je pokazać na przykładzie:
 
-<CustomCodeBlock lineNumbers withTitle maxLines={15}>
+<Tabs>
+
+<TabItem value="presentation" label="Prezentacja" default>
+
+Poniżej prezentacja działania programu, po wpisaniu liczby `20`.
+
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vRH7tM4FmZbwqsVz2kpMKONgv-uLfkaRQqmCBYhxlDcFEoIQNBYQgZQK_y6uDRPQrVuwOt3lN8CwH0b/embed"
+		aspectRatio={12 / 9}
+		delay={800}
+		centered
+		fullWidth
+	/>
+
+</TabItem>
+
+<TabItem value="code" label="Kod">
+<CustomCodeBlock lineNumbers withTitle maxLines={25} resizable>
 
 ```cpp title="main.cpp"
 #include <iostream>
@@ -498,15 +515,9 @@ int main()
 ```
 
 </CustomCodeBlock>
+</TabItem>
 
-Poniżej prezentacja działania programu, po wpisaniu liczby `20`.
+</Tabs>
 
-<GoogleSlides
-		src="https://docs.google.com/presentation/d/e/2PACX-1vRH7tM4FmZbwqsVz2kpMKONgv-uLfkaRQqmCBYhxlDcFEoIQNBYQgZQK_y6uDRPQrVuwOt3lN8CwH0b/embed"
-		aspectRatio={12 / 9}
-		delay={800}
-		centered
-		fullWidth
-	/>
 
 Więcej o możliwościach zmiennych dowiesz się z następnych części kursu 😊
