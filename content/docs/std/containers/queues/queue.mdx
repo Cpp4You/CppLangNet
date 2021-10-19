@@ -1,0 +1,184 @@
+---
+sidebar_position: 2
+title: queue
+---
+
+# Queue class
+
+import ClassSummary				from "@site/src/components/mdx/ClassSummary";
+import SymbolTable, { Symbol }	from "@site/src/components/mdx/SymbolTable";
+import Columns					from "@site/src/components/mdx/Columns";
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<NotFinished />
+
+The queue class is a container adapter that provides a data structure, where you can 
+add new value on its back, or pop value from its front.
+
+Because it is a class template, programmer can specify the type of elements.
+
+<details>
+<summary>Technical definition of a queue</summary>
+<div>
+
+The std::queue class is a container adapter that gives the programmer the functionality of a queue - specifically, a FIFO (first-in, first-out) data structure.
+
+The class template acts as a wrapper to the underlying container - only a specific set of functions is provided. The queue pushes the elements on the back of the underlying container and pops them from the front.
+
+</div>
+</details>
+
+<ClassSummary name="queue" namespaces="std" folder="queue" headerName="queue">
+
+## Template parameters
+
+<SymbolTable noTraits>
+	<Symbol name="T"		desc="The type of stored elements"/>
+	<Symbol name="Container" 		desc="The type of underlying container to use to store the elements"/>
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="container_type"				desc={<code>Container</code>}/>
+	<Symbol pub name="value_type" 				desc={<code>Container::value_type</code>}/>
+	<Symbol pub name="size_type"			desc={<code>Container::size_type</code>}/>
+	<Symbol pub name="reference"				desc={<code>Container::reference</code>}/>
+	<Symbol pub name="const_reference"			desc={<code>Container::const_reference</code>}/>
+</SymbolTable>
+
+## Member functions
+
+<SymbolTable>	
+	<Symbol pub autoLink linkName="constructor" name="(constructor)">
+		Constructs the <code>queue</code>
+	</Symbol>
+	<Symbol pub autoLink linkName="destructor" name="(destructor)">
+		Destructs the <code>queue</code>
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_assign" name="operator="
+			desc="Assigns values to the container adaptor"
+		/>
+</SymbolTable>
+
+### Element access
+
+<SymbolTable>	
+	<Symbol pub autoLink name="front"
+			desc={<>Accesses the first element</>}
+		/>
+	<Symbol pub autoLink name="back"
+			desc={<>Accesses the last element</>}
+		/>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>	
+	<Symbol pub autoLink linkName="begin" name={<>empty</>}
+			desc={<>Checks whether the underlying container is empty</>}
+		/>
+	<Symbol pub autoLink linkName="end" name={<>size</>}
+			desc={<>Returns the number of elements</>}
+		/>
+</SymbolTable>
+
+### Modifiers
+
+<SymbolTable>
+	<Symbol pub autoLink name="push"
+			desc="Inserts element at the end"
+		/>
+	<Symbol pub autoLink name="emplace"
+			desc="Constructs element in-place at the end"
+		/>
+	<Symbol pub autoLink name="pop"
+			desc="Removes the first element"
+		/>
+	<Symbol pub autoLink name="swap"
+			desc="Swaps the contents"
+		/>
+</SymbolTable>
+
+### Member objects
+
+<SymbolTable>
+	<Symbol prot autoLink name="Container C"
+			desc="The underlying container"
+		/>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				operator==<br/>
+				operator!=<br/>
+				operator&lt;<br/>
+				operator&gt;<br/>
+				operator&lt;=<br/>
+				operator&gt;=<br/>
+				operator&lt;=&gt;
+			</>}
+			desc="Lexicographically compares the values in the queue"
+		/>
+	<Symbol name={<>std::swap <small>(std::queue)</small></>}
+			desc={<>Specializes the <a href="#">std::swap</a> algorithm</>}
+		/>
+</SymbolTable>
+
+### Helper classes
+
+<SymbolTable noTraits>
+	<Symbol name={<>std::uses_allocator<small>std::queue</small></>}
+			desc="Specializes the std::uses_allocator type trait"
+		/>
+</SymbolTable>
+
+</ClassSummary>
+
+
+## Deduction guides
+
+<ImproveSection />
+
+## Examples
+
+### Basic manipulation
+
+#### Push and pop on queue, printing the values
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <queue>
+
+int main()
+{
+	std::queue<int> q;
+
+	q.push(1);
+	q.push(2);
+	q.push(3);
+
+	while(q.empty() == false){
+		std::cout << q.front() << std::endl;
+		q.pop();
+	}
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+1
+2
+3
+```
+
+</div>
+</Columns>
