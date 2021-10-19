@@ -107,7 +107,7 @@ int main()
 
 Jeśli w środku nie zarządzasz czasem życia obiektu, [przekaż referencję](#używaj-referencji)!
 
-Jeśli chcesz przekazać cały obiekt do jakiegoś rejestru/magazynu/*managera* (NIE NADUŻYWAJMY `XYZManager`),
+Jeśli chcesz przekazać cały obiekt do jakiegoś rejestru/magazynu/*managera* (nie nadużywajmy nazw `XyzManager`),
 **przekaż przez wartość** i użyj [*przeniesienia*](TODO-move-semantics):
 
 ```cpp
@@ -188,25 +188,26 @@ Jeśli nie potrzebujesz kopiować obiektu, przekaż go przez (stałą) referencj
 Jeśli nie jest to zwykły typ prosty (`int`, `double` itp.), tylko jest to typ złożony, np.:
 
 ```cpp
-struct Vector3f
+struct Player
 {
-	float x, y, z;
+	std::string name;
+	float posX, posY, posZ;
 };
 ```
 
 to:
 
 ```cpp title="❌ ŹLE"
-void print(Vector3f vec) // vec zostaje skopiowany do parametru funkcji
+void print(Player player) // player zostaje skopiowany do parametru funkcji
 {
-	std::cout << vec.x << ", " << vec.y << ", " << vec.z;
+	std::cout << player.posX << ", " << player.posY << ", " << player.posZ;
 }
 ```
 
 ```cpp title="✔ DOBRZE"
-void print(Vector3f const& vec) // stała referencja, nie potrzebujemy tutaj kopiować
+void print(Player const& player) // stała referencja, nie potrzebujemy tutaj kopiować
 {
-	std::cout << vec.x << ", " << vec.y << ", " << vec.z;
+	std::cout << player.posX << ", " << player.posY << ", " << player.posZ;
 }
 ```
 
