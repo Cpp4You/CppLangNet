@@ -1,0 +1,382 @@
+---
+sidebar_position: 1
+---
+
+# Obsługa pamięci
+
+W zarządzaniu pamięcią można popełnić wiele błędów. Poniższe porady pomogą Ci popełniać ich mniej 😄
+
+## Poprawność i bezpieczeństwo
+
+### Używaj referencji
+
+Zasada jest prosta: jeśli dany fragment kodu **wymaga** tego, żeby obiekt istniał,
+użyj referencji a nie wskaźnika.
+
+#### Przykład
+
+Mamy klasę gracza 👨‍💼:
+
+```cpp
+struct Player {
+	int maxHealth	= 100;
+	int health		= 100;
+	int damage		= 15;
+	int score		= 0;
+};
+```
+
+Chcemy stworzyć funkcje, która pozwala wykonać atak na innym graczu:
+
+
+```cpp title="❌ ŹLE"
+void attack(Player* player, Player* target)
+{
+	target->health -= player->damage;
+
+	player->score += 10;
+}
+```
+
+```cpp title="✔ DOBRZE"
+void attack(Player& player, Player& target)
+{
+	target.health -= player.damage;
+
+	player.score += 10;
+}
+```
+
+### Surowe wskaźniki
+
+Surowe wskaźniki (np. `int* ptr`) budzą wiele kontrowersji. Warto wiedzieć kiedy można ich używać.
+
+Na początek:
+
+:::tip
+Nie ma nic złego w używaniu surowych wskaźników... w odpowiedni sposób.
+:::
+
+Rolą surowego wskaźnika jest **wyłącznie** uzyskanie dostępu do określonego miejsca w pamięci.
+
+:::danger
+Nie używaj surowych wskaźników do **zarządzania pamięcią** (dopóki nie masz absolutnej pewności
+że wiesz co robisz).
+
+
+```cpp
+// ❌❌❌
+Player *player = new Player;
+// ...
+delete player;
+// ❌❌❌
+```
+:::
+
+Surowe wskaźniki **nie służą** do kontrolowania czasu życia obiektu (czyli tego ile dany obiekt 
+istnieje w pamięci komputerowej).
+
+Do kontroli czasu życia obiektu użyj **inteligentnego wskaźnika** (*ang.: smart pointer*):
+
+```cpp
+#include <memory>
+
+struct Player {
+	std::string	name;
+	int			health;
+	// ...
+};
+
+int main()
+{
+	// W make_unique parametry konstruktora klasy Player
+	auto player = std::make_unique<Player>( /*tutaj*/ );
+
+	// "player" jest wskaźnikiem typu std::unique_ptr<Player>
+
+
+	Player& ref = *player;
+	Player* ptr = player.get(); // surowy wskaźnik ✅, nie zarządza czasem życia
+
+	
+} // <-- następuje automatyczne usunięcie obiektu spod wskaźnika "player"
+
+```
+
+### Przekazywanie `std::unique_ptr` do funkcji
+
+Jeśli w środku nie zarządzasz czasem życia obiektu, [przekaż referencję](#używaj-referencji)!
+
+Jeśli chcesz przekazać cały obiekt do jakiegoś rejestru/magazynu/*managera* (NIE NADUŻYWAJMY `XYZManager`),
+**przekaż przez wartość** i użyj [*przeniesienia*](TODO-move-semantics):
+
+```cpp
+struct Scene
+{
+	void add(std::unique_ptr<Actor> actor)
+	{
+		// Przenieś do vectora
+		actors.emplace_back( std::move(actor) );
+	}
+
+private:
+	std::vector< std::unique_ptr<Actor> > actors;
+};
+
+// Użycie:
+int main() {
+	Scene scene;
+	// ...
+	auto actor = std::make_unique<Actor>( /* ... */ );
+	// ...
+	scene.add( std::move(actor) ); // Przenieś do parametru funkcji "add"
+}
+```
+
+### Rozróżniaj stos od sterty
+
+Tymczasowe zmienne, które tworzymy wewnątrz funkcji są **alokowane na stosie**,
+a później automatycznie usuwane, gdy wykonanie programu wyjdzie poza ich
+zakres:
+
+```cpp
+struct Player { /* cokolwiek */ };
+
+int main()
+{
+	// Blok kodu:
+	{
+		Player p;
+		// ...
+	} // <-- automatyczne zdjęcie ze stosu "p"
+}
+```
+
+Na stercie (*ang.: heap*) znajdują się obiekty alokowane **dynamicznie**.
+
+Zastanów się: czy poniższy zapis oznacza, że zmienna `health` znajdzie się <u>na stosie</u>?
+
+```cpp
+struct Player {
+	int health;
+	// ...
+};
+```
+
+:::important ODPOWIEDŹ
+⚠ NIE
+:::
+
+Wszystko zależy od tego jakiego sposobu alokacji użyjemy, by zaalokować sam obiekt typu `Player`:
+
+```cpp
+int main() {
+	Player p1;
+	p1.health = 30; // "p1.health" jest na stosie razem z całym obiektem "p1"
+
+	auto p2 = std::make_unique<Player>();
+	p2->health = 30; // "p2->health" jest na stercie!
+}
+```
+
+## Wydajność
+
+### Unikaj kopii
+
+Jeśli nie potrzebujesz kopiować obiektu, przekaż go przez (stałą) referencje.
+
+Jeśli nie jest to zwykły typ prosty (`int`, `double` itp.), tylko jest to typ złożony, np.:
+
+```cpp
+struct Vector3f
+{
+	float x, y, z;
+};
+```
+
+to:
+
+```cpp title="❌ ŹLE"
+void print(Vector3f vec) // vec zostaje skopiowany do parametru funkcji
+{
+	std::cout << vec.x << ", " << vec.y << ", " << vec.z;
+}
+```
+
+```cpp title="✔ DOBRZE"
+void print(Vector3f const& vec) // stała referencja, nie potrzebujemy tutaj kopiować
+{
+	std::cout << vec.x << ", " << vec.y << ", " << vec.z;
+}
+```
+
+### Ogranicz dynamiczne alokacje
+
+Nie chcemy wytworzyć w Tobie panicznego strachu przed dynamicznymi
+alokacjami, jednak warto wiedzieć kiedy się przed nimi powstrzymać.
+
+Czasami warto skorzystać z [`std::array`](/docs/std/containers/arrays/array/) zamiast
+[`std::vector`](/docs/std/containers/arrays/vector/) czy nawet [`std::string`](/docs/std/containers/strings/string/).
+Jeśli możesz oszacować ile **maksymalnie** elementów będziesz potrzebował i ta liczba nie będzie zbyt duża,
+możesz śmiało użyć tablicy o stałym rozmiarze zamiast dynamicznie alokowanej.
+
+Ile to **za dużo**? Musisz to sam(a) oszacować. Jeśli ta pamięć będzie zużyta tylko
+tymczasowo (np. podręczny bufor o wielkości kilku KB do czytania z pliku) to
+bez problemu możesz użyć:
+
+```cpp
+constexpr size_t BUFFER_SIZE = 16 * 1024;
+
+std::array<char, BUFFER_SIZE> buf;
+```
+
+zamiast:
+
+```cpp
+std::string buf;
+```
+
+Jeśli potrzebujesz większych pojemności (większych niż megabajt) to **nie alokuj ich na stosie**:
+
+```cpp title="❌ ŹLE"
+int main()
+{
+	constexpr size_t BUFFER_SIZE = 10 * 1024 * 1024; // 10 MB
+
+	std::array<char, BUFFER_SIZE> buf; // ❌ przepełnienie stosu ❌
+}
+```
+
+W powyższej sytuacji już jesteśmy skazani na użycie dynamicznej alokacji, przez skorzystanie
+np. z `std::string`.
+
+
+### Rezerwuj pamięć z wyprzedzeniem
+
+Jeśli korzystasz z kontenera, który będzie przechowywał wiele obiektów,
+warto na początek luźno oszacować ile w najbliższym czasie ich będzie potrzebne.
+
+Jeśli wiesz, że zaraz będziesz formatował [tekst](/docs/std/containers/strings/string/), który będzie miał np. 100 - 1000 znaków,
+możesz śmiało [zarezerwować](/docs/std/containers/strings/string/reserve/) trochę pamięci z góry (nawet nadmiarowo):
+
+```cpp
+std::string str;
+
+// Rezerwacja pamięci
+str.reserve(128);
+
+// Formatowanie:
+str += "Gracz ";
+str += player.name;
+str += " posiada ";
+str += std::to_string(player.health);
+str += " HP";
+```
+
+:::note
+Powyższy sposób formatowania nie jest najlepszym pomysłem.
+Do formatowania tekstu możesz użyć np. biblioteki [**fmtlib**](https://github.com/fmtlib/fmt):
+
+```cpp
+std::string str = fmt::format("Gracz {} posiada {} HP", player.name, player.health);
+```
+:::
+
+Jeśli zapomnimy zarezerwować pamięć wcześniej, nasz program będzie musiał wykonać sporo alokacji
+w trakcie dodawania kolejnych znaków do tekstu, przez co będziemy tracili cenny czas.
+
+**Nie bagatelizuj tego.**
+
+Nie tyczy się to tylko `string`-a, ale również innych kontenerów, które trzymają
+zawartość w ciągłych fragmentach pamięci i dynamicznie zmieniają swój rozmiar
+(np. [`std::vector`](/docs/std/containers/arrays/vector/))
+
+### Nie nadużywaj `std::shared_ptr`
+
+Ten typ wskaźnika pozwala na kopiowanie go w dowolnej ilości,
+przez co można naiwnie uznać, że możemy go swobodnie przekazywać w ten sposób np. do funkcji:
+
+
+```cpp title="❌ ŹLE"
+struct Player {
+	int maxHealth	= 100;
+	int health		= 100;
+	int damage		= 15;
+	int score		= 0;
+};
+
+void attack(std::shared_ptr<Player> player, std::shared_ptr<Player> target)
+{
+	target->health -= player->damage;
+
+	player->score += 10;
+}
+```
+
+Nikt Ci nie zabroni w ten sposób z nich korzystać, ale jeśli będziesz tego nadużywać,
+to możesz kiedyś się zdziwić, że Twoja gra lub aplikacja będzie tak świetna,
+że aż sam procesor się na chwile zatrzyma, żeby popatrzeć na to cudo 😉
+
+Inteligentne wskaźniki **służą do zarządzania czasem życia obiektu**.
+Jeśli musisz jedynie skorzystać z dynamicznie zaalokowanego obiektu,
+możesz śmiało użyć referencji lub wskaźnika zgodnie z [tą zasadą](#używaj-referencji).
+
+```cpp title="✔ DOBRZE"
+int main() {
+	std::shared_ptr<Player> p1, p2;
+
+	// ...
+
+	attack(*p1, *p2);
+}
+
+void attack(Player& player, Player& target)
+{
+	target.health -= player.damage;
+
+	player.score += 10;
+}
+```
+
+### Używaj `std::string_view`
+
+Został on dodany do biblioteki standardowej (nagłówek `<string_view>`) w wersji C++17.
+
+[`string_view`](/docs/std/containers/strings/string_view/) to *widok* na ciąg znaków, bez znaczenia czy pochodzi on
+ze `std::string`, czy nie. Pozwala on korzystać wygodnie z funkcji takich jak porównywanie,
+`.substr()`, `.find()` bez konieczności kopiowania lub tworzenia obiektu `std::string`.
+
+:::caution
+`std::string` jest alokowany dynamicznie, przez co nie jest najwydajniejszą z opcji.
+:::
+
+Bardzo dobrym przykładem są argumenty programu:
+
+```cpp
+int main(int argc, char *argv[])
+{
+	if (argc < 2) return 0; // brak wystarczającej ilości argumentów
+
+	// ❌ ŹLE:
+	if ( argv[1] == "generate-something" ) 
+	{
+		// NIE ZADZIAŁA, porównywanie wskaźników (czyli porównywanie adresów)
+	}
+	// ❌ ŹLE:
+	if ( std::string(argv[1]) == "generate-something" )
+	{
+		 // ZADZIAŁA, ale jest to niepotrzebnie wolne
+	}
+	// ❌ ŹLE:
+	if ( std::strcmp(argv[1], "generate-something") == 0 )
+	{
+		 // ZADZIAŁA, ale jest to niewygodne rozwiązanie z C
+	}
+
+	// ✅ DOBRZE:
+	if ( std::string_view(argv[1]) == "generate-something" )
+	{
+		// Szybkie i wygodne
+	}
+}
+```

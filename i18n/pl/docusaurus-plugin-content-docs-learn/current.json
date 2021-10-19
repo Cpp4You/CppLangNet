@@ -37,6 +37,10 @@
   },
   "sidebar.defaultSidebar.category.5. Arrays": {
     "message": "5. Tablice",
-    "description": "The label for category Arrays in sidebar defaultSidebar"
+    "description": "The label for category 5. Arrays in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.💰 Golden advices": {
+    "message": "💰 Złote rady",
+    "description": "The label for category 💰 Golden advices in sidebar defaultSidebar"
   }
 }
