@@ -205,7 +205,7 @@ void print(Player player) // player zostaje skopiowany do parametru funkcji
 ```
 
 ```cpp title="✔ DOBRZE"
-void print(Player const& player) // stała referencja, nie potrzebujemy tutaj kopiować
+void print(Player const& player) // referencja do stałej, nie potrzebujemy tutaj kopiować
 {
 	std::cout << player.posX << ", " << player.posY << ", " << player.posZ;
 }
