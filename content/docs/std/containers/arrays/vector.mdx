@@ -1,0 +1,543 @@
+---
+sidebar_position:	3
+title:				std::vector reference
+sidebar_label:		vector
+hide_title:			true
+---
+
+import ClassSummary				from "@site/src/components/mdx/ClassSummary";
+import SymbolTable, { Symbol }	from "@site/src/components/mdx/SymbolTable";
+import Columns					from "@site/src/components/mdx/Columns";
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<NotFinished />
+
+# Vector class reference
+
+## Overview
+
+```cpp
+template<
+		typename T,
+		typename Allocator = std::allocator<T>
+	>
+class vector;
+```
+
+`std::vector` is a container that encapsulates dynamic size arrays.
+
+### Memory
+
+The elements are stored contiguously, one after another.
+This means that a pointer to an element of a `vector` may be passed to any function
+that expects a pointer to an element of an array.
+
+<p align="center">
+	<img style={{border: "1px solid gray", maxHeight: 250}} alt="Array elements in memory" src="/img/component-overview/array-elements-in-memory.png" />
+</p>
+
+### Storage size
+
+The storage of the `vector` is handled automatically, being expanded and contracted as needed.
+Vectors usually occupy more space than static arrays, because more memory is allocated
+to handle future growth. This way a vector does not need to reallocate each time an element
+is inserted, but only when the additional memory is exhausted. The total amount of allocated
+memory can be queried using [`capacity()`](capacity) function. Extra memory can be returned to the
+system via a call to [`shrink_to_fit()`](shrink_to_fit) <i><small>(since C++11)</small></i>.
+
+Reallocations are usually costly operations in terms of performance.
+The [`reserve()`](reserve) function can be used to eliminate reallocations
+if the number of elements is known beforehand.
+
+### Technical details
+
+<details>
+<summary>Complexity</summary>
+<div>
+
+The complexity (efficiency) of common operations on vectors is as follows:
+
+- random access - constant 𝓞(1)
+- insertion or removal of elements at the end - amortized constant 𝓞(1)
+- insertion or removal of elements - linear in the distance to the end of the vector 𝓞(n)
+
+</div>
+</details>
+
+
+<details>
+<summary>Named requirements</summary>
+<div>
+
+`std::vector` (for `T` other than `bool`) meets the requirements of:
+- `Container`
+- `AllocatorAwareContainer`
+- `SequenceContainer`
+- `ContiguousContainer` (since C++17)
+- `ReversibleContainer`
+
+</div>
+</details>
+
+
+
+<ClassSummary name="vector" namespaces="std" folder="vector" headerName="vector">
+
+## Template parameters
+
+<SymbolTable noTraits>
+	<Symbol name="CharT"		desc="character type"/>
+	<Symbol name="Traits" 		desc="traits class specifying the operations on the character type"/>
+	<Symbol name="Allocator"	desc={<><a href="/docs/named_req/allocator">Allocator</a> type used to allocate internal storage</>}/>
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="traits_type"				desc={<code>Traits</code>}/>
+	<Symbol pub name="value_type" 				desc={<code>CharT</code>}/>
+	<Symbol pub name="allocator_type"			desc={<code>Allocator</code>}/>
+	<Symbol pub name="size_type"				desc={<code>std::allocator_traits&lt;Allocator&gt;::size_type</code>}/>
+	<Symbol pub name="difference_type"			desc={<code>std::allocator_traits&lt;Allocator&gt;::difference_type</code>}/>
+	<Symbol pub name="reference"				desc={<code>value_type</code>}/>
+	<Symbol pub name="const_reference"			desc={<code>value_type const&amp;</code>}/>
+	<Symbol pub name="pointer"					desc={<code>std::allocator_traits&lt;Allocator&gt;::pointer</code>}/>
+	<Symbol pub name="const_pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code>}/>
+	<Symbol pub name="iterator"					desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type</code></>}/>
+	<Symbol pub name="const_iterator"			desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type const</code></>}/>
+	<Symbol pub name="reverse_iterator"			desc={<><a href="#"><code>std::reverse_iterator&lt;iterator&gt;</code></a></>}/>
+	<Symbol pub name="const_reverse_iterator"	desc={<><a href="#"><code>std::reverse_iterator&lt;const_iterator&gt;</code></a></>}/>
+</SymbolTable>
+
+## Member functions
+
+<SymbolTable>	
+	<Symbol pub autoLink linkName="constructor" name="(constructor)">
+		Constructs a <code>basic_string</code>
+	</Symbol>
+	<Symbol pub autoLink linkName="destructor" name="(destructor)">
+		Destroys the string, deallocating internal storage if used
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_assign" name="operator="
+			desc="Assigns values to the string"
+		/>
+	<Symbol pub autoLink name="assign"
+			desc="Assigns characters to the string"
+		/>
+	<Symbol pub autoLink name="get_allocator"
+			desc="Returns the associated allocator"
+		/>
+</SymbolTable>
+
+### Element access
+
+<SymbolTable>	
+	<Symbol pub autoLink name="at"
+			desc={<>Accesses the specified character <b>with bounds checking</b></>}
+		/>
+	<Symbol pub autoLink linkName="operator_index" name="operator[]"
+			desc={<>Accesses the specified character</>}
+		/>
+	<Symbol pub autoLink name="front"
+			desc="Returns the first character"
+		/>
+	<Symbol pub autoLink name="back"
+			desc="Returns the last character"
+		/>
+	<Symbol pub autoLink name="data"
+			desc="Returns a pointer to the first character of a string"
+		/>
+	<Symbol pub autoLink name="c_str"
+			desc="Returns a non-modifiable standard C character array version of the string"
+		/>
+	<Symbol pub autoLink linkName="operator_basic_string_view" name="operator basic_string_view"
+			desc={<>returns a non-modifiable <code>string_view</code> into the entire string</>}
+		/>
+</SymbolTable>
+
+### Iterators
+
+<SymbolTable>	
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}
+			desc={<>Returns an <code>iterator/const_iterator</code> to the beginning</>}
+		/>
+	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}
+			desc={<>Returns an <code>iterator/const_iterator</code> to the end</>}
+		/>
+	<Symbol pub autoLink linkName="rbegin" name={<>rbegin<br/>crbegin</>}
+			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the beginning</>}
+		/>
+	<Symbol pub autoLink linkName="rend" name={<>rend<br/>crend</>}
+			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the end</>}
+		/>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>	
+	<Symbol pub autoLink name="empty">
+		Returns <code>true</code> if the string is empty, otherwise <code>false</code>.
+	</Symbol>
+	<Symbol pub autoLink linkName="size" name={<>size<br/>length</>}
+			desc="Returns the number of characters"
+		/>
+	<Symbol pub autoLink name="max_size"
+			desc="Returns the maximum number of characters"
+		/>
+	<Symbol pub autoLink name="reserve"
+			desc="Reserves storage"
+		/>
+	<Symbol pub autoLink name="capacity"
+			desc="Returns the number of characters that can be held in currently allocated storage"
+		/>
+	<Symbol pub autoLink name="shrink_to_fit"
+			desc="Reduces memory usage by freeing unused memory"
+		/>
+</SymbolTable>
+
+### Operations
+
+<SymbolTable>
+	<Symbol pub autoLink name="clear"
+			desc="Clears the contents"
+		/>
+	<Symbol pub autoLink name="insert"
+			desc="Inserts characters"
+		/>
+	<Symbol pub autoLink name="erase"
+			desc="Removes characters"
+		/>
+	<Symbol pub autoLink name="push_back"
+			desc="Appends a character to the end"
+		/>
+	<Symbol pub autoLink name="pop_back"
+			desc="Removes the last character"
+		/>
+	<Symbol pub autoLink name="append"
+			desc="Appends characters to the end"
+		/>
+	<Symbol pub autoLink linkName="operator_addeq" name="operator+="
+			desc="Appends characters to the end"
+		/>
+	<Symbol pub autoLink name="compare"
+			desc="Compares two strings"
+		/>
+	<Symbol pub autoLink name="starts_with"
+			desc="Checks if the string starts with the given prefix"
+		/>
+	<Symbol pub autoLink name="ends_with"
+			desc="Checks if the string ends with the given suffix"
+		/>
+	<Symbol pub autoLink name="contains"
+			desc="Checks if the string contains the given substring or character"
+		/>
+	<Symbol pub autoLink name="replace"
+			desc="Replaces specified portion of a string"
+		/>
+	<Symbol pub autoLink name="substr"
+			desc="Returns a substring"
+		/>
+	<Symbol pub autoLink name="copy"
+			desc="Copies characters"
+		/>
+	<Symbol pub autoLink name="resize"
+			desc="Changes the number of characters stored"
+		/>
+	<Symbol pub autoLink name="swap"
+			desc="Swaps the contents"
+		/>
+</SymbolTable>
+
+### Search
+
+<SymbolTable>
+	<Symbol pub autoLink name="find"
+			desc="Find characters in the string"
+		/>
+	<Symbol pub autoLink name="rfind"
+			desc="Find the last occurrence of a substring"
+		/>
+	<Symbol pub autoLink name="find_first_of"
+			desc="Find first occurrence of characters"
+		/>
+	<Symbol pub autoLink name="find_first_not_of"
+			desc="Find first absence of characters"
+		/>
+	<Symbol pub autoLink name="find_last_of"
+			desc="Find last occurrence of characters"
+		/>
+	<Symbol pub autoLink name="find_last_not_of"
+			desc="Find last absence of characters"
+		/>
+</SymbolTable>
+
+## Constants
+
+<SymbolTable>
+	<Symbol pub static constexpr name="npos"
+			desc="Special value. The exact meaning depends on the context"
+		/>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name="operator+"
+			desc="Concatenates two strings or a string and a char"
+		/>
+	<Symbol name={<>
+				operator==<br/>
+				operator!=<br/>
+				operator&lt;<br/>
+				operator&gt;<br/>
+				operator&lt;=<br/>
+				operator&gt;=<br/>
+				operator&lt;=&gt;
+			</>}
+			desc="Lexicographically compares two strings"
+		/>
+	<Symbol name={<>std::swap <small>(std::basic_string)</small></>}
+			desc={<>Specializes the <a href="#">std::swap</a> algorithm</>}
+		/>
+	<Symbol name={<>
+				erase <small>(std::basic_string)</small><br/>
+				erase_if <small>(std::basic_string)</small>
+			</>}
+			desc="Erases all elements satisfying specific criteria"
+		/>
+</SymbolTable>
+
+### Input/output
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				operator&lt;&lt;<br/>
+				operator&gt;&gt;
+			</>}
+			desc="Performs stream input and output on strings"
+		/>
+	<Symbol name="getline"
+			desc="read data from an I/O stream into a string"
+		/>
+</SymbolTable>
+
+### Numeric conversions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				stoi<br/>
+				stol<br/>
+				stoll
+			</>}
+			desc="Converts a string to a signed integer"
+		/>
+	<Symbol name={<>
+				stoui<br/>
+				stoul<br/>
+				stoull
+			</>}
+			desc="Converts a string to an unsigned integer"
+		/>
+	<Symbol name={<>
+				stof<br/>
+				stod<br/>
+				stold
+			</>}
+			desc="Converts a string to a floating point value"
+		/>
+	<Symbol name="to_string"
+			desc={<>Converts an integral or floating point value to <code>std::string</code></>}
+		/>
+	<Symbol name="to_wstring"
+			desc={<>Converts an integral or floating point value to <code>std::wstring</code></>}
+		/>
+</SymbolTable>
+
+## Literals
+
+<small>Defined in inline namespace <code>std::literals::string_literals</code></small>
+<SymbolTable noTraits>
+	<Symbol name='operator ""s'
+			desc={<>Converts a character array literal to <code>std::string</code></>}
+		/>
+</SymbolTable>
+
+## Helper classes
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				std::hash<small>&lt;std::string&gt;</small><br/>
+				std::hash<small>&lt;std::u8string&gt;</small><br/>
+				std::hash<small>&lt;std::u16string&gt;</small><br/>
+				std::hash<small>&lt;std::u32string&gt;</small><br/>
+				std::hash<small>&lt;std::wstring&gt;</small><br/>
+				std::hash<small>&lt;std::pmr::string&gt;</small><br/>
+				std::hash<small>&lt;std::pmr::u8string&gt;</small><br/>
+				std::hash<small>&lt;std::pmr::u16string&gt;</small><br/>
+				std::hash<small>&lt;std::pmr::u32string&gt;</small><br/>
+				std::hash<small>&lt;std::pmr::wstring&gt;</small><br/>
+			</>}
+			desc="hash support for strings"
+		/>
+</SymbolTable>
+</ClassSummary>
+
+
+## Deduction guides
+
+<ImproveSection />
+
+## Examples
+
+### Basic manipulation
+
+#### Creating and printing a simple string
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string s = "World";
+	std::cout << "Hello, " << s << "!" << std::endl;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+Hello, World!
+```
+
+</div>
+</Columns>
+
+#### Concatenating strings
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string a = "Hello, ";
+	std::string b = "World!";
+	std::string c = a + b;
+	std::cout << c;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+Hello, World!
+```
+
+</div>
+</Columns>
+
+#### Splitting a string
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// Split by the comma.
+	//                    v
+	std::string a = "Hello, World!";
+	size_t pos = a.find(',');
+
+	std::string hello = a.substr(0, pos);
+	// 1 for a comma, and 1 for a space before "World"
+	std::string world = a.substr(pos + 1 + 1);
+
+	std::cout << hello << '\n' << world;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+Hello
+World!
+```
+
+</div>
+</Columns>
+
+
+### Conversions
+
+#### Convert `std::string` to `int`
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string numberInString = "8314";
+
+	// Note: stoi can throw exception if failed!
+	int number = std::stoi(numberInString);
+	std::cout << "Number: " << number;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+Number: 8314
+```
+
+</div>
+</Columns>
+
+#### Convert `std::string` to `float`
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string numberInString = "3.141";
+
+	// Note: stof can throw exception if failed!
+	float number = std::stof(numberInString);
+	std::cout << "Number: " << number;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+Number: 3.141
+```
+
+</div>
+</Columns>
