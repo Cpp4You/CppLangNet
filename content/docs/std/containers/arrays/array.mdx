@@ -173,23 +173,20 @@ Satisfies the requirements of:
 ## Template parameters
 
 <SymbolTable noTraits>
-	<Symbol name="CharT"		desc="character type"/>
-	<Symbol name="Traits" 		desc="traits class specifying the operations on the character type"/>
-	<Symbol name="Allocator"	desc={<><a href="/docs/named_req/allocator">Allocator</a> type used to allocate internal storage</>}/>
+	<Symbol name="T"			desc="Type of the elements"/>
+	<Symbol name="N" 			desc="Number of elements (a compile-time constant)"/>
 </SymbolTable>
 
 ## Type names
 
 <SymbolTable>
-	<Symbol pub name="traits_type"				desc={<code>Traits</code>}/>
-	<Symbol pub name="value_type" 				desc={<code>CharT</code>}/>
-	<Symbol pub name="allocator_type"			desc={<code>Allocator</code>}/>
-	<Symbol pub name="size_type"				desc={<code>std::allocator_traits&lt;Allocator&gt;::size_type</code>}/>
-	<Symbol pub name="difference_type"			desc={<code>std::allocator_traits&lt;Allocator&gt;::difference_type</code>}/>
-	<Symbol pub name="reference"				desc={<code>value_type</code>}/>
+	<Symbol pub name="value_type" 				desc={<code>T</code>}/>
+	<Symbol pub name="size_type"				desc={<code>std::size_t</code>}/>
+	<Symbol pub name="difference_type"			desc={<code>std::ptrdiff_t</code>}/>
+	<Symbol pub name="reference"				desc={<code>value_type&amp;</code>}/>
 	<Symbol pub name="const_reference"			desc={<code>value_type const&amp;</code>}/>
-	<Symbol pub name="pointer"					desc={<code>std::allocator_traits&lt;Allocator&gt;::pointer</code>}/>
-	<Symbol pub name="const_pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code>}/>
+	<Symbol pub name="pointer"					desc={<code>value_type*</code>}/>
+	<Symbol pub name="const_pointer"			desc={<code>value_type const*</code>}/>
 	<Symbol pub name="iterator"					desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type</code></>}/>
 	<Symbol pub name="const_iterator"			desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type const</code></>}/>
 	<Symbol pub name="reverse_iterator"			desc={<><a href="#"><code>std::reverse_iterator&lt;iterator&gt;</code></a></>}/>
@@ -200,19 +197,13 @@ Satisfies the requirements of:
 
 <SymbolTable>	
 	<Symbol pub autoLink linkName="constructor" name="(constructor)">
-		Constructs a <code>basic_string</code>
+		Constructs an <code>array</code> following the rules of aggregate initialization.
 	</Symbol>
 	<Symbol pub autoLink linkName="destructor" name="(destructor)">
-		Destroys the string, deallocating internal storage if used
+		Destroys every element of the array.
 	</Symbol>
 	<Symbol pub autoLink linkName="operator_assign" name="operator="
-			desc="Assigns values to the string"
-		/>
-	<Symbol pub autoLink name="assign"
-			desc="Assigns characters to the string"
-		/>
-	<Symbol pub autoLink name="get_allocator"
-			desc="Returns the associated allocator"
+			desc="Overwrites every element of the array with the corresponding element of another array"
 		/>
 </SymbolTable>
 
@@ -220,25 +211,19 @@ Satisfies the requirements of:
 
 <SymbolTable>	
 	<Symbol pub autoLink name="at"
-			desc={<>Accesses the specified character <b>with bounds checking</b></>}
+			desc={<>Accesses the specified element <b>with bounds checking</b></>}
 		/>
 	<Symbol pub autoLink linkName="operator_index" name="operator[]"
-			desc={<>Accesses the specified character</>}
+			desc={<>Accesses the element</>}
 		/>
 	<Symbol pub autoLink name="front"
-			desc="Returns the first character"
+			desc="Returns the first element"
 		/>
 	<Symbol pub autoLink name="back"
-			desc="Returns the last character"
+			desc="Returns the last element"
 		/>
 	<Symbol pub autoLink name="data"
-			desc="Returns a pointer to the first character of a string"
-		/>
-	<Symbol pub autoLink name="c_str"
-			desc="Returns a non-modifiable standard C character array version of the string"
-		/>
-	<Symbol pub autoLink linkName="operator_basic_string_view" name="operator basic_string_view"
-			desc={<>returns a non-modifiable <code>string_view</code> into the entire string</>}
+			desc="Returns a pointer to the first element of the underlying array"
 		/>
 </SymbolTable>
 
@@ -263,115 +248,30 @@ Satisfies the requirements of:
 
 <SymbolTable>	
 	<Symbol pub autoLink name="empty">
-		Returns <code>true</code> if the string is empty, otherwise <code>false</code>.
+		Returns <code>true</code> if the container is empty, otherwise <code>false</code>.
 	</Symbol>
-	<Symbol pub autoLink linkName="size" name={<>size<br/>length</>}
-			desc="Returns the number of characters"
+	<Symbol pub autoLink name="size"
+			desc="Returns the number of elements"
 		/>
 	<Symbol pub autoLink name="max_size"
-			desc="Returns the maximum number of characters"
-		/>
-	<Symbol pub autoLink name="reserve"
-			desc="Reserves storage"
-		/>
-	<Symbol pub autoLink name="capacity"
-			desc="Returns the number of characters that can be held in currently allocated storage"
-		/>
-	<Symbol pub autoLink name="shrink_to_fit"
-			desc="Reduces memory usage by freeing unused memory"
+			desc="Returns the maximum possible number of elements"
 		/>
 </SymbolTable>
 
 ### Operations
 
 <SymbolTable>
-	<Symbol pub autoLink name="clear"
-			desc="Clears the contents"
-		/>
-	<Symbol pub autoLink name="insert"
-			desc="Inserts characters"
-		/>
-	<Symbol pub autoLink name="erase"
-			desc="Removes characters"
-		/>
-	<Symbol pub autoLink name="push_back"
-			desc="Appends a character to the end"
-		/>
-	<Symbol pub autoLink name="pop_back"
-			desc="Removes the last character"
-		/>
-	<Symbol pub autoLink name="append"
-			desc="Appends characters to the end"
-		/>
-	<Symbol pub autoLink linkName="operator_addeq" name="operator+="
-			desc="Appends characters to the end"
-		/>
-	<Symbol pub autoLink name="compare"
-			desc="Compares two strings"
-		/>
-	<Symbol pub autoLink name="starts_with"
-			desc="Checks if the string starts with the given prefix"
-		/>
-	<Symbol pub autoLink name="ends_with"
-			desc="Checks if the string ends with the given suffix"
-		/>
-	<Symbol pub autoLink name="contains"
-			desc="Checks if the string contains the given substring or character"
-		/>
-	<Symbol pub autoLink name="replace"
-			desc="Replaces specified portion of a string"
-		/>
-	<Symbol pub autoLink name="substr"
-			desc="Returns a substring"
-		/>
-	<Symbol pub autoLink name="copy"
-			desc="Copies characters"
-		/>
-	<Symbol pub autoLink name="resize"
-			desc="Changes the number of characters stored"
+	<Symbol pub autoLink name="fill"
+			desc="Fills the container with specified value"
 		/>
 	<Symbol pub autoLink name="swap"
 			desc="Swaps the contents"
 		/>
 </SymbolTable>
 
-### Search
-
-<SymbolTable>
-	<Symbol pub autoLink name="find"
-			desc="Find characters in the string"
-		/>
-	<Symbol pub autoLink name="rfind"
-			desc="Find the last occurrence of a substring"
-		/>
-	<Symbol pub autoLink name="find_first_of"
-			desc="Find first occurrence of characters"
-		/>
-	<Symbol pub autoLink name="find_first_not_of"
-			desc="Find first absence of characters"
-		/>
-	<Symbol pub autoLink name="find_last_of"
-			desc="Find last occurrence of characters"
-		/>
-	<Symbol pub autoLink name="find_last_not_of"
-			desc="Find last absence of characters"
-		/>
-</SymbolTable>
-
-## Constants
-
-<SymbolTable>
-	<Symbol pub static constexpr name="npos"
-			desc="Special value. The exact meaning depends on the context"
-		/>
-</SymbolTable>
-
 ## Non-member functions
 
 <SymbolTable noTraits>
-	<Symbol name="operator+"
-			desc="Concatenates two strings or a string and a char"
-		/>
 	<Symbol name={<>
 				operator==<br/>
 				operator!=<br/>
@@ -381,71 +281,16 @@ Satisfies the requirements of:
 				operator&gt;=<br/>
 				operator&lt;=&gt;
 			</>}
-			desc="Lexicographically compares two strings"
+			desc="Lexicographically compares the values in the array"
 		/>
-	<Symbol name={<>std::swap <small>(std::basic_string)</small></>}
+	<Symbol name={<>std::get <small>(std::array)</small></>}
+			desc={<>Accesses an element of the array</>}
+		/>
+	<Symbol name={<>std::swap <small>(std::array)</small></>}
 			desc={<>Specializes the <a href="#">std::swap</a> algorithm</>}
 		/>
-	<Symbol name={<>
-				erase <small>(std::basic_string)</small><br/>
-				erase_if <small>(std::basic_string)</small>
-			</>}
-			desc="Erases all elements satisfying specific criteria"
-		/>
-</SymbolTable>
-
-### Input/output
-
-<SymbolTable noTraits>
-	<Symbol name={<>
-				operator&lt;&lt;<br/>
-				operator&gt;&gt;
-			</>}
-			desc="Performs stream input and output on strings"
-		/>
-	<Symbol name="getline"
-			desc="read data from an I/O stream into a string"
-		/>
-</SymbolTable>
-
-### Numeric conversions
-
-<SymbolTable noTraits>
-	<Symbol name={<>
-				stoi<br/>
-				stol<br/>
-				stoll
-			</>}
-			desc="Converts a string to a signed integer"
-		/>
-	<Symbol name={<>
-				stoui<br/>
-				stoul<br/>
-				stoull
-			</>}
-			desc="Converts a string to an unsigned integer"
-		/>
-	<Symbol name={<>
-				stof<br/>
-				stod<br/>
-				stold
-			</>}
-			desc="Converts a string to a floating point value"
-		/>
-	<Symbol name="to_string"
-			desc={<>Converts an integral or floating point value to <code>std::string</code></>}
-		/>
-	<Symbol name="to_wstring"
-			desc={<>Converts an integral or floating point value to <code>std::wstring</code></>}
-		/>
-</SymbolTable>
-
-## Literals
-
-<small>Defined in inline namespace <code>std::literals::string_literals</code></small>
-<SymbolTable noTraits>
-	<Symbol name='operator ""s'
-			desc={<>Converts a character array literal to <code>std::string</code></>}
+	<Symbol name={<>std::to_array <small>(C++20)</small></>}
+			desc={<>creates a std::array object from a built-in array</>}
 		/>
 </SymbolTable>
 
@@ -453,18 +298,14 @@ Satisfies the requirements of:
 
 <SymbolTable noTraits>
 	<Symbol name={<>
-				std::hash<small>&lt;std::string&gt;</small><br/>
-				std::hash<small>&lt;std::u8string&gt;</small><br/>
-				std::hash<small>&lt;std::u16string&gt;</small><br/>
-				std::hash<small>&lt;std::u32string&gt;</small><br/>
-				std::hash<small>&lt;std::wstring&gt;</small><br/>
-				std::hash<small>&lt;std::pmr::string&gt;</small><br/>
-				std::hash<small>&lt;std::pmr::u8string&gt;</small><br/>
-				std::hash<small>&lt;std::pmr::u16string&gt;</small><br/>
-				std::hash<small>&lt;std::pmr::u32string&gt;</small><br/>
-				std::hash<small>&lt;std::pmr::wstring&gt;</small><br/>
+				std::tuple_size<small>&lt;std::array&gt; (C++11)</small><br/>
 			</>}
-			desc="hash support for strings"
+			desc="obtains the size of an array"
+		/>
+	<Symbol name={<>
+				std::tuple_element<small>&lt;std::array&gt; (C++11)</small><br/>
+			</>}
+			desc="obtains the type of the elements of array"
 		/>
 </SymbolTable>
 </ClassSummary>
