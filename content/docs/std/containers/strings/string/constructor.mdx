@@ -104,7 +104,7 @@ Default constructor. Constructs empty string (zero size and unspecified capacity
 If no allocator is supplied, allocator is obtained from a default-constructed instance.
 
 
-### Example
+#### Example
 
 
 
@@ -156,7 +156,7 @@ Constructs the string with `count` copies of character `ch`.
 	</div>
 </details>
 
-### Example
+#### Example
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -196,7 +196,7 @@ int main() {
 Constructs the string with a substring `[pos, other.size())` of `other`.  
 Other words, copies the `other` string starting from element at `pos` index.
 
-### Example
+#### Example
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -239,7 +239,7 @@ Constructs the string with a substring `[pos, pos+count)` of `other`.
 If `count == npos`, or if the requested substring lasts past the end of the string,
 the resulting substring is `[pos, other.size())`.
 
-### Example
+#### Example
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -292,7 +292,7 @@ The behavior is undefined if `[s, s + Traits::length(s))` is not a valid range
 	</div>
 </details>
 
-### Example
+#### Example
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -330,7 +330,7 @@ Constructs the string with the first `count` characters of character string poin
 `s` can contain null characters. The length of the string is `count`.
 The behavior is undefined if `[s, s + count)` is not a valid range.
 
-### Example
+#### Example
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -388,7 +388,7 @@ Constructs the string with the contents of the range `[first, last)`.
 	</div>
 </details>
 
-### Example
+#### Example
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -429,7 +429,7 @@ Constructs the string with a copy of the contents of `other`.
 
 You can optionally specify a custom allocator (2).
 
-### Example
+#### Example
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -472,7 +472,7 @@ Constructs the string with the contents of `other` using [move semantics](/learn
 
 You can optionally specify a custom allocator (2).
 
-### Example
+#### Example
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -511,7 +511,7 @@ Hello, World
 
 Constructs the string with the contents of the [initializer list](/docs/std/lang-support/initializer-list) `ilist`.
 
-### Example
+#### Example
 
 <Columns columns={['8fr', '4fr']}>
 <div>
