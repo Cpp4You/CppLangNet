@@ -317,21 +317,37 @@ Satisfies the requirements of:
 
 ## More examples
 
-### Basic manipulation
+### Using algorithms
 
-#### Creating and printing a simple string
+#### Find minimal value
 
 <Columns spacing="20px" columns={['8fr', '4fr']}>
 <div>
 
 ```cpp
 #include <iostream>
-#include <string>
+#include <array>
+#include <algorithm>
+#include <ranges>
+
+namespace rg = std::ranges;
 
 int main()
 {
-	std::string s = "World";
-	std::cout << "Hello, " << s << "!" << std::endl;
+	auto numbers = std::to_array({ 12, 3, 18, 9}); // C++20
+	
+	// Find minimal element
+	auto minIt = rg::min_element(numbers); // C++20
+
+	// obtain value:
+	auto value = *minIt;
+	// find position:
+	auto index = std::distance(numbers.begin(), minIt);
+
+	
+	std::cout	<< "Min: "			<< value
+				<< ", at index: "	<< index
+				<< std::endl;
 }
 ```
 
@@ -339,27 +355,86 @@ int main()
 <div>
 
 ```plaintext title="Result"
-Hello, World!
+Min: 3, at index: 1
 ```
 
 </div>
 </Columns>
 
-#### Concatenating strings
+### Advanced
+
+#### Using array as a temporary buffer
+
+```cpp
+#include <fstream>
+#include <array>
+#include <string>
+
+std::string readFile(std::istream& file)
+{
+	constexpr size_t BUFFER_SIZE	= 16 * 1024;		// 16 KB
+	constexpr size_t RESERVE_SIZE	= 1 * 1024 * 1024;	// 1 MB
+	std::string result;
+	result.reserve(RESERVE_SIZE); // 1 MB
+
+	std::array<char, BUFFER_SIZE> buf;
+
+	while(file.read(buf.data(), buf.size()))
+		result.append(buf.data(), buf.data() + file.gcount());
+
+	result.append(buf.data(), buf.data() + file.gcount());
+	return result;
+}
+
+// Example usage:
+int main()
+{
+	std::ifstream file("hello.txt");
+	if (file.is_open())
+	{
+		auto fileContents = readFile(file);
+		// ...
+	}
+}
+```
+
+#### Concat two arrays
 
 <Columns spacing="20px" columns={['8fr', '4fr']}>
 <div>
 
 ```cpp
 #include <iostream>
-#include <string>
+#include <array>
+
+template <typename T, size_t N1, size_t N2>
+std::array<T, N1 + N2> concat(
+		std::array<T, N1> const& lhs,
+		std::array<T, N2> const& rhs
+	)
+{
+	std::array<T, N1 + N2> result;
+	
+	// Copy left array
+	for (size_t i = 0; i < lhs.size(); ++i)
+		result[i] = lhs[i];
+
+	// Copy right array
+	for (size_t i = 0; i < rhs.size(); ++i)
+		result[i + lhs.size()] = rhs[i];
+
+	return result;
+}
 
 int main()
 {
-	std::string a = "Hello, ";
-	std::string b = "World!";
-	std::string c = a + b;
-	std::cout << c;
+	auto left	= std::to_array({1, 2, 3});
+	auto right	= std::to_array({4, 5, 6});
+	
+	auto both	= concat(left, right);
+
+	for (int elem : both)
+		std::cout << elem << ", ";
 }
 ```
 
@@ -367,103 +442,7 @@ int main()
 <div>
 
 ```plaintext title="Result"
-Hello, World!
-```
-
-</div>
-</Columns>
-
-#### Splitting a string
-
-<Columns spacing="20px" columns={['8fr', '4fr']}>
-<div>
-
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	// Split by the comma.
-	//                    v
-	std::string a = "Hello, World!";
-	size_t pos = a.find(',');
-
-	std::string hello = a.substr(0, pos);
-	// 1 for a comma, and 1 for a space before "World"
-	std::string world = a.substr(pos + 1 + 1);
-
-	std::cout << hello << '\n' << world;
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Result"
-Hello
-World!
-```
-
-</div>
-</Columns>
-
-
-### Conversions
-
-#### Convert `std::string` to `int`
-
-<Columns spacing="20px" columns={['8fr', '4fr']}>
-<div>
-
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string numberInString = "8314";
-
-	// Note: stoi can throw exception if failed!
-	int number = std::stoi(numberInString);
-	std::cout << "Number: " << number;
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Result"
-Number: 8314
-```
-
-</div>
-</Columns>
-
-#### Convert `std::string` to `float`
-
-<Columns spacing="20px" columns={['8fr', '4fr']}>
-<div>
-
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string numberInString = "3.141";
-
-	// Note: stof can throw exception if failed!
-	float number = std::stof(numberInString);
-	std::cout << "Number: " << number;
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Result"
-Number: 3.141
+1, 2, 3, 4, 5, 6, 
 ```
 
 </div>
