@@ -558,3 +558,45 @@ Number: 3.141
 
 </div>
 </Columns>
+
+#### Convert numbers to `std::string`
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	int n1		= 123;
+	float n2	= 456.20f;
+	double n3	= 3.14159;
+
+	std::string s1 = std::to_string(n1); // int -> string
+	std::string s2 = std::to_string(n2); // float -> string
+	std::string s3 = std::to_string(n3); // double -> string
+	
+	std::cout 	<< "s1: " << s1 << "\n"
+				<< "s2: " << s2 << "\n"
+				<< "s3: " << s3 << std::endl;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+s1: 123
+s2: 456.200012
+s3: 3.141590
+```
+
+</div>
+</Columns>
+
+:::note
+If you want a custom formatting, use [`std::stringstream`](/std/io/streams/stringstream),
+or a non-standard library [fmtlib](https://github.com/fmtlib/fmt).
+:::
