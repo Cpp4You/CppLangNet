@@ -1,0 +1,16 @@
+To create an array with an automatically deduced size or/and type,
+we can use `std::to_array` (since C++20).  
+Note: type **and** size deduction (at the same time) was possible since C++17.
+
+```cpp
+#include <array>
+
+int main() {
+	// type: std::array<int, 4>
+	auto ints		= std::to_array({1, 5, 3, 7});
+	// type: std::array<float, 4>
+	auto floats		= std::to_array<float>({1, 5, 3, 7});
+	// type: std::array<char, 6>, as opposed to std::array{"Hello"}
+	auto hello		= std::to_array("Hello");
+}
+```

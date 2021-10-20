@@ -1,0 +1,14 @@
+Note: `ranges` are available since **C++20**.
+
+```cpp
+#include <array>
+#include <ranges>
+#include <algorithm>
+
+int main() {
+	std::array<int, 4> numbers = {13, 2, 7, 4};
+	// Content: 13,2,7,4
+	std::ranges::sort(numbers);
+	// Content: 2,4,7,13
+}
+```

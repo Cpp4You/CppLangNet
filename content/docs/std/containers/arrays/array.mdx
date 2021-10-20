@@ -8,46 +8,164 @@ hide_title:			true
 import ClassSummary				from "@site/src/components/mdx/ClassSummary";
 import SymbolTable, { Symbol }	from "@site/src/components/mdx/SymbolTable";
 import Columns					from "@site/src/components/mdx/Columns";
+import SwitchView				from "@site/src/components/mdx/SwitchView";
 import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
 import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem					from "@theme/TabItem";
+
+<!------------------ Codes ----------------->
+
+<!-- Top Examples -->
+import TopExampleCreateCpp20			from "./_codes/array/main-page/top-example-create-cpp20.mdx";
+import TopExampleCreateCpp17			from "./_codes/array/main-page/top-example-create-cpp17.mdx";
+import TopExampleCreateUntilCpp17		from "./_codes/array/main-page/top-example-create-until-cpp17.mdx";
+
+import TopExampleSortCpp20				from "./_codes/array/main-page/top-example-sort-cpp20.mdx";
+import TopExampleSortUntilCpp20			from "./_codes/array/main-page/top-example-sort-until-cpp20.mdx";
 
 <NotFinished />
 
 # Array class reference
 
+## Overview
+
 ```cpp
-template <typename Type, size_t Count>
+template <typename T, size_t N>
 class array
 ```
 
-A class that is used to store and manipulate sequence of characters.
+`std::array` is a container that encapsulates fixed size arrays.  
+An array can also be used as a tuple of `N` elements of the same type.
 
-The elements of a string are stored contiguously in memory.
+### Example usage
+
+The examples in this section are very simple ones. Navigate to [examples section at the bottom](#more-examples) for more.
+
+<Tabs>
+<TabItem value="create" label="Create" default>
+<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
+<SwitchView content={
+		{
+			"cpp20": <TopExampleCreateCpp20 />,
+			"cpp17": <TopExampleCreateCpp17 />,
+			"until-cpp17": <TopExampleCreateUntilCpp17 />,
+			"String literal": <>
+
+Note: this is only recommended if you don't have C++20, otherwise use `std::to_array`.
+
+```cpp
+#include <array>
+
+int main() {
+	std::array<char, 6> str = { "Hello" };
+	// Content: 'H','e','l','l','o', <nul>
+}
+```
+
+</>
+		}
+	}/>
+</div>
+</TabItem>
+<TabItem value="fill" label="Fill and print">
+<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
+
+```cpp
+#include <iostream>
+#include <array>
+
+int main()
+{
+	std::array<int, 4> playerScores{}; // initialize with zeros
+
+	for (int score : playerScores)
+		std::cout << score << ", ";
+
+	playerScores.fill(123);
+	playerScores.back() = 30;
+
+	std::cout << '\n';
+	for (int score : playerScores)
+		std::cout << score << ", ";
+}
+```
+
+</div>
+</TabItem>
+<TabItem value="sort" label="Sort">
+<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
+
+<SwitchView content={
+		{
+			"cpp20":		<TopExampleSortCpp20 />,
+			"until-cpp20":	<TopExampleSortUntilCpp20 />,
+		}
+	}/>
+
+</div>
+</TabItem>
+</Tabs>
+
+### Memory
+
+The elements of an array are stored contiguously in memory.
 
 <p align="center">
 	<img style={{border: "1px solid gray", maxHeight: 250}} alt="Array elements in memory" src="/img/component-overview/array-elements-in-memory.png" />
 </p>
 
+### Technical details
 
 <details>
-<summary>Technical definition of a string</summary>
+<summary>Technical definition of an array</summary>
 <div>
 
-The class template `basic_string` stores and manipulates sequences of `char`-like objects,
-which are non-array objects of [trivial](/docs/named_req/triavial_type)
-[standard-layout](/docs/named_req/standard_layout_type) type. The class is dependent neither
-on the character type nor on the nature of operations on that type.
-The definitions of the operations are supplied via the Traits template parameter - a specialization
-of [`std::char_traits`](char_traits) or a compatible traits class. `Traits::char_type` and `CharT`
-must name the same type; otherwise the program is ill-formed.
+This container is an aggregate type with the same semantics as a struct holding a C-style array `T[N]`
+as its only non-static data member. Unlike a C-style array, it doesn't decay to `T*` automatically.
+As an aggregate type, it can be initialized with aggregate-initialization given at most `N` initializers
+that are convertible to `T`:
 
-The elements of a basic_string are stored contiguously, that is, for a basic_string s,
-`&*(s.begin() + n) == &*s.begin() + n` for any n in `[0, s.size())`, or, equivalently,
-a pointer to `s[0]` can be passed to functions that expect a pointer to the first element
-of a null-terminated <small>(since C++11)</small> `CharT[]` array.
+```cpp
+std::array<int, 3> a = {1,2,3};
+```
+
+The struct combines the performance and accessibility of a C-style array with the benefits of a standard container,
+such as knowing its own size, supporting assignment, random access iterators, etc.
 
 </div>
 </details>
+
+<details>
+<summary>Zero-length array (<code>N == 0</code>)</summary>
+<div>
+
+There is a special case for a zero-length array (`N == 0`). In that case, `array.begin() == array.end()`,
+which is some unique value. The effect of calling `front()` or `back()` on a zero-sized array is **undefined**.
+
+</div>
+</details>
+
+<details>
+<summary>Named requirements</summary>
+<div>
+
+`std::array` satisfies the requirements of:
+
+- `Container`
+- `ReversibleContainer`
+
+except that default-constructed array is not empty and that the complexity of swapping is linear.
+
+Satisfies the requirements of:
+
+- `ContiguousContainer` (since C++17)
+- `SequenceContainer` (partially)
+
+</div>
+</details>
+
+
 
 
 <ClassSummary name="array" namespaces="std" folder="array" headerName="array">
@@ -356,7 +474,7 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 
 <ImproveSection />
 
-## Examples
+## More examples
 
 ### Basic manipulation
 
