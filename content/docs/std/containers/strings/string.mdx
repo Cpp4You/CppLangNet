@@ -99,7 +99,7 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 </div>
 </details>
 
-<ClassSummary name="string" namespaces="std" folder="string" headerName="string">
+<ClassSummary name="basic_string" namespaces="std" folder="string" headerName="string">
 
 ## Template parameters
 
@@ -117,7 +117,7 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 	<Symbol pub name="allocator_type"			desc={<code>Allocator</code>}/>
 	<Symbol pub name="size_type"				desc={<code>std::allocator_traits&lt;Allocator&gt;::size_type</code>}/>
 	<Symbol pub name="difference_type"			desc={<code>std::allocator_traits&lt;Allocator&gt;::difference_type</code>}/>
-	<Symbol pub name="reference"				desc={<code>value_type</code>}/>
+	<Symbol pub name="reference"				desc={<code>value_type&amp;</code>}/>
 	<Symbol pub name="const_reference"			desc={<code>value_type const&amp;</code>}/>
 	<Symbol pub name="pointer"					desc={<code>std::allocator_traits&lt;Allocator&gt;::pointer</code>}/>
 	<Symbol pub name="const_pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code>}/>
@@ -578,9 +578,9 @@ int main()
 	std::string s2 = std::to_string(n2); // float -> string
 	std::string s3 = std::to_string(n3); // double -> string
 	
-	std::cout 	<< "s1: " << s1 << "\n"
-				<< "s2: " << s2 << "\n"
-				<< "s3: " << s3 << std::endl;
+	std::cout 	<< "s1: " << s1 << '\n'
+				<< "s2: " << s2 << '\n'
+				<< "s3: " << s3;
 }
 ```
 

@@ -221,6 +221,11 @@ Czasami warto skorzystać z [`std::array`](/docs/std/containers/arrays/array/) z
 Jeśli możesz oszacować ile **maksymalnie** elementów będziesz potrzebował i ta liczba nie będzie zbyt duża,
 możesz śmiało użyć tablicy o stałym rozmiarze zamiast dynamicznie alokowanej.
 
+:::important Optymalizacja string-a
+Klasa `std::string` w wyniku optymalizacji (tzw. SSO) może przechowywać małe napisy
+(na 64-bitowych komputerach poniżej 22 znaków), bez używania dynamicznej alokacji.
+:::
+
 Ile to **za dużo**? Musisz to sam(a) oszacować. Jeśli ta pamięć będzie zużyta tylko
 tymczasowo (np. podręczny bufor o wielkości kilku KB do czytania z pliku) to
 bez problemu możesz użyć:
