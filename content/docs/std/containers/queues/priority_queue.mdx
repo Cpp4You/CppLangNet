@@ -1,12 +1,12 @@
 ---
 sidebar_position:	2
-title:				std::queue reference
-sidebar_label:		queue
+title:				std::priority_queue reference
+sidebar_label:		priority_queue
 hide_title:			true
 ---
 <NotFinished />
 
-# Queue class reference
+# Priority_queue class reference
 
 ## Overview
 
@@ -22,8 +22,8 @@ import TabItem						from "@theme/TabItem";
 <TabItem value="simplified" label="Simplified" default>
 
 ```cpp
-template< class T, /* ... */> 
-class queue;
+template< class T, /* ... */ >
+class priority_queue;
 ```
 
 </TabItem>
@@ -32,45 +32,48 @@ class queue;
 ```cpp
 template<
     class T,
-    class Container = std::deque<T>
-> class queue;
+    class Container = std::vector<T>,
+    class Compare = std::less<typename Container::value_type>
+> class priority_queue;
 ```
 
 </TabItem>
 </Tabs>
 
-The `std::queue` class is a container adapter that provides a data structure, where you can 
-add new value on its back, or pop value from its front.
+The priority queue is basically a queue, which stores elements in some order.
 
-Because it is a class template, programmer can specify the type of elements.
+Programmer can specify what the order will be.
 
 <details>
 <summary>Technical definition of a queue</summary>
 <div>
 
-The `std::queue` class is a container adapter that gives the programmer the functionality of a queue - specifically, a *FIFO* (first-in, first-out) data structure.
+A priority queue is a container adaptor that provides constant time lookup of the largest (by default) element, at the expense of logarithmic insertion and extraction.
 
-The class template acts as a wrapper to the underlying container - only a specific set of functions is provided. The queue pushes the elements on the back of the underlying container and pops them from the front.
+A user-provided Compare can be supplied to change the ordering, e.g. using  would cause the smallest element to appear as the top().
 
+Working with a priority_queue is similar to managing a heap in some random access container, with the benefit of not being able to accidentally invalidate the heap. 
 </div>
 </details>
 
-<ClassSummary name="queue" namespaces="std" folder="queue" headerName="queue">
+<ClassSummary name="priority_queue" namespaces="std" folder="queue" headerName="queue">
 
 ## Template parameters
 
 <SymbolTable noTraits>
 	<Symbol name="T"		desc="The type of stored elements"/>
 	<Symbol name="Container" 		desc="The type of underlying container to use to store the elements"/>
+	<Symbol name="Compare" 		desc="A compare type providing a strict weak ordering"/>
 </SymbolTable>
 
 ## Type names
 
 <SymbolTable>
 	<Symbol pub name="container_type"				desc={<code>Container</code>}/>
-	<Symbol pub name="value_type" 				desc={<code>Container::value_type</code>}/>
-	<Symbol pub name="size_type"			desc={<code>Container::size_type</code>}/>
-	<Symbol pub name="reference"				desc={<code>Container::reference</code>}/>
+	<Symbol pub name="value_compare" 				desc={<code>Compare</code>}/>
+	<Symbol pub name="value_type"			desc={<code>Container::value_type</code>}/>
+	<Symbol pub name="size_type"				desc={<code>Container::size_type</code>}/>
+	<Symbol pub name="reference"			desc={<code>Container::reference</code>}/>
 	<Symbol pub name="const_reference"			desc={<code>Container::const_reference</code>}/>
 </SymbolTable>
 
@@ -78,10 +81,10 @@ The class template acts as a wrapper to the underlying container - only a specif
 
 <SymbolTable>	
 	<Symbol pub autoLink linkName="constructor" name="(constructor)">
-		Constructs the <code>queue</code>
+		Constructs the <code>priority_queue</code>
 	</Symbol>
 	<Symbol pub autoLink linkName="destructor" name="(destructor)">
-		Destructs the <code>queue</code>
+		Destructs the <code>priority_queue</code>
 	</Symbol>
 	<Symbol pub autoLink linkName="operator_assign" name="operator="
 			desc="Assigns values to the container adaptor"
@@ -91,11 +94,8 @@ The class template acts as a wrapper to the underlying container - only a specif
 ### Element access
 
 <SymbolTable>	
-	<Symbol pub autoLink name="front"
-			desc={<>Accesses the first element</>}
-		/>
-	<Symbol pub autoLink name="back"
-			desc={<>Accesses the last element</>}
+	<Symbol pub autoLink name="top"
+			desc={<>Accesses the top element</>}
 		/>
 </SymbolTable>
 
@@ -114,24 +114,27 @@ The class template acts as a wrapper to the underlying container - only a specif
 
 <SymbolTable>
 	<Symbol pub autoLink name="push"
-			desc="Inserts element at the end"
+			desc="Inserts element and sorts the underlying container"
 		/>
 	<Symbol pub autoLink name="emplace"
-			desc="Constructs element in-place at the end"
+			desc="Constructs element in-place and sorts the underlying container"
 		/>
 	<Symbol pub autoLink name="pop"
-			desc="Removes the first element"
+			desc="Removes the top element"
 		/>
 	<Symbol pub autoLink name="swap"
 			desc="Swaps the contents"
 		/>
 </SymbolTable>
 
-## Member objects
+### Member objects
 
 <SymbolTable>
-	<Symbol prot name="Container C"
+	<Symbol prot autoLink name="Container C"
 			desc="The underlying container"
+		/>
+	<Symbol prot autoLink name="Compare comp"
+			desc="The comparison function object"
 		/>
 </SymbolTable>
 
@@ -139,27 +142,22 @@ The class template acts as a wrapper to the underlying container - only a specif
 
 <SymbolTable noTraits>
 	<Symbol name={<>
-				operator==<br/>
-				operator!=<br/>
-				operator&lt;<br/>
-				operator&gt;<br/>
-				operator&lt;=<br/>
-				operator&gt;=<br/>
-				operator&lt;=&gt;
+				<a href="#">std::swap</a>
 			</>}
-			desc="Lexicographically compares the values in the queue"
+			desc="specializes the std::swap algorithm "
 		/>
-	<Symbol name={<>std::swap <small>(std::queue)</small></>}
-			desc={<>Specializes the <a href="#">std::swap</a> algorithm</>}
-		/>
+
 </SymbolTable>
 
-### Helper classes
+## Helper classes
 
 <SymbolTable noTraits>
-	<Symbol name={<>std::uses_allocator<small>std::queue</small></>}
-			desc="Specializes the std::uses_allocator type trait"
+	<Symbol name={<>
+				<a href="#">std::uses_allocator</a>
+			</>}
+			desc="specializes the std::uses_allocator algorithm "
 		/>
+
 </SymbolTable>
 
 </ClassSummary>
@@ -184,14 +182,14 @@ The class template acts as a wrapper to the underlying container - only a specif
 
 int main()
 {
-	std::queue<int> q;
+	std::priority_queue<int> q;
 
 	q.push(1);
 	q.push(2);
 	q.push(3);
 
-	while(q.empty() == false){
-		std::cout << q.front() << std::endl;
+	while (q.empty() == false) {
+		std::cout << q.top() << std::endl;
 		q.pop();
 	}
 }
@@ -201,9 +199,9 @@ int main()
 <div>
 
 ```plaintext title="Result"
-1
-2
 3
+2
+1
 ```
 
 </div>
