@@ -55,7 +55,7 @@ export const MoreInfoNotice = ({more}) => (
 	</p>
 );
 
-<ToolCard toolId="vscode" setupLink="./standalone/setup-vscode">
+<ToolCard toolId="vscode" setupLink="../standalone/editors/setup-vscode">
 	A code editor that, after configuration, transforms into a fully-fledged
 	IDE that allows for very effective work.
 	<ToolCard.Details>
@@ -69,11 +69,11 @@ export const MoreInfoNotice = ({more}) => (
 		<ul>
 			<li>The compiler must be configured separately</li>
 		</ul>
-		<MoreInfoNotice more="./standalone/vscode-summary"/>
+		<MoreInfoNotice more="../standalone/vscode-summary"/>
 	</ToolCard.Details>
 </ToolCard>
 
-<ToolCard toolId="vs2019" setupLink="./standalone/setup-vs2019">
+<ToolCard toolId="vs2019" setupLink="../standalone/editors/setup-vs2019">
 	A powerful tool with everything you need, including a code editor
 	and a compiler that supports the latest C++ 20 standard.
 	<ToolCard.Details>
@@ -90,11 +90,11 @@ export const MoreInfoNotice = ({more}) => (
 			<li>Not portable</li>
 			<li>Windows only</li>
 		</ul>
-		<MoreInfoNotice more="./standalone/vs2019-summary"/>
+		<MoreInfoNotice more="../standalone/vs2019-summary"/>
 	</ToolCard.Details>
 </ToolCard>
 
-<ToolCard toolId="clion" setupLink="./standalone/setup-clion">
+<ToolCard toolId="clion" setupLink="../standalone/editors/setup-clion">
 	An IDE with a large number of useful tools that speed up code editing
 	(refactoring, taking care of the correct naming, etc.).
 	<ToolCard.Details>
@@ -110,13 +110,13 @@ export const MoreInfoNotice = ({more}) => (
 			<li>The compiler must be configured separately</li>
 			<li>Big installation size</li>
 		</ul>
-		<MoreInfoNotice more="./standalone/clion-summary"/>
+		<MoreInfoNotice more="../standalone/clion-summary"/>
 	</ToolCard.Details>
 </ToolCard>
 
 ### Others
 
-<ToolCard toolId="qtcreator" setupLink="./standalone/setup-qtcreator">
+<ToolCard toolId="qtcreator" setupLink="../standalone/editors/setup-qtcreator">
 	The IDE of the creators of the Qt library. Good for creating applications
 	using it, but in other situations it loses with the IDEs from the recommended section.
 </ToolCard>

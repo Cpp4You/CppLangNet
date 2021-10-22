@@ -10,5 +10,13 @@
   "sidebar.defaultSidebar.category.Standalone tools": {
     "message": "Narzędzia do pobrania",
     "description": "The label for category Standalone tools in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Editors": {
+    "message": "Edytory / IDE",
+    "description": "The label for category Editors in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Compilers": {
+    "message": "Kompilatory",
+    "description": "The label for category Compilers in sidebar defaultSidebar"
   }
 }
