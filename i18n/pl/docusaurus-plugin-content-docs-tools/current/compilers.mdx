@@ -1,10 +1,95 @@
 ---
-sidebar_position: 2
-title: 🎯 Wybór kompilatora
+sidebar_position:	2
+sidebar_label:		🎯 Wybór kompilatora
+title:				Wybór kompilatora
+description:		Wybierz odpowiedni kompilator C++ korzystając z naszych poradników.
+hide_title:			true
 ---
+
+<!-- Components -->
+import ToolCard			from '@site/src/components/mdx/ToolsSummary';
+
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
+
+<NotFinished/>
 
 # Wybór kompilatora
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+**Kompilator** to narzędzie niezbędne do programowania w C++.
 
-<NotFinished/>
+## Czym jest kompilator
+
+Kompilator tłumaczy kod napisany w języku C++, na format danych który rozumieją komputery.
+Kod C++ nie jest bezpośrednio zrozumiały dla komputerów, dlatego musi zostać
+skonwertowany.
+
+## Dokonaj wyboru
+
+export const MoreInfoNotice = ({more}) => (
+	<p>
+		Zwróć uwagę, że jest to jedynie skrót z najważniejszych informacji dla początkujących programistów.
+		Po pełne podsumowanie narzędzia zajrzyj <a href={more}>tutaj</a>.
+	</p>
+);
+
+### Windows
+
+<ToolCard toolId="msvc" setupLink="../standalone/setup-vs2019">
+	Wbudowany w środowisko Visual Studio.
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Wbudowany w środowisko</li>
+			<li>Prosta instalacja, automatyczna konfiguracja</li>
+		</ul>
+		<h3>Wady</h3>
+		<ul>
+			<li>Rozmiar instalacji (~5 GB)</li>
+			<li>Tylko na Windowsie</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/msvc-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+<ToolCard toolId="gcc" setupLink="../standalone/compilers/setup-gcc-windows">
+	Dobry, wieloplatformowy kompilator. Na Windowsie instaluje się go
+	korzystając z pakietu MSYS2.
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Stosunkowo niewielki rozmiar instalacji (~1.5GB)</li>
+			<li>Wieloplatformowy</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/gcc-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+
+### Linux
+
+<ToolCard toolId="gcc" setupLink="../standalone/compilers/setup-gcc-linux">
+	Dobry, wieloplatformowy kompilator. Na Linuxie instaluje się go
+	z wiersza poleceń.
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Stosunkowo niewielki rozmiar instalacji</li>
+			<li>Wieloplatformowy</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/gcc-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+<ToolCard toolId="clang" setupLink="../standalone/compilers/setup-clang-linux">
+	Dobry, wieloplatformowy kompilator.
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Wieloplatformowy 🤔</li>
+		</ul>
+		<h3>Wady</h3>
+		<ul>
+			<li>Trudny do zainstalowania na Windowsie</li>
+			<li>Duży rozmiar instalacji</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/clang-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+

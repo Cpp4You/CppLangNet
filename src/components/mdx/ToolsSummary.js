@@ -10,6 +10,9 @@ import CodeBlocksIcon	from '@site/static/img/icons/products/codeblocks.png';
 import CppBuilderIcon	from '@site/static/img/icons/products/cppbuilder.png';
 import DevCppIcon		from '@site/static/img/icons/products/devcpp.png';
 
+import GCCIcon			from '@site/static/img/icons/products/gcc.svg';
+import LLVMIcon			from '@site/static/img/icons/products/llvm.png';
+
 import ReplitIcon		from '@site/static/img/icons/products/replit.svg';
 
 import Translate		from '@docusaurus/Translate';
@@ -71,13 +74,35 @@ export const ToolSummaryInfo = {
 		rating:		8,
 		site:		"https://www.replit.com/",
 	},
+
+	////////////////////////////////////
+	// Compilers
+	////////////////////////////////////
+	"msvc": {
+		author:		"Microsoft",
+		title:		"Visual Studio Compiler",
+		icon:		VS2019Icon,
+		site:		"https://visualstudio.com/",
+	},
+	"gcc": {
+		author:		"The GNU Project",
+		title:		"GCC (GNU Compiler Collection)",
+		icon:		GCCIcon,
+		site:		"https://gcc.gnu.org/",
+	},
+	"clang": {
+		author:		"LLVM Developer Group",
+		title:		"Clang",
+		icon:		LLVMIcon,
+		site:		"https://clang.llvm.org/",
+	},
 };
 
 export default function ToolCard(props)
 {
 	const tool = ToolSummaryInfo[props.toolId];
 	return (
-		<ProductCard title={tool.title} img={tool.icon} author={tool.author} rating={tool.rating}>
+		<ProductCard title={tool.title} img={tool.icon} author={tool.author} rating={tool.rating ? tool.rating : undefined}>
 			<ProductCard.Desc>
 				{props.children}
 			</ProductCard.Desc>
