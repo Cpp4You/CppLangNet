@@ -1,14 +1,211 @@
 ---
 sidebar_position:	1
-title:				Konfiguracja GCC (Windows)
+title:				Instalacja GCC (Windows)
 hide_title:			true
 description:		Naucz się jak skonfigurować GCC (kompilator C++) na Windowsie w prosty sposób.
 ---
 
-import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
-
-<NotFinished/>
-
-# Konfiguracja GCC na Windowsie
+# Instalacja GCC na Windowsie
 
 
+W tym artykule pokażemy Ci, jak zainstalować jedną z <u>najnowszych wersji</u>
+kompilatora **GCC**, który pozwoli Ci tworzyć programy w języku C++.
+
+Na systemie Windows kompilator GCC jest częścią paczki **MSYS2**.
+Należy pobrać ją z tej strony:
+
+<big>
+
+
+[https://msys2.org](https://msys2.org#installation)
+
+
+</big>
+
+## Instalacja i konfiguracja
+
+Niżej opisane kroki znajdują się również na ich głównej stronie.
+
+### 1. Zainstaluj MSYS2
+
+Wystarczy przeklikać się do przodu przez ich instalator.
+
+<p align="center">
+
+Podgląd:<br/>
+![Instalator MSYS2 - ścieżka](https://www.msys2.org/images/install-2-path.png)
+
+</p>
+
+:::danger Miejsce instalacji
+Pamiętaj, żeby zainstalować `msys2` w miejscu na dysku,
+które nie w ścieżce nie ma znaków specjalnych ani spacji,
+najlepiej:
+
+```sh title="✔ Poprawna ścieżka"
+C:\msys64
+```
+
+lub na innym dysku w podobnym miejscu.
+:::
+
+### 2. Pobierz odpowiednie pakiety
+
+Po instalacji uruchom konsolę MSYS2 przez pasek start, wyszukując frazę `MSYS2 MSYS`.
+
+<p align="center">
+
+Podgląd:<br/>
+![Uruchamianie konsoli MSYS2](/img/tutorials/tools/msys2/run-msys2-pl.png)
+
+</p>
+
+Wpisz na niej następujące komendy:
+
+
+```sh title="🔹 1. Aktualizacja bazy pakietów"
+pacman -Syu
+```
+
+Gdy w konsoli pojawi się następująca informacja:
+> ```
+> :: Proceed with installation? [Y/n]
+> ```
+
+Wpisz `Y` (od ang.: *yes*) i zatwierdź Enterem.
+
+Następnie wpisz znów `Y`, gdy pojawi się ta informacja:
+
+> ```
+> :: To complete this update all MSYS2 processes including this terminal will be closed. Confirm to proceed [Y/n]`
+> ```
+
+**Włącz ponownie konsolę `MSYS2 MSYS`**
+
+```sh title="🔹 2. Aktualizacja pakietów bazowych"
+pacman -Su
+```
+
+Znów pytanie, które potwierdzamy `Y`:
+
+> ```
+> :: Proceed with installation? [Y/n]
+> ```
+
+I wpisujemy komendę, która pozwoli nam zainstalować MinGW-w64
+
+```sh title="🔹 3. Instalacja pakietów MinGW-w64"
+pacman -S --needed base-devel mingw-w64-x86_64-toolchain
+```
+
+Gdy wyskoczy informacja:
+
+> ```
+> Enter a selection (default=all): 
+> ```
+
+Wpisz numery zaznaczonych na zielono pakietów:
+
+<p align="center">
+
+Podgląd:<br/>
+![Wybieranie pakietów MinGW64](/img/tutorials/tools/msys2/mingw-packages.png)
+
+</p>
+
+Czyli w moim wypadku:
+
+```sh title="🔹 4. Numery instalowanych pakietów"
+1 2 3 7 9 10 11 13 14 15 16 17 18 19
+```
+
+:::important Alternatywa
+
+Możesz też zainstalować wszystkie pakiety wciskając po prostu Enter,
+jednak wtedy zajmie to trochę więcej miejsca na dysku.
+
+:::
+
+### 3. Dodaj ścieżkę do zmiennej systemowej `PATH`
+
+Jeśli poprawnie wykonałeś powyższe kroki, to masz już zainstalowany
+kompilator GCC na komputerze.
+
+Żeby móc z niego sprawnie korzystać, musisz jeszcze dodać
+ścieżkę do folderu `msys64\mingw64\bin` do systemowej zmiennej środowiskowej
+o nazwie `PATH`.
+
+Jeśli wybrałeś/aś domyślną ścieżkę instalacji (`C:\msys64`), to ta ścieżka
+będzie wyglądała tak:
+
+```
+C:\msys64\mingw64\bin
+```
+
+:::tip Instrukcja
+Przeczytaj poniższy artykuł by dowiedzieć się, jak dodać ścieżkę do
+zmiennej systemowej `PATH`:
+
+▶ https://techniczny.net/jak-w-windows-dodac-sciezke-do-zmiennej-path/
+:::
+
+## Test działania
+
+:::important Uwaga
+
+Następne kroki są **opcjonalne**.
+
+:::
+
+Na koniec warto przetestować, czy kompilator działa.
+
+Utwórz pusty folder np. na pulpicie i stwórz nim za pomocą
+edytora kodu lub nawet Notatnika plik o nazwie i rozszerzeniu:
+
+`Main.cpp`
+
+Zapisz w nim następujący fragment kodu (możesz skopiować ze strony):
+
+```cpp title="Main.cpp - Kod sprawdzający wsparcie C++20"
+#include <iostream>
+#include <ranges>
+#include <algorithm>
+#include <array>
+namespace rg = std::ranges;
+
+int main() {
+	auto arr = std::to_array({12, 8, 3, 7});
+
+	rg::sort(arr);
+	for (size_t i = 0; i < arr.size(); ++i)
+	{
+		if (i != 0) std::cout << ", ";
+		std::cout << arr[i];
+	}
+}
+```
+
+Następnie uruchom konsolę w folderze z plikiem `Main.cpp`,
+np. za pomocą skrótu `Shift+PPM` w środku folderu
+i naciśnięcia "Otwórz tutaj okno programu Powershell".
+
+Wpisz następującą komendę:
+
+```sh title="🔹 Kompilacja i uruchomienie"
+g++ Main.cpp -std=c++20 && .\a
+```
+
+Po chwili w konsoli powinien pojawić się następujący efekt:
+
+```sh title="✔ Poprawny wynik"
+3, 7, 8, 13
+```
+
+Powodzenia w programowaniu 😀
+
+:::tip Czy wszystko poszło ok?
+
+Jeśli masz problemy z instalacją, napisz do nas na serwerze Discord na kanale `#helpdesk-polish`:  
+https://discord.gg/NvBNvpgUHZ
+
+:::
