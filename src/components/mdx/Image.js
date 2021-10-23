@@ -1,4 +1,5 @@
 import React			from 'react';
+import useBaseUrl		from '@docusaurus/useBaseUrl';
 
 export default function Image(props)
 {
@@ -10,9 +11,6 @@ export default function Image(props)
 		display:	(fullWidth			? "block"			: "inline-block"),	
 	};
 
-	if (typeof props.src === "string")
-		props.src = props.src.startsWith("/img/") ? useBaseUrl(props.src) : props.img;
-
 	const imgStyle = props.style || {};
 	imgStyle.minWidth	= props.minwidth || undefined;
 	imgStyle.width		= props.width || undefined;
@@ -22,6 +20,11 @@ export default function Image(props)
 	imgStyle.maxHeight	= props.maxheight || undefined;
 
 	const processedProps = {...props};
+
+	if (typeof props.src === "string")
+		processedProps.src = props.src.startsWith("/img/") ? useBaseUrl(props.src) : props.img;
+
+
 	delete processedProps.border;
 	delete processedProps.center;
 	delete processedProps.fullwidth;
