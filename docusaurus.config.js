@@ -76,6 +76,7 @@ function filterSidebarItems(items)
 				},
 			},
 		],
+		'@docusaurus/plugin-ideal-image',
 		'docusaurus-plugin-sass',
 		[
 			'@docusaurus/plugin-content-docs',
