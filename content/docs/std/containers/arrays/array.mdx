@@ -6,17 +6,14 @@ hide_title:			true
 description:		Summary of a std::array (usage, methods, etc.) - C++ Language
 ---
 
-import ClassSummary				from "@cpp-lang/comps/ClassSummary";
-import SymbolTable, { Symbol }	from "@cpp-lang/comps/SymbolTable";
-import Columns					from "@cpp-lang/comps/Columns";
-import SwitchView				from "@cpp-lang/comps/SwitchView";
-import Image					from "@cpp-lang/comps/Image";
-
-import Tabs						from "@theme/Tabs";
-import TabItem					from "@theme/TabItem";
-
+import ClassSummary				from "@site/src/components/mdx/ClassSummary";
+import SymbolTable, { Symbol }	from "@site/src/components/mdx/SymbolTable";
+import Columns					from "@site/src/components/mdx/Columns";
+import SwitchView				from "@site/src/components/mdx/SwitchView";
 import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
 import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem					from "@theme/TabItem";
 
 <!------------------ Codes ----------------->
 
@@ -27,9 +24,6 @@ import TopExampleCreateUntilCpp17		from "./_codes/array/main-page/top-example-cr
 
 import TopExampleSortCpp20				from "./_codes/array/main-page/top-example-sort-cpp20.mdx";
 import TopExampleSortUntilCpp20			from "./_codes/array/main-page/top-example-sort-until-cpp20.mdx";
-
-<!-- Images -->
-import MemoryImg						from "@site/static/img/component-overview/array-elements-in-memory.png"
 
 # Array class reference
 
@@ -115,7 +109,9 @@ int main()
 
 The elements of an array are stored contiguously in memory.
 
-<Image center border img={MemoryImg} maxheight="250px" alt="Array elements in memory" />
+<p align="center">
+	<img style={{border: "1px solid gray", maxHeight: 250}} alt="Array elements in memory" src="/img/component-overview/array-elements-in-memory.png" />
+</p>
 
 ### Technical details
 

@@ -1,31 +1,27 @@
-import React				from 'react';
-import Layout				from '@theme/Layout';
-import IdealImage			from '@theme/IdealImage';
-import Link					from '@docusaurus/Link';
-import Translate			from '@docusaurus/Translate';
-import HomepageFeatures		from '../components/HomepageFeatures';
+import React from 'react';
+import clsx from 'clsx';
+import Layout from '@theme/Layout';
+import Link from '@docusaurus/Link';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import styles from './index.module.scss';
+import HomepageFeatures from '../components/HomepageFeatures';
+import useThemeContext from '@theme/hooks/useThemeContext';
 
-import useDocusaurusContext	from '@docusaurus/useDocusaurusContext';
-import useBaseUrl			from '@docusaurus/useBaseUrl';
-import useThemeContext		from '@theme/hooks/useThemeContext';
-
-import styles				from './index.module.scss';
-
+import Translate, { translate } from '@docusaurus/Translate';
 
 function HomepageHeader() {
-	
-	const {siteConfig}	= useDocusaurusContext();
-	const {isDarkTheme}	= useThemeContext();
+	const {siteConfig} = useDocusaurusContext();
+	const {isDarkTheme} = useThemeContext();
 
 	const backgroundImages = {
-		'white': '/img/coding-bg-white.jpg',
-		'dark': '/img/coding-bg-dark.jpg'
+		'white': 'img/coding-bg-white.jpg',
+		'dark': 'img/coding-bg-dark.jpg'
 	};
 
 	return (
 		<header className={styles.heroBanner}>
 			<div className={styles.bgImage}>
-				<IdealImage img={ useBaseUrl(backgroundImages[isDarkTheme ? 'dark' : 'white']) }/>
+				<img src={ backgroundImages[isDarkTheme ? 'dark' : 'white'] }/>
 			</div>
 			<div className={styles.container}>
 				<div className={styles.textPart}>
