@@ -44,3 +44,5 @@ export default function Image(props)
 		</div>
 	);
 }
+
+Image.isMDXComponent = true;
