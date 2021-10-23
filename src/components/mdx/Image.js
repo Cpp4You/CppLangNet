@@ -1,5 +1,4 @@
 import React			from 'react';
-import IdealImage		from '@theme/IdealImage';
 
 export default function Image(props)
 {
@@ -11,8 +10,8 @@ export default function Image(props)
 		display:	(fullWidth			? "block"			: "inline-block"),	
 	};
 
-	if (typeof props.img === "string")
-		props.img = props.img.startsWith("/img/") ? useBaseUrl(props.img) : props.img;
+	if (typeof props.src === "string")
+		props.src = props.src.startsWith("/img/") ? useBaseUrl(props.src) : props.img;
 
 	const imgStyle = props.style || {};
 	imgStyle.minWidth	= props.minwidth || undefined;
@@ -38,7 +37,7 @@ export default function Image(props)
 
 	return (
 		<div style={style}>
-			<IdealImage {...processedProps} style={imgStyle}/>
+			<img {...processedProps} style={imgStyle}/>
 		</div>
 	);
 }
