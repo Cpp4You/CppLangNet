@@ -38,6 +38,12 @@ export const ToolSummaryInfo = {
 		icon:		VS2019Icon,
 		rating:		8,
 		site:		"https://visualstudio.com/",
+		gallery: [
+			"/img/tutorials/tools/vs2022-2-hd.png",
+			"/img/tutorials/tools/vs2022-4-hd.png",
+			"/img/tutorials/tools/vs2022-1-hd.png",
+			"/img/tutorials/tools/vs2022-3-hd.png",
+		],
 	},
 	"clion": {
 		author:		"Jetbrains",
