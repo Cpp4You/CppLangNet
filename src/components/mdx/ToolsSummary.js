@@ -16,6 +16,7 @@ import LLVMIcon			from '@site/static/img/icons/products/llvm.png';
 import ReplitIcon		from '@site/static/img/icons/products/replit.svg';
 
 import Translate		from '@docusaurus/Translate';
+import Lightbox			from '@site-comps/Lightbox';
 
 export const ToolSummaryInfo = {
 	"vscode": {
@@ -24,6 +25,12 @@ export const ToolSummaryInfo = {
 		icon:		VSCodeIcon,
 		rating:		9,
 		site:		"https://code.visualstudio.com/",
+		gallery: [
+			"/img/tutorials/tools/vscode-2-hd.png",
+			"/img/tutorials/tools/vscode-1-hd.png",
+			"/img/tutorials/tools/vscode-3-hd.png",
+			"/img/tutorials/tools/vscode-4-hd.png",
+		],
 	},
 	"vs2019": {
 		author:		"Microsoft",
@@ -114,7 +121,14 @@ export default function ToolCard(props)
 						</a>
 					</li>
 					{props.setupLink && (<li><a href={props.setupLink}><Translate id="tool.howToUse">🚀 How to use</Translate></a></li>)}
-					<li><a href="#"><Translate>🖼 Gallery</Translate></a></li>
+					{tool.gallery &&
+						<li>
+							<Lightbox
+									trigger={<a href="#"><Translate>🖼 Gallery</Translate></a>}
+									images={tool.gallery}
+								/>
+						</li>
+					}
 				</ul>
 			</ProductCard.Actions>
 		</ProductCard>
