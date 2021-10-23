@@ -5,10 +5,229 @@ hide_title:			true
 description:		Learn how to setup GNU C++ Compiler on Windows easily.
 ---
 
-import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
-
-<NotFinished/>
-
 # GCC setup on Windows
+
+<hr/>
+
+:::tip Video
+This material is also available in a video version, which can make
+the installation process much easier for you.
+:::
+
+<center>
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/lNcgXUj6Iig"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+	allowFullScreen>
+</iframe>
+</center>
+
+<hr/>
+
+In this article, we will show you how to install one of the <u>latest versions</u>
+of the **GCC** compiler that will allow you to create programs in C++.
+
+On Windows, the GCC compiler is part of the **MSYS2** package.
+You can download it from this page:
+
+<big>
+
+
+[https://msys2.org](https://msys2.org#installation)
+
+
+</big>
+
+## Installation and setup
+
+The steps described below are also on their main page.
+
+### 1. Install MSYS2
+
+Just click forward through their installer.
+
+<p align="center">
+
+Preview:<br/>
+![MSYS2 installer - path](https://www.msys2.org/images/install-2-path.png)
+
+</p>
+
+:::danger Installation path
+Remember to install `msys2` in the disk space,
+that have no special characters or spaces in the path,
+preferably:
+
+```sh title="✔ Correct path"
+C:\msys64
+```
+
+or on another disk in a similar location.
+:::
+
+### 2. Download appropriate packages
+
+After installation, start the MSYS2 console through the start bar menu for the phrase `MSYS2 MSYS`.
+
+<p align="center">
+
+Preview:<br/>
+![Launching the MSYS2 console](/img/tutorials/tools/msys2/run-msys2-pl.png)
+
+</p>
+
+Enter the following commands on it:
+
+
+```sh title="🔹 1. Updating the package database"
+pacman -Syu
+```
+
+When the following information appears in the console:
+> ```
+> :: Proceed with installation? [Y/n]
+> ```
+
+Enter `Y` and accept with Return/Enter key.
+
+Then type `Y` again when this information appears:
+
+> ```
+> :: To complete this update all MSYS2 processes including this terminal will be closed. Confirm to proceed [Y/n]`
+> ```
+
+**Please reopen the `MSYS2 MSYS` console**
+
+```sh title="🔹 2. Base packages update"
+pacman -Su
+```
+
+Again, the question we confirm with `Y`:
+
+> ```
+> :: Proceed with installation? [Y/n]
+> ```
+
+And we enter the command that will allow us to install MinGW-w64
+
+```sh title="🔹 3. Installing MinGW-w64 packages"
+pacman -S --needed base-devel mingw-w64-x86_64-toolchain
+```
+
+When the information pops up:
+
+> ```
+> Enter a selection (default=all): 
+> ```
+
+Enter the numbers of the packages marked in green:
+
+<p align="center">
+
+Preview:<br/>
+![Selecting MinGW64 packages](/img/tutorials/tools/msys2/mingw-packages.png)
+
+</p>
+
+In my case:
+
+```sh title="🔹 4. Installed package numbers"
+1 2 3 7 9 10 11 13 14 15 16 17 18 19
+```
+
+:::important Alternatively
+
+You can also install all packages by just pressing Enter,
+however, then it will take up a little more disk space.
+
+:::
+
+### 3. Add path to system variable `PATH`
+
+If you have followed the steps above correctly,
+you already have the GCC compiler installed on your computer.
+
+To be able to use it efficiently, you also need to add the path
+to the `msys64 \ mingw64 \ bin` folder to the system environment
+variable named` PATH`.
+
+If you chose the default installation path (`C:\msys64`),
+this path will look like this:
+
+```
+C:\msys64\mingw64\bin
+```
+
+:::tip Instruction
+Przeczytaj poniższy artykuł by dowiedzieć się, jak dodać ścieżkę do
+zmiennej systemowej `PATH`:
+
+▶ https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/
+:::
+
+## Test if it works
+
+:::important
+
+The next steps are **optional**.
+
+:::
+
+Finally, it's a good idea to test if the compiler works.
+
+Create an empty folder, e.g. on the desktop and create a file using a code editor or even Notepad,
+with the name and extension:
+
+`Main.cpp`
+
+Save the following code in it (you can copy from the site):
+
+```cpp title="Main.cpp - C++20 support checking code"
+#include <iostream>
+#include <ranges>
+#include <algorithm>
+#include <array>
+namespace rg = std::ranges;
+
+int main() {
+	auto arr = std::to_array({12, 8, 3, 7});
+
+	rg::sort(arr);
+	for (size_t i = 0; i < arr.size(); ++i)
+	{
+		if (i != 0) std::cout << ", ";
+		std::cout << arr[i];
+	}
+}
+```
+
+Then run the console in the folder with the file `Main.cpp`,
+eg by using the shortcut `Shift + PPM` in the middle of the folder
+and pressing "Open the Powershell window here".
+
+Enter the following command:
+
+```sh title="🔹 Compile & run command"
+g++ Main.cpp -std=c++20 && .\a
+```
+
+After a while, the following effect should appear in the console:
+
+```sh title="✔ Correct result"
+3, 7, 8, 13
+```
+
+Good luck with your programming 😀
+
+:::tip Did everything go well?
+
+If you have problems installing, please contact us on the Discord server on the `#helpdesk` channel:  
+https://discord.gg/xH2BPRNftS
+
+:::
 
 
