@@ -28,6 +28,7 @@
     "raw-loader": "^4.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-image-lightbox": "^5.1.4",
     "remark-disable-tokenizers": "^1.1.0",
     "sass": "^1.42.1",
     "url-loader": "^4.1.1"
