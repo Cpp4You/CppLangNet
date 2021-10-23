@@ -17,14 +17,17 @@ import ReplitIcon		from '@site/static/img/icons/products/replit.svg';
 
 import Translate		from '@docusaurus/Translate';
 import Lightbox			from '@site-comps/Lightbox';
-
+import thumbnailStyles	from '@site/src/css/components/Thumbnail.module.scss';
+ 
 export const ToolSummaryInfo = {
 	"vscode": {
-		author:		"Microsoft",
-		title:		"Visual Studio Code",
-		icon:		VSCodeIcon,
-		rating:		9,
-		site:		"https://code.visualstudio.com/",
+		author:				"Microsoft",
+		title:				"Visual Studio Code",
+		icon:				VSCodeIcon,
+		rating:				9,
+		site:				"https://code.visualstudio.com/",
+
+		galleryThumbnail:	"/img/tutorials/tools/vscode-thumbnail.png",
 		gallery: [
 			"/img/tutorials/tools/vscode-2-hd.png",
 			"/img/tutorials/tools/vscode-1-hd.png",
@@ -33,11 +36,13 @@ export const ToolSummaryInfo = {
 		],
 	},
 	"vs2019": {
-		author:		"Microsoft",
-		title:		"Visual Studio",
-		icon:		VS2019Icon,
-		rating:		8,
-		site:		"https://visualstudio.com/",
+		author:				"Microsoft",
+		title:				"Visual Studio",
+		icon:				VS2019Icon,
+		rating:				8,
+		site:				"https://visualstudio.com/",
+
+		galleryThumbnail:	"/img/tutorials/tools/vs2022-thumbnail.png",
 		gallery: [
 			"/img/tutorials/tools/vs2022-4-hd.png",
 			"/img/tutorials/tools/vs2022-2-hd.png",
@@ -58,13 +63,24 @@ export const ToolSummaryInfo = {
 		icon:		QtCreatorIcon,
 		rating:		7,
 		site:		"https://www.qt.io/product/development-tools/",
+
+		galleryThumbnail: "/img/tutorials/tools/qtcreator-thumbnail.png",
+		gallery: [
+			"/img/tutorials/tools/qtcreator-1-hd.png",
+			"/img/tutorials/tools/qtcreator-2-hd.png",
+			"/img/tutorials/tools/qtcreator-3-hd.png",
+			"/img/tutorials/tools/qtcreator-4-hd.png",
+			"/img/tutorials/tools/qtcreator-5-hd.png",
+		],
 	},
 	"codeblocks": {
-		author:		"The Code::Blocks team",
-		title:		"Code Blocks",
-		icon:		CodeBlocksIcon,
-		rating:		5,
-		site:		"https://www.codeblocks.org/",
+		author:				"The Code::Blocks team",
+		title:				"Code Blocks",
+		icon:				CodeBlocksIcon,
+		rating:				5,
+		site:				"https://www.codeblocks.org/",
+
+		galleryThumbnail:	"/img/tutorials/tools/codeblocks-thumbnail.png",
 		gallery: [
 			"/img/tutorials/tools/codeblocks-1-hd.png",
 			"/img/tutorials/tools/codeblocks-2-hd.png",
@@ -86,12 +102,13 @@ export const ToolSummaryInfo = {
 		site:		"https://www.bloodshed.net/",
 	},
 	"replit": {
-		author:		"The Replit Team",
-		title:		"Repl.it",
-		icon:		ReplitIcon,
-		rating:		8,
-		site:		"https://www.replit.com/",
+		author:				"The Replit Team",
+		title:				"Repl.it",
+		icon:				ReplitIcon,
+		rating:				8,
+		site:				"https://www.replit.com/",
 
+		galleryThumbnail:	"/img/tutorials/tools/replit-thumbnail.png",
 		gallery: [
 			"/img/tutorials/tools/replit-3-hd.png",
 			"/img/tutorials/tools/replit-2-hd.png",
@@ -123,6 +140,18 @@ export const ToolSummaryInfo = {
 	},
 };
 
+export function GalleryThumbnail(props)
+{
+	return (
+		<>
+			<div className={thumbnailStyles.Thumbnail} onClick={props.onClick}>
+				<img src={props.src}/>
+				<p className={thumbnailStyles.ThumbnailIcon}>🔎</p>
+			</div>
+		</>
+	);
+}
+
 export default function ToolCard(props)
 {
 	const tool = ToolSummaryInfo[props.toolId];
@@ -141,8 +170,15 @@ export default function ToolCard(props)
 					{props.setupLink && (<li><a href={props.setupLink}><Translate id="tool.howToUse">🚀 How to use</Translate></a></li>)}
 					{tool.gallery &&
 						<li>
+							
 							<Lightbox
-									trigger={<a href="#"><Translate>🖼 Gallery</Translate></a>}
+									trigger={
+										tool.galleryThumbnail
+										?
+											<GalleryThumbnail src={tool.galleryThumbnail} />
+										:
+										<a href="#"><Translate>🖼 Gallery</Translate></a>
+									}
 									images={tool.gallery}
 								/>
 						</li>
