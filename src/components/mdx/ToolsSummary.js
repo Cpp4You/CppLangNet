@@ -39,8 +39,8 @@ export const ToolSummaryInfo = {
 		rating:		8,
 		site:		"https://visualstudio.com/",
 		gallery: [
-			"/img/tutorials/tools/vs2022-2-hd.png",
 			"/img/tutorials/tools/vs2022-4-hd.png",
+			"/img/tutorials/tools/vs2022-2-hd.png",
 			"/img/tutorials/tools/vs2022-1-hd.png",
 			"/img/tutorials/tools/vs2022-3-hd.png",
 		],
@@ -65,6 +65,11 @@ export const ToolSummaryInfo = {
 		icon:		CodeBlocksIcon,
 		rating:		5,
 		site:		"https://www.codeblocks.org/",
+		gallery: [
+			"/img/tutorials/tools/codeblocks-1-hd.png",
+			"/img/tutorials/tools/codeblocks-2-hd.png",
+			"/img/tutorials/tools/codeblocks-3-hd.png",
+		],
 	},
 	"cppbuilder": {
 		author:		"Embarcadero",
@@ -86,6 +91,13 @@ export const ToolSummaryInfo = {
 		icon:		ReplitIcon,
 		rating:		8,
 		site:		"https://www.replit.com/",
+
+		gallery: [
+			"/img/tutorials/tools/replit-3-hd.png",
+			"/img/tutorials/tools/replit-2-hd.png",
+			"/img/tutorials/tools/replit-4-hd.png",
+			"/img/tutorials/tools/replit-1-hd.png",
+		],
 	},
 
 	////////////////////////////////////
