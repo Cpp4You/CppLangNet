@@ -6,6 +6,7 @@ import StarBorder	from '@site/static/mui-icons/StarBorder.svg';
 
 import Details		from '@theme/Details'
 import Translate	from '@docusaurus/Translate';
+import useBaseUrl	from '@docusaurus/useBaseUrl';
 
 import styles from '@site/src/css/components/ProductCard.module.scss'
 
@@ -34,7 +35,10 @@ export default function ProductCard(props) {
 
 	let img;
 	if (typeof props.img === 'string')
-		img = <img src={props.img} className={styles.productIcon} />;
+	{
+		const src = props.img.startsWith("/img/") ? useBaseUrl(props.img) : props.img;
+		img = <img src={src} className={styles.productIcon} />;
+	}
 	else
 		img = <props.img className={styles.productIcon} />;
 

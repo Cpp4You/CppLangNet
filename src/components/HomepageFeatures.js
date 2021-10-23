@@ -1,6 +1,7 @@
 import React			from 'react';
 import clsx				from 'clsx';
 import styles			from './HomepageFeatures.module.scss';
+import useBaseUrl		from '@docusaurus/useBaseUrl';
 
 import { translate }	from '@docusaurus/Translate';
 
@@ -60,7 +61,7 @@ function Feature({svgPath, title, url}) {
 	return (
 		<a href={url} className={styles.pageCard}>
 			<div className={styles.pageCardSvg}>
-				<img src={svgPath} className={styles.featureSvg} alt={title} />
+				<img src={useBaseUrl(svgPath)} className={styles.featureSvg} alt={title} />
 			</div>
 			<div className={styles.pageCardText}>
 				<h3>{title}</h3>

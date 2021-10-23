@@ -1,3 +1,5 @@
+const path = require('path');
+
 const lightCodeTheme = require('prism-react-renderer/themes/github');
 const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
 
@@ -67,8 +69,16 @@ function filterSidebarItems(items)
 	},
 
 	plugins: [
+		[
+			'docusaurus-plugin-module-alias',
+			{
+				alias: {
+					'@cpp-lang/comps': path.resolve(__dirname, 'src/components/mdx/'),
+				},
+			}
+		],
+		'@docusaurus/plugin-ideal-image',
 		'docusaurus-plugin-sass',
-
 		[
 			'@docusaurus/plugin-content-docs',
 			{

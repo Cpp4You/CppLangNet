@@ -4,9 +4,12 @@ sidebar_position: 9
 
 # Using components
 
-import ClassSummary 			from "@site/src/components/mdx/ClassSummary";
-import SymbolTable, { Symbol }	from "@site/src/components/mdx/SymbolTable";
-import ProductCard 				from '@site/src/components/mdx/ProductCard';
+import ClassSummary 			from "@cpp-lang/comps/ClassSummary";
+import SymbolTable, { Symbol }	from "@cpp-lang/comps/SymbolTable";
+import ProductCard 				from "@cpp-lang/comps/ProductCard";
+
+import Image					from "@cpp-lang/comps/Image"; 
+import ClassSummaryImg			from "@site/static/img/component-overview/class-summary.png" 
 
 We provide a few custom components that you can use inside documents.
 
@@ -30,7 +33,7 @@ Here's the list of our custom components.
 Importing:
 
 ```js
-import Columns from '@site/src/components/mdx/Columns';
+import Columns from '@cpp-lang/comps/Columns';
 ```
 
 :::caution
@@ -42,7 +45,7 @@ TODO: description
 Importing:
 
 ```js
-import CustomCodeBlock from '@site/src/components/mdx/CustomCodeBlock';
+import CustomCodeBlock from '@cpp-lang/comps/CustomCodeBlock';
 ```
 
 :::caution
@@ -54,7 +57,7 @@ TODO: description
 Importing:
 
 ```js
-import GoogleSlides from '@site/src/components/mdx/GoogleSlides';
+import GoogleSlides from '@cpp-lang/comps/GoogleSlides';
 ```
 
 :::caution
@@ -66,7 +69,7 @@ TODO: description
 Importing:
 
 ```jsx
-import SymbolTable, { Symbol } from '@site/src/components/mdx/SymbolTable';
+import SymbolTable, { Symbol } from '@cpp-lang/comps/SymbolTable';
 ```
 
 ### `SymbolTable` fields
@@ -120,14 +123,14 @@ remove the indentation, otherwise it will be recognized as a code block.
 Importing:
 
 ```js
-import ClassSummary from "@site/src/components/mdx/ClassSummary";
+import ClassSummary from "@cpp-lang/comps/ClassSummary";
 ```
 
 Usage:
 
 ```jsx
-import ClassSummary				from '@site/src/components/mdx/ClassSummary';
-import SymbolTable, { Symbol }	from '@site/src/components/mdx/SymbolTable';
+import ClassSummary				from '@cpp-lang/comps/ClassSummary';
+import SymbolTable, { Symbol }	from '@cpp-lang/comps/SymbolTable';
 
 <ClassSummary name="string" namespaces="std">
 
@@ -146,7 +149,7 @@ import SymbolTable, { Symbol }	from '@site/src/components/mdx/SymbolTable';
 
 Result:
 
-<img style={{border: "1px solid gray"}} alt="Class Summary" src="/img/component-overview/class-summary.png" />
+<Image center border alt="Class Summary" img={ClassSummaryImg} />
 
 
 ### `ClassSummary` Fields
@@ -162,7 +165,7 @@ Result:
 Importing:
 
 ```jsx
-import ProductCard from '@site/src/components/mdx/ProductCard';
+import ProductCard from '@cpp-lang/comps/ProductCard';
 ```
 
 Usage:
@@ -255,7 +258,7 @@ It is a subcomponent of the `ProductCard` used to add details to the product's d
 Importing:
 
 ```js
-import ToolCard from '@site/src/components/mdx/ToolsSummary';
+import ToolCard from '@cpp-lang/comps/ToolsSummary';
 ```
 
 :::caution
