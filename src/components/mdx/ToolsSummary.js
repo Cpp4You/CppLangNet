@@ -107,14 +107,14 @@ export default function ToolCard(props)
 				{props.children}
 			</ProductCard.Desc>
 			<ProductCard.Actions>
-				<ul style={ { listStyle: "none" } }>
+				<ul style={ { listStyle: "none", margin: 0, padding: 0 } }>
 					<li>
 						<a href={tool.site} target="_blank">
-							<Translate id="tool.projectWebsite">Project website</Translate>
+							<Translate id="tool.projectWebsite">🌐 Project website</Translate>
 						</a>
 					</li>
-					{props.setupLink && (<li><a href={props.setupLink}><Translate id="tool.howToUse">How to use</Translate></a></li>)}
-					<li><a href="#"><Translate>Gallery</Translate></a></li>
+					{props.setupLink && (<li><a href={props.setupLink}><Translate id="tool.howToUse">🚀 How to use</Translate></a></li>)}
+					<li><a href="#"><Translate>🖼 Gallery</Translate></a></li>
 				</ul>
 			</ProductCard.Actions>
 		</ProductCard>
