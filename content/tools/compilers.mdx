@@ -1,10 +1,90 @@
 ---
 sidebar_position: 2
-title: 🎯 Choose a compiler
+sidebar_label:		🎯 Choose a compiler
+title: 				Choose a compiler
+description:		Select a preferred C++ compiler using our tutorials.
+hide_title:			true
 ---
+
+!-- Components -->
+import ToolCard			from '@site/src/components/mdx/ToolsSummary';
 
 # Choose a compiler
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+A **compiler** is a necessary tool to program in C++.
 
-<NotFinished/>
+## What is a compiler
+
+A compiler translates code written in C++ language, to a format that is readable for computers.
+C++ code cannot be understood directly by computers, so it has to be converted.
+
+## Make a choice
+
+export const MoreInfoNotice = ({more}) => (
+	<p>
+		Note that this is only a summary of the most important information for novice programmers.
+		For a full summary of the tool, please see <a href={more}>this article</a>.
+	</p>
+);
+
+### Windows
+
+<ToolCard toolId="msvc" setupLink="../standalone/editors/setup-vs2019">
+	Integrated into Visual Studio IDE.
+	<ToolCard.Details>
+		<h3>Pros</h3>
+		<ul>
+			<li>Integrated into the IDE</li>
+			<li>Very easy installation, automatic configuration</li>
+		</ul>
+		<h3>Cons</h3>
+		<ul>
+			<li>Installation size (~5 GB)</li>
+			<li>Only on Windows</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/msvc-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+<ToolCard toolId="gcc" setupLink="../standalone/compilers/setup-gcc-windows">
+	A good, multiplatform compiler. To install it on Windows, we use
+	the MSYS2 package.
+	<ToolCard.Details>
+		<h3>Pros</h3>
+		<ul>
+			<li>Relatively small installation size (~1.5GB)</li>
+			<li>Multiplatform</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/gcc-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+
+### Linux
+
+<ToolCard toolId="gcc" setupLink="../standalone/compilers/setup-gcc-windows">
+	A good, multiplatform compiler. To install it on Linux, we use
+	the system package manager.
+	<ToolCard.Details>
+		<h3>Pros</h3>
+		<ul>
+			<li>Relatively small installation size (~1.5GB)</li>
+			<li>Multiplatform</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/gcc-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+<ToolCard toolId="clang" setupLink="../standalone/compilers/setup-clang-linux">
+	A good, multiplatform compiler.
+	<ToolCard.Details>
+		<h3>Pros</h3>
+		<ul>
+			<li>Multiplatform 🤔</li>
+		</ul>
+		<h3>Cons</h3>
+		<ul>
+			<li>Hard to install on Windows</li>
+			<li>Big installation size</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/clang-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+
