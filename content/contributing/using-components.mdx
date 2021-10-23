@@ -4,9 +4,9 @@ sidebar_position: 9
 
 # Using components
 
-import ClassSummary 			from "@site/src/components/mdx/ClassSummary";
-import SymbolTable, { Symbol }	from "@site/src/components/mdx/SymbolTable";
-import ProductCard 				from '@site/src/components/mdx/ProductCard';
+import ClassSummary 			from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import ProductCard 				from '@site-comps/ProductCard';
 
 We provide a few custom components that you can use inside documents.
 
@@ -30,7 +30,7 @@ Here's the list of our custom components.
 Importing:
 
 ```js
-import Columns from '@site/src/components/mdx/Columns';
+import Columns from '@site-comps/Columns';
 ```
 
 :::caution
@@ -42,7 +42,7 @@ TODO: description
 Importing:
 
 ```js
-import CustomCodeBlock from '@site/src/components/mdx/CustomCodeBlock';
+import CustomCodeBlock from '@site-comps/CustomCodeBlock';
 ```
 
 :::caution
@@ -54,7 +54,7 @@ TODO: description
 Importing:
 
 ```js
-import GoogleSlides from '@site/src/components/mdx/GoogleSlides';
+import GoogleSlides from '@site-comps/GoogleSlides';
 ```
 
 :::caution
@@ -66,7 +66,7 @@ TODO: description
 Importing:
 
 ```jsx
-import SymbolTable, { Symbol } from '@site/src/components/mdx/SymbolTable';
+import SymbolTable, { Symbol } from '@site-comps/SymbolTable';
 ```
 
 ### `SymbolTable` fields
@@ -120,14 +120,14 @@ remove the indentation, otherwise it will be recognized as a code block.
 Importing:
 
 ```js
-import ClassSummary from "@site/src/components/mdx/ClassSummary";
+import ClassSummary from "@site-comps/ClassSummary";
 ```
 
 Usage:
 
 ```jsx
-import ClassSummary				from '@site/src/components/mdx/ClassSummary';
-import SymbolTable, { Symbol }	from '@site/src/components/mdx/SymbolTable';
+import ClassSummary				from '@site-comps/ClassSummary';
+import SymbolTable, { Symbol }	from '@site-comps/SymbolTable';
 
 <ClassSummary name="string" namespaces="std">
 
@@ -162,7 +162,7 @@ Result:
 Importing:
 
 ```jsx
-import ProductCard from '@site/src/components/mdx/ProductCard';
+import ProductCard from '@site-comps/ProductCard';
 ```
 
 Usage:
@@ -255,7 +255,7 @@ It is a subcomponent of the `ProductCard` used to add details to the product's d
 Importing:
 
 ```js
-import ToolCard from '@site/src/components/mdx/ToolsSummary';
+import ToolCard from '@site-comps/ToolsSummary';
 ```
 
 :::caution

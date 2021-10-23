@@ -1,5 +1,6 @@
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/vsDark');
+const path				= require('path');
+const lightCodeTheme	= require('prism-react-renderer/themes/github');
+const darkCodeTheme		= require('prism-react-renderer/themes/vsDark');
 
 const remarkDisableTokenizers = require('remark-disable-tokenizers');
 
@@ -67,8 +68,15 @@ function filterSidebarItems(items)
 	},
 
 	plugins: [
+		[
+			'docusaurus-plugin-module-alias',
+			{
+				alias: {
+					'@site-comps': path.resolve(__dirname, 'src/components/mdx'),
+				},
+			},
+		],
 		'docusaurus-plugin-sass',
-
 		[
 			'@docusaurus/plugin-content-docs',
 			{
