@@ -50,9 +50,13 @@ The `std::map` is a container that stores key-value pairs with unique keys in so
 <summary>Technical definition of a map</summary>
 <div>
 
-std::map is a sorted associative container that contains key-value pairs with unique keys. Keys are sorted by using the comparison function Compare. Search, removal, and insertion operations have logarithmic complexity. Maps are usually implemented as red-black trees.
+`std::map` is a sorted associative container that contains key-value pairs with unique keys.
+Keys are sorted by using the comparison function `Compare`. Search, removal,
+and insertion operations have logarithmic complexity. Maps are usually implemented as red-black trees.
 
-Everywhere the standard library uses the Compare requirements, uniqueness is determined by using the equivalence relation. In imprecise terms, two objects a and b are considered equivalent (not unique) if neither compares less than the other: !comp(a, b) && !comp(b, a). 
+Everywhere the standard library uses the `Compare` requirements, uniqueness is determined by
+using the equivalence relation. In imprecise terms, two objects `a` and `b` are considered equivalent
+(not unique) if neither compares less than the other: `!comp(a, b) && !comp(b, a)`. 
 
 </div>
 </details>
