@@ -20,7 +20,11 @@ export default class Lightbox extends Component {
 			this.setScrollEnabled(false);
 		}
 		this.handleClose = () => {
-			this.setState({ isOpen: false });
+			this.setState(
+				{
+					isOpen:		false,
+					photoIndex:	0,
+				});
 			this.setScrollEnabled(true);
 		}
 
