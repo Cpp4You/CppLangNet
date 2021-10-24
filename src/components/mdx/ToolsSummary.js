@@ -56,6 +56,15 @@ export const ToolSummaryInfo = {
 		icon:		CLionIcon,
 		rating:		8,
 		site:		"https://www.jetbrains.com/clion/",
+
+		galleryThumbnail: "/img/tutorials/tools/clion-thumbnail.png",
+		gallery: [
+			"/img/tutorials/tools/clion-1-hd.png",
+			"/img/tutorials/tools/clion-2-hd.png",
+			"/img/tutorials/tools/clion-3-hd.png",
+			"/img/tutorials/tools/clion-4-hd.png",
+			"/img/tutorials/tools/clion-5-hd.png",
+		],
 	},
 	"qtcreator": {
 		author:		"The Qt Company",
