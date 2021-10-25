@@ -1,11 +1,144 @@
 ---
 sidebar_position:	1
-description:		"Przykładowy program: zaawansowany kalkulator w języku C++"
 sidebar_label:		➕ Podstawowy kalkulator
+title:				Podstawowy kalkulator
+description:		"Przykładowy program: zaawansowany kalkulator w języku C++"
+hide_title:			true
+tags: [przykład, matematyka, kalkulator, wejście, wyjście]
 ---
+
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
+import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
+
+<NotFinished/>
 
 # Podstawowy kalkulator
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+Wymaga znajomości: [**1. Pierwszy program**](../../first-program) - [**4. Instrukcje warunkowe**](../../conditions)
 
-<NotFinished/>
+## Przegląd
+
+Stworzymy prosty program, który będzie mógł policzyć:
+
+- ➕ sumę
+- ➖ różnicę
+- ✖ iloczyn
+- ➗ iloraz
+
+dwóch liczb rzeczywistych (tak naprawdę *zmiennoprzecinkowych* - `float`)
+
+## Kod źródłowy
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout	<< "=== KALKULATOR ===\n"
+				<< "Menu:\n"
+				<< "1) Dodawanie\n"
+				<< "2) Odejmowanie\n"
+				<< "3) Mnożenie\n"
+				<< "4) Dzielenie\n"
+				<< "> Twój wybór: ";
+
+	int choice;
+	std::cin >> choice;
+
+	float a, b;
+	if (choice == 1)
+	{
+		std::cout	<< "Liczenie sumy (a + b).\n"
+					<< "Proszę wpisać pierwszą liczbę: ";
+		std::cin >> a;
+
+		std::cout	<< "Proszę wpisać drugą liczbę: ";
+		std::cin >> b;
+
+		std::cout << "a + b wynosi " << (a + b);
+	}
+	else if (choice == 2)
+	{
+		std::cout	<< "Liczenie różnicy (a - b).\n"
+					<< "Proszę wpisać pierwszą liczbę: ";
+		std::cin >> a;
+
+		std::cout	<< "Proszę wpisać drugą liczbę: ";
+		std::cin >> b;
+
+		std::cout << "a - b wynosi " << (a - b);
+	}
+	else if (choice == 3)
+	{
+		std::cout	<< "Liczenie iloczynu (a * b).\n"
+					<< "Proszę wpisać pierwszą liczbę: ";
+		std::cin >> a;
+
+		std::cout	<< "Proszę wpisać drugą liczbę: ";
+		std::cin >> b;
+
+		std::cout << "a * b wynosi " << (a * b);
+	}
+	else if (choice == 4)
+	{
+		std::cout	<< "Liczenie ilorazu (a / b).\n"
+					<< "Proszę wpisać pierwszą liczbę: ";
+		std::cin >> a;
+
+		std::cout	<< "Proszę wpisać drugą liczbę: ";
+		std::cin >> b;
+
+		if (b == 0)
+			std::cout << "Nie można dzielić przez 0!";
+		else
+			std::cout << "a / b wynosi " << (a / b);
+	}
+	else
+		std::cout << "Nieprawidłowa opcja: " << choice;
+}
+```
+
+## Wyjaśnienie
+
+<ImproveSection />
+
+### 1. Menu główne
+
+Używamy `cout` do wyświetlania menu głównego programu na samym początku jego
+wykonania <small>([*Lekcja - 1. Pierwszy program*](../../first-program))</small>.
+Połączyliśmy wyświetlenia wielu tekstów za pomocą operatorów `<<`.
+
+### 2. Wybór
+
+By określić, która operacja powinna zostać wykonana, użyliśmy instrukcji `if`, `else if`
+oraz `else` <small>([*Lekcja - 4. Instrukcje warunkowe*](../../conditions))</small>
+
+## Co można usprawnić
+
+### 1. Powtarzający się kod
+
+Łatwo można dostrzec, że jest pewien fragment kodu, który
+powtarza się kilka razy:
+
+```cpp title="⚠ Powtarzający się kod"
+std::cout << "Proszę wpisać pierwszą liczbę: ";
+std::cin >> a;
+
+std::cout << "Proszę wpisać drugą liczbę: ";
+std::cin >> b;
+```
+
+Nauczysz się w kursie rozwiązywać problem powtórzeń w kodzie
+poprzez korzystanie z [**funkcji**](../../functions).
+
+### 2. Wykrywanie błędów wczytywania
+
+Co by się stało, gdyby spróbowano wpisać **słowo**
+(np.: `cześć`) zamiast liczby, w tym miejscu w kodzie:
+
+```cpp title="🤔 Czy to zadziała?"
+int choice;
+std::cin >> choice; // wpisuję "cześć"
+```
+
+**`TODO`**: lekcja o błędach odczytu
