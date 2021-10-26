@@ -21,7 +21,7 @@ który będzie mógł wyświetlać tekst i wykonywać proste obliczenia.
 
 ## Kod programu
 
-Poprzednią lekcję skończyliśmy na następującym kodzie:
+Poprzednio skończyliśmy na następującym kodzie:
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
@@ -62,8 +62,8 @@ int main()
 }
 ```
 
-Tak jak wspominaliśmy we <a href="/learn">wstępie</a>, komputer wykonuje program linijka po linijce.
-Gdy uruchamia aplikację, zaczyna wykonywać po kolei instrukcje z **bloku kodu** `main`-a.
+Tak jak wspominaliśmy we [**wstępie**](/learn), komputer wykonuje program linijka po linijce.
+Gdy uruchamia aplikację, po kolei realizuje instrukcje z **bloku kodu** `main`-a.
 
 **Blok kodu** w C++, to zbiór instrukcji zawartych wewnątrz nawiasów klamrowych:
 
@@ -78,7 +78,7 @@ Funkcja główna `main` ma swój blok kodu i wszystko co znajdzie się pomiędzy
 
 ### Biblioteka `iostream`
 
-Na samym początku kodu, znajduje się linijka:
+Na samym początku, znajduje się linijka:
 
 ```cpp
 #include <iostream>
@@ -119,8 +119,9 @@ Witaj, świecie!1Witaj, świecie!2Witaj, świecie!3
 ```
 
 :::caution Średnik na końcu instrukcji!
-Średnik (`;`) oddziela od siebie instrukcje. Kompilator nie patrzy czy instrukcje są napisane w osobnych liniach.
-Średnik jest traktowany jak koniec instrukcji. Z tego powodu taki kod:
+Średnik (`;`) oznacza koniec pojedynczej instrukcji i tym samym oddziela
+następujące po sobie instrukcje. Kompilator nie patrzy czy są one napisane w osobnych liniach.
+Z tego powodu taki kod:
 ```cpp
 std::cout << "Witaj, świecie!1"; std::cout << "Witaj, świecie!2"; std::cout << "Witaj, świecie!3";
 ```
@@ -142,15 +143,19 @@ Zwróć uwagę, że tekst wypisał się do konsoli bez żadnych odstępów,
 w jednej linii i zawinął się, dopiero pod koniec dostępnego miejsca.
 
 Program robi **dokładnie** to, co ma napisane w kodzie - nie więcej, nie mniej.
-Powyższy kod mówi tyle, że ma wyświetlić podane znaki i on to robi.
+My "powiedzieliśmy" mu tylko tyle, że ma wyświetlić podane znaki... i on to robi.
 Musimy "złamać linię" w odpowiednim miejscu. Sprawi to, że następne
-znaki będą wyświetlane w następnej linii, od samego początku.
+znaki będą wyświetlane od samego początku kolejnego wiersza.
 Aby to zrobić należy **wewnątrz tekstu** umieścić **specjalny znak**
 nowej linii: `\n`, w ten sposób:
 
 ```cpp
 std::cout << "Witaj, świecie!\n";
 ```
+
+:::caution Backslash
+Zwróć uwagę, że używany jest **backslash** (`\n`), a nie slash (`/n`)
+:::
 
 Działanie programu po dodaniu znaków nowej linii:
 
@@ -172,7 +177,8 @@ Znak backslash (`\`) informuje, że **następujący** po nim znak, oznacza coś 
 
 `std::` to przedrostek tzw. **biblioteki standardowej**, z której pochodzi `cout`.
 
-Przedrostek `std::` można pominąć, jeśli damy wcześniej odpowiednią linijkę kodu:
+Można go pominąć, jeśli użyjemy wcześniej odpowiedniej linijki kodu:
+
 ```cpp
 #include <iostream>
 int main()
