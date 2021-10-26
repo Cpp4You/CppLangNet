@@ -6,7 +6,7 @@ description:		  std::forward C++ documentation
 hide_title:			  true
 ---
 
-[Back to `std::string` class reference.](..)
+[Back to **utility** section.](..)
 
 import Columns					from "@site-comps/Columns";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
@@ -14,20 +14,37 @@ import SwitchView				from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
-Returns the allocator associated with the string.
+import Forward_Function_Declaration_Cpp14_Simple			from "./_codes/forward_function_declaration/cpp14-simple.mdx";
+import Forward_Function_Declaration_Cpp14_Detailed			from "./_codes/forward_function_declaration/cpp14-detailed.mdx";
+import Forward_Function_Declaration_UntilCpp14_Simple		from "./_codes/forward_function_declaration/until-cpp14-simple.mdx";
+import Forward_Function_Declaration_UntilCpp14_Detailed		from "./_codes/forward_function_declaration/until-cpp14-detailed.mdx";
 
-:::note
-The `allocator_type` is explained in
-[std::string class reference](../#type-names)
-:::
+import Forward_Function_Decription_ReturnValue_Simple		from "./_codes/forward_function_description/simple.mdx";
+import Forward_Function_Decription_ReturnValue_Detailed		from "./_codes/forward_function_description/detailed.mdx";
+
+# std::forward() utility function
+
+<SwitchView content={{
+		'cpp14': {
+			simplified:	<Forward_Function_Declaration_Cpp14_Simple/>,
+			detailed:	<Forward_Function_Declaration_Cpp14_Detailed/>,
+		},
+		'until-cpp14':	{
+			simplified:	<Forward_Function_Declaration_UntilCpp14_Simple/>,
+			detailed:	<Forward_Function_Declaration_UntilCpp14_Detailed/>,
+		}
+	}}/>
 
 ### Parameters
 
-None.
+`t` - the object to be *forwarded*.
 
 ### Return value
 
-The associated allocator.
+<SwitchView content={{
+		simplified: <Forward_Function_Decription_ReturnValue_Simple/>,
+		detailed:	<Forward_Function_Decription_ReturnValue_Detailed/>,
+	}}/>
 
 ### Complexity
 
@@ -35,20 +52,4 @@ Constant.
 
 ### Example
 
-:::caution
-This page lacks example.
-:::
-
-### See also
-
-<SymbolTable noTraits>
-	<Symbol name="allocator" 		link="/docs/std/memory/allocator">
-		the default allocator
-	</Symbol>
-	<Symbol name="allocator_traits"	link="/docs/std/memory/allocator_traits">
-		provides information about allocator types
-	</Symbol>
-	<Symbol name="uses_allocator"	link="/docs/std/memory/uses_allocator">
-		checks if the specified type supports uses-allocator construction
-	</Symbol>
-</SymbolTable>
+*Perfect forwarding* is a useful facility which helps with preserving the original value category of its argument.
