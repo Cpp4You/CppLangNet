@@ -1,21 +1,27 @@
 ---
 sidebar_position:	1
 sidebar_label:		"1. Pierwszy program"
+title:				"Pierwszy program"
 description:		"Lekcja: pierwszy program w języku C++"
+hide_title:			true
 ---
-
-# Pierwszy program
 
 import Columns		from '@site-comps/Columns';
 import GoogleSlides	from '@site-comps/GoogleSlides';
+import Image		from '@site-comps/Image';
 import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
 
-<NotFinished/>
+import Tabs			from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
+
+# Pierwszy program
+
+Ta lekcja nauczy Cię jak napisać pierwszy prosty program w języku C++,
+który będzie mógł wyświetlać tekst i wykonywać proste obliczenia.
 
 ## Kod programu
 
 Poprzednią lekcję skończyliśmy na następującym kodzie:
-
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
@@ -161,36 +167,18 @@ Znak backslash (`\`) informuje, że **następujący** po nim znak, oznacza coś 
 
 `std::` to przedrostek tzw. **biblioteki standardowej**, z której pochodzi `cout`.
 
-:::important Pomijanie przedrostka `std::`
-
-<details>
-<summary>Rozwiń ciekawostkę</summary>
-<div>
-
 Przedrostek `std::` można pominąć, jeśli damy wcześniej odpowiednią linijkę kodu:
 ```cpp
 #include <iostream>
 int main()
 {
+	// highlight-next-line
 	using namespace std;
 	cout << "Witaj, świecie!";
 }
 ```
-Natomiast wielu doświadczonych programistów zaleca pisanie `std::`.
-
-### Dla ciekawskich (tych bardziej zaawansowanych)
-
-Biblioteka standardowa jest bardzo obszerna, posiada bardzo dużo użytych nazw.
-Użycie `using namespace std;` sprawia, że wszystkie te nazwy są jakby "rozpakowywane"
-do globalnej przestrzeni nazw, przez co możemy się zdziwić, jeśli będziemy chcieli
-użyć nazw takich jak `left`, `right`, `precision`, itp.
-
-Używanie `using namespace std;` gdzie indziej niż lokalnie wewnątrz bloku kodu funkcji
-jest uznawane za **złą praktykę programistyczną** i jest odradzane.
-</div>
-</details>
-
-:::
+Natomiast wielu doświadczonych programistów **zaleca zrezygnowanie z pomijania** `std::`.
+Więcej o tym w dalszej części kursu.
 
 ## Wykonywanie obliczeń
 
@@ -259,3 +247,98 @@ Po uruchomieniu programu dostaniemy prawidłowy wynik obliczenia znajdującego s
 - `*` mnoży przez siebie dwie liczby
 - `/` dzieli przez siebie dwie liczby
 :::
+
+## Potencjalne błędy
+
+Na koniec warto zwrócić uwagę co może spowodować **błąd kompilacji**,
+lub czego nie powinniśmy robić, żeby kod był zgodny z dobrymi praktykami.
+
+### Pomijanie `std::`
+
+:::tip Dobra praktyka
+Najlepiej nie pomijaj przedrostka `std::`.
+:::
+
+Jeśli sprawia Ci problem przedrostek `std::`, to rozważ
+użycie go, tak jak w przykładzie, lokalnie, **zawsze wewnątrz funkcji**:
+
+```cpp title="🔹 Dopuszczalne użycie"
+#include <iostream>
+int main()
+{
+	// highlight-next-line
+	using namespace std;
+	cout << "Witaj, świecie!";
+}
+```
+
+Kładę na to nacisk, ponieważ jest możliwe umieszczenie
+
+```cpp
+using namespace std;
+```
+
+również przed całą funkcją `main`, jednak **nie rób tego**.
+
+### Brak średników `;`
+
+Początkujący często zapominają o średnikach (`;`) na końcach
+instrukcji. Prześledź dokładnie przykłady kodu, podawane
+w tej lekcji zwracając uwagę, gdzie powinny one się znaleźć.
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: expected `;` before (...)
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+TODO
+```
+
+</TabItem>
+</Tabs>
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak średnika"
+		src="/img/tutorials/course/basic/1-first-program/error-no-semicolon-pl.png"
+	/>
+
+### Niezakończony tekst
+
+Tekst pomiędzy znakami `"` `"` i należy pamiętać o tym, żeby na końcu
+tekstu faktycznie ten cudzysłów się znalazł.
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: missing terminating " character
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+TODO
+```
+
+</TabItem>
+</Tabs>
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak średnika"
+		src="/img/tutorials/course/basic/1-first-program/error-no-terminating-quote-pl.png"
+	/>
