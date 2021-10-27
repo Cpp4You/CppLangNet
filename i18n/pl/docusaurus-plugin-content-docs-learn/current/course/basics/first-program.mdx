@@ -1,21 +1,27 @@
 ---
 sidebar_position:	1
 sidebar_label:		"1. Pierwszy program"
+title:				"Pierwszy program"
 description:		"Lekcja: pierwszy program w języku C++"
+hide_title:			true
 ---
-
-# Pierwszy program
 
 import Columns		from '@site-comps/Columns';
 import GoogleSlides	from '@site-comps/GoogleSlides';
+import Image		from '@site-comps/Image';
 import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
 
-<NotFinished/>
+import Tabs			from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
+
+# Pierwszy program
+
+Ta lekcja nauczy Cię jak napisać pierwszy prosty program w języku C++,
+który będzie mógł wyświetlać tekst i wykonywać proste obliczenia.
 
 ## Kod programu
 
-Poprzednią lekcję skończyliśmy na następującym kodzie:
-
+Poprzednio skończyliśmy na następującym kodzie:
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
@@ -56,8 +62,8 @@ int main()
 }
 ```
 
-Tak jak wspominaliśmy we <a href="/learn">wstępie</a>, komputer wykonuje program linijka po linijce.
-Gdy uruchamia aplikację, zaczyna wykonywać po kolei instrukcje z **bloku kodu** `main`-a.
+Tak jak wspominaliśmy we [**wstępie**](/learn), komputer wykonuje program linijka po linijce.
+Gdy uruchamia aplikację, po kolei realizuje instrukcje z **bloku kodu** `main`-a.
 
 **Blok kodu** w C++, to zbiór instrukcji zawartych wewnątrz nawiasów klamrowych:
 
@@ -72,7 +78,7 @@ Funkcja główna `main` ma swój blok kodu i wszystko co znajdzie się pomiędzy
 
 ### Biblioteka `iostream`
 
-Na samym początku kodu, znajduje się linijka:
+Na samym początku, znajduje się linijka:
 
 ```cpp
 #include <iostream>
@@ -90,8 +96,13 @@ Użyliśmy wewnątrz bloku `main-a` takiej instrukcji:
 std::cout << "Witaj, świecie!";
 ```
 
-`cout` jest tzw. strumieniem wyjścia znaków (ang.: <i><b>c</b>haracter <b>out</b>put</i>), jednak na ten moment zapamiętaj, że po prostu
-wyświetla on podany **w cudzysłowie** tekst do konsoli.
+`cout` służy do wyświetlania tekstu do konsoli, który podajemy **w cudzysłowie**.
+O przedrostku `std::` wspomnę za chwilę.
+
+:::tip Dla ciekawskich 😉
+`cout` jest tzw. strumieniem wyjścia znaków (ang.: <i><b>c</b>haracter <b>out</b>put</i>),
+jednak na ten moment nie musisz tego pamiętać.
+:::
 
 Jeśli teraz skopiuję tą linijkę kilka razy:
 
@@ -108,8 +119,9 @@ Witaj, świecie!1Witaj, świecie!2Witaj, świecie!3
 ```
 
 :::caution Średnik na końcu instrukcji!
-Średnik (`;`) oddziela od siebie instrukcje. Kompilator nie patrzy czy instrukcje są napisane w osobnych liniach.
-Średnik jest traktowany jak koniec instrukcji. Z tego powodu taki kod:
+Średnik (`;`) oznacza koniec pojedynczej instrukcji i tym samym oddziela
+następujące po sobie instrukcje. Kompilator nie patrzy czy są one napisane w osobnych liniach.
+Z tego powodu taki kod:
 ```cpp
 std::cout << "Witaj, świecie!1"; std::cout << "Witaj, świecie!2"; std::cout << "Witaj, świecie!3";
 ```
@@ -131,15 +143,19 @@ Zwróć uwagę, że tekst wypisał się do konsoli bez żadnych odstępów,
 w jednej linii i zawinął się, dopiero pod koniec dostępnego miejsca.
 
 Program robi **dokładnie** to, co ma napisane w kodzie - nie więcej, nie mniej.
-Powyższy kod mówi tyle, że ma wyświetlić podane znaki i on to robi.
+My "powiedzieliśmy" mu tylko tyle, że ma wyświetlić podane znaki... i on to robi.
 Musimy "złamać linię" w odpowiednim miejscu. Sprawi to, że następne
-znaki będą wyświetlane w następnej linii, od samego początku.
+znaki będą wyświetlane od samego początku kolejnego wiersza.
 Aby to zrobić należy **wewnątrz tekstu** umieścić **specjalny znak**
 nowej linii: `\n`, w ten sposób:
 
 ```cpp
 std::cout << "Witaj, świecie!\n";
 ```
+
+:::caution Backslash
+Zwróć uwagę, że używany jest **backslash** (`\n`), a nie slash (`/n`)
+:::
 
 Działanie programu po dodaniu znaków nowej linii:
 
@@ -161,36 +177,19 @@ Znak backslash (`\`) informuje, że **następujący** po nim znak, oznacza coś 
 
 `std::` to przedrostek tzw. **biblioteki standardowej**, z której pochodzi `cout`.
 
-:::important Pomijanie przedrostka `std::`
+Można go pominąć, jeśli użyjemy wcześniej odpowiedniej linijki kodu:
 
-<details>
-<summary>Rozwiń ciekawostkę</summary>
-<div>
-
-Przedrostek `std::` można pominąć, jeśli damy wcześniej odpowiednią linijkę kodu:
 ```cpp
 #include <iostream>
 int main()
 {
+	// highlight-next-line
 	using namespace std;
 	cout << "Witaj, świecie!";
 }
 ```
-Natomiast wielu doświadczonych programistów zaleca pisanie `std::`.
-
-### Dla ciekawskich (tych bardziej zaawansowanych)
-
-Biblioteka standardowa jest bardzo obszerna, posiada bardzo dużo użytych nazw.
-Użycie `using namespace std;` sprawia, że wszystkie te nazwy są jakby "rozpakowywane"
-do globalnej przestrzeni nazw, przez co możemy się zdziwić, jeśli będziemy chcieli
-użyć nazw takich jak `left`, `right`, `precision`, itp.
-
-Używanie `using namespace std;` gdzie indziej niż lokalnie wewnątrz bloku kodu funkcji
-jest uznawane za **złą praktykę programistyczną** i jest odradzane.
-</div>
-</details>
-
-:::
+Natomiast wielu doświadczonych programistów **zaleca zrezygnowanie z pomijania** `std::`.
+Więcej o tym w dalszej części kursu.
 
 ## Wykonywanie obliczeń
 
@@ -259,3 +258,98 @@ Po uruchomieniu programu dostaniemy prawidłowy wynik obliczenia znajdującego s
 - `*` mnoży przez siebie dwie liczby
 - `/` dzieli przez siebie dwie liczby
 :::
+
+## Potencjalne błędy
+
+Na koniec warto zwrócić uwagę co może spowodować **błąd kompilacji**,
+lub czego nie powinniśmy robić, żeby kod był zgodny z dobrymi praktykami.
+
+### Pomijanie `std::`
+
+:::tip Dobra praktyka
+Najlepiej nie pomijaj przedrostka `std::`.
+:::
+
+Jeśli sprawia Ci problem przedrostek `std::`, to rozważ
+użycie go, tak jak w przykładzie, lokalnie, **zawsze wewnątrz funkcji**:
+
+```cpp title="🔹 Dopuszczalne użycie"
+#include <iostream>
+int main()
+{
+	// highlight-next-line
+	using namespace std;
+	cout << "Witaj, świecie!";
+}
+```
+
+Kładę na to nacisk, ponieważ jest możliwe umieszczenie
+
+```cpp
+using namespace std;
+```
+
+również przed całą funkcją `main`, jednak **nie rób tego**.
+
+### Brak średników `;`
+
+Początkujący często zapominają o średnikach (`;`) na końcach
+instrukcji. Prześledź dokładnie przykłady kodu, podawane
+w tej lekcji zwracając uwagę, gdzie powinny one się znaleźć.
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: expected `;` before (...)
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+TODO
+```
+
+</TabItem>
+</Tabs>
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak średnika"
+		src="/img/tutorials/course/basic/1-first-program/error-no-semicolon-pl.png"
+	/>
+
+### Niezakończony tekst
+
+Tekst pomiędzy znakami `"` `"` i należy pamiętać o tym, żeby na końcu
+tekstu faktycznie ten cudzysłów się znalazł.
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: missing terminating " character
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+TODO
+```
+
+</TabItem>
+</Tabs>
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak średnika"
+		src="/img/tutorials/course/basic/1-first-program/error-no-terminating-quote-pl.png"
+	/>

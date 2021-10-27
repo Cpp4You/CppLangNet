@@ -1,0 +1,9 @@
+```cpp
+// 1)
+template <typename T>
+T&& forward( typename std::remove_reference<T>::type& t ) noexcept;
+
+// 2)
+template <typename T>
+T&& forward( typename std::remove_reference<T>::type&& t ) noexcept;
+```

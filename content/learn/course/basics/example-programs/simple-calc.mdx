@@ -1,0 +1,144 @@
+---
+sidebar_position:	1
+sidebar_label:		➕ Simple calculator
+title:				Simple calculator
+description:		"Example program: a simple calculator in C++ language"
+hide_title:			true
+tags: [example, math, simple, calculator, input, output]
+---
+
+import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<NotFinished/>
+
+# Simple calculator
+
+Requires knowledge of: [**1. First program**](../../first-program) - [**4. Conditions**](../../conditions)
+
+## Overview
+
+A simple program that allows you to calculate:
+
+- ➕ a sum
+- ➖ a difference
+- ✖ a product
+- ➗ a quotient
+
+of two real numbers.
+
+## Source code
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout	<< "=== CALCULATOR ===\n"
+				<< "Menu:\n"
+				<< "1) Add\n"
+				<< "2) Subtract\n"
+				<< "3) Multiply\n"
+				<< "4) Divide\n"
+				<< "> Your choice: ";
+
+	int choice;
+	std::cin >> choice;
+
+	float a, b;
+	if (choice == 1)
+	{
+		std::cout	<< "Calculating a sum (a + b).\n"
+					<< "Please enter the first number: ";
+		std::cin >> a;
+
+		std::cout	<< "Please enter the second number: ";
+		std::cin >> b;
+
+		std::cout << "a + b equals " << (a + b);
+	}
+	else if (choice == 2)
+	{
+		std::cout	<< "Calculating a difference (a - b).\n"
+					<< "Please enter the first number: ";
+		std::cin >> a;
+
+		std::cout	<< "Please enter the second number: ";
+		std::cin >> b;
+
+		std::cout << "a - b equals " << (a - b);
+	}
+	else if (choice == 3)
+	{
+		std::cout	<< "Calculating a product (a * b).\n"
+					<< "Please enter the first number: ";
+		std::cin >> a;
+
+		std::cout	<< "Please enter the second number: ";
+		std::cin >> b;
+
+		std::cout << "a * b equals " << (a * b);
+	}
+	else if (choice == 4)
+	{
+		std::cout	<< "Calculating a quotient (a / b).\n"
+					<< "Please enter the first number: ";
+		std::cin >> a;
+
+		std::cout	<< "Please enter the second number: ";
+		std::cin >> b;
+
+		if (b == 0)
+			std::cout << "Cannot divide by 0!";
+		else
+			std::cout << "a / b equals " << (a / b);
+	}
+	else
+		std::cout << "Invalid option: " << choice;
+}
+```
+
+## Explaination
+
+<ImproveSection />
+
+### 1. Main menu
+
+`cout` is used to print the main program menu at the
+very beginning <small>([*Lesson - 1. First program*](../../first-program))</small>.
+We chained a multiple text printings using `<<` operators.
+
+### 2. Choice
+
+To determine which math operation should be executed we use `if`, `else if`
+and `else` statements <small>([*Lesson - 4. Conditions*](../../conditions))</small>
+
+## Things to improve
+
+### 1. Repeating code
+
+You can easily spot a piece of code that is repeated
+several times:
+
+```cpp title="⚠ Repeated code fragment"
+std::cout << "Please enter the first number: ";
+std::cin >> a;
+
+std::cout << "Please enter the second number: ";
+std::cin >> b;
+```
+
+You'll learn how to solve this problem in the course,
+by using [**functions**](../../functions).
+
+### 2. Detecting input failures
+
+What would happen if you tried to enter **a word**
+(f.e.: `hello`) instead of a number in this part of the code:
+
+```cpp title="🤔 Will it work?"
+int choice;
+std::cin >> choice; // entering "hello"
+```
+
+**`TODO`**: lesson about input reading failures
