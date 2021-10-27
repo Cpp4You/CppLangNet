@@ -1,0 +1,8 @@
+If an rvalue reference's  (`&&`) type is a `template` parameter, it is treated in a special way and we call it a *universal reference* (or a *forwarding reference*†).
+
+It can bind to **both lvalues and rvalues**. This is handy, because we can later use `std::forward()` to correctly forward it
+with the appropriate value category without really caring whether it was an rvalue or an lvalue reference. 
+
+---
+
+†The term *forwarding reference* derives its name from `std::forward()`'s name.
