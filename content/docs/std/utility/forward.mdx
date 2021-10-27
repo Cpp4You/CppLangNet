@@ -1,9 +1,10 @@
 ---
-sidebar_position:	  2
-title:				  std::forward - utility
-sidebar_label:		  std::forward( )
-description:		  std::forward C++ documentation
-hide_title:			  true
+sidebar_position:	2
+title:				std::forward - utility
+sidebar_label:		std::forward()
+description:		std::forward C++ documentation
+tags:				[forward, utility, perfect-forwarding, universal-reference, forwarding-reference, move]
+hide_title:			true
 ---
 
 [Back to **utility** section.](..)
@@ -22,7 +23,31 @@ import Forward_Function_Declaration_UntilCpp14_Detailed		from "./_codes/forward_
 import Forward_Function_Decription_ReturnValue_Simple		from "./_codes/forward_function_description/simple.mdx";
 import Forward_Function_Decription_ReturnValue_Detailed		from "./_codes/forward_function_description/detailed.mdx";
 
+import Universal_Reference_Description_Simple				from "./_codes/forward_function_description/universal_reference/simple.mdx";
+import Universal_Reference_Description_Detailed				from "./_codes/forward_function_description/universal_reference/detailed.mdx";
+
 # std::forward() utility function
+
+Defined in header `<utility>`.
+
+### Description
+
+This utility function is used to preserve the correct value category of a parameter that is being passed to another function, 
+which can be overloaded value category of its parameter(s) — most frequently in a wrapper-style delegation.
+
+Most common use cases include: 
+
+- Instead of simply calling a function (that is overloaded in a way described above), wrapping it into another function that, for example, 
+  logs something before passing down its parameter. 
+- Writing a factory function (instead of using a constructor itself) which will ultimately call some constructor 
+  (which may distinguish between rvalue and lvalue parameters).
+- Writing a **single** constructor which handles **both** lvalue and rvalue arguments and forwards them to its parameters 
+  (instead of overloading it on value category of its parameters).
+
+Is is not immediately obvious why such function is necessary. Please refer to [exmaples](#examples) below 
+which illustrate what problems may occur if forwarding is omitted.
+
+### Declarations
 
 <SwitchView content={{
 		'cpp14': {
@@ -50,6 +75,228 @@ import Forward_Function_Decription_ReturnValue_Detailed		from "./_codes/forward_
 
 Constant.
 
-### Example
+### Examples
 
 *Perfect forwarding* is a useful facility which helps with preserving the original value category of its argument.
+
+// TODO - tutaj przykład z: funkcją robiącą coś z argumentem (dodanie logowania); konstrktorem z wieloma opcjami.
+
+#### Wrapping a function with a logger
+
+Let us create a simple overload for a `consume()` function which represents a common pattern of treating lvalue and rvalue parameters differently. 
+In this example, the parameters are unused, but still required to demonstrate the importance of using `std::forward()` later.
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <utility>
+#include <string>
+
+void consume(std::string&& message) {
+    std::cout << "Consumes an rvalue\n";
+}
+
+void consume(std::string const& message) {
+    std::cout << "Consumes an lvalue\n";
+}
+
+int main() {
+    auto msg = std::string("sample message");
+    consume(msg);
+    consume("sample message");
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+Consumes an lvalue
+Consumes an rvalue
+```
+
+</div>
+</Columns>
+
+Now, assume that instead of simply calling `consume()` with an argument, we want to wrap it in a logging function, like so:
+
+```cpp
+// #includes and definitions of consume() omitted for brevity
+
+void log_and_consume(std::string&& message) {
+    std::cout << "LOG: logging with rvalue\n";
+    consume(message);
+}
+
+void log_and_consume(std::string const& message) {
+    std::cout << "LOG: logging with lvalue\n";
+    consume(message);
+}
+
+int main() {
+    auto msg = std::string("sample message");
+    log_and_consume(msg);
+    log_and_consume("sample message");
+}
+```
+One may expect the output to be:
+
+```plaintext title="Expected output"
+LOG: logging with lvalue
+Consumes an lvalue
+LOG: logging with rvalue
+Consumes an rvalue
+```
+
+But this is **not** the case. The actual output is:
+
+```plaintext title="Actual output"
+LOG: logging with lvalue
+Consumes an lvalue
+LOG: logging with rvalue
+Consumes an lvalue
+```
+
+Notice the difference in the last line. It says **l**value, not **r**value.
+
+That is becasue named paramteres are always treated as lvalues (even if their type is a reference to an rvalue). 
+To fix this, we can use `std::forward()`:
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+void log_and_consume(std::string&& message) {
+    std::cout << "LOG: logging with rvalue\n";
+    consume(std::forward<std::string&&>(message));
+}
+
+void log_and_consume(std::string const& message) {
+    std::cout << "LOG: logging with lvalue\n";
+    consume(std::forward<std::string const&>(message));
+}
+
+int main() {
+    auto msg = std::string("sample message");
+    log_and_consume(msg);
+    log_and_consume("sample message");
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+LOG: logging with lvalue
+Consumes an lvalue
+LOG: logging with rvalue
+Consumes an rvalue
+```
+
+</div>
+</Columns>
+
+`std::forward()` may seem like a cast that explicitly preserves the correct value category.
+And it actually does exactly that.
+
+#### Implementing a constructor that effciently works with both lvalues and rvalues
+
+Considering a simple class that wraps two `std::string`s:
+
+```cpp
+#include <iostream>
+#include <utility>
+#include <string>
+
+class person {
+    std::string name;
+    std::string surname;
+public:
+    person(std::string const& name, std::string const& surname)
+        	: name(name), surname(surname) { }
+};
+
+int main() {
+    auto name = std::string("Foo");
+    auto surname = std::string("Bar");
+
+    auto p1 = person(name, surname);	// 1)
+	auto p2 = person("Foo", "Bar");		// 2)
+}
+```
+
+This is fine, but `2)` will suffer from performance penalties. 
+C-string literals (`"Foo"` and `"Bar"`) will first have to be converted into `std::string` temporaries. 
+Temporaries can bind to `const&`, so the code compiles, but it is far from optimal. 
+Temporaries will be used to create copies inside `p2`, despite the fact that they could simply be moved into the object.
+
+To fix this, `person`'s constructor can be overloaded to accept rvalues and move them into fields:
+
+```cpp
+person(std::string const& name, std::string const& surname)
+        : name(name), surname(surname) { }
+
+person(std::string&& name, std::string&& surname)
+        : name(std::move(name)), surname(std::move(surname)) { }
+```
+
+[Previous example](#wrapping-a-function-with-a-logger) illustrated that in this case, `name` and `surname` are lvalues (referenced that bound to temporaries),
+so using them to initialize `name` and `surname` fields will not invoke move-constructors. It is necessary to add `std::move` here.
+
+While the above example works, it's far from optimal. Consider this case:
+
+```cpp
+auto p3 = person(name, "Bar");
+```
+
+The creation of `p3` cannot invoke the constructor that takes two rvalues (and moves from them), because `name` is an lvalue.
+Thus the only candidate is the constructor taking two strings by `const&`. Resources are wasted to create a temporary for `"Bar"` and copy it.
+
+One of the solutions consists of implementing every single permutation of `const&` and `&&` variants:
+
+```cpp
+person(std::string const& name, std::string const& surname)
+		: name(name), surname(surname) { }
+
+person(std::string&& name, std::string&& surname)
+		: name(std::move(name)), surname(std::move(surname)) { }
+
+person(std::string const& name, std::string&& surname)
+		: name(name), surname(std::move(surname)) { }
+
+person(std::string&& name, std::string const& surname)
+		: name(std::move(name)), surname(surname) { }
+```
+
+But this is very cumbersome. If `person` had more arguments, we would've had to create even more overloads.
+
+Instead of doing so, we can turn those constructors into a single `tempalate`:
+
+```cpp
+template <typename S1, typename S2>
+person(S1&& name, S2&& surname)
+		: name(/* ??? */ name), surname(/* ??? */ surname) { }
+```
+
+The tricky part is what to put instead of `/* ??? */`. We could put *nothing* there, but we would never use move constructors (which we agreed is not optimal).
+We can't put `std::move()` there, because in the case of receiving an lvalue, we shouldn't move from it.
+
+The solution is to use `std::forward()` like so:
+
+```cpp
+template <typename S1, typename S2>
+person(S1&& name, S2&& surname)
+        : name(std::forward<S1>(name)), surname(std::forward<S2>(surname)) { }
+```
+:::note
+<SwitchView content={{
+		Simplified: <Universal_Reference_Description_Simple/>,
+		Detailed:	<Universal_Reference_Description_Detailed/>,
+	}}/>
+:::
+
+Since we have two arguments that are universal references, we automatically accept any combination of value categories.
+Despite that, `name` and `surname` are parameters that have names and thus, if we can name them, they are treated as lvalues.
+To correctly forward their original value categories to the construction of class' fields, we use `std::forward()`.
