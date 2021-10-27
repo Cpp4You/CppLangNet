@@ -26,7 +26,7 @@ import Forward_Function_Decription_ReturnValue_Detailed		from "./_codes/forward_
 import Universal_Reference_Description_Simple				from "./_codes/forward_function_description/universal_reference/simple.mdx";
 import Universal_Reference_Description_Detailed				from "./_codes/forward_function_description/universal_reference/detailed.mdx";
 
-# std::forward() utility function
+# `std::forward()` utility function
 
 Defined in header `<utility>`.
 
@@ -41,10 +41,10 @@ Most common use cases include:
   logs something before passing down its parameter. 
 - Writing a factory function (instead of using a constructor itself) which will ultimately call some constructor 
   (which may distinguish between rvalue and lvalue parameters).
-- Writing a **single** constructor which handles **both** lvalue and rvalue arguments and forwards them to its parameters 
-  (instead of overloading it on value category of its parameters).
+- Writing a **single** constructor which handles **both** lvalue and rvalue arguments and forwards them to member-initialzier list
+  in order to construct the fields of the class (instead of overloading said constructor on value categories of its parameters).
 
-Is is not immediately obvious why such function is necessary. Please refer to [exmaples](#examples) below 
+Is is not immediately obvious why such function is necessary. Please refer to [examples](#examples) below 
 which illustrate what problems may occur if forwarding is omitted.
 
 ### Declarations
@@ -77,9 +77,8 @@ Constant.
 
 ### Examples
 
-*Perfect forwarding* is a useful facility which helps with preserving the original value category of its argument.
-
-// TODO - tutaj przykład z: funkcją robiącą coś z argumentem (dodanie logowania); konstrktorem z wieloma opcjami.
+*Perfect forwarding* is a useful facility which helps with preserving the original value category of its argument,
+which can help with boilterplate code and / or unoptimal implementations.
 
 #### Wrapping a function with a logger
 
@@ -232,7 +231,7 @@ C-string literals (`"Foo"` and `"Bar"`) will first have to be converted into `st
 Temporaries can bind to `const&`, so the code compiles, but it is far from optimal. 
 Temporaries will be used to create copies inside `p2`, despite the fact that they could simply be moved into the object.
 
-To fix this, `person`'s constructor can be overloaded to accept rvalues and move them into fields:
+To fix this, `person`'s constructor can be overloaded to accept rvalues and move them into class fields:
 
 ```cpp
 person(std::string const& name, std::string const& surname)
@@ -245,14 +244,15 @@ person(std::string&& name, std::string&& surname)
 [Previous example](#wrapping-a-function-with-a-logger) illustrated that in this case, `name` and `surname` are lvalues (referenced that bound to temporaries),
 so using them to initialize `name` and `surname` fields will not invoke move-constructors. It is necessary to add `std::move` here.
 
-While the above example works, it's far from optimal. Consider this case:
+While the above example works, it's still not optimal. Consider this case:
 
 ```cpp
 auto p3 = person(name, "Bar");
 ```
 
-The creation of `p3` cannot invoke the constructor that takes two rvalues (and moves from them), because `name` is an lvalue.
-Thus the only candidate is the constructor taking two strings by `const&`. Resources are wasted to create a temporary for `"Bar"` and copy it.
+The creation of `p3` cannot invoke the constructor that takes two rvalues (and move from them), because `name` is an lvalue.
+Thus, the only candidate is the constructor taking two strings by `const&`. 
+Resources are wasted to create a temporary for `"Bar"` and copy from it.
 
 One of the solutions consists of implementing every single permutation of `const&` and `&&` variants:
 
@@ -272,7 +272,7 @@ person(std::string&& name, std::string const& surname)
 
 But this is very cumbersome. If `person` had more arguments, we would've had to create even more overloads.
 
-Instead of doing so, we can turn those constructors into a single `tempalate`:
+Instead of doing so, we can turn those constructors into a single `template`:
 
 ```cpp
 template <typename S1, typename S2>
@@ -280,8 +280,9 @@ person(S1&& name, S2&& surname)
 		: name(/* ??? */ name), surname(/* ??? */ surname) { }
 ```
 
-The tricky part is what to put instead of `/* ??? */`. We could put *nothing* there, but we would never use move constructors (which we agreed is not optimal).
-We can't put `std::move()` there, because in the case of receiving an lvalue, we shouldn't move from it.
+The tricky part is what to put instead of `/* ??? */`. We could put *nothing* in there, but we would never use move constructors
+(we agreed that never doing so wouldn't be optimal), because - to repeat this important fact - the parameters have names and
+despite being references to rvalues, their names are considered as lvalues. We can't put `std::move()` there either, because in the case of receiving an lvalue, we shouldn't move from it.
 
 The solution is to use `std::forward()` like so:
 
@@ -298,5 +299,5 @@ person(S1&& name, S2&& surname)
 :::
 
 Since we have two arguments that are universal references, we automatically accept any combination of value categories.
-Despite that, `name` and `surname` are parameters that have names and thus, if we can name them, they are treated as lvalues.
+Despite that, `name` and `surname` are parameters that have names and thus, since we can name them, they are treated as lvalues.
 To correctly forward their original value categories to the construction of class' fields, we use `std::forward()`.
