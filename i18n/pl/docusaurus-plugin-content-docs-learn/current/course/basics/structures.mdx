@@ -1,11 +1,296 @@
 ---
 sidebar_position:	8
 sidebar_label:		"8. Struktury"
+title:				Struktury
 description:		"Lekcja: struktury w języku C++"
+tags:				[struktura, obiekt, klasa, programowanie-obiektowe, oop]
+hide_title:			true
 ---
+
+<!-- Components -->
+import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
+
+<!-- Presets -->
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
+import ImproveSection	from '@site/i18n/pl/presets/ImproveSection.mdx';
+
+<NotFinished/>
 
 # Struktury
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+W tej lekcji nauczysz się tworzenia typów danych, złożonych z wielu mniejszych
+elementów, czyli tego co w C++ nazywamy strukturami.
 
-<NotFinished/>
+## Motywacja
+
+Jeśli np. tworząc grę 🎮, chcemy zawrzeć w swoim programie przeciwników,
+zwykle będziemy musieli o każdym z nich zapisac kilka informacji.
+
+Zastanów się: jakie dane o wrogach w grze mogą się przydać?
+Może to być np.:
+
+- nazwa 👹
+- życie 💚
+- siła 💪
+
+itd...
+
+Korzystając z dotychczas nabytej wiedzy, gdybyśmy chcieli napisać program,
+który przechowuje te informacje, moglibyśmy zrobić to np. tak:
+
+```cpp
+#include <string>
+
+int main() {
+	std::string	enemyName = "Goblin";
+	float		enemyHealth = 50;
+	float		enemyStrength = 12;
+	// ...
+}
+```
+
+Gdy będziemy chcieli mieć w grze więcej przeciwników, napotkamy na pewnien problem,
+a właściwie uniedogodnienie:
+
+Jeśli skorzystamy w tym celu z wielu tablic:
+
+```cpp
+std::vector< std::string >	enemyNames;
+std::vector< float >		enemyHealth;
+std::vector< float >		enemyStrength;
+```
+
+to każdy przeciwnik będzie opisany pod jednakowym indeksem w tych tablicach:
+
+- `enemyNames[ index ]` opisuje nazwę
+- `enemyHealth[ index ]` opisuje punkty życia
+- `enemyStrength[ index ]` opisuje punkty siły
+
+
+:::important Uwaga
+Ten sposób wiąże się z "rozrzuceniem" informacji o pojedynczym,
+przeciwniku po wielu tablicach.
+:::
+
+Dodanie pojedynczego wroga do zbioru, w takim programie wyglądałoby tak:
+
+```cpp
+enemyNames.push_back("Goblin");
+enemyHealth.push_back(70);
+enemyStrength.push_back(25);
+```
+
+Im więcej różnych informacji chcemy o przeciwnikach przechować, tym będzie to
+bardziej uciążliwe. Na szczęście tutaj z pomocą przychodzą nam
+**struktury**.
+
+## Tworzenie struktury
+
+Przypomnijmy sobie, jakie dane potrzebujemy przechować:
+
+- nazwa 👹
+- życie 💚
+- siła 💪
+
+Zaraz utworzymy strukturę, dzięki której, będziemy mogli utworzyć **obiekt**,
+który zawiera w sobie te wszystkie 3 rzeczy.
+
+```cpp
+#include <string>
+
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+};
+
+int main()
+{
+	// Na razie pusto
+}
+```
+
+Powyższy kod wprowadza nową **strukturę** - `Enemy`.
+
+:::important Zapamiętaj
+**Struktura** to opis, wzorzec, receptura na to, jak utworzyć **obiekt** (w tym wypadku wroga).
+:::
+
+Żeby utworzyć strukturę, piszemy po słowie kluczowym `struct` jej nazwę, następnie
+między nawiasami klamrowymi `{` `}` umieszczamy jej *zawartość*.
+
+Zawartością mogą być np. zmienne składowe.
+
+:::danger Średnik!
+Zwróć uwagę, na **obowiązkowy** średnik po nawiasie klamrowym, zamykającym definicję
+struktury:
+```cpp
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+	// highlight-next-line
+};
+```
+:::
+
+## Obiekty
+
+Popatrz jak stworzyć obiekt, który korzysta ze wzoru `Enemy`:
+
+```cpp
+int main()
+{
+	Enemy boss;
+}
+```
+
+W ten sposób, zawarliśmy te wszystkie 3 pola (`name`, `health` i `strength`)
+wewnątrz jednej zmiennej `boss`.
+
+:::note Nazewnictwo
+Od teraz będziemy mówili, że `boss` jest **obiektem** typu **`Enemy`**.
+To oznacza, że został stworzony według wzoru `Enemy`.
+:::
+
+### Dostęp do pól
+
+Tak jak wyżej wspomniałem, `boss` zawiera w sobie 3 rzeczy (pola) tj. składa się z trzech zmiennych.
+Żeby dostać się do konkretnej składowej tego obiektu, musimy użyć następującego zapisu:
+
+```cpp title="🔹 Ustaw nazwę bossa na 'Ogr'"
+boss.name = "Ogr";
+```
+
+Używamy kropki `.`, do odniesienia się do pola obiektu. W ten sam sposób,
+możemy np. *zmodyfikować siłę wroga*:
+
+```cpp title="🔹 Modyfikowanie pól obiektu"
+boss.strength	= 50; // Ustawiam siłę na 50
+
+// Boss włącza tryb "furia" - siła zwiększona
+// Życie zmniejszone o połowę
+boss.strength	+= 25;
+boss.health		*= 0.5f;
+```
+
+... lub wyświetlić informacje o nim:
+
+```cpp title="🔹 Korzystanie z pól obiektu"
+#include <iostream>
+#include <string>
+
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+};
+
+int main()
+{
+	// Tworzę obiekt bossa
+	Enemy boss;
+	// Przypisuję temu obiektowi konkretne wartości
+	boss.name		= "Ogr";
+	boss.health		= 250;
+	boss.strength	= 50;
+
+	std::cout	<< boss.name		<< " posiada "
+				<< hero.health		<< " hp i "
+				<< hero.strength	<< " siły."
+				<< std::endl;
+}
+```
+
+### Przekazywanie do funkcji
+
+Nic nie stoi na przeszkodzie, żeby stworzyć funkcję,
+która przyjmuje obiekt pewnej struktury jako parametr.
+Dobrym przykładem bedzie właśnie wyświetlanie informacji o wrogu:
+
+```cpp title="🔹 Funkcja wyświetlająca informacje o przeciwniku"
+void printEnemyInfo(Enemy enemy)
+{
+	std::cout	<< enemy.name		<< " posiada "
+				<< enemy.health		<< " hp i "
+				<< enemy.strength	<< " siły."
+				<< std::endl;
+}
+```
+
+:::danger Kolejność
+`printEnemyInfo` wymaga istnienia typu `Enemy` **przed** zdefiniowaniem
+samej funkcji. Oznacza to, że musimy umieścić funkcję **pod**
+utworzeniem struktury (zobacz przykład niżej).
+Więcej o tym niżej w sekcji [Deklarowanie naprzód](#Deklarowanie-naprzód)
+:::
+
+
+Korzystając w powyższych informacji, utworzymy sobie "grę",
+która będzie posiadała dwóch przeciwników:
+
+- zwykły przeciwnik 👹:  
+**Goblin wojownik**, `60` życia, `14` siły
+
+- boss 💀:  
+**Ogr**, `250` życia, `50` siły
+
+
+<CustomCodeBlock lineNumbers withTitle maxLines={25}>
+
+```cpp title="🔹 Fragment gry z Ogrem i Goblinem"
+#include <iostream>
+#include <string>
+
+/// Utworzenie struktury
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+};
+
+/// Funkcja wyświetlająca informacje o przeciwniku
+void printEnemyInfo(Enemy enemy)
+{
+	std::cout	<< enemy.name		<< " posiada "
+				<< enemy.health		<< " hp i "
+				<< enemy.strength	<< " siły."
+				<< std::endl;
+}
+
+/// Funkcja główna programu
+int main()
+{
+	// Tworzę obiekt goblina i bossa
+	Enemy boss;
+	Enemy goblin;
+
+	// Ustawiam goblinowi odpowiednie wartości
+	goblin.name		= "Goblin wojownik";
+	goblin.health	= 60;
+	goblin.strength	= 14;
+
+	// Ustawiam bossowi odpowiednie wartości
+	boss.name		= "Ogr";
+	boss.health		= 250;
+	boss.strength	= 50;
+
+	// Wyświetlam informacje o każdym z nich:
+	printEnemyInfo(goblin);
+	printEnemyInfo(boss);
+}
+```
+
+</CustomCodeBlock>
+
+### Domyślne wartości pól
+
+<ImproveSection />
+
+## Potencjalne błędy
+
+<ImproveSection />
