@@ -72,12 +72,12 @@ Ten sposób wiąże się z "rozrzuceniem" informacji o pojedynczym
 przeciwniku, po wielu tablicach.
 :::
 
-Dodanie pojedynczego wroga do zbioru, w takim programie wyglądałoby tak:
+Dodanie jednego wroga do zbioru, w takim programie wyglądałoby tak:
 
 ```cpp
 enemyNames.push_back("Goblin");
-enemyHealth.push_back(70);
-enemyStrength.push_back(25);
+enemyHealth.push_back(50);
+enemyStrength.push_back(10);
 ```
 
 Im więcej różnych informacji chcemy o przeciwnikach przechować, tym będzie to
@@ -92,8 +92,8 @@ Przypomnijmy sobie, jakie dane potrzebujemy przechować:
 - życie 💚
 - siła 💪
 
-Zaraz utworzymy strukturę, dzięki której, będziemy mogli utworzyć **obiekt**,
-który zawiera w sobie te wszystkie 3 rzeczy.
+Zaraz dodamy strukturę, dzięki której, będziemy mogli utworzyć **obiekt**,
+który zawiera w sobie te 3 rzeczy.
 
 ```cpp
 #include <string>
