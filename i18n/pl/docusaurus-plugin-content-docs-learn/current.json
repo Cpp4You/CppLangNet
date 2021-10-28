@@ -31,9 +31,9 @@
     "message": "Kurs C++",
     "description": "The label for category C++ Course in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.💻 Example programs": {
-    "message": "💻 Przykładowe programy",
-    "description": "The label for category 💻 Example programs in sidebar defaultSidebar"
+  "sidebar.defaultSidebar.category.💻 Examples": {
+    "message": "💻 Przykłady",
+    "description": "The label for category 💻 Examples in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.5. Arrays": {
     "message": "5. Tablice",
