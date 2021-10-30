@@ -4,6 +4,7 @@
 #include <string>
 #include <ctime>
 #include <cstdlib>
+#include <iomanip>
 
 /////// Przydatne funkcje (deklaracje)
 
@@ -40,6 +41,10 @@ int main()
 	std::vector< Creature > enemies;
 
 	std::cout	<< "=== Arena walki ===\n";
+
+	// Ustawiam formatowanie cout-a
+	std::cout.precision(2);
+	std::cout << std::fixed;
 
 	int difficultyLevel = requestDifficultyLevel();
 	if (difficultyLevel < 1 || difficultyLevel > 3)
