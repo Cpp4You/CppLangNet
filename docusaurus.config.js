@@ -202,6 +202,14 @@ function filterSidebarItems(items)
 					},
 				],
 			},
+			announcementBar: {
+				id: 'join_us',
+				content:
+					'⚠ This site is still in an early phase of construction. You can help us by <a target="_blank" rel="noopener noreferrer" href="/contributing">contributing</a>',
+				backgroundColor: '#fafbfc',
+				textColor: '#091E42',
+				isCloseable: false,
+			},
 			footer: {
 				style: 'dark',
 				links: [
