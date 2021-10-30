@@ -8,6 +8,7 @@ hide_title:			true
 ---
 
 <!-- Components -->
+import Columns			from "@site-comps/Columns";
 import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
 import Image			from "@site-comps/Image";
 
@@ -132,6 +133,8 @@ między nawiasami klamrowymi `{` `}` umieszczamy jej *zawartość*.
 
 Zawartością mogą być np. zmienne składowe.
 
+<div id="srednik-po-definicji" />
+
 :::danger Średnik!
 Zwróć uwagę, na **obowiązkowy** średnik po nawiasie klamrowym, zamykającym definicję
 struktury:
@@ -235,7 +238,6 @@ void printEnemyInfo(Enemy enemy)
 `printEnemyInfo` wymaga istnienia typu `Enemy` **przed** zdefiniowaniem
 samej funkcji. Oznacza to, że musimy umieścić funkcję **pod**
 utworzeniem struktury (zobacz przykład niżej).
-Więcej o tym niżej w sekcji [Deklarowanie naprzód](#Deklarowanie-naprzód)
 :::
 
 
@@ -299,8 +301,145 @@ int main()
 
 ### Domyślne wartości pól
 
-<ImproveSection />
+Elementom struktury możemy nadać domyślne wartości, przez co
+nie będziemy musieli ich za każdym razem wypełniać.
+
+Dobrym przykładem użycia domyślnej wartości jest zmienna,
+która przechowuje całkowitą ilość obrażeń, które zadał
+przeciwnik. Na początek dla każdego wroga, ta wartość
+będzie musiała być równa `0`.
+
+:::caution Wartość zmiennych
+Jeśli pozostawisz pole struktury **bez domyślnej wartości**, np.:
+```cpp
+struct Car
+{
+	int numberOfWheels; // ilośc kół samochodu
+};
+```
+
+to nie oznacza to, że `numberOfWheels` na początku otrzyma wartość `0`, musisz to zrobić **ręcznie**!
+:::
+
+Żeby przypisać domyślną wartość do pola struktury
+używamy zwykłej inicjalizacji, znaną z tworzenia zmiennych:
+
+
+```cpp title="🔹 Domyślna wartość dla 'totalDamage' ⚔"
+/// Utworzenie struktury
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+
+	// highlight-next-line
+	float		totalDamage = 0; // ilość obrażeń
+};
+```
+
+Teraz gdy stworzymy jakiegoś wroga:
+
+```cpp
+Enemy snake; // np. wąż
+```
+
+to wartość
+
+```cpp
+snake.totalDamage
+```
+
+będzie równa `0`.
+
+Możesz się o tym przekonać, np. wyświetlając ją:
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+```cpp
+int main() {
+	Enemy snake;
+	snake.name = "Wąż";
+	// 🟡 Uwaga, nie ustawiam ręcznie wartości totalDamage
+
+	std::cout	<< snake.name
+				<< " zadał łącznie "
+				<< snake.totalDamage
+				<< " obrażeń";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="🔹 Wynik"
+Wąż zadał łącznie 0 obrażeń
+```
+
+</div>
+</Columns>
 
 ## Potencjalne błędy
 
 <ImproveSection />
+
+Oto lista popularnych błędów związanych z tą lekcją:
+
+### Brak średnika po definicji
+
+[Tylko dla przypomnienia.](#srednik-po-definicji)
+
+### Nieprawidłowa kolejność
+
+Upewnij się, że struktura jest zdefiniowana **przed**
+jej pierwszym użyciem.
+
+Przykład **błędnego** kodu:
+
+```cpp title="🔴 Niepoprawna kolejność"
+/// ❌ BŁĄD: użycie "Enemy" przed zdefiniowaniem
+// highlight-next-line
+void printEnemyInfo(Enemy enemy)
+{
+	std::cout	<< enemy.name		<< " posiada "
+				<< enemy.health		<< " hp i "
+				<< enemy.strength	<< " siły."
+				<< std::endl;
+}
+
+/// Utworzenie struktury
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+};
+```
+
+:::tip Ciekawostka
+Ten problem jest możliwy do rozwiązania w inny, wygodniejszy
+sposób niż przenoszenie funkcji `printEnemyInfo` pod definicję
+struktury, jednak o tzw. *forward declaration* wspomnimy
+w dalszej części kursu.
+:::
+
+### Modyfikacja wewnątrz definicji struktury
+
+Zmiennych **nie możemy** modyfikować wewnątrz definicji struktury.
+Możliwe jest jedynie przypisanie początkowej wartości:
+
+```cpp title="🔴 Próba modyfikacji w złym miejscu"
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+
+	int			totalDamage = 0; // OK ✅
+
+	// ❌ BŁĄD: próba modyfikacji w złym miejscu
+	// highlight-next-line
+	health = 250;
+};
+```
