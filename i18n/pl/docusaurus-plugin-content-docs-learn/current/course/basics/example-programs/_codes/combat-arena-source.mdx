@@ -1,0 +1,320 @@
+```cpp
+#include <iostream>
+#include <vector>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+
+/////// Przydatne funkcje (deklaracje)
+
+// Losowanie floata od 0 do 1
+float randomFloat();
+// Losowanie floata od "from" do "to"
+float randomFloat(float from, float to);
+// Losowanie inta od "from" do "to"
+int randomInt(int from, int to);
+
+// Struktura "stworzenie".
+// Użyjemy jej dla 👤 gracza i 👹 wrogów.
+struct Creature
+{
+	std::string name;
+	float		health;
+	float		strength;
+	int			stunRounds = 0;
+};
+
+// Wybór poziomu trudności:
+int requestDifficultyLevel();
+// Ustawienia gracza (nick, klasa postaci)
+Creature requestPlayerSetup();
+// Stwórz przeciwnika
+Creature makeEnemy(int difficultyLevel);
+
+int main()
+{
+	// Przygotowanie liczb pseudolosowych
+	std::srand( std::time(0) );
+
+	Creature player;
+	std::vector< Creature > enemies;
+
+	std::cout	<< "=== Arena walki ===\n";
+
+	int difficultyLevel = requestDifficultyLevel();
+	if (difficultyLevel < 1 || difficultyLevel > 3)
+	{
+		std::cout << "Nieprawidłowy poziom trudności\n";
+		return 0;
+	}
+
+	// Informacje o graczu
+	player = requestPlayerSetup();
+
+	// Spawnowanie przeciwników:
+
+	int numberOfEnemies;
+
+	if (difficultyLevel == 1)
+		numberOfEnemies = 4;
+	else if (difficultyLevel == 1)
+		numberOfEnemies = 6;
+	else if (difficultyLevel == 1)
+		numberOfEnemies = 8;
+
+	// Dodaj przeciwników
+	for (int i = 0; i < numberOfEnemies; i++)
+		enemies.push_back( makeEnemy(difficultyLevel) );
+
+	while (enemies.size() > 0 && player.health > 0)
+	{
+		// Wyświetl informacje o graczu:
+		std::cout	<< "Gracz: "		<< player.name << "\n"
+					<< player.health	<< " HP, "
+					<< player.strength	<< " siły\n\n";
+
+		std::cout << "Walczysz z " << enemies.size() << " przeciwnikami:\n";
+		
+		// Wyświetl przeciwników:
+		for (size_t i = 0; i < enemies.size(); ++i)
+		{
+			if (i != 0)
+				std::cout << ", ";
+			std::cout << enemies[i].name << " (" << enemies[i].health << " HP";
+			if (enemies[i].stunRounds > 0)
+				std::cout << ", ogłuszony";
+			std::cout << ")";
+		}
+		std::cout << "\n\n";
+
+		// Wylosuj przeciwnika (poprzez indeks):
+		int randomEnemy = randomInt(0, enemies.size() - 1);
+
+		std::cout	<< "Skupiasz się na " << enemies[randomEnemy].name
+					<< " (" << enemies[randomEnemy].health << " HP"
+					<< (enemies[randomEnemy].stunRounds > 0 ? ", ogłuszony)\n" : ")\n")
+					<< "Wybierz akcję:\n"
+					<< "1) Atak\n"
+					<< "2) Unik\n"
+					<< "3) Spróbuj ogłuszyć\n"
+					<< "Twój wybór: ";
+
+		int action;
+
+		std::cin >> action;
+		if (action < 1 || action > 3)
+			std::cout << "Nieprawidłowa akcja. Z braku czasu zdecydowałeś się na atak!\n";
+
+		// szansa na zostanie trafionym przez przeciwnika
+		// w tej turze
+		int chanceOfGettingHit = 80;
+
+		if (action == 1)
+		{
+			// Wylosuj siłę ataku (+/- 2 obrażenia)
+			float attackStrength = randomFloat(player.strength - 2, player.strength + 2);
+			std::cout << "Atakujesz zadając " << attackStrength << " obrażeń!\n";
+
+			enemies[randomEnemy].health -= attackStrength;
+		}
+		else if (action == 2)
+		{
+			// Zmniejszamy szansę na bycie trafionym
+			chanceOfGettingHit = randomInt(40, 70);
+		}
+		else if (action == 3)
+		{
+			int stunRounds = randomInt(0, 3);
+			if (stunRounds == 0)
+				std::cout << "Próba ogłuszenia nie powiodła się...\n";
+			else if (stunRounds == 1)
+				std::cout << "Ogłuszyłeś przeciwnika na tą turę\n";
+			else
+				std::cout << "Ogłuszyłeś przeciwnika na tą turę i " << (stunRounds - 1) <<  " następnych\n";
+
+			// Nie pozwól zdjąc ogłuszenia, można tylko przedłużyć
+			if (enemies[randomEnemy].stunRounds < stunRounds)
+				enemies[randomEnemy].stunRounds = stunRounds;
+		}
+		
+		// Przeciwnik nie żyje
+		if (enemies[randomEnemy].health <= 0)
+		{
+			std::cout << "Przeciwnik pada na ziemię bez ruchu...";
+			// Usuwamy przeciwnika
+			enemies.erase(enemies.begin() + randomEnemy);
+		}
+		else // Tura przeciwnika
+		{
+			if (enemies[randomEnemy].stunRounds > 0)
+				std::cout << "Ogłuszony przeciwnik stoi bez ruchu...";
+			else
+			{
+				int hitChanceTest = randomInt(0, 100);
+
+				if (hitChanceTest <= chanceOfGettingHit)
+				{
+					// Wylosuj siłę ataku (+/- 2 obrażenia)
+					float attackStrength = randomFloat(
+							enemies[randomEnemy].strength - 1,
+							enemies[randomEnemy].strength + 1
+						);
+					std::cout << "Przeciwnik wykonuje atak i zadaje " << attackStrength << " obrażeń.";
+					player.health -= attackStrength;
+				}
+				else
+					std::cout << "Przeciwnik wykonuje atak, ale pudłuje...";
+			}
+		}
+		// Odstęp
+		std::cout << "\n\n";
+		
+		// Zmniejsz wszystkim poziom ogłuszenia:
+		for (size_t i = 0; i < enemies.size(); ++i)
+		{
+			if (enemies[i].stunRounds > 0)
+				enemies[i].stunRounds--;
+		}
+	}
+
+	if (player.health <= 0)
+	{
+		std::cout << "Zostałeś pokonany...";
+	}
+}
+
+///////////////////////////////
+// Wybór poziomu trudności:
+///////////////////////////////
+int requestDifficultyLevel()
+{
+	std::cout	<< "Wybierz poziom trudności:\n"
+				<< "1) Łatwy\n"
+				<< "2) Normalny\n"
+				<< "3) Trudny\n"
+				<< "Twój wybór: ";
+
+	int level;
+	std::cin >> level;
+
+	return level;
+}
+
+///////////////////////////////
+// Wybór imienia i klasy postaci
+///////////////////////////////
+Creature requestPlayerSetup()
+{
+	Creature player;
+
+	// Bazowe wartości:
+	player.health	= 100;
+	player.strength	= 12;
+
+	std::cout	<< "Podaj swoje imie wojowniku: ";
+	std::cin.ignore();
+	std::cin.clear();
+	std::getline(std::cin, player.name);
+
+	// Pytaj o klasę postaci aż do skutku:
+	int playerClass			= 0;
+	int playerClassTries	= 0;
+	while (playerClass < 1 || playerClass > 3)
+	{
+		if (playerClassTries > 0)
+			std::cout << "Nieprawidłowa klasa, spróbuj jeszcze raz.\n\n";
+
+		std::cout	<< "Wybierz swoją klasę postaci:\n"
+					<< "1) Rycerz (życie + 15, obrażenia + 4)\n"
+					<< "2) Mag (obrażenia + 7)\n"
+					<< "3) Obrońca (życie + 45)\n"
+					<< "Twój wybór: ";
+		std::cin >> playerClass;
+
+		playerClassTries++;
+	}
+	
+	if (playerClass == 1) // Rycerz
+	{
+		player.health	+= 15;
+		player.strength	+= 4;
+	}
+	else if (playerClass == 2) // Mag
+		player.strength	+= 7;
+	else if (playerClass == 2) // Obrońca
+		player.health	+= 45;
+
+	return player;
+}
+
+
+///////////////////////////////
+// Tworzenie przeciwnika bazując na poziomie trudności
+///////////////////////////////
+Creature makeEnemy(int difficultyLevel)
+{
+	// Typ przeciwnika:
+	// 0 - Goblin
+	// 1 - Goblin wojownik
+	// 2 - Ork
+
+	// Szanse na utworzenie:
+	// Łatwy:	Goblin: 75%, Goblin wojownik 25%
+	// Średni:	Goblin: 55%, Goblin wojownik 45%
+	// Trudny:	Goblin: 55%, Goblin wojownik 30%, Ork: 15%
+
+	int enemyType;
+	int randomChoice = randomInt(0, 100); // losowanie procentów
+	if (difficultyLevel == 1) // Łatwy
+	{
+		if (randomChoice <= 75) enemyType = 0;
+		else					enemyType = 1;
+	}
+	else if (difficultyLevel == 2) // Średni
+	{
+		if (randomChoice <= 55) enemyType = 0;
+		else					enemyType = 1;
+	}
+	else // Trudny
+	{
+		if (randomChoice <= 55)	enemyType = 0;
+		if (randomChoice <= 85)	enemyType = 1; // 85% bo 55% + 30%
+		else					enemyType = 2;
+	}
+
+	Creature enemy;
+
+	// Tworzenie przeciwnika
+	if (enemyType == 0)
+	{
+		enemy.name		= "Goblin";
+		enemy.health	= 20;
+		enemy.strength	= 4;
+	}
+	else if (enemyType == 1)
+	{
+		enemy.name		= "Goblin wojownik";
+		enemy.health	= 30;
+		enemy.strength	= 6;
+	}
+	else // Ork
+	{
+		enemy.name		= "Ork";
+		enemy.health	= 60;
+		enemy.strength	= 11;
+	}
+
+	return enemy;
+}
+
+/////// Przydatne funkcje (definicje)
+float randomFloat() {
+	return float(rand()) / RAND_MAX;
+}
+float randomFloat(float from, float to) {
+	return randomFloat() * (to - from) + from;
+}
+int randomInt(int from, int to) {
+	return int(randomFloat() * (to - from)) + from;
+}
+```

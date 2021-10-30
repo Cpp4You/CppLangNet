@@ -297,6 +297,52 @@ int main()
 
 </CustomCodeBlock>
 
+### Umieszczanie wewnątrz tablicy
+
+Obiekty możemy umieszczać wewnątrz tablic tak samo jak normalne zmienne:
+
+```cpp title="🔹 Tablica przeciwników"
+std::vector< Enemy > enemies;
+```
+
+Poniżej przykład jak dodawać do takiej tablicy:
+
+```cpp title="🔹 Wykorzystanie tablicy"
+// ...
+
+int main()
+{
+	std::vector< Enemy > enemies;
+
+	// (opcjonalnie)
+	// Blok kodu, by ograniczyć widoczność
+	// zmiennych utworzonych wewnątrz
+	{
+		// Tworzę goblina 👉 lokalnie 👈
+		Enemy goblin;
+		// Ustawiam goblinowi odpowiednie wartości
+		goblin.name		= "Goblin wojownik";
+		goblin.health	= 60;
+		goblin.strength	= 14;
+
+		// Dodaję goblina do tablicy
+		// highlight-next-line
+		enemies.push_back( goblin );
+	}
+	// 👈 od tego momentu goblin istnieje tylko w tablicy enemies
+
+	// Wyświetl wszystkich przeciwników:
+	for (Enemy enemy : enemies)
+		printEnemyInfo(enemy);
+}
+```
+
+:::tip Przykład
+Po zapoznaniu się z tą lekcją, przejrzyj ten przykładowy program:
+[**👾 Arena walki**](../example-programs/combat-arena) wraz z jego omówieniem.
+Zobaczysz tam zastosowanie tablic i struktur w praktyce.
+:::
+
 ### Domyślne wartości pól
 
 Elementom struktury możemy nadać domyślne wartości, przez co
