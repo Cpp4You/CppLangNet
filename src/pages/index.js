@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
@@ -10,26 +10,18 @@ import useThemeContext from '@theme/hooks/useThemeContext';
 import Translate, { translate } from '@docusaurus/Translate';
 
 function HomepageHeader() {
+	const {siteConfig} = useDocusaurusContext();
 	const {isDarkTheme} = useThemeContext();
 
-	const [bgImage, setBackgroundImage] = useState(isDarkTheme ? 'dark' : 'white');
-
-	useEffect(() => {
-		const latent = setTimeout(() => setBackgroundImage(isDarkTheme ? 'dark' : 'white'), 100);
-		return () => {
-			clearTimeout(latent);
-		};
-	}, [isDarkTheme]);
-
 	const backgroundImages = {
-		'white': 'img/coding-bg-white.jpg',
-		'dark': 'img/coding-bg-dark.jpg'
+		'white':	'img/coding-bg-white.jpg',
+		'dark':		'img/coding-bg-dark.jpg'
 	};
 
 	return (
 		<header className={styles.heroBanner}>
 			<div className={styles.bgImage}>
-				<img src={ backgroundImages[bgImage] }/>
+				<img src={ backgroundImages[isDarkTheme ? 'dark' : 'white'] + `?no-cache-ts=${Date.now()}` }/>
 			</div>
 			<div className={styles.container}>
 				<div className={styles.textPart}>
@@ -52,11 +44,10 @@ function HomepageHeader() {
 }
 
 export default function Home() {
-	const {siteConfig} = useDocusaurusContext();
-
 	return (
 		<Layout
-			description="An ultimate C++ language wiki">				
+			description="An ultimate C++ language wiki">
+				
 			<HomepageHeader />
 			<main>
 				<HomepageFeatures />
