@@ -1,16 +1,14 @@
-import React from 'react';
-import clsx from 'clsx';
-import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import styles from './index.module.scss';
-import HomepageFeatures from '../components/HomepageFeatures';
-import useThemeContext from '@theme/hooks/useThemeContext';
+import React			from 'react';
+import Link				from '@docusaurus/Link';
+import Translate		from '@docusaurus/Translate';
+import Layout			from '@theme/Layout';
+import useThemeContext	from '@theme/hooks/useThemeContext';
 
-import Translate, { translate } from '@docusaurus/Translate';
+import HomepageFeatures	from '../components/HomepageFeatures';
+import styles			from './index.module.scss';
+
 
 function HomepageHeader() {
-	const {siteConfig} = useDocusaurusContext();
 	const {isDarkTheme} = useThemeContext();
 
 	const backgroundImages = {
@@ -21,7 +19,7 @@ function HomepageHeader() {
 	return (
 		<header className={styles.heroBanner}>
 			<div className={styles.bgImage}>
-				<img src={ backgroundImages[isDarkTheme ? 'dark' : 'white'] + `?no-cache-ts=${Date.now()}` }/>
+				<img src={ backgroundImages[isDarkTheme ? 'dark' : 'white'] }/>
 			</div>
 			<div className={styles.container}>
 				<div className={styles.textPart}>
