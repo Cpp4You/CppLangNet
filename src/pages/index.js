@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
@@ -10,8 +10,16 @@ import useThemeContext from '@theme/hooks/useThemeContext';
 import Translate, { translate } from '@docusaurus/Translate';
 
 function HomepageHeader() {
-	const {siteConfig} = useDocusaurusContext();
 	const {isDarkTheme} = useThemeContext();
+
+	const [bgImage, setBackgroundImage] = useState(isDarkTheme ? 'dark' : 'white');
+
+	useEffect(() => {
+		const latent = setTimeout(() => setBackgroundImage(isDarkTheme ? 'dark' : 'white'), 100);
+		return () => {
+			clearTimeout(latent);
+		};
+	}, [isDarkTheme]);
 
 	const backgroundImages = {
 		'white': 'img/coding-bg-white.jpg',
@@ -21,7 +29,7 @@ function HomepageHeader() {
 	return (
 		<header className={styles.heroBanner}>
 			<div className={styles.bgImage}>
-				<img src={ backgroundImages[isDarkTheme ? 'dark' : 'white'] }/>
+				<img src={ backgroundImages[bgImage] }/>
 			</div>
 			<div className={styles.container}>
 				<div className={styles.textPart}>
@@ -48,10 +56,7 @@ export default function Home() {
 
 	return (
 		<Layout
-			description="An ultimate C++ language wiki">
-				
-			<link rel="preload" as="image" href="img/coding-bg-dark.jpg"/>
-			<link rel="preload" as="image" href="img/coding-bg-white.jpg"/>
+			description="An ultimate C++ language wiki">				
 			<HomepageHeader />
 			<main>
 				<HomepageFeatures />
