@@ -253,5 +253,11 @@
   },
   "since C++23": {
     "message": "od C++23"
+  },
+  "Press the ▶ button": {
+    "message": "Naciśnij przycisk ▶"
+  },
+  "(May not work in private browser mode)": {
+    "message": "(Może nie działać w trybie prywatnym)"
   }
 }
