@@ -13,6 +13,7 @@ import TabItem				from "@theme/TabItem";
 import Columns				from "@site-comps/Columns";
 import CustomCodeBlock		from "@site-comps/CustomCodeBlock";
 import Image				from "@site-comps/Image";
+import Replit				from "@site-comps/Replit";
 
 <!-- Presets -->
 import NotFinished			from "@site/i18n/pl/presets/NotFinished.mdx";
@@ -20,7 +21,7 @@ import NotFinished			from "@site/i18n/pl/presets/NotFinished.mdx";
 # Liczby pseudolosowe
 
 <center>
-	<iframe src='https://gfycat.com/ifr/DarkBrokenCivet' frameborder='0' scrolling='no' allowfullscreen width='640' height='404'></iframe>
+	<iframe src='https://gfycat.com/ifr/DarkBrokenCivet' frameBorder='0' scrolling='no' allowFullScreen width='640' height='404'></iframe>
 </center>
 
 <br/>
@@ -282,6 +283,9 @@ int randomInt(int from, int to)
 
 Korzystanie z wyżej utworzonych funkcji jest bardzo proste i wygodne:
 
+<Tabs>
+<TabItem value="source" label="Pełen kod" default>
+
 <CustomCodeBlock lineNumbers maxLines={30}>
 
 ```cpp
@@ -339,6 +343,12 @@ int randomInt(int from, int to)
 ```
 
 </CustomCodeBlock>
+</TabItem>
+<TabItem value="try-it" label="Uruchom ▶">
+	<Replit.PlayInfo />
+	<Replit embed fullwidth user="poetakodu" repl="Random-Numbers-Test" />
+</TabItem>
+</Tabs>
 
 ### Losowa szansa na zdarzenie
 
