@@ -288,6 +288,7 @@ Korzystanie z wyżej utworzonych funkcji jest bardzo proste i wygodne:
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 
 // Deklaracja funkcji
 float	randomFloat(); // od 0 do 1
@@ -300,17 +301,18 @@ int main()
 	std::srand( std::time(0) );
 
 	// Ustawiam precyzję wyświetlania float-ów
+	std::cout << std::fixed;
 	std::cout.precision(2);
 
 	std::cout << "Losuję 5 liczb od 0 do 1:\n";
 	for (int i = 0; i < 5; ++i)
 		std::cout << randomFloat() << ' ';
 
-	std::cout << "\nLosuję 5 float-ów od 10 do 30:\n";
+	std::cout << "\n\nLosuję 5 float-ów od 10 do 30:\n";
 	for (int i = 0; i < 5; ++i)
 		std::cout << randomFloat(10, 30) << ' ';
 
-	std::cout << "\nLosuję 5 int-ów od 0 do 100:\n";
+	std::cout << "\n\nLosuję 5 int-ów od 0 do 100:\n";
 	for (int i = 0; i < 5; ++i)
 		std::cout << randomInt(0, 100) << ' ';
 }
