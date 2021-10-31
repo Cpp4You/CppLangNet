@@ -16,16 +16,18 @@ import TabItem			from '@theme/TabItem';
 
 # Zmienne
 
-W poprzedniej lekcji mówiliśmy o automatyzacji i pokazywaliśmy jak wykonać pewne obliczenia.
+W tej lekcji powiemy o tym, jak przechowywać różne wartości w trakcie
+działania programu, czyli jak korzystać ze zmiennych.
 
-## Do czego to potrzebne
+## Motywacja
 
-Napiszmy program, który podnosi pewną liczbę do potęgi trzeciej, a następnie ją wyświetla:
+Żeby zrozumieć do czego są one przydatne, napiszmy program,
+który podnosi pewną liczbę do potęgi trzeciej, a następnie ją wyświetla:
 
 <Columns spacing={40} columns={['8fr', '4fr']}>
 <div>
 
-```cpp title="main.cpp | Potęga trzecia"
+```cpp title="🔹 main.cpp | Potęga trzecia"
 #include <iostream>
 
 int main()
@@ -48,7 +50,7 @@ int main()
 Jeśli teraz będziemy chcieli podnieść do trzeciej potęgi inną liczbę, będziemy
 musieli zmieniać trzy miejsca w kodzie. Jest to uciążliwe.
 
-## Zmienne przychodzą na pomoc
+## Wprowadzenie
 
 Żeby nie zmieniać za każdym razem tylu rzeczy, załóżmy na chwilę, że liczba, którą podnosimy
 do potęgi nazywa się `x`. Jak wtedy będzie wyglądał kod?
@@ -268,7 +270,7 @@ Tylko dla przypomnienia 😀
 int name = 40;
 ```
 
-## Co można z nimi zrobić
+## Możliwości
 
 Zmienne przechowują wartości przez czas swojego istnienia (o tym później).
 Możemy do nich zapisywać wartości lub je odczytywać, wyświetlać na ekranie,
