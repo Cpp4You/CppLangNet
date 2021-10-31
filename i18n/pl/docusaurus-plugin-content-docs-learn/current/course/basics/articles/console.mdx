@@ -1,0 +1,75 @@
+---
+sidebar_position:	1
+sidebar_label:		🖥 Konsola
+title:				Konsola
+tags:				[konsola, zależne-od-systemu]
+hide_title:			true
+---
+
+<!-- Components -->
+import Tabs			from "@theme/Tabs";
+import TabItem		from "@theme/TabItem";
+
+<!-- Presets -->
+import NotFinished	from "@site/i18n/pl/presets/NotFinished.mdx";
+
+<NotFinished />
+
+# Konsola
+
+Wymaga znajomości: [**1. Pierwszy program**](../../first-program) - [**7. Funkcje**](../../functions)
+
+## Motywacja
+
+W kursie korzystamy z konsoli systemowej, ponieważ nie wymaga ona
+żadnej dodatkowej konfiguracji i daje nam łatwą możliwość
+komunikacji z użytkownikiem, poprzez możliwość pobierania od niego informacji
+oraz wyświetlania tekstu.
+
+Konsola **nie jest** przeznaczona do tworzenia programów o bogatym
+interfejsie użytkownika i z tego powodu domyślnie oferuje tylko
+najbardziej potrzebne funkcjonalności.
+
+Możemy jednak, w formie zabawy, skorzystać z paru **nieoficjalnych**
+funkcji, które pozwolą nam na trochę więcej.
+
+## Czyszczenie konsoli
+
+Poniższa funkcja czyści konsolę. Działa na systemie Windows oraz Linux.
+
+```cpp
+#include <cstdlib>
+
+void clearConsole()
+{
+#ifdef _WIN32
+	std::system("cls");
+#elif __linux__
+	std::system("clear");
+#else
+	static_assert(false, "Unsupported operating system");
+#endif
+}
+```
+
+W zależności od systemu operacyjnego, wywołuje ona następujące
+polecenie powłoki systemowej (czyli symuluje wpisanie komendy do konsoli):
+
+<Tabs>
+<TabItem value="windows" label="Windows" default>
+
+```shell
+cls
+```
+
+</TabItem>
+<TabItem value="linux" label="Linux">
+
+```shell
+clear
+```
+
+</TabItem>
+</Tabs>
+
+W przypadku innego systemu operacyjnego skutkuje **błędem kompilacji**.
