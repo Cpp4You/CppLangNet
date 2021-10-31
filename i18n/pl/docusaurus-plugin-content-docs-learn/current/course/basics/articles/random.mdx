@@ -1,0 +1,369 @@
+---
+sidebar_position:	2
+sidebar_label:		🎲 Losowość
+title:				Liczby pseudolosowe
+tags:				[losowość, liczby-pseudolosowe]
+description:		"Artykuł (podstawy): liczby pseudolosowe w języku C++"
+hide_title:			true
+---
+
+<!-- Components -->
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+import Columns				from "@site-comps/Columns";
+import CustomCodeBlock		from "@site-comps/CustomCodeBlock";
+import Image				from "@site-comps/Image";
+
+<!-- Presets -->
+import NotFinished			from "@site/i18n/pl/presets/NotFinished.mdx";
+
+# Liczby pseudolosowe
+
+<center>
+	<iframe src='https://gfycat.com/ifr/DarkBrokenCivet' frameborder='0' scrolling='no' allowfullscreen width='640' height='404'></iframe>
+</center>
+
+## Motywacja
+
+W różnych dziedzinach informatyki, np. w kryptografii, cyberbezpieczeństwie
+czy przy tworzeniu gier komputerowych, potrzebna jest możliwośc generowania
+losowych liczb. Przykładowo:
+
+- 🔑 tworzenie hasła z losowych znaków
+- 💥 losowe zdarzenia w świecie gry
+- 🎲 szansa na zadanie obrażeń oparta na rzucie kostką
+
+
+## Dlaczego "pseudolosowe"
+
+Jak możesz zauważyć, artykuł nazywa się "liczby **pseudo**losowe".
+Komputer nie jest w stanie samodzielnie wygenerować prawdziwie losowych liczb
+jednak może, za pomocą pewnych sztuczek, dać nam złudzenie losowości,
+która jest jak najbardziej wystarczająca.
+
+## Generowanie liczb
+
+:::caution Uwaga
+W tym artykule skupimy się na bardzo prymitywnym, ale jednocześnie łatwym
+sposobie. W dalszej części kursu poznasz dużo potężniejsze narzędzia, pochodzące z
+biblioteki `<random>`.
+:::
+
+Zobaczmy na przykładzie jak z tego się korzysta:
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="🔹 Losowanie 5 liczb"
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+int main() {
+	// highlight-next-line
+	std::srand( std::time(0) );
+
+	std::cout << "Generuję 5 losowych liczb:\n";
+	for (int i = 0; i < 5; ++i)
+	// highlight-next-line
+		std::cout << std::rand() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Przykładowy wynik"
+Generuję 5 losowych liczb:
+570368048
+1028036926
+1798519773
+2028832115
+1034913436
+```
+
+</div>
+</Columns>
+
+### Uzyskiwanie kolejnych liczb
+
+Kluczową funkcją jest tutaj
+```cpp
+std::rand()
+```
+(od ang. *random*), która generuje i zwraca
+kolejną pseudolosową liczbę z sekwencji. Taka sekwencja jest bardzo
+nieprzewidywalna, co daje złudzenie losowości.
+
+### Ustawianie ziarna
+
+To z jakich liczb będzie ta sekwencja się składać zależy od tzw. **ziarna** (*ang.: seed*),
+które również jest pewną liczbą. Do ustawiania ziarna służy funkcja:
+
+```cpp title="🔹 Ustawianie ziarna"
+std::srand( <ziarno> )
+```
+(od ang. *seed random*)
+
+
+:::danger Uwaga
+Jeśli pozostawimy domyślne ziarno, generowana sekwencja będzie **zawsze taka sama**.
+:::
+
+Dobrym pomysłem jest ustawianie go **raz, na początku programu**, tak jak w przykładzie.
+Za ziarno posłużył nam aktualny czas, w formie liczby, która zwiększa się z każdą sekundą, dlatego
+za każdym uruchomieniem programu dostaniemy inny efekt. Uzyskaliśmy to za pomocą wywołania funkcji:
+
+```cpp title="🔹 Aktualny czas (w sekundach)"
+std::time(0)
+```
+
+### Wady `std::rand`
+
+Funkcja `std::rand()` jest prosta w użyciu i właściwie na tym jej zalety się kończą. Problemem jest m.in. to,
+że zakres zwracanych przez nią liczb nie jest ściśle określony i różni się w zależności
+np. od użytego kompilatora czy systemu operacyjnego.
+
+Możemy być jedynie pewni tego, że zwrócona liczba jest zawsze z zakresu `[0; RAND_MAX]`,
+przy czym to `RAND_MAX` to pewna stała, zależna od systemu czy kompilatora.
+
+<Image center alt="Zakres od 0 do RAND_MAX"
+		src="/img/tutorials/course/basic/random/0_to_rand_max.png"
+	/>
+<br/>
+
+To jaką wartość ma `RAND_MAX` można banalnie sprawdzić:
+
+```cpp title="🔹 Sprawdzanie maks. możliwej liczby do uzyskania z rand"
+#include <iostream>
+#include <cstdlib>
+
+int main() {
+	std::cout << "RAND_MAX: " << RAND_MAX;
+}
+```
+
+Możliwy wynik:
+
+<Tabs>
+<TabItem value="msvc-windows" label="MSVC (Windows)" default>
+Wersja z Visual Studio 2022 Preview.
+
+```plaintext
+RAND_MAX: 32767
+```
+
+</TabItem>
+<TabItem value="gcc-windows" label="GCC 11.2 (Windows)">
+Wersja GCC 11.2 z paczki MSYS2.
+
+```plaintext
+RAND_MAX: 32767
+```
+
+</TabItem>
+<TabItem value="gcc-wandbox" label="GCC 12.0 (Linux)">
+GCC 12.0.0, ze strony https://wandbox.org
+
+```plaintext
+RAND_MAX: 2147483647
+```
+
+</TabItem>
+<TabItem value="clang-wandbox" label="Clang 13.0 (Linux)">
+Clang 13.0.0, ze strony https://wandbox.org
+
+```plaintext
+RAND_MAX: 2147483647
+```
+
+</TabItem>
+</Tabs>
+
+Powyższe wyniki jasno ukazują ten problem.
+Na Windowsie uzyskaliśmy wynik 2<sup>15</sup> - 1, a na Linuxie 2<sup>31</sup> - 1
+
+### Ograniczanie zakresu liczb
+
+Wiedząc, że `std::rand()` daje nam liczby z zakresu `[0; RAND_MAX]`, możemy się
+tym trochę "pobawić".
+
+#### Liczby rzeczywiste od `0` do `1`
+
+<Image center alt="Zakres od 0 do 1"
+		src="/img/tutorials/course/basic/random/0_to_1.png"
+	/>
+<br/>
+
+Wystarczy podzielić uzyskaną liczbę, przez `RAND_MAX`, by uzyskać wartość
+z zakresu od `0` do `1`.
+
+```cpp title="🔹 Liczba od 0 do 1"
+float randomFloat() {
+	return float( std::rand() ) / RAND_MAX;
+}
+```
+
+:::danger Rzutowanie na float
+Zwróć uwagę, że **musimy** skonwertować co najmniej jedną z tych liczb
+na typ `float`. Obie z tych rzeczy - `RAND_MAX` oraz `rand()` są
+liczbami całkowitymi, w związku z tym operacje na nich dają
+również liczbę całkowitą.
+W uproszczeniu:
+```cpp
+int / int = int
+```
+
+Po konwersji będzie to wyglądać tak:
+```cpp
+float / int = float
+```
+:::
+
+Jeśli się zastanawiasz dlaczego to tak działa, zobacz tą prostą analizę:
+- dla liczby `0` dostaniemy `0 / RAND_MAX`, czyli nadal `0`
+- dla `RAND_MAX` (czyli maks. liczby) dostaniemy `RAND_MAX / RAND_MAX`, czyli `1`
+- dla wszystkich wartości pośrednich uzyskamy liczbę większą od `0` i mniejszą od `1`
+
+#### Liczby rzeczywiste od `A` do `B`
+
+<Image center alt="Zakres od A do B"
+		src="/img/tutorials/course/basic/random/a_to_b.png"
+	/>
+<br/>
+
+Korzystając z poprzedniej funkcji `randomFloat()`, możemy
+zdefiniować podobną funkcje, która wygeneruje liczbę rzeczywistą
+w zakresie od `A` do `B`.
+
+Co musimy zrobić:
+- obliczyć nowego zakresu, `float Length = B - A`
+- pomnożyć liczbę `[0; 1]` przez tą długość, by uzyskać zakres `[0; Length]`
+- przesunąć cały zakres o `A`, by uzyskać: `[A; Length + A]`, czyli `[A; B]`
+
+```cpp title="🔹 Liczba rzeczywista w zakresie"
+// Możemy użyć tej samej nazwy, bo mamy
+// inne parametry (przeładowanie funkcji)
+float randomFloat(float from, float to)
+{
+	float length = to - from;
+
+	return randomFloat()*length + from;
+}
+```
+
+lub upraszczając:
+
+```cpp title="🔹 Liczba rzeczywista w zakresie (uproszczone)"
+float randomFloat(float from, float to)
+{
+	return randomFloat()*(to - from) + from;
+}
+```
+
+#### Liczby całkowite od `A` do `B`
+
+W dokładnie ten sam sposób co powyżej, możemy utworzyć funkcję `randomInt`:
+
+```cpp title="🔹Liczba całkowita w zakresie"
+int randomInt(int from, int to)
+{
+	return int( randomFloat()*(to - from) ) + from;
+}
+```
+
+## Przykłady użycia
+
+### Funkcje z tego artykułu
+
+Korzystanie z wyżej utworzonych funkcji jest bardzo proste i wygodne:
+
+<CustomCodeBlock lineNumbers maxLines={30}>
+
+```cpp
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+// Deklaracja funkcji
+float	randomFloat(); // od 0 do 1
+float	randomFloat(float from, float to); // od "from" do "to"
+int		randomInt(int from, int to); // od "from" do "to" (int)
+
+int main()
+{
+	// Ustawienie ziarna
+	std::srand( std::time(0) );
+
+	// Ustawiam precyzję wyświetlania float-ów
+	std::cout.precision(2);
+
+	std::cout << "Losuję 5 liczb od 0 do 1:\n";
+	for (int i = 0; i < 5; ++i)
+		std::cout << randomFloat() << ' ';
+
+	std::cout << "\nLosuję 5 float-ów od 10 do 30:\n";
+	for (int i = 0; i < 5; ++i)
+		std::cout << randomFloat(10, 30) << ' ';
+
+	std::cout << "\nLosuję 5 int-ów od 0 do 100:\n";
+	for (int i = 0; i < 5; ++i)
+		std::cout << randomInt(0, 100) << ' ';
+}
+
+
+// Definicja funkcji do losowania
+/////////////////////////////////////
+float randomFloat()
+{
+	return float( std::rand() ) / RAND_MAX;
+}
+
+/////////////////////////////////////
+float randomFloat(float from, float to)
+{
+	return randomFloat()*(to - from) + from;
+}
+
+/////////////////////////////////////
+int randomInt(int from, int to)
+{
+	return int( randomFloat()*(to - from) ) + from;
+}
+```
+
+</CustomCodeBlock>
+
+### Losowa szansa na zdarzenie
+
+Jeśli chcemy, by pewne zdarzenie miało np. 30% szans na wystąpienie,
+możemy wylosować liczbę całkowitą z zakresu `[1; 100]` i sprawdzić,
+czy `liczba <= 30`:
+
+```cpp title="🎲 Losowa szansa (30%)"
+int randomChance = randomInt(1, 100);
+
+if (randomChance <= 30)
+{
+	std::cout << "Wygrana :)";
+}
+else
+{
+	std::cout << "Przegrana :(";
+}
+```
+
+Możesz też zrezygnować z procentów i użyć zwykłych ułamków:
+
+```cpp title="🎲 Losowa szansa (30%)"
+float randomChance = randomFloat();
+
+if (randomChance <= 0.30f)
+{
+	std::cout << "Wygrana :)";
+}
+else
+{
+	std::cout << "Przegrana :(";
+}
+```
