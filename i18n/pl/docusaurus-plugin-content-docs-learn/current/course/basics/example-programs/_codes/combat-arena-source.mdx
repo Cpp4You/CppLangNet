@@ -8,12 +8,21 @@
 
 /////// Przydatne funkcje (deklaracje)
 
+/// Czyszczenie konsoli
+/// https://cpp-lang.net/pl/learn/course/basics/articles/console/#czyszczenie-konsoli
+void clearConsole();
+
+/// Liczby pseudolosowe
+/// https://cpp-lang.net/pl/learn/course/basics/articles/random/
+
 // Losowanie floata od 0 do 1
 float randomFloat();
 // Losowanie floata od "from" do "to"
 float randomFloat(float from, float to);
 // Losowanie inta od "from" do "to"
 int randomInt(int from, int to);
+
+
 
 // Struktura "stworzenie".
 // Użyjemy jej dla 👤 gracza i 👹 wrogów.
@@ -52,10 +61,11 @@ int main()
 		std::cout << "Nieprawidłowy poziom trudności\n";
 		return 0;
 	}
+	clearConsole();
 
 	// Informacje o graczu
 	player = requestPlayerSetup();
-
+	
 	// Spawnowanie przeciwników:
 
 	int numberOfEnemies;
@@ -71,6 +81,7 @@ int main()
 	for (int i = 0; i < numberOfEnemies; i++)
 		enemies.push_back( makeEnemy(difficultyLevel) );
 
+	clearConsole();
 	while (enemies.size() > 0 && player.health > 0)
 	{
 		// Wyświetl informacje o graczu:
@@ -180,12 +191,17 @@ int main()
 			if (enemies[i].stunRounds > 0)
 				enemies[i].stunRounds--;
 		}
+
+		std::cout << "Naciśnij Enter, by przejść do kolejnej rundy.";
+		std::cin.ignore();
+		std::cin.get();
+		clearConsole();
 	}
 
 	if (player.health <= 0)
-	{
 		std::cout << "Zostałeś pokonany...";
-	}
+	else
+		std::cout << "Zwyciężyłeś!";
 }
 
 ///////////////////////////////
@@ -220,12 +236,14 @@ Creature requestPlayerSetup()
 	std::cin.ignore();
 	std::cin.clear();
 	std::getline(std::cin, player.name);
+	std::cout << '\n';
 
 	// Pytaj o klasę postaci aż do skutku:
 	int playerClass			= 0;
 	int playerClassTries	= 0;
 	while (playerClass < 1 || playerClass > 3)
 	{
+		clearConsole();
 		if (playerClassTries > 0)
 			std::cout << "Nieprawidłowa klasa, spróbuj jeszcze raz.\n\n";
 
@@ -321,5 +339,16 @@ float randomFloat(float from, float to) {
 }
 int randomInt(int from, int to) {
 	return int(randomFloat() * (to - from)) + from;
+}
+
+void clearConsole()
+{
+#ifdef _WIN32
+	std::system("cls");
+#elif __linux__
+	std::system("clear");
+#else
+	static_assert(false, "Unsupported operating system");
+#endif
 }
 ```
