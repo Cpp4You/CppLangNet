@@ -3,21 +3,33 @@ import useBaseUrl		from '@docusaurus/useBaseUrl';
 
 export default function Image(props)
 {
+	// Setup description
+	let desc = null;
+	if (props.desc)
+	{
+		if (props.center)
+			desc = <center><small>{props.desc}</small></center>;
+		else
+			desc = <><small>{props.desc}</small></>;
+	}
+
 	const fullWidth = props.fullwidth || props.center;
 
 	const style = {
 		border:		(props.border		? "1px solid gray"	: undefined),
-		textAlign:	(props.center		? "center"			: undefined),
-		display:	(fullWidth			? "block"			: "inline-block"),	
+		display:	(fullWidth			? "block"			: "inline-block"),
 	};
 
 	const imgStyle = props.style || {};
-	imgStyle.minWidth	= props.minwidth || undefined;
-	imgStyle.width		= props.width || undefined;
-	imgStyle.maxWidth	= props.maxwidth || undefined;
-	imgStyle.minHeight	= props.minheight || undefined;
-	imgStyle.height		= props.height || undefined;
-	imgStyle.maxHeight	= props.maxheight || undefined;
+	imgStyle.minWidth	= props.minwidth	|| undefined;
+	imgStyle.width		= props.width		|| undefined;
+	imgStyle.maxWidth	= props.maxwidth	|| undefined;
+	imgStyle.minHeight	= props.minheight	|| undefined;
+	imgStyle.height		= props.height 		|| undefined;
+	imgStyle.maxHeight	= props.maxheight	|| undefined;
+	imgStyle.display	= "block";
+	if (props.center)
+		imgStyle.margin = "0 auto";
 
 	const processedProps = {...props};
 
@@ -38,10 +50,16 @@ export default function Image(props)
 	delete processedProps.height;
 	delete processedProps.maxheight;
 
+	delete processedProps.desc;
+
+
 	return (
-		<div style={style}>
-			<img {...processedProps} style={imgStyle}/>
-		</div>
+		<>
+			<div style={style}>
+				<img {...processedProps} style={imgStyle}/>
+			</div>
+			{desc}
+		</>
 	);
 }
 
