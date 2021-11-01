@@ -1,9 +1,156 @@
 ---
-sidebar_position: 1
+sidebar_position:	1
+sidebar_label:		Korzystanie z Replit.com
+title:				Korzystanie z Replit.com
+tags:				[edytor, kompilator, gcc, clang, narzędzie]
+description:		"Korzystanie z Replit.com do programowania w C++"
+hide_title:			true
 ---
 
-# Korzystanie z repl.it
+<!-- Components -->
+import Image			from '@site-comps/Image';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+<!-- Presets -->
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
+import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
 
 <NotFinished/>
+
+# Korzystanie z Replit.com
+
+[**Replit**](https://replit.com) jest bardzo przystępnym środowiskiem online, które
+pozwala tworzyć aplikacje w języku C++. Ważnym atutem jest to, że posiada
+interaktywną konsolę.
+
+## Tworzenie konta
+
+Od pewnego czasu Replit.com wymaga stworzenie darmowego konta na ich stronie.
+Możesz to zrobić przechodząc pod ten link: https://replit.com/signup
+
+Następnie wypełnij poniższe informacje:
+
+<Image
+		center alt="Tworzenie konta na Replit"
+		src="/img/tutorials/tools/replit/sign-up-form.png"
+	/>
+
+## Tworzenie projektu
+
+Kiedy już będziesz zalogowany, skorzystaj z wzoru aplikacji C++,
+który przygotowaliśmy, przechodząc pod ten link:
+
+https://replit.com/@poetakodu/Project-Using-C20?v=1
+
+Kliknij **Fork repl**:
+
+<Image
+		center alt="Tworzenie projektu ze wzoru"
+		src="/img/tutorials/tools/replit/fork.png"
+	/>
+
+:::note Uwaga
+Możesz też utworzyć domyślny projekt C++, który oferuje strona
+Replit, ale na ten moment będzie dostępny tylko Clang 7, który
+**nie wspiera C++20**.
+:::
+
+## Obsługa edytora
+
+Gdy juz stworzysz swój projekt, zostaniesz przeniesiony w tryb edycji
+tego kodu:
+
+<Image
+		center alt="Edytor projektu C++"
+		src="/img/tutorials/tools/replit/editor-view.png"
+	/>
+<br/>
+
+Główny widok jest złożony z trzech paneli:
+
+
+Panel | Zawartość
+---------|----------
+ Lewy | widok narzędzi, domyślnie **widok plików** 🗃
+ Środkowy | **edytor kodu** ✏
+ Prawy | **konsola** 🖥 i terminal systemowy (ang.: *shell*)
+
+### Uruchamianie programu
+
+▶ U góry znajdziesz przycisk **Run**, który uruchamia aplikację.
+
+<Image center
+		alt		="Przycisk run"
+		src		="/img/tutorials/tools/replit/run-button.png"
+	/>
+<br/>
+
+Zanim program zostanie wykonany, musi zostać skompilowany.
+To oznacza, że na początku ujrzysz w konsoli komendę kompilującą
+kod.
+
+✔ Jeśli kod programu jest poprawny, to linijkę niżej zobaczysz
+właściwy wynik jego działania.
+
+⚠ Jeśli kompilator będzie miał jakieś uwagi do kodu, to wyswietli
+ostrzeżenia przed uruchomieniem programu.
+
+🔴 Jeśli kod będzie zawierał błędy, program nie zostanie skompilowany
+ani wykonany.
+
+<Tabs>
+	<TabItem value="ok" label="✔ Poprawny kod" default>
+		<Image border center
+				alt		="Kompilacja i uruchomienie prawidłowego programu"
+				src		="/img/tutorials/tools/replit/run-command-ok.png"
+				desc	="🟡 Komenda kompilacji, 🟣 Wynik"
+			/>
+	</TabItem>
+	<TabItem value="warning" label="⚠ Z ostrzeżeniem">
+		<Image border center
+				alt		="Kompilacja i uruchomienie programu z ostrzeżeniem"
+				desc	="🟡 Komenda kompilacji, 🟤 Ostrzeżenie, 🟣 Wynik"
+				src		="/img/tutorials/tools/replit/run-command-warning.png"
+			/>
+	</TabItem>
+	<TabItem value="error" label="🔴 Z błędem">
+		<Image border center
+				alt		="Próba kompilacji zakończona błędem"
+				desc	="🟡 Komenda kompilacji, 🔴 Błąd"
+				src		="/img/tutorials/tools/replit/run-command-error.png"
+			/>
+	</TabItem>
+</Tabs>
+
+### Edycja kodu źródłowego
+
+<ImproveSection />
+
+To środowisko wspiera wszystkie podstawowe funkcje, które
+są potrzebne początkującej osobie.
+
+<Image center
+		maxheight="400px"
+		alt		="Widok edytora kodu"
+		src		="/img/tutorials/tools/replit/only-editor.png"
+	/>
+<br/>
+
+### Skróty klawiszowe
+
+Replit bazuje na tym samym edytorze, na którym jest zbudowany
+Visual Studio Code, przez co posiada podobne skróty klawiszowe.
+
+Oprócz tych standardowych, warto przetestować te:
+
+Skrót | Opis
+---------|----------
+`Ctrl + Shift + P` lub `F1`					| Otwórz okno poleceń
+Przeciągnięcie środkowym przyciskiem myszy	| Umieść wiele kursorów w sąsiadujących liniach
+`Alt + LPM`									| Dodaj kursor w miejscu kliknięcia
+`Ctrl + /`									| Zakomentuj zaznaczony fragment
+`Alt + 🔼`									| Przesuń aktualną linię do góry o jeden wiersz
+`Alt + 🔽`									| Przesuń aktualną linię w dół o jeden wiersz
+`Shift + Alt + 🔼`							| Duplikuje zaznaczone linie do góry
+`Shift + Alt + 🔽`							| Duplikuje zaznaczone linie w dół
