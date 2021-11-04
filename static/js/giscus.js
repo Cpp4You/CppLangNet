@@ -1,7 +1,3 @@
-let PAGE_IDENTIFIER		= window.location.pathname;
-const BASE_URL			= "https://cpp-lang.net";
-const PAGE_URL			= BASE_URL + PAGE_IDENTIFIER;
-
 (function() {
 
 	const calcTheme = v => (v === "dark") ? "dark" : "light";
@@ -50,10 +46,6 @@ function handlePageLoad()
 		return;
 	}
 
-	const hr				= document.createElement("hr");
-	const giscusContainer	= document.createElement("div");
-	giscusContainer.className = "giscus";
-
 	const validRoutes = [
 		"/learn",
 		"/docs",
@@ -62,11 +54,15 @@ function handlePageLoad()
 	];
 
 	const isValidRoute = validRoutes.findIndex(
-			route => (PAGE_IDENTIFIER.indexOf(route) !== -1)
+			route => (window.location.pathname.indexOf(route) !== -1)
 		) !== -1;
 
 	if (postContainer && isValidRoute)
 	{
+		const hr				= document.createElement("hr");
+		const giscusContainer	= document.createElement("div");
+		giscusContainer.className = "giscus";
+
 		postContainer.appendChild(hr);
 		postContainer.appendChild(giscusContainer);
 		insertGiscusScript();
@@ -74,7 +70,7 @@ function handlePageLoad()
 }
 
 function handlePageLoadAsync() {
-	setTimeout(handlePageLoad, 500);
+	setTimeout(handlePageLoad, 1500);
 }
 
 const onLocationChange = () => handlePageLoadAsync();
@@ -90,11 +86,26 @@ window.addEventListener("load", () => {
 	let prevTheme	= document.documentElement.getAttribute("data-theme");
 	let bodyList	= document.querySelector("body");
 
+	const updateTheme = () => {
+		const currentTheme = document.documentElement.getAttribute("data-theme");
+		if (prevTheme != currentTheme)
+		{
+			sendMessageToGiscusIframe({
+					setConfig: {
+						theme: calcTheme(currentTheme),
+					}
+				});
+			prevTheme = currentTheme;
+		}
+	};
+
+	setInterval(updateTheme, 500);
+
 	let observer = new MutationObserver(
 			(mutations) => {
 				mutations.forEach((mutation) => {
-					
 					if (prevHref != document.location.href) {
+						console.log(`Changed url from ${prevHref} to ${document.location.href}`)
 						onLocationChange(prevHref, document.location.href);
 						/* Changed ! your code here */
 
@@ -102,16 +113,7 @@ window.addEventListener("load", () => {
 					}
 					else
 					{
-						const currentTheme = document.documentElement.getAttribute("data-theme");
-						if (prevTheme != currentTheme)
-						{
-							sendMessageToGiscusIframe({
-									setConfig: {
-										theme: calcTheme(currentTheme),
-									}
-								});
-							prevTheme = currentTheme;
-						}
+						updateTheme();
 					}
 				});
 			}
