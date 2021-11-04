@@ -1,0 +1,4 @@
+[[headers]]
+for = "/css/*"
+[headers.values]
+Access-Control-Allow-Origin = "*"
