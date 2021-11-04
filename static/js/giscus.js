@@ -88,15 +88,12 @@ window.addEventListener("load", () => {
 
 	const updateTheme = () => {
 		const currentTheme = document.documentElement.getAttribute("data-theme");
-		if (prevTheme != currentTheme)
-		{
-			sendMessageToGiscusIframe({
-					setConfig: {
-						theme: calcTheme(currentTheme),
-					}
-				});
-			prevTheme = currentTheme;
-		}
+		sendMessageToGiscusIframe({
+				setConfig: {
+					theme: calcTheme(currentTheme),
+				}
+			});
+		prevTheme = currentTheme;
 	};
 
 	setInterval(updateTheme, 500);
@@ -105,10 +102,7 @@ window.addEventListener("load", () => {
 			(mutations) => {
 				mutations.forEach((mutation) => {
 					if (prevHref != document.location.href) {
-						console.log(`Changed url from ${prevHref} to ${document.location.href}`)
 						onLocationChange(prevHref, document.location.href);
-						/* Changed ! your code here */
-
 						prevHref = document.location.href;
 					}
 					else
