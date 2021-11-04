@@ -56,10 +56,11 @@ function filterSidebarItems(items)
 	trailingSlash: 			true,
 
 	scripts: [
+		"/js/giscus.js",
 		{
 			src: "https://tenor.com/embed.js",
 			async: true,
-		}
+		},
 	],
 
 	i18n: {
@@ -186,7 +187,7 @@ function filterSidebarItems(items)
 				},
 				items: [
 					{ to: '/learn',			label: 'Learn',			position: 'left' },
-					{ to: '/docs',			label: 'Docs',			position: 'left' },
+				{ to: '/docs',			label: 'Docs',			position: 'left' },
 					{ to: '/features',		label: 'Features',		position: 'left' },
 					{ to: '/tools',			label: 'Tools',			position: 'left' },
 					{ to: '/blog',			label: 'Blog',			position: 'left'},
