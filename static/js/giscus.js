@@ -10,7 +10,9 @@ function insertGiscusScript()
 {
 	const isDarkMode 	= calcTheme(document.documentElement.getAttribute("data-theme"));
 	const pathName		= window.location.pathname;
-	const term			= pathName.length < 2 ? 'index' : pathName.substr(1).replace(/\.\w+$/, '');
+	let term			= pathName.length < 2 ? 'index' : pathName.substr(1).replace(/\.\w+$/, '');
+	if (term.endsWith('/'))
+		term = term.substr(0, term.length - 1);
 
 	// DON'T EDIT BELOW THIS LINE
 	var d = document,
@@ -21,7 +23,7 @@ function insertGiscusScript()
 	s.setAttribute("data-category",				"Site comment section");
 	s.setAttribute("data-category-id",			"DIC_kwDOGHXK884B_uFs");
 	s.setAttribute("data-mapping",				"specific");
-	s.setAttribute("data-term",					`${term}-comment-section`);
+	s.setAttribute("data-term",					`Site-${term}-comment-section`);
 	s.setAttribute("data-reactions-enabled",	"1");
 	s.setAttribute("data-emit-metadata",		"0");
 	s.setAttribute("data-theme",				isDarkMode ? 'dark' : 'light');
