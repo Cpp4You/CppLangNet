@@ -24,9 +24,14 @@ const uniqueSiteId = () => {
 		term = term.substr(0, term.length - 1);
 
 	let hash = `${stringHash(term)}`;
-	;
+	
+	// pad hash  to 14 chars with zeros
+	if (hash[0] === '-')
+		hash = `n${hash.substr(1).padStart(13, '0')}`;
+	else
+		hash = hash.padStart(14, '0');
 
-	return `Comment-Section-${hash.replace('-', 'n')}-cs`;
+	return `Comment-Section-${hash}-cs`;
 }
 
 /**
