@@ -3,16 +3,38 @@
 const calcTheme = v => (v === "dark") ? "dark" : "light";
 let giscusScript = null;
 
+const stringHash = str => {
+	let hash = 0;
+	if (str.length == 0) {
+		return hash;
+	}
+	for (var i = 0; i < str.length; i++) {
+		var char = str.charCodeAt(i);
+		hash = ((hash << 5) - hash) + char;
+		hash = hash & hash; // Convert to 32bit integer
+	}
+	return hash;
+}
+
+const uniqueSiteId = () => {
+	const pathName		= window.location.pathname;
+
+	let term			= pathName.length < 2 ? 'index' : pathName.substr(1).replace(/\.\w+$/, '');
+	if (term.endsWith('/'))
+		term = term.substr(0, term.length - 1);
+
+	let hash = `${stringHash(term)}`;
+	;
+
+	return `Comment-Section-${hash.replace('-', 'n')}-cs`;
+}
+
 /**
  * Inserts the Giscus script into the page.
  */
 function insertGiscusScript()
 {
 	const isDarkMode 	= calcTheme(document.documentElement.getAttribute("data-theme"));
-	const pathName		= window.location.pathname;
-	let term			= pathName.length < 2 ? 'index' : pathName.substr(1).replace(/\.\w+$/, '');
-	if (term.endsWith('/'))
-		term = term.substr(0, term.length - 1);
 
 	// DON'T EDIT BELOW THIS LINE
 	var d = document,
@@ -23,7 +45,7 @@ function insertGiscusScript()
 	s.setAttribute("data-category",				"Site comment section");
 	s.setAttribute("data-category-id",			"DIC_kwDOGHXK884B_uFs");
 	s.setAttribute("data-mapping",				"specific");
-	s.setAttribute("data-term",					`Site-${term}-comment-section`);
+	s.setAttribute("data-term",					uniqueSiteId());
 	s.setAttribute("data-reactions-enabled",	"1");
 	s.setAttribute("data-emit-metadata",		"0");
 	s.setAttribute("data-theme",				isDarkMode ? 'dark' : 'light');
