@@ -10,6 +10,7 @@ hide_title:			true
 import Columns			from '@site-comps/Columns'
 import GoogleSlides		from '@site-comps/GoogleSlides'
 import CustomCodeBlock	from '@site-comps/CustomCodeBlock'
+import Image			from '@site-comps/Image'
 import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
@@ -89,12 +90,34 @@ W wyżej przedstawionym programie zmienną stworzyliśmy w ten sposób:
 int x = 212;
 ```
 
+Oto schemat tego zapisu:
+
+<Tabs>
+	<TabItem value="creation-init" label="🔢 Z wartością" default>
+		<Image center maxheight={250}
+				src="/img/tutorials/course/basic/variables/creation-init-pl.png"
+				alt="Schemat tworzenia zmiennej (z inicjalizacją)"
+			/>
+	</TabItem>
+	<TabItem value="creation" label="⚪ Bez wartości">
+		<Image center maxheight={250}
+				src="/img/tutorials/course/basic/variables/creation-pl.png"
+				alt="Schemat tworzenia zmiennej (bez inicjalizacji)"
+			/>
+	</TabItem>
+</Tabs>
+
+
+
+
 Ten <u>niezwykle istotny</u> zapis składa się z następujących elementów:
 
-- `int` - typu zmiennej
-- `x` - nazwy zmiennej
-- `= 212` - **inicjalizacji** (przypisania początkowej wartości)
-- `;` - średnika, który kończy instrukcję
+Element | Opis
+---|---
+**`int`** | typ zmiennej
+`x` | nazwa zmiennej
+`= 212` | **inicjalizacja** (przypisanie początkowej wartości)
+`;` | średnik, który kończy instrukcję
 
 ### Typ zmiennej
 
@@ -107,10 +130,12 @@ czyli taką bez części ułamkowej.
 
 Na tym etapie powinieneś zapamiętać następujące typy zmiennych:
 
-- `int` - liczba całkowita
-- `float` - liczba rzeczywista (z częścią ułamkową)
-- `char` - pojedynczy znak
-- `bool` - wartość logiczna, czyli prawda (`true`) albo fałsz (`false`)
+Typ | Opis
+--- | ---
+**`int`** | liczba całkowita
+**`float`** | liczba rzeczywista (z częścią ułamkową)
+**`char`** | pojedynczy znak
+**`bool`** | wartość logiczna, czyli prawda (**`true`**) albo fałsz (**`false`**)
 
 :::danger Uwaga
 Wyżej wymienione typy zmiennych zawsze piszemy **małą literą**. Ma to znaczenie.
