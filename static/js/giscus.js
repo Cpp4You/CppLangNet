@@ -70,7 +70,7 @@ function handlePageLoad()
 }
 
 function handlePageLoadAsync() {
-	setTimeout(handlePageLoad, 1500);
+	setTimeout(handlePageLoad, 500);
 }
 
 const onLocationChange = () => handlePageLoadAsync();
