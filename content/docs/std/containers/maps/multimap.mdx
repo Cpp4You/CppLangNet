@@ -47,7 +47,7 @@ template<
 </Tabs>
 
 The `std::multimap` is a container that stores key-value pairs, and it works pretty much as 
-std::map, the only diffrence is the keys can repeat themselves. If the keys of both elements  are the
+std::map, the only diffrence is the keys can repeat themselves. If the keys of both elements are the
 same, they are ordered by their values.
 
 ### Example usage
@@ -106,7 +106,7 @@ std::multimap meets the requirements of Container, AllocatorAwareContainer, Asso
 
 ## Member classes
 
-<SymbolTable>	
+<SymbolTable>
 	<Symbol pub autoLink name="value_compare">
 		Compare objects of type value_type
 	</Symbol>
@@ -114,7 +114,7 @@ std::multimap meets the requirements of Container, AllocatorAwareContainer, Asso
 
 ## Member functions
 
-<SymbolTable>	
+<SymbolTable>
 	<Symbol pub autoLink linkName="constructor" name="(constructor)">
 		Constructs the <code>multimap</code>
 	</Symbol>
@@ -132,7 +132,7 @@ std::multimap meets the requirements of Container, AllocatorAwareContainer, Asso
 
 ### Iterators
 
-<SymbolTable>	
+<SymbolTable>
 	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
 		Returns an iterator to the beginning
 	</Symbol>
@@ -271,7 +271,7 @@ int main(){
 
   potions.insert(std::make_pair("health", 200));
 
-  for (auto& [key, value] : player_stats)
+  for (auto& [key, value] : potions)
     std::cout << key << " " << value << std::endl;
 
   return 0;
