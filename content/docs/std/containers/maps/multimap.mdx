@@ -1,0 +1,292 @@
+---
+sidebar_position:	2
+title:				std::multimap reference
+sidebar_label:		multimap
+tags:				[multimap, associative, container, key]
+hide_title:			true
+---
+
+import ClassSummary				from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns					from "@site-comps/Columns";
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem					from "@theme/TabItem";
+
+<NotFinished />
+
+# Multimap class reference
+
+## Overview
+
+<Tabs>
+<TabItem value="simplified" label="Simplified" default>
+
+```cpp
+template<
+    class Key,
+    class T,
+    /* ... */
+> class multimap;
+```
+
+</TabItem>
+<TabItem value="detailed" label="Detailed">
+
+```cpp
+template<
+    class Key,
+    class T,
+    class Compare = std::less<Key>,
+    class Allocator = std::allocator<std::pair<const Key, T> >
+> class multimap;
+```
+
+</TabItem>
+</Tabs>
+
+The `std::multimap` is a container that stores key-value pairs, and it works pretty much as 
+std::map, the only diffrence is the keys can repeat themselves. If the keys of both elements  are the
+same, they are ordered by their values.
+
+### Example usage
+
+The examples in this section are very simple ones. Navigate to [examples section at the bottom](#more-examples) for more.
+
+<ImproveSection />
+
+### Technical details
+
+<details>
+<summary>Technical definition of a multimap</summary>
+<div>
+
+Multimap is an associative container that contains a sorted list of key-value pairs, while permitting multiple entries with the same key. Sorting is done according to the comparison function Compare, applied to the keys. Search, insertion, and removal operations have logarithmic complexity.
+
+The order of the key-value pairs whose keys compare equivalent is the order of insertion and does not change. (since C++11)
+
+Everywhere the standard library uses the Compare requirements, equivalence is determined by using the equivalence relation as described on Compare. In imprecise terms, two objects a and b are considered equivalent if neither compares less than the other: !comp(a, b) && !comp(b, a).
+
+std::multimap meets the requirements of Container, AllocatorAwareContainer, AssociativeContainer and ReversibleContainer. 
+</div>
+</details>
+
+<ClassSummary name="multimap" namespaces="std" folder="multimap" headerName="map">
+
+## Template parameters
+
+<SymbolTable noTraits>
+	<Symbol name="Key"		desc="The type of stored keys"/>
+	<Symbol name="T" 		desc="The type of stored values"/>
+	<Symbol name="Compare" 		desc="It determines the order of keys"/>
+	<Symbol name="Allocator" 		desc="Is responsible for allocating and deallocating memory"/>
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="key_type"				desc="Key"/>
+	<Symbol pub name="mapped_type" 				desc="T"/>
+	<Symbol pub name="value_type"			desc={<code>std::pair&lt;const Key, T&gt;</code>}/>
+	<Symbol pub name="size_type"				desc="Unsigned integer type"/>
+	<Symbol pub name="difference_type"			desc="Signed integer type"/>
+	<Symbol pub name="key_compare"				desc="Compare"/>
+	<Symbol pub name="allocator_type" 				desc="Allocator"/>
+	<Symbol pub name="reference"			desc={<code>value_type&</code>}/>
+	<Symbol pub name="const_reference"				desc={<code>const value_type&</code>}/>
+	<Symbol pub name="pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::pointer</code>}/>
+	<Symbol pub name="const_pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code>}/>
+	<Symbol pub name="iterator"			desc="value_type"/>
+	<Symbol pub name="const_iterator"			desc="const value_type"/>
+	<Symbol pub name="reverse_iterator"			desc={<code>std::reverse_iterator&lt;iterator&gt;</code>}/>
+	<Symbol pub name="const_reverse_iterator"			desc={<code>std::reverse_iterator&lt;const_iterator&gt;</code>}/>
+	<Symbol pub name="node_type"			desc="A specialization of node handle representing a container node"/>
+</SymbolTable>
+
+## Member classes
+
+<SymbolTable>	
+	<Symbol pub autoLink name="value_compare">
+		Compare objects of type value_type
+	</Symbol>
+</SymbolTable>
+
+## Member functions
+
+<SymbolTable>	
+	<Symbol pub autoLink linkName="constructor" name="(constructor)">
+		Constructs the <code>multimap</code>
+	</Symbol>
+	<Symbol pub autoLink linkName="destructor" name="(destructor)">
+		Destructs the <code>multimap</code>
+	</Symbol>
+	<Symbol pub autoLink linkName="operator=" name="operator=">
+		Assigns values to the container
+	</Symbol>
+	<Symbol pub autoLink linkName="get_allocator" name="get_allocator">
+		Returns the associated allocator
+	</Symbol>
+
+</SymbolTable>
+
+### Iterators
+
+<SymbolTable>	
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
+		Returns an iterator to the beginning
+	</Symbol>
+	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
+		Returns an iterator to the end
+	</Symbol>
+	<Symbol pub autoLink linkName="crbegin" name={<>rbegin<br/>crbegin</>}>
+		Returns a reverese iterator to the beginning
+	</Symbol>
+	<Symbol pub autoLink linkName="crend" name={<>rend<br/>crend</>}>
+		Returns a reverse iterator to the end
+	</Symbol>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="empty" name="empty">
+		Checks whether the container is empty
+	</Symbol>
+	<Symbol pub autoLink linkName="size" name="size">
+		Returns the number of elements
+	</Symbol>
+	<Symbol pub autoLink linkName="max_size" name="max_size">
+		Returns the maximum possible number of elements
+	</Symbol>
+</SymbolTable>
+
+### Modifiers
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="clear" name="clear">
+		Clears the contents
+	</Symbol>
+	<Symbol pub autoLink linkName="insert" name="insert">
+		Inserts elements or nodes
+	</Symbol>
+	<Symbol pub autoLink linkName="emplace" name="emplace">
+		Constructs element in-place
+	</Symbol>
+	<Symbol pub autoLink linkName="emplace_hint" name="emplace_hint">
+		Constructs elements in-place using a hint
+	</Symbol>
+	<Symbol pub autoLink linkName="erase" name="erase">
+		Erases elements
+	</Symbol>
+	<Symbol pub autoLink linkName="swap" name="swap">
+		Swaps the contents
+	</Symbol>
+	<Symbol pub autoLink linkName="extract" name="extract">
+		Extracts nodes from the container
+	</Symbol>
+	<Symbol pub autoLink linkName="merge" name="merge">
+		Splices nodes from another container
+	</Symbol>
+</SymbolTable>
+
+### Lookup
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="count" name="count">
+		Returns the number of elements matching specific key
+	</Symbol>
+	<Symbol pub autoLink linkName="find" name="find">
+		Finds element with specific key
+	</Symbol>
+	<Symbol pub autoLink linkName="contains" name="contains">
+		Checks if the container contains element with specific
+	</Symbol>
+	<Symbol pub autoLink linkName="equal_range" name="equal_range">
+		Raturns range of elements matching a specific key
+	</Symbol>
+	<Symbol pub autoLink linkName="lower_bound" name="lower_bound">
+		Returns an iterator to the first element not less than the given key
+	</Symbol>
+	<Symbol pub autoLink linkName="upper_bound" name="upper_bound">
+		Returns an iterator to the first element greater than the given key
+	</Symbol>
+</SymbolTable>
+
+### Observers
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="key_comp" name="key_comp">
+		Returns the function that compares keys
+	</Symbol>
+	<Symbol pub autoLink linkName="value_comp" name="value_comp">
+		Returns the function that compares keys in objects of type value_type
+	</Symbol>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				operator==<br/>
+				operator!=<br/>
+				operator&lt;<br/>
+				operator&gt;<br/>
+				operator&lt;=<br/>
+				operator&gt;=<br/>
+				operator&lt;=&gt;
+			</>}
+			desc="Lexicographically compares two strings in the multimap">
+	</Symbol>
+	<Symbol pub autoLink linkName="std::swap" name="std::swap">
+		Specializes the <code>std::swap</code> algorithm
+	</Symbol>
+	<Symbol pub autoLink linkName="erase_if" name="erase_if">
+		Erases all elements satisfying specific criteria
+	</Symbol>
+</SymbolTable>
+</ClassSummary>
+
+
+## Deduction guides
+
+<ImproveSection />
+
+## More examples
+
+### Basic manipulation
+
+#### Creating multimap, inserting pair and printing it out
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+#include <map>
+
+int main(){
+  std::multimap<std::string, int> potions{ {"health", 30}, {"mana", 25}, {"mana", 50}};
+
+  potions.insert(std::make_pair("health", 200));
+
+  for (auto& [key, value] : player_stats)
+    std::cout << key << " " << value << std::endl;
+
+  return 0;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+health 30
+health 200
+mana 25
+mana 50
+```
+
+</div>
+</Columns>
