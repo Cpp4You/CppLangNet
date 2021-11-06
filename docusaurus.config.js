@@ -186,16 +186,34 @@ function filterSidebarItems(items)
 					src: 'img/cpp.svg',
 				},
 				items: [
-					{ to: '/learn',			label: 'Learn',			position: 'left' },
-				{ to: '/docs',			label: 'Docs',			position: 'left' },
-					{ to: '/features',		label: 'Features',		position: 'left' },
-					{ to: '/tools',			label: 'Tools',			position: 'left' },
-					{ to: '/blog',			label: 'Blog',			position: 'left'},
-					{ to: '/contributing',	label: 'Contributing',	position: 'right'},
+					{ to: '/learn',			label: 'Learn',				position: 'left' },
+					{ to: '/docs',			label: 'Docs',				position: 'left' },
+					{ to: '/features',		label: 'Features',			position: 'left' },
+					{ to: '/tools',			label: 'Tools',				position: 'left' },
+					{ to: '/blog',			label: 'Blog',				position: 'left'},
+					{ to: '/contributing',	label: '💗 Contributing',	position: 'right'},
 					{
-						href: 'https://github.com/PoetaKodu/CppLangNet',
-						label: 'GitHub',
+						type: 'dropdown',
+						label: '🗣 Social',
 						position: 'right',
+						items: [
+							// {
+							// 	label: '🔵 Facebook',
+							// 	href: 'https://www.facebook.com/cpplang',
+							// },
+							{
+								label: '🟣 Discord',
+								href: 'https://discord.gg/NvBNvpgUHZ',
+							},
+							{
+								label: '💬 Forum',
+								href: 'https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum',
+							},
+							{
+								href: 'https://github.com/PoetaKodu/CppLangNet',
+								label: '👉 GitHub',
+							},
+						]
 					},
 					{
 						type: 'localeDropdown',
