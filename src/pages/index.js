@@ -1,13 +1,12 @@
-import React, { useEffect, useState }	from 'react';
-import Link								from '@docusaurus/Link';
-import Translate						from '@docusaurus/Translate';
-import Layout							from '@theme/Layout';
-import ThemedImage						from '@theme/ThemedImage';
-import useBaseUrl						from '@docusaurus/useBaseUrl';
+import React			from 'react';
+import Link				from '@docusaurus/Link';
+import Translate		from '@docusaurus/Translate';
+import Layout			from '@theme/Layout';
+import ThemedImage		from '@theme/ThemedImage';
+import useBaseUrl		from '@docusaurus/useBaseUrl';
 
-
-import HomepageFeatures					from '../components/HomepageFeatures';
-import styles							from './index.module.scss';
+import HomepageFeatures	from '../components/HomepageFeatures';
+import styles			from './index.module.scss';
 
 
 function HomepageHeader() {
