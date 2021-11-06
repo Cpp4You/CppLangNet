@@ -1,11 +1,11 @@
-import React			from 'react';
-import Link				from '@docusaurus/Link';
-import Translate		from '@docusaurus/Translate';
-import Layout			from '@theme/Layout';
-import useThemeContext	from '@theme/hooks/useThemeContext';
+import React, { useEffect }		from 'react';
+import Link						from '@docusaurus/Link';
+import Translate				from '@docusaurus/Translate';
+import Layout					from '@theme/Layout';
+import useThemeContext			from '@theme/hooks/useThemeContext';
 
-import HomepageFeatures	from '../components/HomepageFeatures';
-import styles			from './index.module.scss';
+import HomepageFeatures			from '../components/HomepageFeatures';
+import styles					from './index.module.scss';
 
 
 function HomepageHeader() {
@@ -15,11 +15,29 @@ function HomepageHeader() {
 		'white':	'img/coding-bg-white.jpg',
 		'dark':		'img/coding-bg-dark.jpg'
 	};
+	
+	const recalcImage = () => backgroundImages[isDarkTheme ? 'dark' : 'white'];
+		
+	let bgImg = recalcImage();
+
+	useEffect(
+		() => {
+			let recalcTimer = setTimeout(() => {
+				bgImg = recalcImage();
+			}, 1000);
+
+			// Clearing
+			return () => {
+				clearTimeout(recalcTimer);
+			};
+		},
+		[]
+	);
 
 	return (
 		<header className={styles.heroBanner}>
 			<div className={styles.bgImage}>
-				<img src={ backgroundImages[isDarkTheme ? 'dark' : 'white'] }/>
+				<img src={ bgImg }/>
 			</div>
 			<div className={styles.container}>
 				<div className={styles.textPart}>
