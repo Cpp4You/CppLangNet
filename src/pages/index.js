@@ -1,43 +1,27 @@
-import React, { useEffect }		from 'react';
-import Link						from '@docusaurus/Link';
-import Translate				from '@docusaurus/Translate';
-import Layout					from '@theme/Layout';
-import useThemeContext			from '@theme/hooks/useThemeContext';
+import React, { useEffect, useState }	from 'react';
+import Link								from '@docusaurus/Link';
+import Translate						from '@docusaurus/Translate';
+import Layout							from '@theme/Layout';
+import ThemedImage						from '@theme/ThemedImage';
+import useBaseUrl						from '@docusaurus/useBaseUrl';
 
-import HomepageFeatures			from '../components/HomepageFeatures';
-import styles					from './index.module.scss';
+
+import HomepageFeatures					from '../components/HomepageFeatures';
+import styles							from './index.module.scss';
 
 
 function HomepageHeader() {
-	const {isDarkTheme} = useThemeContext();
-
-	const backgroundImages = {
-		'white':	'img/coding-bg-white.jpg',
-		'dark':		'img/coding-bg-dark.jpg'
-	};
-	
-	const recalcImage = () => backgroundImages[isDarkTheme ? 'dark' : 'white'];
-		
-	let bgImg = recalcImage();
-
-	useEffect(
-		() => {
-			let recalcTimer = setTimeout(() => {
-				bgImg = recalcImage();
-			}, 1000);
-
-			// Clearing
-			return () => {
-				clearTimeout(recalcTimer);
-			};
-		},
-		[]
-	);
 
 	return (
 		<header className={styles.heroBanner}>
 			<div className={styles.bgImage}>
-				<img src={ bgImg }/>
+			<ThemedImage
+					alt="Background image"
+					sources={{
+						light: useBaseUrl('/img/coding-bg-white.jpg'),
+						dark: useBaseUrl('/img/coding-bg-dark.jpg'),
+					}}
+				/>;
 			</div>
 			<div className={styles.container}>
 				<div className={styles.textPart}>
