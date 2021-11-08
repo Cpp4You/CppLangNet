@@ -2,23 +2,28 @@
 sidebar_position:	1
 sidebar_label:		"1. Wstęp do vector-ów"
 title:				Wstęp do vector-ów
-description: 		"Lekcja: wstęp do vectora w języku C++"
+description: 		"Lekcja: wstęp do tablic z użyciem vectora w języku C++"
+hide_title:			true
 ---
 
-# Wstęp do `std::vector`
+<!-- Components -->
+import Image			from "@site-comps/Image";
 
-import NotFinished from "@site/i18n/pl/presets/NotFinished.mdx";
+<!-- Presets -->
+import NotFinished		from "@site/i18n/pl/presets/NotFinished.mdx";
+import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
 
 <NotFinished />
 
+# Wstęp do `std::vector`
+
 W tej lekcji pokażę Ci czym są i do czego służą tablice, w ich
-najprostszej formie, z użyciem narzędzia `std::vector`.
+najprostszej formie, z użyciem narzędzia [`std::vector`](/docs/std/containers/arrays/vector/).
 
-
-## Do czego to potrzebne
+## Motywacja
 
 Załóżmy, że chcemy przechowywać nicki graczy, którzy są na serwerze.
-Nick jest tekstem, który będziemy zapisywać w zmiennej typu `std::string`.
+Nick jest tekstem, który będziemy zapisywać w zmiennej typu [`std::string`](/docs/std/containers/strings/string/).
 
 ```cpp
 #include <iostream>
@@ -41,21 +46,44 @@ int main()
 }
 ```
 
-Zakładając, że mamy 3 graczy na serwerze, możemy skonstruować
-taki kod jak wyżej. W sytuacji, gdy będziemy chcieli mieć
-5 graczy, będziemy musieli bawić się komendą "Kopiuj" -> "Wklej"
-dodatkowe kilka razy.
+Zakładając, że mamy trzech graczy na serwerze, możemy skonstruować
+kod taki jak wyżej. W sytuacji, gdy będziemy chcieli mieć
+5 graczy, będziemy musieli bawić się komendą "kopiuj -> wklej"
+dodatkowe razy. Powtarzanie tego bardzo szybko traci sens.
+Czy istnieje narzędzie, które pozwoli nam skrócić ten kod
+i nie używać tyle razy kopiowania?
 
-Bardzo szybko robienie tego traci sens. Czy istnieje narzędzie,
-które pozwoli nam skrócić ten kod i nie używać tyle razy
-kopiuj-wklej?
-
-Pomogą nam w tym tablice.
+Posłużą nam do tego **tablice**.
 
 ## Czym jest tablica
 
+<Image center border
+		maxheight="300px"
+		src="/img/tutorials/course/basic/arrays/car-brand-names-pl.png"
+		alt="Tablica zawierająca marki pojazdów"
+	/>
+<br/>
+
+
 Tablica to kontener, który może przechowywać wewnątrz *ileś* elementów
-jakiegoś określonego typu. Bardzo szybko można zauważyć, że nasze 3 zmienne:
+jakiegoś określonego typu. Popatrz na wyżej umieszczoną ilustrację.
+Wewnątrz tablicy, znajdują się nazwy marek pojazdów. Zauważ, że
+każdy element ma swój unikalny **indeks**.
+
+:::important Indeksy tablicy
+Elementy tablicy są **indeksowane od zera** w górę.
+Pierwszy element ma indeks `0`, drugi `1` itd.
+:::
+
+Indeksy pozwalają rozróżnić elementy tablicy. Za ich pomocą
+możemy korzystać z nich w kodzie.
+
+## Używanie tablic
+
+W kodzie, podanym wyżej w sekcji [**Motywacja**](#motywacja), mamy bardzo dobrych
+kandydatów, do zrobienia z nich jednej tablicy.
+
+Zmienne
 
 ```cpp
 std::string playerName1;
@@ -63,8 +91,11 @@ std::string playerName2;
 std::string playerName3;
 ```
 
-są tego samego typu. Zamiast robić trzy osobne zmienne, możemy stworzyć
+są tego samego typu i różnią się tylko numerkiem.
+Zamiast robić trzy osobne, możemy stworzyć jedną
 **tablicę**, która zawiera trzy elementy:
+
+### Tworzenie zmiennej tablicowej
 
 ```cpp
 #include <iostream>
@@ -84,7 +115,7 @@ int main()
 ```
 
 `vector` jest tzw. szablonem, a to oznacza, że można go użyć z różnymi typami,
-które podajemy w nawiasie ostrym, zaraz po `std::vector`:
+które podajemy w **nawiasie ostrym**, zaraz po `std::vector`:
 
 ```cpp
 std::vector< int >
@@ -95,7 +126,7 @@ std::vector< /*cokolwiek*/ >
 ```
 
 Ale co to oznacza "*vector danego typu*"? Należy rozumieć przez to tyle,
-że `std::vector<T>` przechowuje elementy typu `T`.
+że `std::vector< T >` przechowuje elementy typu `T`.
 
 Zapis:
 ```cpp
@@ -113,4 +144,222 @@ playerNames(3)
 
 sprawi, że przy utworzeniu tej tablicy, zostaną utworzone
 automatycznie wewnątrz niej `3` zmienne typu `std::string`.
+
+### Dostęp do elementów
+
+Możemy w każdej chwili dostać się do elementu tablicy, korzystając
+z jego indeksu:
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+	std::vector< std::string > playerNames(3);
+
+	// Ustawianie nazw graczy:
+	playerNames[0] = "HappyBanana";
+	playerNames[1] = "AngryCrab";
+	playerNames[2] = "SadWolf";
+
+	// Wyświetlenie nazw graczy:
+	std::cout << "Gracz 0 ma nick: " << playerNames[0];
+}
+```
+
+:::important Elementy tablicy
+Aby uzyskać dostęp do elementu tablicy, podajemy jego indeks
+**w nawiasie kwadratowym**, zaraz po nazwie tablicy:
+
+```cpp
+tablica[ indeks ]
+```
+:::
+
+### Dodawanie elementów
+
+Na ten moment nasza tablica ma 3 elementy, o indeksach `0`, `1` i `2`:
+
+| Indeks | Nazwa |
+| ------ | ---- |
+| 0      | HappyBanana |
+| 1      | AngryCrab   |
+| 2      | SadWolf     |
+
+Aby dodać kolejny element do tablicy, musimy skorzystać z `push_back`.
+Używamy tego w ten sposób:
+
+```cpp title="🔹 Dodawanie elementu do tablicy"
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+	std::vector< std::string > playerNames(3);
+
+	// Ustawianie nazw graczy:
+	playerNames[0] = "HappyBanana";
+	playerNames[1] = "AngryCrab";
+	playerNames[2] = "SadWolf";
+
+	// Dodawanie nowego gracza:
+	// highlight-next-line
+	playerNames.push_back("WickedWitch");
+
+	// Wyświetlenie nazw graczy:
+	std::cout << "Gracz 3 ma nick: " << playerNames[3];
+}
+```
+
+Od momentu wywołania `push_back`, tablica `playerNames` ma już cztery elementy.
+Powyższy zapis używa tzw. *wywołania metody `push_back()`*. O wywołaniach
+i metodach powiemy sobie w przyszłości więcej. Na ten moment zapamiętaj tylko ten
+zapis:
+
+- po nazwie tablicy dajemy kropkę
+- piszemy nazwę *metody*, czyli w tym wypadku `push_back`
+- następnie w nawiasie okrągłym podajemy co chcemy dodać (np. wartość lub zmienną)
+
+:::important Zakres indeksów
+Zwróć uwagę, że tablica o ilości elementów `N`, zawsze ma indeksy
+od `0` do `N-1` włącznie. Czteroelementowa tablica `playerNames`
+ma indeksy od `0` do `3` włącznie.
+:::
+
+Próba zapisania do tablicy o indeksie `4` spowoduje błąd:
+
+```cpp title="🔴 Błąd wykonania"
+playerNames[4] = "NewPlayer"; // BŁĄD!
+```
+
+Powodem jest to, że element o indeksie `4` nie istnieje.
+Taki kod zostanie poprawnie skompilowany (być może dostaniemy ostrzeżenie),
+ale uruchomienie tego programu spowoduje błąd.
+
+### Odczytywanie rozmiaru
+
+Aktualny rozmiar tablicy możemy odczytać używając metody `size()`:
+
+```cpp
+// Ustawianie nazw graczy:
+playerNames[0] = "HappyBanana";
+playerNames[1] = "AngryCrab";
+playerNames[2] = "SadWolf";
+
+// highlight-next-line
+std::cout << "Tablica posiada " << playerNames.size() << " elementów\n";
+
+// Dodawanie nowego gracza:
+playerNames.push_back("WickedWitch");
+std::cout << "Dodano nowego gracza.\n";
+// highlight-next-line
+std::cout << "Tablica posiada " << playerNames.size() << " elementów\n";
+```
+
+Tak jak wyżej z metodą `push_back`, piszemy nazwę po kropce i dajemy
+nawiasy okrągłe, w tym wypadku puste.
+
+### Usuwanie elementów
+
+Na tym etapie nauki będziesz musiał/a mi trochę zaufać.
+Nie będę zagłębiał się w szczegóły, bo to na teraz zbyt skomplikowane.
+Aby usunąć `n`-ty element z vectora (np. z `playerNames`), używamy zapisu:
+
+```cpp title="🔹 Usuwanie z tablicy"
+playerNames.erase( playerNames.begin() + n );
+```
+
+W bardzo dużym uproszczeniu `erase` usuwa konkretny element, ale sam indeks nie wystarczy.
+Musimy użyć `begin()` i dodać do niego ten indeks.
+
+:::tip Zapamiętaj
+Możesz zapamiętać to rozróżniając te dwa pojęcia:
+
+- **indeks** (liczba nieujemna)
+- **pozycja**
+
+Są to dwie różne, ale tematycznie zbliżone rzeczy. Do `erase` podajemy *pozycję*, którą uzyskujemy właśnie
+dodając *indeks* do *pozycji poczatkowej* (`playerNames.begin()`).
+:::
+
+:::danger Uwaga
+Zanim usuniesz dany element tablicy, upewnij się, że istnieje (czyli jest z zakresu `[0, N)`).
+
+```cpp title="🔹 Usuwanie z tablicy (zabezpieczone)"
+int index;
+std::cin >> index;
+
+if (index >= 0 && index < playerNames.size())
+{
+	playerNames.erase( playerNames.begin() + index );
+}
+else
+	std::cout << "Indeks " << index << " nie jest prawidłowy!";
+```
+:::
+
+### Wyświetlanie elementów
+
+Jeśli chcemy wyświetlić **wszystkie** elementy tablicy, bedziemy musieli użyć **pętli**.
+O pętlach powiemy sobie w przyszłości więcej. Pętla pozwala wykonać ten sam fragment
+kodu wielokrotnie.
+
+```cpp title="🔹 Wyświetlanie elementów"
+for (std::string name : playerNames)
+{
+	std::cout << "Nick gracza: " << name << '\n';
+}
+```
+
+Żeby to zrozumieć, pokażę Ci jak to "przeczytać":
+
+```cpp
+for (std::string name : playerNames)
+```
+
+> **Dla** <small>(`for`)</small> **każdej nazwy** <small>(`name`)</small> **która jest typu** `std::string`
+> **z tablicy** `playerNames` **wykonuj następujący blok kodu...**
+
+Wewnątrz tego bloku kodu jest tylko jedna instrukcja:
+
+```cpp
+std::cout << "Nick gracza: " << name << '\n';
+```
+
+Pętla będzie zapisywać kolejno nicki graczów do zmiennej `name`,
+i wykonywać dla każdego z nich instrukcję wyświetlenia.
+
+:::tip Dedukcja typu
+**Jeśli można łatwo się domyśleć** jakiego typu elementy przechowuje tablica,
+możesz skrócić zapis:
+
+```cpp
+for (std::string name : playerNames)
+```
+
+do
+
+```cpp
+for (auto name : playerNames)
+```
+
+wtedy `auto` spowoduje, że typ elementu zostanie wykryty automatycznie.
+:::
+
+## Potencjalne błędy
+
+### Brak nagłówka `<vector>`
+
+<ImproveSection />
+
+### Mieszanie typów
+
+<ImproveSection />
+
+### Wyjście poza rozmiar tablicy
+
+<ImproveSection />
 
