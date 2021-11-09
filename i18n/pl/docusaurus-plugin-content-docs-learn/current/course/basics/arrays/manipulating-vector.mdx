@@ -8,10 +8,16 @@ hide_title:			true
 
 <!-- Components -->
 import SwitchView		from "@site-comps/SwitchView";
+import Image			from "@site-comps/Image";
 import Columns			from "@site-comps/Columns";
 
 <!-- Presets -->
 import NotFinished		from "@site/i18n/pl/presets/NotFinished.mdx";
+import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
+
+<!-- Codes -->
+import AlgoIntroExampleCpp20		from "./_codes/algo-intro-example-cpp20.mdx";
+import AlgoIntroExampleUntilCpp20	from "./_codes/algo-intro-example-until-cpp20.mdx";
 
 <NotFinished />
 
@@ -26,52 +32,60 @@ Dla osób, które z jakiegoś powodu nie mogą zainstalować kompilatora, który
 najnowszy standard, zamieścimy też przykłady działające na starszej wersji.
 :::
 
-Aby móc skorzystać z algorytmów, musimy dodać następujące nagłówki do kodu:
+Aby móc skorzystać z algorytmów, musimy dodać następujący nagłówek do kodu:
+
+```cpp
+#include <algorithm>
+```
+
+## Motywacja
+
+Pokażemy Ci, jak:
+
+1. [posortować elementy wektora (`std::ranges::sort()`)](#sortowanie)
+2. [odwrócić kolejność (`std::ranges::reverse()`)](#odwracanie-kolejności)
+3. [policzyć ile razy występuje dany element (`std::ranges::count()`)](#zliczanie-wystąpień)
+4. [wyszukać najmniejszą wartość (`std::ranges::min()`)](#najmniejsza-wartość)
+5. [wyszukać najmniejszą wartość (`std::ranges::max()`)](#największa-wartość)
+
+## Algorytmy
+
+Na początek stwórzmy sobie prosty program, na którym bedziemy
+testować działanie algorytmów. Przygotujmy tablicę liczb:
+
+```cpp title="🔹 Tablica liczb"
+std::vector<int> numbers = { 22, 13, 27, 4 };
+```
+
+W każdym wypadku, użycie algorytmu sprowadzi się do wpisania:
 
 <SwitchView content={
 		{
-			"cpp20": <div>
-
-```cpp
-#include <ranges>
-#include <algorithm>
-```
-
-			</div>,
-			"until-cpp20": <div>
-
-```cpp
-#include <algorithm>
-```
-
-			</div>
+			"cpp20":		<AlgoIntroExampleCpp20 />,		
+			"until-cpp20":	<AlgoIntroExampleUntilCpp20 />,		
 		}
 	}/>
 
-## Sortowanie
+przy czym za `<wektor>` wstawimy przygotowany wyżej `numbers`.
+Będziemy po każdej operacji wyświetlać zawartość wektora `numbers`
+za pomocą [poznanej wcześniej](../intro-to-vector/#wyświetlanie-elementów) pętli `for`:
 
-Przygotujmy tablicę zawierającą nieposortowane liczby:
-
-```cpp
-#include <iostream>
-#include <vector>
-
-int main() {
-	std::vector<int> numbers = { 5, 3, 1, 4, 2 };
-}
+```cpp title="🔹 Wyświetlanie elementów tablicy"
+for (int n : numbers)
+	std::cout << n << ' ';
 ```
 
+### Sortowanie
 
-Aby je posortowac, należy użyć `std::ranges::sort` w ten sposób:
+Używamy [`std::ranges::sort`](/docs/std/algo/ranges/sort/) w ten sposób:
 
 ```cpp
 #include <iostream>
 #include <vector>
-#include <ranges>
 #include <algorithm>
 
 int main() {
-	std::vector<int> numbers = { 5, 3, 1, 4, 2 };
+	std::vector<int> numbers = { 22, 13, 27, 4 };
 
 	std::ranges::sort(numbers);
 }
@@ -85,30 +99,69 @@ Wyświetlmy je:
 ```cpp
 #include <iostream>
 #include <vector>
-#include <ranges>
 #include <algorithm>
 
 int main() {
-	std::vector<int> numbers = { 5, 3, 1, 4, 2 };
+	std::vector<int> numbers = { 22, 13, 27, 4 };
 
 	for (int n : numbers)
-		std::cout << n << " ";
+		std::cout << n << ' ';
 
 	std::ranges::sort(numbers);
 
 	std::cout << '\n';
 	for (int n : numbers)
-		std::cout << n << " ";
+		std::cout << n << ' ';
 }
 ```
 
 </div>
 <div>
 
-```plaintext title="Result"
-5 3 1 4 2
-1 2 3 4 5
+```plaintext title="Wynik"
+22 13 27 4
+4 13 22 27
 ```
 
 </div>
 </Columns>
+
+### Odwracanie kolejności
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-reverse.gif"
+		alt="Działanie algorytmu 'reverse'"
+	/>
+<br/>
+
+<ImproveSection />
+
+### Zliczanie wystąpień
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-min.gif"
+		alt="Działanie algorytmu 'min'"
+	/>
+<br/>
+
+<ImproveSection />
+
+### Najmniejsza wartość
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-min.gif"
+		alt="Działanie algorytmu 'min'"
+	/>
+<br/>
+
+<ImproveSection />
+
+### Największa wartość
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-min.gif"
+		alt="Działanie algorytmu 'min'"
+	/>
+<br/>
+
+<ImproveSection />
