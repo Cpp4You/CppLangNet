@@ -16,7 +16,7 @@ import TabItem					from "@theme/TabItem";
 
 <NotFinished />
 
-# Unordered_multimap class reference
+# Unordered Multimap class reference
 
 ## Overview
 
@@ -28,7 +28,7 @@ template<
     class Key,
     class T,
     /* ... */
-> class unordered_map;
+> class unordered_multimap;
 ```
 
 </TabItem>
@@ -41,7 +41,7 @@ template<
     class Hash = std::hash<Key>,
     class KeyEqual = std::equal_to<Key>,
     class Allocator = std::allocator< std::pair<const Key, T> >
-> class unordered_map;
+> class unordered_multimap;
 ```
 
 </TabItem>
@@ -59,7 +59,7 @@ The examples in this section are very simple ones. Navigate to [examples section
 ### Technical details
 
 <details>
-<summary>Technical definition of a unordered_map</summary>
+<summary>Technical definition of a unordered_multimap</summary>
 <div>
 Unordered multimap is an unordered associative container that supports equivalent keys (an unordered_multimap may contain multiple copies of each key value) and that associates values of another type with the keys. The unordered_multimap class supports forward iterators. Search, insertion, and removal have average constant-time complexity.
 
@@ -259,7 +259,7 @@ can be used to iterate through a single bucket but not across buckets"/>
 				operator==<br/>
 				operator!=<br/>
 			</>}
-			desc="Compares the values in the unordered_map">
+			desc="Compares the values in the unordered_multimap">
 	</Symbol>
 	<Symbol pub autoLink linkName="std::swap" name="std::swap">
 		Specializes the <code>std::swap</code> algorithm
@@ -279,7 +279,7 @@ can be used to iterate through a single bucket but not across buckets"/>
 
 ### Basic manipulation
 
-#### Creating unordered_map, inserting pair and printing it out
+#### Creating unordered_multimap, inserting pair and printing it out
 
 <Columns spacing="20px" columns={['8fr', '4fr']}>
 <div>
@@ -290,7 +290,8 @@ can be used to iterate through a single bucket but not across buckets"/>
 #include <string>
 
 int main() {
-  std::unordered_multimap<std::string, std::string> player_equipment{ {"player2", "Sword"},    {"player2", "Health potion"} };
+  std::unordered_multimap<std::string, std::string> player_equipment
+  	{ {"player2", "Sword"}, {"player2", "Health potion"} };
 
   for (auto& [key, value] : player_equipment)    
     std::cout << key << " has got " << value << std::endl;
