@@ -75,23 +75,14 @@ for (int n : numbers)
 	std::cout << n << ' ';
 ```
 
-### Sortowanie
+### Prezentacja działania
 
-Używamy [`std::ranges::sort`](/docs/std/algo/ranges/sort/) w ten sposób:
+Na początek zobaczmy przykładowy kod, z wykorzystaniem wszystkich tych algorytmów,
+a później je omówimy.
 
-```cpp
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-int main() {
-	std::vector<int> numbers = { 22, 13, 27, 4 };
-
-	std::ranges::sort(numbers);
-}
-```
-
-Wyświetlmy je:
+<SwitchView content={
+		{
+			"cpp20": <div>
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -104,12 +95,26 @@ Wyświetlmy je:
 int main() {
 	std::vector<int> numbers = { 22, 13, 27, 4 };
 
+	size_t min = std::ranges::min(numbers);
+	size_t max = std::ranges::max(numbers);
+
+	std::cout << "Najmniejsza: " << min << '\n';
+	std::cout << "Największa: " << max << '\n';
+
+	// Na potrzebę prezentacji funkcji "count"
+	// dodaję jedną liczbę 13 na koniec:
+	numbers.push_back(13);
+	
+	size_t count = std::ranges::count(numbers, 13);
+	std::cout << "Wystąpień 13: " << count << '\n';
+
+	std::cout << "Przed posortowaniem:\n";
 	for (int n : numbers)
 		std::cout << n << ' ';
 
 	std::ranges::sort(numbers);
 
-	std::cout << '\n';
+	std::cout << "\nPo posortowaniu:\n";
 	for (int n : numbers)
 		std::cout << n << ' ';
 }
@@ -119,12 +124,112 @@ int main() {
 <div>
 
 ```plaintext title="Wynik"
-22 13 27 4
-4 13 22 27
+Najmniejsza: 4
+Największa: 27
+Wystąpień 13: 2
+Przed posortowaniem:
+22 13 27 4 13 
+Po posortowaniu:
+4 13 13 22 27 
 ```
 
 </div>
 </Columns>
+
+			</div>,
+			"until-cpp20": <div>
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+	std::vector<int> numbers = { 22, 13, 27, 4 };
+
+	size_t min = *std::min_element(numbers.begin(), numbers.end()); // 🟡
+	size_t max = *std::max_element(numbers.begin(), numbers.end()); // 🟡
+
+	std::cout << "Najmniejsza: " << min << '\n';
+	std::cout << "Największa: " << max << '\n';
+
+	// Na potrzebę prezentacji funkcji "count"
+	// dodaję jedną liczbę 13 na koniec:
+	numbers.push_back(13);
+	
+	size_t count = std::count(numbers.begin(), numbers.end(), 13);
+	std::cout << "Wystąpień 13: " << count << '\n';
+
+	std::cout << "Przed posortowaniem:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::sort(numbers.begin(), numbers.end());
+
+	std::cout << "\nPo posortowaniu:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+}
+```
+
+:::caution Uwaga
+Zapis, który oznaczyłem znakiem 🟡, jest bardziej skomplikowany i niestety
+w wersjach przed C++20 nie innej, prostszej możliwości. Jeśli korzystasz
+ze starszej wersji C++, rozważ [zainstalowanie kompilatora](/tools/compilers/), który
+wspiera najnowszy standard języka.
+:::
+
+</div>
+<div>
+
+```plaintext title="Wynik"
+Najmniejsza: 4
+Największa: 27
+Wystąpień 13: 2
+Przed posortowaniem:
+22 13 27 4 13 
+Po posortowaniu:
+4 13 13 22 27
+```
+
+</div>
+</Columns>
+
+			</div>,
+		}
+	}/>
+
+
+## Omówienie
+
+### Sortowanie
+
+<ImproveSection />
+
+Używamy funkcji sortującej w ten sposób:
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::ranges::sort(numbers);
+```
+
+			</div>,
+			"until-cpp20": <div>
+
+```cpp
+std::sort(numbers.begin(), numbers.end());
+```
+
+			</div>,
+		}
+	}/>
 
 ### Odwracanie kolejności
 
@@ -134,17 +239,88 @@ int main() {
 	/>
 <br/>
 
-<ImproveSection />
+Aby odwrócić kolejność elementów wektora, używamy [`std::ranges::reverse`](/docs/std/algo/ranges/reverse/)
+&nbsp;<small>(lub [`std::reverse`](/docs/std/algo/reverse/) przed C++20)</small>.
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::ranges::reverse(numbers);
+```
+
+			</div>,
+			"until-cpp20": <div>
+
+```cpp
+std::reverse(numbers.begin(), numbers.end());
+```
+
+			</div>,
+		}
+	}/>
 
 ### Zliczanie wystąpień
 
+:::note Uwaga
+Na potrzeby tego algorytmu, dodamy sobie jeszcze jedną wartość `13` na koniec tablicy.
+:::
+
 <Image center border maxheight="250px"
-		src="/img/tutorials/course/basic/arrays/algo-min.gif"
-		alt="Działanie algorytmu 'min'"
+		src="/img/tutorials/course/basic/arrays/algo-count.gif"
+		alt="Działanie algorytmu 'count'"
 	/>
 <br/>
 
-<ImproveSection />
+[`count`](/docs/std/algo/ranges/count) służy do zliczania wystąpień elementów, w tym wypadku, wewnątrz wektora.
+Korzystamy z tego w ten sposób:
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::cout << std::ranges::count(numbers, 13);
+```
+			
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+std::cout << std::count(numbers.begin(), numbers.end(), 13);
+```
+
+			</div>		
+		}
+	}/>
+
+
+
+Możemy również zapisać ten wynik do zmiennej. Powinniśmy do tego użyć specjalnego typu `size_t`, który
+w uproszczeniu jest **nieujemną liczbą** (ponieważ ilość wystąpień nie może być ujemna):
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+size_t count = std::ranges::count(numbers, 13);
+std::cout << "Ilość wystąpień 13: " << count;
+```
+
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+size_t count = std::count(numbers.begin(), numbers.end(), 13);
+std::cout << "Ilość wystąpień 13: " << count;
+```
+
+			</div>		
+		}
+	}/>
+
 
 ### Najmniejsza wartość
 
@@ -154,14 +330,52 @@ int main() {
 	/>
 <br/>
 
-<ImproveSection />
+Aby znaleźć najmniejszą wartość wewnątrz wektora, używamy [`std::ranges::min`](/docs/std/algo/ranges/min):
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::cout << std::ranges::min(numbers);
+```
+
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+std::cout << std::min(numbers.begin(), numbers.end());
+```
+
+			</div>		
+		}
+	}/>
 
 ### Największa wartość
 
 <Image center border maxheight="250px"
-		src="/img/tutorials/course/basic/arrays/algo-min.gif"
-		alt="Działanie algorytmu 'min'"
+		src="/img/tutorials/course/basic/arrays/algo-max.gif"
+		alt="Działanie algorytmu 'max'"
 	/>
 <br/>
 
-<ImproveSection />
+Aby znaleźć największą wartość wewnątrz wektora, używamy [`std::ranges::max`](/docs/std/algo/ranges/max) tak:
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::cout << std::ranges::max(numbers);
+```
+
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+std::cout << std::max(numbers.begin(), numbers.end());
+```
+
+			</div>		
+		}
+	}/>
