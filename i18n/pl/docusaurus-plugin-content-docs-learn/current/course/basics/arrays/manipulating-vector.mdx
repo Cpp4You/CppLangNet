@@ -298,7 +298,7 @@ std::cout << std::count(numbers.begin(), numbers.end(), 13);
 
 
 Możemy również zapisać ten wynik do zmiennej. Powinniśmy do tego użyć specjalnego typu `size_t`, który
-w uproszczeniu jest **nieujemną liczbą** (ponieważ ilość wystąpień nie może być ujemna):
+w uproszczeniu jest **nieujemną liczbą** (ponieważ liczba wystąpień nie może być ujemna):
 
 <SwitchView content={
 		{
@@ -306,7 +306,7 @@ w uproszczeniu jest **nieujemną liczbą** (ponieważ ilość wystąpień nie mo
 
 ```cpp
 size_t count = std::ranges::count(numbers, 13);
-std::cout << "Ilość wystąpień 13: " << count;
+std::cout << "Liczba wystąpień 13: " << count;
 ```
 
 			</div>,
@@ -314,7 +314,7 @@ std::cout << "Ilość wystąpień 13: " << count;
 
 ```cpp
 size_t count = std::count(numbers.begin(), numbers.end(), 13);
-std::cout << "Ilość wystąpień 13: " << count;
+std::cout << "Liczba wystąpień 13: " << count;
 ```
 
 			</div>		
