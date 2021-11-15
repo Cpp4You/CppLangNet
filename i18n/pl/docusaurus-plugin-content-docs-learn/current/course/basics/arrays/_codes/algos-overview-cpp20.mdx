@@ -1,0 +1,68 @@
+import Columns			from "@site-comps/Columns";
+import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
+
+<Columns columns={['9fr', '3fr']}>
+<CustomCodeBlock maxLines={25} lineNumbers>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+	std::vector<int> numbers = { 22, 13, 27, 4 };
+
+	size_t min = std::ranges::min(numbers);
+	size_t max = std::ranges::max(numbers);
+
+	std::cout << "Najmniejsza: " << min << '\n';
+	std::cout << "Największa: " << max << '\n';
+
+	// Na potrzebę prezentacji funkcji "count"
+	// dodaję jedną liczbę 13 na koniec:
+	numbers.push_back(13);
+	
+	size_t count = std::ranges::count(numbers, 13);
+	std::cout << "Wystąpień 13: " << count << '\n';
+
+	std::cout << "Przed odwróceniem:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::ranges::reverse(numbers);
+
+	std::cout << "\nPo odwróceniu:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::cout << "\nPrzed posortowaniem:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::ranges::sort(numbers);
+
+	std::cout << "\nPo posortowaniu:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+}
+```
+
+</CustomCodeBlock>
+<div>
+
+```plaintext title="Wynik"
+Najmniejsza: 4
+Największa: 27
+Wystąpień 13: 2
+Przed odwróceniem:
+22 13 27 4 13 
+Po odwróceniu:
+13 4 27 13 22 
+Przed posortowaniem:
+13 4 27 13 22 
+Po posortowaniu:
+4 13 13 22 27
+```
+
+</div>
+</Columns>

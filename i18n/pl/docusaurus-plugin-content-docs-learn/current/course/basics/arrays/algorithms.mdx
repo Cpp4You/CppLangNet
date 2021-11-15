@@ -19,6 +19,9 @@ import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
 import AlgoIntroExampleCpp20		from "./_codes/algo-intro-example-cpp20.mdx";
 import AlgoIntroExampleUntilCpp20	from "./_codes/algo-intro-example-until-cpp20.mdx";
 
+import AlgosOverviewCpp20			from "./_codes/algos-overview-cpp20.mdx";
+import AlgosOverviewUntilCpp20		from "./_codes/algos-overview-until-cpp20.mdx";
+
 <NotFinished />
 
 # Używanie algorytmów
@@ -82,182 +85,70 @@ a później je omówimy.
 
 <SwitchView content={
 		{
-			"cpp20": <div>
-
-<Columns columns={['8fr', '4fr']}>
-<div>
-
-```cpp
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-int main() {
-	std::vector<int> numbers = { 22, 13, 27, 4 };
-
-	size_t min = std::ranges::min(numbers);
-	size_t max = std::ranges::max(numbers);
-
-	std::cout << "Najmniejsza: " << min << '\n';
-	std::cout << "Największa: " << max << '\n';
-
-	// Na potrzebę prezentacji funkcji "count"
-	// dodaję jedną liczbę 13 na koniec:
-	numbers.push_back(13);
-	
-	size_t count = std::ranges::count(numbers, 13);
-	std::cout << "Wystąpień 13: " << count << '\n';
-
-	std::cout << "Przed posortowaniem:\n";
-	for (int n : numbers)
-		std::cout << n << ' ';
-
-	std::ranges::sort(numbers);
-
-	std::cout << "\nPo posortowaniu:\n";
-	for (int n : numbers)
-		std::cout << n << ' ';
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Wynik"
-Najmniejsza: 4
-Największa: 27
-Wystąpień 13: 2
-Przed posortowaniem:
-22 13 27 4 13 
-Po posortowaniu:
-4 13 13 22 27 
-```
-
-</div>
-</Columns>
-
-			</div>,
-			"until-cpp20": <div>
-
-<Columns columns={['8fr', '4fr']}>
-<div>
-
-
-```cpp
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-int main() {
-	std::vector<int> numbers = { 22, 13, 27, 4 };
-
-	size_t min = *std::min_element(numbers.begin(), numbers.end()); // 🟡
-	size_t max = *std::max_element(numbers.begin(), numbers.end()); // 🟡
-
-	std::cout << "Najmniejsza: " << min << '\n';
-	std::cout << "Największa: " << max << '\n';
-
-	// Na potrzebę prezentacji funkcji "count"
-	// dodaję jedną liczbę 13 na koniec:
-	numbers.push_back(13);
-	
-	size_t count = std::count(numbers.begin(), numbers.end(), 13);
-	std::cout << "Wystąpień 13: " << count << '\n';
-
-	std::cout << "Przed posortowaniem:\n";
-	for (int n : numbers)
-		std::cout << n << ' ';
-
-	std::sort(numbers.begin(), numbers.end());
-
-	std::cout << "\nPo posortowaniu:\n";
-	for (int n : numbers)
-		std::cout << n << ' ';
-}
-```
-
-:::caution Uwaga
-Zapis, który oznaczyłem znakiem 🟡, jest bardziej skomplikowany i niestety
-w wersjach przed C++20 nie innej, prostszej możliwości. Jeśli korzystasz
-ze starszej wersji C++, rozważ [zainstalowanie kompilatora](/tools/compilers/), który
-wspiera najnowszy standard języka.
-:::
-
-</div>
-<div>
-
-```plaintext title="Wynik"
-Najmniejsza: 4
-Największa: 27
-Wystąpień 13: 2
-Przed posortowaniem:
-22 13 27 4 13 
-Po posortowaniu:
-4 13 13 22 27
-```
-
-</div>
-</Columns>
-
-			</div>,
+			"cpp20":		<AlgosOverviewCpp20 />,
+			"until-cpp20":	<AlgosOverviewUntilCpp20 />,
 		}
 	}/>
 
 
 ## Omówienie
 
-### Sortowanie
 
-<ImproveSection />
-
-Używamy funkcji sortującej w ten sposób:
-
-<SwitchView content={
-		{
-			"cpp20": <div>
-
-```cpp
-std::ranges::sort(numbers);
-```
-
-			</div>,
-			"until-cpp20": <div>
-
-```cpp
-std::sort(numbers.begin(), numbers.end());
-```
-
-			</div>,
-		}
-	}/>
-
-### Odwracanie kolejności
+### Najmniejsza wartość
 
 <Image center border maxheight="250px"
-		src="/img/tutorials/course/basic/arrays/algo-reverse.gif"
-		alt="Działanie algorytmu 'reverse'"
+		src="/img/tutorials/course/basic/arrays/algo-min.gif"
+		alt="Działanie algorytmu 'min'"
 	/>
 <br/>
 
-Aby odwrócić kolejność elementów wektora, używamy [`std::ranges::reverse`](/docs/std/algo/ranges/reverse/)
-&nbsp;<small>(lub [`std::reverse`](/docs/std/algo/reverse/) przed C++20)</small>.
+Aby znaleźć najmniejszą wartość wewnątrz wektora, używamy [`std::ranges::min`](/docs/std/algo/ranges/min):
 
 <SwitchView content={
 		{
 			"cpp20": <div>
 
 ```cpp
-std::ranges::reverse(numbers);
+std::cout << std::ranges::min(numbers);
 ```
 
 			</div>,
-			"until-cpp20": <div>
+			"until-cpp20":	<div>
 
 ```cpp
-std::reverse(numbers.begin(), numbers.end());
+std::cout << std::min(numbers.begin(), numbers.end());
+```
+
+			</div>		
+		}
+	}/>
+
+### Największa wartość
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-max.gif"
+		alt="Działanie algorytmu 'max'"
+	/>
+<br/>
+
+Aby znaleźć największą wartość wewnątrz wektora, używamy [`std::ranges::max`](/docs/std/algo/ranges/max) tak:
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::cout << std::ranges::max(numbers);
 ```
 
 			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+std::cout << std::max(numbers.begin(), numbers.end());
+```
+
+			</div>		
 		}
 	}/>
 
@@ -321,61 +212,61 @@ std::cout << "Liczba wystąpień 13: " << count;
 		}
 	}/>
 
-
-### Najmniejsza wartość
+### Odwracanie kolejności
 
 <Image center border maxheight="250px"
-		src="/img/tutorials/course/basic/arrays/algo-min.gif"
-		alt="Działanie algorytmu 'min'"
+		src="/img/tutorials/course/basic/arrays/algo-reverse.gif"
+		alt="Działanie algorytmu 'reverse'"
 	/>
 <br/>
 
-Aby znaleźć najmniejszą wartość wewnątrz wektora, używamy [`std::ranges::min`](/docs/std/algo/ranges/min):
+Aby odwrócić kolejność elementów wektora, używamy [`std::ranges::reverse`](/docs/std/algo/ranges/reverse/)
+&nbsp;<small>(lub [`std::reverse`](/docs/std/algo/reverse/) przed C++20)</small>.
 
 <SwitchView content={
 		{
 			"cpp20": <div>
 
 ```cpp
-std::cout << std::ranges::min(numbers);
+std::ranges::reverse(numbers);
 ```
 
 			</div>,
-			"until-cpp20":	<div>
+			"until-cpp20": <div>
 
 ```cpp
-std::cout << std::min(numbers.begin(), numbers.end());
+std::reverse(numbers.begin(), numbers.end());
 ```
 
-			</div>		
+			</div>,
 		}
 	}/>
 
-### Największa wartość
+### Sortowanie
 
 <Image center border maxheight="250px"
-		src="/img/tutorials/course/basic/arrays/algo-max.gif"
-		alt="Działanie algorytmu 'max'"
+		src="/img/tutorials/course/basic/arrays/algo-sort.gif"
+		alt="Działanie algorytmu 'sort'"
 	/>
 <br/>
 
-Aby znaleźć największą wartość wewnątrz wektora, używamy [`std::ranges::max`](/docs/std/algo/ranges/max) tak:
+Używamy funkcji sortującej w ten sposób:
 
 <SwitchView content={
 		{
 			"cpp20": <div>
 
 ```cpp
-std::cout << std::ranges::max(numbers);
+std::ranges::sort(numbers);
 ```
 
 			</div>,
-			"until-cpp20":	<div>
+			"until-cpp20": <div>
 
 ```cpp
-std::cout << std::max(numbers.begin(), numbers.end());
+std::sort(numbers.begin(), numbers.end());
 ```
 
-			</div>		
+			</div>,
 		}
 	}/>
