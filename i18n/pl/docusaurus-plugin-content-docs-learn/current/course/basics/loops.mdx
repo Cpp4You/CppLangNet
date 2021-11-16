@@ -7,8 +7,148 @@ tags:				[pętla, for, while, range-based-for]
 hide_title:			true
 ---
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+<!-- Components -->
+import Image			from "@site-comps/Image";
+import Columns			from "@site-comps/Columns";
+
+<!-- Presets -->
+import ImproveSection	from '@site/i18n/pl/presets/ImproveSection.mdx';
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
 
 <NotFinished/>
 
 # Pętle
+
+W tej lekcji każemy programowi wykonywać wielokrotnie dany kod, czyli skorzystamy z pętli.
+
+## Motywacja
+
+Pętle mają wiele zastosowań, oto kilka z nich:
+
+- 👾 dodanie np. 10 nowych przeciwników do planszy w grze
+- 🖥 wyświetlenie każdego elementu z tablicy
+- ➗ wielokrotne wykonanie obliczeń (np. liczenie silni, ciąg fibonacciego)
+
+W lekcji o wektorach pokazaliśmy już jedną pętlę, która wyświetlała
+wszystkie elementy tablicy:
+
+```cpp title="🔹 Wyświetl każdą liczbę z tablicy"
+for (int n : numbers)
+{
+	std::cout << n << ' ';
+}
+```
+
+Jest to najprostsza wersja pętli w C++. W następnych sekcjach poznasz
+więcej ich rodzajów.
+
+## Rodzaje pętli
+
+W C++ mamy następujące pętle:
+
+- **`for`**
+	- wersja dla zasięgów (*range-based for*)
+	- wersja podstawowa
+- **`while`**
+- **`do ... while`**
+
+Najczęściej używana jest `for` oraz `while` i o nich powiemy w tej lekcji.
+Jeśli chcesz poczytać o pętli `do ... while` to zapoznaj się z artykułem:
+[**Pętla `do ... while`**](articles/do-while).
+
+## Wytłumaczenie
+
+### Pętla `for` (*range-based*)
+
+Ten rodzaj pętli jest najczęściej stosowany do pracy z tablicami, choć może
+być użyty też w inny sposób.
+
+<Image center border maxheight="300px"
+		src="/img/tutorials/course/basic/loops/range-based-for-pl.png"
+		alt="Schemat pętli range-based 'for'"
+		desc="Schemat"
+	/>
+<br/>
+
+W przykładzie pokazanym w sekcji [**Motywacja**](#motywacja) znajduje się właśnie
+pętla **range-based for**, czyli wersja pętli `for` dla tzw. zasięgów.
+Tablica w rozumieniu C++ również jest takim zasięgiem, więc możemy śmiało z niej skorzystać.
+
+Najprostszy przykład:
+
+```cpp title="🔹 Wyświetl każdą liczbę z tablicy"
+std::vector<int> numbers = { 13, 42, -1, 0, -3, -5 };
+
+for (int n : numbers)
+{
+	std::cout << n << ' ';
+}
+```
+
+Ta pętla kolejno przechodzi przez każdy element tablicy `numbers` i zapisuje go do
+zmiennej `n`. Następnie wykonywany jest blok kodu zawarty w nawiasie klamrowym.
+W tym wypadku jest to wyświetlenie liczby.
+
+:::caution Dwukropek
+Zwróć uwagę, że po nazwie zmiennej `n` znajduje się **dwukropek (`:`), nie średnik (`;`)**!
+Nie używamy w tym zapisie żadnego znaku równości (`=`), bo wartość każdego elementu po
+kolei będzie automatycznie przypisywana do `n`.
+:::
+
+<ImproveSection />
+
+### Pętla `while`
+
+<Image center border maxheight="300px"
+		src="/img/tutorials/course/basic/loops/while-pl.png"
+		alt="Schemat pętli 'while'"
+		desc="Schemat"
+	/>
+<br/>
+
+Celowo przechodzimy teraz do pętli `while`, zamiast do zwykłego `for`, ponieważ ułatwi to wyjaśnienia.
+Pętla `while`, jest prosta. Wykonuje ona ciało pętli dopóki warunek jest spełniony:
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="🔹 Wyświetl liczby od 0 do 3"
+int number = 0;
+while (number <= 3)
+{
+	std::cout << number << ' ';
+	number++;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Wynik"
+0 1 2 3
+```
+
+</div>
+</Columns>
+
+Warunek zostanie sprawdzony **przed** każdym obiegiem pętli i tak długo jak jest on spełniony,
+czyli w tym wypadku tak długo jak `number` jest mniejsza lub równa `3`, to będzie wykonywane ciało.
+
+- wyświetlenie `number`
+- zwiększenie `number` o 1
+
+Po ostatnim obiegu pętli, wartość `number` będzie równa `4`, więc warunek nie będzie spełniony,
+przez co pętla się zakończy i komputer przejdzie do wykonywania następnych instrukcji.
+
+<ImproveSection />
+
+### Pętla `for`
+
+<Image center border maxheight="300px"
+		src="/img/tutorials/course/basic/loops/for-pl.png"
+		alt="Schemat pętli 'for'"
+		desc="Schemat"
+	/>
+<br/>
+
+<ImproveSection />
