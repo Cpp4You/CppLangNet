@@ -1,20 +1,27 @@
 ---
 sidebar_position:	1
 sidebar_label:		"1. First program"
-description:		"Lesson: first program in C++"
+description:		"Lesson: first program in C++ language"
+hide_title:			true
 ---
+
+
+import Columns		from '@site-comps/Columns';
+import GoogleSlides	from '@site-comps/GoogleSlides';
+import Image		from '@site-comps/Image';
+import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
+
+import Tabs			from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
 
 # First program
 
-import Columns from '@site-comps/Columns';
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
-
-<NotFinished/>
+This lesson will teach you how to write your first simple C++ program
+that can display text and perform simple calculations.
 
 ## Application code
 
 We finished the previous lesson with the following code:
-
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
@@ -55,7 +62,7 @@ int main()
 }
 ```
 
-As we mentioned in the <a href="../index">introduction</a>, the computer runs the program line by line.
+The computer runs the program line by line.
 When it starts the application, it executes the instructions in the `main` code block sequentially.
 
 A **code block** in C++, is a set of instructions contained inside curly braces:
@@ -115,40 +122,66 @@ std::cout << "Hello, World!1"; std::cout << "Hello, World!2"; std::cout << "Hell
 it is **acceptable** but very illegible.
 :::
 
+Presentation of the above-created program:
+
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vTsdQPMXKN90rcz4i515JK-rpUHjHTc5xIjGVtNJS8XSbloMNObHEBUSszvYi9I7tuKBNIdEKNFh1jk/embed"
+		aspectRatio={960 / 500}
+		delay={500}
+		centered
+	/>
+
+Note that the text typed to the console without any spaces,
+on a single line, and wrapped only towards the end of the available space.
+
+The program does exactly what it says in the code - no more, no less.
+We only "told" it that it should display the given characters... and it does.
+We have to "break" the line in the right place. This will cause the following characters
+to be displayed from the very beginning of the next line. To do this,
+put a special newline character inside the text: `\n`, like this:
+
+```cpp
+std::cout << "Hello, World!\n";
+```
+
+:::caution Backslash
+Note that **backslash** (`\n`) is used, not slash (`/n`)
+:::
+
+Program execution after adding newline characters:
+
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vRtT6R8wewyaM8WZRUP-KIREO_1HEdReq-BhpmUYKsVWRm5VbRRn7jZbhZyMIZMVzarQ1xkGrjS2eoM/embed"
+		aspectRatio={960 / 500}
+		delay={500}
+		centered
+	/>
+
+:::important Uwaga
+`\n` is a **single character**, although to get it we have to write two characters <u>in the code</u>.
+This is because inside the text in the code, we can't put an Enter/Return.
+Backslash (`\`) tells computer that the character that follows it has a special meaning.
+(its called an *escape sequence*, more on that later).
+:::
+
 ### Prefix of the standard namespace
 
 `std::` is the prefix of the **standard library** from which `cout` comes.
 
-:::important Omiting the `std::` prefix
-
-<details>
-<summary>Expand the trivia</summary>
-<div>
-
-The prefix `std::` can be omitted if we give the appropriate line of code beforehand:
+It can be omitted if we give the appropriate line of code beforehand:
 
 ```cpp
 #include <iostream>
 int main()
 {
+	// highlight-next-line
 	using namespace std;
 	cout << "Hello, World!";
 }
 ```
+
 However, many experienced programmers recommend writing `std::`.
-
-### For the curious (those more advanced)
-
-The standard library is very extensive, it has a lot of names used.
-Using `using namespace std;` unpacks all these names to the global namespace.
-which may be surprising if we want to use names like `left`,` right`, `precision`, etc.
-
-Using `using namespace std;` elsewhere than locally inside a function code block
-is considered **bad programming practice** and is strongly discouraged.
-</div>
-</details>
-
-:::
+More on that later in our course.
 
 ## Performing calculations
 
@@ -218,3 +251,98 @@ After starting the program, we will get the correct result of the calculation in
 - `*` multiplies two numbers by itself
 - `/` divides two numbers by itself
 :::
+
+## Potential errors
+
+Finally, it is worth paying attention to what can cause a **compilation error**,
+or what we shouldn't do to keep the code in line with good practice.
+
+### Omiting `std::`
+
+:::tip Good practice
+It's best not to omit the `std::` prefix.
+:::
+
+If you have trouble with the `std::` prefix, consider using it
+locally, **always inside a function** (as shown in the example):
+
+```cpp title="🔹 Acceptable use"
+#include <iostream>
+int main()
+{
+	// highlight-next-line
+	using namespace std;
+	cout << "Hello, World!";
+}
+```
+
+I emphasize this because it is possible to place
+
+```cpp
+using namespace std;
+```
+
+also before the whole `main` function, however **don't do it**.
+
+### Missing semicolons `;`
+
+Beginners often forget the semicolons (`;`) at the end of statements.
+Study the code examples provided in this lesson carefully, paying attention
+to where they should go.
+
+#### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: expected `;` before (...)
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+TODO
+```
+
+</TabItem>
+</Tabs>
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing semicolon"
+		src="/img/tutorials/course/basic/first-program/error-no-semicolon-en.png"
+	/>
+
+### Unterminated text
+
+The text between the signs `"`, `"` and you should remember that at the end of
+the text this quotation mark actually appears.
+
+#### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: missing terminating " character
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+TODO
+```
+
+</TabItem>
+</Tabs>
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing quote"
+		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en.png"
+	/>
