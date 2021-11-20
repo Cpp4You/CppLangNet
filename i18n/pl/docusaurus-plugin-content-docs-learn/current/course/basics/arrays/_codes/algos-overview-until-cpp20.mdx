@@ -13,8 +13,8 @@ import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
 int main() {
 	std::vector<int> numbers = { 22, 13, 27, 4 };
 
-	size_t min = *std::min_element(numbers.begin(), numbers.end()); // 🟡
-	size_t max = *std::max_element(numbers.begin(), numbers.end()); // 🟡
+	int min = *std::min_element(numbers.begin(), numbers.end()); // 🟡
+	int max = *std::max_element(numbers.begin(), numbers.end()); // 🟡
 
 	std::cout << "Najmniejsza: " << min << '\n';
 	std::cout << "Największa: " << max << '\n';
