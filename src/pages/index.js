@@ -35,7 +35,7 @@ function HomepageHeader() {
 					</div>
 				</div>
 				<div className={styles.interactiveEditor}>
-					<iframe src="https://repl.it/@poetakodu/SortVector?lite=true&console=0" />
+					<iframe src="https://repl.it/@poetakodu/SortVector-Cpp20?lite=true" />
 				</div>
 			</div>
 		</header>
