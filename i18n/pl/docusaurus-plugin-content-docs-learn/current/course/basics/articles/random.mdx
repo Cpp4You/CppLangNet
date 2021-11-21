@@ -130,7 +130,7 @@ Funkcja `std::rand()` jest prosta w użyciu i właściwie na tym jej zalety się
 np. od użytego kompilatora czy systemu operacyjnego.
 
 Możemy być jedynie pewni tego, że zwrócona liczba jest zawsze z zakresu `[0; RAND_MAX]`,
-przy czym to `RAND_MAX` to pewna stała, zależna od systemu czy kompilatora.
+przy czym to `RAND_MAX` to pewna stała, zależna od systemu czy kompilatora (nie mniejsza niż `32767`).
 
 <Image center alt="Zakres od 0 do RAND_MAX"
 		src="/img/tutorials/course/basic/random/0_to_rand_max.png"
@@ -168,7 +168,7 @@ RAND_MAX: 32767
 
 </TabItem>
 <TabItem value="gcc-wandbox" label="GCC 12.0 (Linux)">
-GCC 12.0.0, ze strony https://wandbox.org
+GCC 12.0.0, ze strony [https://wandbox.org](https://wandbox.org)
 
 ```plaintext
 RAND_MAX: 2147483647
@@ -176,7 +176,7 @@ RAND_MAX: 2147483647
 
 </TabItem>
 <TabItem value="clang-wandbox" label="Clang 13.0 (Linux)">
-Clang 13.0.0, ze strony https://wandbox.org
+Clang 13.0.0, ze strony [https://wandbox.org](https://wandbox.org)
 
 ```plaintext
 RAND_MAX: 2147483647
@@ -319,6 +319,8 @@ int main()
 	std::cout << "\n\nLosuję 5 int-ów od 0 do 100:\n";
 	for (int i = 0; i < 5; ++i)
 		std::cout << randomInt(0, 100) << ' ';
+
+	std::cout << std::endl;
 }
 
 
