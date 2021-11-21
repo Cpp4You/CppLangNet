@@ -7,9 +7,374 @@ tags:				[randomness, pseudo-random numbers]
 hide_title:			true
 ---
 
-<!-- Presets -->
-import NotFinished from "@site/i18n/en/presets/NotFinished.mdx";
-
-<NotFinished />
+<!-- Components -->
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+import Columns				from "@site-comps/Columns";
+import CustomCodeBlock		from "@site-comps/CustomCodeBlock";
+import Image				from "@site-comps/Image";
+import Replit				from "@site-comps/Replit";
 
 # Pseudo-random numbers
+
+<center>
+	<iframe src='https://gfycat.com/ifr/DarkBrokenCivet' frameBorder='0' scrolling='no' allowFullScreen width='640' height='404'></iframe>
+</center>
+
+<br/>
+
+Requires knowledge of: [**1. First program**](../../first-program) - [**7. Functions**](../../functions)
+
+## Motivation
+
+In various fields of computer science, e.g. in cryptography, cybersecurity or when creating
+computer games, it is necessary to be able to generate random numbers. For example:
+
+- 🔑 creating a password from random characters
+- 💥 random events in the game world
+- 🎲 chance to deal damage based on a die roll
+
+## Why "pseudorandom"
+
+As you can see, the article is called "pseudo random numbers". The computer is not able to
+generate truly random numbers on its own, but it can, by some tricks, give us the illusion
+of randomness, which is perfectly sufficient.
+
+## Generating numbers
+
+:::caution
+In this article, we will focus on a very primitive, yet easy, method. Later in the course you will
+learn about much more powerful tools from the library `<random>`.
+Once you learn them, you shouldn't use `std::rand` anymore.
+:::
+
+Let's see an example of how it is used:
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="🔹 Generating 5 random numbers"
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+int main() {
+	// highlight-next-line
+	std::srand( std::time(0) );
+
+	std::cout << "Generating 5 random numbers:\n";
+	for (int i = 0; i < 5; ++i)
+	// highlight-next-line
+		std::cout << std::rand() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible result"
+Generating 5 random numbers:
+570368048
+1028036926
+1798519773
+2028832115
+1034913436
+```
+
+</div>
+</Columns>
+
+### Getting next numbers
+
+The key thing here is
+
+```cpp
+std::rand()
+```
+
+(from *random*), which generates and returns the next pseudo-random number from the sequence.
+This sequence is very unpredictable, which gives the illusion of true randomness.
+
+### Setting the seed
+
+What numbers this sequence will consist of depends on the so-called seed which is also a number.
+The following function is used to set the seed:
+
+```cpp title="🔹 Setting the seed"
+std::srand( <seed> )
+```
+(from *seed random*)
+
+:::danger
+If we leave the default seed, the generated sequence will **always be the same**.
+:::
+
+It's a good idea to set it **once at the beginning of the program** like in the example.
+We used the current time as a seed, in the form of a number that increases every second,
+so each time we start the program, we will get a different effect.
+We got this with a function call:
+
+```cpp title="🔹 Current time (as a number of seconds)"
+std::time(0)
+```
+
+### Downsides of `std::rand`
+
+The function `std::rand()` is simple to use and its benefits end there.
+The problem is, among others the fact that the range of numbers returned by it is not strictly
+defined and differs depending, for example, on the compiler or operating system used.
+
+We can only be sure that the number returned is always in range `[0; RAND_MAX]`,
+and that `RAND_MAX` is some system or compiler-dependent constant (not less than `32767`).
+
+<Image center alt="Range from 0 to RAND_MAX"
+		src="/img/tutorials/course/basic/random/0_to_rand_max.png"
+	/>
+<br/>
+
+The value of `RAND_MAX` can be easily checked:
+
+```cpp title="🔹 Checking the max. number possible to get from rand"
+#include <iostream>
+#include <cstdlib>
+
+int main() {
+	std::cout << "RAND_MAX: " << RAND_MAX;
+}
+```
+
+Possible result:
+
+<Tabs>
+<TabItem value="msvc-windows" label="MSVC (Windows)" default>
+Visual Studio 2022 Preview.
+
+```plaintext
+RAND_MAX: 32767
+```
+
+</TabItem>
+<TabItem value="gcc-windows" label="GCC 11.2 (Windows)">
+GCC 11.2 from MSYS2 package.
+
+```plaintext
+RAND_MAX: 32767
+```
+
+</TabItem>
+<TabItem value="gcc-wandbox" label="GCC 12.0 (Linux)">
+GCC 12.0.0, from [https://wandbox.org](https://wandbox.org)
+
+```plaintext
+RAND_MAX: 2147483647
+```
+
+</TabItem>
+<TabItem value="clang-wandbox" label="Clang 13.0 (Linux)">
+Clang 13.0.0, from [https://wandbox.org](https://wandbox.org)
+
+```plaintext
+RAND_MAX: 2147483647
+```
+
+</TabItem>
+</Tabs>
+
+The above results clearly show this problem.
+On Windows we got 2<sup>15</sup> - 1, and on Linux 2<sup>31</sup> - 1
+
+### Limiting the range
+
+### Real numbers from `0` to `1`
+
+<Image center alt="Range from 0 to 1"
+		src="/img/tutorials/course/basic/random/0_to_1.png"
+	/>
+<br/>
+
+We can just divide the obtained number by `RAND_MAX` to get a value in the range from `0` to `1`.
+
+```cpp title="🔹 Number from 0 to 1"
+float randomFloat() {
+	return float( std::rand() ) / RAND_MAX;
+}
+```
+
+:::danger Casting to float
+Note that we need to convert at least one of these numbers to a type float.
+Value of both of these things - `RAND_MAX` and `rand()` are integers, therefore operations on them
+also result in an integer.
+
+Simply speaking:
+
+```cpp
+int / int = int
+```
+
+After conversion, it will look like this:
+
+```cpp
+float / int = float
+```
+:::
+
+If you're wondering why this works, check out this simple analysis:
+
+- for the number `0` we will get `0 / RAND_MAX`, so that is still `0`
+- for `RAND_MAX` (i.e. max. number) we get `RAND_MAX / RAND_MAX`, i.e. `1`
+- for all intermediate values, we obtain a number greater than `0` and less than `1`
+
+#### Real numbers from `A` to `B`
+
+<Image center alt="Range from A to B"
+		src="/img/tutorials/course/basic/random/a_to_b.png"
+	/>
+<br/>
+
+Using the previous function `randomFloat()`, we can define a similar function that will
+generate a real number in the range `A` to `B`.
+
+What we have to do:
+
+- calculate a new range, `float Length = B - A`
+- multiply a number `[0; 1]` by the length to get a range `[0; Length]`
+- move the entire range o `A` to get: `[A; Length + A]` that is `[A; B]`
+
+```cpp title="🔹 Real number in custom range"
+// We can use the same functio name, because
+// it has different parameters (function overload)
+float randomFloat(float from, float to)
+{
+	float length = to - from;
+
+	return randomFloat()*length + from;
+}
+```
+
+or simpler:
+
+```cpp title="🔹 Real number in custom range (simpler)"
+float randomFloat(float from, float to)
+{
+	return randomFloat()*(to - from) + from;
+}
+```
+
+#### Integers numbers from `A` to `B`
+
+In exactly the same way as above, we can create a function `randomInt`:
+
+```cpp title="🔹 Integer in a range"
+int randomInt(int from, int to)
+{
+	return int( randomFloat()*(to - from) ) + from;
+}
+```
+
+## Example usage
+
+### Functions in this article
+
+Using the functions created above is very simple and convenient:
+
+<Tabs>
+<TabItem value="source" label="Code" default>
+
+<CustomCodeBlock lineNumbers maxLines={30}>
+
+```cpp
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip>
+
+// Declare functions
+float	randomFloat(); // od 0 do 1
+float	randomFloat(float from, float to); // od "from" do "to"
+int		randomInt(int from, int to); // od "from" do "to" (int)
+
+int main()
+{
+	// Set the seed
+	std::srand( std::time(0) );
+
+	// We set formatting of the cout
+	std::cout << std::fixed;
+	std::cout.precision(2);
+
+	std::cout << "Generating 5 floats from 0 to 1:\n";
+	for (int i = 0; i < 5; ++i)
+		std::cout << randomFloat() << ' ';
+
+	std::cout << "\n\nGenerating 5 floats from 10 to 30:\n";
+	for (int i = 0; i < 5; ++i)
+		std::cout << randomFloat(10, 30) << ' ';
+
+	std::cout << "\n\nGenerating 5 integers from 0 to 100:\n";
+	for (int i = 0; i < 5; ++i)
+		std::cout << randomInt(0, 100) << ' ';
+
+	std::cout << std::endl;
+}
+
+
+// Function implementations
+/////////////////////////////////////
+float randomFloat()
+{
+	return float( std::rand() ) / RAND_MAX;
+}
+
+/////////////////////////////////////
+float randomFloat(float from, float to)
+{
+	return randomFloat()*(to - from) + from;
+}
+
+/////////////////////////////////////
+int randomInt(int from, int to)
+{
+	return int( randomFloat()*(to - from) ) + from;
+}
+```
+
+</CustomCodeBlock>
+</TabItem>
+<TabItem value="try-it" label="Run ▶">
+	<Replit.PlayInfo />
+	<Replit embed fullwidth user="poetakodu" repl="Random-Numbers-Test-En" />
+</TabItem>
+</Tabs>
+
+### Random chance of an event
+
+If we want a certain event to have e.g. a 30% chance of occurrence, we can generate an integer
+from the range `[1; 100]` and check if `number <= 30`:
+
+```cpp title="🎲 Random chance (30%)"
+int randomChance = randomInt(1, 100);
+
+if (randomChance <= 30)
+{
+	std::cout << "Winner :)";
+}
+else
+{
+	std::cout << "Loser :(";
+}
+```
+
+Alternatively, you can forgo percentages and use simple fractions:
+
+```cpp title="🎲 Random chance (30%)"
+float randomChance = randomFloat();
+
+if (randomChance <= 0.30f)
+{
+	std::cout << "Winner :)";
+}
+else
+{
+	std::cout << "Loser :(";
+}
+```
