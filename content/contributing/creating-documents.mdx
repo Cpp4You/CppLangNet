@@ -47,6 +47,29 @@ hide_title:			true
 
 The `sidebar_position` field is **mandatory**, but you should fill other fields too.
 
+:::danger
+`hide_title: true` should be only used when there is something between metadata and the Markdown H1 heading,
+for example:
+
+```mdx
+---
+...
+hide_title:			true
+---
+
+<!-- Components -->
+import Columns			from "@site-comps/Columns";
+
+<!-- Presets -->
+import NotFinished		from "@site/i18n/en/presetsNotFinished";
+
+# The title of the document
+```
+
+Do not use it if metadata is directly above `# The title of the document`, because
+Docusaurus will generate an additional H1 heading.
+:::
+
 For complete metadata list, please visit [this page](https://docusaurus.io/docs/next/api/plugins/@docusaurus/plugin-content-docs#markdown-frontmatter).
 
 :::caution
