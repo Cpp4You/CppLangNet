@@ -1,0 +1,76 @@
+import Columns			from "@site-comps/Columns";
+import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
+
+<Columns columns={['9fr', '3fr']}>
+<CustomCodeBlock maxLines={25} lineNumbers>
+
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+	std::vector<int> numbers = { 22, 13, 27, 4 };
+
+	int min = *std::min_element(numbers.begin(), numbers.end()); // 🟡
+	int max = *std::max_element(numbers.begin(), numbers.end()); // 🟡
+
+	std::cout << "Najmniejsza: " << min << '\n';
+	std::cout << "Największa: " << max << '\n';
+
+	// Na potrzebę prezentacji funkcji "count"
+	// dodaję jedną liczbę 13 na koniec:
+	numbers.push_back(13);
+	
+	size_t count = std::count(numbers.begin(), numbers.end(), 13);
+	std::cout << "Wystąpień 13: " << count << '\n';
+
+	std::cout << "Przed odwróceniem:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::reverse(numbers.begin(), numbers.end());
+
+	std::cout << "\nPo odwróceniu:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::cout << "\nPrzed posortowaniem:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::sort(numbers.begin(), numbers.end());
+
+	std::cout << "\nPo posortowaniu:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+}
+```
+
+</CustomCodeBlock>
+<div>
+
+```plaintext title="Wynik"
+Najmniejsza: 4
+Największa: 27
+Wystąpień 13: 2
+Przed odwróceniem:
+22 13 27 4 13 
+Po odwróceniu:
+13 4 27 13 22 
+Przed posortowaniem:
+13 4 27 13 22 
+Po posortowaniu:
+4 13 13 22 27
+```
+
+</div>
+</Columns>
+
+:::caution Uwaga
+Zapis, który oznaczyłem znakiem 🟡, jest bardziej skomplikowany i niestety
+w wersjach przed C++20 nie innej, prostszej możliwości. Jeśli korzystasz
+ze starszej wersji C++, rozważ [zainstalowanie kompilatora](/tools/compilers/), który
+wspiera najnowszy standard języka.
+:::

@@ -1,0 +1,272 @@
+---
+sidebar_position:	2
+sidebar_label:		"2. Używanie algorytmów"
+title:				Używanie algorytmów
+description: 		"Lekcja: manipulowanie vector-ami za pomocą algorytmów w języku C++"
+hide_title:			true
+---
+
+<!-- Components -->
+import SwitchView		from "@site-comps/SwitchView";
+import Image			from "@site-comps/Image";
+import Columns			from "@site-comps/Columns";
+
+<!-- Presets -->
+import NotFinished		from "@site/i18n/pl/presets/NotFinished.mdx";
+import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
+
+<!-- Codes -->
+import AlgoIntroExampleCpp20		from "./_codes/algo-intro-example-cpp20.mdx";
+import AlgoIntroExampleUntilCpp20	from "./_codes/algo-intro-example-until-cpp20.mdx";
+
+import AlgosOverviewCpp20			from "./_codes/algos-overview-cpp20.mdx";
+import AlgosOverviewUntilCpp20		from "./_codes/algos-overview-until-cpp20.mdx";
+
+<NotFinished />
+
+# Używanie algorytmów
+
+W bibliotece standardowej języka C++ znajdziemy dużo gotowych algorytmów,
+których możemy użyć do manipulowania wektorami.
+
+:::caution Wersja C++
+Zalecamy korzystanie z wersji **C++20**, ponieważ rozwiązania z niej są prostsze.
+Dla osób, które z jakiegoś powodu nie mogą zainstalować kompilatora, który wspiera
+najnowszy standard, zamieścimy też przykłady działające na starszej wersji.
+:::
+
+Aby móc skorzystać z algorytmów, musimy dodać następujący nagłówek do kodu:
+
+```cpp
+#include <algorithm>
+```
+
+## Motywacja
+
+Pokażemy Ci, jak:
+
+1. [wyszukać najmniejszą wartość (`std::ranges::min()`)](#najmniejsza-wartość)
+2. [wyszukać największą wartość (`std::ranges::max()`)](#największa-wartość)
+3. [policzyć ile razy występuje dany element (`std::ranges::count()`)](#zliczanie-wystąpień)
+4. [odwrócić kolejność (`std::ranges::reverse()`)](#odwracanie-kolejności)
+5. [posortować elementy wektora (`std::ranges::sort()`)](#sortowanie)
+
+## Algorytmy
+
+Na początek stwórzmy sobie prosty program, na którym bedziemy
+testować działanie algorytmów. Przygotujmy tablicę liczb:
+
+```cpp title="🔹 Tablica liczb"
+std::vector<int> numbers = { 22, 13, 27, 4 };
+```
+
+W każdym wypadku, użycie algorytmu sprowadzi się do wpisania:
+
+<SwitchView content={
+		{
+			"cpp20":		<AlgoIntroExampleCpp20 />,		
+			"until-cpp20":	<AlgoIntroExampleUntilCpp20 />,		
+		}
+	}/>
+
+przy czym za `<wektor>` wstawimy przygotowany wyżej `numbers`.
+Będziemy po każdej operacji wyświetlać zawartość wektora `numbers`
+za pomocą [poznanej wcześniej](../intro-to-vector/#wyświetlanie-elementów) pętli `for`:
+
+```cpp title="🔹 Wyświetlanie elementów tablicy"
+for (int n : numbers)
+	std::cout << n << ' ';
+```
+
+### Prezentacja działania
+
+Na początek zobaczmy przykładowy kod, z wykorzystaniem wszystkich tych algorytmów,
+a później je omówimy.
+
+<SwitchView content={
+		{
+			"cpp20":		<AlgosOverviewCpp20 />,
+			"until-cpp20":	<AlgosOverviewUntilCpp20 />,
+		}
+	}/>
+
+
+## Omówienie
+
+
+### Najmniejsza wartość
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-min.gif"
+		alt="Działanie algorytmu 'min'"
+	/>
+<br/>
+
+Aby znaleźć najmniejszą wartość wewnątrz wektora, używamy [`std::ranges::min`](/docs/std/algo/ranges/min):
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::cout << std::ranges::min(numbers);
+```
+
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+std::cout << std::min(numbers.begin(), numbers.end());
+```
+
+			</div>		
+		}
+	}/>
+
+### Największa wartość
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-max.gif"
+		alt="Działanie algorytmu 'max'"
+	/>
+<br/>
+
+Aby znaleźć największą wartość wewnątrz wektora, używamy [`std::ranges::max`](/docs/std/algo/ranges/max) tak:
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::cout << std::ranges::max(numbers);
+```
+
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+std::cout << std::max(numbers.begin(), numbers.end());
+```
+
+			</div>		
+		}
+	}/>
+
+### Zliczanie wystąpień
+
+:::note Uwaga
+Na potrzeby tego algorytmu, dodamy sobie jeszcze jedną wartość `13` na koniec tablicy.
+:::
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-count.gif"
+		alt="Działanie algorytmu 'count'"
+	/>
+<br/>
+
+[`count`](/docs/std/algo/ranges/count) służy do zliczania wystąpień elementów, w tym wypadku, wewnątrz wektora.
+Korzystamy z tego w ten sposób:
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::cout << std::ranges::count(numbers, 13);
+```
+			
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+std::cout << std::count(numbers.begin(), numbers.end(), 13);
+```
+
+			</div>		
+		}
+	}/>
+
+
+
+Możemy również zapisać ten wynik do zmiennej. Powinniśmy do tego użyć specjalnego typu `size_t`, który
+w uproszczeniu jest **nieujemną liczbą** (ponieważ liczba wystąpień nie może być ujemna):
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+size_t count = std::ranges::count(numbers, 13);
+std::cout << "Liczba wystąpień 13: " << count;
+```
+
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+size_t count = std::count(numbers.begin(), numbers.end(), 13);
+std::cout << "Liczba wystąpień 13: " << count;
+```
+
+			</div>		
+		}
+	}/>
+
+### Odwracanie kolejności
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-reverse.gif"
+		alt="Działanie algorytmu 'reverse'"
+	/>
+<br/>
+
+Aby odwrócić kolejność elementów wektora, używamy [`std::ranges::reverse`](/docs/std/algo/ranges/reverse/)
+&nbsp;<small>(lub [`std::reverse`](/docs/std/algo/reverse/) przed C++20)</small>.
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::ranges::reverse(numbers);
+```
+
+			</div>,
+			"until-cpp20": <div>
+
+```cpp
+std::reverse(numbers.begin(), numbers.end());
+```
+
+			</div>,
+		}
+	}/>
+
+### Sortowanie
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-sort.gif"
+		alt="Działanie algorytmu 'sort'"
+	/>
+<br/>
+
+Używamy funkcji sortującej w ten sposób:
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::ranges::sort(numbers);
+```
+
+			</div>,
+			"until-cpp20": <div>
+
+```cpp
+std::sort(numbers.begin(), numbers.end());
+```
+
+			</div>,
+		}
+	}/>

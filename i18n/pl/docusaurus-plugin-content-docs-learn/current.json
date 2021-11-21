@@ -42,5 +42,21 @@
   "sidebar.defaultSidebar.category.Golden advices 💰": {
     "message": "Złote rady 💰",
     "description": "The label for category Golden advices 💰 in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.7. Overloading": {
+    "message": "7. Przeładowanie",
+    "description": "The label for category Overloading in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.10. Classes (I)": {
+    "message": "10. Klasy (I)",
+    "description": "The label for category Classes (I) in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.11. Memory (I)": {
+    "message": "11. Pamięć (I)",
+    "description": "The label for category Memory (I) in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Compiler flags 🚩": {
+    "message": "Flagi kompilatora 🚩",
+    "description": "The label for category Compiler flags 🚩 in sidebar defaultSidebar"
   }
 }

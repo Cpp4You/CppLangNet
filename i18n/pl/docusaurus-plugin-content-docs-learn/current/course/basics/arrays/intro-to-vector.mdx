@@ -70,13 +70,16 @@ jakiegoś określonego typu. Popatrz na wyżej umieszczoną ilustrację.
 Wewnątrz tablicy, znajdują się nazwy marek pojazdów. Zauważ, że
 każdy element ma swój unikalny **indeks**.
 
+Istnieją tablice o stałym rozmiarze, które zawsze mają tyle samo elementów,
+oraz **dynamiczne** tablice, których rozmiar może się zmieniać.
+
 :::important Indeksy tablicy
 Elementy tablicy są **indeksowane od zera** w górę.
 Pierwszy element ma indeks `0`, drugi `1` itd.
 :::
 
-Indeksy pozwalają rozróżnić elementy tablicy. Za ich pomocą
-możemy korzystać z nich w kodzie.
+Indeksy pozwalają rozróżnić poszczególne elementy tablicy.
+Za ich pomocą możemy korzystać z tych elementów w kodzie.
 
 ## Używanie tablic
 
@@ -110,6 +113,7 @@ int main()
 ```
 
 Żeby użyć typu `std::vector`, musimy dodać kolejnego `#include`, tym razem:
+
 ```cpp
 #include <vector>
 ```
@@ -219,9 +223,9 @@ Powyższy zapis używa tzw. *wywołania metody `push_back()`*. O wywołaniach
 i metodach powiemy sobie w przyszłości więcej. Na ten moment zapamiętaj tylko ten
 zapis:
 
-- po nazwie tablicy dajemy kropkę
-- piszemy nazwę *metody*, czyli w tym wypadku `push_back`
-- następnie w nawiasie okrągłym podajemy co chcemy dodać (np. wartość lub zmienną)
+1. po nazwie tablicy dajemy kropkę
+2. piszemy nazwę *metody*, czyli w tym wypadku `push_back`
+3. następnie w nawiasie okrągłym podajemy co chcemy dodać (np. wartość lub zmienną)
 
 :::important Zakres indeksów
 Zwróć uwagę, że tablica o ilości elementów `N`, zawsze ma indeksy

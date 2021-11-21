@@ -2,11 +2,65 @@
 sidebar_position:	2
 sidebar_label:		"2. Comments"
 description:		"Lesson: comments in C++"
+tags:				[comment]
 ---
 
 # Comments
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+Comments are used to add descriptions and explanations to the code.
 
-<NotFinished/>
+## Motivation
 
+Comments often show the developer intent when the code is complex.
+They are also very useful in a situation like right now when you are
+reading this course and I can use them to explain things 😄
+
+:::caution
+Comments **do not** affect the operation of the program in any way.
+They are completely ignored during compilation.
+:::
+
+## Types of comments
+
+There are single line comments:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	// this is a single line comment
+	// it starts with "//"
+	// and ends with the end of the line
+	std::cout << "Hello, World!";
+}
+```
+
+... and multi-line comments:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	/*	this is a multi-line comment
+		it starts with "/" followed directly by "*"
+		and ends with "*" followed directly by "/"
+	*/
+	std::cout << "Hello, World!";
+}
+```
+
+## Good practices
+
+Use comments when you find that the code does not describe the intent well enough.
+You will understand what I am talking about as you learn
+new things from the C++ language.
+
+:::tip Language (for non-english speakers)
+It's best to use English to write comments.
+It doesn't really matter at first, but it's definitely worth getting into the habit
+of writing in English, because in the future, someone else may also use your code 😃
+:::
+
+**Comment on your code but don't overdo it.**

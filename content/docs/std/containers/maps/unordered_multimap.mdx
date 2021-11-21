@@ -1,0 +1,312 @@
+---
+sidebar_position:	2
+title:				std::unordered_multimap reference
+sidebar_label:		unordered_multimap
+tags:				[unordered_multimap, associative, container, key]
+hide_title:			true
+---
+
+import ClassSummary				from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns					from "@site-comps/Columns";
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem					from "@theme/TabItem";
+
+<NotFinished />
+
+# Unordered Multimap class reference
+
+## Overview
+
+<Tabs>
+<TabItem value="simplified" label="Simplified" default>
+
+```cpp
+template<
+    class Key,
+    class T,
+    /* ... */
+> class unordered_multimap;
+```
+
+</TabItem>
+<TabItem value="detailed" label="Detailed">
+
+```cpp
+template<
+    class Key,
+    class T,
+    class Hash = std::hash<Key>,
+    class KeyEqual = std::equal_to<Key>,
+    class Allocator = std::allocator< std::pair<const Key, T> >
+> class unordered_multimap;
+```
+
+</TabItem>
+</Tabs>
+
+The `std::unordered_multimap` is a container that stores key-value pairs, and as you can infer from its name
+it does not order elements by any key / value.
+
+### Example usage
+
+The examples in this section are very simple ones. Navigate to [examples section at the bottom](#more-examples) for more.
+
+<ImproveSection />
+
+### Technical details
+
+<details>
+<summary>Technical definition of a unordered_multimap</summary>
+<div>
+Unordered multimap is an unordered associative container that supports equivalent keys (an unordered_multimap may contain multiple copies of each key value) and that associates values of another type with the keys. The unordered_multimap class supports forward iterators. Search, insertion, and removal have average constant-time complexity.
+
+Internally, the elements are not sorted in any particular order, but organized into buckets. Which bucket an element is placed into depends entirely on the hash of its key. This allows fast access to individual elements, since once the hash is computed, it refers to the exact bucket the element is placed into.
+
+The iteration order of this container is not required to be stable (so, for example, std::equal cannot be used to compare two std::unordered_multimaps), except that every group of elements whose keys compare equivalent (compare equal with key_eq() as the comparator) forms a contiguous subrange in the iteration order, also accessible with equal_range().
+
+std::unordered_multimap meets the requirements of Container, AllocatorAwareContainer, UnorderedAssociativeContainer. 
+</div>
+</details>
+
+<ClassSummary name="unordered_multimap" namespaces="std" folder="unordered_multimap" headerName="unordered_map">
+
+## Template parameters
+
+<SymbolTable noTraits>
+	<Symbol name="Key"		desc="The type of stored keys"/>
+	<Symbol name="T" 		desc="The type of stored values"/>
+	<Symbol name="Hash" 		desc="Unary function, which returns unique value"/>
+	<Symbol name="KeyEqual" 		desc="A binary predicate that takes two arguments and returns a bool."/>
+	<Symbol name="Allocator" 		desc="Is responsible for allocating and deallocating memory"/>
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="key_type"				desc="Key"/>
+	<Symbol pub name="mapped_type" 				desc="T"/>
+	<Symbol pub name="value_type"			desc={<code>std::pair&lt;const Key, T&gt;</code>}/>
+	<Symbol pub name="size_type"				desc="Unsigned integer type"/>
+	<Symbol pub name="difference_type"			desc="Signed integer type"/>
+	<Symbol pub name="hasher"				desc="Hash"/>
+	<Symbol pub name="key_equal" 				desc="KeyEqual"/>
+	<Symbol pub name="allocator_type"			desc="Allocator"/>
+	<Symbol pub name="reference"				desc={<code>value_type&</code>}/>
+	<Symbol pub name="const_reference"			desc={<code>const value_type&</code>}/>
+	<Symbol pub name="pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::pointer</code>}/>
+	<Symbol pub name="const_pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code>}/>
+	<Symbol pub name="iterator"			desc="value_type"/>
+	<Symbol pub name="const_iterator"			desc="const value_type"/>
+	<Symbol pub name="local_iterator"			desc="An iterator type whose category, value, difference, pointer and
+reference types are the same as iterator. This iterator
+can be used to iterate through a single bucket but not across buckets"/>
+	<Symbol pub name="const_local_iterator"			desc=" 	An iterator type whose category, value, difference, pointer and
+reference types are the same as const_iterator. This iterator
+can be used to iterate through a single bucket but not across buckets"/>
+	<Symbol pub name="node_type"			desc="a specialization of node handle representing a container node "/>
+</SymbolTable>
+
+
+
+## Member functions
+
+<SymbolTable>	
+	<Symbol pub autoLink linkName="constructor" name="(constructor)">
+		Constructs the <code>unorder_map</code>
+	</Symbol>
+	<Symbol pub autoLink linkName="destructor" name="(destructor)">
+		Destructs the <code>unorder_map</code>
+	</Symbol>
+	<Symbol pub autoLink linkName="operator=" name="operator=">
+		Assigns values to the container
+	</Symbol>
+	<Symbol pub autoLink linkName="get_allocator" name="get_allocator">
+		Returns the associated allocator
+	</Symbol>
+
+</SymbolTable>
+
+### Iterators
+
+<SymbolTable>	
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
+		Returns an iterator to the beginning
+	</Symbol>
+	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
+		Returns an iterator to the end
+	</Symbol>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="empty" name="empty">
+		Checks whether the container is empty
+	</Symbol>
+	<Symbol pub autoLink linkName="size" name="size">
+		Returns the number of elements
+	</Symbol>
+	<Symbol pub autoLink linkName="max_size" name="max_size">
+		Returns the maximum possible number of elements
+	</Symbol>
+</SymbolTable>
+
+### Modifiers
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="clear" name="clear">
+		Clears the contents
+	</Symbol>
+	<Symbol pub autoLink linkName="insert" name="insert">
+		Inserts elements or nodes
+	</Symbol>
+	<Symbol pub autoLink linkName="emplace" name="emplace">
+		Constructs element in-place
+	</Symbol>
+	<Symbol pub autoLink linkName="emplace_hint" name="emplace_hint">
+		Constructs element in-place using a hint
+	</Symbol>
+	<Symbol pub autoLink linkName="erase" name="erase">
+		Erases elements
+	</Symbol>
+	<Symbol pub autoLink linkName="swap" name="swap">
+		Swaps the contents
+	</Symbol>
+	<Symbol pub autoLink linkName="extract" name="extract">
+		Extracts nodes from the container
+	</Symbol>
+	<Symbol pub autoLink linkName="merge" name="merge">
+		Splices nodes from another contrainer
+	</Symbol>
+</SymbolTable>
+
+
+### Lookup
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="count" name="count">
+		Returns the number of elements matching specific key
+	</Symbol>
+	<Symbol pub autoLink linkName="find" name="find">
+		Finds element with specific key
+	</Symbol>
+	<Symbol pub autoLink linkName="contains" name="contains">
+		Checks if the container contains element with specific key
+	</Symbol>
+	<Symbol pub autoLink linkName="equal_range" name="equal_range">
+		Returns range of elements matching a specific key
+	</Symbol>
+</SymbolTable>
+
+### Bucket interface
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
+		Returns an iterator to the beginning of the specified bucket
+	</Symbol>
+	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
+		Returns an iterator to the end of the specified bucket
+	</Symbol>
+	<Symbol pub autoLink linkName="bucket_count" name="bucket_count">
+		Returns the number of buckets
+	</Symbol>
+	<Symbol pub autoLink linkName="max_bucket_count" name="max_bucket_count">
+		Returns the maximum number of buckets
+	</Symbol>
+	<Symbol pub autoLink linkName="bucket_size" name="bucket_size">
+		Returns the number of elements in specific bucket
+	</Symbol>
+	<Symbol pub autoLink linkName="bucket" name="bucket">
+		Returns the bucket for specific key
+	</Symbol>
+</SymbolTable>
+
+### Hash policy
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="load_factor" name="load_factor">
+		Returns average number of elements per bucket
+	</Symbol>
+	<Symbol pub autoLink linkName="max_load_factor" name="max_load_factor">
+		Manages maximum average number of elements per bucket
+	</Symbol>
+	<Symbol pub autoLink linkName="rehash" name="rehash">
+		Reserves at least the specified number of buckets and regenerates the hash table
+	</Symbol>
+	<Symbol pub autoLink linkName="reserve" name="reserve">
+		Reserves space for at least the specified number of elements and regenerates the hash table
+	</Symbol>
+</SymbolTable>
+
+### Observers
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="hash_function" name="hash_function">
+		Returns function to hash the keys
+	</Symbol>
+	<Symbol pub autoLink linkName="key_eq" name="key_eq">
+		Returns the function used to compare keys for equality
+	</Symbol>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				operator==<br/>
+				operator!=<br/>
+			</>}
+			desc="Compares the values in the unordered_multimap">
+	</Symbol>
+	<Symbol pub autoLink linkName="std::swap" name="std::swap">
+		Specializes the <code>std::swap</code> algorithm
+	</Symbol>
+	<Symbol pub autoLink linkName="erase_if" name="erase_if">
+		Erases all elements satisfying specific criteria
+	</Symbol>
+</SymbolTable>
+</ClassSummary>
+
+
+## Deduction guides
+
+<ImproveSection />
+
+## More examples
+
+### Basic manipulation
+
+#### Creating unordered_multimap, inserting pair and printing it out
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <unordered_map>
+#include <string>
+
+int main() {
+  std::unordered_multimap<std::string, std::string> player_equipment
+  	{ {"player2", "Sword"}, {"player2", "Health potion"} };
+
+  for (auto& [key, value] : player_equipment)    
+    std::cout << key << " has got " << value << std::endl;
+
+  return 0;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+player2 has got Sword
+player2 has got Health potion
+```
+
+</div>
+</Columns>

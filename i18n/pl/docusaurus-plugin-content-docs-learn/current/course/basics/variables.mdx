@@ -354,7 +354,7 @@ za pomocą typowych znaków (operatorów) matematycznych:
 - `a * b` - mnoży przez siebie dwie liczby
 - `a / b` - dzieli liczbę `a` przez `b`
 
-:::note
+:::note Uwaga
 To nie są wszystkie operatory matematyczne, o reszcie powiemy
 kiedy indziej.
 :::
@@ -382,7 +382,7 @@ int main()
 
 :::tip Wyrównanie
 Zwróć uwagę, że dla lepszej czytelności kodu wyrównaliśmy klawiszem **`Tab`**
-użycia operatora `<<`. Polecamy tą technikę 😀
+użycia operatora `<<`.
 :::
 
 Bardzo istotnym faktem jest to, że użycie wyżej wymienionych operatorów,
@@ -442,7 +442,7 @@ Zobacz jak to działa na przykładzie (wpisuję 20 do konsoli jeszcze raz):
 
 <CustomCodeBlock lineNumbers>
 
-```cpp title="main.cpp"
+```cpp title="🔹 main.cpp"
 #include <iostream>
 
 int main()
@@ -508,7 +508,7 @@ Poniżej prezentacja działania programu, po wpisaniu liczby `20`.
 <TabItem value="code" label="Kod">
 <CustomCodeBlock lineNumbers withTitle maxLines={25} resizable>
 
-```cpp title="main.cpp"
+```cpp title="🔹 main.cpp"
 #include <iostream>
 
 int main()
@@ -518,29 +518,29 @@ int main()
 	int number;
 	std::cin >> number;
 
-	// Zwiększ "value" o 5:
+	// Zwiększ "number" o 5 i przypisz:
 	number += 5;
 	std::cout << "Po zwiększeniu o 5: " << number << '\n';
 
-	// Zmniejsz "value" o 10:
+	// Zmniejsz "number" o 10 i przypisz:
 	number -= 10;
-	std::cout << "Teraz, po zmniejszeniu o 10: " << number << '\n';
+	std::cout << "Następnie, po zmniejszeniu o 10: " << number << '\n';
 
-	// Pomnóz trzykrotnie:
+	// Pomnóz trzykrotnie i przypisz:
 	number *= 3;
-	std::cout << "Teraz, po pomnożeniu razy 3: " << number << '\n';
+	std::cout << "Następnie, po pomnożeniu razy 3: " << number << '\n';
 
-	// Podziel na 2:
+	// Podziel na 2 i przypisz:
 	number /= 2;
-	std::cout << "Teraz, po podzieleniu przez 2: " << number << '\n';
+	std::cout << "Następnie, po podzieleniu przez 2: " << number << '\n';
 
 	// Zwiększ wartość o 1 (inkrementacja):
 	number++;
-	std::cout << "Teraz, po zinkrementowaniu: " << number << '\n';
+	std::cout << "Następnie, po zinkrementowaniu: " << number << '\n';
 
 	// Zmniejsz wartość o 1 (dekrementacja):
 	number--;
-	std::cout << "Teraz, po zdekrementowaniu: " << number << '\n';
+	std::cout << "Następnie, po zdekrementowaniu: " << number << '\n';
 }
 ```
 

@@ -7,7 +7,12 @@ tags:				[warunki, if, else, else-if]
 hide_title:			true
 ---
 
-import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
+<!-- Components -->
+import Tabs			from "@theme/Tabs";
+import TabItem		from "@theme/TabItem";
+
+<!-- Presets -->
+import NotFinished	from "@site/i18n/pl/presets/NotFinished.mdx";
 
 <NotFinished/>
 
@@ -106,12 +111,29 @@ który wykona się, gdy warunek z `if`-a <u>nie zostanie spełniony</u>.
 :::danger Uwaga - brak średnika `;`
 Zauważ, że po nawiasie przy `if` i po `else` **nie stawiamy średnika**:
 
+<Tabs>
+<TabItem value="right" label="✔ Dobrze" default>
+
 ```cpp
 if (age >= 18) 
 // ...
 else
 // ...
 ```
+
+</TabItem>
+<TabItem value="wrong" label="❌ Źle">
+
+```cpp
+if (age >= 18);
+// ...
+else;
+// ...
+```
+
+</TabItem>
+</Tabs>
+
 :::
 
 Jeśli `if` lub `else` ma wykonać **tylko jedną** instrukcję, możemy użyć zapisu
@@ -140,15 +162,19 @@ Używają one zapisu prawie identycznego do matematycznego, z tą różnicą,
 że *lub równe*, uzyskujemy przez dodanie `=` po **prawej stronie** od `>` lub `<`.
 Oto ważniejsze z nich:
 
-- `a > b` - `a` większe od `b`
-- `a < b` - `a` mniejsze od `b`
-- `a >= b` - `a` większe lub równe `b`
-- `a <= b` - `a` mniejsze lub równe `b`
+| Operator w C++ | Matematyczny odpowiednik | Opis |
+| -------- | -------------- | ----------- |
+| `a > b` | a &gt; b | `a` większe niż `b` |
+| `a >= b` | a ≥ b | `a` większe lub równe `b` |
+| `a < b` | a &lt; b | `a` mniejsze niż `b` |
+| `a <= b` | a ≤ b | `a` mniejsze równe `b` |
 
 Oraz dwa jeszcze istotniejsze operatory:
 
-- `a == b` - `a` **równe** `b`
-- `a != b` - `a` **różne od** `b`
+| Operator w C++ | Matematyczny odpowiednik | Opis |
+| -------- | -------------- | ----------- |
+| `a == b` | a = b | `a` **równe** `b` |
+| `a != b` | a ≠ b | `a` **różne od** `b` |
 
 :::danger Uwaga
 W `if` do sprawdzenia czy `a` jest równe `b` używamy **podwójnego znaku równa się**: `==`
@@ -171,7 +197,7 @@ się, że używasz:
 Ciekawym przypadkiem jest operator negacji, który jest **jednoargumentowy**.
 To oznacza, że operuje tylko na jednym wyrażeniu. Zobaczmy to na przykładzie:
 
-```cpp
+```cpp title="🔹 Operator negacji"
 #include <iostream>
 
 int main()
@@ -369,7 +395,6 @@ int main()
 		std::cout << "Cena biletu: 18zł";
 	else
 		std::cout << "Cena biletu: 15zł";
-
 }
 ```
 

@@ -1,0 +1,244 @@
+---
+sidebar_position:	2
+sidebar_label:		"2. Using algorithms"
+title:				Using algorithms
+description:		"Lesson: using algorithms on vector in C++"
+hide_title:			true
+---
+
+<!-- Components -->
+import SwitchView		from "@site-comps/SwitchView";
+import Image			from "@site-comps/Image";
+import Columns			from "@site-comps/Columns";
+
+<!-- Presets -->
+import NotFinished		from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!-- Codes -->
+import AlgoIntroExampleCpp20		from "./_codes/algo-intro-example-cpp20.mdx";
+import AlgoIntroExampleUntilCpp20	from "./_codes/algo-intro-example-until-cpp20.mdx";
+
+import AlgosOverviewCpp20			from "./_codes/algos-overview-cpp20.mdx";
+import AlgosOverviewUntilCpp20		from "./_codes/algos-overview-until-cpp20.mdx";
+
+<NotFinished />
+
+# Using algorithms
+
+In the C++ standard library we find a lot of ready-made algorithms
+that we can use to manipulate vectors.
+
+:::caution C++ version
+We recommend that you use the C++ 20 version as the solutions are simpler.
+For people who, for some reason, cannot install a compiler that supports the latest standard,
+we will also include examples that work on an older version.
+:::
+
+To be able to use the algorithms, we need to add the following header to the code:
+
+```cpp
+#include <algorithm>
+```
+
+## Motivation
+
+1. [search for the smallest value ( std::ranges::min())](#the-smallest-value)
+2. [search for the smallest value ( std::ranges::max())](#the-greatest-value)
+3. [count how many times a given element occurs ( std::ranges::count())](#counting-the-occurrences)
+4. [reverse order ( std::ranges::reverse())](#reversing-order)
+5. [sort vector elements ( std::ranges::sort())](#sorting)
+
+## Algorithms
+
+At the beginning, let's create a simple program on which we will test the operation
+of the algorithms. Let's prepare an array of numbers:
+
+```cpp title="🔹 Numbers array"
+std::vector<int> numbers = { 22, 13, 27, 4 };
+```
+
+In any case, using the algorithm will come down to typing:
+
+<SwitchView content={
+		{
+			"cpp20":		<AlgoIntroExampleCpp20 />,		
+			"until-cpp20":	<AlgoIntroExampleUntilCpp20 />,		
+		}
+	}/>
+
+where instead of `<vector_name>` we insert the prepared above `numbers`.
+We will display its content after each operation using the `for` loop we learned earlier:
+
+```cpp title="🔹 Displaying each number in an array"
+for (int n : numbers)
+	std::cout << n << ' ';
+```
+
+### Demonstration
+
+First, let's see an example code using all these algorithms, and then we'll discuss them.
+
+<SwitchView content={
+		{
+			"cpp20":		<AlgosOverviewCpp20 />,
+			"until-cpp20":	<AlgosOverviewUntilCpp20 />,
+		}
+	}/>
+
+## Explaination
+
+### The smallest value
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-min.gif"
+		alt="Overview of the 'min' algorithm"
+	/>
+<br/>
+
+To find the smallest value inside a vector, we use [`std::ranges::min`](/docs/std/algo/ranges/min):
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::cout << std::ranges::min(numbers);
+```
+
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+std::cout << std::min(numbers.begin(), numbers.end());
+```
+
+			</div>		
+		}
+	}/>
+
+### The greatest value
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-max.gif"
+		alt="Overview of the 'max' algorithm"
+	/>
+<br/>
+
+To find the greatest value inside a vector, we use [`std::ranges::max`](/docs/std/algo/ranges/max) this way:
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::cout << std::ranges::max(numbers);
+```
+
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+std::cout << std::max(numbers.begin(), numbers.end());
+```
+
+			</div>		
+		}
+	}/>
+
+### Counting the occurrences
+
+:::note
+For the purposes of this algorithm, we're going to add one more value `13` to the end of the array.
+:::
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-count.gif"
+		alt="Overview of the 'count' algorithm"
+	/>
+<br/>
+
+[`count`](/docs/std/algo/ranges/count) is used to count the occurrences of elements, in this case, inside the vector. We use it like this:
+
+We can also write this result to a variable. We should use a special type `size_t` for this,
+which is simply a non-negative number (because the number of occurrences cannot be negative):
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+size_t count = std::ranges::count(numbers, 13);
+std::cout << "Occurrences of 13: " << count;
+```
+
+			</div>,
+			"until-cpp20":	<div>
+
+```cpp
+size_t count = std::count(numbers.begin(), numbers.end(), 13);
+std::cout << "Occurrences of 13: " << count;
+```
+
+			</div>		
+		}
+	}/>
+
+### Reversing the order
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-reverse.gif"
+		alt="Overview of the 'reverse' algorithm"
+	/>
+<br/>
+
+To reverse the order of the vector's elements, we use [`std::ranges::reverse`](/docs/std/algo/ranges/reverse/)
+&nbsp;<small>(or [`std::reverse`](/docs/std/algo/reverse/) before C++20)</small>.
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::ranges::reverse(numbers);
+```
+
+			</div>,
+			"until-cpp20": <div>
+
+```cpp
+std::reverse(numbers.begin(), numbers.end());
+```
+
+			</div>,
+		}
+	}/>
+
+### Sorting
+
+<Image center border maxheight="250px"
+		src="/img/tutorials/course/basic/arrays/algo-sort.gif"
+		alt="Działanie algorytmu 'sort'"
+	/>
+<br/>
+
+We use the [`sort`](/docs/std/algo/ranges/sort/) function like this:
+
+<SwitchView content={
+		{
+			"cpp20": <div>
+
+```cpp
+std::ranges::sort(numbers);
+```
+
+			</div>,
+			"until-cpp20": <div>
+
+```cpp
+std::sort(numbers.begin(), numbers.end());
+```
+
+			</div>,
+		}
+	}/>

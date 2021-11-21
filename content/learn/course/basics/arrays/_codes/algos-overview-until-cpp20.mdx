@@ -1,0 +1,76 @@
+import Columns			from "@site-comps/Columns";
+import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
+
+<Columns columns={['9fr', '3fr']}>
+<CustomCodeBlock maxLines={25} lineNumbers>
+
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+	std::vector<int> numbers = { 22, 13, 27, 4 };
+
+	int min = *std::min_element(numbers.begin(), numbers.end()); // 🟡
+	int max = *std::max_element(numbers.begin(), numbers.end()); // 🟡
+
+	std::cout << "The smallest: " << min << '\n';
+	std::cout << "The greatest: " << max << '\n';
+
+	// For the sake of demonstration of the "count"
+    // function I add a single 13 number to the end:
+	numbers.push_back(13);
+	
+	size_t count = std::count(numbers.begin(), numbers.end(), 13);
+	std::cout << "Occurrences of 13: " << count << '\n';
+
+	std::cout << "Before reversing:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::reverse(numbers.begin(), numbers.end());
+
+	std::cout << "\nAfter reversing:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::cout << "\nBefore sorting:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+
+	std::sort(numbers.begin(), numbers.end());
+
+	std::cout << "\nAfter sorting:\n";
+	for (int n : numbers)
+		std::cout << n << ' ';
+}
+```
+
+</CustomCodeBlock>
+<div>
+
+```plaintext title="Result"
+The smallest: 4
+The greatest: 27
+Occurrences of 13: 2
+Before reversing:
+22 13 27 4 13 
+After reversing:
+13 4 27 13 22 
+Before sorting:
+13 4 27 13 22 
+After sorting:
+4 13 13 22 27 
+```
+
+</div>
+</Columns>
+
+:::caution Note
+The code marked with 🟡 is more complicated and unfortunately in versions before C++20
+there is no other, simpler possibility. If you are using an older version of C++,
+consider [installing a compiler](/tools/compilers/) that supports the latest
+language standard.
+:::
