@@ -1,11 +1,474 @@
 ---
 sidebar_position:	8
 sidebar_label:		"8. Structures"
+title:				"Structures"
 description:		"Lesson: structures basics in C++"
+tags:				[structure, object, class, object-oriented-programming, object-oriented, oop]
+hide_title:			true
 ---
+
+<!-- Components -->
+import Columns			from "@site-comps/Columns";
+import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
+import Image			from "@site-comps/Image";
+
+<!-- Presets -->
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<NotFinished />
 
 # Structures
 
-import NotFinished from "@site/i18n/en/presets/NotFinished.mdx";
+In this lesson, you learn how to create data types made up of many
+smaller elements - what in C++ we call structures.
 
-<NotFinished />
+## Motivation
+
+<Image center
+		maxheight={200}
+		alt="Goblin enemy presentation"
+		src="/img/tutorials/course/basic/structures/GoblinEnemy.gif"
+		desc={<>Goblin image by <a href="https://luizmelo.itch.io/monsters-creatures-fantasy">LuizMelo</a></>}
+	/>
+<br/>
+
+If, for example, when creating a game 🎮, we want to include opponents in our program,
+we will usually have to write down some information about each of them.
+
+Consider what data about the enemies in the game can be useful? It can be, for example:
+
+- name 👾
+- health 💚
+- strength 💪
+
+etc.
+
+Using the knowledge we have acquired so far, if we wanted to write a program that stores this
+information, we could do it like this:
+
+```cpp
+#include <string>
+
+int main() {
+	std::string	enemyName = "Goblin";
+	float		enemyHealth = 50;
+	float		enemyStrength = 12;
+	// ...
+}
+```
+
+When we want to have more opponents in the game, we will encounter a problem,
+or rather inconvenience:
+
+If we use multiple arrays for this purpose:
+
+```cpp
+std::vector< std::string >	enemyNames;
+std::vector< float >		enemyHealth;
+std::vector< float >		enemyStrength;
+```
+
+then each opponent will be described under the same index in these tables:
+
+- `enemyNames[ index ]` describes the name
+- `enemyHealth[ index ]` describes life points
+- `enemyStrength[ index ]` describes the points of strength
+
+:::important
+This method involves "spreading" information about a single opponent across multiple tables.
+:::
+
+Adding one enemy to a set in such a program would look like this:
+
+```cpp
+enemyNames.push_back("Goblin");
+enemyHealth.push_back(50);
+enemyStrength.push_back(10);
+```
+
+The more information we want to store about our opponents, the more bothersome
+it will be. Fortunately, **structures** come to our aid here.
+
+## Creating structures
+
+Let's recall what data we need to store:
+
+- name 👾
+- life 💚
+- strength 💪
+
+We are about to add a structure that allows us to create an object that contains these 3 things.
+
+```cpp
+#include <string>
+
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+};
+
+int main()
+{
+	// We leave it empty for now
+}
+```
+
+The above code introduces a new **structure** - `Enemy`.
+
+:::important Remember
+A **structure** is a description, a pattern, a recipe for how to create
+an object (in this case, an enemy).
+:::
+
+To create a structure, we write its name after the `struct` keyword, then we put its contents
+between the curly braces `{` and `}`.
+
+The contents can be, for example, variables.
+
+<div id="semicolon-at-structure-end" />
+
+:::danger Semicolon
+Note the **obligatory** semicolon after the curly braces to close the structure definition:
+```cpp
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+	// highlight-next-line
+};
+```
+:::
+
+## Objects
+
+Here's how to create an object that uses the `Enemy` structure
+(which is treated as a formula for creating an object):
+
+```cpp
+int main()
+{
+	Enemy boss;
+}
+```
+
+Thus, we contained all these 3 fields (`name`, `health` and `strength`) inside one variable `boss`.
+
+:::note Naming
+From now on we will say that it `boss` is an object of the type `Enemy`.
+This means that it was created using `Enemy` structure as a formula.
+:::
+
+### Accessing fields
+
+As mentioned above, it `boss` contains 3 things (fields), i.e. it consists of three variables.
+To get to a specific member of this object, we need to use the following notation:
+
+```cpp title="🔹 Set the name of the boss to 'Ogre'"
+boss.name = "Ogre";
+```
+
+We use a dot `.` to refer to the object's field. In the same way, we can e.g.
+modify the enemy's *strength*:
+
+```cpp title="🔹 Modifying the fields of an object"
+boss.strength	= 50; // I set bosses strength to 50
+
+// Boss enables "fury" skill - strength increases
+// Health decreases by a half
+boss.strength	+= 25;
+boss.health		*= 0.5f;
+```
+
+... or display information about it:
+
+```cpp title="🔹 Using object fields"
+#include <iostream>
+#include <string>
+
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+};
+
+int main()
+{
+	// I create boss object
+	Enemy boss;
+	// I assign values to its fields
+	boss.name		= "Ogre";
+	boss.health		= 250;
+	boss.strength	= 50;
+
+	std::cout	<< boss.name		<< " has "
+				<< boss.health		<< " hp and "
+				<< boss.strength	<< " strength."
+				<< std::endl;
+}
+```
+
+### Passing objects to functions
+
+Nothing prevents you from creating a function that takes an object of a certain structure
+as a parameter. A good example will be just displaying information about an enemy:
+
+```cpp title="🔹 A function that displays information about an opponent"
+void printEnemyInfo(Enemy enemy)
+{
+	std::cout	<< enemy.name		<< " has "
+				<< enemy.health		<< " hp and "
+				<< enemy.strength	<< " strength."
+				<< std::endl;
+}
+```
+
+:::danger Order
+`printEnemyInfo` requires a type `Enemy` to exist **before** the function itself is defined.
+This means we need to put the function underneath the structure creation (see example below).
+:::
+
+Using the above information, we will create a "game" that will have two opponents:
+
+- ordinary enemy 👹:  
+**Goblin warrior**, `60` health, `14` strength
+
+- boss 💀:  
+**Ogre**, `250` health, `50` strength
+
+<CustomCodeBlock lineNumbers withTitle maxLines={25}>
+
+```cpp title="🔹 A fragment of a game code with an Ogre and a Goblin"
+#include <iostream>
+#include <string>
+
+// Creating struct
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+};
+
+// Function that display information about an enemy
+void printEnemyInfo(Enemy enemy)
+{
+	std::cout	<< enemy.name		<< " has "
+				<< enemy.health		<< " hp and "
+				<< enemy.strength	<< " strength."
+				<< std::endl;
+}
+
+// The main function
+int main()
+{
+	// I create boss and goblin objects
+	Enemy boss;
+	Enemy goblin;
+
+	// I setup goblin object fields
+	goblin.name		= "Goblin warrior";
+	goblin.health	= 60;
+	goblin.strength	= 14;
+
+	// I setup boss object fields
+	boss.name		= "Ogre";
+	boss.health		= 250;
+	boss.strength	= 50;
+
+	// and print information about them
+	printEnemyInfo(goblin);
+	printEnemyInfo(boss);
+}
+```
+
+</CustomCodeBlock>
+
+### Objects inside arrays
+
+We can put objects inside arrays just like normal variables:
+
+```cpp title="🔹 Vector of enemies"
+std::vector< Enemy > enemies;
+```
+
+Below is an example of how to add to such an array:
+
+```cpp title="🔹 Adding objects inside vector"
+// ...
+
+int main()
+{
+	std::vector< Enemy > enemies;
+
+	// (optional)
+	// A code block to limit the scope
+	// of local variables inside
+	{
+		// I create goblin variable 👉 locally 👈
+		Enemy goblin;
+		// I setup the fields
+		goblin.name		= "Goblin warrior";
+		goblin.health	= 60;
+		goblin.strength	= 14;
+
+		// I add the object to the vector
+		// highlight-next-line
+		enemies.push_back( goblin );
+	}
+	// 👈 from this moment, goblin exists ONLY inside the vector
+
+	// Print every enemy in the vector
+	for (Enemy enemy : enemies)
+		printEnemyInfo(enemy);
+}
+```
+
+:::tip Example
+After reading this lesson, review this sample program: [**👾 Battle Arena**](../example-programs/combat-arena)
+and its overview. There you will see how arrays and structures are used in practice.
+:::
+
+### Default field values
+
+We can give the structure elements default values, so we won't have to fill them in every time.
+
+A good example of using the default value is a variable that stores the total amount of damage
+an opponent has dealt. To start with, for each enemy, this value will have to be equal `0`.
+
+:::caution Field values
+If you leave the structure field with no default value , e.g .:
+```cpp
+struct Car
+{
+	int numberOfWheels;
+};
+```
+
+it doesn't mean `numberOfWheels` will be set to `0` at the moment of object creation,
+you have to do it **manually**!
+:::
+
+To assign a default value to a structure field, we use the usual initialization,
+known for creating variables:
+
+```cpp title="🔹 Default value for 'totalDamage' ⚔"
+// Creating the structure
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+
+	// highlight-next-line
+	float		totalDamage = 0;
+};
+```
+
+Now when we create some enemy:
+
+```cpp
+Enemy snake; // snake as an example
+```
+
+then the value of its field `totalDamage`
+
+```cpp
+snake.totalDamage
+```
+
+will be set to `0` automatically.
+
+You can find out about it, e.g. by printing it:
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+
+```cpp
+int main() {
+	Enemy snake;
+	snake.name = "Snake";
+	// 🟡 Note, I'm not setting "totalDamage" manually
+
+	std::cout	<< snake.name
+				<< " has dealt "
+				<< snake.totalDamage
+				<< " total damage";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="🔹 Result"
+Snake has dealt 0 total damage
+```
+
+</div>
+</Columns>
+
+## Potential errors
+
+<ImproveSection />
+
+Here is a list of common errors related to this lesson:
+
+### No semicolon after definition
+
+[Just for the record.](#semicolon-at-structure-end)
+
+### Invalid order
+
+Make sure the structure is defined **before** using it for the first time.
+
+**Wrong** code example:
+
+```cpp title="🔴 Incorrect order"
+/// ❌ Error: usage of type "Enemy" before its definition
+// highlight-next-line
+void printEnemyInfo(Enemy enemy)
+{
+	std::cout	<< enemy.name		<< " has "
+				<< enemy.health		<< " hp and "
+				<< enemy.strength	<< " strength."
+				<< std::endl;
+}
+
+// Creating the structure
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+};
+```
+
+:::tip
+This problem can be solved in a different, more convenient way than moving the function
+`printEnemyInfo` below the structure definition, with the so-called *forward declaration*.
+We will mention it later in the course.
+:::
+
+### Modifying inside structure definition
+
+Variables **cannot** be modified inside a structure definition.
+It is only possible to assign an initial value:
+
+```cpp title="🔴 Attempt to modify field in a wrong place"
+struct Enemy
+{
+	std::string	name;
+	float		health;
+	float		strength;
+
+	int			totalDamage = 0; // OK ✅
+
+	// ❌ Error: Attempt to modify field in a wrong place
+	// highlight-next-line
+	health = 250;
+};
+```
