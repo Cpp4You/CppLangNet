@@ -16,33 +16,33 @@ int main() {
 	int min = *std::min_element(numbers.begin(), numbers.end()); // 🟡
 	int max = *std::max_element(numbers.begin(), numbers.end()); // 🟡
 
-	std::cout << "Najmniejsza: " << min << '\n';
-	std::cout << "Największa: " << max << '\n';
+	std::cout << "The smallest: " << min << '\n';
+	std::cout << "The greatest: " << max << '\n';
 
-	// Na potrzebę prezentacji funkcji "count"
-	// dodaję jedną liczbę 13 na koniec:
+	// For the sake of demonstration of the "count"
+    // function I add a single 13 number to the end:
 	numbers.push_back(13);
 	
 	size_t count = std::count(numbers.begin(), numbers.end(), 13);
-	std::cout << "Wystąpień 13: " << count << '\n';
+	std::cout << "Occurrences of 13: " << count << '\n';
 
-	std::cout << "Przed odwróceniem:\n";
+	std::cout << "Before reversing:\n";
 	for (int n : numbers)
 		std::cout << n << ' ';
 
 	std::reverse(numbers.begin(), numbers.end());
 
-	std::cout << "\nPo odwróceniu:\n";
+	std::cout << "\nAfter reversing:\n";
 	for (int n : numbers)
 		std::cout << n << ' ';
 
-	std::cout << "\nPrzed posortowaniem:\n";
+	std::cout << "\nBefore sorting:\n";
 	for (int n : numbers)
 		std::cout << n << ' ';
 
 	std::sort(numbers.begin(), numbers.end());
 
-	std::cout << "\nPo posortowaniu:\n";
+	std::cout << "\nAfter sorting:\n";
 	for (int n : numbers)
 		std::cout << n << ' ';
 }
@@ -51,26 +51,26 @@ int main() {
 </CustomCodeBlock>
 <div>
 
-```plaintext title="Wynik"
-Najmniejsza: 4
-Największa: 27
-Wystąpień 13: 2
-Przed odwróceniem:
+```plaintext title="Result"
+The smallest: 4
+The greatest: 27
+Occurrences of 13: 2
+Before reversing:
 22 13 27 4 13 
-Po odwróceniu:
+After reversing:
 13 4 27 13 22 
-Przed posortowaniem:
+Before sorting:
 13 4 27 13 22 
-Po posortowaniu:
-4 13 13 22 27
+After sorting:
+4 13 13 22 27 
 ```
 
 </div>
 </Columns>
 
-:::caution Uwaga
-Zapis, który oznaczyłem znakiem 🟡, jest bardziej skomplikowany i niestety
-w wersjach przed C++20 nie innej, prostszej możliwości. Jeśli korzystasz
-ze starszej wersji C++, rozważ [zainstalowanie kompilatora](/tools/compilers/), który
-wspiera najnowszy standard języka.
+:::caution Note
+The code marked with 🟡 is more complicated and unfortunately in versions before C++20
+there is no other, simpler possibility. If you are using an older version of C++,
+consider [installing a compiler](/tools/compilers/) that supports the latest
+language standard.
 :::
