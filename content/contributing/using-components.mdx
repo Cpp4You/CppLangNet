@@ -14,16 +14,17 @@ import ProductCard 				from '@site-comps/ProductCard';
 We provide a few custom components that you can use inside documents.
 
 To import a component, use an `import` statement from the component's description.
-Put the import on the top of a document, right after the main heading:
+Put the import on the top of a document, right before the main heading, and after doc metadata.
 
 ```md
 ---
-sidebar_position: 1
+...
+hide_title: true
 ---
 
-# The document heading
-
 <!-- PUT IMPORTS HERE -->
+
+# The document heading
 ```
 
 Here's the list of our custom components.
