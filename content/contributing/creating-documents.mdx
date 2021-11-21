@@ -18,6 +18,26 @@ then ask if there's a need for such an article, or if the course edit would be r
 You can do that or create an issue directly on GitHub, however the communication is
 easier and faster on the Discord server.
 
+## Templates
+
+Right now we don't got doc templates, we will create them in the future, once we establish
+some kind of a standard.
+
+We have examples of good docs that you should visit and possibly use them as a temporary template:
+
+Documentation:
+
+- [std::array reference](/docs/std/containers/arrays/array/) - a good template for class summary page
+- [std::basic_string constructors](/docs/std/containers/strings/string/constructor/) - a good template for constructors or other methods
+- [std::basic_string::at](/docs/std/containers/strings/string/at/) - a good (?) template for class methods
+
+Learning:
+- [First program (Basics)](/learn/course/basics/first-program/)
+- [Structures (Basics)](/learn/course/basics/structures/)
+
+
+## Overview
+
 :::note
 Visit [this link](https://docusaurus.io/docs/create-doc) to learn how to create docs in Docusaurus.
 :::
@@ -34,13 +54,13 @@ class-constructors.mdx
 Start by filling a [metadata of the document](https://docusaurus.io/docs/next/api/plugins/@docusaurus/plugin-content-docs#markdown-frontmatter).
 Open it, and at the very top create a **document metadata** section.
 
-```mdx
+```md
 ---
-sidebar_position:	8
-sidebar_label:		"8. Structures"
-title:				"Structures"
-description:		"Lesson: structures basics in C++"
-tags:				[structure, object, class, object-oriented-programming, object-oriented, oop]
+sidebar_position:	1
+sidebar_label:		"1. Class constructors"
+title:				"Class constructors"
+description:		"Lesson: basics of class constructors in C++ language"
+tags:				[class, constructor, method, object, object-oriented-programming, object-oriented, oop]
 hide_title:			true
 ---
 ```
@@ -51,7 +71,7 @@ The `sidebar_position` field is **mandatory**, but you should fill other fields 
 `hide_title: true` should be only used when there is something between metadata and the Markdown H1 heading,
 for example:
 
-```mdx
+```md
 ---
 ...
 hide_title:			true
