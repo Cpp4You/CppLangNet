@@ -4,6 +4,9 @@ sidebar_position: 9
 
 # Using components
 
+import Image 					from "@site-comps/Image";
+import Columns 					from "@site-comps/Columns";
+import GoogleSlides				from "@site-comps/GoogleSlides";
 import ClassSummary 			from "@site-comps/ClassSummary";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 import ProductCard 				from '@site-comps/ProductCard';
@@ -11,21 +14,69 @@ import ProductCard 				from '@site-comps/ProductCard';
 We provide a few custom components that you can use inside documents.
 
 To import a component, use an `import` statement from the component's description.
-Put the import on the top of a document, right after the main heading:
+Put the import on the top of a document, right before the main heading, and after doc metadata.
 
 ```md
 ---
-sidebar_position: 1
+...
+hide_title: true
 ---
 
-# The document heading
-
 <!-- PUT IMPORTS HERE -->
+
+# The document heading
 ```
 
 Here's the list of our custom components.
 
+## `Image`
+
+Extended image component.
+
+Importing:
+
+```js
+import Image from '@site-comps/Image';
+```
+
+<SymbolTable noTraits>
+	<Symbol name="src"			desc="(required) image source, just like <img> HTML tag." />
+	<Symbol name="border"		desc="Whether to add full page width border around image (default: false)" />
+	<Symbol name="center"		desc="Whether to center the image" />
+	<Symbol name="desc"			desc="A centered description displayed below the image" />
+	<Symbol name="minwidth"		desc={<>A convenient way to specify <code>minWidth</code> of the image."</>} />
+	<Symbol name="width"		desc={<>A convenient way to specify <code>width</code> of the image."</>} />
+	<Symbol name="maxwidth"		desc={<>A convenient way to specify <code>maxWidth</code> of the image."</>} />
+	<Symbol name="minheight"	desc={<>A convenient way to specify <code>minHeight</code> of the image."</>} />
+	<Symbol name="height"		desc={<>A convenient way to specify <code>height</code> of the image."</>} />
+	<Symbol name="maxheight"	desc={<>A convenient way to specify <code>maxHeight</code> of the image."</>} />
+</SymbolTable>
+
+```jsx title="🔹 Image component example"
+<Image center border
+		maxheight={200}
+		alt="Goblin enemy presentation"
+		src="/img/tutorials/course/basic/structures/GoblinEnemy.gif"
+		desc={<>Goblin image by <a href="https://luizmelo.itch.io/monsters-creatures-fantasy">LuizMelo</a></>}
+	/>
+```
+
+Result:
+
+<hr/>
+
+<Image center border
+		maxheight={200}
+		alt="Goblin enemy presentation"
+		src="/img/tutorials/course/basic/structures/GoblinEnemy.gif"
+		desc={<>Goblin image by <a href="https://luizmelo.itch.io/monsters-creatures-fantasy">LuizMelo</a></>}
+	/>
+
+<hr/>
+
 ## `Columns`
+
+Splits children into columns.
 
 Importing:
 
@@ -33,35 +84,93 @@ Importing:
 import Columns from '@site-comps/Columns';
 ```
 
-:::caution
-TODO: description
+
+<SymbolTable noTraits>
+	<Symbol name="columns"		desc="(required) CSS column widths (array), see example below." />
+</SymbolTable>
+
+```jsx title="🔹 Columns component example"
+<Columns columns={["8fr", "4fr"]}>
+	<div>Contents of column 1</div>
+	<div>Contents of column 2</div>
+</Columns>
+```
+
+:::tip
+`Columns` component are often used to display code alongside its result.
+
+You can use a prepared "coderesult" snippet I've put in `.vscode-template`.
 :::
 
+Known issues:
+
+- column widths are not responsive
+
 ## `CustomCodeBlock`
+
+Adds additional functionality to markdown code blocks.
 
 Importing:
 
 ```js
 import CustomCodeBlock from '@site-comps/CustomCodeBlock';
 ```
+<SymbolTable noTraits>
+	<Symbol name="lineNumbers"	desc="Whether to add line numbers" />
+	<Symbol name="maxLines"		desc="Number of lines that when exceeded, causes a vertical scrollbar to appear." />
+	<Symbol name="withTitle"	desc="Option that should be added when code block has a title (necessary for proper maxLines calculation" />
+	<Symbol name="resizable"	desc="Whether user should be able to resize code block" />
+</SymbolTable>
 
-:::caution
-TODO: description
-:::
+Known issues:
+
+- user can resize beyond the height of the code block
 
 ## `GoogleSlides`
+
+Embeds a Google Slides presentation.
 
 Importing:
 
 ```js
 import GoogleSlides from '@site-comps/GoogleSlides';
 ```
+<SymbolTable noTraits>
+	<Symbol name="src"				desc={<>(required) The source of a Google Slides presentation (cut after <code>/embed</code>)</>} />
+	<Symbol name="aspectRatio"		desc={<>A number that describes <code>width</code> : <code>height</code> ratio (default: <code>16 / 9</code>) </>} />
+	<Symbol name="delay"			desc="Interval between automatic slide changes (milliseconds)" />
+	<Symbol name="autoStart"		desc={<>Whether to start the presentation after page load (default: <code>true</code>)</>} />
+	<Symbol name="loop"				desc={<>Whether to loop the presentation (default: <code>true</code>)</>} />
+	<Symbol name="fullWidth"		desc={<>Whether to use 100% (<code>true</code>) of page width or 80% (<code>false</code>) (default: <code>false</code>)</>} />
+</SymbolTable>
 
-:::caution
-TODO: description
-:::
+Example:
+
+```jsx
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vTsdQPMXKN90rcz4i515JK-rpUHjHTc5xIjGVtNJS8XSbloMNObHEBUSszvYi9I7tuKBNIdEKNFh1jk/embed"
+		aspectRatio={960 / 500}
+		delay={500}
+		centered
+	/>
+```
+
+Result:
+
+<hr/>
+
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vTsdQPMXKN90rcz4i515JK-rpUHjHTc5xIjGVtNJS8XSbloMNObHEBUSszvYi9I7tuKBNIdEKNFh1jk/embed"
+		aspectRatio={960 / 500}
+		delay={500}
+		centered
+	/>
+
+<hr/>
 
 ## `SymbolTable`
+
+A table that is used to document symbols and properties.
 
 Importing:
 

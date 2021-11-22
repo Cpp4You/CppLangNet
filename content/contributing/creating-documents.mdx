@@ -18,6 +18,26 @@ then ask if there's a need for such an article, or if the course edit would be r
 You can do that or create an issue directly on GitHub, however the communication is
 easier and faster on the Discord server.
 
+## Templates
+
+Right now we don't got doc templates, we will create them in the future, once we establish
+some kind of a standard.
+
+We have examples of good docs that you should visit and possibly use them as a temporary template:
+
+Documentation:
+
+- [std::array reference](/docs/std/containers/arrays/array/) - a good template for class summary page
+- [std::basic_string constructors](/docs/std/containers/strings/string/constructor/) - a good template for constructors or other methods
+- [std::basic_string::at](/docs/std/containers/strings/string/at/) - a good (?) template for class methods
+
+Learning:
+- [First program (Basics)](/learn/course/basics/first-program/)
+- [Structures (Basics)](/learn/course/basics/structures/)
+
+
+## Overview
+
 :::note
 Visit [this link](https://docusaurus.io/docs/create-doc) to learn how to create docs in Docusaurus.
 :::
@@ -31,16 +51,44 @@ it empty. **Pick a lowercase name without spaces, separated by hyphens**, for ex
 class-constructors.mdx
 ```
 
-Start by filling a [metadata of the document](https://docusaurus.io/docs/next/api/plugins/@docusaurus/plugin-content-docs#markdown-frontmatter). Open it, and at the very top create a **document metadata** section.
+Start by filling a [metadata of the document](https://docusaurus.io/docs/next/api/plugins/@docusaurus/plugin-content-docs#markdown-frontmatter).
+Open it, and at the very top create a **document metadata** section.
 
-```mdx
+```md
 ---
-sidebar_position: 4
-title: Class constructors
+sidebar_position:	1
+sidebar_label:		"1. Class constructors"
+title:				"Class constructors"
+description:		"Lesson: basics of class constructors in C++ language"
+tags:				[class, constructor, method, object, object-oriented-programming, object-oriented, oop]
+hide_title:			true
 ---
 ```
 
-The `sidebar_position` field is **mandatory**.
+The `sidebar_position` field is **mandatory**, but you should fill other fields too.
+
+:::danger
+`hide_title: true` should be only used when there is something between metadata and the Markdown H1 heading,
+for example:
+
+```md
+---
+...
+hide_title:			true
+---
+
+<!-- Components -->
+import Columns			from "@site-comps/Columns";
+
+<!-- Presets -->
+import NotFinished		from "@site/i18n/en/presetsNotFinished";
+
+# The title of the document
+```
+
+Do not use it if metadata is directly above `# The title of the document`, because
+Docusaurus will generate an additional H1 heading.
+:::
 
 For complete metadata list, please visit [this page](https://docusaurus.io/docs/next/api/plugins/@docusaurus/plugin-content-docs#markdown-frontmatter).
 

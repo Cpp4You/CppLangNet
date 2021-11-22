@@ -165,7 +165,7 @@ export default function ToolCard(props)
 {
 	const tool = ToolSummaryInfo[props.toolId];
 	return (
-		<ProductCard title={tool.title} img={tool.icon} author={tool.author} rating={tool.rating ? tool.rating : undefined}>
+		<ProductCard title={tool.title} img={tool.icon} author={tool.author} >
 			<ProductCard.Desc>
 				{props.children}
 			</ProductCard.Desc>
