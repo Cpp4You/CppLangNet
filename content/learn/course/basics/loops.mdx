@@ -1,11 +1,155 @@
 ---
 sidebar_position:	6
 sidebar_label:		"6. Loops"
-description:		"Lesson: loops basics in C++"
+title:				"Loops"
+description:		"Lesson: loops basics in C++ language"
+tags:				[loop, for, while, range-based-for]
+hide_title:			true
 ---
+
+<!-- Components -->
+import Image			from "@site-comps/Image";
+import Columns			from "@site-comps/Columns";
+
+<!-- Presets -->
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+
+<NotFinished/>
 
 # Loops
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+In this lesson, we'll make the program execute a given code multiple times, that is, we'll use a loop.
 
-<NotFinished/>
+## Motivation
+
+Loops have many uses, here are a few of them:
+
+- 👾 adding, for example, 10 new opponents to the level in the game
+- 🖥 displaying each element in an array
+- ➗ multiple calculations (e.g. counting factorials, fibonacci sequence)
+
+In the vector lesson, we already showed one loop that displayed
+all the elements of an array:
+
+```cpp title="🔹 Print each number from an array"
+for (int n : numbers)
+{
+	std::cout << n << ' ';
+}
+```
+
+This is the simplest version of a loop in C++.
+You will learn more about their types in the following sections.
+
+## Loop types
+
+- **`for`**
+	- range-based version
+	- basic version
+- **`while`**
+- **`do ... while`**
+
+The most common used are `for` and `while`, and we'll cover them in this lesson.
+If you want to read about the `do ... while` loop, see the article:
+[**`do ... while` loop**](articles/do-while).
+
+## Explaination
+
+### Range-based for
+
+This type of loop is most commonly used for working with arrays,
+although it can also be used in other ways.
+
+<Image center border maxheight="300px"
+		src="/img/tutorials/course/basic/loops/range-based-for-en.png"
+		alt="range-based 'for' loop scheme"
+		desc="Scheme"
+	/>
+<br/>
+
+In the example shown in the [**Motivation**](#motivation) section, there is a **range-based for** loop,
+which is a version of the `for` loop for the so-called ranges.
+
+An array as understood in C++ is also a range, so feel free to use it.
+
+The simplest example:
+
+```cpp title="🔹 Print each number from an array"
+std::vector<int> numbers = { 13, 42, -1, 0, -3, -5 };
+
+for (int n : numbers)
+{
+	std::cout << n << ' ';
+}
+```
+
+This loop sequentially traverses each element of the array `numbers` and writes it to the
+variable `n`. The block of code enclosed in the curly braces is then executed.
+In this case it is a simple printing of the number.
+
+:::caution Colon
+Note that the variable name `n` is followed by **a colon (`:`), not a semicolon (`;`)**!
+We do not use any equal sign (`=`) in this notation, because the value of each element in turn
+will be automatically assigned to `n`.
+:::
+
+<ImproveSection />
+
+## `while` loop
+
+<Image center border maxheight="300px"
+		src="/img/tutorials/course/basic/loops/while-en.png"
+		alt="'while' loop scheme"
+		desc="Scheme"
+	/>
+<br/>
+
+We are now intentionally moving into the `while` loop, rather than the basic `for`,
+as this will make the explanation easier. The while loop is simple.
+It executes the body of the loop until the condition is true:
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="🔹 Print numbers from 0 to 3"
+int number = 0;
+while (number <= 3)
+{
+	std::cout << number << ' ';
+	number++;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+0 1 2 3
+```
+
+</div>
+</Columns>
+
+The condition will be checked **before** each loop execution and as long as it is satisfied,
+i.e. as long as `number` is less than or equal to `3` in this case, the body will be executed.
+
+- printing the `number`
+- increasing `number` by 1
+
+After the last loop execution, the value of `number` will be equal to `4`,
+so the condition will not be satisfied, causing the loop to terminate and the computer
+to proceed with the next instructions.
+
+<ImproveSection />
+
+### `for` loop
+
+<Image center border maxheight="300px"
+		src="/img/tutorials/course/basic/loops/for-en.png"
+		alt="Basic 'for' loop scheme"
+		desc="scheme"
+	/>
+<br/>
+
+<ImproveSection />
