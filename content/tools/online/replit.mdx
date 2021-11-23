@@ -1,9 +1,143 @@
 ---
-sidebar_position: 1
+sidebar_position:	1
+sidebar_label:		Using Replit.com
+title:				Using Replit.com
+tags:				[editor, compiler, gcc, clang, tool, ide]
+description:		"Using Replit.com to program in C++ language"
+hide_title:			true
 ---
 
-# Using repl.it
+<!-- Components -->
+import Image			from '@site-comps/Image';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+<!-- Presets -->
+import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
 
 <NotFinished/>
+
+# Using Replit.com
+
+[**Replit**](https://replit.com) is a very accessible online environment that allows you to create
+applications in C++. An important advantage is that it has an interactive console.
+
+## Creating an account
+
+For some time now, Replit.com has required the creation of a free account on their site.
+You can do this by following this link: [https://replit.com/signup](https://replit.com/signup)
+
+Then complete the information below:
+
+<Image center
+		alt="Creating a Replit account"
+		src="/img/tutorials/tools/replit/sign-up-form.png"
+	/>
+
+## Creating a project
+
+Once you are logged in, use the C++ application pattern we have prepared by going to this link:
+
+[Replit C++20 Project Template](https://replit.com/@poetakodu/Project-Using-C20?v=1)
+
+Click **Fork repl**:
+
+<Image center
+		alt="Creating a new project from template"
+		src="/img/tutorials/tools/replit/fork.png"
+	/>
+
+:::note
+You can also create a default C++ project that the Replit website offers,
+but at the moment only Clang 7 will be available, which **does not support C++20**.
+:::
+
+## Using the editor
+
+Once you have created your project, you will be transferred to the code editing mode:
+
+<Image center
+		alt="C++ code editor"
+		src="/img/tutorials/tools/replit/editor-view.png"
+	/>
+<br/>
+
+The main view is made up of three panels:
+
+Panel | Contents
+---------|----------
+ Left | tools view, by default **file view** 🗃
+ Middle | **code editor** ✏
+ Right | **console** 🖥 and system terminal (*shell*)
+
+### Running the program
+
+▶ At the top you will find the **Run** button that starts the application.
+
+<Image center
+		alt		="Run button"
+		src		="/img/tutorials/tools/replit/run-button.png"
+	/>
+<br/>
+
+Before the program can be executed, its code must be compiled. This means that at the beginning
+you will see a command to compile the code in the console.
+
+- ✔ If the program code is correct, the line below will show the result of its operation.
+- ⚠ If the compiler detects any non-fatal problems on the code, it will warn you before running the program.
+- 🔴 If the code contains errors, the program will not be compiled or executed.
+
+<Tabs>
+	<TabItem value="ok" label="✔ Correct code" default>
+		<Image border center
+				alt		="Compilation and running a valid code"
+				src		="/img/tutorials/tools/replit/run-command-ok.png"
+				desc	="🟡 Compile command, 🟣 Result"
+			/>
+	</TabItem>
+	<TabItem value="warning" label="⚠ With a warning">
+		<Image border center
+				alt		="Compilation and running a code with warnings"
+				desc	="🟡 Compile command, 🟤 Warning, 🟣 Result"
+				src		="/img/tutorials/tools/replit/run-command-warning.png"
+			/>
+	</TabItem>
+	<TabItem value="error" label="🔴 With an error">
+		<Image border center
+				alt		="Compilation failed because of an error"
+				desc	="🟡 Compile command, 🔴 Error"
+				src		="/img/tutorials/tools/replit/run-command-error.png"
+			/>
+	</TabItem>
+</Tabs>
+
+### Editing the source code
+
+<ImproveSection />
+
+This environment supports all the basic functions that a beginner needs.
+
+<Image center
+		maxheight="400px"
+		alt		="Code editor view"
+		src		="/img/tutorials/tools/replit/only-editor.png"
+	/>
+<br/>
+
+### Keyboard shortcuts
+
+Replit is based on the same editor as Visual Studio Code, and therefore has similar keyboard shortcuts.
+In addition to the standard ones, it's worth testing these:
+
+Shortcut | Description
+---------|----------
+`Ctrl + Shift + P` or `F1`					| Open a command window
+Drag with middle mouse button				| Place multiple cursors on adjacent lines
+`Alt + LPM`									| Add a new cursor at the click location
+`Ctrl + /`									| Toggles comment on the selected fragment
+`Alt + 🔼`									| Move the current line up one line
+`Alt + 🔽`									| Move the current line down one line
+`Shift + Alt + 🔼`							| Duplicates the selected lines upwards
+`Shift + Alt + 🔽`							| Duplicates the selected lines downwards
+
