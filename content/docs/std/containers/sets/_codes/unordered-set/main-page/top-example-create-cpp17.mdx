@@ -1,0 +1,10 @@
+Since C++17 we can use Class Template Argument Deduction, the effect will be  the same.
+```cpp
+#include <unordered_set>
+
+int main() {
+  std::unordered_set ints{1, 2, 3, 2, 1, 4, 5, 5};
+
+ // Content: 1, 2, 3, 4, 5
+}
+```

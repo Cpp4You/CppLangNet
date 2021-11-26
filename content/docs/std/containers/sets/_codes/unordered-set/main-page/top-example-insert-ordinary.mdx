@@ -1,0 +1,15 @@
+No matter what, the set will always remain unique.
+```cpp
+#include <unordered_set>
+
+int main() {
+  std::unordered_set<int> ints;
+  
+  ints.insert(1);
+  ints.insert(2);
+  ints.insert(1);
+  ints.insert(2);
+
+  // Content: 1 2
+}
+```

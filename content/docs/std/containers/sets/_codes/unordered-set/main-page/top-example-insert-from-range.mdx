@@ -1,0 +1,13 @@
+We can also insert from other ranges, like in the construction.
+```cpp
+#include <unordered_set>
+#include <array>
+
+int main() {
+  std::array<int, 5> array = {1, 2, 3, 3, 4};
+  std::unordered_set<int> ints;
+
+  ints.insert(array.cbegin(), array.cend());
+
+  // Content: 1, 2, 3, 4
+}

@@ -1,0 +1,12 @@
+We can construct almost every container from other containers using iterators.
+```cpp
+#include <unordered_set>
+#include <array>
+
+int main() {
+  std::array<int, 5> array{1, 4, 3, 3, 2};
+  std::unordered_set<int> ints(array.cbegin(), array.cend());
+
+ // Content: 1, 2, 3, 4
+}
+```
