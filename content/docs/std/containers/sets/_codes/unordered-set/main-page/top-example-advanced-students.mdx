@@ -1,0 +1,55 @@
+We can create our own comparators by defining function objects with `operator()` overloaded.
+To create a custom hash for an object, we can create a specialization for it in the `std` namespace.
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_set>
+
+struct student {
+  std::string name;
+  std::string surname;
+  int age;
+
+  bool operator==(const student&) const noexcept = default;
+};
+
+/*
+ *	We need to define a specialization for std::hash for the unordered_set to work
+ *  properly.
+ */
+namespace std {
+
+  template <>
+  struct hash<student> {
+    std::size_t operator()(const student& obj) const noexcept {
+      constexpr auto str_hash = std::hash<std::string>();
+
+      return (str_hash(obj.name) * 31) ^ (str_hash(obj.surname) * 31) ^ obj.age;
+    }
+  }; 
+
+}
+
+struct student_comparator {
+  bool operator()(const student& first, const student& second) const noexcept {
+    return first == second; 
+  }
+};
+
+auto main() -> int {
+  using student_set = std::unordered_set<student, std::hash<student>, student_comparator>;
+  
+  const auto student1 = student("Philip", "Davies", 17);
+  const auto student2 = student("Philip", "Davies", 17);
+  const auto student3 = student("Philip", "Smith", 19);
+  const auto student4 = student("Jacob", "Jones", 19);
+
+  auto students = student_set{student1, student2, student3, student4};
+
+  for(const auto& student : students) {
+    std::cout << "Student: " << student.name << ' ' 
+							<< student.surname << ", " 
+							<< student.age << " years old.\n";
+  }
+}
+```

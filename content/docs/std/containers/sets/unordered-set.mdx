@@ -8,14 +8,32 @@ hide_title:			true
 
 import ClassSummary				from "@site-comps/ClassSummary";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import SwitchView 		from "@site-comps/SwitchView"
 import Columns					from "@site-comps/Columns";
 import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
 import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
 import Tabs						from "@theme/Tabs";
 import TabItem					from "@theme/TabItem";
+
 import TopCodeSimplifiedRegular from "./_codes/unordered-set/main-page/top-overview-simplified-regular.mdx";
 import TopCodeDetailedReguler from "./_codes/unordered-set/main-page/top-overview-detailed-regular.mdx";
 import TopCodeDetailedPmr from "./_codes/unordered-set/main-page/top-overview-detailed-pmr.mdx";
+
+import TopExampleCreateCpp17 from "./_codes/unordered-set/main-page/top-example-create-cpp17.mdx"
+import TopExampleCreateUntilCpp17 from "./_codes/unordered-set/main-page/top-example-create-until-cpp17.mdx"
+import TopExampleCreateFromRange from "./_codes/unordered-set/main-page/top-example-create-from-range.mdx"
+
+import TopExampleInsertOrdinary from "./_codes/unordered-set/main-page/top-example-insert-ordinary.mdx"
+import TopExampleInsertInitList from "./_codes/unordered-set/main-page/top-example-insert-many-at-once.mdx"
+import TopExampleInsertFromRange from "./_codes/unordered-set/main-page/top-example-insert-from-range.mdx"
+
+import TopExampleSearchFind from "./_codes/unordered-set/main-page/top-example-search-find.mdx"
+import TopExampleSearchCount from "./_codes/unordered-set/main-page/top-example-search-count.mdx"
+import TopExampleSearchContains from "./_codes/unordered-set/main-page/top-example-search-contains.mdx"
+
+import TopExampleAdvancedStudents from "./_codes/unordered-set/main-page/top-example-advanced-students.mdx"
+
+import TopDeductionGuides from "./_codes/unordered-set/main-page/top-deduction-guides.mdx"
 
 <NotFinished />
 
@@ -45,13 +63,56 @@ The `std::unordered_set` is an associative container for storing unique objects.
 The examples in this section are very simple ones. Navigate to [examples section at the bottom](#more-examples) for more.
 
 
+<Tabs>
+<TabItem value="create" label="Create" default>
+<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
+	<SwitchView content={
+			{
+				"until-cpp17": <TopExampleCreateUntilCpp17/>,
+				"cpp17": <TopExampleCreateCpp17/>,
+				"From range": <TopExampleCreateFromRange/>,
+			}
+	}/>
 
-<ImproveSection />
+:::caution Order of elements
+It's important to notice, that although in the examples' comments there's an arbitrary order chosen,
+the elements inside remain unordered (as the name of the container suggests), which means we aren't guaranteed
+to have any particular order when iterating over the unordered set. 
+:::
+
+</div>
+</TabItem>
+
+<TabItem value="insert" label="Insert">
+<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
+	<SwitchView content={
+		{
+			"Ordinary": <TopExampleInsertOrdinary/>,
+			"Many at once": <TopExampleInsertInitList/>,
+			"From range": <TopExampleInsertFromRange/>,
+		}
+	}/>
+</div>
+</TabItem>
+
+<TabItem value="search" label="Search">
+<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
+	<SwitchView content={
+		{
+			"Count": <TopExampleSearchCount/>,
+			"Find": <TopExampleSearchFind/>,
+			"Contains (since C++20)": <TopExampleSearchContains/>
+		}
+	}/>
+</div>
+</TabItem>
+</Tabs>
+
 
 ### Technical details
 
 <details>
-<summary>Technical definition of a unordered_set</summary>
+<summary>Technical definition of an unordered_set</summary>
 <div>
 Unordered set is an associative container that contains a set of unique objects of type Key. Search, insertion, and removal have average constant-time complexity.
 
@@ -69,19 +130,9 @@ std::unordered_set meets the requirements of Container, AllocatorAwareContainer,
 
 <SymbolTable noTraits>
 	<Symbol name="Key"		desc="The type of the stored values"/>
-	<Symbol name="Hash" 		desc="A unary callable, that takes an argument of type `Key`, and returns a unique value."/>
-	<Symbol name="KeyEqual" 		desc="A binary, callable predicate that takes two arguments of type `Key` and returns a bool."/>
-	<Symbol name="Allocator" 		desc="A class that manages the allocation and deallocation of memory."/>
-</SymbolTable>
-
-### Iterator invalidation
-
-<SymbolTable noTraits>
-	<Symbol name={<center><b>Operation</b></center>}	desc={<center><b>Invalidated</b></center>}/>
-	<Symbol name="All read only operations, swap, std::swap"	desc="Never"/>
-	<Symbol name="Clear, rehash, reverse, operator="	desc="Always"/>
-	<Symbol name="Insert, emplace, emplace_hiny"	desc="Only if causes rehash"/>
-	<Symbol name="Erase"	desc="Only to the element erased"/>
+	<Symbol name="Hash" 		desc={<>A unary callable, that takes an argument of type <code>Key</code>, and returns a unique value</>}/>
+	<Symbol name="KeyEqual" 		desc={<>A binary, callable predicate that takes two arguments of type <code>Key</code> and returns a bool</>}/>
+	<Symbol name="Allocator" 		desc="A class that manages the allocation and deallocation of memory"/>
 </SymbolTable>
 
 ## Type names
@@ -89,8 +140,8 @@ std::unordered_set meets the requirements of Container, AllocatorAwareContainer,
 <SymbolTable>
 	<Symbol pub name="key_type"				desc="Key"/>
 	<Symbol pub name="value_type"			desc="Key"/>
-	<Symbol pub name="size_type"				desc="Unsigned integer type (usually std::size_t)"/>
-	<Symbol pub name="difference_type"			desc="Signed integer type (usually std::ptrdiff_t)"/>
+	<Symbol pub name="size_type" 			desc={<>Unsigned integer type (usually <code>std::size_t</code>)</>}/>
+	<Symbol pub name="difference_type"	desc={<>Signed integer type (usually <code>std::ptrdiff_t</code>)</>}/>
 	<Symbol pub name="hasher"				desc="Hash"/>
 	<Symbol pub name="key_equal" 				desc="KeyEqual"/>
 	<Symbol pub name="allocator_type"			desc="Allocator"/>
@@ -106,7 +157,7 @@ can be used to iterate through a single bucket but not across buckets"/>
 	<Symbol pub name="const_local_iterator"			desc=" 	An iterator type whose category, value, difference, pointer and
 reference types are the same as const_iterator. This iterator
 can be used to iterate through a single bucket but not across buckets"/>
-	<Symbol pub name="node_type (since C++17)"			desc="a specialization of node handle representing a container node "/>
+	<Symbol pub name="node_type (since C++17)"			desc="A specialization of node handle representing a container node "/>
 <Symbol pub name="insert_return_type (since C++17)">
 Type describing the result of inserting a node_type, a specialization of
 
@@ -117,11 +168,19 @@ template <class Iter, class NodeType> struct /*unspecified*/ {
     NodeType node;
 };
 ```
-instantiated with template arguments iterator and node_type.
+instantiated with template arguments iterator and node_type
 </Symbol>
 </SymbolTable>
 
+## Iterator invalidation
 
+<SymbolTable noTraits>
+	<Symbol name={<center><b>Operation</b></center>}	desc={<center><b>Invalidated</b></center>}/>
+	<Symbol name="All read only operations, swap, std::swap"	desc="Never"/>
+	<Symbol name="Clear, rehash, reverse, operator="	desc="Always"/>
+	<Symbol name="Insert, emplace, emplace_hiny"	desc="Only if causes rehash"/>
+	<Symbol name="Erase"	desc="Only to the element erased"/>
+</SymbolTable>
 
 ## Member functions
 
@@ -284,11 +343,33 @@ instantiated with template arguments iterator and node_type.
 </SymbolTable>
 </ClassSummary>
 
-
-## Deduction guides
-
-<ImproveSection />
-
 ## More examples
 
-<ImproveSection />
+### Creating a custom hash and comparator.
+
+<div>
+	<TopExampleAdvancedStudents/>
+</div>
+<div>
+
+```plaintext title="Result"
+Student: Jacob Jones, 19 years old.
+Student: Philip Smith, 19 years old.
+Student: Philip Davies, 17 years old.
+```
+</div>
+
+:::note Custom hashes
+Note that although we've added four students into the set, we only see information about three of them being displayed.
+This is because there are two students with exactly the same data. When the hashes of both of them are being compared, they turn out to be the same,
+which then leads to a comparision of the two objects themselves (using `operator==`, hence the it's presence inside `student`). If the comparision tests positive,
+the new object (that compared the same as the one already inserted) is not being added.
+:::
+
+## Deduction guides
+<details>
+<summary>Click to expand</summary>
+<div>
+	<TopDeductionGuides/>
+</div>
+</details>

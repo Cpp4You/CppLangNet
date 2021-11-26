@@ -1,0 +1,10 @@
+The elements will stay unique even if we repeat them at the point of construction.
+```cpp
+#include <unordered_set>
+
+int main() {
+  std::unordered_set<int> ints{1, 2, 3, 2, 1, 4, 5, 5};
+
+ // Content: 1, 2, 3, 4, 5
+}
+```

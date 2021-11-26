@@ -1,0 +1,15 @@
+Since C++20 we simply use `.contains()` on the set to determine if the value exists.
+```cpp
+#include <unordered_set>
+#include <iostream>
+
+int main() {
+  std::unordered_set<int> ints{1, 2, 3, 4, 5};
+
+  if(ints.contains(3)) {
+    std::cout << "3 exists in the set.";
+  } else {
+    std::cout << "3 doesn't exist in the set.";
+  }
+}
+```
