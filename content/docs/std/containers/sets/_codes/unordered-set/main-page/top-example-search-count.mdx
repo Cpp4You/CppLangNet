@@ -1,4 +1,4 @@
-Instead of using `find` we can also use `.count()`, to determine the existence of an element in the set.
+`.count()` is an another method of determining the existence of an element in the set.
 ```cpp
 #include <unordered_set>
 #include <iostream>
@@ -6,7 +6,7 @@ Instead of using `find` we can also use `.count()`, to determine the existence o
 int main() {
   std::unordered_set<int> ints{1, 2, 3, 4, 5};
 
-  if(ints.count(3) == 1) { // or  simply if(ints.count(3)) { , same effect
+  if(ints.count(3) == 1) { // or  simply if(ints.count(3)) , same effect
     std::cout << "3 exists in the set.";
   } else {
     std::cout << "3 doesn't exist in the set.";
