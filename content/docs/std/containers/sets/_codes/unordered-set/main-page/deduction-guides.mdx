@@ -1,0 +1,87 @@
+### Deduction guides
+```cpp
+// (1)
+template< class InputIt,
+          class Hash = std::hash<iter_val_t<InputIt>>,
+          class Pred = std::equal_to<iter_val_t<InputIt>>,
+          class Alloc = std::allocator<iter_val_t<InputIt>> >
+unordered_set( InputIt, InputIt,
+         typename /*see below*/::size_type = /*see below*/,
+         Hash = Hash(), Pred = Pred(), Alloc = Alloc() )
+  -> unordered_set<iter_val_t<InputIt>, Hash, Pred, Alloc>;
+```
+```cpp
+// (2)
+template< class InputIt, class Alloc >
+unordered_set( InputIt, InputIt, typename /*see below*/::size_type, Alloc )
+  -> unordered_set<iter_val_t<InputIt>,
+              std::hash<iter_val_t<InputIt>>,
+              std::equal_to<iter_val_t<InputIt>>,
+              Alloc>;
+```
+```cpp
+// (3)
+template< class InputIt, class Hash, class Alloc >
+unordered_set( InputIt, InputIt, typename /*see below*/::size_type, Hash, Alloc )
+  -> unordered_set<iter_val_t<InputIt>, Hash,
+             std::equal_to<iter_val_t<InputIt>>, Allocator>;
+```
+> *`(1 - 3)`* allow deduction from an **iterator range**
+
+```cpp
+// (4)
+template< class T, class Allocator >
+unordered_set( std::initializer_list<T>, typename /*see below*/::size_type, Allocator )
+  -> unordered_set<T, std::hash<T>, std::equal_to<T>, Alloc>;
+```
+```cpp
+// (5)
+template< class T, class Hash, class Alloc >
+unordered_set( std::initializer_list<T>, typename /*see below*/::size_type, Hash, Alloc )
+  -> unordered_set<T, Hash, std::equal_to<T>, Alloc>;
+```
+```cpp
+// (6)
+template< class T,
+          class Hash = std::hash<T>,
+          class Pred = std::equal_to<T>,
+          class Alloc = std::allocator<T> >
+unordered_set( std::initializer_list<T>,
+         typename /*see below*/::size_type = /*see below*/,
+         Hash = Hash(), Pred = Pred(), Alloc = Alloc() )
+  -> unordered_set<T, Hash, Pred, Alloc>;
+```
+> *`(4- 6)`* allow deduction from a [**`std::initializer_list`**](#)
+
+Alias `iter_val_t` is defined as if follows:
+```cpp
+template< class InputIt >
+using iter_val_t = typename std::iterator_traits<InputIt>::value_type;
+```
+
+:::note
+Note that this alias isn't guaranteed to be found anywhere in the standard library. 
+It is defined solely for presentation purposes of these deduction guides and weren't
+present in the standard library at the point of writing this document.
+:::
+
+The `size_type` parameter type refers to the `size_type` member type of the type deduced by the deduction guide.
+
+### Overload resolution
+In order for any of the deduction guides to participate in overload resolution, 
+the folllowing requirements must be met:
+ - `InputIt` satisfies [`LegacyInputIterator`](#)
+ - `Alloc` satisfies [`Allocator`](#)
+ - `Hash` doesn't deduce to an integral type or doesn't satisfy [`Allocator`](#)
+ - `Pred` doesn't satisfy [`Allocator`](#)
+
+:::note
+The extent to which the library determines that a type does not satisfy [`LegacyInputIterator`](#) is **unspecified**,
+except that as a minimum:
+ - Integral types do not qualify as input iterators. 
+
+Likewise, the extent to which it determines that a type does not satisfy [`Allocator`](#) is **unspecified**,
+except that as a minimum:
+ - The member type `Alloc::value_type` must exist.
+ - The expression [`std::declval<Alloc&>().allocate(std::size_t{})`](#) must be well-formed when treated as an unevaluated operand.
+:::

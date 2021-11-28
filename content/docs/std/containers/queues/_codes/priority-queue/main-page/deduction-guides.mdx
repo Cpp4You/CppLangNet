@@ -1,0 +1,77 @@
+### Deduction guides
+```cpp
+// (1)
+template< class Comp, class Container >
+priority_queue( Comp, Container )
+  -> priority_queue<typename Container::value_type, Container, Comp>;
+```
+```cpp
+// (2)
+template< class Comp, class Container, class Alloc >
+priority_queue( Comp, Container, Alloc )
+  -> priority_queue<typename Container::value_type, Container, Comp>;
+```
+```cpp
+// (3)
+template< class InputIt, class Comp, class Container, class Alloc >
+priority_queue( InputIt, InputIt, Comp, Container, Alloc )
+  -> priority_queue<typename Container::value_type, Container, Comp>;
+```
+> *`(1 - 3)`* allow deduction from an **underlying container type**
+
+```cpp
+// (4)
+template< class InputIt, class Comp, class Alloc >
+priority_queue( InputIt, InputIt, Comp, Alloc )
+  -> priority_queue<iter_val_t<InputIt>,
+                    std::vector<iter_val_t<InputIt>, Alloc>, Comp>;
+```
+```cpp
+// (5)
+template< class InputIt, class Alloc >
+priority_queue( InputIt, InputIt, Alloc )
+  -> priority_queue<iter_val_t<InputIt>,
+                    std::vector<iter_val_t<InputIt>, Alloc>,
+                    std::less<iter_val_t<InputIt>>>;
+```
+```cpp
+// (6)
+template< class InputIt,
+          class Comp = std::less<iter_val_t<InputIt>>,
+          class Container = std::vector<iter_val_t<InputIt> >
+priority_queue( InputIt, InputIt, Comp = Comp(), Container = Container() )
+  -> priority_queue<iter_val_t<InputIt>, Container, Comp>;
+```
+> *`(4 - 6)`* allow deduction from an **iterator range**
+
+Alias `iter_val_t` is defined as if follows:
+```cpp
+template< class InputIt >
+using iter_val_t = typename std::iterator_traits<InputIt>::value_type;
+```
+
+:::note
+Note that this alias isn't guaranteed to be found anywhere in the standard library. 
+It is defined solely for presentation purposes of these deduction guides and weren't
+present in the standard library at the point of writing this document.
+:::
+
+### Overload resolution
+In order for any of the deduction guides to participate in overload resolution, 
+the folllowing requirements must be met:
+ - `InputIt` satisfies [`LegacyInputIterator`](#)
+ - `Comp` doesn't satisfy [`Allocator`](#)
+ - `Container` doesn't satisfy [`Allocator`](#)
+ - for *`(3)`* and *`(5)`*, (since C++23) `Alloc` satisfies [`Allocator`](#)
+ - for *`(2)`* and *`(4)`*, [`std::uses_allocator_v<Container, Alloc>`](#) is `true`
+
+:::note
+The extent to which the library determines that a type does not satisfy [`LegacyInputIterator`](#) is **unspecified**,
+except that as a minimum:
+ - Integral types do not qualify as input iterators. 
+
+Likewise, the extent to which it determines that a type does not satisfy [`Allocator`](#) is **unspecified**,
+except that as a minimum:
+ - The member type `Alloc::value_type` must exist.
+ - The expression [`std::declval<Alloc&>().allocate(std::size_t{})`](#) must be well-formed when treated as an unevaluated operand.
+:::

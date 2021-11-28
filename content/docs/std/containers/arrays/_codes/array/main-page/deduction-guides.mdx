@@ -1,0 +1,13 @@
+### Deduction guides
+```cpp
+// (1)
+template< class T, class... U >
+array( T, U... ) -> array<T, 1 + sizeof...(U)>;
+```
+> (1) allows deduction from a [**variadic parameter pack**](#)
+
+It's purpose is to provide an equivalent of [`std::experimental::make_array`](#).
+
+The program is ill-formed if any `U` is not the same as `T` ([`std::is_same_v<T, U>`](#)`&& ...`).
+
+An empty parameter pack is allowed, the type of `std::array` is `std::array<T, 1>` then. 

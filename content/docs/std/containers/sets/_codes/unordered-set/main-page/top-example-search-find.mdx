@@ -1,14 +1,13 @@
-We can use the `find` method to look for a specific value in the set.
-If the value isn't in the set the returned iterator will be equal to `.end()` or `.cend()`
+We can use the `.find()` method to look for a specific value in the set.
+If the value isn't in the set, the returned iterator will be equal to the end iterator (obtained by `.end()` or `.cend()`).
 ```cpp
 #include <unordered_set>
-#include <algorithm>
 #include <iostream>
 
 int main() {
   std::unordered_set<int> ints{1, 2, 3, 4, 5};
 
-  auto it = ints.find(3); 
+  const auto it = ints.find(3); // we can use auto to deduce the type of the iterator returned
 
   if(it != ints.cend()) {
     // if the iterator is not equal to ints.cend(), the value is in the set
@@ -17,3 +16,4 @@ int main() {
     std::cout << "3 doesn't exist in the set.";
   }
 }
+```

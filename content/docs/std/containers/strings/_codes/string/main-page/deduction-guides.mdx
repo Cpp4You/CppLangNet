@@ -1,0 +1,49 @@
+### Deduction guides
+```cpp
+// (1)
+template< class InputIt, class Alloc = std::allocator<
+                         typename std::iterator_traits<InputIt>::value_type> >
+basic_string( InputIt, InputIt, Alloc = Alloc() )
+  -> basic_string<typename std::iterator_traits<InputIt>::value_type,
+                std::char_traits<typename std::iterator_traits<InputIt>::value_type>,
+                Alloc>;
+```
+> *`(1)`* allows deduction from a **iterator range**
+
+```cpp
+// (2)
+template< class CharT,
+          class Traits,
+          class Alloc = std::allocator<CharT> >
+explicit basic_string( std::basic_string_view<CharT, Traits>, const Alloc& = Alloc() )
+  -> basic_string<CharT, Traits, Alloc>;
+```
+```cpp
+// (3)
+template< class CharT,
+          class Traits,
+          class Alloc = std::allocator<CharT>> >
+basic_string( std::basic_string_view<CharT, Traits>, typename /*see below*/::size_type,
+              typename /*see below*/::size_type, const Alloc& = Alloc() )
+    -> basic_string<CharT, Traits, Alloc>;
+```
+> *`(2)`* and *`(3)`* allow deduction from a [**`std::basic_string_view<CharT, Traits>`**](/docs/std/containers/strings/string_view)
+
+The `size_type` parameter type refers to the `size_type` member type of the type deduced by the deduction guide.
+
+### Overload resolution
+In order for any of the deduction guides to participate in overload resolution, 
+the folllowing requirements must be met:
+ - for *`(1)`*, `InputIt` satisfies [`LegacyInputIterator`](#)
+ - for *`(1 - 3)`*, `Alloc` satisfies [`Allocator`](#)
+
+:::note
+The extent to which the library determines that a type does not satisfy [`LegacyInputIterator`](#) is **unspecified**,
+except that as a minimum:
+ - Integral types do not qualify as input iterators. 
+
+Likewise, the extent to which it determines that a type does not satisfy [`Allocator`](#) is **unspecified**,
+except that as a minimum:
+ - The member type `Alloc::value_type` must exist.
+ - The expression [`std::declval<Alloc&>().allocate(std::size_t{})`](#) must be well-formed when treated as an unevaluated operand.
+:::
