@@ -186,24 +186,24 @@ Vector danych, dla których algorytm wywoła naszą lambdę.
 ```cpp
 std::vector<int> V = {1, 2, 3, 4, 5};
 	// highlight-next-line
-transform(V.begin(), [...]);
+std::transform(V.begin(), [...]);
 ```
 #### 2. Koniec
 Mówi algorytmowi gdzie kończy się wktor.
 ```cpp
 // highlight-next-line
-transform(V.begin(), V.end(), [...]);
+std::transform(V.begin(), V.end(), [...]);
 ```
 #### 3. Rezultat
 __Początek__ vector, do którego algorytm będzie zapisywał dane. __Musi mieć taki rozmiar jak vector, z którego dane są pobierane.__ Może być tym samym vector, z którego pobieramy dane.
 ```cpp
 std::vector<int> resultat;
 	// highlight-next-line
-transform(V.begin(), V.end(), resultat.begin(), [...]);
+std::transform(V.begin(), V.end(), resultat.begin(), [...]);
 
 	//highlight-start
 	// Też poprawnie ✅
-transform(V.begin(), V.end(), V.begin(), [...]);
+std::transform(V.begin(), V.end(), V.begin(), [...]);
 	// highlight-end
 ```
 
@@ -213,7 +213,7 @@ Najważniejsza rzecz w tym przykładzie. Nasza lambda musi przyjmować jeden arg
 ```cpp
 auto square = [](int a) { return a * a; };
 // highlight-next-line
-transform(V.begin(), V.end(), resultat.begin(), square);
+std::transform(V.begin(), V.end(), resultat.begin(), square);
 ```
 
 ### Złączmy teraz części kodu w całość
@@ -239,7 +239,7 @@ int main()
 	// highlight-next-line
 	auto square = [](int a) { return a * a; };
 	// highlight-next-line
-    transform(V.begin(), V.end(), V.begin(), square);
+    std::transform(V.begin(), V.end(), V.begin(), square);
 
 	std::cout << "Po użyciu algorytmu:\n";
 	for(auto a : V)
