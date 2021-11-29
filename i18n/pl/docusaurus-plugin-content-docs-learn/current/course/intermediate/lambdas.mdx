@@ -49,14 +49,14 @@ Możemy taką lambdę przypisać do obiektu:
 ```cpp
 auto lambda = [a, b] (int c, int d) { return a * b + c * d;};
 ```
-Lambda musi posiadać ciało i listę wychwytywania (może być pusta). Często spotyka się też listę argumentów. Reszta rzeczy (jak atrybuty, typ rezultatu itp.) nie są obowiązkowe, więc porozmawiamy o nich w lekcji drugiej.
+Lambda musi posiadać ciało i listę wychwytywania (może być pusta). Często spotyka się też listę argumentów. Reszta rzeczy (jak atrybuty, typ rezultatu itp.) nie jest obowiązkowa, więc porozmawiamy o niej w lekcji drugiej.
 Przyjrzyjmy się teraz poszczególnym częściom:
 
 #### 1. Lista wychwytywania (ang. capture list)
 Jak wiemy z lekcji o funkcjach, zmienne lokalne (np. z funkcji main) nie są znane w ciele innej funkcji. To samo tyczy się wyrażeń lambda. Aby zmienna lokalna była znana w ciele wyrażnia lambda należy dodać ją na listę wychwytywania.
 
 :::danger Edycja zmiennych
-Zmiennych wychwyconych nie można edytować. Jest sposób na obejście tego ograniczenia, jednak porozmawiamy o tym w lekcji drugiej.
+Zmiennych wychwyconych przez listę nie można edytować. Jest sposób na obejście tego ograniczenia, jednak porozmawiamy o tym w lekcji drugiej.
 :::
 
 #### 2. Lista argumentów
