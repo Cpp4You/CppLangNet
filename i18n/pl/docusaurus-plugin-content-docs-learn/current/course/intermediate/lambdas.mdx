@@ -7,24 +7,237 @@ hide_title:			true
 ---
 
 import NotFinished from "@site/i18n/pl/presets/NotFinished.mdx";
+import Columns			from "@site-comps/Columns";
+import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
+import Image			from "@site-comps/Image";
+import Tabs			from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
 
 <NotFinished />
 
 # Lambdy
 
-// TODO:
+W tej lekcji dowiesz się czym są i do czego mogą się przydać wyrażenia lambda.
 
-Podstawy:
+## Czym są te całe lambdy?
+Lambdy służa do tworzenia obiektów funkcyjnych, które można wywołać jak funkcje. 
+
+:::important *"Nienazwane funkcje"*
+Lambdy często nazywane w ten sposób, lecz nie jest to do końca poprawna nazwa. Lambdy mogą być nazwanym obiektem zdefiniowanym za pomocą słowa kluczowego `auto` lub typu `std::function` (o którym dowiemy się w lekcji drugiej o lambdach).
+:::
+
+## Do czego mogą nam się przydać?
+Lambdy przydają się często do algorytmów z biblioteki standardowej. W drugiej części lekcji o lambdach dowiemy się jak łatwo stworzyć taki algorytm samemu.
+
+## Definiowanie lambd
+
+
+
+
+<Image center
+		maxheight={470}
+		alt="Definiowanie lambdy"
+		src="/img/tutorials/course/intermediate/lambdas/Lambdas_pl.jpg"
+		desc={<></>}
+	/>
+<br/>
+Możemy taką lambdę przypisać do obiektu:
+
+```cpp
+auto lambda = [a, b] (int c, int d) { return a * b + c * d;};
+```
+Podstawowa lambda musi posiadać conajmniej ciało i listę wychwytywania. Często spotyka się też listę argumentów.
+Przyjrzyjmy się teraz poszczególnym częściom:
+
+#### 1. Lista wychwytywania (ang. capture list)
+Jak wiemy z lekcji o funkcjach, zmienne lokalne (np. z funkcji main) nie są znane w ciele innej funkcji. To samo tyczy się wyrażeń lambda. Aby zmienna lokalna była znana w ciele wyrażnia lambda należy dodać ją na listę wychwytywania.
+
+#### 2. Lista argumentów
+Działa tak samo jak w przypadku funkcji.
+
+#### 3. Ciało wyrażenia lambda
+Tutaj zapisujemy instrukcje, działamy na zmiennych itp. W ciele wyrażenia lambda może się znaleźć instrukcja `return`.
+
+
+
+
+### Proste przykłady
 
 ```cpp
 auto five = [] { return 5; };
 std::cout << five();
 ```
+Powyższy kod wypisze na ekranie: ```5```
 
+Następujący kod zawiera wyrażenie lambda z argumentem:
 ```cpp
 auto square = [](int x) { return x*x; };
 std::cout << square(5);
 ```
+Nasz obiekt funkcyjny `square` zwraca sześcian argumentu `x`.
+Rezultat programu: `25`
 
-// itd.
+:::danger Najczęstsze błędy
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="lambdas.cpp"
+#include <iostream>
+
+int function();
+int main()
+{
+	int A = 5;
+	
+	// highlight-start
+	// ❌ Zmienna A nie jest tutaj znana ❌
+	//auto addToA = [] (int b) { return A + b; };
+	// highlight-end
+
+	// highlight-start
+	// Poprawna definicja lambdy ✅
+	auto addToA = [A] (int b) { return A + b; };
+	std::cout << addToA(5) << "\n";
+	// highlight-end
+
+	// highlight-start
+	// ❌ Zmiennej B też tu nie znamy ❌
+	//auto addToB = [B] (int a) { return B + a; };
+	// highlight-end
+	function()
+}
+
+int function()
+{
+	int B = 7;
+	// highlight-start
+	// Poprawny zapis ✅
+	auto addToB = [B] (int a) { return B + a; };
+	std::cout << addToB(9);
+	// highlight-end
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+10
+16
+```
+
+</div>
+</Columns>
+:::
+
+## Prosty algorytm
+### `std::transform()`
+
+Oczywiście, aby użyć tego algorytmu, musimy dołączyć plik `algorithm`.
+
+Algorytm `std::transform()` wykonuje na każdym elemencie wektora jakąś modyfikację, a rezultat pracy wpisuje do wskazanego innego wektora.
+
+<Image center
+		maxheight={470}
+		alt="std::transform"
+		src="/img/tutorials/course/intermediate/lambdas/std-transform_pl.jpg"
+		desc={<></>}
+	/>
+<br/>
+
+#### 1. Początek
+Vector danych, dla których algorytm wywoła naszą lambdę.
+```cpp
+std::vector<int> V = {1, 2, 3, 4, 5};
+	// highlight-next-line
+transform(V.begin(), [...]);
+```
+#### 2. Koniec
+Mówi algorytmowi gdzie kończy się wktor.
+```cpp
+// highlight-next-line
+transform(V.begin(), V.end(), [...]);
+```
+#### 3. Rezultat
+__Początek__ vector, do którego algorytm będzie zapisywał dane. __Musi mieć taki rozmiar jak vector, z którego dane są pobierane.__ Może być tym samym vector, z którego pobieramy dane.
+```cpp
+std::vector<int> resultat;
+	// highlight-next-line
+transform(V.begin(), V.end(), resultat.begin(), [...]);
+
+	//highlight-start
+	// Też poprawnie ✅
+transform(V.begin(), V.end(), V.begin(), [...]);
+	// highlight-end
+```
+
+#### 4. Lambda
+Najważniejsza rzecz w tym przykładzie. Nasza lambda musi przyjmować jeden arguemnt takiego typu jak elementy vectora-źródła, a zwracać argument typu identycznego jak elementy vectora, w którym zapisywana są rezultaty.
+
+```cpp
+auto square = [](int a) { return a * a; };
+// highlight-next-line
+transform(V.begin(), V.end(), resultat.begin(), square);
+```
+
+### Złączmy teraz części kodu w całość
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="std::transform"
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	std::cout << "Przed użyciem algorytmu:\n";
+	for(auto a : V)
+	{
+		std::cout << a << " ";
+	}
+	std::cout << "\n\n";
+
+	std::vector<int> V = {1, 2, 3, 4, 5};
+	// highlight-next-line
+	auto square = [](int a) { return a * a; };
+	// highlight-next-line
+    transform(V.begin(), V.end(), V.begin(), square);
+
+	std::cout << "Po użyciu algorytmu:\n";
+	for(auto a : V)
+	{
+		std::cout << a << " ";
+	}
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+Przed użyciem algorytmu:
+1
+2
+3
+4
+5
+
+
+Po użyciu algorytmu:
+1
+4
+9
+16
+25
+```
+
+</div>
+</Columns>
+
+Więcej algorytmów poznamy w lekcji drugiej.
 
