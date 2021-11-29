@@ -16,14 +16,15 @@ import TabItem		from '@theme/TabItem';
 <NotFinished />
 
 # Lambdy
-
 W tej lekcji dowiesz się czym są i do czego mogą się przydać wyrażenia lambda.
 
-## Do czego mogą nam się przydać?
+## Motywacja
+
+### Do czego mogą nam się przydać?
 Lambdy przydają się często do algorytmów z biblioteki standardowej. W drugiej części lekcji o lambdach dowiemy się jak łatwo stworzyć taki algorytm samemu.
 
 
-## Czym są te całe lambdy?
+### Czym są te całe lambdy?
 Lambdy służa do tworzenia obiektów funkcyjnych, które można wywołać jak funkcje. 
 
 :::important *"Nienazwane funkcje"*
@@ -60,47 +61,6 @@ Działa tak samo jak w przypadku funkcji.
 #### 3. Ciało wyrażenia lambda
 Tutaj zapisujemy instrukcje, działamy na zmiennych itp. W ciele wyrażenia lambda może się znaleźć instrukcja `return`.
 
-
-
-
-## Czym są te całe lambdy?
-Lambdy służa do tworzenia obiektów funkcyjnych, które można wywałoać. 
-
-:::important *"Nienazwane funkcje"*
-Lambdy często nazywane w ten sposób, lecz nie jest to poprawna nazwa. Lambdy mogą być obiektem z nazwą zdefiniowanym za pomocą słowa kluczowego `auto` lub typu `std::function` (o którym dowiemy się w lekcji drugiej o lambdach).
-:::
-
-## Do czego mogą nam się przydać?
-Lambdy przydają się często do algorytmów z biblioteki standardowej. W drugiej części lekcji o lambdach dowiemy się jak stworzyć taki własny algorytm.
-
-## Definiowanie lambd
-
-
-
-
-<Image center
-		maxheight={370}
-		alt="Definiowanie lambdy"
-		src="/img/tutorials/course/intermediate/lambdas/Lambdas_pl.jpg"
-		desc={<></>}
-	/>
-<br/>
-Możemy taką lambdę przypisać do obiektu:
-
-```cpp
-auto lambda = [a, b] (int c, int d) { return a * b + c * d;};
-```
-Podstawowa lambda musi posiadać conajmniej ciało i listę wychwytywania. Często spotyka się też listę argumentów.
-Przyjrzyjmy się teraz poszczególnym częściom:
-
-#### 1. Lista wychwytywania (ang. capture list)
-Jak wiemy z lekcji o funkcjach, zmienne lokalne (np. z funkcji main) nie są znane w ciele innej funkcji. To samo tyczy się wyrażeń lambda. Zmienne lokalne dodane na listę wychwytywania są znane w wyrażeniu lambda.
-
-#### 2. Lista argumentów
-Działa tak samo jak w przypadku funkcji.
-
-#### 3. Ciało wyrażenia lambda
-Tutaj zapisujemy instrukcje, działamy na zmiennych itp. W ciele wyrażenia lambda może się znaleźć instrukcja `return`.
 
 
 
