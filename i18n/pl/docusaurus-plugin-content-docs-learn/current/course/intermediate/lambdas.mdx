@@ -49,11 +49,15 @@ Możemy taką lambdę przypisać do obiektu:
 ```cpp
 auto lambda = [a, b] (int c, int d) { return a * b + c * d;};
 ```
-Podstawowa lambda musi posiadać conajmniej ciało i listę wychwytywania. Często spotyka się też listę argumentów.
+Lambda musi posiadać ciało i listę wychwytywania (może być pusta). Często spotyka się też listę argumentów. Reszta rzeczy (jak atrybuty, typ rezultatu itp.) nie są obowiązkowe, więc porozmawiamy o nich w lekcji drugiej.
 Przyjrzyjmy się teraz poszczególnym częściom:
 
 #### 1. Lista wychwytywania (ang. capture list)
 Jak wiemy z lekcji o funkcjach, zmienne lokalne (np. z funkcji main) nie są znane w ciele innej funkcji. To samo tyczy się wyrażeń lambda. Aby zmienna lokalna była znana w ciele wyrażnia lambda należy dodać ją na listę wychwytywania.
+
+:::danger Edycja zmiennych
+Zmiennych wychwyconych nie można edytować. Jest sposób na obejście tego ograniczenia, jednak porozmawiamy o tym w lekcji drugiej.
+:::
 
 #### 2. Lista argumentów
 Działa tak samo jak w przypadku funkcji.
@@ -67,19 +71,47 @@ Tutaj zapisujemy instrukcje, działamy na zmiennych itp. W ciele wyrażenia lamb
 
 ### Proste przykłady
 
-```cpp
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="Prosta lambda"
 auto five = [] { return 5; };
 std::cout << five();
 ```
-Powyższy kod wypisze na ekranie: ```5```
 
-Następujący kod zawiera wyrażenie lambda z argumentem:
-```cpp
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+5
+```
+
+</div>
+</Columns>
+	
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="Następujący kod zawiera wyrażenie lambda z argumentem:"
 auto square = [](int x) { return x*x; };
 std::cout << square(5);
 ```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+25
+```
+
+</div>
+</Columns>
+
+
 Nasz obiekt funkcyjny `square` zwraca sześcian argumentu `x`.
-Rezultat programu: `25`
+
 
 :::danger Najczęstsze błędy
 
