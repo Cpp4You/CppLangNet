@@ -12,6 +12,13 @@ import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
 import Image			from "@site-comps/Image";
 import Tabs			from '@theme/Tabs';
 import TabItem		from '@theme/TabItem';
+import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
+import SwitchView		from "@site-comps/SwitchView";
+
+import TransformIntroExampleCpp20		from "./lambdas/_codes/transform-example-cpp20.mdx";
+import TransformIntroExampleUntilCpp20	from "./lambdas/_codes/transform-example-until-cpp20.mdx";
+
+
 
 <NotFinished />
 
@@ -19,7 +26,6 @@ import TabItem		from '@theme/TabItem';
 W tej lekcji dowiesz się czym są i do czego mogą się przydać wyrażenia lambda.
 
 ## Motywacja
-
 
 Lambdy przydają się często do algorytmów z biblioteki standardowej. W drugiej części lekcji o lambdach dowiemy się jak łatwo stworzyć taki algorytm samemu.
 
@@ -169,111 +175,25 @@ int function()
 :::
 
 ## Prosty algorytm
+
+:::caution Wersja C++
+Zalecamy korzystanie z wersji **C++20**, ponieważ rozwiązania z niej są prostsze.
+Dla osób, które z jakiegoś powodu nie mogą zainstalować kompilatora, który wspiera
+najnowszy standard, zamieścimy też przykłady działające na starszej wersji.
+:::
+
 ### `std::transform()`
 
 Oczywiście, aby użyć tego algorytmu, musimy dołączyć plik `algorithm`.
 
 Algorytm `std::transform()` wykonuje na każdym elemencie wektora jakąś modyfikację, a rezultat pracy wpisuje do wskazanego innego wektora.
 
-<Image center
-		maxheight={470}
-		alt="std::transform"
-		src="/img/tutorials/course/intermediate/lambdas/std-transform_pl.jpg"
-		desc={<></>}
-	/>
-<br/>
-
-#### 1. Początek
-Vector danych, dla których algorytm wywoła naszą lambdę.
-```cpp
-std::vector<int> V = {1, 2, 3, 4, 5};
-	// highlight-next-line
-transform(V.begin(), [...]);
-```
-#### 2. Koniec
-Mówi algorytmowi gdzie kończy się wktor.
-```cpp
-// highlight-next-line
-transform(V.begin(), V.end(), [...]);
-```
-#### 3. Rezultat
-__Początek__ vector, do którego algorytm będzie zapisywał dane. __Musi mieć taki rozmiar jak vector, z którego dane są pobierane.__ Może być tym samym vector, z którego pobieramy dane.
-```cpp
-std::vector<int> resultat;
-	// highlight-next-line
-transform(V.begin(), V.end(), resultat.begin(), [...]);
-
-	//highlight-start
-	// Też poprawnie ✅
-transform(V.begin(), V.end(), V.begin(), [...]);
-	// highlight-end
-```
-
-#### 4. Lambda
-Najważniejsza rzecz w tym przykładzie. Nasza lambda musi przyjmować jeden arguemnt takiego typu jak elementy vectora-źródła, a zwracać argument typu identycznego jak elementy vectora, w którym zapisywana są rezultaty.
-
-```cpp
-auto square = [](int a) { return a * a; };
-// highlight-next-line
-transform(V.begin(), V.end(), resultat.begin(), square);
-```
-
-### Złączmy teraz części kodu w całość
-
-<Columns spacing={40} columns={['7fr', '4fr']}>
-<div>
-
-```cpp title="std::transform"
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-int main()
-{
-	std::cout << "Przed użyciem algorytmu:\n";
-	for(auto a : V)
-	{
-		std::cout << a << " ";
-	}
-	std::cout << "\n\n";
-
-	std::vector<int> V = {1, 2, 3, 4, 5};
-	// highlight-next-line
-	auto square = [](int a) { return a * a; };
-	// highlight-next-line
-    transform(V.begin(), V.end(), V.begin(), square);
-
-	std::cout << "Po użyciu algorytmu:\n";
-	for(auto a : V)
-	{
-		std::cout << a << " ";
-	}
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-Przed użyciem algorytmu:
-1
-2
-3
-4
-5
-
-
-Po użyciu algorytmu:
-1
-4
-9
-16
-25
-```
-
-</div>
-</Columns>
+<SwitchView content={
+		{
+			"cpp20":		<TransformIntroExampleCpp20 />,
+			"until-cpp20":	<TransformIntroExampleUntilCpp20 />,
+		}
+	}/>
 
 Więcej algorytmów poznamy w lekcji drugiej.
 
