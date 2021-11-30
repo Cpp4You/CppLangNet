@@ -8,9 +8,11 @@ hide_title:			true
 ---
 
 import ClassSummary				from "@site-comps/ClassSummary";
+import CustomCodeBlock				from "@site-comps/CustomCodeBlock";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 import Columns					from "@site-comps/Columns";
 import SwitchView				from "@site-comps/SwitchView";
+import Image				from "@site-comps/Image";
 import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
 import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
 import Tabs						from "@theme/Tabs";
@@ -19,12 +21,19 @@ import TabItem					from "@theme/TabItem";
 <!------------------ Codes ----------------->
 
 <!-- Top Examples -->
-import TopExampleCreateCpp20			from "./_codes/array/main-page/top-example-create-cpp20.mdx";
-import TopExampleCreateCpp17			from "./_codes/array/main-page/top-example-create-cpp17.mdx";
-import TopExampleCreateUntilCpp17		from "./_codes/array/main-page/top-example-create-until-cpp17.mdx";
+import TopExampleCreateCpp20			from "./_codes/array/main-page/examples/top/create-cpp20.mdx";
+import TopExampleCreateCpp17			from "./_codes/array/main-page/examples/top/create-cpp17.mdx";
+import TopExampleCreateUntilCpp17		from "./_codes/array/main-page/examples/top/create-until-cpp17.mdx";
+import TopExampleStringLiteral from "./_codes/array/main-page/examples/top/create-string-literal.mdx";
 
-import TopExampleSortCpp20				from "./_codes/array/main-page/top-example-sort-cpp20.mdx";
-import TopExampleSortUntilCpp20			from "./_codes/array/main-page/top-example-sort-until-cpp20.mdx";
+import TopExampleFillAndPrint from "./_codes/array/main-page/examples/top/fill-and-print.mdx";
+
+import TopExampleSortCpp20				from "./_codes/array/main-page/examples/top/sort-cpp20.mdx";
+import TopExampleSortUntilCpp20			from "./_codes/array/main-page/examples/top/sort-until-cpp20.mdx";
+
+import FurtherExampleConcatTwoArrays	from "./_codes/array/main-page/examples/further/concat-two-arrays.mdx"
+import FurtherExampleTemporaryBuffer from "./_codes/array/main-page/examples/further/temporary-buffer.mdx"
+import FurtherExampleMinimalValue		from "./_codes/array/main-page/examples/further/minimal-value.mdx"
 
 <!-- Deduction Guides -->
 import DeductionGuides			from "./_codes/array/main-page/deduction-guides.mdx";
@@ -52,47 +61,14 @@ The examples in this section are very simple ones. Navigate to [examples section
 			"cpp20": <TopExampleCreateCpp20 />,
 			"cpp17": <TopExampleCreateCpp17 />,
 			"until-cpp17": <TopExampleCreateUntilCpp17 />,
-			"String literal": <>
-
-Note: this is only recommended if you don't have C++20, otherwise use `std::to_array`.
-
-```cpp
-#include <array>
-
-int main() {
-	std::array<char, 6> str = { "Hello" };
-	// Content: 'H','e','l','l','o', <nul>
-}
-```
-
-</>
+			"String literal": <TopExampleStringLiteral />
 		}
 	}/>
 </div>
 </TabItem>
 <TabItem value="fill" label="Fill and print">
 <div style={{ padding: "10px 20px", border: "1px solid gray" }}>
-
-```cpp
-#include <iostream>
-#include <array>
-
-int main()
-{
-	std::array<int, 4> playerScores{}; // initialize with zeros
-
-	for (int score : playerScores)
-		std::cout << score << ", ";
-
-	playerScores.fill(123);
-	playerScores.back() = 30;
-
-	std::cout << '\n';
-	for (int score : playerScores)
-		std::cout << score << ", ";
-}
-```
-
+	<TopExampleFillAndPrint />
 </div>
 </TabItem>
 <TabItem value="sort" label="Sort">
@@ -114,7 +90,9 @@ int main()
 The elements of an array are stored contiguously in memory.
 
 <p align="center">
-	<img style={{border: "1px solid gray", maxHeight: 250}} alt="Array elements in memory" src="/img/doc/array-elements-in-memory.png" />
+	<Image maxheight={250} 
+				 alt="Array elements in memory" 
+				 src="/img/doc/array-elements-in-memory.png"  />
 </p>
 
 ### Technical details
@@ -156,21 +134,18 @@ which is some unique value. The effect of calling `front()` or `back()` on a zer
 
 `std::array` satisfies the requirements of:
 
-- `Container`
-- `ReversibleContainer`
+- [`Container`](/docs/named_req/Container)
+- [`ReversibleContainer`](/docs/named_req/ReversibleContainer)
 
-except that default-constructed array is not empty and that the complexity of swapping is linear.
+except that default-constructed array is not empty and that the complexity of swapping is linear
 
 Satisfies the requirements of:
 
-- `ContiguousContainer` (since C++17)
-- `SequenceContainer` (partially)
+- [`ContiguousContainer`](/docs/named_req/ContiguousContainer) (since C++17)
+- [`SequenceContainer`](/docs/named_req/SequenceContainer) (partially)
 
 </div>
 </details>
-
-
-
 
 <ClassSummary name="array" namespaces="std" folder="array" headerName="array">
 
@@ -191,8 +166,8 @@ Satisfies the requirements of:
 	<Symbol pub name="const_reference"			desc={<code>value_type const&amp;</code>}/>
 	<Symbol pub name="pointer"					desc={<code>value_type*</code>}/>
 	<Symbol pub name="const_pointer"			desc={<code>value_type const*</code>}/>
-	<Symbol pub name="iterator"					desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type</code></>}/>
-	<Symbol pub name="const_iterator"			desc={<><a href="#"><code>LegacyRandomAccessIterator</code></a> to <code>value_type const</code></>}/>
+	<Symbol pub name="iterator"					desc={<><a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> to <code>value_type</code></>}/>
+	<Symbol pub name="const_iterator"			desc={<><a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> to <code>value_type const</code></>}/>
 	<Symbol pub name="reverse_iterator"			desc={<><a href="#"><code>std::reverse_iterator&lt;iterator&gt;</code></a></>}/>
 	<Symbol pub name="const_reverse_iterator"	desc={<><a href="#"><code>std::reverse_iterator&lt;const_iterator&gt;</code></a></>}/>
 </SymbolTable>
@@ -200,14 +175,14 @@ Satisfies the requirements of:
 ## Member functions
 
 <SymbolTable>	
-	<Symbol pub autoLink linkName="constructor" name="(constructor)">
-		Constructs an <code>array</code> following the rules of aggregate initialization.
-	</Symbol>
-	<Symbol pub autoLink linkName="destructor" name="(destructor)">
-		Destroys every element of the array.
-	</Symbol>
+	<Symbol pub name="(constructor)"
+			desc={<>Constructs an <code>array</code> following the rules of aggregate initialization.</>}
+		/>
+	<Symbol pub name="(destructor)"
+			desc="Destroys every element of the array."
+		/>
 	<Symbol pub autoLink linkName="operator_assign" name="operator="
-			desc="Overwrites every element of the array with the corresponding element of another array"
+			desc="Overwrites every element of the array with the corresponding element of another array."
 		/>
 </SymbolTable>
 
@@ -215,19 +190,19 @@ Satisfies the requirements of:
 
 <SymbolTable>	
 	<Symbol pub autoLink name="at"
-			desc={<>Accesses the specified element <b>with bounds checking</b></>}
+			desc={<>Accesses the specified element <b>with bounds checking.</b></>}
 		/>
 	<Symbol pub autoLink linkName="operator_index" name="operator[]"
-			desc={<>Accesses the element</>}
+			desc={<>Accesses the element.</>}
 		/>
 	<Symbol pub autoLink name="front"
-			desc="Returns the first element"
+			desc="Returns the first element."
 		/>
 	<Symbol pub autoLink name="back"
-			desc="Returns the last element"
+			desc="Returns the last element."
 		/>
 	<Symbol pub autoLink name="data"
-			desc="Returns a pointer to the first element of the underlying array"
+			desc="Returns a pointer to the first element of the underlying array."
 		/>
 </SymbolTable>
 
@@ -235,30 +210,30 @@ Satisfies the requirements of:
 
 <SymbolTable>	
 	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}
-			desc={<>Returns an <code>iterator/const_iterator</code> to the beginning</>}
+			desc={<>Returns an <code>iterator/const_iterator</code> to the beginning.</>}
 		/>
 	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}
-			desc={<>Returns an <code>iterator/const_iterator</code> to the end</>}
+			desc={<>Returns an <code>iterator/const_iterator</code> to the end.</>}
 		/>
 	<Symbol pub autoLink linkName="rbegin" name={<>rbegin<br/>crbegin</>}
-			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the beginning</>}
+			desc={<>Returns a reverse <code>iterator/const_iterator</code> to the beginning.</>}
 		/>
 	<Symbol pub autoLink linkName="rend" name={<>rend<br/>crend</>}
-			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the end</>}
+			desc={<>Returns a reverse <code>iterator/const_iterator</code> to the end.</>}
 		/>
 </SymbolTable>
 
 ### Capacity
 
 <SymbolTable>	
-	<Symbol pub autoLink name="empty">
-		Returns <code>true</code> if the container is empty, otherwise <code>false</code>.
-	</Symbol>
+	<Symbol pub autoLink name="empty"
+			desc={<>Returns <code>true</code> if the container is empty, otherwise <code>false</code>.</>}
+		/>
 	<Symbol pub autoLink name="size"
-			desc="Returns the number of elements"
+			desc="Returns the number of elements."
 		/>
 	<Symbol pub autoLink name="max_size"
-			desc="Returns the maximum possible number of elements"
+			desc="Returns the maximum possible number of elements."
 		/>
 </SymbolTable>
 
@@ -266,10 +241,10 @@ Satisfies the requirements of:
 
 <SymbolTable>
 	<Symbol pub autoLink name="fill"
-			desc="Fills the container with specified value"
+			desc="Fills the container with specified value."
 		/>
 	<Symbol pub autoLink name="swap"
-			desc="Swaps the contents"
+			desc="Swaps the contents."
 		/>
 </SymbolTable>
 
@@ -285,16 +260,16 @@ Satisfies the requirements of:
 				operator&gt;=<br/>
 				operator&lt;=&gt;
 			</>}
-			desc="Lexicographically compares the values in the array"
+			desc="Lexicographically compares the values in the array."
 		/>
 	<Symbol name={<>std::get <small>(std::array)</small></>}
-			desc={<>Accesses an element of the array</>}
+			desc={<>Accesses an element of the array.</>}
 		/>
 	<Symbol name={<>std::swap <small>(std::array)</small></>}
-			desc={<>Specializes the <a href="#">std::swap</a> algorithm</>}
+			desc={<>Specializes the <a href="#">std::swap</a> algorithm.</>}
 		/>
 	<Symbol name={<>std::to_array <small>(C++20)</small></>}
-			desc={<>creates a std::array object from a built-in array</>}
+			desc={<>Creates a <code>std::array</code> object from a built-in array.</>}
 		/>
 </SymbolTable>
 
@@ -304,18 +279,19 @@ Satisfies the requirements of:
 	<Symbol name={<>
 				std::tuple_size<small>&lt;std::array&gt; (C++11)</small><br/>
 			</>}
-			desc="obtains the size of an array"
+			desc="Obtains the size of an array."
 		/>
 	<Symbol name={<>
 				std::tuple_element<small>&lt;std::array&gt; (C++11)</small><br/>
 			</>}
-			desc="obtains the type of the elements of array"
+			desc="Obtains the type of the elements of an array."
 		/>
 </SymbolTable>
 </ClassSummary>
 
 
 ## Deduction guides (since C++17)
+
 <details>
 <summary>Click to expand</summary>
 <div>
@@ -327,36 +303,12 @@ Satisfies the requirements of:
 
 ### Using algorithms
 
-#### Find minimal value
-
 <Columns spacing="20px" columns={['8fr', '4fr']}>
 <div>
 
-```cpp
-#include <iostream>
-#include <array>
-#include <algorithm>
-
-namespace rg = std::ranges;
-
-int main()
-{
-	auto numbers = std::to_array({ 12, 3, 18, 9}); // C++20
-	
-	// Find minimal element
-	auto minIt = rg::min_element(numbers); // C++20
-
-	// obtain value:
-	auto value = *minIt;
-	// find position:
-	auto index = std::distance(numbers.begin(), minIt);
-
-	
-	std::cout	<< "Min: "			<< value
-				<< ", at index: "	<< index
-				<< std::endl;
-}
-```
+<CustomCodeBlock withTitle>
+	<FurtherExampleMinimalValue/>
+</CustomCodeBlock>
 
 </div>
 <div>
@@ -370,80 +322,16 @@ Min: 3, at index: 1
 
 ### Advanced
 
-#### Using array as a temporary buffer
-
-```cpp
-#include <fstream>
-#include <array>
-#include <string>
-
-std::string readFile(std::istream& file)
-{
-	constexpr size_t BUFFER_SIZE	= 16 * 1024;		// 16 KB
-	constexpr size_t RESERVE_SIZE	= 1 * 1024 * 1024;	// 1 MB
-	std::string result;
-	result.reserve(RESERVE_SIZE); // 1 MB
-
-	std::array<char, BUFFER_SIZE> buf;
-
-	while(file.read(buf.data(), buf.size()))
-		result.append(buf.data(), buf.data() + file.gcount());
-
-	result.append(buf.data(), buf.data() + file.gcount());
-	return result;
-}
-
-// Example usage:
-int main()
-{
-	std::ifstream file("hello.txt");
-	if (file.is_open())
-	{
-		auto fileContents = readFile(file);
-		// ...
-	}
-}
-```
-
-#### Concat two arrays
+<CustomCodeBlock withTitle>
+	<FurtherExampleTemporaryBuffer/>
+</CustomCodeBlock>
 
 <Columns spacing="20px" columns={['8fr', '4fr']}>
 <div>
 
-```cpp
-#include <iostream>
-#include <array>
-
-template <typename T, size_t N1, size_t N2>
-std::array<T, N1 + N2> concat(
-		std::array<T, N1> const& lhs,
-		std::array<T, N2> const& rhs
-	)
-{
-	std::array<T, N1 + N2> result;
-	
-	// Copy left array
-	for (size_t i = 0; i < lhs.size(); ++i)
-		result[i] = lhs[i];
-
-	// Copy right array
-	for (size_t i = 0; i < rhs.size(); ++i)
-		result[i + lhs.size()] = rhs[i];
-
-	return result;
-}
-
-int main()
-{
-	auto left	= std::to_array({1, 2, 3});
-	auto right	= std::to_array({4, 5, 6});
-	
-	auto both	= concat(left, right);
-
-	for (int elem : both)
-		std::cout << elem << ", ";
-}
-```
+<CustomCodeBlock withTitle>
+	<FurtherExampleConcatTwoArrays/>
+</CustomCodeBlock>
 
 </div>
 <div>

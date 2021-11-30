@@ -8,6 +8,6 @@ array( T, U... ) -> array<T, 1 + sizeof...(U)>;
 
 It's purpose is to provide an equivalent of [`std::experimental::make_array`](#).
 
-The program is ill-formed if any `U` is not the same as `T` ([`std::is_same_v<T, U>`](#)`&& ...`).
+The program is ill-formed if any `U` is not the same as `T` ([`std::is_same_v<T, U>`](#)` && ...`).
 
 An empty parameter pack is allowed, the type of `std::array` is `std::array<T, 1>` then. 
