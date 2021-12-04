@@ -56,6 +56,7 @@ The examples in this section are very simple ones. Navigate to [examples section
 <Tabs>
 <TabItem value="create" label="Create" default>
 <div style={{ padding: "10px 20px", border: "1px solid gray" }}>
+
 <SwitchView content={
 		{
 			"cpp20": <TopExampleCreateCpp20 />,
@@ -64,11 +65,14 @@ The examples in this section are very simple ones. Navigate to [examples section
 			"String literal": <TopExampleStringLiteral />
 		}
 	}/>
+
 </div>
 </TabItem>
 <TabItem value="fill" label="Fill and print">
 <div style={{ padding: "10px 20px", border: "1px solid gray" }}>
+
 	<TopExampleFillAndPrint />
+
 </div>
 </TabItem>
 <TabItem value="sort" label="Sort">
@@ -176,7 +180,7 @@ Satisfies the requirements of:
 
 <SymbolTable>	
 	<Symbol pub name="(constructor)"
-			desc={<>Constructs an <code>array</code> following the rules of aggregate initialization.</>}
+			desc="Constructs an array following the rules of aggregate initialization."
 		/>
 	<Symbol pub name="(destructor)"
 			desc="Destroys every element of the array."
@@ -193,7 +197,7 @@ Satisfies the requirements of:
 			desc={<>Accesses the specified element <b>with bounds checking.</b></>}
 		/>
 	<Symbol pub autoLink linkName="operator_index" name="operator[]"
-			desc={<>Accesses the element.</>}
+			desc="Accesses the element."
 		/>
 	<Symbol pub autoLink name="front"
 			desc="Returns the first element."
@@ -263,7 +267,7 @@ Satisfies the requirements of:
 			desc="Lexicographically compares the values in the array."
 		/>
 	<Symbol name={<>std::get <small>(std::array)</small></>}
-			desc={<>Accesses an element of the array.</>}
+			desc="Accesses an element of the array."
 		/>
 	<Symbol name={<>std::swap <small>(std::array)</small></>}
 			desc={<>Specializes the <a href="#">std::swap</a> algorithm.</>}
@@ -295,7 +299,9 @@ Satisfies the requirements of:
 <details>
 <summary>Click to expand</summary>
 <div>
+
 	<DeductionGuides/>
+
 </div>
 </details>
 
