@@ -16,6 +16,7 @@ import LLVMIcon			from '@site/static/img/icons/products/llvm.png';
 import ReplitIcon		from '@site/static/img/icons/products/replit.svg';
 
 import Translate		from '@docusaurus/Translate';
+import useBaseUrl		from '@docusaurus/useBaseUrl';
 import Lightbox			from '@site-comps/Lightbox';
 import thumbnailStyles	from '@site/src/css/components/Thumbnail.module.scss';
  
@@ -184,11 +185,11 @@ export default function ToolCard(props)
 									trigger={
 										tool.galleryThumbnail
 										?
-											<GalleryThumbnail src={tool.galleryThumbnail} />
+											<GalleryThumbnail src={useBaseUrl(tool.galleryThumbnail)} />
 										:
 										<a href="#"><Translate>🖼 Gallery</Translate></a>
 									}
-									images={tool.gallery}
+									images={tool.gallery.map(l => useBaseUrl(l))}
 								/>
 						</li>
 					}
