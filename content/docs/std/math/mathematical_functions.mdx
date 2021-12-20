@@ -1,0 +1,422 @@
+---
+sidebar_position:	2
+title:				Mathematical functions
+sidebar_label:		Mathematical functions
+description:		Listing of common mathematical functions
+tags:				[math, mathematical functions]
+hide_title:			true
+---
+
+import ClassSummary				from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem					from "@theme/TabItem";
+
+# Common mathematical functions
+
+## Functions
+<SymbolTable noTraits>
+Defined in header <code>&lt;cstdlib&gt;</code><br/>
+	<Symbol autoLink linkName="abs" name={<>
+				abs<br/>
+				labs<br/>
+				llabs<br/>
+			</>} desc="Computes absolute value of an integral value (|x|)"/>
+	<Symbol autoLink linkName="div" name={<>
+				div<br/>
+				ldiv<br/>
+				lldiv<br/>
+			</>} desc="Computes quotient and remainder of integer division"/>
+Defined in header <code>&lt;cinttypes&gt;</code>
+	<Symbol autoLink linkName="absmax" name={<>
+				abs<br/>
+				imaxabs<br/>
+			</>} desc="Computes absolute value of an integral value (|x|)"/>
+	<Symbol autoLink linkName="divmax"name={<>
+				div<br/>
+				imaxdiv<br/>
+			</>} desc="Computes quotient and remainder of integer division"/>
+</SymbolTable>
+
+Defined in header <code>&lt;cmath&gt;</code>
+### Basic operations
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="abs" name={<>
+				abs<br/>
+				fabs<br/>
+				fabsf<br/>
+				fabsl<br/>
+			</>} desc="Absolute value of a floating point value (|x|)"/>
+	<Symbol autoLink linkName="fmod" name={<>
+				fmod<br/>
+				fmodf<br/>
+				fmodl<br/>
+			</>} desc="Remainder of the floating point division operation"/>
+	<Symbol autoLink linkName="remainder" name={<>
+				remainder<br/>
+				remainderf<br/>
+				remainderl<br/>
+			</>} desc="Signed remainder of the division operation"/>
+	<Symbol autoLink linkName="remquo" name={<>
+				remquo<br/>
+				remquof<br/>
+				remquol<br/>
+			</>} desc="Signed remainder as well as the three last bits of the division operation"/>
+	<Symbol autoLink linkName="fma" name={<>
+				fma<br/>
+				fmaf<br/>
+				fmal<br/>
+			</>} desc="Fused multiply-add operation"/>
+	<Symbol autoLink linkName="fmax" name={<>
+				fmax<br/>
+				fmaxf<br/>
+				fmaxl<br/>
+			</>} desc="Larger of two floating-point values"/>
+	<Symbol autoLink linkName="fmin" name={<>
+				fmin<br/>
+				fminf<br/>
+				fminl<br/>
+			</>} desc="Smaller of two floating point values"/>
+	<Symbol autoLink linkName="fdim" name={<>
+				fdim<br/>
+				fdimf<br/>
+				fdiml<br/>
+			</>} desc="Positive difference of two floating point values (max(0, x - y))"/>
+	<Symbol autoLink linkName="nan" name={<>
+				nan<br/>
+				nanf<br/>
+				nanl<br/>
+			</>} desc="not-a-number (NaN)"/>
+</SymbolTable>
+
+### Exponential functions
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="exp" name={<>
+				exp<br/>
+				expf<br/>
+				expl<br/>
+			</>} desc={<>Returns e raised to the given power (e<sup>x</sup>)</>}/>
+	<Symbol autoLink linkName="exp2" name={<>
+				exp2<br/>
+				exp2f<br/>
+				exp2l<br/>
+			</>} desc={<>Returns 2 raised to the given power (2<sup>x</sup>)</>}/>
+	<Symbol autoLink linkName="expml" name={<>
+				expml<br/>
+				expmlf<br/>
+				expmll<br/>
+			</>} desc={<>Returns e raised to the given power, minues one (e<sup>x</sup> - 1)</>}/>
+	<SymbolautoLink linkName="log" name={<>
+				log<br/>
+				logf<br/>
+				logl<br/>
+			</>} desc={<> Computes natural (base e) logarithm (ln x)</>}/>
+	<Symbol autoLink linkName="log10" name={<>
+				log10<br/>
+				log10f<br/>
+				log10l<br/>
+			</>} desc={<>Computes common (base 10) logarithm (log<sub>10</sub>x)</>}/>
+	<Symbol autoLink linkName="log2" name={<>
+				log2<br/>
+				log2f<br/>
+				log2l<br/>
+			</>} desc={<>Base 2 logarithm of the given number (log<sub>2</sub>x)</>}/>
+	<Symbol autoLink linkName="loglp" name={<>
+				loglp<br/>
+				loglpf<br/>
+				loglpl<br/>
+			</>} desc={<>Natural logarithm (to base e) of 1 plus the given number(ln(1 + x))</>}/>
+</SymbolTable>
+
+### Power functions
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="pow" name={<>
+				pow<br/>
+				powf<br/>
+				powl<br/>
+			</>} desc={<>Raises a number to the given power (x<sup>y</sup>)</>}/>
+	<Symbol autoLink linkName="sqrt" name={<>
+				sqrt<br/>
+				sqrtf<br/>
+				sqrtl<br/>
+			</>} desc={<>Computes square root (<span>&#8730;</span>x)</>}/>
+	<Symbol autoLink linkName="cbrt" name={<>
+				cbrt<br/>
+				cbrtf<br/>
+				cbrtl<br/>
+			</>} desc={<>Computes cubic root (<span>&#8731;</span>x)</>}/>
+	<Symbol autoLink linkName="hypot" name={<>
+				hypot<br/>
+				hypotf<br/>
+				hypotl<br/>
+			</>} desc={<>Computes square root of the sum of the squares of two or three given numbers (<span>&#8730;</span>x<sup>2</sup>+y<sup>2</sup>)</>}/>
+</SymbolTable>
+
+
+### Trigonometric functions
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="sin" name={<>
+				sin<br/>
+				sinf<br/>
+				sinl<br/>
+			</>} desc={<>Computes sine (sin x)</>}/>
+	<Symbol autoLink linkName="cos" name={<>
+				cos<br/>
+				cosf<br/>
+				cosl<br/>
+			</>} desc={<>Computes cosine (cos x)</>}/>
+	<Symbol autoLink linkName="tan" name={<>
+				tan<br/>
+				tanf<br/>
+				tanl<br/>
+			</>} desc={<>Computes tangent (tan x)</>}/>
+	<Symbol autoLink linkName="asin" name={<>
+				asin<br/>
+				asinf<br/>
+				asinl<br/>
+			</>} desc={<>Computes arc sine (arcsin x)</>}/>
+	<Symbol autoLink linkName="acos" name={<>
+				acos<br/>
+				acosf<br/>
+				acosl<br/>
+			</>} desc={<>Computes arc cosine (arccos x)</>}/>
+	<Symbol autoLink linkName="atan" name={<>
+				atan<br/>
+				atanf<br/>
+				atanl<br/>
+			</>} desc={<>Computes arc tangent (arctan x)</>}/>
+	<Symbol autoLink linkName="atan2" name={<>
+				atan2<br/>
+				atan2f<br/>
+				atan2l<br/>
+			</>} desc={<>Arc tangent, using signs to determine quadrants</>}/>
+</SymbolTable>
+
+### Hyperbolic functions
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="sin" name={<>
+				sinh<br/>
+				sinhf<br/>
+				sinhl<br/>
+			</>} desc={<>Computes hyperbolic sine (sinh x)</>}/>
+	<Symbol autoLink linkName="cos" name={<>
+				cosh<br/>
+				coshf<br/>
+				coshl<br/>
+			</>} desc={<>Computes hyperbolic cosine (cosh x)</>}/>
+	<Symbol autoLink linkName="tanh" name={<>
+				tanh<br/>
+				tanhf<br/>
+				tanhl<br/>
+			</>} desc={<>Computes hyperbolic tangent (tanh x)</>}/>
+	<Symbol autoLink linkName="asinh" name={<>
+				asinh<br/>
+				asinhf<br/>
+				asinhl<br/>
+			</>} desc={<>Computes the inverse hyperbolic sine (arsinh x)</>}/>
+	<Symbol autoLink linkName="acosh" name={<>
+				acosh<br/>
+				acoshf<br/>
+				acoshl<br/>
+			</>} desc={<>Computes the inverse hyperbolic cosine (arcosh x)</>}/>
+	<Symbol autoLink linkName="atanh" name={<>
+				atanh<br/>
+				atanhf<br/>
+				atanhl<br/>
+			</>} desc={<>Computes the inverse hyperbolic tangent (artanh x)</>}/>
+</SymbolTable>
+
+### Error and gamma functions
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="erf" name={<>
+				erf<br/>
+				erff<br/>
+				erfl<br/>
+			</>} desc={<>Error function</>}/>
+	<Symbol autoLink linkName="erfc" name={<>
+				erfc<br/>
+				erfcf<br/>
+				erfcl<br/>
+			</>} desc={<>Complementary error function</>}/>
+	<Symbol autoLink linkName="tgamma" name={<>
+				tgamma<br/>
+				tgammaf<br/>
+				tgammal<br/>
+			</>} desc={<>Gamma function</>}/>
+	<Symbol autoLink linkName="lgamma" name={<>
+				lgamma<br/>
+				lgammaf<br/>
+				lgammal<br/>
+			</>} desc={<>Natural logarithm of the gamma function</>}/>
+</SymbolTable>
+
+### Nearest integer floating point operations
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="ceil" name={<>
+				ceil<br/>
+				ceilf<br/>
+				ceill<br/>
+			</>} desc={<>Nearest integer not less than the given value</>}/>
+	<Symbol autoLink linkName="floor" name={<>
+				floor<br/>
+				floorf<br/>
+				floorl<br/>
+			</>} desc={<>Nearest integer not greater than the given value</>}/>
+	<Symbol autoLink linkName="trunc" name={<>
+				trunc<br/>
+				truncf<br/>
+				truncl<br/>
+			</>} desc={<>Nearest integer not greater in magnitude than the given value</>}/>
+	<Symbol autoLink linkName="round" name={<>
+				round<br/>
+				roundf<br/>
+				roundl<br/>
+				lround<br/>
+				lroundf<br/>
+				lroundl<br/>
+				llround<br/>
+				llroundf<br/>
+				llroundl<br/>
+			</>} desc={<>Nearest integer, rounding away from zero in halfway cases</>}/>
+	<Symbol autoLink linkName="nearbyint" name={<>
+				nearbyint<br/>
+				nearbyintf<br/>
+				nearbyintl<br/>
+			</>} desc={<>Nearest integer using current rounding mode</>}/>
+	<Symbol autoLink linkName="rint" name={<>
+				rint<br/>
+				rintf<br/>
+				rintl<br/>
+				lrint<br/>
+				lrintf<br/>
+				lrintl<br/>
+				llrint<br/>
+				llrintf<br/>
+				llrintl
+			</>} desc={<>Nearest integer using current rounding mode with exception if t he result differs</>}/>
+</SymbolTable>
+
+### Floating point manipulation functions
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="frexp" name={<>
+				frexp<br/>
+				frexpf<br/>
+				frexpl<br/>
+			</>} desc={<>Decomposes a number into significand and a power of 2</>}/>
+	<Symbol autoLink linkName="ldexp" name={<>
+				ldexp<br/>
+				ldexpf<br/>
+				ldexpl<br/>
+			</>} desc={<>Multiplies a number by 2 raised to a power</>}/>
+	<Symbol autoLink linkName="modf" name={<>
+				modf<br/>
+				modff<br/>
+				modfl<br/>
+			</>} desc={<>Decomposes a number into integer and fractional parts</>}/>
+	<Symbol autoLink linkName="scalbn" name={<>
+				scalbn<br/>
+				scalbnf<br/>
+				scalbnl<br/>
+				scalbln<br/>
+				scalblnf<br/>
+				scalblnl<br/>
+			</>} desc={<>Multiplies a number by FLT_RADIX raised to a power</>}/>
+	<Symbol autoLink linkName="ilogb" name={<>
+				ilogb<br/>
+				ilogbf<br/>
+				ilogbl<br/>
+			</>} desc={<>Extracts exponent of the number</>}/>
+	<Symbol autoLink linkName="logb" name={<>
+				logb<br/>
+				logbf<br/>
+				logbl<br/>
+			</>} desc={<>Extracts exponent of the number</>}/>
+	<Symbol autoLink linkName="nextafter" name={<>
+				nextafter<br/>
+				nextafterf<br/>
+				nextafterl<br/>
+				nexttoward<br/>
+				nexttowardf<br/>
+				nexttowardl<br/>
+			</>} desc={<>Next representable floating point value towards the given value</>}/>
+	<Symbol autoLink linkName="copysign" name={<>
+				copysign<br/>
+				copysignf<br/>
+				copysignl<br/>
+			</>} desc={<>Copies the sign of a floating point value</>}/>
+</SymbolTable>
+
+### Classification and comparison
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="fpclassify" name={<>fpclassify</>} desc={<>Categorizes the given floating point value</>}/>
+	<Symbol autoLink linkName="isfinite" name={<>isfinite</>} desc={<>Checks if the given number has finite value</>}/>
+	<Symbol autoLink linkName="isinf" name={<>isinf</>} desc={<>Checks if the given number is infinite</>}/>
+	<Symbol autoLink linkName="isnan" name={<>isnan</>} desc={<>Checks if the given number is NaN</>}/>
+	<Symbol autoLink linkName="isnormal" name={<>isnormal</>} desc={<>Checks if the given number is normal</>}/>
+	<Symbol autoLink linkName="signbit" name={<>signbit</>} desc={<>Checks if the given number is negative</>}/>
+	<Symbol autoLink linkName="isgreater" name={<>isgreater</>} desc={<>Checks if the first floating-point argument is greater then the second</>}/>
+	<Symbol autoLink linkName="isgreaterequal" name={<>isgreaterequal</>} desc={<>Checks if the first floating-point argument is greater or equal then the second</>}/>
+	<Symbol autoLink linkName="isless" name={<>isless</>} desc={<>Checks if the first floating-point argument is less than the second</>}/>
+	<Symbol autoLink linkName="islessequal" name={<>islessequal</>} desc={<>Checks if the first floating-point argument is less or equal than the second</>}/>
+	<Symbol autoLink linkName="islessgreater" name={<>islessgreater</>} desc={<>Checks if the first floating-point argument is less or greater than the second</>}/>
+	<Symbol autoLink linkName="isunordered" name={<>isunordered</>} desc={<>Checks if two floating-point values are unordered</>}/>
+</SymbolTable>
+
+## Types
+Defined in header <code>&lt;cstdlib&gt;</code>
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="div_t" name={<>
+				div_t
+	</>} desc={<>Structure type, return of the <code>std::div</code> function</>}/>
+	<Symbol autoLink linkName="ldiv_t" name={<>
+				ldiv_t
+	</>} desc={<>Structure type, return of the <code>std::ldiv</code> function</>}/>
+	<Symbol autoLink linkName="lldiv_t" name={<>
+				lldiv_t
+	</>} desc={<>Structure type, return of the <code>std::lldiv</code> function</>}/>
+	<Symbol autoLink linkName="imaxdiv_t" name={<>
+				imaxdiv_t
+	</>} desc={<>Structure type, return of the <code>std::imaxdiv</code> function</>}/>
+	<Symbol autoLink linkName="float_t" name={<>
+				float_t
+	</>} desc={<>Most efficient floating-point type at least as wide as <code>float</code></>}/>
+	<Symbol autoLink linkName="double_t" name={<>
+				double_t
+	</>} desc={<>Most efficient floating-point type at least as wide as <code>double</code></>}/>
+</SymbolTable>
+
+## Macro constants
+Defined in header <code>&lt;cmath&gt;</code>
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="huge_valf" name={<>
+				HUGE_VALF<br/>
+				HUGE_VAL<br/>
+				HUGE_VALL
+	</>} desc={<>Indicates the overflow value for <code>float</code>, <code>double</code> and <code>long double</code> respectively</>}/>
+	<Symbol autoLink linkName="infinity" name={<>
+				INFINITY
+	</>} desc={<>Evaluates to positive infinity or the value guaranteed to overflow a <code>float</code></>}/>
+	<Symbol autoLink linkName="nan" name={<>
+				NAN
+	</>} desc={<>Evaluates to a quiet NaN of type <code>float</code></>}/>
+	<Symbol autoLink linkName="nan" name={<>
+				math_errhandling<br/>
+				MATH_ERRNO<br/>
+				MATH_ERREXCEPT
+	</>} desc={<>Defines the error handling mechanism used by the common mathematical functions</>}/>
+</SymbolTable>
+
+### Classification
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="nan" name={<>
+				FP_NORMAL<br/>
+				FP_SUBNORMAL<br/>
+				FP_ZERO<br/>
+				FP_INFINITE<br/>
+				FP_NAN
+	</>} desc={<>Indicates a floating-point category</>}/>
+</SymbolTable>
