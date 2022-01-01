@@ -262,12 +262,20 @@ function filterSidebarItems(items)
 						title: 'Community',
 						items: [
 							{
+								label: 'Discord',
+								href: 'https://discord.gg/3MeXQ8TvBw',
+							},
+							{
+								label: 'Forum',
+								href: 'https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum',
+							},
+							{
 								label: 'Stack Overflow',
 								href: 'https://stackoverflow.com/questions/tagged/cpp',
 							},
 							{
-								label: 'Discord',
-								href: 'https://discord.gg/3MeXQ8TvBw',
+								label: 'Reddit',
+								href: 'https://reddit.com/r/cpp',
 							}
 						],
 					},
