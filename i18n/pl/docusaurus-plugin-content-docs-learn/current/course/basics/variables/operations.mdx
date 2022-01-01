@@ -7,9 +7,266 @@ tags:				[operacja, zmienna, deklaracja, definicja, int, float, char, string]
 hide_title:			true
 ---
 
-import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
 
 <NotFinished/>
 
 # Operacje na zmiennych
+
+Zmienne przechowują wartości przez czas swojego istnienia (o tym później).
+Możemy do nich zapisywać wartości lub je odczytywać, wyświetlać na ekranie,
+porównywać itp.
+
+### Prosta interakcja z użytkownikiem
+
+Nasze programy będą nieco ciekawsze, gdy pozwolimy użytkownikowi
+wpisać coś do konsoli.  
+Zrobimy to za pomocą instrukcji `cin` (ang: <i>**c**haracter **in**put</i>):
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "Podaj swój wiek: ";
+	
+	int age;
+	// highlight-next-line
+	std::cin >> age;
+
+	std::cout << "Masz " << age << "lat.\n";
+}
+```
+
+`cin` pozwala nam zapisać zawartość tzw. **standardowego wejścia** (stdin)
+do zmiennej, którą podajemy po znakach `>>`.
+
+O standardowym wejściu powiemy kiedy indziej, na razie zapamiętaj, że
+`cin` umożliwia użytkownikowi programu wpisać coś od konsoli,
+po czym zapisuje ową wartość do zmiennej.
+
+Zwróć uwagę, że:
+- `cout` używa operatora `<<`
+- `cin` używa operatora `>>`
+
+Oprócz tego, możesz zobaczyć, że **nie przypisaliśmy zmiennej `age` wartości początkowej.**
+Nie jest to potrzebne, bo od razu po jej stworzeniu, używamy `std::cin` aby zapisać
+do niej wartość taką, jaką użytkownik wpisze z klawiatury.
+
+:::tip Zapamiętaj
+Możesz zapamiętać kierunek znaczków w tym operatorze w prosty sposób
+- `cout` - tekst idzie **do konsoli** - `<<` skierowane w strone `cout`
+- `cin` - tekst idzie **do zmiennej** - `>>` skierowane w stronę zmiennej
+:::
+
+
+### Proste operacje matematyczne
+
+Zmienne, które zawierają liczby można dowolnie modyfikować
+za pomocą typowych znaków (operatorów) matematycznych:
+
+- `a + b` - dodaje do siebie dwie liczby
+- `a - b` - odejmuje od siebie dwie liczby
+- `a * b` - mnoży przez siebie dwie liczby
+- `a / b` - dzieli liczbę `a` przez `b`
+
+:::note Uwaga
+To nie są wszystkie operatory matematyczne, o reszcie powiemy
+kiedy indziej.
+:::
+
+Wykorzystajmy te operatory w praktyce:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "Podaj swój wiek: ";
+
+	int age;
+	std::cin >> age;
+
+	// highlight-start
+	std::cout << "Za 10 lat, będziesz mieć: "					<< (age + 10)	<< " lat\n";
+	std::cout << "5 lat temu, miałeś/aś: "						<< (age - 5)	<< " lat\n";
+	std::cout << "Jak będziesz 2x starszy/a, będziesz mieć: "	<< (age * 2)	<< " lat\n";
+	std::cout << "Ktoś dwa razy młodszy ma :"					<< (age / 2)	<< " lat";
+	// highlight-end
+}
+```
+
+:::tip Wyrównanie
+Zwróć uwagę, że dla lepszej czytelności kodu wyrównaliśmy klawiszem **`Tab`**
+użycia operatora `<<`.
+:::
+
+Bardzo istotnym faktem jest to, że użycie wyżej wymienionych operatorów,
+**nie zmienia zawartości** zmiennej `age`.
+
+Wpisując wiek `20`, uzyskamy następujący wynik:
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```plaintext title="Konsola"
+Za 10 lat, będziesz mieć: 30 lat
+5 lat temu, miałeś/aś: 15 lat
+Jak będziesz 2x starszy/a, będziesz mieć: 40 lat
+Ktoś dwa razy młodszy ma: 10 lat
+```
+
+</div>
+
+<div>
+
+```plaintext title="Opis"
+(age: 20 => + 10 = 30)
+(age: 20 => - 5 = 30)
+(age: 20 => * 2 = 40)
+(age: 20 => / 2 = 10)
+```
+
+</div>
+</Columns>
+
+
+Jak widzimy, na każdym etapie wartość zmiennej `age` pozostała ta sama (`20`).
+Dzieje się tak dlatego, że w zapisie:
+```cpp
+a + b
+```
+to samo **wyrażenie** `a + b` ma pewną wartość, a zawartość zmiennych zostaje nietknięta.
+
+Jeśli chcemy np. zwiększyć zmienną o `10`, to musimy **przypisać** do niej
+**wartość** tego wyrażenia:
+
+```cpp
+age = age + 10;
+```
+
+... lub w skrócie:
+
+```cpp
+age += 10;
+```
+
+Zobacz jak to działa na przykładzie (wpisuję 20 do konsoli jeszcze raz):
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock lineNumbers>
+
+```cpp title="🔹 main.cpp"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Podaj swój wiek: ";
+
+	int age;
+	std::cin >> age;
+
+	
+	std::cout << "Teraz masz: " << age << " lat\n";
+	// highlight-start
+	age += 30;
+	std::cout << "Za 30 lat, będziesz mieć: " << age << " lat";
+	// highlight-end
+}
+```
+
+</CustomCodeBlock>
+
+</div>
+
+<div>
+
+```plaintext title="Wynik"
+Teraz masz: 20 lat
+Za 30 lat, będziesz mieć: 50 lat
+```
+
+</div>
+</Columns>
+
+#### Przebieg programu
+
+Zmienna `age`:
+- podczas wykonania linii `11` ma wartość `20`.
+- w linii `12` zmienia wartość na `20 + 30` czyli `50`
+- w linii `13` jest już wyświetlana z wartością `50`
+
+### Modyfikowanie zmiennych
+
+Poza wyżej przedstawionym operatorem `+=`, jest jeszcze wiele innych
+dostępnych operatorów, które modyfikują zawartość zmiennych.
+
+Najprościej będzie je pokazać na przykładzie:
+
+<Tabs>
+
+<TabItem value="presentation" label="Prezentacja" default>
+
+Poniżej prezentacja działania programu, po wpisaniu liczby `20`.
+
+<!-- Source link: https://docs.google.com/presentation/d/1T7esXOx9Cdw31bxGFEK3My_jNqXxPMoQE8AUbQFILhs/edit?usp=sharing -->
+
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vRH7tM4FmZbwqsVz2kpMKONgv-uLfkaRQqmCBYhxlDcFEoIQNBYQgZQK_y6uDRPQrVuwOt3lN8CwH0b/embed"
+		aspectRatio={12 / 9}
+		delay={800}
+		centered
+		fullWidth
+	/>
+
+</TabItem>
+
+<TabItem value="code" label="Kod">
+<CustomCodeBlock lineNumbers withTitle maxLines={25} resizable>
+
+```cpp title="🔹 main.cpp"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Podaj jakąś liczbę: ";
+
+	int number;
+	std::cin >> number;
+
+	// Zwiększ "number" o 5 i przypisz:
+	number += 5;
+	std::cout << "Po zwiększeniu o 5: " << number << '\n';
+
+	// Zmniejsz "number" o 10 i przypisz:
+	number -= 10;
+	std::cout << "Następnie, po zmniejszeniu o 10: " << number << '\n';
+
+	// Pomnóz trzykrotnie i przypisz:
+	number *= 3;
+	std::cout << "Następnie, po pomnożeniu razy 3: " << number << '\n';
+
+	// Podziel na 2 i przypisz:
+	number /= 2;
+	std::cout << "Następnie, po podzieleniu przez 2: " << number << '\n';
+
+	// Zwiększ wartość o 1 (inkrementacja):
+	number++;
+	std::cout << "Następnie, po zinkrementowaniu: " << number << '\n';
+
+	// Zmniejsz wartość o 1 (dekrementacja):
+	number--;
+	std::cout << "Następnie, po zdekrementowaniu: " << number << '\n';
+}
+```
+
+</CustomCodeBlock>
+</TabItem>
+
+</Tabs>
+
+
+Więcej o możliwościach zmiennych dowiesz się z następnych części kursu 😊
 
