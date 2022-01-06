@@ -3,7 +3,8 @@
 	align-items: center;
 	width: 100%;
 	margin: 0 auto;
-	border-top: 1px solid gray;
+	// border-top: 1px solid gray;
+	background-color: rgba(black, 0.6);
 }
 
 .featuresContainer {
@@ -57,6 +58,15 @@ $iconSize: 80px;
 }
 .pageCard {
 	min-width: 0;
+	width: 50%;
+}
+
+}
+
+@media (max-width: 600px) {
+
+.pageCard {
+	min-width: 0;
 	width: 100%;
 }
 
@@ -88,4 +98,14 @@ html[data-theme='dark']
 	filter: none;
 }
 
+}
+
+.overview {
+	min-height: 300px;
+	&:nth-child(even) {
+		background-color: var(--ifm-color-secondary);
+	}
+	&:nth-child(odd) {
+		background-color: var(--ifm-color-secondary-dark);
+	}
 }
