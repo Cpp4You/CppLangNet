@@ -31,6 +31,10 @@ html:not([class*="docs-version-"]) {
 	background-attachment: fixed;
 
 	:global(.navbar) {
+		background-color: rgba(white, 0.9);
+	}
+
+	&[data-theme="dark"] :global(.navbar) {
 		background-color: rgba(black, 0.6);
 	}
 }
@@ -50,9 +54,6 @@ html:not([class*="docs-version-"]) {
 	position: 		relative;
 	overflow: 		hidden;
 
-	// background-color: rgb(243, 243, 243);
-	// background-size: 0 0;
-	// background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
 	transition: 0.01s;
 
 	.textPart {
@@ -66,9 +67,11 @@ html:not([class*="docs-version-"]) {
 		font-size: 8em;
 		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 		font-weight: bold;
+		color: white;
 	}
 	.subtitle {
 		font-size: 180%;
+		color: white;
 	}
 
 	.container {
@@ -88,6 +91,7 @@ html:not([class*="docs-version-"]) {
 		text-align: left;
 		padding: 10px 20px;
 		// min-height: 600px;
+		background-color: rgba(white, 0.8);
 		
 		>iframe {
 			width: 100%;	
@@ -205,8 +209,6 @@ html[data-theme="dark"]
 {
 
 .heroBanner {
-
-	background-color: transparent;
 
 	.textPart {
 	}
