@@ -16,20 +16,20 @@ import SwitchView		from "@site-comps/SwitchView";
 <br/>
 
 #### 1. Początek
-Vector danych, dla których algorytm wywoła naszą lambdę.
+Jako pierwszy argument wysyłamy początek wektora danych.
 ```cpp
 std::vector<int> V = {1, 2, 3, 4, 5};
 	// highlight-next-line
 std::transform(V.begin(), [...]);
 ```
 #### 2. Koniec
-Mówi algorytmowi gdzie kończy się wktor.
+Jako pierwszy argument wysyłamy koniec wektora danych.
 ```cpp
 // highlight-next-line
 std::transform(V.begin(), V.end(), [...]);
 ```
 #### 3. Rezultat
-__Początek__ vector, do którego algorytm będzie zapisywał dane. __Musi mieć taki rozmiar jak vector, z którego dane są pobierane.__ Może być tym samym vector, z którego pobieramy dane.
+Jako trzeci argument wyślemy początek wektora, do którego chcemy zapisać dane. __Wektor musi mieć taki rozmiar jak wektor, z którego dane są pobierane.__ Możemy również wysłać ten sam wektor jak ten, z którego dane pobieramy.
 ```cpp
 std::vector<int> resultat;
 
@@ -44,7 +44,9 @@ std::transform(V.begin(), V.end(), V.begin(), [...]);
 ```
 
 #### 4. Lambda
-Najważniejsza rzecz w tym przykładzie. Nasza lambda musi przyjmować jeden arguemnt takiego typu jak elementy vectora-źródła, a zwracać argument typu identycznego jak elementy vectora, w którym zapisywana są rezultaty.
+Najważniejsza rzecz w tym przykładzie - argument trzeci. Wysyłamy tu lambdę, która:
+- Przyjmuje jeden argument typu takiego jaki mają elementy wektorów
+- Zwraca argument typu takeigo jak typ elementów wektorów.
 
 ```cpp
 auto square = [](int a) { return a * a; };

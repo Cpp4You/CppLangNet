@@ -121,18 +121,18 @@ std::cout << lambda(5);
 ```
 
 </div>
-35
+
 <div>
 
 ```plaintext title="Wynik (konsola)"
-5
+35
 ```
 
 </div>
 </Columns>
 
 #### Ciało wyrażenia lambda
-Tutaj zapisujemy instrukcje, działamy na zmiennych itp. W ciele wyrażenia lambda może się znaleźć instrukcja `return`.
+Jest to zwykły blok kodu funkcji. Tutaj zapisujemy instrukcje, działamy na zmiennych itp. W ciele wyrażenia lambda może się znaleźć instrukcja `return`.
 
 
 
@@ -140,25 +140,50 @@ Tutaj zapisujemy instrukcje, działamy na zmiennych itp. W ciele wyrażenia lamb
 
 ### Proste przykłady
 
-<Columns spacing={40} columns={['7fr', '4fr']}>
+#### Porównajmy teraz lambdę z funkcją
+
+Porównanie lambdy i funkcji generującej liczbę 5 za każdym wywołaniem.
+
+<Columns spacing={40} columns={['5.5fr', '5.5fr']}>
 <div>
 
-```cpp title="Prosta lambda"
+```cpp title="Lambda"
+#include <iostream>
+
+int main()
+{
 auto five = [] { return 5; };
 std::cout << five();
+}
 ```
 
 </div>
 
 <div>
 
-```plaintext title="Wynik (konsola)"
-5
+```plaintext title="Funkcja"
+#include <iostream>
+
+int five();
+
+int main()
+{
+std::cout << five();
+}
+
+void five()
+{
+	return 5;
+}
 ```
 
 </div>
 </Columns>
 	
+
+---
+
+
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
 
@@ -249,7 +274,11 @@ najnowszy standard, zamieścimy też przykłady działające na starszej wersji.
 
 Oczywiście, aby użyć tego algorytmu, musimy dołączyć plik `algorithm`.
 
-Algorytm `std::transform()` wykonuje na każdym elemencie wektora jakąś modyfikację, a rezultat pracy wpisuje do wskazanego innego wektora.
+```cpp
+#include <algorithm>
+```
+#### Co chcemy zrobić?
+W naszym przykładzie stworzymy wektor liczb całkowitych (`int`) oraz lambdę, która podnosi liczby do kwadratu. Użyjemy do tego algorytmu `transform()` z biblioteki standardowej. Wyślemy mu nasz wektor, lambdę oraz wektor, do którego algorytm zapisze wyniki. 
 
 <SwitchView content={
 		{

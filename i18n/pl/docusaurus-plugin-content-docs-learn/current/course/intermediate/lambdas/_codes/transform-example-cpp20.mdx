@@ -22,14 +22,14 @@ W przypadku C++20 algorytm znajduje się dodatkowo w przestrzeni nazw `ranges`, 
 ::: 
 
 #### 1. Początek
-Vector danych, dla których algorytm wywoła naszą lambdę.
+Jako pierwszy argument wysyłamy wektor danych (w naszym przypadku jest typu `int`).
 ```cpp
 std::vector<int> V = {1, 2, 3, 4, 5};
 	// highlight-next-line
 std::ranges::transform(V, [...]);
 ```
 #### 2. Rezultat
-__Początek__ vector, do którego algorytm będzie zapisywał dane. __Musi mieć taki rozmiar jak vector, z którego dane są pobierane.__ Może być tym samym vector, z którego pobieramy dane.
+Jako drugi argument wyślemy wektor, do którego chcemy zapisać dane. __Musi mieć taki rozmiar jak wektor, z którego dane są pobierane.__ Możemy również wysłać ten sam wektor jak ten, z którego dane pobieramy.
 ```cpp
 std::vector<int> resultat;
 
@@ -44,7 +44,9 @@ std::ranges::transform(V, V, [...]);
 ```
 
 #### 3. Lambda
-Najważniejsza rzecz w tym przykładzie. Nasza lambda musi przyjmować jeden arguemnt takiego typu jak elementy vectora-źródła, a zwracać argument typu identycznego jak elementy vectora, w którym zapisywana są rezultaty.
+Najważniejsza rzecz w tym przykładzie - argument trzeci. Wysyłamy tu lambdę, która:
+- Przyjmuje jeden argument typu takiego jaki mają elementy wektorów
+- Zwraca argument typu takeigo jak typ elementów wektorów.
 
 ```cpp
 auto square = [](int a) { return a * a; };
