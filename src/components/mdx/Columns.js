@@ -20,6 +20,7 @@ export default function Columns(props) {
 
 	const divProps = { ...props };
 	delete divProps.columns;
+	delete divProps.spacing;
 
 	return (
 		<div className={styles.columns} {...divProps} style={style}>
