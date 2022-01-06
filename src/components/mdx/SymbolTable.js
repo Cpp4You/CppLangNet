@@ -50,7 +50,7 @@ export default function SymbolTable(props)
 		const sorted = arr.sort((l, r) => (readAccess(l).Order < readAccess(r).Order));
 
 		return (
-			<table no-traits={`${props.noTraits || "false"}`} className={styles.symbolTable}>
+			<table data-no-traits={`${props.noTraits || "false"}`} className={styles.symbolTable}>
 				<tbody>
 					{sorted}
 				</tbody>
