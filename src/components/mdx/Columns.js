@@ -18,8 +18,11 @@ export default function Columns(props) {
 		style.gridTemplateColumns = props.columns.map(e => `${e}`).join(" ");
 	}
 
+	const divProps = { ...props };
+	delete divProps.columns;
+
 	return (
-		<div className={styles.columns} {...props} style={style}>
+		<div className={styles.columns} {...divProps} style={style}>
 			{props.children}
 		</div>
 	);
