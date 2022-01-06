@@ -72,12 +72,23 @@ function Feature({svgPath, title, url}) {
 
 export default function HomepageFeatures() {
 	return (
-		<section className={styles.features}>
-			<div className={styles.featuresContainer}>
-				{FeatureList.map((props, idx) => (
-					<Feature key={idx} {...props} />
-				))}
-			</div>
-		</section>
+		<>
+			<section className={styles.features}>
+				<div className={styles.featuresContainer}>
+					{FeatureList.map((props, idx) => (
+						<Feature key={idx} {...props} />
+					))}
+				</div>
+			</section>
+			{/* <section className={styles.overview}>
+				
+			</section>
+			<section className={styles.overview}>
+				
+			</section>
+			<section className={styles.overview}>
+				
+			</section> */}
+		</>
 	);
 }
