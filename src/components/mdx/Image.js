@@ -34,7 +34,7 @@ export default function Image(props)
 	const processedProps = {...props};
 
 	if (typeof props.src === "string")
-		processedProps.src = props.src.startsWith("/img/") ? useBaseUrl(props.src) : props.img;
+		processedProps.src = props.src.startsWith("/img/") ? useBaseUrl(props.src) : props.src;
 
 
 	delete processedProps.border;
