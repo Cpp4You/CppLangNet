@@ -51,7 +51,7 @@ html[data-theme='dark'] {
 * Notice the chained .language-ts class name to .prism-code
 * You can chain more languages in order to add line numbers
 */
-*[line-numbers="true"] .prism-code[class*=language-] .token-line::before {
+*[data-line-numbers="true"] .prism-code[class*=language-] .token-line::before {
 	counter-increment: line-number;
 	content: counter(line-number);
 	margin-right: calc(var(--ifm-pre-padding) * 1.5);

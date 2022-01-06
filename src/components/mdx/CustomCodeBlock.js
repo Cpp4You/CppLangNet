@@ -32,7 +32,7 @@ export default function CustomCodeBlock(props) {
 
 	return (
 		<div 	ref={containerRef}
-				line-numbers={`${props.lineNumbers}`}
+				data-line-numbers={`${props.lineNumbers}`}
 			>
 			{props.children}
 		</div>
