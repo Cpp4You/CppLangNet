@@ -96,19 +96,133 @@ html[data-theme='dark']
 
 }
 
-
 .featureSvg {
 	filter: none;
+}
+
+.overview {
+	&:nth-child(even) {
+		background-color: rgba(black, 0.7);
+	}
+	&:nth-child(odd) {
+		background-color: rgba(black, 0.6);
+	}
 }
 
 }
 
 .overview {
-	min-height: 300px;
 	&:nth-child(even) {
-		background-color: var(--ifm-color-secondary);
+		background-color: rgba(white, 0.9);
 	}
 	&:nth-child(odd) {
-		background-color: var(--ifm-color-secondary-dark);
+		background-color: rgba(white, 0.8);
+	}
+
+	figure {
+		display: flex;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		max-height: 350px;
+		width: 45%;
+		align-items: center;
+	}
+	img {
+		display: block;
+		width: 100%;
+		height: auto;
+	}
+	.actionButton {
+		display: inline-block;
+		color: white;
+		text-decoration: none;
+		padding: 15px 30px;
+		border: none;
+		border-bottom: 3px solid blue;
+		border-radius: 2px;
+		box-sizing: border-box;
+		background-color: rgb(0, 119, 255);
+		transition: 0.2s;
+		&:hover {
+			background-color: rgb(52, 133, 255);
+		}
 	}
 }
+
+@media (min-width: 901px) {
+
+.overview:nth-child(even) {
+	.overviewContent {
+		h1 { text-align: right; }
+	}
+	.overviewContainer {
+		flex-direction: row-reverse;
+	}
+}
+
+}
+
+.overviewContainer {
+	display: flex;
+	justify-content: space-between;
+	padding: 20px 0;
+	width: 60%;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.overviewContent {
+	width: 45%;
+	padding: 10px 0;
+	min-height: 350px;
+}
+
+@media (max-width: 1300px) {
+	.overviewContainer {
+		width: 85%;
+	}
+}
+
+
+@media (max-width: 900px) {
+	.overviewContainer {
+		width: 95%;
+	}
+}
+
+@media (max-width: 900px) {
+	.overviewContainer {
+		flex-direction: column-reverse;
+		align-items: center;
+		flex-wrap: wrap;
+
+		>* {
+			width: 100%;
+		}
+
+		figure {
+			width: 80%;
+			margin-bottom: 20px;
+		}
+
+		h1, p {
+			text-align: center;
+		}
+		.actionButton {
+			margin: 0 auto;
+		}
+	}
+	.overviewContent {
+		min-height: unset;
+	}
+}
+
+// .headline {
+// 	padding: 80px 0;
+// 	text-align: center;
+// 	font-size: 2.5em;
+// 	color: white;
+// 	text-transform: uppercase;
+// }
+
