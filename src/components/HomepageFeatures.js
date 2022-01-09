@@ -91,7 +91,7 @@ export default function HomepageFeatures() {
 						</p>
 						<a className={styles.actionButton} href="/talks">Browse catalogue</a>
 					</div>
-					<figure><img src={useBaseUrl("img/talk.png")}/></figure>
+					<figure><video loop autoPlay={true} src={useBaseUrl("video/talks.mp4")}/></figure>
 				</div>
 			</section>
 			<section className={styles.overview}>
