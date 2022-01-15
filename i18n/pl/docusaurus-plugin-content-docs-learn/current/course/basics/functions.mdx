@@ -12,6 +12,8 @@ import ImproveSection	from '@site/i18n/pl/presets/ImproveSection.mdx';
 
 import CustomCodeBlock	from '@site-comps/CustomCodeBlock';
 import GoogleSlides		from '@site-comps/GoogleSlides';
+import Columns			from '@site-comps/Columns';
+import Image			from '@site-comps/Image';
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
 
@@ -142,7 +144,8 @@ int main() {
 }
 ```
 
-Komputer uruchamiając program znajduje funkcję `main` a następnie ją wykonuje.
+Komputer uruchamiając program znajduje funkcję `main` a następnie ją wykonuje,
+przechodząc po każdej instrukcji wewnątrz, linijka po linijce.
 
 ## Tworzenie funkcji
 
@@ -150,11 +153,40 @@ Zaczniemy od najprostszych funkcji, stopniowo przechodząc do coraz bardziej zaa
 
 ### Bez parametrów
 
+<Image center border
+		src="/img/tutorials/course/basic/functions/proc-no-params-pl.png"
+		desc="Schemat najprostszej funkcji"
+	/>
+
+Jak widzimy wyżej, definiując własną funkcję, musimy zadbać o jej nazwę oraz ciało, trzymając
+się przy tym składni. Po słowie `void` piszemy **nazwę funkcji**, następnie dajemy puste
+**nawiasy okrągłe** (o tym powiemy dalej w tej lekcji), potem **bez średnika** umieszczamy poniżej
+blok kodu, który nazywamy **ciałem funkcji**.
+
+:::important Nazewnictwo
+Nazywając funkcję przestrzegamy tych samych zasad co przy [nazwach zmiennych](../variables/#nazwa-zmiennej).
+:::
+
+W ten sposób mamy już zdefiniowaną funkcję. Oznacza to, że gdy tylko będziemy tego chcieli, możemy
+ją **wywołać**. Robimy to w ten sposób:
+
+```cpp title="🔹 Wywołanie funkcji"
+print();
+```
+
+:::caution Uwaga
+Zwróć uwagę, że dajemy **średnik** po wywołaniu funkcji.
+:::
+
 Napiszmy przykładową funkcję, która wyświetla 10 liczb parzystych i użyjmy jej kilka razy:
+
+<Columns columns={['8fr', '4fr']}>
+<div>
 
 ```cpp
 #include <iostream>
 
+// Definicja funkcji
 void print10EvenNumbers()
 {
 	for (int i = 0; i <= 10; i++)
@@ -164,13 +196,33 @@ void print10EvenNumbers()
 
 int main()
 {
+	// Wywołanie funkcji
 	print10EvenNumbers();
 	print10EvenNumbers();
 	print10EvenNumbers();
 }
 ```
 
+</div>
+<div>
+
+```plaintext title="Wynik (konsola)"
+0 2 4 6 8 10 12 14 16 18 20
+0 2 4 6 8 10 12 14 16 18 20
+0 2 4 6 8 10 12 14 16 18 20
+```
+
+</div>
+</Columns>
+
 ### Z parametrami ⚠
+
+<ImproveSection />
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/proc-params-pl.png"
+		desc="Schemat funkcji z parametrami"
+	/>
 
 Działanie funkcji możemy uzależnić od **parametrów**. Chcąc, żeby funkcja wyświetlała
 więcej lub mniej liczb parzystych niż 10, możemy utworzyć w funkcji parametr,
@@ -216,7 +268,28 @@ int main() {
 }
 ```
 
-<ImproveSection />
+:::danger Popularny błąd
+Zauważ, że kolejne parametry funkcji umieszczamy po przecinku, każdorazowo podając jego typ.
+Częstym błędem wśród początkujących jest pominięcie typu w następnych parametrach.
+
+<Tabs>
+<TabItem label="❌ Źle" value="bad" default>
+
+```cpp
+void printBiggerNumber(int a, b)
+```
+
+</TabItem>
+<TabItem label="✔ Dobrze" value="good">
+
+```cpp
+void printBiggerNumber(int a, int b)
+```
+
+</TabItem>
+</Tabs>
+
+:::
 
 ### Wartość zwracana ⚠
 
