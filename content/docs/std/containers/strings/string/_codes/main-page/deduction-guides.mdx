@@ -32,7 +32,7 @@ basic_string( std::basic_string_view<CharT, Traits>, typename /*see below*/::siz
 The `size_type` parameter type refers to the `size_type` member type of the type deduced by the deduction guide.
 
 ### Overload resolution
-In order for any of the deduction guides to participate in overload resolution, 
+In order for any of the deduction guides to participate in overload resolution,
 the folllowing requirements must be met:
  - for *`(1)`*, `InputIt` satisfies [`LegacyInputIterator`](#)
  - for *`(1 - 3)`*, `Alloc` satisfies [`Allocator`](#)
@@ -40,7 +40,7 @@ the folllowing requirements must be met:
 :::note
 The extent to which the library determines that a type does not satisfy [`LegacyInputIterator`](#) is **unspecified**,
 except that as a minimum:
- - Integral types do not qualify as input iterators. 
+ - Integral types do not qualify as input iterators.
 
 Likewise, the extent to which it determines that a type does not satisfy [`Allocator`](#) is **unspecified**,
 except that as a minimum:
