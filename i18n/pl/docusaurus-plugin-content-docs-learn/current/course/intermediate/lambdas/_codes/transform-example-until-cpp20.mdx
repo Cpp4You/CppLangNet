@@ -45,8 +45,8 @@ std::transform(v.begin(), v.end(), v.begin(), [...]);
 
 #### 4. Lambda
 Najważniejsza rzecz w tym przykładzie - argument trzeci. Wysyłamy tu lambdę, która:
-- Przyjmuje jeden argument typu takiego jaki mają elementy wektorów
-- Zwraca argument typu takiego jak typ elementów wektorów.
+- Przyjmuje jeden argument typu takiego jaki mają elementy wektora, z któego dane pobieramy
+- Zwraca argument typu takiego jak typ elementów wektora, do którego zapisuje dane.
 
 ```cpp
 auto square = [](int a) { return a * a; };
