@@ -18,28 +18,28 @@ import SwitchView		from "@site-comps/SwitchView";
 #### 1. Początek
 Jako pierwszy argument wysyłamy początek wektora danych.
 ```cpp
-std::vector<int> V = {1, 2, 3, 4, 5};
+std::vector<int> v = {1, 2, 3, 4, 5};
 	// highlight-next-line
-std::transform(V.begin(), [...]);
+std::transform(v.begin(), [...]);
 ```
 #### 2. Koniec
 Jako pierwszy argument wysyłamy koniec wektora danych.
 ```cpp
 // highlight-next-line
-std::transform(V.begin(), V.end(), [...]);
+std::transform(v.begin(), v.end(), [...]);
 ```
 #### 3. Rezultat
 Jako trzeci argument wyślemy początek wektora, do którego chcemy zapisać dane. __Wektor musi mieć taki rozmiar jak wektor, z którego dane są pobierane.__ Możemy również wysłać ten sam wektor jak ten, z którego dane pobieramy.
 ```cpp
-std::vector<int> resultat;
+std::vector<int> result;
 
 	// highlight-next-line
-resultat.resize(V.size());
-std::transform(V.begin(), V.end(), resultat.begin(), [...]);
+result.resize(v.size());
+std::transform(v.begin(), v.end(), result.begin(), [...]);
 
 	//highlight-start
 	// Też poprawnie ✅
-std::transform(V.begin(), V.end(), V.begin(), [...]);
+std::transform(v.begin(), v.end(), v.begin(), [...]);
 	// highlight-end
 ```
 
@@ -51,10 +51,10 @@ Najważniejsza rzecz w tym przykładzie - argument trzeci. Wysyłamy tu lambdę,
 ```cpp
 auto square = [](int a) { return a * a; };
 // highlight-next-line
-std::transform(V.begin(), V.end(), resultat.begin(), square);
+std::transform(v.begin(), v.end(), result.begin(), square);
 ```
 
-### Złączmy teraz części kodu w całość
+#### Złączmy teraz części kodu w całość
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
@@ -67,20 +67,20 @@ std::transform(V.begin(), V.end(), resultat.begin(), square);
 int main()
 {
 	std::cout << "Przed użyciem algorytmu:\n";
-	for(auto a : V)
+	for(auto a : v)
 	{
 		std::cout << a << " ";
 	}
 	std::cout << "\n\n";
 
-	std::vector<int> V = {1, 2, 3, 4, 5};
+	std::vector<int> v = {1, 2, 3, 4, 5};
 	// highlight-next-line
 	auto square = [](int a) { return a * a; };
 	// highlight-next-line
-    std::transform(V.begin(), V.end(), V.begin(), square);
+    std::transform(v.begin(), v.end(), v.begin(), square);
 
 	std::cout << "Po użyciu algorytmu:\n";
-	for(auto a : V)
+	for(auto a : v)
 	{
 		std::cout << a << " ";
 	}

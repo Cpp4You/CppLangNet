@@ -24,22 +24,22 @@ W przypadku C++20 algorytm znajduje się dodatkowo w przestrzeni nazw `ranges`, 
 #### 1. Początek
 Jako pierwszy argument wysyłamy wektor danych (w naszym przypadku jest typu `int`).
 ```cpp
-std::vector<int> V = {1, 2, 3, 4, 5};
+std::vector<int> v = {1, 2, 3, 4, 5};
 	// highlight-next-line
-std::ranges::transform(V, [...]);
+std::ranges::transform(v, [...]);
 ```
 #### 2. Rezultat
 Jako drugi argument wyślemy wektor, do którego chcemy zapisać dane. __Musi mieć taki rozmiar jak wektor, z którego dane są pobierane.__ Możemy również wysłać ten sam wektor jak ten, z którego dane pobieramy.
 ```cpp
-std::vector<int> resultat;
+std::vector<int> result;
 
 	// highlight-next-line
-resultat.resize(V.size());
-std::ranges::transform(V, resultat, [...]);
+result.resize(v.size());
+std::ranges::transform(v, result, [...]);
 
 	//highlight-start
 	// Też poprawnie ✅
-std::ranges::transform(V, V, [...]);
+std::ranges::transform(v, v, [...]);
 	// highlight-end
 ```
 
@@ -51,10 +51,10 @@ Najważniejsza rzecz w tym przykładzie - argument trzeci. Wysyłamy tu lambdę,
 ```cpp
 auto square = [](int a) { return a * a; };
 // highlight-next-line
-std::ranges::transform(V, resultat, square);
+std::ranges::transform(v, result, square);
 ```
 
-### Złączmy teraz części kodu w całość
+#### Złączmy teraz części kodu w całość
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
@@ -67,20 +67,20 @@ std::ranges::transform(V, resultat, square);
 int main()
 {
 	std::cout << "Przed użyciem algorytmu:\n";
-	for(auto a : V)
+	for(auto a : v)
 	{
 		std::cout << a << " ";
 	}
 	std::cout << "\n\n";
 
-	std::vector<int> V = {1, 2, 3, 4, 5};
+	std::vector<int> v = {1, 2, 3, 4, 5};
 	// highlight-next-line
 	auto square = [](int a) { return a * a; };
 	// highlight-next-line
-    std::ranges::transform(V, V, square);
+    std::ranges::transform(v, v, square);
 
 	std::cout << "Po użyciu algorytmu:\n";
-	for(auto a : V)
+	for(auto a : v)
 	{
 		std::cout << a << " ";
 	}

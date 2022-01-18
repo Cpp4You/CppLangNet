@@ -272,13 +272,18 @@ najnowszy standard, zamieścimy też przykłady działające na starszej wersji.
 
 ### `std::transform()`
 
-Oczywiście, aby użyć tego algorytmu, musimy dołączyć plik `algorithm`.
+Aby użyć tego algorytmu, musimy dołączyć plik `algorithm`.
 
 ```cpp
 #include <algorithm>
 ```
+### Przykładowy program
+
 #### Co chcemy zrobić?
-W naszym przykładzie stworzymy wektor liczb całkowitych (`int`) oraz lambdę, która podnosi liczby do kwadratu. Użyjemy do tego algorytmu `transform()` z biblioteki standardowej. Wyślemy mu nasz wektor, lambdę oraz wektor, do którego algorytm zapisze wyniki. 
+W naszym przykładzie stworzymy wektor oraz będziemy chcieli podnieść wszystkie jego elementy do kwadratu.
+
+#### Możliwe opcje
+Algorytm `transform()` może przyjąć zarówno funkcję jak i lambdę. Jako argument wyślemy lambdę, bo o nich jest ten rozdział. Nasza lambda przyjmnie jeden argument typu `int` oraz zwróci wartość tego samego typu.
 
 <SwitchView content={
 		{
