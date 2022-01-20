@@ -1,0 +1,40 @@
+import CustomCodeBlock from "@site-comps/CustomCodeBlock";
+
+<CustomCodeBlock lineNumbers maxLines={20} resizable>
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	std::vector<int> numbers = {1, 4, 13, 15};
+
+	// highlight-start
+	for (int i : numbers) {
+		std::cout << i << ' ';
+	}
+	std::cout << '\n';
+	// highlight-end
+
+	numbers.push_back(13);
+
+	// highlight-start
+	for (int i : numbers) {
+		std::cout << i << ' ';
+	}
+	std::cout << '\n';
+	// highlight-end
+
+	numbers.push_front(3);
+
+	// highlight-start
+	for (int i : numbers) {
+		std::cout << i << ' ';
+	}
+	std::cout << '\n';
+	// highlight-end
+}
+```
+
+</CustomCodeBlock>

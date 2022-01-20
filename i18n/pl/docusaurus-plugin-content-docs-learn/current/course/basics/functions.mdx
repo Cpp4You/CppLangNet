@@ -1,21 +1,34 @@
 ---
 sidebar_position:	7
-sidebar_label:		"7. Funkcje 🚧"
+sidebar_label:		"7. Funkcje"
 title:				Funkcje
 description:		"Lekcja: funkcje w języku C++"
 tags:				[funkcja]
 hide_title:			true
 ---
 
-import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
-import ImproveSection	from '@site/i18n/pl/presets/ImproveSection.mdx';
+<!-- Presets -->
+import NotFinished				from '@site/i18n/pl/presets/NotFinished.mdx';
+import ImproveSection			from '@site/i18n/pl/presets/ImproveSection.mdx';
 
-import CustomCodeBlock	from '@site-comps/CustomCodeBlock';
-import GoogleSlides		from '@site-comps/GoogleSlides';
-import Columns			from '@site-comps/Columns';
-import Image			from '@site-comps/Image';
-import Tabs				from '@theme/Tabs';
-import TabItem			from '@theme/TabItem';
+<!-- Components -->
+import CustomCodeBlock			from '@site-comps/CustomCodeBlock';
+import GoogleSlides				from '@site-comps/GoogleSlides';
+import Columns					from '@site-comps/Columns';
+import Image					from '@site-comps/Image';
+import Tabs						from '@theme/Tabs';
+import TabItem					from '@theme/TabItem';
+
+<!-- Codes -->
+import Code_TopExampleWithout				from "./_codes/functions/top-example-without.mdx";
+import Code_TopExampleWith					from "./_codes/functions/top-example-with.mdx";
+
+import Code_ExampleReuse					from "./_codes/functions/example-reuse.mdx";
+import Code_ExampleReuseWithParam			from "./_codes/functions/example-reuse-with-param.mdx";
+import Code_ExampleReuseWithParams			from "./_codes/functions/example-reuse-with-params.mdx";
+
+import Code_ExampleDefaultParam				from "./_codes/functions/example-default-param.mdx";
+import Code_ExampleMultipleDefaultParams	from "./_codes/functions/example-multiple-default-params.mdx";
 
 <NotFinished/>
 
@@ -34,89 +47,12 @@ przejdziemy w dalszej części tej lekcji.
 <hr/>
 
 <Tabs>
-
-<TabItem value="without-functions" label="⚠ Bez funkcji">
-
-<CustomCodeBlock lineNumbers maxLines={20} resizable>
-
-```cpp
-#include <iostream>
-#include <vector>
-
-int main()
-{
-	std::vector<int> numbers = {1, 4, 13, 15};
-
-	// highlight-start
-	for (int i : numbers) {
-		std::cout << i << ' ';
-	}
-	std::cout << '\n';
-	// highlight-end
-
-	numbers.push_back(13);
-
-	// highlight-start
-	for (int i : numbers) {
-		std::cout << i << ' ';
-	}
-	std::cout << '\n';
-	// highlight-end
-
-	numbers.push_front(3);
-
-	// highlight-start
-	for (int i : numbers) {
-		std::cout << i << ' ';
-	}
-	std::cout << '\n';
-	// highlight-end
-}
-```
-
-</CustomCodeBlock>
-
-</TabItem>
-
-<TabItem value="with-function" label="🟢 Z funkcją">
-
-<CustomCodeBlock lineNumbers maxLines={20} resizable>
-
-```cpp
-#include <iostream>
-#include <vector>
-
-void print(std::vector<int> vec)
-{
-	for (int i : vec) {
-		std::cout << i << ' ';
-	}
-	std::cout << '\n';
-}
-
-int main()
-{
-	std::vector<int> numbers = {1, 4, 13, 15};
-
-	// highlight-next-line
-	print(numbers);
-
-	numbers.push_back(13);
-
-	// highlight-next-line
-	print(numbers);
-
-	numbers.push_front(3);
-
-	// highlight-next-line
-	print(numbers);
-}
-```
-
-</CustomCodeBlock>
-
-</TabItem>
-
+	<TabItem value="without-functions" label="⚠ Bez funkcji">
+		<Code_TopExampleWithout />
+	</TabItem>
+	<TabItem value="with-function" label="🟢 Z funkcją">
+		<Code_TopExampleWith />
+	</TabItem>
 </Tabs>
 
 <hr/>
@@ -180,40 +116,9 @@ Zwróć uwagę, że dajemy **średnik** po wywołaniu funkcji.
 
 Napiszmy przykładową funkcję, która wyświetla 10 liczb parzystych i użyjmy jej kilka razy:
 
-<Columns columns={['8fr', '4fr']}>
-<div>
-
-```cpp
-#include <iostream>
-
-// Definicja funkcji
-void print10EvenNumbers()
-{
-	for (int i = 0; i < 10; i++)
-		std::cout << (i * 2) << ' ';
-	std::cout << '\n';
-}
-
-int main()
-{
-	// Wywołanie funkcji
-	print10EvenNumbers();
-	print10EvenNumbers();
-	print10EvenNumbers();
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Wynik (konsola)"
-0 2 4 6 8 10 12 14 16 18
-0 2 4 6 8 10 12 14 16 18
-0 2 4 6 8 10 12 14 16 18
-```
-
-</div>
-</Columns>
+<>
+<Code_ExampleReuse />
+</>
 
 ### Z parametrami
 
@@ -223,28 +128,13 @@ int main()
 	/>
 
 Działanie funkcji możemy uzależnić od **parametrów**. Chcąc, żeby funkcja wyświetlała
-więcej lub mniej liczb parzystych niż 10, możemy utworzyć w funkcji parametr,
+dowolnie dużo liczb parzystych, możemy utworzyć w funkcji parametr,
 który będzie to kontrolował. Parametr jest zmienną wewnątrz funkcji, którą tworzymy
 w środku nawiasów okrągłych:
 
-```cpp
-#include <iostream>
-
-// highlight-next-line
-void printEvenNumbers(int howMany)
-{
-	for (int i = 0; i < howMany; i++)
-		std::cout << (i * 2) << ' ';
-	std::cout << '\n';
-}
-
-int main()
-{
-	printEvenNumbers(10);
-	printEvenNumbers(5);
-	printEvenNumbers(3);
-}
-```
+<>
+<Code_ExampleReuseWithParam />
+</>
 
 Powyższy zapis
 
@@ -256,23 +146,9 @@ oznacza, że w momencie wywołania, do parametru `howMany` wewnątrz tej funkcji
 zostanie przypisana wartość `10`. Możemy do funkcji przekazywać dowolną liczbę parametrów.
 Oddzielamy je przecinkami:
 
-```cpp title="🔹 Wyświetlanie większej spośród dwóch liczb"
-#include <iostream>
-
-void printBiggerNumber(int a, int b)
-{
-	if (a > b)
-		std::cout << a << '\n';
-	else
-		std::cout << b << '\n';
-}
-
-int main() {
-	printBiggerNumber(3, 5);
-	printBiggerNumber(5, 3);
-	printBiggerNumber(3, 10);
-}
-```
+<>
+<Code_ExampleReuseWithParams />
+</>
 
 :::danger Popularny błąd
 Zauważ, że kolejne parametry funkcji umieszczamy po przecinku, każdorazowo podając jego typ.
@@ -342,8 +218,6 @@ void printEvenNumbers(int howMany)
 Teraz gdy podamy wartość mniejszą lub równą zero do parametru funkcji, funkcja już na początku zostanie przerwana.
 
 ### Wartość zwracana
-
-<ImproveSection />
 
 <Image center border
 		src="/img/tutorials/course/basic/functions/retval-params-pl.png"
@@ -438,36 +312,82 @@ O funkcji `main` powiemy więcej w przyszłości.
 
 :::
 
-### Domyślne wartości parametrów ⚠
+### Domyślne wartości parametrów
 
-<ImproveSection />
+<Image center border
+		src="/img/tutorials/course/basic/functions/default-params-pl.png"
+		desc="Schemat funkcji z wartością domyślną parametru"
+	/>
+
+
+Parametrom możemy nadawać domyślne wartości, które zostaną wykorzystane, jeśli sami podczas wywołania funkcji
+nie podamy innej wartości. Aby to zrobić, należy po znaku `=` podać wartość domyślną, tak jak na schemacie.
+
+Jest to mechanizm przydatny w sytuacji, gdy funkcji używamy zazwyczaj w jeden konkretny sposób, ale nie
+chcemy się do niego ograniczać. Przykładowo, często gdy wyświetlamy tekst (nasza testowa funkcja `print`),
+mamy zamiar przejść od razu do nowej linii. Możemy więc utworzyć parametr, którego domyślną wartością będzie
+`true` oznaczająca to przejscie, lecz gdy podamy `false` to zostanie to pominięte.
+
+Poniżej przykład z implementacją funkcji `print` oraz jej użyciem:
+
+<><Code_ExampleDefaultParam /></>
+
+:::danger Kolejność parametrów
+Żaden parametr bez wartości domyślnej nie może znaleźć się po parametrze z wartością domyślną.
+
+<Tabs>
+<TabItem value="bad" label="❌ Źle" default>
+
+```cpp
+#include <iostream>
+
+// Funkcja zmniejszająca "number" o "step"
+// highlight-next-line
+int decrease(int step = 1, int number) // ❌ błąd
+{
+	return number - step;
+}
+
+int main()
+{
+	std::cout << "5 pomniejszone o 10 daje: " << decrease(5, 10) << '\n';
+}
+```
+
+</TabItem>
+<TabItem value="good" label="✔ Dobrze">
+
+```cpp
+#include <iostream>
+
+// Funkcja zmniejszająca "number" o "step"
+// highlight-next-line
+int decrease(int number, int step = 1)
+{
+	return number - step;
+}
+
+int main()
+{
+	std::cout << "5 pomniejszone o 10 daje: " << decrease(5, 10) << '\n';
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::
+
+Funkcja może przyjmować dowolną ilość parametrów z domyślnymi wartościami, np.:
+
+<><Code_ExampleMultipleDefaultParams /></>
 
 ### Deklaracja a definicja
 
 Aby móc użyć powyższej funkcji `sum`, musimy upewnić się, że znajduje się ona **przed** tym użyciem, przykładowo:
 
 <Tabs>
-<TabItem value="good" label="✔ Dobrze" default>
-
-```cpp
-#include <iostream>
-
-int sum(int from, int to)
-{
-	int result = 0;
-	for (int i = from; i <= to; i++)
-		result += i;
-	return result;
-}
-
-int main()
-{
-	std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
-}
-```
-
-</TabItem>
-<TabItem value="bad" label="❌ Źle">
+<TabItem value="bad" label="❌ Źle" default>
 
 ```cpp
 #include <iostream>
@@ -486,6 +406,26 @@ int sum(int from, int to)
 	for (int i = from; i <= to; i++)
 		result += i;
 	return result;
+}
+```
+
+</TabItem>
+<TabItem value="good" label="✔ Dobrze">
+
+```cpp
+#include <iostream>
+
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+
+int main()
+{
+	std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
 }
 ```
 
@@ -612,6 +552,62 @@ int sum(int from, int to)
 
 :::danger Zasada jednej definicji (ang.: *ODR*)
 Definicja **musi** pojawić się w kodzie **tylko raz** (deklaracji może być wiele).
+:::
+
+:::danger Domyślne wartości parametrów
+Gdy rozdzielamy deklarację i definicję to domyślne wartości parametrów umieszczamy tylko w deklaracji:
+
+<Tabs>
+<TabItem value="bad" label="❌ Źle" default>
+
+```cpp
+#include <iostream>
+
+// 🟣 Deklaracja
+void print(std::string text, bool addNewLine = true);
+
+int main()
+{
+	print("Jeden");
+}
+
+// 🔵 Definicja
+// highlight-next-line
+void print(std::string text, bool addNewLine = true) // ❌ Błąd
+{
+	std::cout << text;
+	if (addNewLine)
+		std::cout << '\n';
+}
+```
+
+</TabItem>
+<TabItem value="good" label="✔ Dobrze">
+
+```cpp
+#include <iostream>
+
+// 🟣 Deklaracja
+void print(std::string text, bool addNewLine = true);
+
+int main()
+{
+	print("Jeden");
+}
+
+// 🔵 Definicja
+// highlight-next-line
+void print(std::string text, bool addNewLine)
+{
+	std::cout << text;
+	if (addNewLine)
+		std::cout << '\n';
+}
+```
+
+</TabItem>
+</Tabs>
+
 :::
 
 ## Przykłady ⚠

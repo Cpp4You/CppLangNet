@@ -1,0 +1,26 @@
+```cpp
+#include <iostream>
+
+void fizzBuzz(std::string fizzWord = "Fizz", std::string buzzWord = "Buzz", int count = 5)
+{
+	for (int i = 1; i < count; i++)
+	{
+		if (i % 3 == 0 && i % 5 == 0)
+			std::cout << fizzWord << buzzWord << '\n';
+		else if (i % 3 == 0)
+			std::cout << fizzWord << '\n';
+		else if (i % 5 == 0)
+			std::cout << buzzWord << '\n';
+		else
+			std::cout << i << '\n';
+	}
+}
+
+int main()
+{
+	fizzBuzz();						// to samo co fizzBuzz("Fizz", "Buzz", 5)
+	fizzBuzz("Shizz");				// to samo co fizzBuzz("Shizz", "Buzz", 5)
+	fizzBuzz("Shizz", "Wooz");		// to samo co fizzBuzz("Shizz", "Wooz", 5)
+	fizzBuzz("Shizz", "Wooz", 15);	// to samo co fizzBuzz("Shizz", "Wooz", 15)
+}
+```
