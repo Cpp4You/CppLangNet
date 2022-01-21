@@ -7,11 +7,11 @@
     "description": "The title of the 404 page"
   },
   "theme.NotFound.p1": {
-    "message": "Nie mogliśmy znaleźć strony której szukasz.",
+    "message": "Nie mogliśmy znaleźć strony, której szukasz.",
     "description": "The first paragraph of the 404 page"
   },
   "theme.NotFound.p2": {
-    "message": "Proszę skontaktuj się z właścielem strony, z której link doprowadził Cię tutaj i poinformuj ich, że odnośnik jest nieprawidłowy.",
+    "message": "Proszę, skontaktuj się z właścicielem strony, z której link doprowadził Cię tutaj i poinformuj ich, że odnośnik jest nieprawidłowy.",
     "description": "The 2nd paragraph of the 404 page"
   },
   "theme.AnnouncementBar.closeButtonAriaLabel": {
@@ -39,7 +39,7 @@
     "description": "The label used to navigate to the older blog posts page (next page)"
   },
   "theme.blog.post.readingTime.plurals": {
-    "message": "{readingTime} min aby przeczytać|{readingTime} min aby przeczytać|{readingTime} min aby przeczytać",
+    "message": "{readingTime} min, aby przeczytać|{readingTime} min, aby przeczytać|{readingTime} min, aby przeczytać",
     "description": "Pluralized label for \"{readingTime} min read\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
   },
   "theme.blog.post.readMore": {
@@ -123,7 +123,7 @@
     "description": "The title of the page for a docs tag"
   },
   "theme.docs.versions.unreleasedVersionLabel": {
-    "message": "Ta dokumentacja dotyczy najnowszej i nieopublikowanej jeszce wersji {siteTitle} ({versionLabel}).",
+    "message": "Ta dokumentacja dotyczy najnowszej i nieopublikowanej jeszcze wersji {siteTitle} ({versionLabel}).",
     "description": "The label used to tell the user that he's browsing an unreleased doc version"
   },
   "theme.docs.versions.unmaintainedVersionLabel": {
@@ -139,7 +139,7 @@
     "description": "The label used for the latest version suggestion link label"
   },
   "theme.common.editThisPage": {
-    "message": "Edytuj tą stronę",
+    "message": "Edytuj tę stronę",
     "description": "The link label to edit the current page"
   },
   "theme.common.headingLinkTitle": {
@@ -152,7 +152,7 @@
   },
   "theme.lastUpdated.byUser": {
     "message": " przez {user}",
-    "description": "The words used to describe by who the page has been last updated"
+    "description": "The words used to describe by whom the page has been last updated"
   },
   "theme.lastUpdated.lastUpdatedAtBy": {
     "message": "Ostatnia aktualizacja{atDate}{byUser}",
@@ -160,7 +160,7 @@
   },
   "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
     "message": "← Powrót do menu głównego",
-    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
+    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs' sidebar)"
   },
   "theme.navbar.mobileVersionsDropdown.label": {
     "message": "Wersje",
