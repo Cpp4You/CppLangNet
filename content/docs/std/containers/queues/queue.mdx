@@ -3,12 +3,9 @@ sidebar_position:	2
 title:				std::queue reference
 sidebar_label:		queue
 hide_title:			true
+description:		Summary of a std::queue (usage, methods, etc.) - C++ Language
+tags:				[queue, adapter, fifo]
 ---
-<NotFinished />
-
-# Queue class reference
-
-## Overview
 
 import ClassSummary				from "@site-comps/ClassSummary";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
@@ -18,34 +15,43 @@ import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
 import Tabs						from "@theme/Tabs";
 import TabItem						from "@theme/TabItem";
 
+<!------------------ Codes ----------------->
+
+<!-- Further Examples -->
+import FurtherExamplePushPopPrint from "./priority-queue/_codes/main-page/examples/further/push-pop-print.mdx"
+
+<!-- Overview -->
+import OverviewSimplifiedRegular from "./queue/_codes/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedReguler from "./queue/_codes/main-page/overview/overview-detailed-regular.mdx";
+
 <!-- Deduction Guides -->
-import DeductionGuides from "./_codes/queue/main-page/deduction-guides.mdx"
+import DeductionGuides from "./queue/_codes/main-page/deduction-guides.mdx";
+
+<NotFinished />
+
+# Queue class reference
+
+## Overview
 
 <Tabs>
 <TabItem value="simplified" label="Simplified" default>
 
-```cpp
-template< class T, /* ... */> 
-class queue;
-```
+	<OverviewSimplifiedRegular />
 
 </TabItem>
 <TabItem value="detailed" label="Detailed">
 
-```cpp
-template<
-    class T,
-    class Container = std::deque<T>
-> class queue;
-```
+	<OverviewDetailedReguler />
 
 </TabItem>
 </Tabs>
 
-The `std::queue` class is a container adapter that provides a data structure, where you can 
-add new value on its back, or pop value from its front.
+Queue is a container **adapter**
 
-Because it is a class template, programmer can specify the type of elements.
+It adapts a container by providing a new interface to it.
+
+The new interface resembles a queue, a FIFO (First In First Out) data structure.
+This means that the first element to be pushed is the first one to be accessed (like in a shop queue - first person to get in is the first person to be served).
 
 <details>
 <summary>Technical definition of a queue</summary>
@@ -53,7 +59,8 @@ Because it is a class template, programmer can specify the type of elements.
 
 The `std::queue` class is a container adapter that gives the programmer the functionality of a queue - specifically, a *FIFO* (first-in, first-out) data structure.
 
-The class template acts as a wrapper to the underlying container - only a specific set of functions is provided. The queue pushes the elements on the back of the underlying container and pops them from the front.
+The class template acts as a wrapper to the underlying container - only a specific set of functions is provided.
+The queue pushes the elements on the back of the underlying container and pops them from the front.
 
 </div>
 </details>
@@ -63,8 +70,21 @@ The class template acts as a wrapper to the underlying container - only a specif
 ## Template parameters
 
 <SymbolTable noTraits>
-	<Symbol name="T"		desc="The type of stored elements"/>
-	<Symbol name="Container" 		desc="The type of underlying container to use to store the elements"/>
+	<Symbol
+			name="T"
+			desc={<>
+				The type of the stored elements.
+				The behaviour is undefined if <code>T</code> is not <code>Container::value_type</code>.
+				</>}
+		/>
+	<Symbol
+			name="Container"
+			desc={<>
+				The type of the underlying container used to store the elements.
+				By default <a href="/docs/containers/arays/vector"><code>std::deque&lt;T&gt;</code></a>.
+				The container must satisfy <a href="/docs/named_req/SequenceContainer">SequenceContainer</a>.
+				</>}
+		/>
 </SymbolTable>
 
 ## Type names
@@ -79,62 +99,60 @@ The class template acts as a wrapper to the underlying container - only a specif
 
 ## Member functions
 
-<SymbolTable>	
+<SymbolTable>
 	<Symbol pub autoLink linkName="constructor" name="(constructor)">
-		Constructs the <code>queue</code>
+		Constructs a <code>queue</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="destructor" name="(destructor)">
-		Destructs the <code>queue</code>
+		Destructs a <code>queue</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="operator_assign" name="operator="
-			desc="Assigns values to the container adaptor"
+			desc="Assigns one queue to another."
 		/>
 </SymbolTable>
 
 ### Element access
 
-<SymbolTable>	
+<SymbolTable>
 	<Symbol pub autoLink name="front"
-			desc={<>Accesses the first element</>}
+			desc="Accesses the element at the top (first pushed)."
 		/>
 	<Symbol pub autoLink name="back"
-			desc={<>Accesses the last element</>}
+			desc="Accesses the element at the back (last pushed)."
 		/>
 </SymbolTable>
 
 ### Capacity
 
-<SymbolTable>	
-	<Symbol pub autoLink linkName="begin" name={<>empty</>}
-			desc={<>Checks whether the underlying container is empty</>}
+<SymbolTable>
+	<Symbol pub autoLink name="empty"
+			desc={<>Returns <code>true</code> if the queue is empty, otherwise <code>false</code>.</>}
 		/>
-	<Symbol pub autoLink linkName="end" name={<>size</>}
-			desc={<>Returns the number of elements</>}
-		/>
+	<Symbol pub autoLink name="size" desc="Returns the number of elements in the queue." />
 </SymbolTable>
 
 ### Modifiers
 
 <SymbolTable>
 	<Symbol pub autoLink name="push"
-			desc="Inserts element at the end"
+			desc="Inserts a new element at the end."
 		/>
 	<Symbol pub autoLink name="emplace"
-			desc="Constructs element in-place at the end"
+			desc="Constructs a new element in-place at the end."
 		/>
 	<Symbol pub autoLink name="pop"
-			desc="Removes the first element"
+			desc={<>Removes the first pushed element (the one that would've been returned by <code>queue.front()</code>).</>}
 		/>
 	<Symbol pub autoLink name="swap"
-			desc="Swaps the contents"
+			desc="Swaps two queues."
 		/>
 </SymbolTable>
 
 ## Member objects
 
 <SymbolTable>
-	<Symbol prot name="Container C"
-			desc="The underlying container"
+	<Symbol prot name={<><code>Container</code> C</>}
+			desc={<>The underlying container. By default <a href="/docs/containers/arrays/deque"><code>std::deque&lt;T&gt;</code></a>.</>}
 		/>
 </SymbolTable>
 
@@ -142,26 +160,28 @@ The class template acts as a wrapper to the underlying container - only a specif
 
 <SymbolTable noTraits>
 	<Symbol name={<>
-				operator==<br/>
-				operator!=<br/>
-				operator&lt;<br/>
-				operator&gt;<br/>
-				operator&lt;=<br/>
-				operator&gt;=<br/>
-				operator&lt;=&gt;
+				operator== <br/>
+				operator!= <br/>
+				operator&lt; <br/>
+				operator&gt; <br/>
+				operator&lt;= <br/>
+				operator&gt;= <br/>
+				operator&lt;=&gt; <small>(C++20)</small>
 			</>}
-			desc="Lexicographically compares the values in the queue"
+			desc="Lexicographically compares values in a queue."
 		/>
 	<Symbol name={<>std::swap <small>(std::queue)</small></>}
-			desc={<>Specializes the <a href="#">std::swap</a> algorithm</>}
+			desc={<>An overload for the <a href="#">std::swap</a> algorithm.</>}
 		/>
 </SymbolTable>
 
 ### Helper classes
 
 <SymbolTable noTraits>
-	<Symbol name={<>std::uses_allocator<small>std::queue</small></>}
-			desc="Specializes the std::uses_allocator type trait"
+	<Symbol name={<>
+			<a href="#">std::uses_allocator</a> <small>(std::queue)</small>
+		</>}
+			desc={<>Specializes the <code>std::uses_allocator</code> type trait.</>}
 		/>
 </SymbolTable>
 
@@ -172,7 +192,7 @@ The class template acts as a wrapper to the underlying container - only a specif
 <details>
 <summary>Click to expand</summary>
 <div>
-	<DeductionGuides/>
+	<DeductionGuides />
 </div>
 </details>
 
@@ -180,29 +200,12 @@ The class template acts as a wrapper to the underlying container - only a specif
 
 ### Basic manipulation
 
-#### Push and pop on queue, printing the values
-
 <Columns spacing="20px" columns={['8fr', '4fr']}>
 <div>
 
-```cpp
-#include <iostream>
-#include <queue>
-
-int main()
-{
-	std::queue<int> q;
-
-	q.push(1);
-	q.push(2);
-	q.push(3);
-
-	while(q.empty() == false){
-		std::cout << q.front() << std::endl;
-		q.pop();
-	}
-}
-```
+<CustomCodeBlock withTitle>
+	<FurtherExamplePushPopPrint />
+</CustomCodeBlock>
 
 </div>
 <div>
