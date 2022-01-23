@@ -27,9 +27,6 @@ import Code_ExampleReuse					from "./_codes/functions/example-reuse.mdx";
 import Code_ExampleReuseWithParam			from "./_codes/functions/example-reuse-with-param.mdx";
 import Code_ExampleReuseWithParams			from "./_codes/functions/example-reuse-with-params.mdx";
 
-import Code_ExampleDefaultParam				from "./_codes/functions/example-default-param.mdx";
-import Code_ExampleMultipleDefaultParams	from "./_codes/functions/example-multiple-default-params.mdx";
-
 <NotFinished/>
 
 # Funkcje
@@ -312,76 +309,6 @@ O funkcji `main` powiemy więcej w przyszłości.
 
 :::
 
-### Domyślne wartości parametrów
-
-<Image center border
-		src="/img/tutorials/course/basic/functions/default-params-pl.png"
-		desc="Schemat funkcji z wartością domyślną parametru"
-	/>
-
-
-Parametrom możemy nadawać domyślne wartości, które zostaną wykorzystane, jeśli sami podczas wywołania funkcji
-nie podamy innej wartości. Aby to zrobić, należy po znaku `=` podać wartość domyślną, tak jak na schemacie.
-
-Jest to mechanizm przydatny w sytuacji, gdy funkcji używamy zazwyczaj w jeden konkretny sposób, ale nie
-chcemy się do niego ograniczać. Przykładowo, często gdy wyświetlamy tekst (nasza testowa funkcja `print`),
-mamy zamiar przejść od razu do nowej linii. Możemy więc utworzyć parametr, którego domyślną wartością będzie
-`true` oznaczająca to przejscie, lecz gdy podamy `false` to zostanie to pominięte.
-
-Poniżej przykład z implementacją funkcji `print` oraz jej użyciem:
-
-<><Code_ExampleDefaultParam /></>
-
-:::danger Kolejność parametrów
-Żaden parametr bez wartości domyślnej nie może znaleźć się po parametrze z wartością domyślną.
-
-<Tabs>
-<TabItem value="bad" label="❌ Źle" default>
-
-```cpp
-#include <iostream>
-
-// Funkcja zmniejszająca "number" o "step"
-// highlight-next-line
-int decrease(int step = 1, int number) // ❌ błąd
-{
-	return number - step;
-}
-
-int main()
-{
-	std::cout << "5 pomniejszone o 10 daje: " << decrease(5, 10) << '\n';
-}
-```
-
-</TabItem>
-<TabItem value="good" label="✔ Dobrze">
-
-```cpp
-#include <iostream>
-
-// Funkcja zmniejszająca "number" o "step"
-// highlight-next-line
-int decrease(int number, int step = 1)
-{
-	return number - step;
-}
-
-int main()
-{
-	std::cout << "5 pomniejszone o 10 daje: " << decrease(5, 10) << '\n';
-}
-```
-
-</TabItem>
-</Tabs>
-
-:::
-
-Funkcja może przyjmować dowolną ilość parametrów z domyślnymi wartościami, np.:
-
-<><Code_ExampleMultipleDefaultParams /></>
-
 ### Deklaracja a definicja
 
 Aby móc użyć powyższej funkcji `sum`, musimy upewnić się, że znajduje się ona **przed** tym użyciem, przykładowo:
@@ -552,64 +479,6 @@ int sum(int from, int to)
 
 :::danger Zasada jednej definicji (ang.: *ODR*)
 Definicja **musi** pojawić się w kodzie **tylko raz** (deklaracji może być wiele).
-:::
-
-:::danger Domyślne wartości parametrów
-Gdy rozdzielamy deklarację i definicję to domyślne wartości parametrów umieszczamy tylko w deklaracji:
-
-<Tabs>
-<TabItem value="bad" label="❌ Źle" default>
-
-```cpp
-#include <iostream>
-#include <string>
-
-// 🟣 Deklaracja
-void print(std::string text, bool addNewLine = true);
-
-int main()
-{
-	print("Jeden");
-}
-
-// 🔵 Definicja
-// highlight-next-line
-void print(std::string text, bool addNewLine = true) // ❌ Błąd
-{
-	std::cout << text;
-	if (addNewLine)
-		std::cout << '\n';
-}
-```
-
-</TabItem>
-<TabItem value="good" label="✔ Dobrze">
-
-```cpp
-#include <iostream>
-#include <string>
-
-// 🟣 Deklaracja
-void print(std::string text, bool addNewLine = true);
-
-int main()
-{
-	print("Jeden");
-}
-
-// 🔵 Definicja
-// highlight-next-line
-void print(std::string text, bool addNewLine)
-{
-	std::cout << text;
-	if (addNewLine)
-		std::cout << '\n';
-}
-```
-
-</TabItem>
-</Tabs>
-
 :::
 
 ## Przykłady ⚠

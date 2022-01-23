@@ -152,7 +152,7 @@
   },
   "theme.lastUpdated.byUser": {
     "message": " przez {user}",
-    "description": "The words used to describe by whom the page has been last updated"
+    "description": "The words used to describe by who the page has been last updated"
   },
   "theme.lastUpdated.lastUpdatedAtBy": {
     "message": "Ostatnia aktualizacja{atDate}{byUser}",
@@ -160,7 +160,7 @@
   },
   "theme.navbar.mobileSidebarSecondaryMenu.backButtonLabel": {
     "message": "← Powrót do menu głównego",
-    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs' sidebar)"
+    "description": "The label of the back button to return to main menu, inside the mobile navbar sidebar secondary menu (notably used to display the docs sidebar)"
   },
   "theme.navbar.mobileVersionsDropdown.label": {
     "message": "Wersje",
