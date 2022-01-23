@@ -1,26 +1,35 @@
 ---
 sidebar_position:	2
-sidebar_label:		"2. Operacje 🚧"
+sidebar_label:		"2. Operacje"
 title:				"Operacje"
 description:		"Lekcja: podstawowe operacje na zmiennych w języku C++"
-tags:				[operacja, zmienna, deklaracja, definicja, int, float, char, string]
+tags:				[operacja, zmienna, deklaracja, definicja, int, float, char]
 hide_title:			true
 ---
 
 import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
 
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
+
+import Columns			from '@site-comps/Columns';
+import CustomCodeBlock	from '@site-comps/CustomCodeBlock';
+import GoogleSlides		from '@site-comps/GoogleSlides';
+
 <NotFinished/>
 
 # Operacje na zmiennych
 
-Zmienne przechowują wartości przez czas swojego istnienia (o tym później).
-Możemy do nich zapisywać wartości lub je odczytywać, wyświetlać na ekranie,
-porównywać itp.
+W tej lekcji nauczymy się wykonywania różnych operacji z użyciem zmiennych, będziemy:
+- zapisywać do nich wartości,
+- modyfikować z użyciem wyrażeń matematycznych,
+- wyświetlać ich zawartość w konsoli.
 
-### Prosta interakcja z użytkownikiem
+Dowiemy się też jak pozwolić na prostą interakcję z użytkownikiem programu.
 
-Nasze programy będą nieco ciekawsze, gdy pozwolimy użytkownikowi
-wpisać coś do konsoli.  
+## Interakcja z użytkownikiem
+
+Nasze programy będą nieco ciekawsze, gdy pozwolimy użytkownikowi wpisać coś do konsoli.
 Zrobimy to za pomocą instrukcji `cin` (ang: <i>**c**haracter **in**put</i>):
 
 ```cpp
@@ -59,8 +68,7 @@ Możesz zapamiętać kierunek znaczków w tym operatorze w prosty sposób
 - `cin` - tekst idzie **do zmiennej** - `>>` skierowane w stronę zmiennej
 :::
 
-
-### Proste operacje matematyczne
+## Działania matematyczne
 
 Zmienne, które zawierają liczby można dowolnie modyfikować
 za pomocą typowych znaków (operatorów) matematycznych:
@@ -69,6 +77,7 @@ za pomocą typowych znaków (operatorów) matematycznych:
 - `a - b` - odejmuje od siebie dwie liczby
 - `a * b` - mnoży przez siebie dwie liczby
 - `a / b` - dzieli liczbę `a` przez `b`
+- `a % b` - daje resztę z dzielenia liczby `a` przez `b`
 
 :::note Uwaga
 To nie są wszystkie operatory matematyczne, o reszcie powiemy
@@ -91,14 +100,15 @@ int main()
 	std::cout << "Za 10 lat, będziesz mieć: "					<< (age + 10)	<< " lat\n";
 	std::cout << "5 lat temu, miałeś/aś: "						<< (age - 5)	<< " lat\n";
 	std::cout << "Jak będziesz 2x starszy/a, będziesz mieć: "	<< (age * 2)	<< " lat\n";
-	std::cout << "Ktoś dwa razy młodszy ma :"					<< (age / 2)	<< " lat";
+	std::cout << "Ktoś dwa razy młodszy ma :"					<< (age / 2)	<< " lat\n";
+	std::cout << (age % 10) << " lat temu Twój wiek był podzielny przez 10";
 	// highlight-end
 }
 ```
 
 :::tip Wyrównanie
-Zwróć uwagę, że dla lepszej czytelności kodu wyrównaliśmy klawiszem **`Tab`**
-użycia operatora `<<`.
+Zwróć uwagę, że dla kompilatora nie ma znaczenia czy użyjemy jednej spacji, czy wyrównamy kod
+z użyciem klawisza **`Tab`**.
 :::
 
 Bardzo istotnym faktem jest to, że użycie wyżej wymienionych operatorów,
@@ -153,7 +163,7 @@ age += 10;
 
 Zobacz jak to działa na przykładzie (wpisuję 20 do konsoli jeszcze raz):
 
-<Columns columns={['8fr', '4fr']}>
+<Columns columns={['2fr', '1fr']}>
 <div>
 
 <CustomCodeBlock lineNumbers>
@@ -167,7 +177,6 @@ int main()
 
 	int age;
 	std::cin >> age;
-
 	
 	std::cout << "Teraz masz: " << age << " lat\n";
 	// highlight-start
@@ -191,7 +200,7 @@ Za 30 lat, będziesz mieć: 50 lat
 </div>
 </Columns>
 
-#### Przebieg programu
+### Przebieg programu
 
 Zmienna `age`:
 - podczas wykonania linii `11` ma wartość `20`.
@@ -206,8 +215,7 @@ dostępnych operatorów, które modyfikują zawartość zmiennych.
 Najprościej będzie je pokazać na przykładzie:
 
 <Tabs>
-
-<TabItem value="presentation" label="Prezentacja" default>
+<TabItem value="presentation" label="🖼 Prezentacja" default>
 
 Poniżej prezentacja działania programu, po wpisaniu liczby `20`.
 
@@ -222,7 +230,6 @@ Poniżej prezentacja działania programu, po wpisaniu liczby `20`.
 	/>
 
 </TabItem>
-
 <TabItem value="code" label="Kod">
 <CustomCodeBlock lineNumbers maxLines={25} resizable>
 
@@ -267,6 +274,5 @@ int main()
 
 </Tabs>
 
-
-Więcej o możliwościach zmiennych dowiesz się z następnych części kursu 😊
+Więcej o możliwościach zmiennych dowiesz się z następnych części kursu.
 
