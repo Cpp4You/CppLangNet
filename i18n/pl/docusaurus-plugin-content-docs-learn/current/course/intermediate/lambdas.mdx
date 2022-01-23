@@ -144,7 +144,7 @@ Jest to zwykły blok kodu funkcji. Tutaj zapisujemy instrukcje, działamy na zmi
 
 Porównanie lambdy i funkcji generującej liczbę 5 za każdym wywołaniem.
 
-<Columns spacing={40} columns={['5.5fr', '5.5fr']}>
+<Columns spacing={40} columns={['1fr', '1fr']}>
 <div>
 
 ```cpp title="Lambda"
@@ -215,7 +215,7 @@ Nasz obiekt funkcyjny `square` zwraca sześcian argumentu `x`.
 ```cpp title="lambdas.cpp"
 #include <iostream>
 
-int function();
+int Bplus();
 int main()
 {
 	int A = 5;
@@ -232,18 +232,18 @@ int main()
 	// highlight-end
 
 	// highlight-start
-	// ❌ Zmiennej B też tu nie znamy ❌
-	//auto addToB = [B] (int a) { return B + a; };
+	// ❌ Zmiennej b też tu nie znamy ❌
+	//auto addToB = [b] (int a) { return b + a; };
 	// highlight-end
 	function();
 }
 
-int function()
+int Bplus()
 {
-	int B = 7;
+	int b = 7;
 	// highlight-start
 	// Poprawny zapis ✅
-	auto addToB = [B] (int a) { return B + a; };
+	auto addToB = [B] (int a) { return b + a; };
 	std::cout << addToB(9);
 	// highlight-end
 }
