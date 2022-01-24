@@ -23,6 +23,7 @@ import FurtherExampleCreateInsertChangePrint from "./_codes/map/main-page/exampl
 <!-- Overview -->
 import OverviewSimplifiedRegular from "./_codes/map/main-page/overview/overview-simplified-regular.mdx";
 import OverviewDetailedRegular from "./_codes/map/main-page/overview/overview-detailed-regular.mdx";
+import OverviewDetailedPmr from "./_codes/map/main-page/overview/overview-detailed-pmr.mdx";
 
 <!-- Deduction Guides -->
 import DeductionGuides from "./_codes/map/main-page/deduction-guides.mdx"
@@ -40,9 +41,19 @@ import DeductionGuides from "./_codes/map/main-page/deduction-guides.mdx"
 
 </TabItem>
 <TabItem value="detailed" label="Detailed">
+	<Tabs>
+		<TabItem value="regular" label="Regular" default>
 
-	<OverviewDetailedRegular />
+			<OverviewDetailedRegular/>
 
+		</TabItem>
+
+		<TabItem value="pmr" label="Polymorphic (since C++17)">
+
+			<OverviewDetailedPmr/>
+
+		</TabItem>
+	</Tabs>
 </TabItem>
 </Tabs>
 

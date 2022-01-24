@@ -1,0 +1,7 @@
+```cpp
+namespace pmr {
+    template< class Key, class Value, class Compare = std::less<Key> >
+    using map = std::map<Key, Value, Compare,
+                         std::pmr::polymorphic_allocator<std::pair<const Key, Value>>>
+}
+```
