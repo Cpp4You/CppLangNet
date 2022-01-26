@@ -1,0 +1,352 @@
+---
+sidebar_position:	1
+sidebar_label:		"1. Wprowadzenie"
+title:				"Wprowadzenie"
+description:		"Lekcja: wprowadzenie do zmiennych w języku C++"
+tags:				[zmienna, deklaracja, definicja, inicjalizacja, int, float, char]
+slug:				/course/basics/variables/
+hide_title:			true
+---
+
+import Columns			from '@site-comps/Columns'
+import GoogleSlides		from '@site-comps/GoogleSlides'
+import CustomCodeBlock	from '@site-comps/CustomCodeBlock'
+import Image			from '@site-comps/Image'
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
+
+# Wprowadzenie do zmiennych
+
+W tej lekcji powiemy o tym, jak przechowywać różne wartości w trakcie
+działania programu, czyli jak korzystać ze zmiennych.
+
+## Motywacja
+
+Żeby zrozumieć do czego są one przydatne, napiszmy program,
+który podnosi pewną liczbę do potęgi trzeciej, a następnie ją wyświetla:
+
+<Columns spacing={40} columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="🔹 main.cpp | Potęga trzecia"
+#include <iostream>
+
+int main()
+{
+	std::cout << 212 * 212 * 212;
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik"
+9528128
+```
+
+</div>
+</Columns>
+
+Jeśli teraz będziemy chcieli podnieść do trzeciej potęgi inną liczbę, będziemy
+musieli zmieniać trzy miejsca w kodzie. Jest to uciążliwe.
+
+### Rozwiązanie
+
+Żeby nie zmieniać za każdym razem tylu rzeczy, załóżmy na chwilę, że liczba, którą podnosimy
+do potęgi nazywa się `x`. Jak wtedy będzie wyglądał kod?
+
+```cpp
+#include <iostream>
+int main()
+{
+	std::cout << x * x * x;
+}
+```
+
+Powyższy program na tym etapie, **nie przejdzie etapu kompilacji**, ponieważ kod źródłowy jeszcze nie jest w pełni poprawny.
+Żeby użyć `x` w obliczeniu, musimy napierw stworzyć **zmienną** o tej nazwie:
+
+```cpp
+#include <iostream>
+int main()
+{
+	int x = 212;
+	std::cout << x * x * x;
+}
+```
+
+Powyższy program skompiluje się i zadziała poprawnie.
+
+:::important Zmienna
+**Zmienna** to pojemnik na dane **określonego typu**.
+:::
+
+## Tworzenie zmiennych
+
+W wyżej przedstawionym programie zmienną stworzyliśmy w ten sposób:
+
+```cpp
+int x = 212;
+```
+
+Oto schemat tego zapisu:
+
+<Tabs>
+	<TabItem value="creation-init" label="🔢 Z wartością" default>
+		<Image center maxheight={250}
+				src="/img/tutorials/course/basic/variables/creation-init-pl.png"
+				alt="Schemat tworzenia zmiennej (z inicjalizacją)"
+			/>
+	</TabItem>
+	<TabItem value="creation" label="⚪ Bez wartości">
+		<Image center maxheight={250}
+				src="/img/tutorials/course/basic/variables/creation-pl.png"
+				alt="Schemat tworzenia zmiennej (bez inicjalizacji)"
+			/>
+	</TabItem>
+</Tabs>
+
+
+Ten <u>niezwykle istotny</u> zapis składa się z następujących elementów:
+
+Element | Opis
+---|---
+**`int`** | typ zmiennej
+`x` | nazwa zmiennej
+`= 212` | **inicjalizacja** (przypisanie początkowej wartości)
+`;` | średnik, który kończy instrukcję
+
+### Typ zmiennej
+
+Typ zmiennej mówi o tym, co może dana zmienna przechowywać.
+Tak jak wspominałem wcześniej, zmienna jest pojemnikiem przechowującym
+pewne rzeczy, **określonego typu**.
+
+:::note Liczba całkowita
+`int` to skrót od angielskiego słowa *integer*, który oznacza **liczbę całkowitą**,
+czyli taką bez części ułamkowej.
+:::
+
+Oprócz użytego wyżej `int` dostępnych jest jeszcze wiele innych typów.
+Na tym etapie postaraj się zapamiętać następujące typy:
+
+Typ | Opis
+--- | ---
+**`int`** | liczba całkowita
+**`float`** | liczba rzeczywista (z częścią ułamkową)
+**`char`** | pojedynczy znak
+**`bool`** | wartość logiczna, czyli prawda (**`true`**) albo fałsz (**`false`**)
+
+:::danger Uwaga
+Wyżej wymienione typy zmiennych zawsze piszemy **małą literą**. Ma to znaczenie.
+:::
+
+#### Przykłady tworzenia zmiennych:
+
+<div style={ {border: "1px solid lightgray", padding: 15 } } >
+
+<Tabs>
+	<TabItem value="int" label={<code>int</code>} default>
+
+```cpp
+// Bez inicjalizacji
+// Zmienna będzie posiadać przypadkową wartość
+int x;
+
+// Tworzymy zmienną i przypisujemy jej wartość 30
+int y = 30;
+```
+
+
+	</TabItem>
+	<TabItem value="float" label={<code>float</code>}>
+
+```cpp
+// Bez inicjalizacji
+// Zmienna będzie posiadać przypadkową wartość
+float x;
+
+// Tworzymy zmienną i przypisujemy jej wartość 30
+float y = 30;
+
+// Tworzymy zmienną i przypisujemy jej wartość 1.234
+float z = 1.234f;
+```
+
+:::caution Część ułamkowa
+Gdy zmiennej typu `float` przypisujemy wartość z częścią ułamkową,
+musimy zakończyć tą liczbę znakiem `f`:
+- ✔ `12.45f`
+- ❌ `12.45`
+
+Ma to swoje uzasadnienie, ale o tym kiedy indziej.
+:::
+
+	</TabItem>
+	<TabItem value="char" label={<code>char</code>}>
+
+```cpp
+// Bez inicjalizacji
+// Zmienna będzie posiadać przypadkową wartość
+char x;
+
+// Tworzymy zmienną i przypisujemy jej znak 'j'
+char y = 'j';
+```
+
+:::danger Znaki
+Pojedyncze znaki zapisujemy **zawsze** między <u>pojedynczymi
+apostrofami</u>.
+- znak: `'c'`
+- ciąg znaków, składający się z jednego znaku: `"c"`
+
+Zatem:
+- ✔ `char x = 'c';`
+- ❌ `char x = "c";`
+:::
+
+	</TabItem>
+	<TabItem value="bool" label={<code>bool</code>}>
+
+```cpp
+// Bez inicjalizacji
+// Zmienna będzie posiadać przypadkową wartość
+bool x;
+
+// Tworzymy zmienną i przypisujemy jej wartość "prawda"
+bool y = true;
+
+// Tworzymy zmienną i przypisujemy jej wartość "fałsz"
+bool z = false;
+```
+
+	</TabItem>
+</Tabs>
+
+</div>
+
+### Nazwa zmiennej
+
+Nazwa może być dowolna, z pewnymi istotnymi ograniczeniami:
+
+- ❌ nie może posiadać spacji (zabronione: ❌ `abc def`)
+- ✔ może składać się z:
+	- ✔ znaków `a`-`z` oraz `A`-`Z`
+	- ✔ cyfr, ale nie na początku (zabronione: ❌ `932abc`)
+	- ✔ podkreślnika `_`
+
+Możesz utworzyć tyle zmiennych ile tylko chcesz, jednak muszą one różnić się nazwami,
+bo są ich unikalnymi identyfikatorami (z pewnymi wyjątkami, ale o tym kiedy indziej).
+
+Wielkość liter ma znaczenie:
+
+```cpp
+int x = 30;
+float X = 12.34f;
+```
+
+W wyżej przedstawionym kodzie, zmienne `x` oraz `X` to dwie różne zmienne!
+
+:::tip Dobra praktyka
+Najlepiej korzystaj z **tylko** angielskich nazw, czyli np:
+```cpp
+float average;
+```
+
+zamiast
+
+```cpp
+float srednia;
+```
+:::
+
+### Inicjalizacja (wartość początkowa)
+
+Inicjalizacja jest **opcjonalnym** krokiem w tworzeniu zmiennych.
+Gdy ją kreujemy, możemy albo zostawić ją bez chcianej wartości:
+
+```cpp
+int x;
+```
+
+lub przypisać jej wartość początkową:
+
+```cpp
+int x = 30;
+```
+
+Uwaga, słowo to: "inicjalizacja" ✔, nie "inicjacja" ❌
+
+### Średnik na końcu
+
+Tylko dla przypomnienia 😀
+
+```cpp
+int name = 40;
+```
+
+## Możliwości
+
+W tej sekcji jedynie pokażę Ci kilka możliwości korzystania ze zmiennych, natomiast ich omówienie
+znajduje się w następnej lekcji o zmiennych.
+
+### Wczytywanie danych od użytkownika
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	int age; // aktualny wiek
+	std::cout << "Podaj ile masz lat: ";
+	std::cin >> age;
+	std::cout << "Za 10 lat będziesz mieć: " << age + 10 << " lat.\n";
+}
+```
+
+## Powtórzenie
+
+Podsumowując:
+
+- wiemy jak [stworzyć zmienną](#tworzenie-zmiennych)
+- rozumiemy różnicę między [typami zmiennych](#typ-zmiennej)
+
+## Dodatkowe wiadomości
+
+### Brak inicjalizacji
+
+```cpp title="🔹 Przykład"
+int main() {
+	int x; // brak inicjalizacji
+}
+```
+
+Niezainicjalizowana zmienna (bez przypisanej początkowej wartości), wewnątrz bloku funkcji (np. wewnątrz `main`-a)
+będzie na początku posiadała przypadkową wartość, **nie będzie wyzerowana**.
+Zostawienie zmiennej bez wartości początkowej **może powodować problemy**
+w dalszej części kodu. Czasami jednak intencjonalnie możemy to pomijać,
+ale o tym kiedy indziej.
+
+### Konwersja typu
+
+Zmienna posiada określony typ, którego nie można dowolnie zmieniać.
+Wartości, które w niej spróbujemy zapisać muszą być zgodne z jej typem.
+Przykładowo, do zmiennej typu `float` (liczba rzeczywista) możemy zapisać
+liczbę całkowitą (`int`):
+
+```cpp title="🔹 Przykład"
+float y = 30; // OK
+```
+
+Zmienna typu `int` nie może przechowywać części ułamkowej, więc gdy spróbujemy do niej taką wartość
+zapisać, zostanie ona **skonwertowana**, lecz nie wystąpi żadne zaokrąglenie tylko po prostu ucięcie
+części ułamkowej.
+
+```cpp title="⚠ Niejawna konwersja"
+int y = 30.5f; // OK, konwersja do 30
+```
+
+Kompilator analizując kod *może* wystosować ostrzeżenie, że następuje **niejawna** konwersja. Niejawna dlatego,
+że takiego zapisu moglibyśmy użyć nieświadomie i uzyskać nie tą wartość co chcemy.

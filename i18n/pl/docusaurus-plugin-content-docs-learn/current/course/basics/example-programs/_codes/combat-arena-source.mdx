@@ -119,7 +119,10 @@ int main()
 
 		std::cin >> action;
 		if (action < 1 || action > 3)
+		{
 			std::cout << "Nieprawidłowa akcja. Z braku czasu zdecydowałeś się na atak!\n";
+			action = 1;
+		}
 
 		// szansa na zostanie trafionym przez przeciwnika
 		// w tej turze

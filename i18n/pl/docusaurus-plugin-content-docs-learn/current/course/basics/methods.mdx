@@ -1,14 +1,96 @@
 ---
 sidebar_position:	9
-sidebar_label:		"9. Metody"
+sidebar_label:		"9. Metody 🚧"
 title:				Metody
 description:		"Lekcja: podstawy metod w języku C++"
 tags:				[metoda, konstruktor, destruktor, struktura, klasa, obiekt, programowanie-obiektowe, oop]
 hide_title:			true
 ---
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+import Columns		from '@site-comps/Columns';
+import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
 
 <NotFinished/>
 
 # Metody
+
+Ta lekcja pokaże Ci, jak umieszczać funkcje wewnątrz struktury, czyli tworzyć tzw. metody.
+
+## Motywacja
+
+W lekcji o [strukturach](../structures) uczyliśmy się jak zawierać różne informacje
+o obiektach wewnątrz jednego typu, będącego strukturą. W ten sposób opisaliśmy
+pewne **cechy** obiektu. Oprócz tego, możemy też "nauczyć" obiekt wykonywać
+różne zadania.
+
+Rozważmy przykład samochodu. Opiszemy go następującą strukturą:
+
+```cpp
+struct Car
+{
+	// informacje o pojeździe
+	std::string	brand;
+	std::string	model;
+	int			yearOfProduction;
+
+	// poruszanie się
+	float		topSpeed = 200;		// max. prędkość (km/h)
+	float		acceleration = 50;	// przyspieszenie (km/h na sekundę)
+	float		speed = 0;			// aktualna prędkość (km/h)
+};
+```
+
+Następnie umieśćmy w niej funkcję, o nazwie `accelerate`, która będzie
+zwiększała `speed` o wartość przyspieszenia (`acceleration`):
+
+```cpp
+class Car
+{
+	// informacje o pojeździe
+	std::string	brand;
+	std::string	model;
+	int			yearOfProduction;
+
+	// poruszanie się
+	float		topSpeed = 200;		// max. prędkość (km/h)
+	float		acceleration = 50;	// przyspieszenie (km/h na sekundę)
+	float		speed = 0;			// aktualna prędkość (km/h)
+
+	// funkcja zwiększająca prędkość
+	void accelerate()
+	{
+		speed += acceleration;
+		std::cout << "Aktualna prędkość: " << speed << " km/h\n";
+	}
+};
+```
+
+Tak utworzoną metodę, możemy wywołać na obiekcie, w ten sposób:
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Wywołanie metody accelerate()"
+// ...
+
+int main()
+{
+	Car car;
+	// wywołanie po raz pierwszy
+	car.accelerate();
+	// wywołanie po raz drugi
+	car.accelerate();
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Wynik"
+Aktualna prędkość: 50 km/h
+Aktualna prędkość: 100 km/h
+```
+
+</div>
+</Columns>
+

@@ -1,0 +1,36 @@
+import Columns from "@site-comps/Columns";
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+
+// Definicja funkcji
+void print10EvenNumbers()
+{
+	for (int i = 0; i < 10; i++)
+		std::cout << (i * 2) << ' ';
+	std::cout << '\n';
+}
+
+int main()
+{
+	// Wywołanie funkcji
+	print10EvenNumbers();
+	print10EvenNumbers();
+	print10EvenNumbers();
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Wynik (konsola)"
+0 2 4 6 8 10 12 14 16 18
+0 2 4 6 8 10 12 14 16 18
+0 2 4 6 8 10 12 14 16 18
+```
+
+</div>
+</Columns>

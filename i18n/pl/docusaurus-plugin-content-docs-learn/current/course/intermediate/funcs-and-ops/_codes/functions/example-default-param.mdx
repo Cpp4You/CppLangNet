@@ -1,0 +1,36 @@
+import Columns from "@site-comps/Columns";
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+
+void print(std::string text, bool addNewLine = true)
+{
+	std::cout << text;
+	if (addNewLine)
+		std::cout << '\n';
+}
+
+int main()
+{
+	print("Jeden");
+	print("Dwa");
+	print("Trzy", false);
+	print("Cztery", false);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Wynik (konsola)"
+Jeden
+Dwa
+TrzyCztery
+```
+
+</div>
+</Columns>

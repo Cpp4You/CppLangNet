@@ -10,10 +10,11 @@ tags:				[string, container, text, char, compile-time]
 import ClassSummary				from "@site-comps/ClassSummary";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 import Columns					from "@site-comps/Columns";
+import Image					from "@site-comps/Image";
 import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
 import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
 import Tabs						from "@theme/Tabs";
-import TabItem						from "@theme/TabItem";
+import TabItem					from "@theme/TabItem";
 
 <!-- Deduction Guides -->
 import DeductionGuides from "./_codes/string/main-page/deduction-guides.mdx"
@@ -55,9 +56,10 @@ The elements of a string are stored contiguously in memory.
 This means that a pointer to an element of a `string` may be passed to any function
 that expects a pointer to an element of an array of characters.
 
-<p align="center">
-	<img style={{border: "1px solid gray", maxHeight: 250}} alt="String elements in memory" src="/img/doc/string-elements-in-memory.png" />
-</p>
+<Image center border maxheight={250}
+		alt="String elements in memory"
+		src="/img/doc/string-elements-in-memory.png"
+	/>
 
 ### Aliases
 

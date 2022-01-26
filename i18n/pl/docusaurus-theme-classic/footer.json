@@ -54,5 +54,13 @@
   "link.item.label.Contributing": {
     "message": "Pomóż w rozwoju",
     "description": "The label of footer link with label=Contributing linking to /contributing"
+  },
+  "link.item.label.Forum": {
+    "message": "Forum",
+    "description": "The label of footer link with label=Forum linking to https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum"
+  },
+  "link.item.label.Reddit": {
+    "message": "Reddit",
+    "description": "The label of footer link with label=Reddit linking to https://reddit.com/r/cpp"
   }
 }
