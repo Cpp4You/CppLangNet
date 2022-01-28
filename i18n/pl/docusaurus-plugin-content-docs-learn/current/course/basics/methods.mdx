@@ -18,10 +18,24 @@ Ta lekcja pokaże Ci, jak umieszczać funkcje wewnątrz struktury, czyli tworzy�
 
 ## Motywacja
 
+W programowaniu często odwzorowuje się obiekty z życia, np. podczas tworzenia gry
+możemy chcieć umieścić przeciwników, którzy będą definiowani poprzez swoje
+
+- **cechy**, np.:
+	- nazwę 👾
+	- życie 💚
+	- siłę 💪
+- **zachowania**, np.:
+	- atak 🗡
+	- obronę 🛡
+
+Ten sposób opisywania obiektów, rozdzielający cechy i zachowania, jest bardzo powszechny.
 W lekcji o [strukturach](../structures) uczyliśmy się jak zawierać różne informacje
-o obiektach wewnątrz jednego typu, będącego strukturą. W ten sposób opisaliśmy
-pewne **cechy** obiektu. Oprócz tego, możemy też "nauczyć" obiekt wykonywać
-różne zadania.
+o obiektach wewnątrz jednego typu, który sami stworzyliśmy. W ten sposób opisaliśmy
+jego **cechy**. Teraz przejdziemy do metod, które pozwolą nam "nauczyć" obiekt
+wykonywać konkretne zadania - określą jego **zachowanie**. 
+
+## Wprowadzenie
 
 Rozważmy przykład samochodu. Opiszemy go następującą strukturą:
 
@@ -44,7 +58,7 @@ Następnie umieśćmy w niej funkcję, o nazwie `accelerate`, która będzie
 zwiększała `speed` o wartość przyspieszenia (`acceleration`):
 
 ```cpp
-class Car
+struct Car
 {
 	// informacje o pojeździe
 	std::string	brand;
