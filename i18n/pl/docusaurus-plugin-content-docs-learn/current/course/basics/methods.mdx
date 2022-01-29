@@ -1,14 +1,20 @@
 ---
 sidebar_position:	9
-sidebar_label:		"9. Metody 🚧"
-title:				Metody
+sidebar_label:		"9. Metody"
+title:				"Metody"
 description:		"Lekcja: podstawy metod w języku C++"
 tags:				[metoda, konstruktor, destruktor, struktura, klasa, obiekt, programowanie-obiektowe, oop]
 hide_title:			true
 ---
 
-import Columns		from '@site-comps/Columns';
-import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
+<!-- Components -->
+import Columns			from '@site-comps/Columns';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
+
+<!--  Presets -->
+import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
+import ImproveSection	from '@site/i18n/pl/presets/ImproveSection.mdx';
 
 <NotFinished/>
 
@@ -18,16 +24,16 @@ Ta lekcja pokaże Ci, jak umieszczać funkcje wewnątrz struktury, czyli tworzy�
 
 ## Motywacja
 
-W programowaniu często odwzorowuje się obiekty z życia, np. podczas tworzenia gry
-możemy chcieć umieścić przeciwników, którzy będą definiowani poprzez swoje
+W programowaniu często odwzorowuje się obiekty z życia, np. podczas tworzenia gry wyścigowej 🏎
+będziemy chcieli umiescić pojazdy, które będą definiowane poprzez swoje
 
 - **cechy**, np.:
-	- nazwę 👾
-	- życie 💚
-	- siłę 💪
+	- markę
+	- model 🚘
+	- maks. prędkość 🚀
 - **zachowania**, np.:
-	- atak 🗡
-	- obronę 🛡
+	- przyspieszanie 💨
+	- hamowanie 🛑
 
 Ten sposób opisywania obiektów, rozdzielający cechy i zachowania, jest bardzo powszechny.
 W lekcji o [strukturach](../structures) uczyliśmy się jak zawierać różne informacje
@@ -37,7 +43,7 @@ wykonywać konkretne zadania - określą jego **zachowanie**.
 
 ## Wprowadzenie
 
-Rozważmy przykład samochodu. Opiszemy go następującą strukturą:
+Na potrzeby tej lekcji stwórzmy strukturę, która zawiera cechy samochodu:
 
 ```cpp
 struct Car
@@ -54,30 +60,45 @@ struct Car
 };
 ```
 
-Następnie umieśćmy w niej funkcję, o nazwie `accelerate`, która będzie
-zwiększała `speed` o wartość przyspieszenia (`acceleration`):
+Wewnątrz funkcji `main` stwórzmy obiekt tej struktury:
+
+```cpp
+int main()
+{
+	Car car;
+	car.brand = "Ford";
+	car.model = "Focus";
+	car.yearOfProduction = 2010;
+
+}
+```
+
+Teraz przejdziemy do tego, jak zmusić go (`car`) do działania.
+
+## Tworzenie i używanie metod
+
+Wewnątrz struktury `Car`, na jej koniec, umieśćmy funkcję, o nazwie `accelerate`,
+która będzie zwiększała `speed` o wartość przyspieszenia `acceleration`:
 
 ```cpp
 struct Car
 {
 	// informacje o pojeździe
-	std::string	brand;
-	std::string	model;
-	int			yearOfProduction;
-
-	// poruszanie się
-	float		topSpeed = 200;		// max. prędkość (km/h)
-	float		acceleration = 50;	// przyspieszenie (km/h na sekundę)
-	float		speed = 0;			// aktualna prędkość (km/h)
+	std::string	brand;	
+	// ...
 
 	// funkcja zwiększająca prędkość
+	// highlight-next-line
 	void accelerate()
 	{
 		speed += acceleration;
-		std::cout << "Aktualna prędkość: " << speed << " km/h\n";
 	}
 };
 ```
+
+:::important Definicja
+**Metodami** nazywamy funkcje, które należą do struktur (lub klas, z którymi zapoznasz się dalej w kursie).
+:::
 
 Tak utworzoną metodę, możemy wywołać na obiekcie, w ten sposób:
 
@@ -90,10 +111,16 @@ Tak utworzoną metodę, możemy wywołać na obiekcie, w ten sposób:
 int main()
 {
 	Car car;
+	// początkowe wartości...
+
 	// wywołanie po raz pierwszy
+	// highlight-next-line
 	car.accelerate();
+	std::cout << "Aktualna prędkość: " << car.speed << " km/h\n";
 	// wywołanie po raz drugi
+	// highlight-next-line
 	car.accelerate();
+	std::cout << "Aktualna prędkość: " << car.speed << " km/h\n";
 }
 ```
 
@@ -108,3 +135,174 @@ Aktualna prędkość: 100 km/h
 </div>
 </Columns>
 
+Podajemy nazwę obiektu, który ma wykonać daną rzecz, następnie po kropce
+podajemy nazwę metody i parametry - tak jak przy wywołaniu zwykłej funkcji.
+
+<Columns columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="🔸 Wywołanie metody"
+obiekt.nazwaMetody(argumenty);
+```
+
+</div>
+<div>
+
+```cpp title="🔹 Wywołanie funkcji"
+nazwaFunkcji(argumenty);
+```
+
+</div>
+</Columns>
+
+### Kolejność definicji
+
+Wewnątrz struktury, metody nie muszą być zdefiniowane przed deklaracją zmiennej lub innej metody,
+która też do tej struktury należy:
+
+<Tabs>
+<TabItem value="good1" label="✔ Dobrze" default>
+
+Zwróć uwagę na kolejność definiowania metod: `limitSpeed` została użyta w `accelerate`,
+mimo że jej definicja znajduje się niżej. Podobnie pola `speed` oraz `acceleration`,
+zostały użyte przed ich deklaracją, bo znajduje się ona w kodzie **pod** tym użyciem.
+W ramach struktury jest to dozwolone.
+
+```cpp
+struct Car
+{
+	// funkcja zwiększająca prędkość
+	void accelerate()
+	{
+		speed += acceleration;
+		limitSpeed();
+	}
+
+	void limitSpeed() {
+		if (speed > topSpeed)
+			speed = topSpeed;
+	}
+
+	// Zmienne należące do klasy
+	float topSpeed = 200;
+	float acceleration = 50;
+	float speed = 0;
+	// reszta...
+};
+```
+
+</TabItem>
+<TabItem value="good2" label="✔ Dobrze (zachowana kolejność)">
+
+Kolejność funkcji i zmiennych jest ustawiona według ich użycia - również poprawne.
+
+```cpp
+struct Car
+{
+	// Zmienne należące do klasy
+	float topSpeed = 200;
+	float acceleration = 50;
+	float speed = 0;
+	// reszta...
+
+	void limitSpeed() {
+		if (speed > topSpeed)
+			speed = topSpeed;
+	}
+
+	// funkcja zwiększająca prędkość
+	void accelerate()
+	{
+		speed += acceleration;
+		limitSpeed();
+	}
+};
+```
+
+</TabItem>
+<TabItem value="bad" label="❌ Źle">
+
+Poza strukturą, taka zmiana kolejności jest niedozwolona, bez użycia osobnej deklaracji:  
+
+```cpp
+// Wyświetl "Hello, World!"
+void printHelloWorld()
+{
+	// ❌ Błąd, użycie funkcji `world` przed definicją
+	// highlight-next-line
+	std::cout << "Hello, " << world();
+}
+
+// Zwróć napis "World!"
+std::string world()
+{
+	return "World!"
+}
+```
+
+</TabItem>
+</Tabs>
+
+
+### Deklaracja i definicja
+
+Podobnie jak w przypadku funkcji, możemy rozdzielić deklarację i definicję metody.
+Dzięki temu jesteśmy w stanie przenieść ich definicje poza ciało struktury:
+
+```cpp
+struct Car
+{
+	// Zmienne należące do klasy
+	float topSpeed = 200;
+	float acceleration = 50;
+	float speed = 0;
+	// reszta...
+
+	// Deklaracje metod:
+	// highlight-start
+	void limitSpeed();
+	void accelerate();
+	// highlight-end
+};
+
+// highlight-next-line
+void Car::limitSpeed()
+{
+	if (speed > topSpeed)
+		speed = topSpeed;
+}
+
+// highlight-next-line
+void Car::accelerate()
+{
+	speed += acceleration;
+	limitSpeed();
+}
+```
+
+Zauważ, że w takim przypadku poprzedzamy nazwę metody nazwą struktury - `Car`,
+oraz podwójnym dwukropkiem - `::`, czyli tzw. operatorem zakresu (ang.: *scope resolution operator*).
+
+```cpp title="🔹 Schemat definicji poza ciałem struktury"
+typ NazwaStruktury::nazwaMetody(parametry)
+{
+	// ...
+}
+```
+
+Jednym z plusów takiego zapisu jest możliwość rozdzielenia *interfejsu*
+struktury od *implementacji*. Dzięki temu, gdy raz zaimplementujesz
+jej metody, za każdym kolejnym razem będziesz przeglądać tylko zestaw
+nazw zmiennych i metod, z których będziesz korzystać, bez rozpraszania się
+szczegółami implementacji.
+
+Ten zapis jest też kluczowy przy dzieleniu kodu na wiele plików - powiemy
+o tym dalej w kursie.
+
+## Przykłady
+
+<ImproveSection />
+
+## Potecjalne błędy
+
+<ImproveSection />
