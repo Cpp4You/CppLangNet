@@ -2,8 +2,9 @@
 sidebar_position:	2
 title:				std::unordered_multimap reference
 sidebar_label:		unordered_multimap
-tags:				[unordered_multimap, associative, container, key]
 hide_title:			true
+description:		Summary of a std::unordered_multimap (usage, methods, etc.) - C++ Language
+tags:				[unordered_multimap, associative, container, key, multi, unordered]
 ---
 
 import ClassSummary				from "@site-comps/ClassSummary";
@@ -13,6 +14,16 @@ import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
 import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
 import Tabs						from "@theme/Tabs";
 import TabItem					from "@theme/TabItem";
+
+<!------------------ Codes ----------------->
+
+<!-- Further Examples -->
+import FurtherExampleCreateInsertPrint from "./_codes/unordered-multimap/main-page/examples/further/create-insert-print.mdx"
+
+<!-- Overview -->
+import OverviewSimplifiedRegular from "./_codes/unordered-multimap/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedRegular from "./_codes/unordered-multimap/main-page/overview/overview-detailed-regular.mdx";
+import OverviewDetailedPmr from "./_codes/unordered-multimap/main-page/overview/overview-detailed-pmr.mdx";
 
 <!-- Deduction Guides -->
 import DeductionGuides from "./_codes/unordered-multimap/main-page/deduction-guides.mdx"
@@ -26,120 +37,155 @@ import DeductionGuides from "./_codes/unordered-multimap/main-page/deduction-gui
 <Tabs>
 <TabItem value="simplified" label="Simplified" default>
 
-```cpp
-template<
-    class Key,
-    class T,
-    /* ... */
-> class unordered_multimap;
-```
+	<OverviewSimplifiedRegular />
 
 </TabItem>
 <TabItem value="detailed" label="Detailed">
+	<Tabs>
+		<TabItem value="regular" label="Regular" default>
 
-```cpp
-template<
-    class Key,
-    class T,
-    class Hash = std::hash<Key>,
-    class KeyEqual = std::equal_to<Key>,
-    class Allocator = std::allocator< std::pair<const Key, T> >
-> class unordered_multimap;
-```
+			<OverviewDetailedRegular />
 
+		</TabItem>
+
+		<TabItem value="pmr" label="Polymorphic (since C++17)">
+
+			<OverviewDetailedPmr />
+
+		</TabItem>
+	</Tabs>
 </TabItem>
 </Tabs>
 
-The `std::unordered_multimap` is a container that stores key-value pairs, and as you can infer from its name
-it does not order elements by any key / value.
 
-### Example usage
+The `std::unordered_multimap` is a container that stores key-value pairs. It works almost as
+`std::unordered_multimap`, the only difference is that the keys can repeat themselves.
+If the keys of both elements are the same, their values are compared to determine if they should be added to the multimap.
 
-The examples in this section are very simple ones. Navigate to [examples section at the bottom](#more-examples) for more.
-
-<ImproveSection />
+The order of the elements stored is not specified, unlike in `std::multimap`.
 
 ### Technical details
 
 <details>
-<summary>Technical definition of a unordered_multimap</summary>
+<summary>Technical definition of an unordered multimap</summary>
 <div>
-Unordered multimap is an unordered associative container that supports equivalent keys (an unordered_multimap may contain multiple copies of each key value) and that associates values of another type with the keys. The unordered_multimap class supports forward iterators. Search, insertion, and removal have average constant-time complexity.
+Unordered multimap is an unordered associative container that supports equivalent keys (an unordered_multimap may contain multiple copies of each key value)
+and that associates values of another type with the keys.
 
-Internally, the elements are not sorted in any particular order, but organized into buckets. Which bucket an element is placed into depends entirely on the hash of its key. This allows fast access to individual elements, since once the hash is computed, it refers to the exact bucket the element is placed into.
 
-The iteration order of this container is not required to be stable (so, for example, std::equal cannot be used to compare two std::unordered_multimaps), except that every group of elements whose keys compare equivalent (compare equal with key_eq() as the comparator) forms a contiguous subrange in the iteration order, also accessible with equal_range().
+The unordered_multimap class supports forward iterators. Search, insertion, and removal have average constant-time complexity.  
 
-std::unordered_multimap meets the requirements of Container, AllocatorAwareContainer, UnorderedAssociativeContainer. 
+
+Internally, the elements are not sorted in any particular order, but organized into buckets.
+Which bucket an element is placed into depends entirely on the hash of its key.
+This allows fast access to individual elements, since once the hash is computed, it refers to the exact bucket the element is placed into.
+
+The iteration order of this container is not required to be stable (so, for example, [`std::equal`](#) cannot be used to compare two `std::unordered_multimap`s),
+except that every group of elements whose keys compare equivalent (compare equal with [`key_eq()`](#) as the comparator)
+forms a contiguous subrange in the iteration order, also accessible with `equal_range()`.
+
+`std::unordered_multimap` meets the requirements of [`Container`](/docs/named_req/Container), [`AllocatorAwareContainer`](/docs/named_req/AllocatorAwareContainer),
+[`UnorderedAssociativeContainer`](/docs/named_req/UnorderedAssociativeContainer).
 </div>
 </details>
 
-<ClassSummary name="unordered_multimap" namespaces="std" folder="unordered_multimap" headerName="unordered_map">
+<ClassSummary name="unordered_multimap" namespaces="std" folder="unordered_multimap" headerName="unordered_multimap">
 
 ## Template parameters
 
 <SymbolTable noTraits>
-	<Symbol name="Key"		desc="The type of stored keys"/>
-	<Symbol name="T" 		desc="The type of stored values"/>
-	<Symbol name="Hash" 		desc="Unary function, which returns unique value"/>
-	<Symbol name="KeyEqual" 		desc="A binary predicate that takes two arguments and returns a bool."/>
-	<Symbol name="Allocator" 		desc="Is responsible for allocating and deallocating memory"/>
+	<Symbol name="Key"		desc="The type of the stored keys."/>
+	<Symbol name="Value" 		desc="The type of the stored values."/>
+	<Symbol name="Hash" 		desc={<>A function object that perfoms hashing on two objects of type <code>Key</code>.</>}/>
+	<Symbol name="KeyEqual">
+		A function object taking two arguments of type <code>Key</code> and determining if the keys are equal. Must return <code>bool</code>.
+	</Symbol>
+	<Symbol
+			name="Allocator"
+			desc={<>
+					An allocator type responsible for allocating and deallocating memory.
+					Must satisfy <a href="/docs/named_req/Allocator">Allocator</a>.
+				</>}
+		/>
 </SymbolTable>
 
 ## Type names
 
 <SymbolTable>
-	<Symbol pub name="key_type"				desc="Key"/>
-	<Symbol pub name="mapped_type" 				desc="T"/>
-	<Symbol pub name="value_type"			desc={<code>std::pair&lt;const Key, T&gt;</code>}/>
-	<Symbol pub name="size_type"				desc="Unsigned integer type"/>
-	<Symbol pub name="difference_type"			desc="Signed integer type"/>
-	<Symbol pub name="hasher"				desc="Hash"/>
-	<Symbol pub name="key_equal" 				desc="KeyEqual"/>
-	<Symbol pub name="allocator_type"			desc="Allocator"/>
-	<Symbol pub name="reference"				desc={<code>value_type&</code>}/>
-	<Symbol pub name="const_reference"			desc={<code>const value_type&</code>}/>
-	<Symbol pub name="pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::pointer</code>}/>
-	<Symbol pub name="const_pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code>}/>
-	<Symbol pub name="iterator"			desc="value_type"/>
-	<Symbol pub name="const_iterator"			desc="const value_type"/>
-	<Symbol pub name="local_iterator"			desc="An iterator type whose category, value, difference, pointer and
-reference types are the same as iterator. This iterator
-can be used to iterate through a single bucket but not across buckets"/>
-	<Symbol pub name="const_local_iterator"			desc=" 	An iterator type whose category, value, difference, pointer and
-reference types are the same as const_iterator. This iterator
-can be used to iterate through a single bucket but not across buckets"/>
-	<Symbol pub name="node_type"			desc="a specialization of node handle representing a container node "/>
+	<Symbol pub name="key_type"				desc={<code>Key</code>} />
+	<Symbol pub name="mapped_type" 		desc={<code>Value</code>} />
+	<Symbol pub name="value_type"			desc={<code>std::pair&lt;const Key, Value&gt;</code>} />
+	<Symbol pub name="size_type"			desc={<>Unsigned integer type (usually <code><a href="#">std::size_t</a></code>).</>} />
+	<Symbol pub
+			name="difference_type"
+			desc={<>
+					Signed integer type (usually <code><a href="#">std::ptrdiff_t</a></code>).
+			</>}
+		/>
+	<Symbol pub name="hasher"				desc={<code>Hash</code>} />
+	<Symbol pub name="key_equal"				desc={<code>KeyEqual</code>} />
+	<Symbol pub name="allocator_type" 				desc={<code>Allocator</code>} />
+	<Symbol pub name="reference"			desc={<code>value_type&</code>} />
+	<Symbol pub name="const_reference"				desc={<code>const value_type&</code>} />
+	<Symbol pub name="pointer">
+		<code>Allocator::pointer</code> <small>(until C++11)</small>
+		<br/>
+		<code><a href="#">std::allocator_traits</a>&lt;Allocator&gt;::pointer</code> <small>(since C++11)</small>
+	</Symbol>
+	<Symbol pub name="const_pointer">
+		<code>Allocator::const_pointer</code> <small>(until C++11)</small>
+		<br/>
+		<code><a href="#">std::allocator_traits</a>&lt;Allocator&gt;::const_pointer</code> <small>(since C++11)</small>
+	</Symbol>
+	<Symbol pub
+			name="iterator"
+			desc={<>
+					<a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a> to <code>value_type</code>
+				</>}
+		/>
+	<Symbol pub
+			name="const_iterator"
+			desc={<>
+					<a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a> to <code>const value_type</code>
+				</>}
+		/>
+	<Symbol pub name="local_iterator">
+		Like <code>iterator</code> but only to iterate across a single bucket.
+	</Symbol>
+	<Symbol pub name="const_local_iterator">
+		Like <code>const_iterator</code> but only to iterate across a single bucket.
+	</Symbol>
+	<Symbol pub
+			name={<>node_type <small>(since C++17)</small></>}
+			desc={<> A specialization of <a href="">node handle</a> representing a container node.</>}
+		/>
 </SymbolTable>
-
-
 
 ## Member functions
 
-<SymbolTable>	
+<SymbolTable>
 	<Symbol pub autoLink linkName="constructor" name="(constructor)">
-		Constructs the <code>unorder_map</code>
+		Constructs a new unordered_multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="destructor" name="(destructor)">
-		Destructs the <code>unorder_map</code>
+		Destructs a unordered_multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="operator=" name="operator=">
-		Assigns values to the container
+		Assigns one unordered_multimap to another.
 	</Symbol>
 	<Symbol pub autoLink linkName="get_allocator" name="get_allocator">
-		Returns the associated allocator
+		Returns the associated allocator.
 	</Symbol>
-
 </SymbolTable>
 
 ### Iterators
 
-<SymbolTable>	
-	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
-		Returns an iterator to the beginning
+<SymbolTable>
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin></>}>
+		Returns an iterator to the beginning.
 	</Symbol>
-	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
-		Returns an iterator to the end
+	<Symbol pub autoLink linkName="end" name={<>end<br/>cend></>}>
+		Returns an iterator to the end.
 	</Symbol>
 </SymbolTable>
 
@@ -147,13 +193,13 @@ can be used to iterate through a single bucket but not across buckets"/>
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="empty" name="empty">
-		Checks whether the container is empty
+		Returns <code>true</code> if the unordered_multimap is empty, otherwise <code>false</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="size" name="size">
-		Returns the number of elements
+		Returns the number of elements in the unordered_multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="max_size" name="max_size">
-		Returns the maximum possible number of elements
+		Returns the maximum possible number of elements.
 	</Symbol>
 </SymbolTable>
 
@@ -161,46 +207,45 @@ can be used to iterate through a single bucket but not across buckets"/>
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="clear" name="clear">
-		Clears the contents
+		Clears the contents of a unordered_multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="insert" name="insert">
-		Inserts elements or nodes
+		Inserts elements or nodes (extracted with <code>.extract()</code>) <small>(since C++17)</small>.
 	</Symbol>
 	<Symbol pub autoLink linkName="emplace" name="emplace">
-		Constructs element in-place
+		Constructs a new element in place.
 	</Symbol>
 	<Symbol pub autoLink linkName="emplace_hint" name="emplace_hint">
-		Constructs element in-place using a hint
+		Constructs elements in-place using a hint (iterator).
 	</Symbol>
 	<Symbol pub autoLink linkName="erase" name="erase">
-		Erases elements
+		Erases elements.
 	</Symbol>
 	<Symbol pub autoLink linkName="swap" name="swap">
-		Swaps the contents
+		Swaps two unordered_multimaps.
 	</Symbol>
-	<Symbol pub autoLink linkName="extract" name="extract">
-		Extracts nodes from the container
+	<Symbol pub autoLink linkName="extract" name={<>extract <small>(since C++17)</small></>}>
+		Extracts nodes from the unordered_multimap (can be later inserted somewhere else).
 	</Symbol>
-	<Symbol pub autoLink linkName="merge" name="merge">
-		Splices nodes from another contrainer
+	<Symbol pub autoLink linkName="merge" name={<>merge <small>(since C++17)</small></>}>
+		Merges two unordered_multimaps together.
 	</Symbol>
 </SymbolTable>
-
 
 ### Lookup
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="count" name="count">
-		Returns the number of elements matching specific key
+		Returns the number of elements matching a specific key (for unordered_multimap it's always going to be 1 or 0).
 	</Symbol>
 	<Symbol pub autoLink linkName="find" name="find">
-		Finds element with specific key
+		Searches for an element and returns an iterator to it, or end iterator if not found.
 	</Symbol>
-	<Symbol pub autoLink linkName="contains" name="contains">
-		Checks if the container contains element with specific key
+	<Symbol pub autoLink linkName="contains" name={<>contains <small>(since C++20)</small></>}>
+		Returns <code>true</code> if an element is inside the unordered_multimap, otherwise <code>false</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="equal_range" name="equal_range">
-		Returns range of elements matching a specific key
+		Returns a range of elements matching a specific key (for unordered_multimap it's always going to be one or zero elements).
 	</Symbol>
 </SymbolTable>
 
@@ -208,22 +253,22 @@ can be used to iterate through a single bucket but not across buckets"/>
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
-		Returns an iterator to the beginning of the specified bucket
+		Returns an iterator to the beginning of a specified bucket.
 	</Symbol>
 	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
-		Returns an iterator to the end of the specified bucket
+		Returns an iterator to the end of a specified bucket.
 	</Symbol>
 	<Symbol pub autoLink linkName="bucket_count" name="bucket_count">
-		Returns the number of buckets
+		Returns a number of buckets.
 	</Symbol>
 	<Symbol pub autoLink linkName="max_bucket_count" name="max_bucket_count">
-		Returns the maximum number of buckets
+		Returns a maximum number of buckets.
 	</Symbol>
 	<Symbol pub autoLink linkName="bucket_size" name="bucket_size">
-		Returns the number of elements in specific bucket
+		Returns a number of elements in a specific bucket.
 	</Symbol>
 	<Symbol pub autoLink linkName="bucket" name="bucket">
-		Returns the bucket for specific key
+		Returns a bucket for a specific key.
 	</Symbol>
 </SymbolTable>
 
@@ -231,16 +276,16 @@ can be used to iterate through a single bucket but not across buckets"/>
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="load_factor" name="load_factor">
-		Returns average number of elements per bucket
+		Returns an average number of elements per bucket.
 	</Symbol>
 	<Symbol pub autoLink linkName="max_load_factor" name="max_load_factor">
-		Manages maximum average number of elements per bucket
+		Manages a maximum average number of elements per bucket.
 	</Symbol>
 	<Symbol pub autoLink linkName="rehash" name="rehash">
-		Reserves at least the specified number of buckets and regenerates the hash table
+		Reserves at least the specified number of buckets and regenerates the hash table.
 	</Symbol>
 	<Symbol pub autoLink linkName="reserve" name="reserve">
-		Reserves space for at least the specified number of elements and regenerates the hash table
+		Reserves space for at least a specified number of elements and regenerates the hash table.
 	</Symbol>
 </SymbolTable>
 
@@ -248,10 +293,10 @@ can be used to iterate through a single bucket but not across buckets"/>
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="hash_function" name="hash_function">
-		Returns function to hash the keys
+		Returns an internal function object that hashes keys.
 	</Symbol>
 	<Symbol pub autoLink linkName="key_eq" name="key_eq">
-		Returns the function used to compare keys for equality
+		Returns an internal function object that compares keys.
 	</Symbol>
 </SymbolTable>
 
@@ -260,18 +305,21 @@ can be used to iterate through a single bucket but not across buckets"/>
 <SymbolTable noTraits>
 	<Symbol name={<>
 				operator==<br/>
-				operator!=<br/>
+				operator!= <small>(removed in C++20)</small>
 			</>}
-			desc="Compares the values in the unordered_multimap">
+			desc="Compares values in an unordered_multimap.">
 	</Symbol>
-	<Symbol pub autoLink linkName="std::swap" name="std::swap">
-		Specializes the <code>std::swap</code> algorithm
-	</Symbol>
-	<Symbol pub autoLink linkName="erase_if" name="erase_if">
-		Erases all elements satisfying specific criteria
-	</Symbol>
+	<Symbol name={<>std::swap <small>(std::unordered_multimap)</small></>}
+			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
+		/>
+	<Symbol name={<>
+				std::erase_if <small>(std::unordered_multimap)</small>
+			</>}
+			desc={<>Overload for a <a href="#">std::erase_if</a> algorithm.</>}
+		/>
 </SymbolTable>
 </ClassSummary>
+
 
 
 ## Deduction guides (since C++17)
@@ -286,33 +334,20 @@ can be used to iterate through a single bucket but not across buckets"/>
 
 ### Basic manipulation
 
-#### Creating unordered_multimap, inserting pair and printing it out
-
 <Columns spacing="20px" columns={['8fr', '4fr']}>
 <div>
 
-```cpp
-#include <iostream>
-#include <unordered_map>
-#include <string>
-
-int main() {
-  std::unordered_multimap<std::string, std::string> player_equipment
-  	{ {"player2", "Sword"}, {"player2", "Health potion"} };
-
-  for (auto& [key, value] : player_equipment)    
-    std::cout << key << " has got " << value << std::endl;
-
-  return 0;
-}
-```
+<CustomCodeBlock withTitle>
+	<FurtherExampleCreateInsertPrint />
+</CustomCodeBlock>
 
 </div>
 <div>
 
 ```plaintext title="Result"
-player2 has got Sword
+player3 has got Shield
 player2 has got Health potion
+player2 has got Sword
 ```
 
 </div>

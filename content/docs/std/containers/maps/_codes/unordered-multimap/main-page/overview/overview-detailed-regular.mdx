@@ -1,0 +1,10 @@
+```cpp
+template<
+    class Key,
+    class Value,
+    class Hash = std::hash<Key>,
+    class KeyEqual = std::equal_to<Key>,
+    class Allocator = std::allocator<std::pair<const Key, Value>>
+>
+class unordered_multimap;
+```
