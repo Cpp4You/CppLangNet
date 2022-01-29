@@ -28,7 +28,7 @@ function HomepageHeader() {
 					</p>
 					<div className={styles.callToAction}>
 						<Link
-							className={"button button--secondary button--lg" + " " + styles.btnGrad}
+							className={styles.btnGrad}
 							to="/learn">
 							<Translate>Get started</Translate> 🚀
 						</Link>
