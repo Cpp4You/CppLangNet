@@ -1,0 +1,18 @@
+```cpp title='Creating map, inserting pairs, printing it out'
+#include <iostream>
+#include <utility>
+#include <string>
+#include <map>
+
+int main(){
+  std::multimap<std::string, int> potions { {"health", 30}, {"mana", 25}, {"mana", 50} };
+
+  potions.emplace("health", 200);
+  potions.insert(std::make_pair("speed", 10));
+
+  for (const auto& [key, value] : potions)
+    std::cout << key << " " << value << std::endl;
+
+  return 0;
+}
+```
