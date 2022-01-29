@@ -2,11 +2,9 @@ import React			from 'react';
 import Link				from '@docusaurus/Link';
 import Translate		from '@docusaurus/Translate';
 import Layout			from '@theme/Layout';
-import ThemedImage		from '@theme/ThemedImage';
 import CodeBlock		from '@theme/CodeBlock';
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
-import useBaseUrl		from '@docusaurus/useBaseUrl';
 
 import HomepageFeatures	from '../components/HomepageFeatures';
 import styles			from './index.module.scss';
