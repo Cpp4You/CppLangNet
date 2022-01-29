@@ -6,12 +6,12 @@ description:		"Lekcja: lambdy (I) w języku C++"
 hide_title:			true
 ---
 
-import NotFinished from "@site/i18n/pl/presets/NotFinished.mdx";
+import NotFinished		from "@site/i18n/pl/presets/NotFinished.mdx";
 import Columns			from "@site-comps/Columns";
 import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
 import Image			from "@site-comps/Image";
-import Tabs			from '@theme/Tabs';
-import TabItem		from '@theme/TabItem';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
 import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
 import SwitchView		from "@site-comps/SwitchView";
 
@@ -19,10 +19,10 @@ import TransformIntroExampleCpp20		from "./lambdas/_codes/transform-example-cpp2
 import TransformIntroExampleUntilCpp20	from "./lambdas/_codes/transform-example-until-cpp20.mdx";
 
 
-
 <NotFinished />
 
 # Lambdy
+
 W tej lekcji dowiesz się czym są i do czego mogą się przydać wyrażenia lambda.
 
 ## Motywacja
@@ -41,7 +41,7 @@ Lambdy często nazywane w ten sposób, lecz nie jest to do końca poprawna nazwa
 <Image center
 		maxheight={470}
 		alt="Definiowanie lambdy"
-		src="/img/tutorials/course/intermediate/lambdas/capture-list-pl.png"
+		src="/img/tutorials/course/intermediate/lambdas/summary-pl.png"
 		desc={<></>}
 	/>
 <br/>
@@ -60,8 +60,8 @@ Zacznijmy od najprostszej lambdy:
 
 int main()
 {
-auto hello = [] { std::cout << "Witaj, świecie!"; };
-hello();
+	auto hello = [] { std::cout << "Witaj, świecie!"; };
+	hello();
 }
 ```
 
