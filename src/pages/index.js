@@ -30,7 +30,7 @@ function HomepageHeader() {
 						<Link
 							className={"button button--secondary button--lg" + " " + styles.btnGrad}
 							to="/learn">
-							<Translate>Get started</Translate> <span style={{ fontWeight: "normal"}}>🚀</span>
+							<Translate>Get started</Translate> 🚀
 						</Link>
 					</div>
 				</div>
