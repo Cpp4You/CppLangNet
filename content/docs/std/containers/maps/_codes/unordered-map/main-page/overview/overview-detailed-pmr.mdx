@@ -1,0 +1,12 @@
+```cpp
+namespace pmr {
+    template<
+        class Key,
+        class Value,
+        class Hash = std::hash<Key>,
+        class KeyEqual = std::equal_to<Key>,
+    >
+    using unordered_map = std::unordered_map<Key, Value, Hash, KeyEqual,
+                            std::pmr::polymorphic_allocator<std::pair<const Key, Value>>>;
+}
+```

@@ -1,0 +1,19 @@
+```cpp title='Create, insert and print'
+#include <unordered_map>
+#include <iostream>
+#include <string>
+
+int main() {
+  std::unordered_map<std::string, std::string> player_locations {
+    {"player2", "Capital City"},
+    {"player3", "The Harbor"}
+  };
+
+  player_locations["player1"] = "Mine";
+
+  for (const auto& [key, value] : player_locations)
+    std::cout << key << " is in " << value << '\n';
+
+  return 0;
+}
+```
