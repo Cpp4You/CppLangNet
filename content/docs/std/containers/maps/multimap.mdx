@@ -4,7 +4,7 @@ title:				std::multimap reference
 sidebar_label:		multimap
 hide_title:			true
 description:		Summary of a std::multimap (usage, methods, etc.) - C++ Language
-tags:				[multimap, map, associative, multi]
+tags:				[multimap, container, associative, ordered, multi, key]
 ---
 
 import ClassSummary				from "@site-comps/ClassSummary";
@@ -36,14 +36,14 @@ import DeductionGuides from "./multimap/_codes/main-page/deduction-guides.mdx"
 ## Overview
 
 <Tabs>
-<TabItem value="simplified" label="Simplified" default>
+<TabItem value="simplified" label="Simplified (since C++98)" default>
 
 	<OverviewSimplifiedRegular />
 
 </TabItem>
 <TabItem value="detailed" label="Detailed">
 	<Tabs>
-		<TabItem value="regular" label="Regular" default>
+		<TabItem value="regular" label="Regular (since C++98)" default>
 
 			<OverviewDetailedRegular/>
 
@@ -170,16 +170,16 @@ In imprecise terms, two objects **a** and **b** are considered equivalent if nei
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="constructor" name="(constructor)">
-		Constructs a new <code>std::multimap</code>.
+		Constructs a new multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="destructor" name="(destructor)">
-		Destructs a <code>std::multimap</code>.
+		Destructs a multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="operator=" name="operator=">
 		Assigns one multimap to another.
 	</Symbol>
 	<Symbol pub autoLink linkName="get_allocator" name="get_allocator">
-		Returns the associated allocator.
+		Returns an associated allocator.
 	</Symbol>
 
 </SymbolTable>
@@ -205,10 +205,10 @@ In imprecise terms, two objects **a** and **b** are considered equivalent if nei
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="empty" name="empty">
-		Returns <code>true</code> if the multimap is empty, otherwise <code>false</code>.
+		Returns <code>true</code> if a multimap is empty, otherwise <code>false</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="size" name="size">
-		Returns the number of elements in the multimap.
+		Returns the number of elements in a multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="max_size" name="max_size">
 		Returns the maximum possible number of elements.
@@ -219,15 +219,15 @@ In imprecise terms, two objects **a** and **b** are considered equivalent if nei
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="clear" name="clear">
-		Clears the contents of the multimap.
+		Clears the contents of a multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="insert" name="insert">
 		Inserts elements or nodes (extracted with <code>.extract()</code>) <small>(since C++17)</small>.
 	</Symbol>
-	<Symbol pub autoLink linkName={<>emplace <small>(since C++11)</small></>} name="emplace">
+	<Symbol pub autoLink linkName="emplace" name={<>emplace <small>(since C++11)</small></>}>
 		Constructs a new element in place.
 	</Symbol>
-	<Symbol pub autoLink linkName={<>emplace_hint <small>(since C++11)</small></>} name="emplace_hint">
+	<Symbol pub autoLink linkName="emplace_hint" name={<>emplace_hint <small>(since C++11)</small></>}>
 		Constructs elements in-place using a hint (iterator).
 	</Symbol>
 	<Symbol pub autoLink linkName="erase" name="erase">
@@ -237,7 +237,7 @@ In imprecise terms, two objects **a** and **b** are considered equivalent if nei
 		Swaps two multimaps.
 	</Symbol>
 	<Symbol pub autoLink linkName="extract" name={<>extract <small>(since C++17)</small></>}>
-		Extracts nodes from the multimap (can be later inserted somewhere else).
+		Extracts nodes from a multimap (can be later inserted somewhere else).
 	</Symbol>
 	<Symbol pub autoLink linkName="merge" name={<>merge <small>(since C++17)</small></>}>
 		Merges two multimaps together.
@@ -254,7 +254,7 @@ In imprecise terms, two objects **a** and **b** are considered equivalent if nei
 		Searches for an element and returns an iterator to it, or end iterator if not found.
 	</Symbol>
 	<Symbol pub autoLink linkName="contains" name={<>contains <small>(since C++20)</small></>}>
-		Returns <code>true</code> if an element is inside the multimap, otherwise <code>false</code>.
+		Returns <code>true</code> if an element is inside a multimap, otherwise <code>false</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="equal_range" name="equal_range">
 		Returns a range of elements matching a specific key.
@@ -263,7 +263,7 @@ In imprecise terms, two objects **a** and **b** are considered equivalent if nei
 		Returns an iterator to the first element <i>not less</i> than the given key.
 	</Symbol>
 	<Symbol pub autoLink linkName="upper_bound" name="upper_bound">
-		Returns an iterator to the first element <i>greater</i> than the given key
+		Returns an iterator to the first element <i>greater</i> than the given key.
 	</Symbol>
 </SymbolTable>
 
@@ -288,7 +288,7 @@ In imprecise terms, two objects **a** and **b** are considered equivalent if nei
 				operator&gt; <small>(removed in C++20)</small><br/>
 				operator&lt;= <small>(removed in C++20)</small><br/>
 				operator&gt;= <small>(removed in C++20)</small><br/>
-				operator&lt;=&gt;
+				operator&lt;=&gt; <small>(since C++20)</small>
 			</>}
 			desc="Lexicographically compares the values in a multimap."
 		/>
@@ -296,9 +296,9 @@ In imprecise terms, two objects **a** and **b** are considered equivalent if nei
 			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
 		/>
 	<Symbol name={<>
-				std::erase_if <small>(std::multimap)</small>
+				std::erase_if <small>(std::multimap) (since C++20)</small>
 			</>}
-			desc={<>Overloads for <a href="#">std::erase_if</a> algorithms.</>}
+			desc={<>Overload for a <a href="#">std::erase_if</a> algorithm.</>}
 		/>
 </SymbolTable>
 

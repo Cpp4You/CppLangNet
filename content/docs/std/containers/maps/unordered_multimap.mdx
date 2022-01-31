@@ -4,10 +4,11 @@ title:				std::unordered_multimap reference
 sidebar_label:		unordered_multimap
 hide_title:			true
 description:		Summary of a std::unordered_multimap (usage, methods, etc.) - C++ Language
-tags:				[unordered_multimap, associative, container, key, multi, unordered]
+tags:				[unordered_multimap, container, associative, key, multi, unordered]
 ---
 
 import ClassSummary				from "@site-comps/ClassSummary";
+import CustomCodeBlock				from "@site-comps/CustomCodeBlock";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 import Columns					from "@site-comps/Columns";
 import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
@@ -35,14 +36,14 @@ import DeductionGuides from "./unordered-multimap/_codes/main-page/deduction-gui
 ## Overview
 
 <Tabs>
-<TabItem value="simplified" label="Simplified" default>
+<TabItem value="simplified" label="Simplified (since C++11)" default>
 
 	<OverviewSimplifiedRegular />
 
 </TabItem>
 <TabItem value="detailed" label="Detailed">
 	<Tabs>
-		<TabItem value="regular" label="Regular" default>
+		<TabItem value="regular" label="Regular (since C++11)" default>
 
 			<OverviewDetailedRegular />
 
@@ -59,7 +60,7 @@ import DeductionGuides from "./unordered-multimap/_codes/main-page/deduction-gui
 
 
 The `std::unordered_multimap` is a container that stores key-value pairs. It works almost as
-`std::unordered_multimap`, the only difference is that the keys can repeat themselves.
+`std::unordered_map`, the only difference is that the keys can repeat themselves.
 If the keys of both elements are the same, their values are compared to determine if they should be added to the multimap.
 
 The order of the elements stored is not specified, unlike in `std::multimap`.
@@ -168,13 +169,13 @@ forms a contiguous subrange in the iteration order, also accessible with `equal_
 		Constructs a new unordered_multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="destructor" name="(destructor)">
-		Destructs a unordered_multimap.
+		Destructs an unordered_multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="operator=" name="operator=">
 		Assigns one unordered_multimap to another.
 	</Symbol>
 	<Symbol pub autoLink linkName="get_allocator" name="get_allocator">
-		Returns the associated allocator.
+		Returns an associated allocator.
 	</Symbol>
 </SymbolTable>
 
@@ -193,10 +194,10 @@ forms a contiguous subrange in the iteration order, also accessible with `equal_
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="empty" name="empty">
-		Returns <code>true</code> if the unordered_multimap is empty, otherwise <code>false</code>.
+		Returns <code>true</code> if an unordered_multimap is empty, otherwise <code>false</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="size" name="size">
-		Returns the number of elements in the unordered_multimap.
+		Returns the number of elements in an unordered_multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="max_size" name="max_size">
 		Returns the maximum possible number of elements.
@@ -207,7 +208,7 @@ forms a contiguous subrange in the iteration order, also accessible with `equal_
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="clear" name="clear">
-		Clears the contents of a unordered_multimap.
+		Clears the contents of an unordered_multimap.
 	</Symbol>
 	<Symbol pub autoLink linkName="insert" name="insert">
 		Inserts elements or nodes (extracted with <code>.extract()</code>) <small>(since C++17)</small>.
@@ -225,7 +226,7 @@ forms a contiguous subrange in the iteration order, also accessible with `equal_
 		Swaps two unordered_multimaps.
 	</Symbol>
 	<Symbol pub autoLink linkName="extract" name={<>extract <small>(since C++17)</small></>}>
-		Extracts nodes from the unordered_multimap (can be later inserted somewhere else).
+		Extracts nodes from an unordered_multimap (can be later inserted somewhere else).
 	</Symbol>
 	<Symbol pub autoLink linkName="merge" name={<>merge <small>(since C++17)</small></>}>
 		Merges two unordered_multimaps together.
@@ -236,16 +237,16 @@ forms a contiguous subrange in the iteration order, also accessible with `equal_
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="count" name="count">
-		Returns the number of elements matching a specific key (for unordered_multimap it's always going to be 1 or 0).
+		Returns the number of elements matching a specific key.
 	</Symbol>
 	<Symbol pub autoLink linkName="find" name="find">
 		Searches for an element and returns an iterator to it, or end iterator if not found.
 	</Symbol>
 	<Symbol pub autoLink linkName="contains" name={<>contains <small>(since C++20)</small></>}>
-		Returns <code>true</code> if an element is inside the unordered_multimap, otherwise <code>false</code>.
+		Returns <code>true</code> if an element is inside an unordered_multimap, otherwise <code>false</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="equal_range" name="equal_range">
-		Returns a range of elements matching a specific key (for unordered_multimap it's always going to be one or zero elements).
+		Returns a range of elements matching a specific key.
 	</Symbol>
 </SymbolTable>
 
@@ -313,7 +314,7 @@ forms a contiguous subrange in the iteration order, also accessible with `equal_
 			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
 		/>
 	<Symbol name={<>
-				std::erase_if <small>(std::unordered_multimap)</small>
+				std::erase_if <small>(std::unordered_multimap) (since C++20)</small>
 			</>}
 			desc={<>Overload for a <a href="#">std::erase_if</a> algorithm.</>}
 		/>
