@@ -1,0 +1,6 @@
+```cpp
+namespace pmr {
+    template< class Key, class Compare = std::less<Key> >
+    using set = std::set<Key, Compare, std::pmr::polymorphic_allocator<Key>>;
+}
+```

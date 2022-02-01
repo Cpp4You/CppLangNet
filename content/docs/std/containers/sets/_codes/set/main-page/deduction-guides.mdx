@@ -15,6 +15,7 @@ set(InputIt, InputIt, Comp = Comp(), Alloc = Alloc())
   -> set<typename std::iterator_traits<InputIt>::value_type, Comp, Alloc>;
 ```
 > *`(1)`* and *`(2)`* allow for deduction from an **iterator range**
+
 ```cpp
 // (3)
 template<class Key, class Comp = std::less<Key>, class Alloc = std::allocator<Key>>
@@ -30,7 +31,7 @@ set(std::initializer_list<Key>, Alloc)
 > *`(3)`* and *`(4)`* allow for deduction from a [**`std::initializer_list`**](#)
 
 ### Overload resolution
-In order for any of the deduction guides to participate in overload resolution, 
+In order for any of the deduction guides to participate in overload resolution,
 the folllowing requirements must be met:
  - `InputIt` satisfies [`LegacyInputIterator`](#)
  - `Alloc` satisfies [`Allocator`](#)
@@ -39,7 +40,7 @@ the folllowing requirements must be met:
 :::note
 The extent to which the library determines that a type does not satisfy [`LegacyInputIterator`](#) is **unspecified**,
 except that as a minimum:
- - Integral types do not qualify as input iterators. 
+ - Integral types do not qualify as input iterators.
 
 Likewise, the extent to which it determines that a type does not satisfy [`Allocator`](#) is **unspecified**,
 except that as a minimum:

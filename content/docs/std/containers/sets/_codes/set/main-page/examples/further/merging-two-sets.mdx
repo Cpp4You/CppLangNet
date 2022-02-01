@@ -1,0 +1,21 @@
+```cpp
+#include <iostream>
+#include <set>
+
+int main() {
+  std::set<char> letters = {'A', 'C', 'B'};
+  std::set<char> letters2 = {'E', 'D', 'C'};
+
+  letters.merge(letters2);
+
+  for (const auto i : letters)
+    std::cout << i << ' ';
+
+  std::cout << '\n';
+
+  for (const auto i : letters2)
+    std::cout << i << ' ';
+
+  return 0;
+}
+```
