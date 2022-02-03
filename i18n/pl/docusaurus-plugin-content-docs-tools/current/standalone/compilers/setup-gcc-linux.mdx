@@ -8,16 +8,22 @@ hide_title:			true
 
 # Instalacja GCC na Linuksie
 
-Jeśli masz Linuxa opartego na dystrybucji Ubuntu otwórz terminal i wpisz
+Dla dystrybucji opartych o Ubuntu i manager pakietów `apt` otwórz terminal i wpisz
 
 ```bash
 > sudo apt update
 > sudo apt install g++
 ```
 
+Dla innych dystrybucji użyj odpowiedniego dla nich managera pakietów, np. `yum`, `pacman`.
+
+:::caution g++ vs gcc
+GCC (GNU Compilar Collection) to ogólna nazwa pakietu kompilatorów. `gcc` jest kompilatorem języka C, `g++` to kompilator języka C++.
+:::
+
 Następnie zweryfikuj czy komenda `g++ --version` wypisuje Ci wersję kompilatora. Przykładowy poprawny output:
 
-```bash
+```text
 > g++ --version
 g++ (GCC) 10.3.0
 Copyright (C) 2020 Free Software Foundation, Inc.
@@ -26,3 +32,28 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
 
 W zależności od wersji kompilatora różne nowości z kolejnych standardów języka mogą być niedostępne. Zapoznaj się z [tą tabelą na cppreference.org](https://en.cppreference.com/w/cpp/compiler_support)
+
+## Instalacja `build-essential`
+
+Alternatywą dla instalacji samego kompilatora jest zainstalowanie pakietu służącego do budowania i kompilowania pod swoją konkretną dystrybucję Linuxa.
+
+```bash
+> sudo apt install build-essential
+```
+
+W skład tego pakietu wchodzą m.in. `gcc`, `g++` i system budowania `make`.
+
+## Instalacja dodatkowych narzędzi
+
+Warto oprócz samego kompilatora `g++` zainstalować kilka dodatkowych narzędzi:
+* `gdb` - debugger konsolowy
+* `make` - system budowania oparty o pliki Makefile
+* `cmake` - generator systemów budowania
+* `binutils` - narzędzia do analizy plików wykonywalnych
+* `valgrind` - dynamiczny analizator kodu używany głównie do wykrywania wycieków pamięci
+
+To wszystko można zainstalować jedną komendą
+
+```bash
+sudo apt install g++ gdb make cmake binutils valgrind
+```
