@@ -148,6 +148,12 @@ export const ToolSummaryInfo = {
 		icon:		LLVMIcon,
 		site:		"https://clang.llvm.org/",
 	},
+	"apple-clang": {
+		author:		"Apple & LLVM Authors",
+		title:		"Apple Clang",
+		icon:		LLVMIcon,
+		site:		"https://github.com/apple/llvm-project",
+	},
 };
 
 export function GalleryThumbnail(props)
