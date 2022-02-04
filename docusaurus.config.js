@@ -176,6 +176,7 @@ function filterSidebarItems(items)
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
+			hideableSidebar: true,
 			colorMode: {
 				defaultMode: 'dark'
 			},
@@ -222,12 +223,11 @@ function filterSidebarItems(items)
 				],
 			},
 			announcementBar: {
-				id: 'join_us',
 				content:
 					'⚠ This site is still in an early phase of construction. You can help us by <a target="_blank" rel="noopener noreferrer" href="/contributing">contributing</a>',
 				backgroundColor: '#fafbfc',
 				textColor: '#091E42',
-				isCloseable: false,
+				isCloseable: true,
 			},
 			footer: {
 				style: 'dark',
@@ -261,12 +261,20 @@ function filterSidebarItems(items)
 						title: 'Community',
 						items: [
 							{
+								label: 'Discord',
+								href: 'https://discord.gg/3MeXQ8TvBw',
+							},
+							{
+								label: 'Forum',
+								href: 'https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum',
+							},
+							{
 								label: 'Stack Overflow',
 								href: 'https://stackoverflow.com/questions/tagged/cpp',
 							},
 							{
-								label: 'Discord',
-								href: 'https://discord.gg/3MeXQ8TvBw',
+								label: 'Reddit',
+								href: 'https://reddit.com/r/cpp',
 							}
 						],
 					},

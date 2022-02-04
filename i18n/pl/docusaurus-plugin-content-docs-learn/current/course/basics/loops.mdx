@@ -56,6 +56,10 @@ Najczęściej używana jest `for` oraz `while` i o nich powiemy w tej lekcji.
 Jeśli chcesz poczytać o pętli `do ... while` to zapoznaj się z artykułem:
 [**Pętla `do ... while`**](articles/do-while).
 
+:::important Iteracja (definicja)
+**Iteracja** - pojedynczy obieg pętli.
+:::
+
 ## Wytłumaczenie
 
 ### Pętla `for` (*range-based*)
@@ -95,9 +99,9 @@ Nie używamy w tym zapisie żadnego znaku równości (`=`), bo wartość każdeg
 kolei będzie automatycznie przypisywana do `n`.
 :::
 
-<ImproveSection />
-
 ### Pętla `while`
+
+<ImproveSection />
 
 <Image center border maxheight="300px"
 		src="/img/tutorials/course/basic/loops/while-pl.png"
@@ -107,7 +111,7 @@ kolei będzie automatycznie przypisywana do `n`.
 <br/>
 
 Celowo przechodzimy teraz do pętli `while`, zamiast do zwykłego `for`, ponieważ ułatwi to wyjaśnienia.
-Pętla `while`, jest prosta. Wykonuje ona ciało pętli dopóki warunek jest spełniony:
+Pętla `while` wykonuje ciało pętli dopóki warunek jest spełniony:
 
 <Columns columns={['8fr', '4fr']}>
 <div>
@@ -140,8 +144,6 @@ czyli w tym wypadku tak długo jak `number` jest mniejsza lub równa `3`, to bę
 Po ostatnim obiegu pętli, wartość `number` będzie równa `4`, więc warunek nie będzie spełniony,
 przez co pętla się zakończy i komputer przejdzie do wykonywania następnych instrukcji.
 
-<ImproveSection />
-
 ### Pętla `for`
 
 <Image center border maxheight="300px"
@@ -151,4 +153,131 @@ przez co pętla się zakończy i komputer przejdzie do wykonywania następnych i
 	/>
 <br/>
 
+Ta pętla jest uproszczeniem pewnego **bardzo** często powtarzającego się schematu i jest ona
+zazwyczaj używana do krokowego przejścia przez pewien zakres (np. liczbowy).
+
+Zacznijmy od przykładu:
+
+```cpp title="🔹 Wyświetl liczby od 0 do 9"
+for (int i = 0; i < 10; i++)
+{
+	std::cout << i << ' ';
+}
+```
+
+Powyższa pętla wyświetla liczby od 0 do 9. Nawias okrągły przy `for` składa się z trzech części,
+oddzielonych **średnikami**:
+
+| Fragment | Opis |
+| -------- | ---- |
+| `int i = 0` | instrukcja początkowa (zazwyczaj utworzenie zmiennej) |
+| `i < 10` | warunek |
+| `i++` | wyrażenie iteracji |
+
+Gdy program zaczyna wykonywać pętlę `for`, jednorazowo wykonuje instrukcję początkową - w naszym wypadku
+tworzy zmienną i nadaje jej wartość `0`.
+Program następnie:
+
+1. sprawdzi warunek
+	- niespełniony: wyjdź z pętli
+	- spełniony: idź do punktu 2
+2. wykona ciało pętli
+3. wykona wyrażenie iteracji i przejdzie do pkt. 1
+
+Powyższa pętla `for` jest równoznaczna z:
+
+```cpp
+int i = 0;
+while (i < 10)
+{
+	std::cout << i << ' ';
+	i++;
+}
+```
+
+#### Iteracja po tablicach
+
+Pętli `for` bardzo często używamy do iterowania po tablicach, w sytuacji gdy
+albo potrzebujemy mieć dostęp do numeru iteracji lub gdy nie chcemy iterować
+po całym zakresie.
+
+```cpp title="🔹 Iteracja po całej tablicy"
+std::vector<int> numbers = {10, 13, 15, 18, 60};
+for (int i = 0; i < numbers.size(); i++)
+{
+	std::cout << "numbers[" << i << "]: " << numbers[i] << '\n';
+}
+```
+
+```cpp title="🔹 Iteracja po połowie tablicy"
+std::vector<int> numbers = {10, 13, 15, 18, 60};
+for (int i = 0; i < numbers.size() / 2; i++)
+{
+	std::cout << "numbers[" << i << "]: " << numbers[i] << '\n';
+}
+```
+
+#### Pusty nawias
+
+Kod podawany w nawiasie pętli `for` jest opcjonalny. **Średniki są wymagane**.
+
+```cpp title="🔹 Brak instrukcji w nawiasie"
+for ( ; ; )
+{
+	// kod
+}
+```
+
+Powyższy zapis sprawi, że pętla `for` będzie wykonywała się w nieskończoność (ze względu na pusty warunek),
+chyba że przerwiemy ją manualnie...
+
+## Przerwanie pętli
+
+Pętlę możemy przerwać w dowolnym momencie za pomocą instrukcji `break`:
+
+```cpp
+for (int i = 0; i < 10; i++)
+{
+	if (i == 5)
+	// highlight-next-line
+		break;
+	std::cout << i << ' ';
+}
+```
+
+Ta pętla wyświetli liczby od 0 do 4, ponieważ przy `i` równym `5` wykonanie pętli zostanie przerwane.
+W ten sam sposób możemy przerwać pętlę `while`.
+
+## Przerwanie obiegu pętli
+
+Aby pominąć wykonywanie aktualnego obiegu pętli używamy instrukcji `continue`:
+
+```cpp
+for (int i = 0; i < 10; i++)
+{
+	if (i == 5)
+	// highlight-next-line
+		continue;
+	std::cout << i << ' ';
+}
+```
+
+Pętla wyświetli liczby od `0` do `9` z pominięciem liczby `5`, bo zanim wykona instrukcję
+wyświetlania (`std::cout`) to program przeskoczy do następnego obiegu.
+
+:::caution Pętla for i continue
+Zauważ, że użycie `continue` w pętli `for` nie pomija *wyrażenia iteracji* ([zobacz schemat powyżej](#pętla-for)).
+:::
+
+## Przykłady
+
 <ImproveSection />
+
+## Potencjalne błędy
+
+<ImproveSection />
+
+## Dodatkowe informacje
+
+<ImproveSection />
+

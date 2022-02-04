@@ -1,0 +1,70 @@
+---
+sidebar_position:	1
+sidebar_label:		"Introduction to C++"
+title:				"Introduction to C++"
+description:		"Introduction to C++ programming language course"
+slug:				/course/
+hide_title:			true
+---
+
+import CodeBlock	from '@theme/CodeBlock'
+
+import Columns		from '@site-comps/Columns'
+
+# Introduction to C++
+
+:::important Before you start
+You will need programmer tools for code editing.
+<b>Visit <a href="/tools">Development tools</a></b>
+:::
+
+## The first program
+
+Once you have your code editor ready, you can start writing your first program.
+
+When learning a new programming language, the first thing you do
+is a simple application that displays the following text: **"Hello, World!"**.
+
+After creating the project, in your environment, a file with the extension `.cpp` has probably been automatically added.
+Most often it is called `main.cpp` (sometimes `Source.cpp` or `ProjectName.cpp`).
+If there is none, create one and name it `main.cpp`.
+
+:::tip New files
+If you don't know how to add a file to your project, see the <a href="/tools" target="_blank">tools</a>
+section and find a tutorial for an editor of your choice.
+:::
+
+It is in it that we will save all the code for now.
+
+### Application code
+
+Paste the following code and run it:
+
+<Columns spacing={40} columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Hello, World!";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result (console)"
+Hello, World!
+```
+
+</div>
+</Columns>
+
+
+You should see an effect like the one above.
+
+You will find an explanation of the above code in the next lesson 🙂
+

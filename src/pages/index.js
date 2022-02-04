@@ -2,40 +2,55 @@ import React			from 'react';
 import Link				from '@docusaurus/Link';
 import Translate		from '@docusaurus/Translate';
 import Layout			from '@theme/Layout';
-import ThemedImage		from '@theme/ThemedImage';
-import useBaseUrl		from '@docusaurus/useBaseUrl';
+import CodeBlock		from '@theme/CodeBlock';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
 
 import HomepageFeatures	from '../components/HomepageFeatures';
 import styles			from './index.module.scss';
 
+import Code_Sorting		from "!!raw-loader!./ExampleCppCode_Sorting.cpp";
+import Code_HelloWorld	from "!!raw-loader!./ExampleCppCode_HelloWorld.cpp";
+import Code_FizzBuzz	from "!!raw-loader!./ExampleCppCode_FizzBuzz.cpp";
+import Code_ReadFile	from "!!raw-loader!./ExampleCppCode_ReadFile.cpp";
 
 function HomepageHeader() {
 
 	return (
 		<header className={styles.heroBanner}>
-			<div className={styles.bgImage}>
-			<ThemedImage
-					alt="Background image"
-					sources={{
-						light: useBaseUrl('/img/coding-bg-white.jpg'),
-						dark: useBaseUrl('/img/coding-bg-dark.jpg'),
-					}}
-				/>;
-			</div>
 			<div className={styles.container}>
 				<div className={styles.textPart}>
-					<h1 className={styles.title}><Translate>C++ Programming Language</Translate></h1>
-					<p className={styles.subtitle}><Translate>Learn how to build blazing fast software</Translate></p>
-					<div className={styles.buttons}>
+					<h1 className={styles.title}>
+						C++
+					</h1>
+					<p className={styles.subtitle}>
+						<Translate>Programming Language</Translate>
+					</p>
+					<div className={styles.callToAction}>
 						<Link
-							className="button button--secondary button--lg"
+							className={styles.btnGrad}
 							to="/learn">
-							<Translate>Start learning</Translate>
+							<Translate>Get started</Translate> 🚀
 						</Link>
 					</div>
 				</div>
 				<div className={styles.interactiveEditor}>
-					<iframe src="https://repl.it/@poetakodu/SortVector-Cpp20?lite=true" />
+					<Tabs>
+						<TabItem value="sorting" label="Sorting" default>
+							<CodeBlock className="language-cpp">{Code_Sorting}</CodeBlock>
+						</TabItem>
+						<TabItem value="hello_world" label="Hello, World" default>
+							<CodeBlock className="language-cpp">{Code_HelloWorld}</CodeBlock>
+						</TabItem>
+						<TabItem value="fizzbuzz" label="FizzBuzz" default>
+							<CodeBlock className="language-cpp">{Code_FizzBuzz}</CodeBlock>
+						</TabItem>
+						<TabItem value="read_file" label="Read file" default>
+							<CodeBlock className="language-cpp">{Code_ReadFile}</CodeBlock>
+						</TabItem>
+					</Tabs>
+					
+					{/* <iframe src="https://repl.it/@poetakodu/SortVector-Cpp20?lite=true" /> */}
 				</div>
 			</div>
 		</header>

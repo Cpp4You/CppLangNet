@@ -31,7 +31,7 @@ export const MoreInfoNotice = ({more}) => (
 
 ### Windows
 
-<ToolCard toolId="msvc" setupLink="../standalone/editors/setup-vs2019">
+<ToolCard toolId="msvc" setupLink="../standalone/editors/vs2022/setup">
 	Wbudowany w środowisko Visual Studio.
 	<ToolCard.Details>
 		<h3>Zalety</h3>
@@ -90,3 +90,36 @@ export const MoreInfoNotice = ({more}) => (
 	</ToolCard.Details>
 </ToolCard>
 
+### MacOS
+
+<ToolCard toolId="apple-clang" setupLink="../standalone/compilers/setup-clang-macos">
+	Dobry, wieloplatformowy kompilator. Fork oficjalnego projektu clang z pewnymi specyficznymi dla architektury MacOS zmianami. Ten pakiet zawiera też narzędzia do debugowania.
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Wieloplatformowy 🤔</li>
+			<li>Najłatwiejszy do użycia na MacOS</li>
+			<li>Wbudowany debugger lldb</li>
+		</ul>
+		<h3>Wady</h3>
+		<ul>
+			<li>Zazwyczaj nie wspiera tak dobrze nowych funkcjonalności jak oficjalna wersja clanga</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/clang-summary"/>
+	</ToolCard.Details>
+</ToolCard>
+<ToolCard toolId="gcc" setupLink="../standalone/compilers/setup-gcc-macos">
+	Dobry, wieloplatformowy kompilator. Aby zainstalować go na MacOS używamy managera pakietów <code>brew</code>.
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Stosunkowo niewielki rozmiar instalacji</li>
+			<li>Wieloplatformowy</li>
+		</ul>
+		<h3>Wady</h3>
+		<ul>
+			<li>Trudne (lub nawet niemożliwe do skonfigurowania) debugowanie kodu, z powodu zabezpieczeń systemu MacOS, który stosuje certyfikaty aplikacji</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/gcc-summary"/>
+	</ToolCard.Details>
+</ToolCard>

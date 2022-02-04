@@ -3,7 +3,7 @@ import React from 'react';
 import ProductCard		from './ProductCard';
 
 import VSCodeIcon		from '@site/static/img/icons/products/vscode_1_35.svg';
-import VS2019Icon		from '@site/static/img/icons/products/vs_2019.svg';
+import VS2022Icon		from '@site/static/img/icons/products/vs_2019.svg';
 import CLionIcon		from '@site/static/img/icons/products/clion.svg';
 import QtCreatorIcon	from '@site/static/img/icons/products/qtcreator.svg';
 import CodeBlocksIcon	from '@site/static/img/icons/products/codeblocks.png';
@@ -16,6 +16,7 @@ import LLVMIcon			from '@site/static/img/icons/products/llvm.png';
 import ReplitIcon		from '@site/static/img/icons/products/replit.svg';
 
 import Translate		from '@docusaurus/Translate';
+import useBaseUrl		from '@docusaurus/useBaseUrl';
 import Lightbox			from '@site-comps/Lightbox';
 import thumbnailStyles	from '@site/src/css/components/Thumbnail.module.scss';
  
@@ -35,10 +36,10 @@ export const ToolSummaryInfo = {
 			"/img/tutorials/tools/vscode-4-hd.png",
 		],
 	},
-	"vs2019": {
+	"vs2022": {
 		author:				"Microsoft",
 		title:				"Visual Studio",
-		icon:				VS2019Icon,
+		icon:				VS2022Icon,
 		rating:				8,
 		site:				"https://visualstudio.com/",
 
@@ -132,7 +133,7 @@ export const ToolSummaryInfo = {
 	"msvc": {
 		author:		"Microsoft",
 		title:		"Visual Studio Compiler",
-		icon:		VS2019Icon,
+		icon:		VS2022Icon,
 		site:		"https://visualstudio.com/",
 	},
 	"gcc": {
@@ -146,6 +147,12 @@ export const ToolSummaryInfo = {
 		title:		"Clang",
 		icon:		LLVMIcon,
 		site:		"https://clang.llvm.org/",
+	},
+	"apple-clang": {
+		author:		"Apple & LLVM Authors",
+		title:		"Apple Clang",
+		icon:		LLVMIcon,
+		site:		"https://github.com/apple/llvm-project",
 	},
 };
 
@@ -184,11 +191,11 @@ export default function ToolCard(props)
 									trigger={
 										tool.galleryThumbnail
 										?
-											<GalleryThumbnail src={tool.galleryThumbnail} />
+											<GalleryThumbnail src={useBaseUrl(tool.galleryThumbnail)} />
 										:
 										<a href="#"><Translate>🖼 Gallery</Translate></a>
 									}
-									images={tool.gallery}
+									images={tool.gallery.map(l => useBaseUrl(l))}
 								/>
 						</li>
 					}

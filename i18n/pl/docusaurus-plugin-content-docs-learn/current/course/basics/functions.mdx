@@ -7,285 +7,488 @@ tags:				[funkcja]
 hide_title:			true
 ---
 
-import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
-import CustomCodeBlock	from '@site-comps/CustomCodeBlock';
-import GoogleSlides		from '@site-comps/GoogleSlides';
-import Tabs				from '@theme/Tabs';
-import TabItem			from '@theme/TabItem';
+<!-- Presets -->
+import NotFinished				from '@site/i18n/pl/presets/NotFinished.mdx';
+import ImproveSection			from '@site/i18n/pl/presets/ImproveSection.mdx';
+
+<!-- Components -->
+import CustomCodeBlock			from '@site-comps/CustomCodeBlock';
+import GoogleSlides				from '@site-comps/GoogleSlides';
+import Columns					from '@site-comps/Columns';
+import Image					from '@site-comps/Image';
+import Tabs						from '@theme/Tabs';
+import TabItem					from '@theme/TabItem';
+
+<!-- Codes -->
+import Code_TopExampleWithout				from "./_codes/functions/top-example-without.mdx";
+import Code_TopExampleWith					from "./_codes/functions/top-example-with.mdx";
+
+import Code_ExampleReuse					from "./_codes/functions/example-reuse.mdx";
+import Code_ExampleReuseWithParam			from "./_codes/functions/example-reuse-with-param.mdx";
+import Code_ExampleReuseWithParams			from "./_codes/functions/example-reuse-with-params.mdx";
 
 <NotFinished/>
 
 # Funkcje
 
-Nieodłącznym elementem każdego programu, który do tej pory pisaliśmy
-była **funkcja `main`**:
+W tej lekcji dowiesz się jak nauczyć program wykonywania akcji, z możliwością
+ich wielokrotnego użytku.
 
-```cpp
-int main()
-{
+## Motywacja
 
-}
-```
+Jednym z plusów używania funkcji jest redukcja potwórzeń w kodzie. Zobacz przykład
+poniżej, w wersji bez użycia funkcji oraz z użyciem. Na ten moment
+nie musisz rozumieć zapisu z przykładu z funkcją - do wyjaśnienia
+przejdziemy w dalszej części tej lekcji.
 
-W tej lekcji dowiesz się więcej o tym, czym w ogóle są funkcje.
-
-## Po co funkcje
-
-Dzięki funkcjom, możesz jakby **nauczyć** komputer wykonywania pewnych akcji.
-Pomyśl o tym w ten sposób: gdy rodzic prosi:
-
-> Kup w sklepie 10 jajek
-
-to nie musi Ci tłumaczyć krok po kroku, że:
-
-- masz się ubrać
-- wziąć pieniądze
-- iść zgodnie z trasą do odpowiednie sklepu
-- otworzyć drzwi do sklepu
-- itd...
-
-Nie musi tego robić, bo nauczyłeś/aś się już, co się kryję pod pewnym stwierdzeniem
-"kup w sklepie XYZ". Jaki jest plus tego? Że zaoszczędzacie mnóstwo czasu
-i wysiłku, bo **nie musicie** się za każdym razem **powtarzać**.
-
-Z komputerem jest podobnie. Możemy go raz nauczyć pewnego postępowania,
-a potem wielokrotnie korzystać z tego, nie musząc powtarzać za każdym razem detali.
-
-## Naiwne podejście
-
-Zróbmy program, który pozwoli nam zarządzać graczami.
-Ma mieć on takie opcje:
-
-1. ⚠ Wyświetlanie listy graczy
-2. Dodawanie gracza (po czym ⚠ wyświetlana jest lista obecnych graczy)
-3. Usuwanie gracza (po czym ⚠ wyświetlana jest lista obecnych graczy)
-4. Zmiana nicku gracza
-
-Po przeanalizowaniu tych punktów, można zauważyć, że będziemy musieli
-w trzech różnych miejscach użyć dokładnie tego samego kodu.
-Oznaczyłem je znacznikiem ⚠.
-
-Poniżej przykład, jak mógłby wyglądać ten program. Zaznaczyłem w nim
-fragmenty, które kilkukrotnie się powtarzają, są identyczne.
+<hr/>
 
 <Tabs>
-<TabItem value="code" label="Pełen kod" default>
-
-<CustomCodeBlock lineNumbers maxLines={25} resizable>
-
-```cpp
-#include <iostream>
-#include <vector>
-#include <string>
-
-int main()
-{
-	std::vector< std::string > players;
-
-	int choice = 0;
-	do
-	{
-		std::cout	<< "--- MENU GRY ---\n";
-					<< "1) Lista graczy\n"
-					<< "2) Dodaj gracza\n"
-					<< "3) Usuń gracza\n"
-					<< "4) Zmień nick gracza\n";
-					<< "5) Wyjdź\n";
-					<< "Twój wybór: ";
-
-		std::cin >> choice;
-
-		if (choice == 1) // WYŚWIETLANIE LISTY GRACZY
-		{
-			// highlight-start
-			// ❌ Powtórzenie tego samego kodu ❌
-			std::cout << "\n-----Lista graczy-----\n";
-			for (int i = 0; i < players.size(); i++)
-			{
-				std::cout << "[" << i << "]: " << players[i] << "\n";
-			}
-			// highlight-end
-		}
-		else if (choice == 2) // DODAWANIE NOWEGO GRACZA
-		{
-			std::cout << "Podaj nick dla nowego gracza: ";
-
-			std::string newPlayerName;
-			std::cin >> newPlayerName;
-			
-			players.push_back(newPlayerName);
-
-			std::cout << "Dodano gracza: " << newPlayerName << "\n";
-
-			// highlight-start
-			// ❌ Powtórzenie tego samego kodu ❌
-			std::cout << "\n-----Lista graczy-----\n";
-			for (int i = 0; i < players.size(); i++)
-			{
-				std::cout << "[" << i << "]: " << players[i] << "\n";
-			}
-			// highlight-end
-		}
-		else if (choice == 3) // USUWANIE GRACZA
-		{
-			std::cout << "Podaj indeks gracza do usunięcia: ";
-
-			int playerIndex;
-			std::cin >> playerIndex;
-
-			if (playerIndex >= 0 && playerIndex < players.size())
-			{
-				std::cout	<< "Usuwam gracza " << players[playerIndex]
-							<< " (indeks: " << playerIndex << ")\n"; 
-
-				players.erase(players.begin() + playerIndex);
-
-				// highlight-start
-				// ❌ Powtórzenie tego samego kodu ❌
-				std::cout << "\n-----Lista graczy-----\n";
-				for (int i = 0; i < players.size(); i++)
-				{
-					std::cout << "[" << i << "]: " << players[i] << "\n";
-				}
-				// highlight-end
-			}
-			else
-			{
-				std::cout << "Niepoprawny indeks gracza!\n";
-			}
-		}
-		else if (choice == 4) // ZMIANA NAZWY GRACZA
-		{
-			std::cout << "Podaj indeks gracza do zmiany nazwy: ";
-
-			int playerIndex;
-			std::cin >> playerIndex;
-
-			if (playerIndex >= 0 && playerIndex < players.size())
-			{
-				std::cout << "Podaj nową nazwę gracza: ";
-
-				std::string newPlayerName;
-				std::cin >> newPlayerName;
-
-				std::cout	<< "Zmieniam nazwę gracza z " << players[playerIndex]
-							<< " na " << newPlayerName
-							<< " (indeks: " << playerIndex << ")\n"; 
-
-				players[playerIndex] = newPlayerName;
-			}
-		}
-
-		std::cout << '\n';
-
-	} while(choice >= 1 && choice <= 4);
-}
-```
-
-</CustomCodeBlock>
-
-</TabItem>
-<TabItem value="instruction" label="Instrukcja">
-	{/* DO ZMIANY */}
-	<GoogleSlides
-			src="https://docs.google.com/presentation/d/e/2PACX-1vTsdQPMXKN90rcz4i515JK-rpUHjHTc5xIjGVtNJS8XSbloMNObHEBUSszvYi9I7tuKBNIdEKNFh1jk/embed"
-			aspectRatio={960 / 500}
-			delay={500}
-			centered
-			fullWidth
-		/>
-</TabItem>
-<TabItem value="result" label="Wynik">
-	{/* DO ZMIANY */}
-	<GoogleSlides
-			src="https://docs.google.com/presentation/d/e/2PACX-1vTsdQPMXKN90rcz4i515JK-rpUHjHTc5xIjGVtNJS8XSbloMNObHEBUSszvYi9I7tuKBNIdEKNFh1jk/embed"
-			aspectRatio={960 / 500}
-			delay={500}
-			centered
-			fullWidth
-		/>
-</TabItem>
-
-
+	<TabItem value="without-functions" label="⚠ Bez funkcji">
+		<Code_TopExampleWithout />
+	</TabItem>
+	<TabItem value="with-function" label="🟢 Z funkcją">
+		<Code_TopExampleWith />
+	</TabItem>
 </Tabs>
 
-Ten kod jest spory. Mamy jedną, gigantyczną funkcję `main`, wiele powtórzeń tych samych instrukcji:
+<hr/>
+
+W przykładzie powyżej tworzymy tablicę liczb i modyfikujemy ją, każdorazowo wyświetlając zawartość.
+Różnica między tymi dwoma wersjami jest taka, że pierwszy zawiera fragment kodu, który przekleiliśmy
+parę razy komendą kopiuj-wklej. W drugiej, bardziej prawidłowej wersji, jednorazowo **uczymy nasz program
+jak wyświetlić tablicę liczb** a następnie korzystamy z tego wielokrotnie wtedy, kiedy tego potrzebujemy.
+
+Funkcje mają jeszcze bardzo wiele innych zastosowań i część z nich w tej lekcji pokażemy. Póki co jednak
+musimy powrócić na sam początek do podstaw.
+
+## Wprowadzenie
+
+:::important Definicja
+Funkcja to wydzielony fragment kodu, który możemy wielokrotnie wykorzystywać.
+:::
+
+Od samego początku nauki w naszych programach umieszczaliśmy specjalną funkcję,
+którą jest `main`.
+
 ```cpp
-std::cout << "\n-----Lista graczy-----\n";
-for (int i = 0; i < players.size(); i++)
-{
-	std::cout << "[" << i << "]: " << players[i] << "\n";
+int main() {
+	// kod programu
 }
 ```
 
-My jako programiści, chcemy sobie pracę **ułatwiać**.
+Komputer uruchamiając program znajduje funkcję `main` a następnie ją wykonuje,
+przechodząc po każdej instrukcji wewnątrz, linijka po linijce.
 
 ## Tworzenie funkcji
 
-Musimy "nauczyć" program, wyświetlać listę graczy za pomocą jednego prostego polecenia.
-Nazwijmy to polecenie:
+Zaczniemy od najprostszych funkcji, stopniowo przechodząc do coraz bardziej zaawansowanych.
 
-```cpp
-showPlayerList
+### Bez parametrów
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/proc-no-params-pl.png"
+		desc="Schemat najprostszej funkcji"
+	/>
+
+Jak widzimy wyżej, definiując własną funkcję, musimy zadbać o jej nazwę oraz ciało, trzymając
+się przy tym składni. Po słowie `void` piszemy **nazwę funkcji**, następnie dajemy puste
+**nawiasy okrągłe** (o tym powiemy dalej w tej lekcji), potem **bez średnika** umieszczamy poniżej
+blok kodu, który nazywamy **ciałem funkcji**.
+
+:::important Nazewnictwo
+Nazywając funkcję przestrzegamy tych samych zasad co przy [nazwach zmiennych](../variables/#nazwa-zmiennej).
+:::
+
+W ten sposób mamy już zdefiniowaną funkcję. Oznacza to, że gdy tylko będziemy tego chcieli, możemy
+ją **wywołać**. Robimy to w ten sposób:
+
+```cpp title="🔹 Wywołanie funkcji"
+print();
 ```
 
-Aby stworzyć najprostszą funkcję o tej nazwie, musimy napisać podany poniżej kod.  
-Musi on:
-- ✔ być poza kodem funkcji `main`
-- ✔ znaleźć się przed funkcją `main`
+:::caution Uwaga
+Zwróć uwagę, że dajemy **średnik** po wywołaniu funkcji.
+:::
+
+Napiszmy przykładową funkcję, która wyświetla 10 liczb parzystych i użyjmy jej kilka razy:
+
+<>
+<Code_ExampleReuse />
+</>
+
+### Z parametrami
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/proc-params-pl.png"
+		desc="Schemat funkcji z parametrami"
+	/>
+
+Działanie funkcji możemy uzależnić od **parametrów**. Chcąc, żeby funkcja wyświetlała
+dowolnie dużo liczb parzystych, możemy utworzyć w funkcji parametr,
+który będzie to kontrolował. Parametr jest zmienną wewnątrz funkcji, którą tworzymy
+w środku nawiasów okrągłych:
+
+<>
+<Code_ExampleReuseWithParam />
+</>
+
+Powyższy zapis
 
 ```cpp
-void showPlayerList()
+printEvenNumbers(10);
+```
+
+oznacza, że w momencie wywołania, do parametru `howMany` wewnątrz tej funkcji
+zostanie przypisana wartość `10`. Możemy do funkcji przekazywać dowolną liczbę parametrów.
+Oddzielamy je przecinkami:
+
+<>
+<Code_ExampleReuseWithParams />
+</>
+
+:::danger Popularny błąd
+Zauważ, że kolejne parametry funkcji umieszczamy po przecinku, każdorazowo podając jego typ.
+Częstym błędem wśród początkujących jest pominięcie typu w następnych parametrach.
+
+<Tabs>
+<TabItem label="❌ Źle" value="bad" default>
+
+```cpp
+void printBiggerNumber(int a, b)
+```
+
+</TabItem>
+<TabItem label="✔ Dobrze" value="good">
+
+```cpp
+void printBiggerNumber(int a, int b)
+```
+
+</TabItem>
+</Tabs>
+
+:::
+
+### Instrukcja powrotu
+
+Możemy kazać programowi wcześniej powrócić z funkcji, za pomocą instrukcji:
+
+```cpp
+return;
+```
+
+W momencie jej napotkania, program przestaje wykonywać kolejne instrukcje w funkcji
+i wraca do miejsca, z którego została ona wywołana. Przytoczmy stworzoną przez nas wcześniej
+funkcję `printEvenNumbers`:
+
+```cpp
+void printEvenNumbers(int howMany)
 {
-	// Kod funkcji, tak jak przy mainie
+	for (int i = 0; i < howMany; i++)
+		std::cout << (i * 2) << ' ';
+	std::cout << '\n';
 }
 ```
 
-Ten zapis zaraz zostanie dokładnie wyjaśniony. Na tą chwilę pójdźmy jeszcze troszkę dalej.
-Żeby program **wywołał** funkcję, a więc wykonał kod, który się wewnątrz tej funkcji znajduje
-musimy użyć zapisu:
+Co się stanie, jeśli podamy ujemną liczbę do `howMany`?
 
 ```cpp
-showPlayerList();
+printEvenNumbers(-10);
 ```
 
-:::danger Uwaga
-Zwróć uwagę na średnik `;` na końcu wywołania!
+Wykonywanie funkcji z taką wartością parametru nie ma sensu, dlatego możemy to już na samym początku
+wychwycić i wykonać powrót:
+
+```cpp
+void printEvenNumbers(int howMany)
+{
+	if (howMany <= 0)
+		return;
+
+	for (int i = 0; i < howMany; i++)
+		std::cout << (i * 2) << ' ';
+	std::cout << '\n';
+}
+```
+
+Teraz gdy podamy wartość mniejszą lub równą zero do parametru funkcji, funkcja już na początku zostanie przerwana.
+
+### Wartość zwracana
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/retval-params-pl.png"
+		desc="Schemat funkcji z parametrami i wartością zwracaną"
+	/>
+
+
+Funkcje mogą pozostawić po swoim wykonaniu pewien **rezultat**. Łatwiej będzie to zrozumieć gdy zastosujemy analogię do
+realnego życia. Rodzic wysyła swoje dziecko do sklepu po 10 jajek. Po powrocie dziecka, będzie chciał wiedzieć,
+czy udało mu się kupić tyle ile poprosił, czy nie. Tak samo my, wykonując niektóre funkcje w kodzie,
+chcemy znać ich rezultat, czyli **wartość zwracaną**.
+
+#### Typ zwracanej wartości
+
+Wymagane jest, aby określić jakiego typu jest wartość zwracana. Podajemy go **przed** nazwą funkcji, przykładowo:
+
+```cpp title="🔹 Zwracamy liczbę całkowitą" 
+int sum(int from, int to)
+```
+
+```cpp title="🔹 Brak zwracanej wartości"
+void print(int number)
+```
+
+Zauważ, że wprowadziliśmy nowy typ: `void` (z ang.: *pusty*). Jeśli wpiszemy go w miejsce typu zwracanego,
+będzie to oznaczało, że funkcja nie zwraca wartości, tj. nie potrzebujemy znać jej rezultatu.
+Zauważ, że z `void` korzystaliśmy w poprzednich sekcjach tej lekcji, właśnie z tego powodu.
+
+:::danger Typ pusty i zmienne
+Typ `void` nie może być użyty do stworzenia zmiennej:
+
+```cpp title="❌ Nieprawidłowy zapis"
+void variable;
+```
+
+Zmienna z założenia przechowuje wartość, co byłoby niemożliwe gdyby była typu `void`.
 :::
 
-### Kod funkcji
+#### Zastosowanie
 
-Nasza funkcja jest na ten moment całkowicie pusta, więc nie robi nic.
-Przeklejmy tam kod, który wcześniej się powtarzał.
-Początek kodu teraz wygląda tak:
+Zaimplementujmy funkcję ze schematu wyżej. Ma ona zliczyć sumę wszystkich liczb w zakresie od `from` do `to` włącznie.
+
+```cpp
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+Zwróconą wartość możemy użyć np. zapisując ją do zmiennej:
+
+```cpp title="🔹 Zapisywanie rezultatu do zmiennej"
+int s = sum(10, 100);
+```
+
+... lub użyć w wyrażeniu (np. jako parametr funkcji):
+
+```cpp title="🔹 Używanie rezultatu"
+std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
+```
+
+#### Wymogi
+
+:::danger Zwrócenie wartości jest obowiązkowe
+Funkcja, która zwraca jakąś wartość (wszystko poza typem `void`), **musi** na samym końcu swojego wykonania
+zwrócić jakąś wartość.
+
+```cpp title="❌ Błąd: brak zwracanej wartości"
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	// highlight-next-line
+	// ❌ Brak instrukcji return!
+}
+```
+
+Wyjątkiem jest funkcja `main`, która mimo zwracania typu `int`, wykonuje automatyczne zwrócenie wartości
+gdy pominiemy `return`:
+
+```cpp title="✔ OK"
+int main() {
+	// Brak instrukcji return
+}
+```
+
+O funkcji `main` powiemy więcej w przyszłości.
+
+:::
+
+### Deklaracja a definicja
+
+Aby móc użyć powyższej funkcji `sum`, musimy upewnić się, że znajduje się ona **przed** tym użyciem, przykładowo:
+
+<Tabs>
+<TabItem value="bad" label="❌ Źle" default>
 
 ```cpp
 #include <iostream>
-#include <vector>
-#include <string>
 
-void showPlayerList()
+int main()
 {
-	// ❌ Nie wiadomo czym jest "players" ❌
+	// Uwaga, użycie przed definicją
+	// highlight-next-line
+	std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100); // ❌
+}
 
-	std::cout << "\n-----Lista graczy-----\n";
-	for (int i = 0; i < players.size(); i++) // ❌
-	{
-		std::cout << "[" << i << "]: " << players[i] << "\n"; // ❌
-	}
+// highlight-next-line
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+</TabItem>
+<TabItem value="good" label="✔ Dobrze">
+
+```cpp
+#include <iostream>
+
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
 }
 
 int main()
 {
-	// highlight-start
-	// Dopiero tutaj wprowadzamy zmienną "players" ✅
-	std::vector< std::string > players;
-	// highlight-end
-
-	// ... cała reszta main-a 
+	std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
 }
 ```
 
-:::caution Uwaga
-Powyższy kod na tym etapie jeszcze się ❌ **nie skompiluje**!
+</TabItem>
+</Tabs>
+
+Dbanie o to, żeby kolejność zawsze się zgadzała jest uciążliwe a czasami nawet niemożliwe.
+Żeby naprawić błąd z powyższego przykładu musimy zastosować tzw. **deklarację funkcji**.
+
+Póki co tworząc funkcję, używaliśmy **definicję funkcji**, która oprócz deklaracji,
+zawiera też całą jej implementację (ciało). Deklarowanie funkcji wygląda jak jej definiowanie,
+**bez podawania jej ciała**. Musimy też zadbać, żeby po deklaracji dać średnik.
+
+<Columns columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="🔵 Definicja"
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+</div>
+<div>
+
+```cpp title="🟣 Deklaracja"
+int sum(int from, int to);
+```
+
+</div>
+</Columns>
+
+Zasada jest taka, że aby użyć funkcji, musi być ona wcześniej **zadeklarowana**.
+Definicja musi się pojawić, jednak nie ma znaczenia czy będzie ona przed czy po użyciu.
+Oto dwa przykłady:
+
+<Tabs>
+<TabItem value="good" label="✔ OK" default>
+
+```cpp
+#include <iostream>
+
+// 🟣 Deklaracja
+// highlight-next-line
+int sum(int from, int to);
+
+int main()
+{
+	std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
+}
+
+// 🔵 Definicja
+// highlight-next-line
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+</TabItem>
+<TabItem value="good2" label="✔ OK (definicja przed)">
+
+```cpp
+#include <iostream>
+
+// 🟣 Deklaracja
+// highlight-next-line
+int sum(int from, int to);
+
+// 🔵 Definicja
+// highlight-next-line
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+
+int main()
+{
+	std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
+}
+```
+
+</TabItem>
+<TabItem value="good3" label="✔ OK (wiele dekl.)">
+
+```cpp
+#include <iostream>
+
+// 🟣 Deklaracje
+// highlight-start
+int sum(int from, int to);
+int sum(int from, int to); // OK, wiele deklaracji dopuszczalne
+int sum(int from, int to); // tylko po co to tutaj? 🤔
+// highlight-end
+
+int main()
+{
+	std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
+}
+
+// 🔵 Definicja
+// highlight-next-line
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::danger Zasada jednej definicji (ang.: *ODR*)
+Definicja **musi** pojawić się w kodzie **tylko raz** (deklaracji może być wiele).
 :::
+
+## Przykłady 🚧
+
+<ImproveSection />
+
+## Potencjalne błędy 🚧
+
+<ImproveSection />
+
+## Dodatkowe informacje 🚧
+
+<ImproveSection />

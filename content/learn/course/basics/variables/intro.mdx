@@ -1,0 +1,545 @@
+---
+sidebar_position:	1
+sidebar_label:		"1. Introduction"
+title:				"Introduction"
+description:		"Lesson: introduction to variables basics in C++"
+tags:				[variable, declaration, definition, initialization, int, float, char, string]
+slug:				/course/basics/variables/
+hide_title:			true
+---
+
+import Columns			from '@site-comps/Columns'
+import GoogleSlides		from '@site-comps/GoogleSlides'
+import CustomCodeBlock	from '@site-comps/CustomCodeBlock'
+import Image			from '@site-comps/Image'
+import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
+
+# Introduction to variables
+
+In this lesson, we'll talk about how to store different values while a program
+is running, that is, how to use variables.
+
+## Motivation
+
+To understand what they are useful for, let's write a program that raises a number
+to the third power and then displays it:
+
+<Columns spacing={40} columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="🔹 main.cpp | Power of three"
+#include <iostream>
+
+int main()
+{
+	std::cout << 212 * 212 * 212;
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result (console)"
+9528128
+```
+
+</div>
+</Columns>
+
+If we now want to raise a different number to the third power, we will have
+to change three places in the code. It is tedious.
+
+## Introduction
+
+In order not to change so many things every time, let's assume for a moment
+that the number we are raising to the power of three is called `x`.
+What will the code look like then?
+
+```cpp
+#include <iostream>
+int main()
+{
+	std::cout << x * x * x;
+}
+```
+
+The above program at this stage **will not compile**. To use `x` in a calculation,
+we first need to create a **variable** named `x`:
+
+```cpp
+#include <iostream>
+int main()
+{
+	int x = 212;
+	std::cout << x * x * x;
+}
+```
+
+The above program will compile and run correctly.
+
+:::important Variable definition
+A **variable** is a container for data of a certain type.
+:::
+
+## Creating variables
+
+In the above program, we created the variable like this:
+
+```cpp
+int x = 212;
+```
+
+Here is a diagram of this notation:
+
+<Tabs>
+	<TabItem value="creation-init" label="🔢 With initial value" default>
+		<Image center maxheight={250}
+				src="/img/tutorials/course/basic/variables/creation-init-en.png"
+				alt="Scheme for creating a variable (with initialization)"
+			/>
+	</TabItem>
+	<TabItem value="creation" label="⚪ Without value">
+		<Image center maxheight={250}
+				src="/img/tutorials/course/basic/variables/creation-en.png"
+				alt="Scheme for creating a variable (without initialization)"
+			/>
+	</TabItem>
+</Tabs>
+
+This <u>extremely important</u> notation consists of the following elements:
+
+Element | Description
+---|---
+**`int`** | variable type
+`x` | variable name
+`= 212` | **initialization** (assignment of the initial value)
+`;` | a semicolon that ends the statement
+
+### Variable type
+
+The type of a variable tells you what the variable can store. As mentioned before,
+a variable is a container that holds certain things of a **certain type**.
+
+`int` is an abbreviation of the word *integer* that is, a number without the fractional part.
+
+At this stage, you should remember the following types of variables:
+
+Type | Description
+--- | ---
+**`int`** | integer
+**`float`** | real number (with fractional part)
+**`char`** | a single character
+**`bool`** | boolean value, i.e. `true` or `false`
+
+We will cover more types and facts about them in the future.
+
+:::danger
+The above-mentioned types of variables are always written with **lowercase letters**. It matters.
+:::
+
+#### Examples of creating variables:
+
+<hr/>
+
+<Tabs>
+	<TabItem value="int" label={<code>int</code>} default>
+
+```cpp
+// Without initialization
+// Variable will contain an unpredictable value
+int x;
+
+// We create a variable and assign the 30 value to it
+int y = 30;
+```
+
+
+	</TabItem>
+	<TabItem value="float" label={<code>float</code>}>
+
+```cpp
+// Without initialization
+// Variable will contain an unpredictable value
+float x;
+
+// We create a variable and assign the 30 value to it
+float y = 30;
+
+// We create a variable and assign the 1.234 value to it
+float z = 1.234f;
+```
+
+:::caution Fractional part
+When we assign a value with a fractional part to a variable of type `float`,
+we must end the number with the `f` character:
+
+- ✔ `12.45f`
+- ❌ `12.45`
+
+This has its justification, but more on that later.
+:::
+
+	</TabItem>
+	<TabItem value="char" label={<code>char</code>}>
+
+```cpp
+// Without initialization
+// Variable will contain an unpredictable value
+char x;
+
+// We create a variable and assign the 'j' character to it
+char y = 'j';
+```
+
+:::danger Characters
+Single characters are **always** written between <u>single quotes</u>.
+- character: `'c'`
+- a **string of characters**, consisting of 1 character: `"c"`
+
+Therefore:
+- ✔ `char x = 'c';`
+- ❌ `char x = "c";`
+:::
+
+	</TabItem>
+	<TabItem value="bool" label={<code>bool</code>}>
+
+```cpp
+// Without initialization
+// Variable will contain an unpredictable value
+bool x;
+
+// We create a variable and assign the "true" value to it
+bool y = true;
+
+// We create a variable and assign the "false" value to it
+bool z = false;
+```
+
+	</TabItem>
+</Tabs>
+
+<hr/>
+
+### Variable name
+
+The name can be anything you want, with some important restrictions:
+
+- ❌ must not have spaces (prohibited: ❌ `abc def`)
+- ✔ may consist of:
+	- ✔ characters `a`-`z` and `A`-`Z`
+	- ✔ digits, but not at the beginning (prohibited: ❌ `932abc`)
+	- ✔ underscore `_`
+
+You can create as many variables as you want, but they must have different names
+as they are their unique identifiers (with some exceptions, but more on that later).
+
+Case of the letters is important, variable names are case-sensitive:
+
+```cpp
+int x = 30;
+float X = 12.34f;
+```
+
+In the code above, the variables `x` and `X` are two different variables!
+
+:::tip Good practice (for non-english speakers)
+It's best to use **only** English names, for example:
+```cpp
+float average;
+```
+
+instead of:
+
+```cpp
+float srednia; // average in Polish
+```
+:::
+
+### Initialization (initial value)
+
+Initialization is an optional step in creating variables. When we create it, we can
+either leave it without the desired value:
+
+```cpp
+int x;
+```
+
+or assign it an initial value:
+
+```cpp
+int x = 30;
+```
+
+:::caution NO INITIALIZATION
+An uninitialized variable, inside a function block (e.g. inside `main`) will initially have
+an unpredictable value, it won't be reset to 0.
+
+Leaving a variable without its initial value can cause problems later in the code.
+Sometimes, however, we may intentionally skip it, but more on that later.
+:::
+
+### Semicolon at the end
+
+Just a remainder 😀
+
+```cpp
+int name = 40;
+```
+
+## Opportunities
+
+Variables hold values ​​for the duration of their existence (more on that later).
+We can write values ​​to them or read them, display them on the screen, compare, etc.
+
+### Simple interaction with the user
+
+Our programs will be a bit more interesting when we let the user type
+something into the console.  
+We will do by adding a new instruction using `cin` (<i>**c**haracter **in**put</i>):
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "Please enter your age: ";
+	
+	int age;
+	// highlight-next-line
+	std::cin >> age;
+
+	std::cout << "You're " << age << " years old.\n";
+}
+```
+
+`cin` allows us to save the content of the so-called standard input (stdin)
+to the variable that is passed after the characters `>>`.
+
+We'll talk about standard input another time, for now remember that `cin`
+allows the program user to type something from the console,
+and then assigns that value to a variable.
+
+Please not that:
+- `cout` uses the `<<` operator
+- `cin` uses the `>>` operator
+
+In addition to that, you can see that we didn't assign an initial value to `age`.
+It is not needed, because immediately after its creation, we use `std::cin`
+that assings the value that the user enters from the keyboard.
+
+:::tip Remember
+You can remember the direction of the stamps in this operator in an easy way
+
+- `cout` - the text goes **to the console** - `<<` pointing to the `cout`
+- `cin` -  the text goes **to the variable** - `>>` pointing to the variable
+:::
+
+### Simple math operations
+
+Variables that contain numbers can be freely modified using typical mathematical signs (operators):
+
+- `a + b` - adds two numbers together
+- `a - b` - subtracts two numbers from each other
+- `a * b` - multiplies two numbers by itself
+- `a / b` - divides the number `a` by `b`
+
+:::note
+These are not all math operators, we'll talk about the rest later.
+:::
+
+Let's use these operators in practice:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "Please enter your age: ";
+
+	int age;
+	std::cin >> age;
+
+	// highlight-start
+	std::cout << "In 10 years, you'll be "					<< (age + 10)	<< " years old\n";
+	std::cout << "5 years ago, you were "					<< (age - 5)	<< " years old\n";
+	std::cout << "When you are twice as old, you'll be "	<< (age * 2)	<< " years old\n";
+	std::cout << "Someone twice as young is "				<< (age / 2)	<< " years old";
+	// highlight-end
+}
+```
+
+:::tip Alignment
+Note that for the sake of better readability of the code, we've used the **`Tab`** key
+to align the code after `<<` operator.
+:::
+
+A very important fact is that the use of the above-mentioned operators
+**does not change the content of the variable** `age`.
+
+By entering the age `20`, we will get the following result:
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```plaintext title="Console"
+In 10 years, you'll be 30 years old
+5 years ago, you were 15 years old
+When you are twice as old, you'll be 40 years old
+Someone twice as young is 10 years old
+```
+
+</div>
+
+<div>
+
+```plaintext title="Description"
+(age: 20 => + 10 = 30)
+(age: 20 => - 5 = 30)
+(age: 20 => * 2 = 40)
+(age: 20 => / 2 = 10)
+```
+
+</div>
+</Columns>
+
+As we can see, the value of the variable `age` remained the same at each stage (having value of `20`).  
+This is because in the notation:
+
+```cpp
+a + b
+```
+
+the `a + b` expression **results** in some value and the contents of the **variables are left untouched**.  
+If, for example, we want to increase a variable by `10`, we have to assign the result value of this expression to it:
+
+```cpp
+age = age + 10;
+```
+
+... or in short:
+
+```cpp
+age += 10;
+```
+
+See how it works on an example (I type `20` into the console again):
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock lineNumbers>
+
+```cpp title="🔹 main.cpp"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Please enter your age: ";
+
+	int age;
+	std::cin >> age;
+
+	std::cout << "You're now " << age << " years old\n";
+	// highlight-start
+	age += 30;
+	std::cout << "In 30 years, you'll be " << age << " years old";
+	// highlight-end
+}
+```
+
+</CustomCodeBlock>
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+You're now 20 years old
+In 30 years, you'll be 50 years old
+```
+
+</div>
+</Columns>
+
+### Program execution flow
+
+Variable `age`:
+
+- when the line `11` is executed, it has the value `20`.
+- in the line it `12` changes the value to `20 + 30` that is `50`
+- on the line `13` is already displayed with the value `50`
+
+### Modifying variables
+
+In addition to the operator presented above: `+=`, there are many other operators available
+that modify the content of variables.
+
+The easiest way to show them is an example:
+
+<Tabs>
+
+<TabItem value="presentation" label="Presentation" default>
+
+Below is a presentation of the program's operation, after entering the number `20`.
+
+<!-- Source link: https://docs.google.com/presentation/d/1PsrXxeMhAaZ8ehk-x6hS7rigpaqw4b_2uxfGTlQRxdI/edit?usp=sharing -->
+
+<GoogleSlides
+		src="https://docs.google.com/presentation/d/e/2PACX-1vS7Ya69_dj0B6FiwDhhInEq4znQd229dKAv4umb4FZfHlgvg1t8zU0ocZIl6uXT6AF42SnO4OpiYw0T/embed"
+		aspectRatio={12 / 9}
+		delay={800}
+		centered
+		fullWidth
+	/>
+
+</TabItem>
+
+<TabItem value="code" label="Code">
+<CustomCodeBlock lineNumbers maxLines={25} resizable>
+
+```cpp title="🔹 main.cpp"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Enter some number: ";
+
+	int number;
+	std::cin >> number;
+
+	// Increase "number" by 5 and assign.
+	number += 5;
+	std::cout << "After increasing by 5: " << number << '\n';
+
+	// Decrease "number" by 10 and assign.
+	number -= 10;
+	std::cout << "Now, after decreasing by 10: " << number << '\n';
+
+	// Multiply by 3 and assign.
+	number *= 3;
+	std::cout << "Now, after multiplying by 3: " << number << '\n';
+
+	// Divide by 2 and assign.
+	number /= 2;
+	std::cout << "Now, after dividing by 2: " << number << '\n';
+
+	// Increase value by 1 (incrementation):
+	number++;
+	std::cout << "Now, after incrementation: " << number << '\n';
+
+	// Decrease value by 1 (decrementation):
+	number--;
+	std::cout << "Now, after decrementation: " << number << '\n';
+}
+```
+
+</CustomCodeBlock>
+</TabItem>
+
+</Tabs>
+
+You will learn more about the possibilities of variables in the next course lessons 😊

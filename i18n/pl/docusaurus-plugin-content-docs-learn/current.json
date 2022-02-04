@@ -43,20 +43,40 @@
     "message": "Złote rady 💰",
     "description": "The label for category Golden advices 💰 in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.7. Overloading": {
-    "message": "7. Przeładowanie",
-    "description": "The label for category Overloading in sidebar defaultSidebar"
+  "sidebar.defaultSidebar.category.9. Classes (I)": {
+    "message": "9. Klasy (I)",
+    "description": "The label for category 9. Classes (I) in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.10. Classes (I)": {
-    "message": "10. Klasy (I)",
-    "description": "The label for category Classes (I) in sidebar defaultSidebar"
-  },
-  "sidebar.defaultSidebar.category.11. Memory (I)": {
-    "message": "11. Pamięć (I)",
-    "description": "The label for category Memory (I) in sidebar defaultSidebar"
+  "sidebar.defaultSidebar.category.10. Memory (I)": {
+    "message": "10. Pamięć (I)",
+    "description": "The label for category 10. Memory (I) in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.Compiler flags 🚩": {
     "message": "Flagi kompilatora 🚩",
     "description": "The label for category Compiler flags 🚩 in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.3. Variables": {
+    "message": "3. Zmienne",
+    "description": "The label for category 3. Variables in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.2. Templates (II)": {
+    "message": "2. Szablony (II)",
+    "description": "The label for category 2. Templates (II) in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.4. Classes (II)": {
+    "message": "4. Klasy (II)",
+    "description": "The label for category 4. Classes (II) in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.5. Exceptions (II)": {
+    "message": "5. Wyjątki (II)",
+    "description": "The label for category 5. Exceptions (II) in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.9. Memory (II)": {
+    "message": "9. Pamięć (II)",
+    "description": "The label for category 9. Memory (II) in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.6. Functions and operators": {
+    "message": "6. Funkcje i operatory",
+    "description": "The label for category 6. Functions and operators in sidebar defaultSidebar"
   }
 }

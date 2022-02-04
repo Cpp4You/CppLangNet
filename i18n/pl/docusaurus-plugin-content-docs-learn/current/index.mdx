@@ -8,15 +8,15 @@ slug: /
 import CustomCodeBlock from '@site-comps/CustomCodeBlock';
 
 Jesteś w dziale nauki programowania. Znajdziesz tutaj kurs języka C++, oraz inne materiały,
-których tematyka krąży właśnie wokoło programowania w nim.
+których tematyka krąży wokoło programowania w nim.
 
-Zanim przejdziesz do kursu C++, zapoznaj się z tym, czym w ogóle jest programowanie?
+Zanim przejdziesz do kursu, zapoznaj się z tym, czym w ogóle jest programowanie?
 
 ## Czym jest programowanie
 
 Programowanie służy do automatyzacji zadań za pomocą maszyny, która wykonuje polecenia.
 W kursie C++ nauczysz się jak tworzyć programy, które można uruchomić z komputera.
-Dzięki temu będziesz w stanie stworzyć aplikacje, która na przykład:
+Dzięki temu będziesz w stanie stworzyć aplikację, która na przykład:
 
 - wykona za Ciebie pewne obliczenia ➕ ➖ ✖ ➗
 - jest grą komputerową 🎮 😄
@@ -24,17 +24,18 @@ Dzięki temu będziesz w stanie stworzyć aplikacje, która na przykład:
 
 :::tip Gry komputerowe 🎮
 Kilka słów od autora tej strony: uwielbiam tworzyć gry komputerowe. Bardzo lubię uczyć programowania
-używając przykładów z gier. Uważam to za świetną formę nauki, która łączy wiedzę z przyjemnością! 
+używając przykładów z gier i na pewno znajdziesz takie w tym kursie. Uważam to za świetną formę nauki,
+która łączy wiedzę z przyjemnością! 
 :::
 
 ### Jak to wygląda
 
-Programista pisze kod. Pokażemy Ci jak robić to w taki sposób, żeby był zgodny
+**Programista pisze kod.** Pokażemy Ci jak robić to w taki sposób, żeby był zgodny
 z zasadami języka C++ i nauczymy Cię dobrych praktyk w programowaniu.
 
 Oto prosty kod w języku C++, który liczy za Ciebie pole trapezu:
 
-<CustomCodeBlock lineNumbers maxLines={15} withTitle resizable>
+<CustomCodeBlock lineNumbers maxLines={15} resizable>
 
 ```cpp title="main.cpp"
 #include <iostream>
@@ -56,7 +57,7 @@ int main()
 	std::cout << "Podaj wartość h: ";
 	std::cin >> h;
 
-	if (a > 0 and b > 0 and h > 0)
+	if (a > 0 && b > 0 && h > 0)
 	{
 		std::cout << "Pole trapezu o:\n";
 		std::cout << "a = " << a << "\n";

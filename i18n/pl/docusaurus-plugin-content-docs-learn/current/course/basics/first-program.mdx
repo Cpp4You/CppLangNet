@@ -76,7 +76,7 @@ Gdy uruchamia aplikację, po kolei realizuje instrukcje z **bloku kodu** `main`-
 Funkcja główna `main` ma swój blok kodu i wszystko co znajdzie się pomiędzy tymi nawiasami zostanie wykonane po kolei.
 
 
-### Biblioteka `iostream`
+### Nagłówek `iostream`
 
 Na samym początku, znajduje się linijka:
 
@@ -84,9 +84,12 @@ Na samym początku, znajduje się linijka:
 #include <iostream>
 ```
 
-Pozwoli ona nam dalej korzystać z funkcjonalności **wejścia** (ang.: *input*) i **wyjścia** (ang.: *output*) (stąd `iostream` - od *input/output stream*).
+Pozwoli ona nam dalej korzystać z funkcjonalności **wejścia** (ang.: *input*) i **wyjścia** (ang.: *output*) (stąd `iostream` - od _**i**nput/**o**utput stream_).
 W praktyce oznacza to, że będziemy mogli wypisać coś w konsoli oraz pozwolić użytkownikowi wpisać coś do konsoli i to przechwycić.
-O samym `#include` powiemy sobie w przyszłości więcej. Na ten moment wystarczy.
+`iostream` jest **plikiem nagłówkowym** (ang.: *header file*). W przyszłości będziemy korzystać z wielu innych nagłówków.
+
+Instrukcje `#include <naglowek>` prawie zawsze dajemy na samym początku pliku z kodem.
+O samym `#include` powiemy sobie w przyszłości więcej - na teraz wystarczy.
 
 ### Wypisywanie do konsoli
 
@@ -166,12 +169,20 @@ Działanie programu po dodaniu znaków nowej linii:
 		centered
 	/>
 
-:::important Uwaga
-`\n` jest **pojedynczym znakiem**, mimo że żeby go uzyskać musimy napisać <u>w kodzie</u> dwa znaki.
-Jest tak ze względu na to, że wewnątrz tekstu w kodzie, nie możemy dać entera.
-Znak backslash (`\`) informuje, że **następujący** po nim znak, oznacza coś specjalnego
-(tzw. *escape sequence*, o tym kiedy indziej).
+:::important Znak nowej linii
+Zapis `\n` umieszczony w kodzie, wewnątrz tekstu jest tak naprawdę **pojedynczym znakiem** dla programu.
+Więcej o tym w przyszłości.
 :::
+
+<!-- --------------------------------- Poprzedni tekst, który nie jest używany póki co
+
+mimo, że w kodzie składa się tak naprawdę z dwóch znaków - `\` oraz `n`.
+Sekwencja `\n` jest zastępywana specjalnym znakiem nowej linii. Wewnątrz tekstu w kodzie, nie możemy dać entera,
+stąd ten zapis. Znak backslash (`\`) informuje, że **następujący** po nim znak, oznacza coś specjalnego
+(tzw. *escape sequence*, o tym kiedy indziej).
+
+------------------------------------------------ -->
+
 
 ### Przedrostek przestrzeni nazw
 
