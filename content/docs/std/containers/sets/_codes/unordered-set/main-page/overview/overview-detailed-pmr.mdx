@@ -2,8 +2,8 @@
 namespace pmr {
     template <class Key,
               class Hash = std::hash<Key>,
-              class Pred = std::equal_to<Key>>
-    using unordered_set = std::unordered_set<Key, Hash, Pred,
+              class Compare = std::equal_to<Key>>
+    using unordered_set = std::unordered_set<Key, Hash, Compare,
                                              std::pmr::polymorphic_allocator<Key>>;
 }
 ```

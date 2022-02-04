@@ -2,11 +2,12 @@
 sidebar_position:	2
 title:				std::unordered_set reference
 sidebar_label:		unordered_set
-tags:				[unordered_set, set, unordered, associative, container, key]
+tags:				[unordered_set, set, container, unordered, associative, container, key]
 hide_title:			true
 ---
 
 import ClassSummary				from "@site-comps/ClassSummary";
+import CustomCodeBlock				from "@site-comps/CustomCodeBlock";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 import SwitchView 		from "@site-comps/SwitchView"
 import Columns					from "@site-comps/Columns";
@@ -16,24 +17,24 @@ import Tabs						from "@theme/Tabs";
 import TabItem					from "@theme/TabItem";
 
 <!-- Top Examples -->
-import CodeSimplifiedRegular from "./_codes/unordered-set/main-page/overview-simplified-regular.mdx";
-import CodeDetailedReguler from "./_codes/unordered-set/main-page/overview-detailed-regular.mdx";
-import CodeDetailedPmr from "./_codes/unordered-set/main-page/overview-detailed-pmr.mdx";
+import OverviewSimplifiedRegular from "./_codes/unordered-set/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedRegular from "./_codes/unordered-set/main-page/overview/overview-detailed-regular.mdx";
+import OverviewDetailedPmr from "./_codes/unordered-set/main-page/overview/overview-detailed-pmr.mdx";
 
-import TopExampleCreateCpp17 from "./_codes/unordered-set/main-page/top-example-create-cpp17.mdx"
-import TopExampleCreateUntilCpp17 from "./_codes/unordered-set/main-page/top-example-create-until-cpp17.mdx"
-import TopExampleCreateFromRange from "./_codes/unordered-set/main-page/top-example-create-from-range.mdx"
+import TopExampleCreateCpp17 from "./_codes/unordered-set/main-page/examples/top/create-cpp17.mdx"
+import TopExampleCreateUntilCpp17 from "./_codes/unordered-set/main-page/examples/top/create-until-cpp17.mdx"
+import TopExampleCreateFromRange from "./_codes/unordered-set/main-page/examples/top/create-from-range.mdx"
 
-import TopExampleInsertOrdinary from "./_codes/unordered-set/main-page/top-example-insert-ordinary.mdx"
-import TopExampleInsertInitList from "./_codes/unordered-set/main-page/top-example-insert-many-at-once.mdx"
-import TopExampleInsertFromRange from "./_codes/unordered-set/main-page/top-example-insert-from-range.mdx"
+import TopExampleInsertOrdinary from "./_codes/unordered-set/main-page/examples/top/insert-ordinary.mdx"
+import TopExampleInsertInitList from "./_codes/unordered-set/main-page/examples/top/insert-many-at-once.mdx"
+import TopExampleInsertFromRange from "./_codes/unordered-set/main-page/examples/top/insert-from-range.mdx"
 
-import TopExampleSearchFind from "./_codes/unordered-set/main-page/top-example-search-find.mdx"
-import TopExampleSearchCount from "./_codes/unordered-set/main-page/top-example-search-count.mdx"
-import TopExampleSearchContains from "./_codes/unordered-set/main-page/top-example-search-contains.mdx"
+import TopExampleSearchFind from "./_codes/unordered-set/main-page/examples/top/search-find.mdx"
+import TopExampleSearchCount from "./_codes/unordered-set/main-page/examples/top/search-count.mdx"
+import TopExampleSearchContains from "./_codes/unordered-set/main-page/examples/top/search-contains.mdx"
 
 <!-- Advanced Examples -->
-import ExampleAdvancedStudents from "./_codes/unordered-set/main-page/example-advanced-students.mdx"
+import ExampleAdvancedStudents from "./_codes/unordered-set/main-page/examples/further/students-hash-comparators.mdx"
 
 <!-- Deduction Guides -->
 import DeductionGuides from "./_codes/unordered-set/main-page/deduction-guides.mdx"
@@ -45,18 +46,25 @@ import DeductionGuides from "./_codes/unordered-set/main-page/deduction-guides.m
 ## Overview
 
 <Tabs>
-<TabItem value="simplified" label="Simplified (since C++11)" default>
-	<CodeSimplifiedRegular/>
+<TabItem value="simplified" label="Simplified (since C++98)" default>
+
+	<OverviewSimplifiedRegular />
+
 </TabItem>
 <TabItem value="detailed" label="Detailed">
 	<Tabs>
-		<TabItem value="regular" label="Regular (since C++11)" default>
-			<CodeDetailedReguler/>
+		<TabItem value="regular" label="Regular (since C++98)" default>
+
+			<OverviewDetailedRegular />
+
 		</TabItem>
+
 		<TabItem value="pmr" label="Polymorphic (since C++17)">
-			<CodeDetailedPmr/>
+
+			<OverviewDetailedPmr />
+
 		</TabItem>
-	</Tabs> 
+	</Tabs>
 </TabItem>
 </Tabs>
 
@@ -65,22 +73,21 @@ The `std::unordered_set` is an associative container for storing unique objects.
 
 The examples in this section are very simple ones. Navigate to [examples section at the bottom](#more-examples) for more.
 
-
 <Tabs>
 <TabItem value="create" label="Create" default>
 <div style={{ padding: "10px 20px", border: "1px solid gray" }}>
 	<SwitchView content={
 			{
-				"cpp17": <TopExampleCreateCpp17/>,
-				"until-cpp17": <TopExampleCreateUntilCpp17/>,
-				"From range": <TopExampleCreateFromRange/>
+				"cpp17": <TopExampleCreateCpp17 />,
+				"until-cpp17": <TopExampleCreateUntilCpp17 />,
+				"From range": <TopExampleCreateFromRange />
 			}
 	}/>
 
 :::caution Order of elements
 It's important to notice, that although there's an arbitrary order chosen in the examples' comments,
 the elements inside remain unordered (as the name of the container suggests), which means we aren't guaranteed
-to have any particular order while iterating over the unordered set. 
+to have any particular order while iterating over the unordered set.
 :::
 
 </div>
@@ -90,9 +97,9 @@ to have any particular order while iterating over the unordered set.
 <div style={{ padding: "10px 20px", border: "1px solid gray" }}>
 	<SwitchView content={
 		{
-			"Ordinary": <TopExampleInsertOrdinary/>,
-			"Many at once": <TopExampleInsertInitList/>,
-			"From range": <TopExampleInsertFromRange/>
+			"Ordinary": <TopExampleInsertOrdinary />,
+			"Many at once": <TopExampleInsertInitList />,
+			"From range": <TopExampleInsertFromRange />
 		}
 	}/>
 </div>
@@ -102,28 +109,32 @@ to have any particular order while iterating over the unordered set.
 <div style={{ padding: "10px 20px", border: "1px solid gray" }}>
 	<SwitchView content={
 		{
-			"Contains (since C++20)": <TopExampleSearchContains/>,
-			"Count": <TopExampleSearchCount/>,
-			"Find": <TopExampleSearchFind/>
+			"Contains (since C++20)": <TopExampleSearchContains />,
+			"Count": <TopExampleSearchCount />,
+			"Find": <TopExampleSearchFind />
 		}
 	}/>
 </div>
 </TabItem>
 </Tabs>
 
-
 ### Technical details
 
 <details>
 <summary>Technical definition of an unordered_set</summary>
 <div>
-Unordered set is an associative container that contains a set of unique objects of type Key. Search, insertion, and removal have average constant-time complexity.
+`std::unordered_set` is an associative container that contains a set of unique objects of type `Key`.
 
-Internally, the elements are not sorted in any particular order, but organized into buckets. Which bucket an element is placed into depends entirely on the hash of its value. This allows fast access to individual elements, since once a hash is computed, it refers to the exact bucket the element is placed into.
+Search, insertion, and removal have average constant-time complexity.
+
+Internally, the elements are not sorted in any particular order, but organized into buckets.
+Which bucket an element is placed into depends entirely on the hash of its value.
+This allows fast access to individual elements, since once a hash is computed, it refers to the exact bucket the element is placed into.
 
 Container elements may not be modified (even by non const iterators) since modification could change an element's hash and corrupt the container.
 
-std::unordered_set meets the requirements of Container, AllocatorAwareContainer, UnorderedAssociativeContainer.
+`std::unordered_set` meets the requirements of [`Container`](/docs/named_req/Container), [`AllocatorAwareContainer`](/docs/named_req/AllocatorAwareContainer),
+[`UnorderedAssociativeContainer`](/docs/named_req/UnorderedAssociativeContainer).
 </div>
 </details>
 
@@ -132,48 +143,80 @@ std::unordered_set meets the requirements of Container, AllocatorAwareContainer,
 ## Template parameters
 
 <SymbolTable noTraits>
-	<Symbol name="Key"		desc="The type of the stored values"/>
-	<Symbol name="Hash" 		desc={<>A unary callable, that takes an argument of type <code>Key</code>, and returns a unique value</>}/>
-	<Symbol name="KeyEqual" 		desc={<>A binary, callable predicate that takes two arguments of type <code>Key</code> and returns a bool</>}/>
-	<Symbol name="Allocator" 		desc="A class that manages the allocation and deallocation of memory"/>
+	<Symbol name="Key"		desc="The type of the stored keys." />
+	<Symbol name="Hash">
+		A function object that perfoms hashing on two objects of type <code>Key</code>.
+	</Symbol>
+	<Symbol name="Compare">
+		A comparator type satisfying <a href="/docs/named_req/Compare">Compare</a>.
+	</Symbol>
+	<Symbol name="Allocator">
+		An allocator type responsible for allocating and deallocating memory.
+		Must satisfy <a href="/docs/named_req/Allocator">Allocator</a>.
+	</Symbol>
 </SymbolTable>
 
 ## Type names
 
 <SymbolTable>
-	<Symbol pub name="key_type"				desc={<><code>Key</code></>}/>
-	<Symbol pub name="value_type"			desc={<><code>Key</code></>}/>
-	<Symbol pub name="size_type" 			desc={<>Unsigned integer type (usually <code>std::size_t</code>)</>}/>
-	<Symbol pub name="difference_type"	desc={<>Signed integer type (usually <code>std::ptrdiff_t</code>)</>}/>
-	<Symbol pub name="hasher"				desc={<><code>Hash</code></>}/>
-	<Symbol pub name="key_equal" 				desc={<><code>KeyEqual</code></>}/>
-	<Symbol pub name="allocator_type"			desc={<><code>Allocator</code></>}/>
-	<Symbol pub name="reference"				desc={<code>value_type&</code>}/>
-	<Symbol pub name="const_reference"			desc={<code>const value_type&</code>}/>
-	<Symbol pub name="pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::pointer</code>}/>
-	<Symbol pub name="const_pointer"			desc={<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code>}/>
-	<Symbol pub name="iterator"			desc={<>Constant <a href="#"><code>LegacyForwardIterator</code></a> to <code>value_type</code></>}/>
-	<Symbol pub name="const_iterator"			desc={<> <a href="#"><code>LegacyForwardIterator</code></a> to const value_type </>}/>
-	<Symbol pub name="local_iterator"			desc={<>An iterator type whose category, value, difference, pointer and
-reference types are the same as <code>iterator</code>. This iterator
-can be used to iterate through a single bucket <b>but not across buckets</b></>}/>
-	<Symbol pub name="const_local_iterator"			desc={<>An iterator type whose category, value, difference, pointer and
-reference types are the same as <code>const_iterator</code>. This iterator
-can be used to iterate through a single bucket <b>but not across buckets</b></>}/>
-	<Symbol pub name={<>node_type <small>(since C++17)</small></>}			desc="A specialization of node handle representing a container node"/>
-<Symbol pub name={<> insert_return_type <small>(since C++17)</small> </>}>
-Type describing the result of inserting a `node_type`, a specialization of
+	<Symbol pub name="key_type"				desc={<code>Key</code>} />
+	<Symbol pub name="value_type" 		desc={<code>Key</code>} />
+	<Symbol pub name="size_type">
+		Unsigned integer type (usually <code><a href="#">std::size_t</a></code>).
+	</Symbol>
+	<Symbol pub name="difference_type">
+		Signed integer type (usually <code><a href="#">std::ptrdiff_t</a></code>).
+	</Symbol>
+	<Symbol pub name="hasher"				desc={<code>Hash</code>} />
+	<Symbol pub name="key_equal"				desc={<code>KeyEqual</code>} />
+	<Symbol pub name="allocator_type" 				desc={<code>Allocator</code>} />
+	<Symbol pub name="reference"			desc={<code>value_type&</code>} />
+	<Symbol pub name="const_reference"				desc={<code>const value_type&</code>} />
+	<Symbol pub name="pointer">
+		<code><a href="#">std::allocator_traits</a>&lt;Allocator&gt;::pointer</code>
+	</Symbol>
+	<Symbol pub name="const_pointer">
+		<code><a href="#">std::allocator_traits</a>&lt;Allocator&gt;::const_pointer</code>
+	</Symbol>
+	<Symbol pub name={<>iterator <a href="#unordered-sets-iterators"><sup>❗</sup></a></>}>
+			Constant <a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a> to <code>value_type</code>
+	</Symbol>
+	<Symbol pub name={<>const_iterator <a href="#unordered-sets-iterators"><sup>❗</sup></a></>}>
+		<a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a> to <code>const value_type</code>
+	</Symbol>
+	<Symbol pub name="local_iterator">
+		Like <code>iterator</code> but only to iterate across a single bucket.
+	</Symbol>
+	<Symbol pub name="const_local_iterator">
+		Like <code>const_iterator</code> but only to iterate across a single bucket.
+	</Symbol>
+	<Symbol pub name={<>node_type <small>(since C++17)</small></>}>
+		A specialization of <a href="">node handle</a> representing a container node.
+	</Symbol>
+<Symbol pub name={<>insert_return_type <small>(since C++17)</small> </>}>
+Type describing the result of inserting a <code>node_type</code>, a specialization of
 
 ```cpp
-template <class Iter, class NodeType> struct /*unspecified*/ {
+template < class Iter, class NodeType >
+struct /* unspecified */ {
     Iter     position;
     bool     inserted;
     NodeType node;
 };
 ```
-instantiated with template arguments `iterator` and `node_type`
+instantiated with template arguments `iterator` and `node_type`.
 </Symbol>
 </SymbolTable>
+
+### Unordered set's iterators
+
+`iterator` is said to be **constant** because it is impossible to modify the values it's pointing to.
+This is because modyfing a value the iterator is pointing to could possibly invalidate the internal structure of the unordered set,
+which could then lead to all kinds of incorrect and unexpected behaviours.
+
+The member <a href="#type-names">type aliases</a> <code>iterator</code> and <code>const_iterator</code> *may* be the same.
+This is left entirely to the implementation.
+This means that any overloaded functions/specializations differing only in the iterator types may be incorrect and may lead to <a href="#"><b>ODR violation</b></a>.
 
 ## Iterator invalidation
 
@@ -187,30 +230,29 @@ instantiated with template arguments `iterator` and `node_type`
 
 ## Member functions
 
-<SymbolTable>	
+<SymbolTable>
 	<Symbol pub autoLink linkName="constructor" name="(constructor)">
-		Constructs the <code>unordered_set</code>
+		Constructs a new unordered set.
 	</Symbol>
 	<Symbol pub autoLink linkName="destructor" name="(destructor)">
-		Destructs the <code>unordered_set</code>
+		Destructs an unordered set.
 	</Symbol>
 	<Symbol pub autoLink linkName="operator=" name="operator=">
-		Assigns values to the container
+		Assigns one unordered set to another.
 	</Symbol>
 	<Symbol pub autoLink linkName="get_allocator" name="get_allocator">
-		Returns the associated allocator
+		Returns an associated allocator.
 	</Symbol>
-
 </SymbolTable>
 
 ### Iterators
 
-<SymbolTable>	
+<SymbolTable>
 	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
-		Returns an iterator to the beginning
+		Returns an iterator to the beginning.
 	</Symbol>
 	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
-		Returns an iterator to the end
+		Returns an iterator to the end.
 	</Symbol>
 </SymbolTable>
 
@@ -218,13 +260,13 @@ instantiated with template arguments `iterator` and `node_type`
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="empty" name="empty">
-		Checks whether the container is empty
+		Returns <code>true</code> if a set is empty, otherwise <code>false</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="size" name="size">
-		Returns the number of elements
+		Returns the number of elements in an unordered set.
 	</Symbol>
 	<Symbol pub autoLink linkName="max_size" name="max_size">
-		Returns the maximum possible number of elements
+		Returns the maximum possible number of elements.
 	</Symbol>
 </SymbolTable>
 
@@ -232,30 +274,29 @@ instantiated with template arguments `iterator` and `node_type`
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="clear" name="clear">
-		Clears the contents
+		Clears the contents of an unordered set.
 	</Symbol>
 	<Symbol pub autoLink linkName="insert" name="insert">
-		Inserts elements or nodes (since c++17)
+		Inserts elements (or nodes (extracted with <code>.extract()</code>) <small>(since C++17)</small>).
 	</Symbol>
 	<Symbol pub autoLink linkName="emplace" name="emplace">
-		Constructs element in-place
+		Constructs a new element in place.
 	</Symbol>
 	<Symbol pub autoLink linkName="emplace_hint" name="emplace_hint">
-		Constructs elements in-place using a hint (iterator)
+		Constructs elements in-place using a hint (iterator).
 	</Symbol>
 	<Symbol pub autoLink linkName="erase" name="erase">
-		Erases elements
+		Erases elements.
 	</Symbol>
 	<Symbol pub autoLink linkName="swap" name="swap">
-		Swaps the contents
+		Swaps two unordered sets.
 	</Symbol>
-	<Symbol pub autoLink linkName="extract" name={<>extract <small>(since c++17)</small></>}>
-		Extract nodes from the container
+	<Symbol pub autoLink linkName="extract" name={<>extract <small>(since C++17)</small></>}>
+		Extracts nodes from an unordered set (can be later inserted somewhere else).
 	</Symbol>
-	<Symbol pub autoLink linkName="merge" name={<>merge <small>(since c++17)</small></>}>
-		Splices nodes from another container
+	<Symbol pub autoLink linkName="merge" name={<>merge <small>(since C++17)</small></>}>
+		Merges two unordered sets together.
 	</Symbol>
-
 </SymbolTable>
 
 
@@ -263,40 +304,39 @@ instantiated with template arguments `iterator` and `node_type`
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="count" name="count">
-		Returns the number of elements matching specific key
+		Returns the number of elements matching a specific key.
 	</Symbol>
 	<Symbol pub autoLink linkName="find" name="find">
-		Finds element with specific key
+		Searches for an element and returns an iterator to it, or an end iterator if not found.
 	</Symbol>
 	<Symbol pub autoLink linkName="contains" name={<>contains <small>(since C++20)</small></>}>
-		Checks if the container contains element with specific key
+		Returns <code>true</code> if an element is inside a set, otherwise <code>false</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="equal_range" name="equal_range">
-		Returns range of elements matching a specific key
+		Returns a range of elements matching a specific key.
 	</Symbol>
-
 </SymbolTable>
 
 ### Bucket interface
 
 <SymbolTable>
-	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
-		Returns an iterator to the beginning of the specified bucket
+	<Symbol pub autoLink linkName="begin" name={<>begin <small>(size_type)</small><br/>cbegin <small>(size_type)</small></>}>
+		Returns an iterator to the beginning of a specified bucket.
 	</Symbol>
-	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
-		Returns an iterator to the end of the specified bucket
+	<Symbol pub autoLink linkName="end" name={<>end <small>(size_type)</small><br/>cend <small>(size_type)</small></>}>
+		Returns an iterator to the end of a specified bucket.
 	</Symbol>
 	<Symbol pub autoLink linkName="bucket_count" name="bucket_count">
-		Returns the number of buckets
+		Returns a number of buckets.
 	</Symbol>
 	<Symbol pub autoLink linkName="max_bucket_count" name="max_bucket_count">
-		Returns the maximum number of buckets
+		Returns a maximum number of buckets.
 	</Symbol>
 	<Symbol pub autoLink linkName="bucket_size" name="bucket_size">
-		Returns the number of elements in specific bucket
+		Returns a number of elements in a specific bucket.
 	</Symbol>
 	<Symbol pub autoLink linkName="bucket" name="bucket">
-		Returns the bucket for specific key
+		Returns a bucket for a specific key.
 	</Symbol>
 </SymbolTable>
 
@@ -304,16 +344,16 @@ instantiated with template arguments `iterator` and `node_type`
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="load_factor" name="load_factor">
-		Returns average number of elements per bucket
+		Returns an average number of elements per bucket.
 	</Symbol>
 	<Symbol pub autoLink linkName="max_load_factor" name="max_load_factor">
-		Manages maximum average number of elements per bucket
+		Manages a maximum average number of elements per bucket.
 	</Symbol>
 	<Symbol pub autoLink linkName="rehash" name="rehash">
-		Reserves at least the specified number of buckets and regenerates the hash table
+		Reserves at least the specified number of buckets and regenerates the hash table.
 	</Symbol>
 	<Symbol pub autoLink linkName="reserve" name="reserve">
-		Reserves space for at least the specified number of elements and regenerates the hash table
+		Reserves space for at least a specified number of elements and regenerates the hash table.
 	</Symbol>
 </SymbolTable>
 
@@ -321,10 +361,10 @@ instantiated with template arguments `iterator` and `node_type`
 
 <SymbolTable>
 	<Symbol pub autoLink linkName="hash_function" name="hash_function">
-		Returns function to hash the keys
+		Returns an internal function object that hashes keys.
 	</Symbol>
 	<Symbol pub autoLink linkName="key_eq" name="key_eq">
-		Returns the function used to compare keys for equality
+		Returns an internal function object that compares keys.
 	</Symbol>
 </SymbolTable>
 
@@ -333,16 +373,18 @@ instantiated with template arguments `iterator` and `node_type`
 <SymbolTable noTraits>
 	<Symbol name={<>
 				operator==<br/>
-				operator!= <small>(removed in C++20)</small><br/>
+				operator!= <small>(removed in C++20)</small>
 			</>}
-			desc="Compares the values in the unordered_map">
+			desc="Compares values in an unordered_map.">
 	</Symbol>
-	<Symbol pub autoLink linkName="std::swap" name={<>std::swap<small>(std::unordered_set)</small></>}>
-		Specializes the <code>std::swap</code> algorithm
-	</Symbol>
-	<Symbol pub autoLink linkName="erase_if" name={<>std::erase_if<small>(std::unordered_set) (C++20)</small></>}>
-		Erases all elements satisfying specific criteria
-	</Symbol>
+	<Symbol name={<>std::swap <small>(std::unordered_set)</small></>}
+			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
+		/>
+	<Symbol name={<>
+				std::erase_if <small>(std::unordered_set) (since C++20)</small>
+			</>}
+			desc={<>Overload for a <a href="#">std::erase_if</a> algorithm.</>}
+		/>
 </SymbolTable>
 </ClassSummary>
 
@@ -350,7 +392,7 @@ instantiated with template arguments `iterator` and `node_type`
 <details>
 <summary>Click to expand</summary>
 <div>
-	<DeductionGuides/>
+	<DeductionGuides />
 </div>
 </details>
 
@@ -359,7 +401,9 @@ instantiated with template arguments `iterator` and `node_type`
 ### Creating a custom hash and comparator.
 
 <div>
-	<ExampleAdvancedStudents/>
+<CustomCodeBlock withTitle>
+	<ExampleAdvancedStudents />
+</CustomCodeBlock >
 </div>
 <div>
 
