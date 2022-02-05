@@ -1,0 +1,218 @@
+---
+sidebar_position:	2
+title:				std::priority_queue reference
+sidebar_label:		priority_queue
+hide_title:			true
+description:		Summary of a std::priority_queue (usage, methods, etc.) - C++ Language
+tags:				[priority_queue, queue, priority, order, comparator]
+---
+
+import ClassSummary				from "@site-comps/ClassSummary";
+import CustomCodeBlock				from "@site-comps/CustomCodeBlock";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns					from "@site-comps/Columns";
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem						from "@theme/TabItem";
+import Image 						from "@site-comps/Image"
+
+<!------------------ Codes ----------------->
+
+<!-- Further Examples -->
+import FurtherExamplePushPopPrint from "./priority-queue/_codes/main-page/examples/further/push-pop-print.mdx"
+
+<!-- Overview -->
+import OverviewSimplifiedRegular from "./priority-queue/_codes/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedReguler from "./priority-queue/_codes/main-page/overview/overview-detailed-regular.mdx";
+
+<!-- Deduction Guides -->
+import DeductionGuides from "./priority-queue/_codes/main-page/deduction-guides.mdx"
+
+<NotFinished />
+
+# Priority queue class reference
+
+## Overview
+
+<Tabs>
+<TabItem value="simplified" label="Simplified" default>
+
+	<OverviewSimplifiedRegular />
+
+</TabItem>
+<TabItem value="detailed" label="Detailed">
+
+	<OverviewDetailedReguler />
+
+</TabItem>
+</Tabs>
+
+Priority queue is a container **adapter**.
+
+It adapts a container by providing a new interface to it.
+
+The new interface resembles a queue with a specified order that's not based on the order of insertion,
+but rather based on some specified relation between the elements.
+
+<details>
+<summary>Technical definition of a priority queue</summary>
+<div>
+
+A priority queue is a container adaptor that provides constant time lookup of the largest (by default) element, at the expense of logarithmic insertion and extraction.
+
+A user-provided `Compare` can be supplied to change the ordering, e.g. using  would cause the smallest element to appear as the [`top()`](#).
+
+Working with a `priority_queue` is similar to managing a heap in some random access container, with the benefit of not being able to accidentally invalidate the heap.
+
+</div>
+</details>
+
+<ClassSummary name="priority_queue" namespaces="std" folder="prority-queue" headerName="queue">
+
+## Template parameters
+
+<SymbolTable noTraits>
+	<Symbol
+			name="T"
+			desc={<>
+				The type of the stored elements.
+				The behaviour is undefined if <code>T</code> is not <code>Container::value_type</code>.
+				</>}
+		/>
+	<Symbol
+			name="Container"
+			desc={<>
+				The type of the underlying container used to store the elements.
+				By default <a href="/docs/containers/arays/vector"><code>std::vector&lt;T&gt;</code></a>.
+				The container must satisfy <a href="/docs/named_req/SequenceContainer">SequenceContainer</a> and
+				it's iterators must satisfy <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a>.
+				</>}
+		/>
+	<Symbol
+			name="Compare"
+			desc={<>
+				A comparator type satisfying <a href="/docs/named_req/Compare">Compare</a>.
+				</>}
+		/>
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="container_type"				desc={<code>Container</code>} />
+	<Symbol pub name="value_compare" 				desc={<code>Compare</code>} />
+	<Symbol pub name="value_type"			desc={<code>Container::value_type</code>} />
+	<Symbol pub name="size_type"				desc={<code>Container::size_type</code>} />
+	<Symbol pub name="reference"			desc={<code>Container::reference</code>} />
+	<Symbol pub name="const_reference"			desc={<code>Container::const_reference</code>} />
+</SymbolTable>
+
+## Member functions
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="constructor" name="(constructor)">
+		Constructs a <code>priority_queue</code>.
+	</Symbol>
+	<Symbol pub autoLink linkName="destructor" name="(destructor)">
+		Destructs a <code>priority_queue</code>.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_assign" name="operator="
+			desc="Assigns one priority queue to another."
+		/>
+</SymbolTable>
+
+### Element access
+
+<SymbolTable>
+	<Symbol pub autoLink name="top" desc="Accesses the element at the top." />
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>
+	<Symbol pub autoLink name="empty"
+			desc={<>Returns <code>true</code> if the queue is empty, otherwise <code>false</code>.</>}
+		/>
+	<Symbol pub autoLink name="size" desc="Returns the number of elements in the queue." />
+</SymbolTable>
+
+### Modifiers
+
+<SymbolTable>
+	<Symbol pub autoLink name="push"
+			desc={<>Inserts an element and sorts the underlying container using <code>Compare</code>.</>}
+		/>
+	<Symbol pub autoLink name="emplace"
+			desc="Constructs an element in-place and sorts the underlying container."
+		/>
+	<Symbol pub autoLink name="pop"
+			desc="Removes the top element."
+		/>
+	<Symbol pub autoLink name="swap"
+			desc="Swaps two queues."
+		/>
+</SymbolTable>
+
+### Member objects
+
+<SymbolTable>
+	<Symbol prot name={<><code>Container</code> C</>}
+			desc={<>The underlying container. By default <a href="/docs/containers/arrays/vector"><code>std::vector&lt;T&gt;</code></a>.</>}
+		/>
+	<Symbol prot name={<><code>Compare</code> comp</>} desc="The comparator object." />
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+			<a href="#">std::swap</a> <small>(std::priority_queue)</small>
+		</>}
+			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
+		/>
+</SymbolTable>
+
+## Helper classes
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+			<a href="#">std::uses_allocator</a> <small>(std::priority_queue)</small>
+		</>}
+			desc={<>Specializes the <code>std::uses_allocator</code> type trait.</>}
+		/>
+</SymbolTable>
+
+</ClassSummary>
+
+
+## Deduction guides (since C++17)
+<details>
+<summary>Click to expand</summary>
+<div>
+	<DeductionGuides/>
+</div>
+</details>
+
+## Examples
+
+### Basic manipulation
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExamplePushPopPrint />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+3
+2
+1
+```
+
+</div>
+</Columns>

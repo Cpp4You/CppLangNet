@@ -1,0 +1,32 @@
+```cpp title="Using array as a temporary buffer"
+#include <fstream>
+#include <array>
+#include <string>
+
+std::string readFile(std::istream& file)
+{
+	constexpr size_t BUFFER_SIZE	= 16 * 1024;		// 16 KB
+	constexpr size_t RESERVE_SIZE	= 1 * 1024 * 1024;	// 1 MB
+	std::string result;
+	result.reserve(RESERVE_SIZE); // 1 MB
+
+	std::array<char, BUFFER_SIZE> buf;
+
+	while(file.read(buf.data(), buf.size()))
+		result.append(buf.data(), buf.data() + file.gcount());
+
+	result.append(buf.data(), buf.data() + file.gcount());
+	return result;
+}
+
+// Example usage:
+int main()
+{
+	std::ifstream file("hello.txt");
+	if (file.is_open())
+	{
+		auto fileContents = readFile(file);
+		// ...
+	}
+}
+```

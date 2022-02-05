@@ -1,0 +1,25 @@
+```cpp title="Find minimal value"
+#include <iostream>
+#include <array>
+#include <algorithm>
+
+namespace rg = std::ranges;
+
+int main()
+{
+	auto numbers = std::to_array({ 12, 3, 18, 9}); // C++20
+	
+	// Find minimal element
+	auto minIt = rg::min_element(numbers); // C++20
+
+	// obtain value:
+	auto value = *minIt;
+	// find position:
+	auto index = std::distance(numbers.begin(), minIt);
+
+	
+	std::cout	<< "Min: "			<< value
+				<< ", at index: "	<< index
+				<< std::endl;
+}
+```

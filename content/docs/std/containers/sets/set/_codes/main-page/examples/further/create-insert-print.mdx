@@ -1,0 +1,17 @@
+```cpp
+#include <iostream>
+#include <set>
+
+int main() {
+  std::set<int> unique_item_id = {3, 3, 1};
+
+  unique_item_id.insert(12);
+  unique_item_id.insert(12);
+
+  std::cout << "Unique items id's:\n";
+  for (const auto elem : unique_item_id)
+    std::cout << elem << '\n';
+
+  return 0;
+}
+```

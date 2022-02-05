@@ -1,0 +1,13 @@
+```cpp title='Convert string to float'
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string numberInString = "3.141";
+
+	// Note: stof can throw exception if failed!
+	float number = std::stof(numberInString);
+	std::cout << "Number: " << number;
+}
+```

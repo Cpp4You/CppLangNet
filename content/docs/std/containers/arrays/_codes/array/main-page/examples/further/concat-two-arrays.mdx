@@ -1,0 +1,29 @@
+```cpp title="Concat two arrays"
+#include <iostream>
+#include <array>
+
+template <typename T, size_t N1, size_t N2>
+std::array<T, N1 + N2> concat(
+		std::array<T, N1> const& lhs,
+		std::array<T, N2> const& rhs
+	)
+{
+	std::array<T, N1 + N2> result;
+
+	rg::copy(lhs, result.begin());
+	rg::copy(rhs, result.begin() + rhs.size());
+
+	return result;
+}
+
+int main()
+{
+	auto left	= std::to_array({1, 2, 3});
+	auto right	= std::to_array({4, 5, 6});
+	
+	auto both	= concat(left, right);
+
+	for (int elem : both)
+		std::cout << elem << ", ";
+}
+```

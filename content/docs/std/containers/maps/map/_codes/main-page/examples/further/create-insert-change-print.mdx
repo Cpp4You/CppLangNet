@@ -1,0 +1,18 @@
+```cpp title='Creating map, inserting pair, changing values and printing it out'
+#include <iostream>
+#include <string>
+#include <map>
+
+int main(){
+  std::map<std::string, int> player_stats { {"C1", -10}, {"B2", 25} };
+
+  player_stats.insert(std::make_pair("A3", 200));
+  player_stats.emplace("D4", 500);
+  player_stats["A3"] = 90;
+
+  for (auto& [key, value] : player_stats)
+    std::cout << key << " " << value << std::endl;
+
+  return 0;
+}
+```

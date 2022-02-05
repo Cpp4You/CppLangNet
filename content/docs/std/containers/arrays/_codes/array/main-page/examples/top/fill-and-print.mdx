@@ -1,0 +1,19 @@
+```cpp
+#include <iostream>
+#include <array>
+
+int main()
+{
+	std::array<int, 4> playerScores{}; // initialize with zeros
+
+	for (int score : playerScores)
+		std::cout << score << ", ";
+
+	playerScores.fill(123);
+	playerScores.back() = 30;
+
+	std::cout << '\n';
+	for (int score : playerScores)
+		std::cout << score << ", ";
+}
+```

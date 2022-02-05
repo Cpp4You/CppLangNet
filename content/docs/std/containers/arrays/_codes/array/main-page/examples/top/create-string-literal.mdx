@@ -1,0 +1,10 @@
+Note: this is only recommended if you don't have C++20, otherwise use [`std::to_array`](#).
+
+```cpp
+#include <array>
+
+int main() {
+	std::array<char, 6> str = { "Hello" };
+	// Content: 'H','e','l','l','o', <nul>
+}
+```
