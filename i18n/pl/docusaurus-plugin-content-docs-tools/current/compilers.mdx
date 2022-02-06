@@ -59,6 +59,21 @@ export const MoreInfoNotice = ({more}) => (
 		<MoreInfoNotice more="../standalone/compilers/gcc-summary"/>
 	</ToolCard.Details>
 </ToolCard>
+<ToolCard toolId="clang" setupLink="../standalone/compilers/setup-clang-windows">
+	Dobry, wieloplatformowy kompilator.
+	<ToolCard.Details>
+		<h3>Zalety</h3>
+		<ul>
+			<li>Wieloplatformowy 🤔</li>
+			<li>Prosta instalacja</li>
+		</ul>
+		<h3>Wady</h3>
+		<ul>
+			<li>Duży rozmiar instalacji</li>
+		</ul>
+		<MoreInfoNotice more="../standalone/compilers/clang-summary"/>
+	</ToolCard.Details>
+</ToolCard>
 
 ### Linux
 
@@ -83,7 +98,6 @@ export const MoreInfoNotice = ({more}) => (
 		</ul>
 		<h3>Wady</h3>
 		<ul>
-			<li>Trudny do zainstalowania na Windowsie</li>
 			<li>Duży rozmiar instalacji</li>
 		</ul>
 		<MoreInfoNotice more="../standalone/compilers/clang-summary"/>
