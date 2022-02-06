@@ -1,0 +1,49 @@
+---
+sidebar_position:	4
+title:				Instalacja Clang (Windows)
+description:		Naucz się jak skonfigurować Clang (kompilator C++) na Windowsie w prosty sposób.
+tags:				[kompilator, narzędzie, clang, windows]
+hide_title:			true
+---
+
+import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+
+W tym artykule dowiesz się jak zainstalować Clang w systemie Windows w bardzo prosty sposób.
+
+# Instalacja i konfiguracja
+
+## 1. Sprawdź czy posiadasz WinGet na swoim komputerze
+Winget to menadżer pakietów dla systemu Windows stworzony przez firmę Microsoft. 
+To właśnie on pozwoli nam w prosty sposób pobrać kompilator Clang.
+
+Na początek musimy otworzyć wiersz polecenia. 
+Aby sprawdzić czy Winget jest zainstalowany na komputerze wystarczy wpisać komendę `winget`.
+
+Jeżeli nie otrzymasz komunikatu jak poniższy możesz przejść do kolejnego podpunktu:
+```
+'winget' is not recognized as an internal or external command,
+operable program or batch file.
+```
+
+## 2. Zainstaluj pakiet LLVM
+Aby to zrobić wystarczy, że wpiszemy następującą komendę: `winget install --id LLVM.LLVM`.
+Musimy teraz poczekać aż pakiet się zainstaluje. Po instalacji została nam do zrobienia ostatnia rzecz.
+
+3. Dodaj ścieżkę do zmiennej systemowej `PATH`
+Jeśli poprawnie wykonałeś powyższe kroki, posiadasz już zainstalowany kompilator Clang na komputerze.
+
+Żeby móc z niego sprawnie korzystać, musisz jeszcze dodać ścieżkę do folderu `LLVM\bin` do systemowej zmiennej środowiskowej o nazwie `PATH`.
+
+Ścieżka powinna wyglądać tak:
+```
+C:\Program Files\LLVM\bin
+```
+
+Jeżeli kompilator zainstalowany jest w innym folderze musisz go znaleźć sam.
+
+:::tip Instrukcja
+Przeczytaj poniższy artykuł by dowiedzieć się, jak dodać ścieżkę do
+zmiennej systemowej `PATH`:
+
+▶ https://techniczny.net/jak-w-windows-dodac-sciezke-do-zmiennej-path/
+:::
