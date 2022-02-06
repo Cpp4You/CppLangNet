@@ -19,11 +19,14 @@ To właśnie on pozwoli nam w prosty sposób pobrać kompilator Clang.
 Na początek musimy otworzyć wiersz polecenia. 
 Aby sprawdzić czy Winget jest zainstalowany na komputerze wystarczy wpisać komendę `winget`.
 
-Jeżeli nie otrzymasz komunikatu jak poniższy możesz przejść do kolejnego podpunktu:
+Jeżeli nie otrzymasz poniższego komunikatu, możesz przejść do kolejnego podpunktu:
 ```
 'winget' is not recognized as an internal or external command,
 operable program or batch file.
 ```
+
+Jeśli jednak otrzymasz ten komunikat pobierz i uruchom plik `.msixbundle` z GitHuba Microsoftu:  
+▶ https://github.com/microsoft/winget-cli/releases
 
 ## 2. Zainstaluj pakiet LLVM
 Aby to zrobić wystarczy, że wpiszemy następującą komendę: `winget install --id LLVM.LLVM`.
