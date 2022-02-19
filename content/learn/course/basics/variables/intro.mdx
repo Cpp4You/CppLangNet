@@ -8,13 +8,19 @@ slug:				/course/basics/variables/
 hide_title:			true
 ---
 
+<!-- Components -->
+
 import Columns			from '@site-comps/Columns'
 import GoogleSlides		from '@site-comps/GoogleSlides'
 import CustomCodeBlock	from '@site-comps/CustomCodeBlock'
 import Image			from '@site-comps/Image'
-import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
+
+<!-- Presets -->
+
+import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
 
 # Introduction to variables
 
@@ -52,7 +58,7 @@ int main()
 If we now want to raise a different number to the third power, we will have
 to change three places in the code. It is tedious.
 
-## Introduction
+### Solution
 
 In order not to change so many things every time, let's assume for a moment
 that the number we are raising to the power of three is called `x`.
@@ -292,254 +298,64 @@ int name = 40;
 
 ## Opportunities
 
-Variables hold values ​​for the duration of their existence (more on that later).
-We can write values ​​to them or read them, display them on the screen, compare, etc.
+In this section, I will only show you a few ways to use variables,
+while their explaination is in the next lesson.
 
-### Simple interaction with the user
-
-Our programs will be a bit more interesting when we let the user type
-something into the console.  
-We will do by adding a new instruction using `cin` (<i>**c**haracter **in**put</i>):
+### Receiving input from the user
 
 ```cpp
 #include <iostream>
 
 int main()
 {
-	std::cout << "Please enter your age: ";
-	
-	int age;
-	// highlight-next-line
+	int age; // current age
+	std::cout << "Enter your age: ";
 	std::cin >> age;
-
-	std::cout << "You're " << age << " years old.\n";
+	std::cout << "In 10 years you will be: " << age + 10 << " years\n";
 }
 ```
 
-`cin` allows us to save the content of the so-called standard input (stdin)
-to the variable that is passed after the characters `>>`.
+## Summary
 
-We'll talk about standard input another time, for now remember that `cin`
-allows the program user to type something from the console,
-and then assigns that value to a variable.
+<ImproveSection />
 
-Please not that:
-- `cout` uses the `<<` operator
-- `cin` uses the `>>` operator
+To summarize, we:
+- know how to [create a variable](#creating-variables)
+- understand the difference between [types of variables](#variable-type)
 
-In addition to that, you can see that we didn't assign an initial value to `age`.
-It is not needed, because immediately after its creation, we use `std::cin`
-that assings the value that the user enters from the keyboard.
 
-:::tip Remember
-You can remember the direction of the stamps in this operator in an easy way
+## Additional info
 
-- `cout` - the text goes **to the console** - `<<` pointing to the `cout`
-- `cin` -  the text goes **to the variable** - `>>` pointing to the variable
-:::
+### Lack of initialization
 
-### Simple math operations
-
-Variables that contain numbers can be freely modified using typical mathematical signs (operators):
-
-- `a + b` - adds two numbers together
-- `a - b` - subtracts two numbers from each other
-- `a * b` - multiplies two numbers by itself
-- `a / b` - divides the number `a` by `b`
-
-:::note
-These are not all math operators, we'll talk about the rest later.
-:::
-
-Let's use these operators in practice:
-
-```cpp
-#include <iostream>
-
-int main()
-{
-	std::cout << "Please enter your age: ";
-
-	int age;
-	std::cin >> age;
-
-	// highlight-start
-	std::cout << "In 10 years, you'll be "					<< (age + 10)	<< " years old\n";
-	std::cout << "5 years ago, you were "					<< (age - 5)	<< " years old\n";
-	std::cout << "When you are twice as old, you'll be "	<< (age * 2)	<< " years old\n";
-	std::cout << "Someone twice as young is "				<< (age / 2)	<< " years old";
-	// highlight-end
+```cpp title="🔹 Example"
+int main() {
+	int x; // No initializer
 }
 ```
 
-:::tip Alignment
-Note that for the sake of better readability of the code, we've used the **`Tab`** key
-to align the code after `<<` operator.
-:::
+An uninitialized variable (without an assigned value at the beginning), inside a function block (e.g. inside `main`)
+will have an unpredictable value at the beginning, **won't be set to zero**.
+Leaving a variable without an initial value **can cause problems** later in the code execution.
+However, sometimes we can intentionally skip this, but about that some other time.
 
-A very important fact is that the use of the above-mentioned operators
-**does not change the content of the variable** `age`.
+### Type conversion
 
-By entering the age `20`, we will get the following result:
+A variable has a specific type that cannot be arbitrarily changed in different places in the code.
+The values that we try to write into it must match its type.
+For example, we can write to a variable of type `float` (a real number)
+an integer (`int`):
 
-<Columns columns={['8fr', '4fr']}>
-<div>
-
-```plaintext title="Console"
-In 10 years, you'll be 30 years old
-5 years ago, you were 15 years old
-When you are twice as old, you'll be 40 years old
-Someone twice as young is 10 years old
+```cpp title="🔹 Example"
+float y = 30; // OK
 ```
 
-</div>
+A variable of type `int` cannot store a fractional part, so when we try to write such a value to it
+it will be **converted**, but no rounding will occur, just a truncation of the fractional part.
 
-<div>
-
-```plaintext title="Description"
-(age: 20 => + 10 = 30)
-(age: 20 => - 5 = 30)
-(age: 20 => * 2 = 40)
-(age: 20 => / 2 = 10)
+```cpp title="⚠ Implicit conversion"
+int y = 30.5f; // OK, converted to 30
 ```
 
-</div>
-</Columns>
-
-As we can see, the value of the variable `age` remained the same at each stage (having value of `20`).  
-This is because in the notation:
-
-```cpp
-a + b
-```
-
-the `a + b` expression **results** in some value and the contents of the **variables are left untouched**.  
-If, for example, we want to increase a variable by `10`, we have to assign the result value of this expression to it:
-
-```cpp
-age = age + 10;
-```
-
-... or in short:
-
-```cpp
-age += 10;
-```
-
-See how it works on an example (I type `20` into the console again):
-
-<Columns columns={['8fr', '4fr']}>
-<div>
-
-<CustomCodeBlock lineNumbers>
-
-```cpp title="🔹 main.cpp"
-#include <iostream>
-
-int main()
-{
-	std::cout << "Please enter your age: ";
-
-	int age;
-	std::cin >> age;
-
-	std::cout << "You're now " << age << " years old\n";
-	// highlight-start
-	age += 30;
-	std::cout << "In 30 years, you'll be " << age << " years old";
-	// highlight-end
-}
-```
-
-</CustomCodeBlock>
-
-</div>
-
-<div>
-
-```plaintext title="Result"
-You're now 20 years old
-In 30 years, you'll be 50 years old
-```
-
-</div>
-</Columns>
-
-### Program execution flow
-
-Variable `age`:
-
-- when the line `11` is executed, it has the value `20`.
-- in the line it `12` changes the value to `20 + 30` that is `50`
-- on the line `13` is already displayed with the value `50`
-
-### Modifying variables
-
-In addition to the operator presented above: `+=`, there are many other operators available
-that modify the content of variables.
-
-The easiest way to show them is an example:
-
-<Tabs>
-
-<TabItem value="presentation" label="Presentation" default>
-
-Below is a presentation of the program's operation, after entering the number `20`.
-
-<!-- Source link: https://docs.google.com/presentation/d/1PsrXxeMhAaZ8ehk-x6hS7rigpaqw4b_2uxfGTlQRxdI/edit?usp=sharing -->
-
-<GoogleSlides
-		src="https://docs.google.com/presentation/d/e/2PACX-1vS7Ya69_dj0B6FiwDhhInEq4znQd229dKAv4umb4FZfHlgvg1t8zU0ocZIl6uXT6AF42SnO4OpiYw0T/embed"
-		aspectRatio={12 / 9}
-		delay={800}
-		centered
-		fullWidth
-	/>
-
-</TabItem>
-
-<TabItem value="code" label="Code">
-<CustomCodeBlock lineNumbers maxLines={25} resizable>
-
-```cpp title="🔹 main.cpp"
-#include <iostream>
-
-int main()
-{
-	std::cout << "Enter some number: ";
-
-	int number;
-	std::cin >> number;
-
-	// Increase "number" by 5 and assign.
-	number += 5;
-	std::cout << "After increasing by 5: " << number << '\n';
-
-	// Decrease "number" by 10 and assign.
-	number -= 10;
-	std::cout << "Now, after decreasing by 10: " << number << '\n';
-
-	// Multiply by 3 and assign.
-	number *= 3;
-	std::cout << "Now, after multiplying by 3: " << number << '\n';
-
-	// Divide by 2 and assign.
-	number /= 2;
-	std::cout << "Now, after dividing by 2: " << number << '\n';
-
-	// Increase value by 1 (incrementation):
-	number++;
-	std::cout << "Now, after incrementation: " << number << '\n';
-
-	// Decrease value by 1 (decrementation):
-	number--;
-	std::cout << "Now, after decrementation: " << number << '\n';
-}
-```
-
-</CustomCodeBlock>
-</TabItem>
-
-</Tabs>
-
-You will learn more about the possibilities of variables in the next course lessons 😊
+The compiler analyzing the code *may* issue a warning that there is an **implicit** conversion.
+Implicit because we could use such a notation unintentionally and get the wrong value.

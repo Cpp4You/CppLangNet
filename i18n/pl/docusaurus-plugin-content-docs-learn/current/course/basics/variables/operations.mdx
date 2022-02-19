@@ -7,8 +7,10 @@ tags:				[operacja, zmienna, deklaracja, definicja, int, float, char]
 hide_title:			true
 ---
 
+<!-- Presets -->
 import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
 
+<!-- Components -->
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
 
@@ -20,17 +22,17 @@ import GoogleSlides		from '@site-comps/GoogleSlides';
 
 # Operacje na zmiennych
 
-W tej lekcji nauczymy się wykonywania różnych operacji z użyciem zmiennych, będziemy:
+W tej lekcji nauczysz się wykonywać różne operacje z użyciem zmiennych. Będziemy:
 - zapisywać do nich wartości,
-- modyfikować z użyciem wyrażeń matematycznych,
+- modyfikować je z użyciem wyrażeń matematycznych,
 - wyświetlać ich zawartość w konsoli.
 
-Dowiemy się też jak pozwolić na prostą interakcję z użytkownikiem programu.
+Dowiesz się też jak pozwolić użytkownikowi na prostą interakcję z programem.
 
 ## Interakcja z użytkownikiem
 
 Nasze programy będą nieco ciekawsze, gdy pozwolimy użytkownikowi wpisać coś do konsoli.
-Zrobimy to za pomocą instrukcji `cin` (ang: <i>**c**haracter **in**put</i>):
+Zrobimy to za pomocą instrukcji `cin` (ang: _**c**haracter **in**put_):
 
 ```cpp
 #include <iostream>
@@ -116,7 +118,7 @@ Bardzo istotnym faktem jest to, że użycie wyżej wymienionych operatorów,
 
 Wpisując wiek `20`, uzyskamy następujący wynik:
 
-<Columns columns={['8fr', '4fr']}>
+<Columns columns={['2fr', '1fr']}>
 <div>
 
 ```plaintext title="Konsola"
@@ -124,6 +126,7 @@ Za 10 lat, będziesz mieć: 30 lat
 5 lat temu, miałeś/aś: 15 lat
 Jak będziesz 2x starszy/a, będziesz mieć: 40 lat
 Ktoś dwa razy młodszy ma: 10 lat
+0 lat temu Twój wiek był podzielny przez 10
 ```
 
 </div>
@@ -135,6 +138,7 @@ Ktoś dwa razy młodszy ma: 10 lat
 (age: 20 => - 5 = 30)
 (age: 20 => * 2 = 40)
 (age: 20 => / 2 = 10)
+(age: 20 => % 10 = 0)
 ```
 
 </div>
@@ -146,7 +150,8 @@ Dzieje się tak dlatego, że w zapisie:
 ```cpp
 a + b
 ```
-to samo **wyrażenie** `a + b` ma pewną wartość, a zawartość zmiennych zostaje nietknięta.
+
+to samo **wyrażenie** `a + b` ma pewną wartość, a **zawartość zmiennych zostaje nietknięta**.
 
 Jeśli chcemy np. zwiększyć zmienną o `10`, to musimy **przypisać** do niej
 **wartość** tego wyrażenia:
@@ -203,9 +208,10 @@ Za 30 lat, będziesz mieć: 50 lat
 ### Przebieg programu
 
 Zmienna `age`:
+
 - podczas wykonania linii `11` ma wartość `20`.
 - w linii `12` zmienia wartość na `20 + 30` czyli `50`
-- w linii `13` jest już wyświetlana z wartością `50`
+- w linii `13` jest wyświetlana już z wartością `50`
 
 ### Modyfikowanie zmiennych
 
@@ -230,6 +236,7 @@ Poniżej prezentacja działania programu, po wpisaniu liczby `20`.
 	/>
 
 </TabItem>
+
 <TabItem value="code" label="Kod">
 <CustomCodeBlock lineNumbers maxLines={25} resizable>
 

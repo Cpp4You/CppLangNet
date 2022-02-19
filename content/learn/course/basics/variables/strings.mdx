@@ -1,14 +1,254 @@
 ---
 sidebar_position:	3
-sidebar_label:		"3. Strings 🚧"
+sidebar_label:		"3. Strings"
 title:				"Strings"
 description:		"Lesson: basics of string/text type in C++"
 tags:				[string, text, type, variable, declaration, definition, initialization]
 hide_title:			true
 ---
 
+<!-- Presets -->
 import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<!-- Components -->
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
 
 <NotFinished/>
 
 # Strings
+
+In this lesson, you will learn how to use variables that store text.
+
+## Motivation
+
+Text type variables are quite useful. An example would be a program which
+reads the user's name, then greets him with the number of characters in his name.
+
+```cpp title="🔹 Program that loads a name"
+#include <iostream>
+// highlight-next-line
+#include <string>
+
+int main()
+{
+	// highlight-next-line
+	std::string name;
+	std::cout << "Enter your name: ";
+	std::cin >> name;
+	std::cout << "Welcome, " << name << "!\n";
+	std::cout << "Your name has " << name.size() << " characters.\n";
+}
+```
+
+## Type for storing text
+
+In previous lessons, we talked about different types of variables, mainly those
+that store numbers. We also mentioned the `char' type, which stores
+**a single character**.
+
+In programming, text is referred to as a *string of characters*.
+In C++, there is a type that allows us to store such strings, and it is [`std::string`](/docs/std/containers/strings/string).
+
+:::caution Plik nagłówkowy
+To be able to use `std::string` properly we **must** add the `string` header to the code,
+in the same way as we did earlier with `iostream`:
+
+```cpp
+#include <string>
+```
+:::
+
+The `std::string` type is used just like any other, that is:
+
+```cpp title="🔹 Using the string type"
+int number;
+std::string text;
+```
+
+### Initialization
+
+Assigning the initial value is the same as for variables of other types,
+but note that **text is specified between double quotes**, not single quotes:
+
+```cpp
+std::string welcome = "Hello, World!";
+std::cout << welcome;
+```
+
+If no value is given, the variable will be a string of length 0, i.e. it will be empty text.
+
+## String operations
+
+### User interaction
+
+We can display the strings using `std::cout` and load them using `std::cin`.
+
+```cpp title="🔹 Name reading and welcome message"
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string name;
+	std::cout << "Enter your name: ";
+	std::cin >> name;
+	std::cout << "Welcome, " << name << "!\n";
+}
+```
+
+Note that `std::cin` takes the text until it encounters the first whitespace character, such as a space.
+Because of this, if we enter our first and last name, only the first name will go into the `name` variable.
+To get the whole line of text we write:
+
+```cpp title="🔹 Reading a whole line of text"
+std::string name;
+std::getline(std::cin, name);
+```
+
+### Appending
+
+To append some text to the end of a string, we can use the `+=` operator:
+
+```cpp
+std::string name = "John";
+name += " Smith";
+
+std::cout << name;
+```
+
+If we play around with the order of operations, using the `=` and `+` operators we can
+add a piece of text to the beginning:
+
+```cpp
+std::string name = "John";
+// highlight-next-line
+name = "Smith " + name;
+
+std::cout << name;
+```
+
+### Reading the length
+
+To check how many characters are in a string we use the so-called *method* `size`.
+We'll talk more about functions and methods later in the course, for now remember that
+we use them like this:
+
+```cpp title="🔹 Program that loads a name"
+#include <iostream>
+// highlight-next-line
+#include <string>
+
+int main()
+{
+	// highlight-next-line
+	std::string name;
+	std::cout << "Enter your name: ";
+	std::cin >> name;
+	std::cout << "Welcome, " << name << "!\n";
+	std::cout << "Your name has " << name.size() << " characters.\n";
+}
+```
+
+that is, we specify the variable (`name`), then we write `size` after the period and then **empty** round brackets:
+
+```cpp title="🔹 Calling the size method"
+name.size()
+```
+
+### Retreiving a substring
+
+Analogous to the `size` method, we can retrieve a portion of the string using the `substr` method:
+
+```cpp title="🔹 Calling the substr method"
+std::string name = "John Smith";
+std::cout << name.substr(0, 4);
+```
+
+Zauważ, że w nawiasach okrągłych podajemy zakres znaków, które chcemy uzyskać:
+
+```cpp
+substr( [starting position], [count] )
+```
+
+that is, in the case above, we copy three characters starting at position `0`.
+
+:::caution Indexing
+In the strings, we count characters from `0`, not from `1`. The first character is located at position `0`.
+:::
+
+### Converting numbers to strings
+
+Because of the way the program stores numbers and text, these values
+are not convertible between them by default. To understand this, we need to be able to distinguish between
+these two things:
+
+```cpp
+53
+"53"
+```
+
+The first value is the number 53, and the second is a text consisting of the characters `'5'` and `'3'`.
+If we want to convert the number `53` to text form, we **cannot** do it this way:
+
+<Tabs>
+<TabItem value="bad1" label="❌ Incorrect" default>
+
+```cpp
+int number = 53;
+std::string numberInStr	= number; // Error
+```
+
+</TabItem>
+<TabItem value="bad2" label="❌ Incorrect">
+
+```cpp
+std::string numberInStr	= 53; // Error
+```
+
+</TabItem>
+</Tabs>
+
+
+Instead, we must use the so-called `std::to_string` function (we'll talk about functions later in the course).
+It is done in this way:
+
+```cpp title="✔ Converting a number to a text"
+int number = 53;
+std::string numberInStr	= std::to_string(number);
+```
+
+In the same way, if we have a number stored inside a string, we can
+convert it to an `int` with `std::stoi` (_**s**tring **to** **i**nt_) and
+to `float` type with `std::stof` (_**s**tring **to** **f**loat_):
+
+<Tabs>
+<TabItem value="stoi" label="🔵 std::stoi" default>
+
+Convert `std::string` to `int`:
+```cpp
+std::string numberInStr = "53";
+int number = std::stoi(numberInStr);
+```
+
+</TabItem>
+<TabItem value="stof" label="🟣 std::stof">
+
+Convert `std::string` to `float`:
+```cpp
+std::string numberInStr = "53.5"; // do not put `f` at the end in the text
+float number = std::stof(numberInStr);
+```
+
+</TabItem>
+</Tabs>
+
+
+## Examples
+
+<ImproveSection />
+
+## Potential errors
+
+<ImproveSection />
