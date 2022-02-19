@@ -29,7 +29,7 @@ Loops have many uses, here are a few of them:
 - 🖥 displaying each element in an array
 - ➗ multiple calculations (e.g. counting factorials, fibonacci sequence)
 
-In the vector lesson, we already showed one loop that displayed
+In the lesson about vectors, we already showed one loop that displayed
 all the elements of an array:
 
 ```cpp title="🔹 Print each number from an array"
@@ -44,6 +44,8 @@ You will learn more about their types in the following sections.
 
 ## Loop types
 
+In C++, we have the following loops:
+
 - **`for`**
 	- range-based version
 	- basic version
@@ -54,9 +56,13 @@ The most common used are `for` and `while`, and we'll cover them in this lesson.
 If you want to read about the `do ... while` loop, see the article:
 [**`do ... while` loop**](articles/do-while).
 
+:::important Iteration (definition)
+**Iteration** - a single loop body execution.
+:::
+
 ## Explaination
 
-### Range-based for
+### Range-based `for`
 
 This type of loop is most commonly used for working with arrays,
 although it can also be used in other ways.
@@ -70,7 +76,6 @@ although it can also be used in other ways.
 
 In the example shown in the [**Motivation**](#motivation) section, there is a **range-based for** loop,
 which is a version of the `for` loop for the so-called ranges.
-
 An array as understood in C++ is also a range, so feel free to use it.
 
 The simplest example:
@@ -94,8 +99,6 @@ We do not use any equal sign (`=`) in this notation, because the value of each e
 will be automatically assigned to `n`.
 :::
 
-<ImproveSection />
-
 ## `while` loop
 
 <Image center border maxheight="300px"
@@ -105,11 +108,10 @@ will be automatically assigned to `n`.
 	/>
 <br/>
 
-We are now intentionally moving into the `while` loop, rather than the basic `for`,
-as this will make the explanation easier. The while loop is simple.
-It executes the body of the loop until the condition is true:
+We are now intentionally moving into the `while` loop, rather than the basic `for`, as this will make
+the explanation easier. The while loop executes its body as long as the condition is met:
 
-<Columns columns={['8fr', '4fr']}>
+<Columns columns={['2fr', '1fr']}>
 <div>
 
 ```cpp title="🔹 Print numbers from 0 to 3"
@@ -137,19 +139,142 @@ i.e. as long as `number` is less than or equal to `3` in this case, the body wil
 - printing the `number`
 - increasing `number` by 1
 
-After the last loop execution, the value of `number` will be equal to `4`,
-so the condition will not be satisfied, causing the loop to terminate and the computer
-to proceed with the next instructions.
-
-<ImproveSection />
+After the last loop execution, the value of `number` will be equal to `4`, so the condition will not be
+satisfied, causing the loop to terminate and the computer to proceed with the next instructions.
 
 ### `for` loop
 
 <Image center border maxheight="300px"
 		src="/img/tutorials/course/basic/loops/for-en.png"
-		alt="Basic 'for' loop scheme"
-		desc="scheme"
+		alt=" Schema of a 'for' loop"
+		desc="Schema"
 	/>
 <br/>
+
+This loop is a simplification of a certain **very** frequently repeated pattern, and it is
+typically used to step through some range (such as numeric range).
+
+Let's start with an example:
+
+```cpp title="🔹 Display numbers from 0 to 9"
+for (int i = 0; i < 10; i++)
+{
+	std::cout << i << ' ';
+}
+```
+
+The above loop displays the numbers from 0 to 9. The round bracket at `for` consists of three parts,
+separated by ** semicolons**:
+
+| Fragment | Description |
+| -------- | ---- |
+| `int i = 0` | initial instruction (usually the creation of a variable) |
+| `i < 10` | condition |
+| `i++` | iteration expression |
+
+When a program starts executing a `for` loop, it executes the initial statement once - in our case
+creates a variable and gives it the value `0`.
+The program then:
+
+1. checks the condition
+	- unfulfilled: leave the loop
+	- fulfilled: go to the point 2
+2. executes the loop body
+3. performs an iteration expression and goes to pt. 1
+
+The above `for` loop is equivalent to:
+
+```cpp
+int i = 0;
+while (i < 10)
+{
+	std::cout << i << ' ';
+	i++;
+}
+```
+
+#### Iterating through arrays
+
+The `for` loop is very often used to iterate through arrays, in situations where
+we either need access to the iteration number or we do not want to iterate
+over the entire range.
+
+```cpp title="🔹 Iterating over an entire array"
+std::vector<int> numbers = {10, 13, 15, 18, 60};
+for (int i = 0; i < numbers.size(); i++)
+{
+	std::cout << "numbers[" << i << "]: " << numbers[i] << '}
+}
+```
+
+```cpp title="🔹 Iterating over half of an array"
+std::vector<int> numbers = {10, 13, 15, 18, 60};
+for (int i = 0; i < numbers.size() / 2; i++)
+{
+	std::cout << "numbers[" << i << "]: " << numbers[i] << '}
+}
+```
+
+#### Empty parenthesis
+
+The code given in the `for` loop parentheses is optional. **The semicolons are required**.
+
+```cpp title="🔹 For loop with empty parentheses"
+for ( ; ; )
+{
+	// code
+}
+```
+
+The above will make the `for` loop execute infinitely (due to the empty condition),
+unless we manually break it...
+
+## Stopping a loop
+
+We can stop the loop at any point using the `break` statement:
+
+```cpp
+for (int i = 0; i < 10; i++)
+{
+	if (i == 5)
+	// highlight-next-line
+		break;
+	std::cout << i << ' ';
+}
+```
+
+This loop will display numbers from 0 to 4, because at `i` equal to `5` the execution of the loop will be aborted.
+We can break the `while` loop in the same way.
+
+## Skipping a single iteration
+
+To skip further execution of the current loop iteration we use the `continue` statement:
+
+```cpp
+for (int i = 0; i < 10; i++)
+{
+	if (i == 5)
+	// highlight-next-line
+		continue;
+	std::cout << i << ' ';
+}
+```
+
+The loop will display the numbers from `0` to `9`, excluding the number `5`, because before it executes the
+display instruction (`std::cout`) the program will jump to the next iteration.
+
+:::caution For loop and continue
+Note that using `continue` in a `for` loop does not omit the *iteration expression* ([see diagram above](#for-loop)).
+:::
+
+## Examples
+
+<ImproveSection />
+
+## Potential errors
+
+<ImproveSection />
+
+## Additional information
 
 <ImproveSection />
