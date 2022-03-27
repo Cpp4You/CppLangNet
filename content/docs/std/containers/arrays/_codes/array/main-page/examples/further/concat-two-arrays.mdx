@@ -1,6 +1,7 @@
 ```cpp title="Concat two arrays"
 #include <iostream>
 #include <array>
+#include <algorithm>
 
 template <typename T, size_t N1, size_t N2>
 std::array<T, N1 + N2> concat(
@@ -8,6 +9,8 @@ std::array<T, N1 + N2> concat(
 		std::array<T, N2> const& rhs
 	)
 {
+	namespace rg = std::ranges;
+
 	std::array<T, N1 + N2> result;
 
 	rg::copy(lhs, result.begin());
