@@ -1,11 +1,307 @@
 ---
 sidebar_position:	9
-sidebar_label:		"9. Methods 🚧"
+title:				"Metody"
+sidebar_label:		"9. Methods"
 description:		"Lesson: methods basics in C++"
+tags:				[method, constructor, destructor, structure, struct, class, object-oriented, oop]
+hide_title:			true
 ---
+
+<!-- Components -->
+import Columns			from '@site-comps/Columns';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
+
+<!--  Presets -->
+import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<NotFinished/>
 
 # Methods
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+This lesson will show you how to place functions inside a structure, i.e. create so-called **methods**.
 
-<NotFinished/>
+## Motivation
+
+In programming, objects from real life are often mirrored, for example when creating a racing game 🏎
+we will want to have vehicles that are defined by their
+
+- **traits**, such as:
+	- brand
+	- model 🚘
+	- max. speed 🚀
+- **behaviour**, e.g:
+	- acceleration 💨
+	- braking 🛑 🛑
+
+This way of describing objects, separating features and behaviors, is very common.
+In the lesson on [structures](../structures) we learned how to contain different information
+about objects within a single type that we created ourselves. In doing so, we described
+its **traits**. Now we're going to move on to methods that will allow us to "teach" the object to
+perform a specific task - define its **behaviour**. 
+
+## Introduction
+
+For the purposes of this lesson, let's create a structure that contains the features of a car:
+
+```cpp
+struct Car
+{
+	// car information
+	std::string	brand;
+	std::string	model;
+	int			yearOfProduction;
+
+	// movement
+	float		topSpeed = 200;		// (km/h)
+	float		acceleration = 50;	// (km/h per second)
+	float		speed = 0;			// current one (km/h)
+};
+```
+
+Inside the `main` function, let's create an object of this structure:
+
+```cpp
+int main()
+{
+	Car car;
+	car.brand = "Ford";
+	car.model = "Focus";
+	car.yearOfProduction = 2010;
+
+}
+```
+
+Now we will move on to how to make it (`car`) work.
+
+## Creating and using methods
+
+Inside the `Car` structure, at its end, let's put a function, named `accelerate`,
+which will increase the `speed` by the acceleration value of the `acceleration`:
+
+```cpp
+struct Car
+{
+	// car information
+	std::string	brand;	
+	// ...
+
+	// method that increases the speed
+	// highlight-next-line
+	void accelerate()
+	{
+		speed += acceleration;
+	}
+};
+```
+
+:::important Definition
+**Methods** are called functions that belong to structures (or classes, which you will learn about later in the course).
+:::
+
+A method created this way can be called on an object, like this:
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Calling the accelerate()"
+// ...
+
+int main()
+{
+	Car car;
+	// initial values...
+
+	// calling for the first time
+	// highlight-next-line
+	car.accelerate();
+	std::cout << "Current speed: " << car.speed << " km/h\n";
+	// calling for the second time
+	// highlight-next-line
+	car.accelerate();
+	std::cout << "Current speed: " << car.speed << " km/h\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+Current speed: 50 km/h
+Current speed: 100 km/h
+```
+
+</div>
+</Columns>
+
+We give the name of the object that is to do the given thing, then after the dot
+we give the method name and parameters - just like when calling a normal function.
+
+<Columns columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="🔸 Calling a method"
+object.methodName(arguments);
+```
+
+</div>
+<div>
+
+```cpp title="🔹 Calling a function"
+functionName(arguments);
+```
+
+</div>
+</Columns>
+
+### Definition order
+
+Inside a structure, methods need not be defined before declaring a variable or another method,
+which also belongs to this structure:
+
+<Tabs>
+<TabItem value="good1" label="✔ Good" default>
+
+Note the order in which the methods are defined: `limitSpeed` was used in `accelerate`,
+even though its definition is below. Similarly, the `speed` and `acceleration` fields
+have been used before their declaration, because it is in the code **under** this usage.
+This is allowed within the structure.
+
+```cpp
+struct Car
+{
+	// function that increases the speed
+	void accelerate()
+	{
+		speed += acceleration;
+		limitSpeed();
+	}
+
+	void limitSpeed() {
+		if (speed > topSpeed)
+			speed = topSpeed;
+	}
+
+	// class data members
+	float topSpeed = 200;
+	float acceleration = 50;
+	float speed = 0;
+	// the rest...
+};
+```
+
+</TabItem>
+<TabItem value="good2" label="✔ Good (order kept)">
+
+The order of functions and variables is set according to their usage - also correct.
+
+```cpp
+struct Car
+{
+	// class data members
+	float topSpeed = 200;
+	float acceleration = 50;
+	float speed = 0;
+	// the rest...
+
+	void limitSpeed() {
+		if (speed > topSpeed)
+			speed = topSpeed;
+	}
+
+	// function that increases the speed
+	void accelerate()
+	{
+		speed += acceleration;
+		limitSpeed();
+	}
+};
+```
+
+</TabItem>
+<TabItem value="bad" label="❌ Bad">
+
+Outside of a structure, such reordering is not allowed without using a separate declaration:
+
+```cpp
+void printHelloWorld()
+{
+	// ❌ Error, using `world` function before definition
+	// highlight-next-line
+	std::cout << "Hello, " << world();
+}
+
+// Return the "World!" string
+std::string world()
+{
+	return "World!"
+}
+```
+
+</TabItem>
+</Tabs>
+
+
+### Declaration and definition
+
+As with functions, we can separate the method declaration and definition.
+This way we are able to move their definitions outside of the structure body:
+
+```cpp
+struct Car
+{
+	// class data members
+	float topSpeed = 200;
+	float acceleration = 50;
+	float speed = 0;
+	// the rest...
+
+	// Methods declarations:
+	// highlight-start
+	void limitSpeed();
+	void accelerate();
+	// highlight-end
+};
+
+// highlight-next-line
+void Car::limitSpeed()
+{
+	if (speed > topSpeed)
+		speed = topSpeed;
+}
+
+// highlight-next-line
+void Car::accelerate()
+{
+	speed += acceleration;
+	limitSpeed();
+}
+```
+
+Note that in this case, we precede the method name with the structure name `Car`,
+and a double colon `::`, the so-called *scope resolution operator*.
+
+```cpp title="🔹 Definition outside the structure body scheme"
+type StructureName::methodName(parameters)
+{
+	// ...
+}
+```
+
+One of the advantages of this notation is the ability to separate the *interface*
+of the structure from its *implementation*. This way, once you've implemented
+methods, each time you look at the structure, you will only see the set of
+variable and method names that you will use, without getting distracted by the
+implementation details.
+
+This notation is also crucial when splitting the code into multiple files - we'll tell
+about it further on in the course.
+
+## Examples
+
+<ImproveSection />
+
+## Potential errors
+
+<ImproveSection />
