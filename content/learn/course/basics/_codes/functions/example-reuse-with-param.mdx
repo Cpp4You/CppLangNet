@@ -1,0 +1,18 @@
+```cpp
+#include <iostream>
+
+// highlight-next-line
+void printEvenNumbers(int howMany)
+{
+	for (int i = 0; i < howMany; i++)
+		std::cout << (i * 2) << ' ';
+	std::cout << '\n';
+}
+
+int main()
+{
+	printEvenNumbers(10);
+	printEvenNumbers(5);
+	printEvenNumbers(3);
+}
+```

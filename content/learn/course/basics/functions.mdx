@@ -1,11 +1,495 @@
 ---
 sidebar_position:	7
-sidebar_label:		"7. Functions 🚧"
-description:		"Lesson: functions basics in C++"
+sidebar_label:		"7. Functions"
+title:				"Functions"
+description:		"Lesson: function basics in C++"
+tags:				[function, call]
+hide_title:			true
 ---
+
+<!-- Presets -->
+import NotFinished				from '@site/i18n/en/presets/NotFinished.mdx';
+import ImproveSection			from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<!-- Components -->
+import CustomCodeBlock			from '@site-comps/CustomCodeBlock';
+import GoogleSlides				from '@site-comps/GoogleSlides';
+import Columns					from '@site-comps/Columns';
+import Image					from '@site-comps/Image';
+import Tabs						from '@theme/Tabs';
+import TabItem					from '@theme/TabItem';
+
+<!-- Codes -->
+import Code_TopExampleWithout				from "./_codes/functions/top-example-without.mdx";
+import Code_TopExampleWith					from "./_codes/functions/top-example-with.mdx";
+
+import Code_ExampleReuse					from "./_codes/functions/example-reuse.mdx";
+import Code_ExampleReuseWithParam			from "./_codes/functions/example-reuse-with-param.mdx";
+import Code_ExampleReuseWithParams			from "./_codes/functions/example-reuse-with-params.mdx";
+
+<NotFinished/>
 
 # Functions
 
-import NotFinished from "@site/i18n/en/presets/NotFinished.mdx";
+In this lesson you will learn how to teach a program to perform actions,
+with the ability to reuse them.
 
-<NotFinished />
+## Motivation
+
+One of the advantages of using functions is the reduction of duplicates in the code. See example
+below, the version without and with functions. At this point
+you do not need to understand the notation of the example with the function - we will
+explain it later in this lesson.
+
+<hr/>
+
+<Tabs>
+	<TabItem value="without-functions" label="⚠ Without functions">
+		<Code_TopExampleWithout />
+	</TabItem>
+	<TabItem value="with-function" label="🟢 With function">
+		<Code_TopExampleWith />
+	</TabItem>
+</Tabs>
+
+<hr/>
+
+In the example above, we create an array of numbers and modify it, displaying the contents each time.
+The difference between the two versions is that the first one contains a piece of code that we have copy-pasted
+several times. In the second, more correct version, we **teach our program once
+how to display an array of numbers** and then use it repeatedly when we need it.
+
+Functions have many other uses and we will show some of them in this lesson. But for now
+we need to go back to the basics.
+
+## Introduction
+
+:::important Definition
+A function is a separate piece of code that we can reuse many times.
+:::
+
+From the very beginning of our study, we included a special function in our programs,
+which is `main`.
+
+```cpp
+int main() {
+	// program code
+}
+```
+
+A computer running a program finds the function `main` and then executes it,
+passing each statement inside, line by line.
+
+## Creating functions
+
+We will start with the simplest features, gradually moving to more and more advanced features.
+
+### Without parameters
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/proc-no-params-en.png"
+		desc="Scheme of the simplest function"
+	/>
+
+As we can see above, when defining our own function, we have to take care of its name and body, sticking to the
+syntax. After the word `void` we write **function name**, then we put empty **parentheses**
+(we'll talk about that later in this lesson), then **without a semicolon** we place below
+block of code, which we call the **function body**.
+
+:::important Naming
+When naming a function, follow the same rules as for [variable names](../variables/#variable-name).
+:::
+
+Now we already have our function defined. This means that whenever we want to,
+we can **call** it. We do it this way:
+
+```cpp title="🔹 Calling the print function"
+print();
+```
+
+:::caution
+Note that we put a **semicolon** after the function call, because it's also the end of the statement.
+:::
+
+Let's write an example function that displays 10 even numbers and use it a few times:
+
+<>
+<Code_ExampleReuse />
+</>
+
+### With parameters
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/proc-params-en.png"
+		desc="Scheme of a function with parameters"
+	/>
+
+The behavior of the function can depend on **parameters**. If you want the function to display
+any number of even numbers, we can create a parameter in the function,
+that will control it. A parameter is a variable inside the function, which we create
+inside the parentheses
+
+<>
+<Code_ExampleReuseWithParam />
+</>
+
+The above notation
+
+```cpp
+printEvenNumbers(10);
+```
+
+means that when called, the `howMany` parameter inside this function
+will be assigned the value `10`. We can pass any number of parameters to the function.
+Separate them by commas:
+
+<>
+<Code_ExampleReuseWithParams />
+</>
+
+:::danger Common mistake
+Notice that we place the function parameters after a comma, **each time specifying its type**.
+A common mistake among beginners is omitting the type in the following parameters.
+
+<Tabs>
+<TabItem label="❌ Bad" value="bad" default>
+
+```cpp
+void printBiggerNumber(int a, b)
+```
+
+</TabItem>
+<TabItem label="✔ Good" value="good">
+
+```cpp
+void printBiggerNumber(int a, int b)
+```
+
+</TabItem>
+</Tabs>
+
+:::
+
+### Return statement
+
+We can tell the program to return from a function earlier, using a statement:
+
+```cpp
+return;
+```
+
+Upon encountering it, the program stops executing further instructions in the function
+and returns to the place from which it was called.
+Let's recall the function we created earlier - `printEvenNumbers`
+
+```cpp
+void printEvenNumbers(int howMany)
+{
+	for (int i = 0; i < howMany; i++)
+		std::cout << (i * 2) << ' ';
+	std::cout << '\n';
+}
+```
+
+What happens if we pass a negative number to `howMany`?
+
+```cpp
+printEvenNumbers(-10);
+```
+
+Executing a function with such a parameter value makes no sense, so we can detect this at
+the very beginning and use the `return`:
+
+```cpp
+void printEvenNumbers(int howMany)
+{
+	if (howMany <= 0)
+		return;
+
+	for (int i = 0; i < howMany; i++)
+		std::cout << (i * 2) << ' ';
+	std::cout << '\n';
+}
+```
+
+Now if we pass a value less than or equal to zero to a function parameter, the function will
+be terminated at the beginning.
+
+### Return value
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/retval-params-en.png"
+		desc="Schema of a function with parameters and return value"
+	/>
+
+
+Functions can produce a **result** after their execution. It will be easier to understand this if we use an analogy to
+real life. Father sends his child to the store to buy 10 eggs. When the child returns, he will want to know,
+whether the child managed to buy as many as he asked for or not. In the same way, we, performing some functions in code,
+we want to know the result, the **return value**.
+
+#### Return value type
+
+It is required to specify what type the return value is. We specify it **before** the function name, example:
+
+```cpp title="🔹 We return an integer" 
+int sum(int from, int to)
+```
+
+```cpp title="🔹 No return value is produced"
+void print(int number)
+```
+
+Notice that we have introduced a new type: `void`. If we write it in place of the return type,
+it means that the function does not return a value, i.e. we do not need to know its result.
+Note that we used `void` in the previous sections of this lesson for this very reason.
+
+:::danger Void as a variable type
+The `void` type cannot be used to create a variable:
+
+```cpp title="❌ Illegal use"
+void variable;
+```
+
+A variable inherently stores a value, which would be impossible if it were of type `void`.
+:::
+
+#### Usage
+
+Let's implement the function from the diagram above. It is to count the sum of all numbers in the range `from` to `to` inclusive.
+
+```cpp
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+We can use the returned value, for example, by writing it to a variable:
+
+```cpp title="🔹 Saving the result to a variable"
+int s = sum(10, 100);
+```
+
+... or use in an expression (for example, as a function parameter):
+
+```cpp title="🔹 Using a result"
+std::cout << "Sum of the numbers in range [10; 100] equals: " << sum(10, 100);
+```
+
+#### Requirements
+
+:::danger Returning a value is mandatory
+A function that returns some value (anything other than a `void' type), **must** at the very end of its execution
+return some value.
+
+```cpp title="❌ Error: No value returned"
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	// highlight-next-line
+	// ❌ No return statement!
+}
+```
+
+An exception is the `main` function, which, despite returning an `int` type,
+performs an automatic return of a value `0` when `return` is omitted:
+
+```cpp title="✔ Acceptable"
+int main() {
+	// No "return" statement
+}
+```
+
+We will say more about the `main` function in the future.
+
+:::
+
+### Declaration and definition
+
+In order to use the above `sum` function, we need to make sure that it is **before** this use, for example:
+
+<Tabs>
+<TabItem value="bad" label="❌ Bad" default>
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	// Warning, used before the definition
+	// highlight-next-line
+	std::cout << "Sum of the numbers in range [10; 100] equals: " << sum(10, 100); // ❌
+}
+
+// highlight-next-line
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+</TabItem>
+<TabItem value="good" label="✔ Good">
+
+```cpp
+#include <iostream>
+
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+
+int main()
+{
+	std::cout << "Sum of the numbers in range [10; 100] equals: " << sum(10, 100);
+}
+```
+
+</TabItem>
+</Tabs>
+
+Making sure that the order always matches is troublesome and sometimes even impossible.
+To fix the error in the above example, we have to use so called **function declaration**.
+
+So far, when creating functions we used **function definition** which besides declaration,
+also contains its entire implementation (body). Declaring a function looks like defining it,
+**without providing its body**. We also need to take care to put a semicolon after the declaration.
+
+<Columns columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="🔵 Definition"
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+</div>
+<div>
+
+```cpp title="🟣 Declaration"
+int sum(int from, int to);
+```
+
+</div>
+</Columns>
+
+The rule is that in order to use a function, it must be **declared** beforehand.
+The definition must appear, but it does not matter if it is before or after the use.
+Here are two examples:
+
+<Tabs>
+<TabItem value="good" label="✔ OK" default>
+
+```cpp
+#include <iostream>
+
+// 🟣 Declaration
+// highlight-next-line
+int sum(int from, int to);
+
+int main()
+{
+	std::cout << "Sum of the numbers in range [10; 100] equals: " << sum(10, 100);
+}
+
+// 🔵 Definition
+// highlight-next-line
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+</TabItem>
+<TabItem value="good2" label="✔ OK (definition before)">
+
+```cpp
+#include <iostream>
+
+// 🟣 Declaration
+// highlight-next-line
+int sum(int from, int to);
+
+// 🔵 Definition
+// highlight-next-line
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+
+int main()
+{
+	std::cout << "Sum of the numbers in range [10; 100] equals: " << sum(10, 100);
+}
+```
+
+</TabItem>
+<TabItem value="good3" label="✔ OK (wiele dekl.)">
+
+```cpp
+#include <iostream>
+
+// 🟣 Declarations
+// highlight-start
+int sum(int from, int to);
+int sum(int from, int to); // OK, multiple declarations are acceptable
+int sum(int from, int to); // but unnecessary 🤔
+// highlight-end
+
+int main()
+{
+	std::cout << "Sum of the numbers in range [10; 100] equals: " << sum(10, 100);
+}
+
+// 🔵 Definition
+// highlight-next-line
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::danger The One Definition Rule (*ODR*)
+The definition **must** appear in the code **only once** (there can be multiple declarations).
+:::
+
+## Examples 🚧
+
+<ImproveSection />
+
+## Potential errors 🚧
+
+<ImproveSection />
+
+## Additional information 🚧
+
+<ImproveSection />
