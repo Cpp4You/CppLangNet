@@ -14,9 +14,16 @@
 	--ifm-color-primary-light: #00358f;
 	--ifm-color-primary-lighter: #003796;
 	--ifm-color-primary-lightest: #003ea9;
-	
 	--ifm-code-font-size: 95%;
 	font-variant-ligatures: none;
+
+
+	--sidebar-code-color-class-name: rgb(0, 134, 105);
+	--sidebar-code-color-function: rgb(107, 97, 62);
+}
+
+footer.footer--dark a {
+	--ifm-link-color: #00d0f6;
 }
 
 .docusaurus-highlight-code-line {
@@ -34,6 +41,9 @@ html[data-theme='dark'] {
 	--ifm-color-primary-light: #2ddfff;
 	--ifm-color-primary-lighter: #3be1ff;
 	--ifm-color-primary-lightest: #64e7ff;
+
+	--sidebar-code-color-class-name: rgb(3, 199, 156);
+	--sidebar-code-color-function: rgb(197, 162, 48);
 
 	.docusaurus-highlight-code-line {
 		background-color: rgba(0, 0, 0, 0.3);
@@ -62,3 +72,129 @@ html[data-theme='dark'] {
 	position: sticky;
 	left: var(--ifm-pre-padding);
 }
+
+@mixin GenerateHeaderBrandLogo($name, $srcLight, $srcDark) {
+	.header-#{$name}-link {
+		padding: 5px;
+		margin-left: 5px;
+		margin-right: 5px;
+		border: 0px solid transparent;
+		border-radius: 50%;
+		transition: 0.2s;
+	}
+
+	.header-#{$name}-link::before {
+		content: '';
+		width: 24px;
+		height: 24px;
+		display: flex;
+		background: $srcLight no-repeat;
+	}
+	
+	[data-theme='dark'] .header-#{$name}-link::before {
+		background: $srcDark no-repeat;
+	}
+
+	.header-#{$name}-link:hover {
+		background-color: rgb(235, 237, 240);
+	}
+
+	[data-theme='dark'] .header-#{$name}-link:hover {
+		background-color: rgb(68, 73, 80);		
+	}
+}
+
+@include GenerateHeaderBrandLogo(
+		github,
+		url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E"),
+		url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='white' d='M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12'/%3E%3C/svg%3E")
+	);
+
+@include GenerateHeaderBrandLogo(
+		discord,
+		url("../icons/discord-logo-black.svg"),
+		url("../icons/discord-logo-white.svg")
+	);
+
+@mixin SidebarCodeFont {
+	font-family: 'Jetbrains Mono', 'Consolas', monospace;
+	font-size: 85%;
+	letter-spacing: -1px;
+}
+
+@mixin GenerateSidebarCodeColor($codeElemName, $colorVar) {
+	li.sidebar-code.#{$codeElemName}>div {
+		>a {
+			@include SidebarCodeFont;
+		}
+	
+		&:not([class$=--active]) {
+			&>a {
+				color: var($colorVar);
+			}	
+		}
+		&[class*=menu__link--active] {
+			&>a:not([class*=menu__link--active]) {
+				color: var($colorVar);
+			}
+		}
+	}
+	
+	li.sidebar-code.#{$codeElemName}>a {
+		@include SidebarCodeFont;
+		&:not([class*=menu__link--active]) {
+			color: var($colorVar);
+		}
+	}
+}
+
+@include GenerateSidebarCodeColor(sidebar-class-name, --sidebar-code-color-class-name);
+@include GenerateSidebarCodeColor(sidebar-function, --sidebar-code-color-function);
+
+.menu__caret::before, .menu__link--sublist-caret::after {
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+@mixin GenerateCategoryLevelBorder($categoryLevel, $color) {
+	li.theme-doc-sidebar-item-category-level-#{$categoryLevel} {
+		&.menu__list-item--collapsed {
+			&>div {
+				position: relative;
+				left: -1px;
+			}
+		}
+		&:not(.menu__list-item--collapsed)>ul>li {
+			border-left: 1px solid $color;
+		}
+		box-sizing: border-box;
+	}
+}
+
+li.menu__list-item {
+	&>div, &>a {
+		border-radius: 0;
+	}
+}
+li.menu__list-item:not(:first-child) {
+	margin-top: 0;
+}
+
+@include GenerateCategoryLevelBorder(1, rgba(gray, 0.4));
+
+li.theme-doc-sidebar-item-category {
+	// @include GenerateCategoryLevelBorder(2, rgba(gray, 0.4));
+	// @include GenerateCategoryLevelBorder(3, rgba(gray, 0.4));
+	// @include GenerateCategoryLevelBorder(4, rgba(gray, 0.5));
+	// @include GenerateCategoryLevelBorder(5, rgba(gray, 0.6));
+
+	&:not(.menu__list-item--collapsed)>ul>li {
+		border-left: 1px solid gray;
+	}
+
+	>div {
+		// border-top: 2px rgba(16, 179, 207, 0.2) solid;
+		// box-sizing: border-box;
+	}
+}
+

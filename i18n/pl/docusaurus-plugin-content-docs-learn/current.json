@@ -27,9 +27,9 @@
     "message": "Edytowanie kodu",
     "description": "The label for category Editing code in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.C++ Course": {
-    "message": "Kurs C++",
-    "description": "The label for category C++ Course in sidebar defaultSidebar"
+  "sidebar.defaultSidebar.category.📖 C++ Course": {
+    "message": "📖 Kurs C++",
+    "description": "The label for category 📖 C++ Course in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.💻 Examples": {
     "message": "💻 Przykłady",

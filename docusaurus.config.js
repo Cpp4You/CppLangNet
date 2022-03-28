@@ -84,7 +84,7 @@ function filterSidebarItems(items)
 				id: 'learn',
 				path: 'content/learn',
 				routeBasePath: 'learn',
-				sidebarPath: require.resolve('./sidebars.js'),
+				sidebarPath: require.resolve('./sidebars/learn.js'),
 				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
@@ -98,7 +98,7 @@ function filterSidebarItems(items)
 				id: 'tools',
 				path: 'content/tools',
 				routeBasePath: 'tools',
-				sidebarPath: require.resolve('./sidebars.js'),
+				sidebarPath: require.resolve('./sidebars/tools.js'),
 				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
@@ -112,7 +112,7 @@ function filterSidebarItems(items)
 				id: 'features',
 				path: 'content/features',
 				routeBasePath: 'features',
-				sidebarPath: require.resolve('./sidebars.js'),
+				sidebarPath: require.resolve('./sidebars/features.js'),
 				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
@@ -126,7 +126,7 @@ function filterSidebarItems(items)
 				id: 'contributing',
 				path: 'content/contributing',
 				routeBasePath: 'contributing',
-				sidebarPath: require.resolve('./sidebars.js'),
+				sidebarPath: require.resolve('./sidebars/contributing.js'),
 				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
@@ -143,14 +143,15 @@ function filterSidebarItems(items)
 			({
 				docs: {
 					path: 'content/docs',
-					sidebarPath: require.resolve('./sidebars.js'),
+
+					sidebarPath: require.resolve('./sidebars/docs.js'),
 					// Please change this to your repo.
 					editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
 					editLocalizedFiles: true,
 					showLastUpdateTime: true,
 					showLastUpdateAuthor: true,
 					remarkPlugins: remarkConfig,
-					exclude: [ "**/codes/**.{mdx}" ],
+					exclude: [ "**/_codes/**.{mdx}" ],
 					sidebarItemsGenerator: async function ({
 						defaultSidebarItemsGenerator,
 						...args
@@ -193,32 +194,26 @@ function filterSidebarItems(items)
 					{ to: '/tools',			label: 'Tools',				position: 'left' },
 					{ to: '/blog',			label: 'Blog',				position: 'left'},
 					{ to: '/contributing',	label: '💗 Contributing',	position: 'right'},
-					{
-						type: 'dropdown',
-						label: '🗣 Social',
-						position: 'right',
-						items: [
-							// {
-							// 	label: '🔵 Facebook',
-							// 	href: 'https://www.facebook.com/cpplang',
-							// },
-							{
-								label: '🟣 Discord',
-								href: 'https://discord.gg/NvBNvpgUHZ',
-							},
-							{
-								label: '💬 Forum',
-								href: 'https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum',
-							},
-							{
-								href: 'https://github.com/PoetaKodu/CppLangNet',
-								label: '👉 GitHub',
-							},
-						]
-					},
+					// {
+					// 	href: 'https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum',
+					// 	label: '🗣 Community',
+					// 	position: 'right',
+					// },
 					{
 						type: 'localeDropdown',
 						position: 'right',
+					},
+					{
+						href: 'https://discord.gg/NvBNvpgUHZ',
+						position: 'right',
+						className: 'header-discord-link',
+						'aria-label': 'Official Discord server',
+					},
+					{
+						href: 'https://github.com/PoetaKodu/CppLangNet',
+						position: 'right',
+						className: 'header-github-link',
+						'aria-label': 'GitHub repository',
 					},
 				],
 			},
@@ -292,7 +287,7 @@ function filterSidebarItems(items)
 						],
 					},
 				],
-				copyright: `Copyright © ${new Date().getFullYear()} <a href="https://github.com/PoetaKodu">Paweł Syska</a>, Inc. Built with Docusaurus.`,
+				copyright: `Copyright © ${new Date().getFullYear()} <a href="https://github.com/PoetaKodu" target="_blank">Paweł Syska</a>, Inc. Built with Docusaurus.`,
 			},
 			prism: {
 				theme: 		lightCodeTheme,
