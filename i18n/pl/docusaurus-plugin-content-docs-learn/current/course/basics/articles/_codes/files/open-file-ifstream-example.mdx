@@ -1,0 +1,14 @@
+```cpp
+#include <iostream>
+#include <fstream>
+
+int main()
+{
+	auto file = std::ifstream("plik.txt");
+
+	std::string firstWord;
+	file >> firstWord;
+
+	std::cout << "Pierwszy wyraz z pliku to: " << firstWord << '\n';
+}
+```

@@ -1,0 +1,44 @@
+---
+sidebar_label:		🗃 Obsługa plików (II)
+title:				Obsługa plików (II)
+tags:				[plik, system plików, fstream, filesystem, odczyt, zapis]
+description:		"Artykuł (poziom średni): obsługa plików w języku C++"
+hide_title:			true
+---
+
+<!-- Components -->
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+import Columns				from "@site-comps/Columns";
+import CustomCodeBlock		from "@site-comps/CustomCodeBlock";
+import Image				from "@site-comps/Image";
+import Replit				from "@site-comps/Replit";
+
+# Obsługa plików
+
+
+## Motywacja
+
+
+
+## Odczyt sekwencyjny
+
+```cpp
+#include <array>
+#include <string>
+#include <istream>
+
+std::string readContents(std::istream& input)
+{
+	constexpr int BUFFER_SIZE = 16 * 1024;
+
+	std::array<char, BUFFER_SIZE> buffer;
+	std::string contents;
+
+	while (input.read(buffer.data(), buffer.size()))
+		contents.append(buffer.data(), input.gcount());
+	contents.append(buffer.data(), input.gcount());
+
+	return contents;
+}
+```

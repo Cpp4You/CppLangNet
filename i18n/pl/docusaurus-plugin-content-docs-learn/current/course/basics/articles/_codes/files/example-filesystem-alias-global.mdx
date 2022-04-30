@@ -1,0 +1,16 @@
+```cpp
+#include <filesystem>
+
+// highlight-next-line
+namespace fs = std::filesystem;
+
+void createSettingsFolder()
+{
+	fs::create_directories(fs::current_path() / "settings");
+}
+
+void printCurrentPath()
+{
+	std::cout << fs::current_path() << '\n';
+}
+```

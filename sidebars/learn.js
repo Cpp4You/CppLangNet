@@ -56,9 +56,12 @@ module.exports = {
 						{
 							type: 'category',
 							label: '📰 Articles',
+							link: { type: 'doc', id: 'course/basics/articles/index' },
 							items: [
 								'course/basics/articles/console',
 								'course/basics/articles/random',
+								'course/basics/articles/files',
+								'course/basics/articles/filesystem',
 							]
 						},
 						{
@@ -117,6 +120,13 @@ module.exports = {
 							]
 						},
 						'course/intermediate/const-correctness',
+						{
+							type: 'category',
+							label: '📰 Articles',
+							items: [
+								'course/intermediate/articles/files',
+							]
+						},
 					]
 				},
 				{

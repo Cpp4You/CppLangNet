@@ -1,0 +1,335 @@
+---
+sidebar_label:		📝 Obsługa plików
+title:				Obsługa plików
+tags:				[plik, fstream, odczyt, zapis]
+description:		"Artykuł (podstawy): obsługa plików w języku C++"
+hide_title:			true
+---
+
+<!-- Presets -->
+import ImproveSection		from "@site/i18n/pl/presets/ImproveSection.mdx";
+
+<!-- Components -->
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+import Details				from "@theme/Details";
+import Columns				from "@site-comps/Columns";
+import CustomCodeBlock		from "@site-comps/CustomCodeBlock";
+import Image				from "@site-comps/Image";
+import Replit				from "@site-comps/Replit";
+
+<!-- Codes -->
+import Example_FilesystemAliasGlobal		from "./_codes/files/example-filesystem-alias-global.mdx";
+import Example_FilesystemAliasWithinFunc	from "./_codes/files/example-filesystem-alias-within-func.mdx";
+
+import Code_OpenFileFstream					from "./_codes/files/open-file-fstream.mdx";
+import Code_OpenFileIfstream				from "./_codes/files/open-file-ifstream.mdx";
+import Code_OpenFileOfstream				from "./_codes/files/open-file-ofstream.mdx";
+
+import Code_OpenFileFstreamExample			from "./_codes/files/open-file-fstream-example.mdx";
+import Code_OpenFileIfstreamExample			from "./_codes/files/open-file-ifstream-example.mdx";
+import Code_OpenFileOfstreamExample			from "./_codes/files/open-file-ofstream-example.mdx";
+
+
+# Obsługa plików
+
+Wymaga znajomości: [**1. Pierwszy program**](../../first-program) - [**9. Metody**](../../methods) oraz [**11. Referencje**](../../references)
+
+W tym artykule pokażemy Ci jak poprawnie korzystać z plików w języku C++.
+
+## Motywacja
+
+Używanie plików 📝 jest często niezbędną częścią aplikacji. Programy przechowują swoje dane
+między innymi na dysku komputerowym. Aplikacje biurowe zapisują dokumenty utworzone przez użytkownika.
+Często korzystają z plików konfiguracyjnych, które również znajdują się na dysku. Gry wideo trzymają modele, dźwięki,
+tekstury i inną tego typu zawartość wewnątrz swoich plików.
+
+<Image center
+		alt="Wyświetlanie zawartości pliku"
+		src="/img/tutorials/course/basic/files/displaying-file-content.png"
+		desc="Wyświetlanie zawartości pliku"
+	/>
+
+## Operacje na pliku
+
+### Wstęp
+
+W kodzie z tego artykułu będziemy korzystali z następującego nagłówka z biblioteki standardowej:
+
+```cpp
+#include <fstream>
+```
+
+Pozwoli on nam na obsługę pojedynczego pliku i jego zawartości, w tym:
+
+- stworzenie pliku
+- odczyt danych
+- zapisanie danych
+
+### Otwieranie pliku
+
+Żeby w ogóle móc korzystać z zawartości pliku, musimy go otworzyć za pomocą odpowiedniego obiektu
+z biblioteki standardowej. W zależności od tego czy chcemy jedynie odczytywać dane, czy tylko zapisywać,
+czy robić obydwie te rzeczy, użyjemy obiektu innego typu.
+
+Przy obsłudze plików w języku C++ korzystamy z obiektów typu `std::fstream` oraz jego wariantów,
+w postaci `std::ifstream` i `std::ofstream`.
+
+<Tabs>
+	<TabItem label="🔹 Tryb do odczytu" value="ifstream" default>
+		<Code_OpenFileIfstream />
+	</TabItem>
+	<TabItem label="💡 Przykład" value="example">
+		<Code_OpenFileIfstreamExample />
+	</TabItem>
+</Tabs>
+
+<Tabs>
+	<TabItem label="🔹 Tryb do zapisu" value="ofstream" default>
+		<Code_OpenFileOfstream />
+	</TabItem>
+	<TabItem label="💡 Przykład" value="example">
+		<Code_OpenFileOfstreamExample />
+	</TabItem>
+</Tabs>
+
+:::important Przedrostki
+Zwróć uwagę na różnicę <code>std::<b>i</b>fstream</code> (ang.: *<b>i</b>nput file stream*) i <code>std::<b>o</b>fstream</code> (ang.: *<b>o</b>utput file stream*).
+:::
+
+Aby otworzyć plik w obydwu trybach jednocześnie używamy `std::fstream` (bez przedrostka **`i`** ani **`o`**).
+
+<Tabs>
+	<TabItem label="🔹 Tryb do odczytu i zapisu" value="fstream" default>
+		<Code_OpenFileFstream />
+	</TabItem>
+	<TabItem label="💡 Przykład" value="example">
+		<Code_OpenFileFstreamExample />
+	</TabItem>
+</Tabs>
+
+### Odczyt i zapis danych
+
+Z obiektu `file`, który utworzyliśmy wyżej korzystamy w bardzo podobny sposób do
+tego jak używaliśmy `std::cin` oraz `std::cout`. Interfejsy tych obiektów zostały
+w bibliotece standardowej ujednolicone - każdy z nich jest "strumieniem",
+na którym możemy wykonywać operacje za pomocą operatorów `<<` oraz `>>`:
+
+Utwórz ręcznie plik `plik.txt` w ogólnodostępnym miejscu na dysku, np. utwórz folder `zadanie`
+na dysku C (na Windowsie) - `C:/zadanie/plik.txt` lub folderze użytkownika (na Linuxie: `/home/username/`).
+
+```plaintext title="Zawartość 'plik.txt'"
+ala ma 1 kota
+oraz 2 psy
+```
+
+#### Otwarcie pliku
+
+:::note Ścieżki bezwzględne
+Na tym etapie będziemy posługiwać się tylko **ścieżkami bezwzględnymi**, czyli takimi które precyzyjnie
+określają położenie pliku na komputerze. Czytając artykuł dalej, poznasz też **ścieżki względne**,
+które zawsze określają położenie względem tzw. *folderu roboczego*.
+:::
+
+Używamy wcześniej poznanej metody:
+
+```cpp
+#include <iostream>
+#include <fstream>
+
+int main() {
+	auto file = std::fstream("C:/zadanie/plik.txt");
+
+	// dalsze operacje
+}
+```
+
+:::danger Slash i backslash
+System Windows używa domyślnie znaku backslash (`\`) jako separatora w ścieżkach.
+Ten sam znak ma również [specjalne znaczenie](#) w tekście w C++. Podając ścieżkę
+do pliku ręcznie w kodzie, np:
+
+```cpp
+auto file = std::ifstream("C:\\zadanie\\plik.txt");
+```
+
+użyj podwójnego znaku backslash (`\\`) tak jak powyżej, lub zastąp je znakiem slash (`/`).
+:::
+
+#### Odczyt
+
+Plik zawiera dwie linie, które są podzielone na "słowa" - `ala`, `ma`, `1`, `kota` itd.
+
+:::caution Odczyt za pomocą `>>`
+Tak jak w przypadku `std::cin` wczytywanie danych za pomocą operatora `>>`
+zatrzymuje się na pierwszym [białym znaku](#) - spacji, tabulacji czy nowej linii.
+:::
+
+Wyświetlmy je w pętli:
+
+```cpp
+// ⚠ nie zapomnij o include <string>
+std::string word;
+while (file >> word) {
+	std::cout << "Slowo: " << word << '\n';
+}
+```
+
+Zauważ, że odczyt `file >> word` umieściliśmy w **warunku pętli**, ponieważ po próbie wykonania odczytu,
+`operator>>` zwróci wynik, który pozwoli nam określić czy operacja się powiodła czy nie.
+
+:::info Ciekawostka
+Wynik operatora `>>` jest *konwertowalny* na typ `bool` (`true` / `false`),
+więc może zostać wstawiony do warunku pętli.
+:::
+
+W naszym wypadku niepowodzenie może następić dopiero przy końcu pliku.
+
+#### Wczytywanie całych linii
+
+Aby wczytać całą linię z pliku, używamy funkcji `std::getline`, w ten sposób:
+
+```cpp title="🔹 Wczytanie linii z pliku"
+std::string line;
+std::getline(file, line);
+```
+
+Aby wczytać cały plik linia po linii, umieszczamy `getline` w warunku pętli `while`,
+tak samo jak zrobiliśmy wyżej z operatorem `>>`:
+
+```cpp title="🔹 Wczytanie całego pliku"
+std::string line;
+while (std::getline(file, line)) {
+	std::cout << "Linia: " << line << '\n';
+}
+```
+
+#### Zapis
+
+Chcąc zapisać dane do pliku, skorzystamy z tego samego operatora co przy `std::cout`:
+
+```cpp
+int age = 23;
+file << "Mam " << age << " lata\n";
+```
+
+Operator `<<` potrafi korzystać z tych samych typów zmiennych co `std::cout`.
+
+
+### Pozycja operacji w pliku
+
+Operacje zapisu i odczytu na pliku są wykonywane względem wewnętrznej pozycji w pliku.
+
+### Tryby otwarcia
+
+Tworząc obiekt typu `std::fstream` lub jego wariantów, możemy opcjonalnie określić
+w drugim parametrze tryb otwarcia pliku:
+
+```cpp
+auto file = std::fstream("plik.txt", tryb);
+```
+
+Dopuszczalne wartości:
+
+| Tryb | Opis |
+|------|------|
+| `std::ios::in` | do odczytu |
+| `std::ios::out` | do zapisu |
+| `std::ios::app` | do zapisu, ale zawsze dopisujemy na koniec pliku |
+| `std::ios::trunc` | do zapisu, ale przy otwarciu zawartość jest tracona |
+| `std::ios::binary` | tryb binarny (więcej o tym niżej) |
+| `std::ios::ate` | ustawia domyślną pozycję zapisu i odczytu na koniec |
+
+Podane poniżej tryby można ze sobą łączyć za pomocą operatora `|`.
+
+#### Domyślne tryby
+
+`std::fstream` domyślnie otwiera plik w trybie `std::ios::in | std::ios::out` (do odczytu i do zapisu):
+
+```cpp
+auto file = std::fstream("plik.txt");
+```
+
+Ten zapis jest równoważny z tym:
+
+```cpp
+auto file = std::fstream("plik.txt", std::ios::in | std::ios::out);
+```
+
+Każda z trzech klas: `std::fstream`, `std::ifstream` i `std::ofstream` posiada swoje
+domyślne tryby otwarcia. Oto one:
+
+<!-- The pipe character | can be escaped with &#124; -->
+
+| Klasa | Domyślny tryb |
+|------|--------------|
+| `std::fstream` | <code>std::ios::in &#124; std::ios::out</code> |
+| `std::ifstream` | `std::ios::in` |
+| `std::ofstream` | `std::ios::out` |
+
+#### Tryb binarny
+
+
+
+## Przykłady
+
+<ImproveSection />
+
+## Potencjalne błędy
+
+### Niepoprawne wykorzystanie `eof()`
+
+Często możemy natknąć się na kod, który odczytuje dane w ten sposób:
+		
+```cpp title="❌ Źle"
+std::string word;
+while (!file.eof())
+{
+	file >> word;
+	std::cout << word << '\n';
+}
+```
+
+Metoda `eof()` sprawdza czy dotarliśmy do końca pliku (ang.: *end of file*), jednak
+to podejście jest **niepoprawne**! Zauważ, że nie sprawdzamy czy operacja `>>` się powiodła
+przed wypisaniem `word`!
+
+### Przekazywanie do funkcji bez referencji
+
+Obiekty typu `std::fstream` i jego wariacje zawsze przekazujemy do funkcji przez **referencję**,
+ponieważ kopiowanie ich do parametru jest zabronione!
+
+<Tabs>
+<TabItem label="❌ Źle" value="bad" default>
+
+```cpp
+auto readLines(std::fstream file) // ❌ Uwaga: brak referencji
+{
+	auto lines = std::vector<std::string>();
+
+	std::string line;
+	while (std::getline(file, line))
+		lines.push_back(line);
+
+	return lines;
+}
+```
+
+</TabItem>
+<TabItem label="✔ Dobrze" value="good">
+
+```cpp
+auto readLines(std::fstream& file)
+{
+	auto lines = std::vector<std::string>();
+
+	std::string line;
+	while (std::getline(file, line))
+		lines.push_back(line);
+
+	return lines;
+}
+```
+
+</TabItem>
+</Tabs>

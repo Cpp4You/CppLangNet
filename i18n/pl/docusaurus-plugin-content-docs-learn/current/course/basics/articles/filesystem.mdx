@@ -1,0 +1,159 @@
+---
+sidebar_label:		🗃 System plików
+title:				System plików
+tags:				[system plików, plik, filesystem,]
+description:		"Artykuł (podstawy): korzystanie z systemu plików w języku C++"
+hide_title:			true
+---
+
+<!-- Components -->
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+import Details				from "@theme/Details";
+import Columns				from "@site-comps/Columns";
+import CustomCodeBlock		from "@site-comps/CustomCodeBlock";
+import Image				from "@site-comps/Image";
+import Replit				from "@site-comps/Replit";
+
+<!-- Examples -->
+import Example_FilesystemAliasGlobal		from "./_codes/files/example-filesystem-alias-global.mdx";
+import Example_FilesystemAliasWithinFunc	from "./_codes/files/example-filesystem-alias-within-func.mdx";
+
+# System plików
+
+Wymaga znajomości: [**1. Pierwszy program**](../../first-program) - [**9. Metody**](../../methods) oraz [**11. Referencje**](../../references)
+oraz artykułu o [obsłudze plików](../files).
+
+W tym artykule pokażemy Ci jak poprawnie korzystać z systemu plików w języku C++.
+
+## Motywacja
+
+Korzystanie z systemu plików jest często niezbędną częścią aplikacji. Programy przechowują swoje dane
+na dysku komputerowym. Aplikacje biurowe zapisują dokumenty utworzone przez użytkownika.
+Często korzystają z plików konfiguracyjnych, które również znajdują się na dysku. Gry wideo trzymają modele, dźwięki,
+tekstury i inną tego typu zawartość wewnątrz swoich plików.
+
+## Wstęp
+
+Do obsługi systemu plików będziemy korzystali z nagłówka z biblioteki standardowej:
+
+```cpp
+#include <filesystem>
+```
+
+Dzięki niemu będziemy mogli m.in.:
+
+- tworzyć i usuwać foldery
+- przeglądać zawartość folderów
+- sprawdzać rozmiar plików
+- sprawdzać czy pliki lub foldery istnieją
+
+:::caution Wsparcie kompilatora
+Upewnij się, że Twój kompilator wspiera wersję języka **C++17** i ten tryb wsparcia jest włączony,
+ponieważ `<filesystem>` został dodany do biblioteki standardowej właśnie w tej wersji.
+:::
+
+### Alias dla filesystem
+
+:::important Uwaga
+Ten krok jest opcjonalny.
+:::
+
+Ze względu na to, że wszelka funkcjonalność związana z `<filesystem>` jest zawarta wewnątrz
+przestrzeni nazw `std::filesystem`, będziemy dla wygody używać aliasu `fs`, który tworzymy w ten sposób:
+
+```cpp
+namespace fs = std::filesystem;
+```
+
+Porównanie:
+
+<Tabs>
+<TabItem label="🟡 Bez aliasu" value="without-alias" default>
+
+```cpp
+std::filesystem::path("file.txt")
+std::filesystem::exists("other_file.txt")
+std::filesystem::recursive_directory_iterator("folder")
+```
+
+</TabItem>
+<TabItem label="🟢 Z aliasem" value="with-alias">
+
+```cpp
+fs::path("file.txt")
+fs::exists("other_file.txt")
+fs::recursive_directory_iterator("folder")
+```
+
+</TabItem>
+</Tabs>
+
+
+Powyższy alias możesz umieścić w zależności od preferencji:
+- wewnątrz funkcji, by ograniczyć zakres "działania" aliasu do danego bloku kodu
+<details>
+	<summary>Przykład</summary>
+	<div>
+		<Example_FilesystemAliasWithinFunc />
+	</div>
+</details>
+- zaraz po instrukcji `#include <filesystem>`, by móc używać go w całym pliku
+<details>
+	<summary>Przykład</summary>
+	<div>
+		<Example_FilesystemAliasGlobal />
+	</div>
+</details>
+
+Przy czym warto podkreślić, że pierwszy sposób jest bezpieczniejszy i powinien być używany,
+chyba że jesteś dobrze zaznajomiony z [przestrzeniami nazw](../../namespaces) i [aliasami](../../aliases)
+i masz absolutną pewność, że wiesz co robisz.
+
+### Klasa ścieżki `path`
+
+```cpp
+auto p = fs::path("C:/plik.txt");
+```
+
+### Czy plik istnieje
+
+```cpp
+auto p = fs::path("plik.txt");
+std::cout << "Plik " << p << (fs::exists(p) ? "istnieje" : "nie istnieje") << '\n';
+```
+
+### Folder roboczy i relatywne ścieżki
+
+```cpp
+std::cout << fs::current_path() << '\n';
+```
+
+
+
+
+
+### Zawartość folderu
+
+
+
+#### Iteracja po zawartości
+
+```cpp
+for (auto entry : fs::directory_iterator("C:/folder"))
+{
+	std::cout << entry.path() << '\n';
+}
+```
+
+#### Iteracja rekursywna
+
+```cpp
+for (auto entry : fs::recursive_directory_iterator("C:/folder"))
+{
+	std::cout << entry.path() << '\n';
+}
+```
+
+## Więcej przykładów
+

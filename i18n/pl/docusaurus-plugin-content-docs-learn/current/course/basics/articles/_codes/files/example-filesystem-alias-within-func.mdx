@@ -1,0 +1,19 @@
+```cpp
+#include <filesystem>
+
+void createSettingsFolder()
+{
+	// highlight-next-line
+	namespace fs = std::filesystem;
+
+	fs::create_directories(fs::current_path() / "settings");
+}
+
+void printCurrentPath()
+{
+	// highlight-next-line
+	namespace fs = std::filesystem;
+
+	std::cout << fs::current_path() << '\n';
+}
+```
