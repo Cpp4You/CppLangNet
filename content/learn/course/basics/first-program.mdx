@@ -73,7 +73,7 @@ A **code block** in C++, is a set of instructions contained inside curly braces:
 }
 ```
 
-The function `main` has a block of code, and everything between the parentheses will be executed sequentially.
+The function `main` has a block of code, and everything between the curly braces will be executed <u>sequentially, top to bottom</u>.
 
 ### The `iostream` library
 
@@ -83,11 +83,42 @@ At the very beginning of the code there is a line:
 #include <iostream>
 ```
 
-It will allow us to continue using the input and output functions (hence `iostream` - from *input/output stream*).
-In practice, this means that we will be able to write something in the console and let the user type something into the console and intercept it.
+This allows us to use the standard input and output tools provided by C++. The name `iostream` is short for *input/output stream*.
+In practice, this means that we the programmer can write a message in the **console**; then, our program can intercept the response from the user.
 We'll tell more about `#include` itself in the future. Enough for the moment.
 
+### The console
+
+The "console" or "terminal" is the most basic form of communication for a program. It allows for a simple, two-way text interface between the program and the user.
+You're going to become very familiar with this tool, as you will be using it every step of the way on your journey to becoming an expert programmer.
+
+Below are some examples of consoles after running our Hello World program. While not every terminal is the same, they will look very similar
+by only displaying simple text with little to no color.
+
+#### 🖼 Examples of some consoles:
+
+<Tabs groupId="consoles">
+<TabItem value="windows" label="Windows" default>
+	<Image center
+			alt="Example of what a Windows console may look like"
+			src="/img/tutorials/course/basic/first-program/example-terminal-windows.png"
+		/>
+</TabItem>
+<TabItem value="linux" label="Linux">
+	<Image center
+			alt="Example of what a Linux console may look like"
+			src="/img/tutorials/course/basic/first-program/example-terminal-linux.png"
+		/>
+</TabItem>
+</Tabs>
+
+Many coding applications like Visual Studio, VSCode, CLion, Vim, etc., have a console window integrated directly into the interface.
+
+TODO: We will provide a tutorial for how to use a terminal and perform common operations.
+
 ### Printing text to the console
+
+
 
 We used this statement inside a `main` block:
 
@@ -119,7 +150,7 @@ The semicolon is treated as the end of the statement. For this reason, such a co
 std::cout << "Hello, World!1"; std::cout << "Hello, World!2"; std::cout << "Hello, World!3";
 ```
 
-it is **acceptable** but very illegible.
+it is **acceptable** but very illegible. Don't write code like this!
 :::
 
 Presentation of the above-created program:
@@ -145,7 +176,7 @@ std::cout << "Hello, World!\n";
 ```
 
 :::caution Backslash
-Note that **backslash** (`\n`) is used, not slash (`/n`)
+Note that **backslash** (`\n`) is used, not slash (`/n`).
 :::
 
 Program execution after adding newline characters:
@@ -157,7 +188,7 @@ Program execution after adding newline characters:
 		centered
 	/>
 
-:::important Uwaga
+:::important Newline Character
 `\n` is a **single character**, although to get it we have to write two characters <u>in the code</u>.
 This is because inside the text in the code, we can't put an Enter/Return.
 Backslash (`\`) tells computer that the character that follows it has a special meaning.
@@ -168,20 +199,26 @@ Backslash (`\`) tells computer that the character that follows it has a special 
 
 `std::` is the prefix of the **standard library** from which `cout` comes.
 
-It can be omitted if we give the appropriate line of code beforehand:
+Beginners often find typing `std::` to be unwieldy. It can be omitted if we give the appropriate line of code beforehand:
 
 ```cpp
 #include <iostream>
 int main()
 {
 	// highlight-next-line
-	using namespace std;
+	using std::cout;
 	cout << "Hello, World!";
 }
 ```
 
-However, many experienced programmers recommend writing `std::`.
-More on that later in our course.
+Now, all statements within this code block below the `using` line can omit the `std::` prefix for `cout`.
+
+:::caution using namespace std
+In many other online tutorials and sources, it is extremely common to find others recommending `using namespace std;` at the <u>top of your file</u>.
+While this is legal C++, it is **strongly discouraged** by nearly all experienced C++ programmers. We will cover these reasons later.
+
+For the time being, prefer the style displayed above.
+:::
 
 ## Performing calculations
 
@@ -213,7 +250,7 @@ int main()
 
 Pay attention to the result of the above program.
 
-:::caution
+:::info Text vs Instructions
 Everything in quotation marks is treated as text, not instructions.
 :::
 
@@ -250,12 +287,20 @@ After starting the program, we will get the correct result of the calculation in
 - `-` subtracts two numbers from each other
 - `*` multiplies two numbers by itself
 - `/` divides two numbers by itself
+- `()` parentheses order operations
+
+The order math in C++ is done follows the "PEMDAS" order you may have learned in school.
+
+1. First Parentheses
+2. Then Multiplication/Division from left to right
+3. Finally Addition/Subtraction from left to right
 :::
 
 ## Potential errors
 
-Finally, it is worth paying attention to what can cause a **compilation error**,
-or what we shouldn't do to keep the code in line with good practice.
+Finally, it is worth paying attention to what can cause a **compilation error**. Compilation errors are caused by invalid C++.
+When the compiler encounters invalid code, it will stop and tell you what's wrong. You cannot run your program unless compilation is
+completed without errors.
 
 ### Omiting `std::`
 
@@ -276,13 +321,19 @@ int main()
 }
 ```
 
-I emphasize this because it is possible to place
+I emphasize this because it is possible to place `using namespace std;` 
+at the top of your file, but **don't do this** (even though it's all over the Internet!), as it can lead to mysterious errors stemming from ambiguity.
+This is because `std` has a **huge** amount of names that you will commonly use in your code.
 
-```cpp
-using namespace std;
-```
+#### `using namespace std` vs `using std::cout`
+- `using namespace std;` means that you don't need to prepend `std::` for any member of the standard library you use.
+Common items you may see on your journey and in later tutorials are `cout`, `cin`, `string`, `array`, and `vector`.
 
-also before the whole `main` function, however **don't do it**.
+- `using std::cout;` means that only `cout` has the privilege to not require `std::` in front of it. You can do this for multiple items at once like:
+`using std::cout, std::cin, std::string;`
+
+
+Generally, it is recommended to use the `using std::cout;` style over `using namespace std;` if you wish to omit `std::`.
 
 ### Missing semicolons `;`
 
@@ -299,16 +350,6 @@ to where they should go.
 error: expected `;` before (...)
 ```
 
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-TODO
-```
-
-</TabItem>
-</Tabs>
-
 #### 🖼 Illustration of the error:
 
 <Image center
@@ -316,10 +357,35 @@ TODO
 		src="/img/tutorials/course/basic/first-program/error-no-semicolon-en.png"
 	/>
 
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2143: syntax error: missing ';' before 'std::cout'
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing semicolon"
+		src="/img/tutorials/course/basic/first-program/error-no-semicolon-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::info Flaky Error Messages
+Compilers have to guess where you missed a semicolon. Therefore if you are sure that you didn't miss
+a semicolon on the line it tells you about, try looking up a few lines.
+
+Additionally missing semicolons can also cause unrelated errors further down your code.
+Usually the first error message given by the compiler is the most helpful one.
+:::
+
 ### Unterminated text
 
-The text between the signs `"`, `"` and you should remember that at the end of
-the text this quotation mark actually appears.
+Text is always between the quote characters `"TEXT IS HERE!"`. 
+Forgetting to add the second quotation mark leads to C++ thinking the rest of your program is text.
 
 #### 🔴 Error message
 
@@ -330,19 +396,87 @@ the text this quotation mark actually appears.
 error: missing terminating " character
 ```
 
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-TODO
-```
-
-</TabItem>
-</Tabs>
-
 #### 🖼 Illustration of the error:
 
 <Image center
 		alt="Illustration of the error - missing quote"
 		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en.png"
 	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2001: newline in constant
+error C2143: syntax error: missing ';' before '}'
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing quote"
+		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+
+
+### Using `"`
+
+You may be tempted to put quotes inside a message when outputting it to the console.
+However, remember that C++ considers everything inside of `"..."` quotes to be text.
+
+Thus, if you write:
+```cpp
+"Hi! My name is "Slim Shady". Nice to meet you!"
+```
+
+C++ will interpret this as:
+```plaintext
+"TEXT" C++ CODE "TEXT"
+```
+
+You can prevent this by using the `\` backslash character to *escape* the quote.
+
+```cpp
+"Hi! My name is \"Slim Shady\". Nice to meet you!"
+```
+
+#### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: unable to find string literal operator ‘operator""Slim’ with ‘const char [16]’, ‘long unsigned int’ arguments
+```
+
+#### 🖼 Illustration of the error:
+
+TODO
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C3688: invalid literal suffix 'Slim'; literal operator or literal operator template 'operator ""Slim' not found
+error C2146: syntax error: missing ';' before identifier 'Shady'
+error C2065: 'Shady': undeclared identifier
+error C2143: syntax error: missing ';' before 'string'
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing quote"
+		src="/img/tutorials/course/basic/first-program/error-unescaped-quote-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::info Unhelpful errors
+These error messages aren't that helpful! Your hint should be the fact that it is treating what you intend to be text as code.
+:::
