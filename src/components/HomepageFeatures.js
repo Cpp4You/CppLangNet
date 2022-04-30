@@ -3,10 +3,17 @@ import clsx				from 'clsx';
 import styles			from './HomepageFeatures.module.scss';
 
 import useBaseUrl		from '@docusaurus/useBaseUrl';
+import ThemedImage		from '@theme/ThemedImage';
+
+
 import { translate }	from '@docusaurus/Translate';
 
 const VscIconsFolder = 'img/icons/vscode/dark';
 const vscIcon = (name) => `${VscIconsFolder}/${name}.svg`;
+const vscThemedIcon = (light, dark = light) => ({
+		light: `img/icons/vscode/light/${light}.svg`,
+		dark: `img/icons/vscode/dark/${dark}.svg`,
+	});
 
 
 
@@ -14,7 +21,7 @@ const FeatureList = [
 	{
 		title:		translate({ message: 'Learn', id: 'langFeature.Learn' }),
 		url:		'learn/',
-		svgPath:	vscIcon('book'),
+		svgPath:	vscThemedIcon('book'),
 		description: (
 			<>
 				Docusaurus was designed from the ground up to be easily installed and
@@ -24,7 +31,7 @@ const FeatureList = [
 	},
 	{
 		title:		translate({ message: 'Docs', id: 'langFeature.Docs' }),
-		svgPath:	vscIcon('repo'),
+		svgPath:	vscThemedIcon('repo'),
 		url:		'docs/',
 		description: (
 			<>
@@ -36,7 +43,7 @@ const FeatureList = [
 	{
 		title:		translate({ message: 'Features', id: 'langFeature.Features' }),
 		url:		'features/',
-		svgPath:	vscIcon('extensions'),
+		svgPath:	vscThemedIcon('extensions'),
 		description: (
 			<>
 				Extend or customize your website layout by reusing React. Docusaurus can
@@ -47,7 +54,7 @@ const FeatureList = [
 	{
 		title:		translate({ message: 'Tools', id: 'langFeature.Tools' }),
 		url:		'tools/',
-		svgPath:	vscIcon('tools'),
+		svgPath:	vscThemedIcon('tools'),
 		description: (
 			<>
 				Extend or customize your website layout by reusing React. Docusaurus can
@@ -61,7 +68,9 @@ function Feature({svgPath, title, url}) {
 	return (
 		<a href={url} className={styles.pageCard}>
 			<div className={styles.pageCardSvg}>
-				<img src={svgPath} className={styles.featureSvg} alt={title} />
+				{typeof svgPath == "object" && <ThemedImage sources={svgPath} />}
+				{typeof svgPath == "string" && <img src={svgPath} alt={title} />}
+				
 			</div>
 			<div className={styles.pageCardText}>
 				<h3>{title}</h3>
