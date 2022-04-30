@@ -73,7 +73,8 @@ Gdy uruchamia aplikację, po kolei realizuje instrukcje z **bloku kodu** `main`-
 }
 ```
 
-Funkcja główna `main` ma swój blok kodu i wszystko co znajdzie się pomiędzy tymi nawiasami zostanie wykonane po kolei.
+Funkcja główna `main` ma swój blok kodu i wszystko co znajdzie się pomiędzy tymi nawiasami zostanie
+wykonane <u>po kolei, od góry do dołu</u>.
 
 
 ### Nagłówek `iostream`
@@ -90,6 +91,40 @@ W praktyce oznacza to, że będziemy mogli wypisać coś w konsoli oraz pozwoli�
 
 Instrukcje `#include <naglowek>` prawie zawsze dajemy na samym początku pliku z kodem.
 O samym `#include` powiemy sobie w przyszłości więcej - na teraz wystarczy.
+
+### Konsola
+
+Konsola lub inaczej "terminal" to najbardziej podstawowe narzędzie pozwalające na komunikację z programem. Pozwala ona stworzyć prosty interfejs,
+między programem a jego użytkownikiem. Będziesz mieć okazję zapoznać się z tym narzedziem naprawdę dobrze, ponieważ będziesz używać
+go bardzo często w swojej przygodzie z programowaniem.
+
+Poniżej znajdują się przykłady tego jak wygląda program "Witaj świecie" w konsoli. Nie każdy terminal jest taki sam, ale każdy wygląda bardzo
+podobnie - po prostu wyświetla tekst w jednym konkretnym kolorze.
+
+#### 🖼 Przykłady wyglądu konsol
+
+<Tabs groupId="consoles">
+<TabItem value="windows" label="Windows" default>
+	<Image center
+			maxheight={400}
+			alt="Przykładowy wygląd konsoli na Windowsie"
+			src="/img/tutorials/course/basic/first-program/example-terminal-windows.png"
+		/>
+</TabItem>
+<TabItem value="linux" label="Linux">
+	<Image center
+			maxheight={400}
+			alt="Przykładowy wygląd konsoli na Linuxie"
+			src="/img/tutorials/course/basic/first-program/example-terminal-linux.png"
+		/>
+</TabItem>
+</Tabs>
+
+Wiele edytorów kodu takich jak Visual Studio, VS Code, CLion czy Vim posiadają zintegrowane okno konsoli bezpośrednio w programie.
+
+:::info TODO
+Dodać link do poradnika jak wykonywać podstawowe operacje w konsoli.
+:::
 
 ### Wypisywanie do konsoli
 
@@ -129,7 +164,7 @@ Z tego powodu taki kod:
 std::cout << "Witaj, świecie!1"; std::cout << "Witaj, świecie!2"; std::cout << "Witaj, świecie!3";
 ```
 
-jest **akceptowalny**, jednak bardzo nieczytelny.
+jest **akceptowalny**, jednak bardzo nieczytelny. Nie pisz kodu w ten sposób!
 :::
 
 
@@ -157,7 +192,7 @@ std::cout << "Witaj, świecie!\n";
 ```
 
 :::caution Backslash
-Zwróć uwagę, że używany jest **backslash** (`\n`), a nie slash (`/n`)
+Zwróć uwagę, że używany jest **backslash** (`\n`), a nie slash (`/n`).
 :::
 
 Działanie programu po dodaniu znaków nowej linii:
@@ -188,19 +223,27 @@ stąd ten zapis. Znak backslash (`\`) informuje, że **następujący** po nim zn
 
 `std::` to przedrostek tzw. **biblioteki standardowej**, z której pochodzi `cout`.
 
-Można go pominąć, jeśli użyjemy wcześniej odpowiedniej linijki kodu:
+Początkujący zazwyczaj nie przepadają za ciągłym powtarzaniem go. Można go pominąć, jeśli użyjemy
+wcześniej odpowiedniej linijki kodu:
 
 ```cpp
 #include <iostream>
 int main()
 {
 	// highlight-next-line
-	using namespace std;
+	using std::cout;
 	cout << "Witaj, świecie!";
 }
 ```
-Natomiast wielu doświadczonych programistów **zaleca zrezygnowanie z pomijania** `std::`.
-Więcej o tym w dalszej części kursu.
+
+Od miejsca wprowadzenia `using std::cout;` do końca bloku kodu można pominąć `std::` przy używaniu
+`cout`.
+
+:::caution using namespace std
+W wielu innych kursach i źródłach można spotkać się z polecaniem korzystania z `using namespace std;`
+**na samej górze** pliku z kodem. O ile jest to legalne w C++, to doświadczeni programiści
+zdecydowanie odradzają tej praktyki. Więcej o tym powiemy w dalszej części kursu.
+:::
 
 ## Wykonywanie obliczeń
 
@@ -268,6 +311,13 @@ Po uruchomieniu programu dostaniemy prawidłowy wynik obliczenia znajdującego s
 - `-` odejmuje od siebie dwie liczby
 - `*` mnoży przez siebie dwie liczby
 - `/` dzieli przez siebie dwie liczby
+- `()` kontroluje kolejność wykonywania działań
+
+W wykonywaniu działań obowiązuje kolejność znana nam z matematyki:
+
+1. Najpierw to co w nawiasach okrągłych
+2. Następnie mnożenie i dzielenie, w kolejności od lewej do prawej
+3. Później dodawanie i odejmowanie, w kolejności od lewej do prawej
 :::
 
 ## Potencjalne błędy
@@ -281,7 +331,7 @@ lub czego nie powinniśmy robić, żeby kod był zgodny z dobrymi praktykami.
 Najlepiej nie pomijaj przedrostka `std::`.
 :::
 
-Jeśli sprawia Ci problem przedrostek `std::`, to rozważ
+Jeśli przedrostek `std::` sprawia Ci problem, to rozważ
 użycie go, tak jak w przykładzie, lokalnie, **zawsze wewnątrz funkcji**:
 
 ```cpp title="🔹 Dopuszczalne użycie"
@@ -300,7 +350,18 @@ Kładę na to nacisk, ponieważ jest możliwe umieszczenie
 using namespace std;
 ```
 
-również przed całą funkcją `main`, jednak **nie rób tego**.
+również przed całą funkcją `main`, jednak **nie rób tego**, nawet jeśli cały internet mówi, że tak jest ok.
+To podejście może prowadzić do dziwnych błędów wynikających z konfliktu nazw (ang. ambiguity).
+Zawartość biblioteki standardowej jest ogromna. `std` posiada wewnątrz bardzo wiele nazw.
+
+#### Porównanie `using`
+
+- **`using namespace std`** sprawia, że wszelkie nazwy, które wcześniej wymagały dodania przedrostka `std::` teraz będą dostępne
+bez tego wymogu, a wśrod nich są takie nazwy jak np. `left`
+- **`using std::cout`** pozwala nam pomijać przedrostek `std::` tylko przed `cout`. Możemy w ten sposób umiescić kilka potrzebnych rzeczy,
+np.: `using std::cout, std::cin, std::string;`
+
+Podsumowując: preferuj używanie `using std::cout` zamiast `using namespace std`.
 
 ### Brak średników `;`
 
@@ -317,22 +378,37 @@ w tej lekcji zwracając uwagę, gdzie powinny one się znaleźć.
 error: expected `;` before (...)
 ```
 
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-TODO
-```
-
-</TabItem>
-</Tabs>
-
 #### 🖼 Ilustracja błędu:
 
 <Image center
 		alt="Ilustracja błędu - brak średnika"
 		src="/img/tutorials/course/basic/first-program/error-no-semicolon-pl.png"
 	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2143: syntax error: missing ';' before 'std::cout'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Illustration of the error - missing semicolon"
+		src="/img/tutorials/course/basic/first-program/error-no-semicolon-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::info Niedokładna treść błędów
+Kompilatory próbując wykryć gdzie brakuje średnika często muszą zgadywać. Z tego powodu, jeśli jesteś pewny,
+że w podanej przez kompilator linii nie brakuje średnika, sprawdź również kilka linijek, które otaczają tą podaną.
+
+Dodatkowo, brakujące średniki mogą powodować inne niezwiązane błędy niżej w Twoim kodzie.
+Zazwyczaj najbardziej pomocna jest treść pierwszego błędu wystosowanego przez kompilator.
+:::
 
 ### Niezakończony tekst
 
@@ -348,19 +424,84 @@ tekstu faktycznie ten cudzysłów się znalazł.
 error: missing terminating " character
 ```
 
+#### 🖼 Ilustracja błędu
+
+<Image center
+		alt="Illustration of the error - missing quote"
+		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en.png"
+	/>
+
 </TabItem>
 <TabItem value="msvc" label="MSVC">
 
 ```plaintext
-TODO
+error C2001: newline in constant
+error C2143: syntax error: missing ';' before '}'
 ```
-
-</TabItem>
-</Tabs>
 
 #### 🖼 Ilustracja błędu:
 
 <Image center
-		alt="Ilustracja błędu - brak cudzysłowu"
-		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-pl.png"
+		alt="Illustration of the error - missing quote"
+		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en-msvc.png"
 	/>
+
+</TabItem>
+</Tabs>
+
+### Wyświetlanie znaku `"`
+
+Może Cię kusić, aby umieścić cudzysłów wewnątrz komunikatu, gdy wypisujesz go na konsolę.
+Pamiętaj jednak, że C++ traktuje wszystko, co znajduje się wewnątrz `"..."`, jako tekst.
+
+Z tego powodu, jeśli napiszesz:
+```cpp
+"Cześć! Nazywam się "Diego", witaj w kolonii!"
+```
+
+C++ zinterpretuje to jako
+```cpp
+"TEKST" KOD C++ "TEKST"
+```
+
+Możesz temu zapobiec dodając backslash (`\`) przed cudzysłowem, by użyć tzw. *escape-sequence*.
+
+```cpp
+"Cześć! Nazywam się \"Diego\", witaj w kolonii!"
+```
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: unable to find string literal operator ‘operator""Diego’ with ‘const char [20]’, ‘long unsigned int’ arguments
+```
+
+#### 🖼 Ilustracja błędu:
+
+TODO
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C3688: invalid literal suffix 'Diego'; literal operator or literal operator template 'operator ""Diego' not found
+error C2143: syntax error: missing ';' before 'string'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - nieprawidłowy cudzysłów"
+		src="/img/tutorials/course/basic/first-program/error-unescaped-quote-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::info Niepomocne błędy
+Powyższe komunikaty o błędach nie są zbyt pomocne! Realną wskazówką powinien być fakt, że program traktuje to, co ma być tekstem, jako kod
+(widać to w edytorze kodu).
+:::
