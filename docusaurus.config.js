@@ -219,10 +219,10 @@ function filterSidebarItems(items)
 			},
 			announcementBar: {
 				content:
-					'⚠ This site is still in an early phase of construction. You can help us by <a target="_blank" rel="noopener noreferrer" href="/contributing">contributing</a>',
+					'⚠ This site is still in an early phase of construction. You can help us by <a target="_blank" rel="noopener noreferrer" href="/contributing">contributing</a>. Consider giving us a ⭐ star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/PoetaKodu/CppLangNet/stargazers">GitHub</a>',
 				backgroundColor: '#fafbfc',
 				textColor: '#091E42',
-				isCloseable: true,
+				isCloseable: false,
 			},
 			footer: {
 				style: 'dark',
