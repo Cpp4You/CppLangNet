@@ -6,10 +6,50 @@ tags:				[compiler, tool, gcc, linux]
 hide_title:			true
 ---
 
-import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
-
-<NotFinished/>
 
 # GCC setup on Linux
 
+In this article, we will discuss how to setup GCC on linux using terminal.
 
+GCC stands for GNU Compiler Collections which is used to compile mainly
+C and C++ language. GCC was originally written as the compiler for the
+GNU operating system. GCC is an open-source collection of compilers and
+libraries.
+
+First, we have to open up the terminal; we can use the shortcut
+`ctrl` + `alt` + `t` or we can manually open it up by searching it in
+the menu
+
+**Command 1:** To begin, update the packages list using the below command
+```
+sudo apt-get update
+```
+This command is used to download package information from all configured
+sources and to get the info of the updated versions of the packages.
+
+:::important Note
+***sudo** *(Super User DO)* enables a permitted user to run a command as
+the *superuser* or another user, depending on the security policy. So,
+if required, enter your system *password* to proceed.
+:::
+
+**Command 2:** Now we have to install the build-essential packages, which
+is also known as a meta-package, it contains the GCC compiler all the other
+essentials used to compile the software written in C and C++ language.
+```
+sudo apt-get install build-packages
+```
+If required enter your system *password* to proceed.
+
+**Command 3:** For checking if GCC had successfully installed on your system.
+```
+gcc --version
+```
+If installed successfully, output would be like this:
+
+#### Output:
+
+<Image center
+       alt="Output for `gcc --version`"
+       src="https://i.ibb.co/g9ZBpYn/image.png"
+       />
