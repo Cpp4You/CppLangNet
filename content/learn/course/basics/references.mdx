@@ -7,8 +7,73 @@ tags:				[reference, pointer, memory]
 hide_title:			true
 ---
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
-
-<NotFinished/>
-
 # References
+
+:::note Add a page about pointers
+It is difficult to understand references before pointers.
+:::
+
+References are very similar to pointers.
+But the difference is that references cannot refer to something else, or refer to nothing.
+A reference to a variable is basically "another name" for that variable.
+
+## Motivations
+The most common use case for references is `pass by reference`.
+
+Pass by reference means to take function parameters by "the variable itself".
+Normally when functions take parameters, it'll copy the value of the parameters,
+also known as `pass by value`
+
+Here is an example:
+```cpp
+void PlusOne(int num) 
+{
+    num = num + 1; // Add 1 to num
+}
+
+int main() 
+{
+    int x = 5;
+    PlusOne(x);
+    std::cout << x;
+}
+```
+
+Expected output:
+```
+6
+```
+
+Actual output:
+```
+5
+```
+
+And this is all due to *pass by value*. Only the value of `x` was taken in by the `PlusOne`.
+So `x` itself was not changed at all.
+
+### Fixing the function with pass by reference
+Here is how you can use pass by reference to get the result you want:
+```cpp
+void PlusOne(int& num) 
+{
+    num = num + 1;
+}
+
+int main() 
+{
+    int x = 5;
+    PlusOne(x);
+    std::cout << x;
+}
+```
+
+Now it outputs the expected:
+```
+6
+```
+
+:::important Prefer references over pointers
+Pointers can change target and point to null, references are much safer.
+Always use references unless a pointer is needed.
+:::
