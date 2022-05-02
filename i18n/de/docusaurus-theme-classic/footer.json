@@ -1,0 +1,62 @@
+{
+  "link.title.Shortcut": {
+    "message": "Kurzlinks",
+    "description": "The title of the footer links column with title=Shortcut in the footer"
+  },
+  "link.title.Community": {
+    "message": "Community",
+    "description": "The title of the footer links column with title=Community in the footer"
+  },
+  "link.title.More": {
+    "message": "Mehr",
+    "description": "The title of the footer links column with title=More in the footer"
+  },
+  "link.item.label.Learn C++": {
+    "message": "Lerne C++",
+    "description": "The label of footer link with label=Learn C++ linking to /learn"
+  },
+  "link.item.label.Documentation": {
+    "message": "Dokumentation",
+    "description": "The label of footer link with label=Documentation linking to /docs"
+  },
+  "link.item.label.Features": {
+    "message": "Features",
+    "description": "The label of footer link with label=Features linking to /features"
+  },
+  "link.item.label.Tools": {
+    "message": "Tools",
+    "description": "The label of footer link with label=Tools linking to /tools"
+  },
+  "link.item.label.Contributing": {
+    "message": "Beitragen",
+    "description": "The label of footer link with label=Contributing linking to /contributing"
+  },
+  "link.item.label.Discord": {
+    "message": "Discord",
+    "description": "The label of footer link with label=Discord linking to https://discord.gg/3MeXQ8TvBw"
+  },
+  "link.item.label.Forum": {
+    "message": "Forum",
+    "description": "The label of footer link with label=Forum linking to https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum"
+  },
+  "link.item.label.Stack Overflow": {
+    "message": "Stack Overflow",
+    "description": "The label of footer link with label=Stack Overflow linking to https://stackoverflow.com/questions/tagged/cpp"
+  },
+  "link.item.label.Reddit": {
+    "message": "Reddit",
+    "description": "The label of footer link with label=Reddit linking to https://reddit.com/r/cpp"
+  },
+  "link.item.label.Blog": {
+    "message": "Blog",
+    "description": "The label of footer link with label=Blog linking to /blog"
+  },
+  "link.item.label.GitHub": {
+    "message": "GitHub",
+    "description": "The label of footer link with label=GitHub linking to https://github.com/PoetaKodu/CppLangNet"
+  },
+  "copyright": {
+    "message": "Copyright © 2022 <a href=\"https://github.com/PoetaKodu\" target=\"_blank\">Paweł Syska</a>, Inc. Built with Docusaurus.",
+    "description": "The footer copyright"
+  }
+}
