@@ -65,7 +65,7 @@ function filterSidebarItems(items)
 
 	i18n: {
 		defaultLocale: 'en',
-		locales: [ 'en', 'pl' ]
+		locales: [ 'en', 'pl', 'de' ]
 	},
 
 	plugins: [
