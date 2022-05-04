@@ -6,40 +6,37 @@ description:		"Lekcja: lambdy (I) w języku C++"
 hide_title:			true
 ---
 
-import NotFinished		from "@site/i18n/pl/presets/NotFinished.mdx";
 import Columns			from "@site-comps/Columns";
 import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
 import Image			from "@site-comps/Image";
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
-import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
 import SwitchView		from "@site-comps/SwitchView";
 
 import TransformIntroExampleCpp20		from "./lambdas/_codes/transform-example-cpp20.mdx";
 import TransformIntroExampleUntilCpp20	from "./lambdas/_codes/transform-example-until-cpp20.mdx";
 
 
-<NotFinished />
-
 # Wyrażenia lambda
 
 Wyrażnia lambda, zwane częściej *lambdami*, to wygodny sposób na zapisanie kawałka kodu w obiekcie, który można potem przesłać do funkcji i wykorzystać.
 Lambdy przydają się głównie do:
- - tworzenia nazwanych obiektów wewnątrz funkcji, które można potem wykorzystać jak funkcje, bez zaśmiecania globalnej przestrzeni.
- - tworzenia nienazwanych kawałków kodu, które można przesyłać do innych funkcji (np. algorytmów biblioteki standardowej).
+ - tworzenia nazwanych obiektów wewnątrz funkcji, które można potem wykorzystać jak funkcje, bez zaśmiecania globalnej przestrzeni nazw.
+ - tworzenia "nienazwanych" kawałków kodu, które można przesyłać do innych funkcji (np. algorytmów biblioteki standardowej).
 
-W sekcji [**wykorzystanie w praktyce**](#wykorzystanie-w-praktyce) znajduje się kilka przykładów wykorzystania lambd.
+W sekcji  znajduje się kilka przykładów wykorzystania lambd.
+Zalecamy zajrzeć do sekcji [**Proste przykłady**](#proste-przykłady) i [**Wykorzystanie w praktyce**](#wykorzystanie-w-praktyce).
 
-:::important *"Nienazwane funkcje, funktory, obiekty funkcyjne"*
-Lambdy często nazywane są "nienazwanymi funkcjami" (*ang. anonymous function*), funktorami (*ang. functor*) lub "obiektami funkcyjnymi" (*ang. function object*).
+:::important *"Nienazwane funkcje, obiekty funkcyjne"*
+Lambdy często nazywane są **nienazwanymi funkcjami** (*ang. anonymous function*) lub **obiektami funkcyjnymi** (*ang. function object*).
 Żadna z tych nazw nie jest poprawna, aczkolwiek może zostać użyta w kontekście lambd. Lambdy, co prawda tworzą potajemnie obiekt, aczkolwiek same w sobie są tylko wyrażeniami.
-Z uwagi na specyfikę działania wyrażeń lambda, aby przypisać ich wynik do obiektu, należy użyć słowa kluczowego `auto`, lub typu `std::function` (o którym dowiemy się w lekcji drugiej o lambdach).
+Z uwagi na specyfikę działania wyrażeń lambda (tworzenie magicznego, niewidzialnego obiektu o nieznanym, magicznym typie), aby przypisać ich wynik do obiektu, należy użyć słowa kluczowego `auto`, lub typu `std::function` (o którym dowiemy się w lekcji drugiej o lambdach).
 :::
 
-## Składnia lambdy
+## Składnia
 <Image center
 		maxheight={470}
-		alt="Definiowanie lambdy"
+		alt="Składnia lamdby"
 		src="/img/tutorials/course/intermediate/lambdas/summary-pl.png"
 		desc={<></>}
 	/>
@@ -51,18 +48,18 @@ Przy wyrażeniu lambda można jeszcze dodać atrybuty, typ zwracany i wiele inny
 ani tak często używane, więc porozmawiamy o nich w innej lekcji.
 
 #### Lista przechwytywania (*ang. capture list*)
-Jak wiemy z lekcji o funkcjach, zmienne lokalne (np. z funkcji main) nie są znane w ciele innej funkcji.
+Jak wiemy z lekcji o funkcjach, zmienne lokalne (np. z funkcji `main`) nie są znane w ciele innej funkcji.
 To samo tyczy się wyrażeń lambda. Te zmienne lokalne domyślnie również nie są widoczne wewnątrz ciała lambdy, dlatego,
-aby móc uzyskać do nich dostęp, należy użyć listy przechwytywania.
+aby móc uzyskać do nich dostęp, należy użyć **listy przechwytywania**.
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
 
-```cpp title="Lambda z listą przechwytywania."
+```cpp title="Lambda z listą przechwytywania"
 int five = 5;
-auto return7 = [five] () { return five + 2; };
+auto get7 = [five] () { return five + 2; };
 
-std::cout << return7();
+std::cout << get7();
 ```
 
 </div>
@@ -70,34 +67,35 @@ std::cout << return7();
 <div>
 
 ```plaintext title="Wynik (konsola)"
-25
+7
 ```
 
 </div>
 </Columns>
 
 :::note
-W przypadku lambdy z pustą listą argumentów można pominąć okrągłe nawiasy przy deklaracji.
+W przypadku lambdy z pustą listą argumentów można **pominąć okrągłe nawiasy** przy deklaracji.
 ```cpp
 int five = 5;
-auto return7 = [five] { return five + 2; };
+auto get7 = [five] { return five + 2; };
 
-std::cout << return7();
+std::cout << get7();
 ```
 :::
 
-:::caution Edycja zmiennych
-Zmiennych wychwyconych przez listę nie można edytować. Jest sposób na obejście tego ograniczenia, jednak porozmawiamy o tym w lekcji drugiej.
+:::caution Edycja przechwyconych zmiennych
+Zmiennych wychwyconych przez listę przechwytywania **nie można** edytować.
+Jest sposób na obejście tego ograniczenia, jednak porozmawiamy o tym w lekcji drugiej.
 :::
 
-#### Lista argumentów
+#### Lista parametrów
 Działa tak samo jak w przypadku funkcji.
-Pozwala nam zadeklarować z jakimi parametrami funkcja powinna zostać wywołania, a potem przesłać do niej argumenty.
+Pozwala nam zadeklarować z jakimi parametrami funkcja powinna zostać wywołana, a potem przesłać do niej argumenty.
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
 
-```cpp title="Lambda z użytą listą argumentów."
+```cpp title="Lambda z listą argumentów"
 auto multplyBy7 = [] (int a) { return a * 7; }; // lambda z parametrem a o typie int
 std::cout << multplyBy7(5); // lambda wywołana z argumentem 5
 ```
@@ -114,16 +112,17 @@ std::cout << multplyBy7(5); // lambda wywołana z argumentem 5
 </Columns>
 
 #### Ciało wyrażenia lambda
-Jest to zwykły blok kodu. Tutaj zapisujemy instrukcje, działamy na zmiennych itp. W ciele wyrażenia lambda może się znaleźć instrukcja `return`.
+Jest to zwykły blok kodu. Tutaj zapisujemy instrukcje, działamy na zmiennych itp.
+W ciele wyrażenia lambda może się znaleźć instrukcja `return`.
 
 ### Proste przykłady
 
-#### Porównanie lambdy i funkcji zwracającą liczbę 5 za każdym wywołaniem.
+#### Porównanie lambdy i funkcji zwracającą liczbę 5 za każdym wywołaniem
 
 <Columns spacing={40} columns={['1fr', '1fr']}>
 <div>
 
-```cpp title="Lambda."
+```cpp title="Lambda"
 #include <iostream>
 
 int main()
@@ -137,7 +136,7 @@ int main()
 
 <div>
 
-```cpp title="Funkcja."
+```cpp title="Funkcja"
 #include <iostream>
 
 int five() 
@@ -154,12 +153,12 @@ int main()
 </div>
 </Columns>
 
-#### Lambda zwracająca kwadrat swojego argumentu.
+#### Lambda zwracająca kwadrat swojego argumentu
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
 
-```cpp title="Wyrażenie lambda z argumentem."
+```cpp title="Wyrażenie lambda z argumentem"
 auto square = [](int x) { return x*x; };
 std::cout << square(5);
 ```
@@ -182,13 +181,13 @@ std::cout << square(5);
 
 ```cpp title="Lambda jako funkcja w funkcji."
 void print3Hellos(std::string name) {
-	auto print_hello = [](std::string hello, std::string name) {
+	auto print_hello = [name](std::string hello) {
 		std::cout << hello << ", " << name << "!\n";
 	}
 
-	print_hello("Hello", name);
-	print_hello("Welcome", name2);
-	print_hello("Hi, ", name3);
+	print_hello("Hello");
+	print_hello("Welcome");
+	print_hello("Hi");
 }
 // ...
 print3Hellos("Mark");
@@ -211,18 +210,18 @@ Hi, Mark!
 
 ### Próba użycia nieprzechwyconej zmiennej
 
-```cpp
+```cpp title='Próba użycia nieprzechwyconej zmiennej'
 int main()
 {
 	int A = 5;
 	
 	// highlight-start
-	// ❌ Zmienna A nie jest tutaj znana ❌
-	//auto addToA = [] (int b) { return A + b; };
+	// ❌ Zmienna A nie jest znana wewnątrz addToA ❌
+	// auto addToA = [] (int b) { return A + b; };
 	// highlight-end
 
 	// highlight-start
-	// Poprawna definicja lambdy ✅
+	// ✅ Poprawna definicja lambdy ✅
 	auto addToA = [A] (int b) { return A + b; };
 	std::cout << addToA(5) << "\n";
 	// highlight-end
@@ -231,18 +230,19 @@ int main()
 
 ### Próba zmodyfikowania przechwyconej zmiennej
 
-```cpp
+```cpp title='Próba zmodyfikowania przechwyconej zmiennej'
 int main()
 {
 	int A = 5;
 	
 	// highlight-start
 	// ❌ Nie możemy tutaj zmodyfikować zmiennej A ❌
-	//auto addToA = [A] (int b) { A += b; };
+	// auto addToA = [A] (int b) { A += b; };
 	// highlight-end
 
 	// highlight-start
-	// Póki co możemy wykorzystać zwracanie wartości, w dalszej części kursu dowiesz się jak modyfikować przechwycone zmienne ✅
+	// ✅ Póki co możemy wykorzystać zwracanie wartości.
+	// W dalszej części kursu dowiesz się jak modyfikować przechwycone zmienne ✅
 	auto addToA = [A] (int b) { return A + b; };
 	std::cout << addToA(5) << "\n";
 	// highlight-end
@@ -252,12 +252,12 @@ int main()
 ## Wykorzystanie w praktyce
 
 :::caution Wersja C++
-Zalecamy korzystanie z wersji **C++20**, ponieważ rozwiązania z niej są prostsze.
+Zalecamy korzystanie z najnowszej wersji C++ (poprawnie zwanej standardem) - **C++20**, ponieważ rozwiązania z niej są prostsze.
 Dla osób, które z jakiegoś powodu nie mogą zainstalować kompilatora, który wspiera
 najnowszy standard, zamieścimy też przykłady działające na starszej wersji.
 :::
 
-### Wykorzystnie lambdy na przykładzie `std::transform()`
+### Wykorzystnie lambdy na przykładzie algorytmu **transform**
 
 Aby użyć tego algorytmu, musimy dołączyć nagłówek `algorithm`.
 
@@ -265,13 +265,11 @@ Aby użyć tego algorytmu, musimy dołączyć nagłówek `algorithm`.
 #include <algorithm>
 ```
 
-### Użycie transform z wykorzystaniem lambdy
-
 #### Co chcemy zrobić?
 W naszym przykładzie stworzymy wektor oraz będziemy chcieli podnieść wszystkie jego elementy do kwadratu.
 
 #### Możliwe opcje
-Algorytm `transform()` może przyjąć zarówno funkcję, obiekt funkcujny jak i lambdę.
+Algorytm `transform` może przyjąć zarówno funkcję, obiekt funkcyjny jak i lambdę.
 Jako argument wyślemy lambdę, bo o nich jest ten rozdział. Nasza lambda przyjmnie jeden argument typu `int` oraz zwróci wartość tego samego typu.
 
 <SwitchView content={
