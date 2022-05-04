@@ -79,9 +79,9 @@ std::cout << get7();
 In case of a lambda expression with an empty parameter list, the **parentheses** can be **ommited**.
 ```cpp
 int five = 5;
-auto return7 = [five] { return five + 2; };
+auto get7 = [five] { return five + 2; };
 
-std::cout << return7();
+std::cout << get7();
 ```
 :::
 
@@ -272,7 +272,7 @@ To use this algorithm, you have to include the `algorithm` header.
 In the example, we will create a vector of numbers and square every each of it with the use of the **transform** algorithm.
 
 #### The way to go
-The `transform` algorithm, can be passed a function, function object, functor or a lambda.
+The `transform` algorithm, can be passed a function, function object, or a lambda.
 Since it's a lesson about lambdas, we will make use of them. Our lambda will take one parameter of type `int` and will return a value of the same type.
 
 <SwitchView content={
