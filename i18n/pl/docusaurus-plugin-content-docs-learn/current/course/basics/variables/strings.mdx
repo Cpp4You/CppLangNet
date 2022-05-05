@@ -14,6 +14,7 @@ import ImproveSection	from '@site/i18n/pl/presets/ImproveSection.mdx';
 <!-- Components -->
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
+import Columns			from "@site-comps/Columns";
 
 <NotFinished/>
 
@@ -157,6 +158,12 @@ czyli podajemy zmienną (`name`), następnie po kropce piszemy `size` i dajemy *
 name.size()
 ```
 
+Co ciekawe, `std::string` ma również drugą metodę, o nazwie `length`, która działa dokładnie w ten sam sposób:
+```cpp title="🔹 Wywołanie metody length"
+name.length()
+```
+
+
 ### Pobieranie fragmentu
 
 Analogicznie do metody `size` możemy pobrać fragment napisu za pomocą metody `substr` (od ang.: *substring*):
@@ -219,7 +226,7 @@ int number = 53;
 std::string numberInStr	= std::to_string(number);
 ```
 
-W ten sam sposób, jeśli mamy wewnątrz łańcuchu znaków zapisaną liczbę, możemy ją
+W ten sam sposób, jeśli mamy wewnątrz łańcucha znaków zapisaną liczbę, możemy ją
 przekonwertować na inta za pomocą `std::stoi` (od ang.: _**s**tring **to** **i**nt_) oraz
 typu `float` za pomocą `std::stof` (od ang.: _**s**tring **to** **f**loat_):
 
@@ -247,7 +254,353 @@ float number = std::stof(numberInStr);
 
 ## Przykłady
 
-<ImproveSection />
+### Podstawowa manipulacja
+
+#### Tworzenie i wyświetlanie
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Tworzenie i wyświetlanie"
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string myName = "Super Coder";
+	std::cout << "My name is " << myName << "!\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+My name is Super Coder!
+```
+
+</div>
+</Columns>
+
+#### Dodawanie napisów
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Dodawanie napisów"
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string myName = "Super";
+	std::string mySurname = "Coder";
+
+	// Możemy dodawać napisy do siebie:
+	std::string myWholeName = myName + " " + mySurname;
+
+	std::cout << "My name is " << myWholeName << "!\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+My name is Super Coder!
+```
+
+</div>
+</Columns>
+
+#### Podnapisy
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Podnapisy"
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string myWholeName = "Super Coder";
+
+	std::string myName = myWholeName.substr(0, 5);
+	// 0 1 2 3 4 5 6 7 8 9 10
+	// S u p e r   C o d e r
+	// ^^^^^^^^^
+	// Zaczynamy od indeksu 0, bierzemy 5 znaków.
+
+	std::cout << "My name is " << myName << "!\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+My name is Super!
+```
+
+</div>
+</Columns>
+
+### Wczytywanie
+
+#### Wczytywanie cin'em
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Wczytywanie cin'em"
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string name;
+	std::cin >> name;
+
+	std::cout << "Hello " << name << "!\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+> Super Coder
+Hello Super!
+```
+
+</div>
+</Columns>
+
+:::caution `std::cin` vs `std::getline`
+`std::cin` domyślnie wczytuje tylko i wyłącznie do napotkania spacji, z tego powodu jeśli wprowadzimy napis w którym są spacje, zostanie on ucięty.
+Aby móc wczytać napis ze spacjami, należy użyć [`std::getline`](#wczytywanie-getlinem).
+:::
+
+#### Wczytywanie getlin'em
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Wczytywanie getlin'em"
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string name;
+	std::getline(std::cin, name);
+
+	std::cout << "Hello " << name << "!\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+> Super Coder
+Hello Super Coder!
+```
+
+</div>
+</Columns>
+
+#### Separator w getlinie
+
+W funkcji `std::getline` jako trzeci argument możemy podać również separator, do którego `std::getline` ma czytać.
+Domyślnie jest to znak nowej linii, więc `std::getline` wczytuje całą linię, jednak możemy tam dać dowolny znak.
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Separator w getlinie"
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string name;
+	std::getline(std::cin, name, '?');
+
+	std::cout << "Hello " << name << "!\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+> Super Co?der
+Hello Super Co!
+```
+
+</div>
+</Columns>
+
+
+### Konwersje
+
+#### Int i float na string
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Int i float na string"
+#include <iostream>
+#include <string>
+
+int main() {
+	int dayOfTheWeek = 3;
+	float temperature = 17.4f;
+
+	std::string message = "Mamy dzisiaj " 
+		+ std::to_string(dayOfTheWeek) 
+		+ ". dzień tygodnia, dzisiejsza temperatura to " 
+		+ std::to_string(temperature) 
+		+ " stopni Celsjusza!";
+
+	std::cout << message << "\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+Mamy dzisiaj 3. dzień tygodnia, dzisiejsza temperatura to 17.000000 stopni Celsjusza!
+```
+
+</div>
+</Columns>
+
+
+:::important `17.400000`
+Rzuciło Ci się pewnie w oczy, że nasza zmienna `temperature` o wartości `17.4` jest reprezentowana w napisie jako `17.400000`.
+Tak powinno być, a sposób manipulowanie precyzją liczb zmiennoprzecinkowych omówimy kiedy indziej.
+:::
+
+#### String na int
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="String na int"
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string cpp20Release = "2020";
+	int howMuchPassed = std::stoi(cpp20Release) - 2017;
+	std::cout << "Standard C++20 wyszedł w roku " << cpp20Release << ", " << howMuchPassed <<" lata po standardzie C++17.\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+Standard c++20 wyszedł w roku 2022, 3 lata po standardzie C++17.
+```
+
+</div>
+</Columns>
+
+### Szukanie
+
+#### Szukanie napisu
+
+```
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22
+N a z y w a m   s i  e     S  u  p  e  r     C  o  d  e  r
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
+`introduction.find("Super Coder")` znajdzie nam pozycję `"Super Coder"`, zwróci indeks **12**.
+Przekazujemy to do metody `substr` wraz z argumentem `11`, który oznacza dlugość napisu.
+W naszym przypadku `"Super Coder"` ma 11 liter.
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Szukanie napisu"
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string introduction = "Nazywam sie Super Coder";
+	std::string name = introduction.substr(introduction.find("Super Coder"), 11);
+
+	std::cout << name << "\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+Super Coder
+```
+
+</div>
+</Columns>
+
+#### Dzielenie napisu
+
+Dzielenie napisu (*ang. string splitting*) polega na podzieleniu całego napisu na mniejsze części,
+na podstawie separatora (*ang. delimiter/separator*). Używane jest często, np. żeby wydobyć nazwę z adresu email,
+wartość z rekordu `NAZWA=WARTOŚĆ`, czy konkretnych elementów z daty w formacie `YYYY-MM-DD`.
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Dzielenie napisu"
+#include <iostream>
+#include <string>
+
+int main() {
+	std::string time = "16:04";
+	int position = time.find(':'); // mozemy wyszukiwac pojedyncze znaki lub cale napisy
+
+	int hour = std::stoi(time.substr(0, 2));
+	// tutaj wiemy, ze godzina zaczyna sie od indeksu 0 i ma dwa znaki
+	int minutes = std::stoi(time.substr(position + 1, 2)); 
+	// wykorzystujemy pozycje znalezionego dwukropka i wiedze,
+	// ze minuty rowniez sa zapisane na dwoch znakach
+	// przeprowadzamy tutaj konwersje na int, poniewaz dokonujemy pozniej operacji matematycznej w cout
+
+	std::cout << "Do godziny " << hour + 1 << " pozostalo "  << 60 - minutes << " minut.\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+Do godziny 17 pozostalo 56 minut.
+```
+
+</div>
+</Columns>
+
+:::tip `position + 1`
+Przy przypisywaniu wartości do zmiennej `minutes` robimy `std::stoi(time.substr(position + 1, 2))`.
+```
+0 1 2 3 4 
+1 6 : 0 4
+	^ ^
+```
+`position` to `2`, więc wywołanie `time.substr(position, 2)` zwróciłoby `:0`.
+Musimy więc tutaj doać `1` do position, żeby poprawnie dostać liczbę minut.
+:::
 
 ## Potencjalne błędy
 
