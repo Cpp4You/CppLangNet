@@ -74,9 +74,13 @@ Please visit the [Contributing guide](CONTRIBUTING.md).
 	<img src="static/img/DiscordHelpDev.png" alt="Join our Discord Server" width="300px">
 </a>
 
-## 💗 Credits
+## 💗 Contributors
 
-For complete credit information, [see this document](CREDITS.md).
+<a href="https://github.com/PoetaKodu/CppLangNet/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=PoetaKodu/CppLangNet" />
+</a>
+
+Made with [contrib.rocks](https://contrib.rocks).
 
 
 
