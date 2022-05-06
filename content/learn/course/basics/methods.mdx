@@ -228,7 +228,7 @@ Outside of a structure, such reordering is not allowed without using a separate 
 void printHelloWorld()
 {
 	// ❌ Error, using `world` function before definition
-	// highlight-next-line
+	// error-next-line
 	std::cout << "Hello, " << world();
 }
 

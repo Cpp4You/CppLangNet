@@ -428,8 +428,8 @@ Make sure the structure is defined **before** using it for the first time.
 **Wrong** code example:
 
 ```cpp title="🔴 Incorrect order"
-/// ❌ Error: usage of type "Enemy" before its definition
-// highlight-next-line
+// ❌ Error: usage of type "Enemy" before its definition
+// error-next-line
 void printEnemyInfo(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " has "
@@ -468,7 +468,7 @@ struct Enemy
 	int			totalDamage = 0; // OK ✅
 
 	// ❌ Error: Attempt to modify field in a wrong place
-	// highlight-next-line
+	// error-next-line
 	health = 250;
 };
 ```

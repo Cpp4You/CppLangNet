@@ -99,10 +99,12 @@ Instead of making three separate variables, we can create one array that contain
 ```cpp
 #include <iostream>
 #include <string>
+// highlight-next-line
 #include <vector> // necessary for std::vector usage
 
 int main()
 {
+	// highlight-next-line
 	std::vector< std::string > playerNames(3);
 	// ...
 }
@@ -229,7 +231,8 @@ Note that an array with the number of elements `N` always has indices from `0` t
 An attempt to write to an array with index `4` will result in an error:
 
 ```cpp title="🔴 Run-time error"
-playerNames[4] = "NewPlayer"; // ERROR!
+// error-next-line
+playerNames[4] = "NewPlayer"; // Error
 ```
 
 The reason is that the element with index `4` does not exist

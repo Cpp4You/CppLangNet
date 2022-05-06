@@ -441,8 +441,8 @@ jej pierwszym użyciem.
 Przykład **błędnego** kodu:
 
 ```cpp title="🔴 Niepoprawna kolejność"
-/// ❌ BŁĄD: użycie "Enemy" przed zdefiniowaniem
-// highlight-next-line
+// ❌ Błąd: użycie "Enemy" przed zdefiniowaniem
+// error-next-line
 void printEnemyInfo(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " posiada "
@@ -481,8 +481,8 @@ struct Enemy
 
 	int			totalDamage = 0; // OK ✅
 
-	// ❌ BŁĄD: próba modyfikacji w złym miejscu
-	// highlight-next-line
+	// ❌ Błąd: próba modyfikacji w złym miejscu
+	// error-next-line
 	health = 250;
 };
 ```

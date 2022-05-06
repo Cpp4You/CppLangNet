@@ -54,8 +54,8 @@ Poniżej przykład z implementacją funkcji `print` oraz jej użyciem:
 #include <iostream>
 
 // Funkcja zmniejszająca "number" o "step"
-// highlight-next-line
-int decrease(int step = 1, int number) // ❌ błąd
+// error-next-line
+int decrease(int step = 1, int number) // ❌ Błąd
 {
 	return number - step;
 }
@@ -116,7 +116,7 @@ int main()
 }
 
 // 🔵 Definicja
-// highlight-next-line
+// error-next-line
 void print(std::string text, bool addNewLine = true) // ❌ Błąd
 {
 	std::cout << text;
