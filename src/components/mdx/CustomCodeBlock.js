@@ -31,9 +31,7 @@ export default function CustomCodeBlock(props) {
 	}, [limitLines, style]);
 
 	return (
-		<div 	ref={containerRef}
-				data-line-numbers={`${props.lineNumbers}`}
-			>
+		<div ref={containerRef}>
 			{props.children}
 		</div>
 	);
