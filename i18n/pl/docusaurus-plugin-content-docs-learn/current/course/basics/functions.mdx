@@ -321,9 +321,9 @@ Aby móc użyć powyższej funkcji `sum`, musimy upewnić się, że znajduje si�
 
 int main()
 {
-	// Uwaga, użycie przed definicją
-	// highlight-next-line
-	std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100); // ❌
+	// Błąd: użycie przed definicją
+	// error-next-line
+	std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
 }
 
 // highlight-next-line
