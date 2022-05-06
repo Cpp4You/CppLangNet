@@ -138,7 +138,7 @@ function filterSidebarItems(items)
 
 	presets: [
 		[
-			'@docusaurus/preset-classic',
+			'classic',
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
 				docs: {
@@ -169,6 +169,10 @@ function filterSidebarItems(items)
 				},
 				theme: {
 					customCss: require.resolve('./src/css/custom.scss'),
+				},
+				gtag: {
+					trackingID: 'G-N768FKNY0R',
+					anonymizeIP: true,
 				},
 			}),
 		],
