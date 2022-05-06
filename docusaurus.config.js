@@ -177,7 +177,11 @@ function filterSidebarItems(items)
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
-			hideableSidebar: true,
+			docs: {
+				sidebar: {
+					hideable: true,
+				},
+			},
 			colorMode: {
 				defaultMode: 'dark'
 			},
@@ -292,6 +296,17 @@ function filterSidebarItems(items)
 			prism: {
 				theme: 		lightCodeTheme,
 				darkTheme:	darkCodeTheme,
+				magicComments: [
+					{
+						className: 'code-block-highlighted-line',
+						line: 'highlight-next-line',
+						block: { start: 'highlight-start', end: 'highlight-end' }
+					},
+					{
+						className: 'code-block-error-line',
+						line: 'error-next-line',
+					}
+				]
 			},
 		}),
 });
