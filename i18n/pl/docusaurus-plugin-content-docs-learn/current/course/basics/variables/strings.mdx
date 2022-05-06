@@ -15,6 +15,7 @@ import ImproveSection	from '@site/i18n/pl/presets/ImproveSection.mdx';
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
 import Columns			from "@site-comps/Columns";
+import Image			from "@site-comps/Image";
 
 <NotFinished/>
 
@@ -602,6 +603,249 @@ Przy przypisywaniu wartości do zmiennej `minutes` robimy `std::stoi(time.substr
 Musimy więc tutaj doać `1` do position, żeby poprawnie dostać liczbę minut.
 :::
 
+
 ## Potencjalne błędy
 
-<ImproveSection />
+### Używanie `''` zamiast `""`
+
+W C++ie sekwencje napisów zapisujemy w podwójnym cudzysłowiu (`""`), nie pojedynczym (`''`) - `"Hej"`.
+
+W pojedynczym zapisujemy tylko i wyłącznie pojedyncze znaki - `'H'`.
+
+```cpp title="Niepoprawny kod"
+#include <string>
+int main() {
+	std::string s = 'Hej!';
+	// Bardzo mozliwe, ze osobno dostaniemy komunikat o 'Hej!'
+	// i osobno o samej probie przypisania (patrz Tresc bledu ponizej):
+}
+```
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+warning: multi-character constant
+```
+```plaintext
+error: no viable conversion from 'int' to 'std::string' (aka ...)
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - niepoprawny cudzysłów"
+		src="/img/tutorials/course/basic/variables/error-wrong-quote-pl-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+warning: multi-character constant
+```
+```plaintext
+error: conversion from `int` to non-scalar type `std::string` {aka ...} requested
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - niepoprawny cudzysłów"
+		src="/img/tutorials/course/basic/variables/error-wrong-quote-pl-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2440: 'initializing': cannot convert from 'int' to 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Illustration of the error - niepoprawny cudzysłów"
+		src="/img/tutorials/course/basic/variables/error-wrong-quote-pl-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+### Próba zawarcia `"` w napisie
+
+Każdy język ma swoją składnię, czyli zestaw słów kluczowych, operatorów i zasad mówiących jak język ma wyglądać, to samo tyczy się C++a.
+W C++ie napisy zapisujemy pomiędzy znakami `""`. Jeśli spróbujemy wypisać lub zapisać w `std::string` w normalny sposób `"`:
+
+```cpp title='Niepoprawny kod'
+std::string sentence = "Waran z Komodo inaczej nazywany "smokiem z Komodo" jest najwieksza zyjaca jaszczurka.";
+```
+
+To program analizujący składnię C++ zintepretuje to jako:
+```
+"Waran z Komodo inaczej nazywany "smokiem z Komodo" jest najwieksza zyjaca jaszczurka."
+               NAPIS                KOD C++                NAPIS
+```
+
+Więc aby wyświetlić poprawnie znak `"` należy użyć tzw. *escape sequence* (czyli specjalnego połączenia znaku `\` z jakimś innym, które są inaczej interpretowane wewnątrz napisów).
+
+Jeden *escape sequence* już poznaliśmy - to `\n`, które powoduje zrobienie nowej linii.
+
+Więc aby zapisać znak `"` należy zrobić `\"`:
+```cpp title='Poprawny kod'
+std::string sentence = "Waran z Komodo inaczej nazywany \"smokiem z Komodo\" jest najwieksza zyjaca jaszczurka.";
+```
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: invalid suffix on literal; C++11 requires a space between literal and identifier
+```
+```plaintext
+error: expected ';' at end of declaration
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - próba wyświetlenia cudzysłowia"
+		src="/img/tutorials/course/basic/variables/error-trying-to-display-quote-pl-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+error: unable to find string literal operator ‘operator""smokiem’ with ‘const char [33]’, ‘long unsigned int’ arguments
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - próba wyświetlenia cudzysłowia"
+		src="/img/tutorials/course/basic/variables/error-trying-to-display-quote-pl-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C3688: invalid literal suffix 'smokiem'; literal operator or literal operator template 'operator ""smokiem' not found
+error C2146: syntax error: missing ';' before identifier 'z'
+error C2065: 'z': undeclared identifier
+error C2146: syntax error: missing ';' before identifier 'Komodo'
+error C2065: 'Komodo': undeclared identifier
+error C2143: syntax error: missing ';' before 'string'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - próba wyświetlenia cudzysłowia"
+		src="/img/tutorials/course/basic/variables/error-trying-to-display-quote-pl-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+### Użycie `std::getline` po `std::cin`
+
+Często zdarza się, że pobieramy od użytkownika wiele danych i używamy `std::cin` oraz `std::getline` naprzemiennie.
+
+Jest to problematyczne, ponieważ jeśli spróbujemy użyć `std::getline` zaraz po `std::cin`, wywołanie `std::getline` nie zadziała.
+Rozważmy przykładowy program:
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+	std::cout << "Wprowadz swoj wiek: ";
+	int age;
+	std::cin >> age;
+
+	std::cout << "Wprowadz swoje imie: ";
+	std::string name;
+	std::getline(std::cin, name);
+
+	std::cout << name << " masz " << age << " lat.\n";
+}
+```
+
+Ten kod jest jak najbardziej poprawny i się skompiluje, jednak kiedy go wykonamy, zostaniemy zaskoczeni:
+```plaintext
+Wprowadz swoj wiek: 15
+Wprowadz swoje imie:  masz 15lat.
+```
+
+Wyżej wywołany został program, użytkownik został poproszony o wiek, więc go wprowadził.
+Po wprowadzeniu wieku, zostało wyświetlone `Wprowadz swoje imie: masz 15 lat.`
+
+Jak temu zaradzić? 
+
+<Tabs groupId="answer">
+<TabItem value="short-answer" label="Krótka odpowiedź" default>
+
+Wrzucić 
+```cpp
+std::cin.ignore(1);
+```
+Zaraz po `std::cin >> age`:
+
+</TabItem>
+<TabItem value="long-answer" label="Długa odpowiedź" default>
+
+Dzieje się tak dlatego, że `std::cin` i `std::getline` operują na dzielonym **strumieniu danych**.
+Można o nim po prostu myśleć jako o napisie wprowadzanym przez użytkownika, na którym są później wykonywane operacje, np.:
+
+```cpp
+int age;
+std::cin >> age;
+```
+Tutaj, po wprowadzeniu przez użytkownika `15`, w tym *magicznym strumieniu danych* znajdą się 3 znaki - `15\n`.
+`std::cin` przeczyta `15` i zostawi tam `\n`.
+
+Następnie, przy wywołaniu `std::getline`, getline przeczyta wszystkie znaki, aż do napotkania znaku nowej linii.
+Z uwagi na to, że jedyne co znajduje się na ten moment w strumieniu to znak nowej linii,
+`std::getline` nie pozwoli nawet użytkownikowi wprowadzić danych, po prostu przeczyta ten znak nowej linii, usunie go ze strumienia i program będzie działać dalej.
+
+Po takim ciągu zdarzeń, nasz `std::string name` będzie pusty, wywoła się `std::cout` na samym dole i zostanie wyświetlone `masz 15 lat.`
+
+Wywołanie `std::cin.ignore(1);` naprawi problem.
+`std::cin.ignore` to funkcja, która usuwa ze strumienia określoną ilość znaków.
+Po wywołaniu tej funkcji znak nowej linii zostanie usunięty, a wywołanie `std::getline` zadziała tak, jak się spodziewamy.
+
+</TabItem>
+</Tabs>
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main() {
+	std::cout << "Wprowadz swoj wiek: ";
+	int age;
+	std::cin >> age;
+	// highlight-next-line
+	std::cin.ignore(1);
+
+	std::cout << "Wprowadz swoje imie: ";
+	std::string name;
+	std::getline(std::cin, name);
+
+	std::cout << name << " masz " << age << " lat.\n";
+}
+```
+
+Teraz nasz program działa poprawnie :)
+
+```plaintext
+Wprowadz swoj wiek: 15
+Wprowadz swoje imie: Super Coder
+Super Coder masz 15 lat.
+```
