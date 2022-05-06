@@ -1,6 +1,8 @@
 import React			from 'react';
 import useBaseUrl		from '@docusaurus/useBaseUrl';
 
+import transformEmptyTagElem from "@site/src/helper/TransformEmptyTagElem";
+
 export default function Image(props)
 {
 	// Setup description
@@ -8,9 +10,9 @@ export default function Image(props)
 	if (props.desc)
 	{
 		if (props.center)
-			desc = <center><small>{props.desc}</small></center>;
+			desc = <center><small>{transformEmptyTagElem(props.desc)}</small></center>;
 		else
-			desc = <><small>{props.desc}</small></>;
+			desc = <><small>{transformEmptyTagElem(props.desc)}</small></>;
 	}
 
 	const fullWidth = props.fullwidth || props.center;
