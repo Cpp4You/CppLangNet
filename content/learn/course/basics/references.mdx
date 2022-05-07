@@ -1,79 +1,95 @@
 ---
 sidebar_position:	11
-sidebar_label:		"11. References (I) 🚧"
+sidebar_label:		"11. References (I)"
 title:				"References (I)"
 description:		"Lesson: references basics in C++ language"
 tags:				[reference, pointer, memory]
 hide_title:			true
 ---
 
+1) show that when you assign to a reference it modifies the original value
+2) show how to modify vector element in range-based for loop (auto& elem : vec)
+3) show that you can add reference in a function parameter and it will modify the original value, not a copy 
+
 # References
-
-:::note Add a page about pointers
-It is difficult to understand references before pointers.
-:::
-
-References are very similar to pointers.
-But the difference is that references cannot refer to something else, or refer to nothing.
-A reference to a variable is basically "another name" for that variable.
+References are a way to refer to a variable.
+When you create a reference to a variable, it becomes the variable itself.
 
 ## Motivations
-The most common use case for references is `pass by reference`.
+References are used for *indirection*,
+it is so you can access a variable through another variable.
 
-Pass by reference means to take function parameters by "the variable itself".
-Normally when functions take parameters, it'll copy the value of the parameters,
-also known as `pass by value`
-
-Here is an example:
+You can create a reference by adding a `&` to the type of the variable you want to refer to.
 ```cpp
-void PlusOne(int num) 
-{
-    num = num + 1; // Add 1 to num
-}
-
-int main() 
-{
-    int x = 5;
-    PlusOne(x);
-    std::cout << x;
-}
+int var = 5;
+int& ref = x; // ref is a int reference that refers to var
 ```
-
-Expected output:
-```
-6
-```
-
-Actual output:
-```
-5
-```
-
-And this is all due to *pass by value*. Only the value of `x` was taken in by the `PlusOne`.
-So `x` itself was not changed at all.
-
-### Fixing the function with pass by reference
-Here is how you can use pass by reference to get the result you want:
+Now, if you modify `ref`, `var` will also be modified because `ref` **is** `var`.
 ```cpp
-void PlusOne(int& num) 
-{
-    num = num + 1;
+ref = 23;
+std::cout << var; // Prints out 23
+```
+
+Understand but don't see the value?
+
+Some use cases for references are:
+- Modifying elements in a range-based for loop
+- Passing by reference
+
+## Modifying elements in a range-based for loop
+Since references **become** the variable that it is referring to,
+we can use it to access the elements in our arrays.
+
+Here is a simple array
+```cpp
+std::vector<int> arr(3);
+arr[0] = 2;
+arr[1] = 4;
+arr[2] = 6;
+```
+
+Let's say we want to add 5 to each element,
+It's possible to do that one by one, but it becomes annoying and long if the array is big. <br/>
+So loops will come to our rescue!
+
+```cpp
+for (int x : arr) {
+x = x + 5;
 }
+// Elements remain unchanged after this loop
+```
+But the code above will unfortunately not work.
+This is because only the value of the element is being written into `x`,
+not the element itself.
 
-int main() 
-{
-    int x = 5;
-    PlusOne(x);
-    std::cout << x;
+This is where references come in,
+they can make the actual element of the array be written into `x`.
+```cpp
+for (int& x : arr) {
+x = x + 5;
+}
+```
+Now each each element of the array has successfully be increased by five.
+
+## Pass by reference
+Function parameters have a similar issue.
+They also only copy the value and not the variable itself,
+so you can't modify the actual variable.
+```cpp
+void double(int x) {
+x = x * 2; 
 }
 ```
 
-Now it outputs the expected:
-```
-6
+This again, can be solved with references:
+
+```cpp
+void double(int& x) {
+x = x * 2; 
+}
 ```
 
-:::important Prefer references over pointers
-Pointers can change target and point to null, references are much safer.
-Always use references unless a pointer is needed.
+:::note Use references accordingly
+You should only use references for when you actually need to modify the variable.
+Don't use references if you just need the value.
 :::
