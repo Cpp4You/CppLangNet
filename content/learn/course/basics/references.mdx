@@ -30,6 +30,7 @@ because only the value of `x` is written into `num`.
 
 This is where references come into play.
 
+
 ## Using references
 You can create a reference by adding a `&` to the type of the variable you want to refer to.
 ```cpp
@@ -41,6 +42,28 @@ Now, if you modify `ref`, `var` will also be modified because `ref` **is** `var`
 ref = 23;
 std::cout << var; // Prints out 23
 ```
+
+
+## Pass by reference
+Now let's see how we can use references to solve our issue.
+
+We just need to make the function take a `int reference` instead of `int`.
+```cpp
+void doubleNumber(int num) 
+{
+num = num * 2;
+}
+
+int main()
+{
+int x = 5;
+doubleNumber(x); // x is now 10!
+}
+```
+Now the the function `doubleNumber` takes a reference,
+`num` will become whatever variable is passed into the function.
+This means when we modify num (which has become `x`), we also indirectly modify `x`.
+
 
 ## Modifying elements in a range-based for loop
 Since references **become** the variable that it is referring to,
@@ -69,7 +92,7 @@ But the code above will unfortunately not work.
 This is because only the value of the element is being written into `x`,
 not the element itself.
 
-This is where references come in,
+This is where we can use references,
 they can make the actual element of the array be written into `x`.
 ```cpp
 for (int& x : arr) 
@@ -77,27 +100,7 @@ for (int& x : arr)
 x = x + 5;
 }
 ```
-Now each each element of the array has successfully be increased by five.
-
-## Pass by reference
-Function parameters have a similar issue.
-They also only copy the value and not the variable itself,
-so you can't modify the actual variable.
-```cpp
-void double(int x) 
-{
-x = x * 2; 
-}
-```
-
-This again, can be solved with references:
-
-```cpp
-void double(int& x) 
-{
-x = x * 2; 
-}
-```
+Now each each element of the array has successfully increased by five.
 
 :::note Use references accordingly
 You should only use references for when you actually need to modify the variable.
