@@ -12,9 +12,25 @@ References are a way to refer to a variable.
 When you create a reference to a variable, it becomes the variable itself.
 
 ## Motivations
-References are used for *indirection*,
-it is so you can access a variable through another variable.
+Let's say that you have a function that doubles the parameter.
+```cpp
+void doubleNumber(int num) 
+{
+num = num * 2;
+}
 
+int main()
+{
+int x = 5;
+doubleNumber(x); // x will still be 5!
+}
+```
+But this will not work,
+because only the value of `x` is written into `num`.
+
+This is where references come into play.
+
+## Using references
 You can create a reference by adding a `&` to the type of the variable you want to refer to.
 ```cpp
 int var = 5;
@@ -25,12 +41,6 @@ Now, if you modify `ref`, `var` will also be modified because `ref` **is** `var`
 ref = 23;
 std::cout << var; // Prints out 23
 ```
-
-Understand but don't see the value?
-
-Some use cases for references are:
-- Modifying elements in a range-based for loop
-- Passing by reference
 
 ## Modifying elements in a range-based for loop
 Since references **become** the variable that it is referring to,
@@ -49,7 +59,8 @@ It's possible to do that one by one, but it becomes annoying and long if the arr
 So loops will come to our rescue!
 
 ```cpp
-for (int x : arr) {
+for (int x : arr) 
+{
 x = x + 5;
 }
 // Elements remain unchanged after this loop
@@ -61,7 +72,8 @@ not the element itself.
 This is where references come in,
 they can make the actual element of the array be written into `x`.
 ```cpp
-for (int& x : arr) {
+for (int& x : arr) 
+{
 x = x + 5;
 }
 ```
@@ -72,7 +84,8 @@ Function parameters have a similar issue.
 They also only copy the value and not the variable itself,
 so you can't modify the actual variable.
 ```cpp
-void double(int x) {
+void double(int x) 
+{
 x = x * 2; 
 }
 ```
@@ -80,7 +93,8 @@ x = x * 2;
 This again, can be solved with references:
 
 ```cpp
-void double(int& x) {
+void double(int& x) 
+{
 x = x * 2; 
 }
 ```
