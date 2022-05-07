@@ -475,7 +475,7 @@ int main() {
 <div>
 
 ```plaintext title="Wynik (konsola)"
-Mamy dzisiaj 3. dzień tygodnia, dzisiejsza temperatura to 17.000000 stopni Celsjusza!
+Mamy dzisiaj 3. dzień tygodnia, dzisiejsza temperatura to 17.400000 stopni Celsjusza!
 ```
 
 </div>
@@ -508,7 +508,7 @@ int main() {
 <div>
 
 ```plaintext title="Wynik (konsola)"
-Standard c++20 wyszedł w roku 2022, 3 lata po standardzie C++17.
+Standard C++20 wyszedł w roku 2020, 3 lata po standardzie C++17.
 ```
 
 </div>
@@ -523,7 +523,7 @@ Standard c++20 wyszedł w roku 2022, 3 lata po standardzie C++17.
 N a z y w a m   s i  e     S  u  p  e  r     C  o  d  e  r
                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 ```
-`introduction.find("Super Coder")` znajdzie nam pozycję `"Super Coder"`, zwróci indeks **12**.
+`introduction.find("Super Coder")` zwróci nam pozycję `"Super Coder"`, czyli indeks **12**.
 Przekazujemy to do metody `substr` wraz z argumentem `11`, który oznacza dlugość napisu.
 W naszym przypadku `"Super Coder"` ma 11 liter.
 
@@ -677,7 +677,7 @@ error C2440: 'initializing': cannot convert from 'int' to 'std::basic_string<cha
 ### Próba zawarcia `"` w napisie
 
 Każdy język ma swoją składnię, czyli zestaw słów kluczowych, operatorów i zasad mówiących jak język ma wyglądać, to samo tyczy się C++a.
-W C++ie napisy zapisujemy pomiędzy znakami `""`. Jeśli spróbujemy wypisać lub zapisać w `std::string` w normalny sposób `"`:
+W C++ie napisy zapisujemy pomiędzy znakami `""`. Jeśli spróbujemy wypisać lub zapisać w `std::string` w normalny sposób znak `"`:
 
 ```cpp title='Niepoprawny kod'
 std::string sentence = "Waran z Komodo inaczej nazywany "smokiem z Komodo" jest najwieksza zyjaca jaszczurka.";
@@ -691,7 +691,7 @@ To program analizujący składnię C++ zintepretuje to jako:
 
 Więc aby wyświetlić poprawnie znak `"` należy użyć tzw. *escape sequence* (czyli specjalnego połączenia znaku `\` z jakimś innym, które są inaczej interpretowane wewnątrz napisów).
 
-Jeden *escape sequence* już poznaliśmy - to `\n`, które powoduje zrobienie nowej linii.
+Jeden *escape sequence* już poznaliśmy - to znak `\n`, który powoduje wyświetlenie nowej linii.
 
 Więc aby zapisać znak `"` należy zrobić `\"`:
 ```cpp title='Poprawny kod'
@@ -808,7 +808,7 @@ int age;
 std::cin >> age;
 ```
 Tutaj, po wprowadzeniu przez użytkownika `15`, w tym *magicznym strumieniu danych* znajdą się 3 znaki - `15\n`.
-`std::cin` przeczyta `15` i zostawi tam `\n`.
+`std::cin` przeczyta `15` i zostawi tam `\n`. (Pamiętajmy, że `\n`, to escape sequence. `\n` jest przez C++ interepretowane jako jeden znak.)
 
 Następnie, przy wywołaniu `std::getline`, getline przeczyta wszystkie znaki, aż do napotkania znaku nowej linii.
 Z uwagi na to, że jedyne co znajduje się na ten moment w strumieniu to znak nowej linii,
