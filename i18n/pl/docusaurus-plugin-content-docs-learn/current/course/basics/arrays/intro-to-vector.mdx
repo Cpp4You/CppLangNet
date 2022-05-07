@@ -236,7 +236,8 @@ ma indeksy od `0` do `3` włącznie.
 Próba zapisania do tablicy o indeksie `4` spowoduje błąd:
 
 ```cpp title="🔴 Błąd wykonania"
-playerNames[4] = "NewPlayer"; // BŁĄD!
+// error-next-line
+playerNames[4] = "NewPlayer"; // Błąd!
 ```
 
 Powodem jest to, że element o indeksie `4` nie istnieje.

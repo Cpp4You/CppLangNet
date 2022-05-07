@@ -4,11 +4,9 @@
 
 int main()
 {
-	namespace rg = std::ranges;
-
 	auto numbers = std::vector{ 7, 5, 9, 1, 4 };
 	// highlight-next-line
-	rg::sort(numbers);
+	std::ranges::sort(numbers);
 
 	std::cout << "Sorted numbers: ";
 	for(auto n : numbers)

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import transformEmptyTagElem from "@site/src/helper/TransformEmptyTagElem";
+
 import styles from '@site/src/css/components/SymbolTable.module.scss'
 
 import { ClassContext } from './ClassContext';
@@ -67,15 +69,15 @@ export default function SymbolTable(props)
 export function Symbol(props) {
 
 	const ctx = React.useContext(ClassContext);
+	
+	let nameElem = transformEmptyTagElem(props.name);
 
 	let desc = null;
 	if (props.desc)
 		desc = props.desc;
 	else if (props.children)
 		desc = props.children;
-
-	let nameElem = props.name;
-
+		
 	if (props.link || props.autoLink)
 		nameElem = <a href={props.link || `${(props.linkName || props.name)}`}>{nameElem}</a>;
 
@@ -90,6 +92,8 @@ export function Symbol(props) {
 		}
 	}
 
+	const arr = [1, 10, 13, 15];
+
 	return (
 		<tr>
 			<td className={styles.symbolProp}>
@@ -103,7 +107,9 @@ export function Symbol(props) {
 			<td className={styles.symbolName}>
 				{nameElem}
 			</td>
-			<td className={styles.symbolDesc}>{desc}</td>
+			<td className={styles.symbolDesc}>
+				{transformEmptyTagElem(desc)}
+			</td>
 		</tr>
 	);
 };

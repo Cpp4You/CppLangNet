@@ -1,11 +1,14 @@
 import React from 'react';
 
-import Tabs			from '@theme/Tabs';
-import TabItem		from '@theme/TabItem';
+// Docusaurus
+import Tabs						from '@theme/Tabs';
+import TabItem					from '@theme/TabItem';
+import Translate				from '@docusaurus/Translate';
 
-import Translate	from '@docusaurus/Translate';
+// Custom
+import transformEmptyTagElem	from "@site/src/helper/TransformEmptyTagElem";
 
-import styles from '@site/src/css/components/SwitchView.module.scss'
+import styles					from '@site/src/css/components/SwitchView.module.scss'
 
 const langs = new Map();
 langs.set('cpp98', 'C++98');
@@ -49,10 +52,10 @@ export default function SwitchView(props) {
 									<>
 										<Tabs groupId="view_mode" className={styles.smallTabs}>
 											<TabItem value="simplified" label="Simplified" default>
-												{value.simplified}
+												{transformEmptyTagElem(value.simplified)}
 											</TabItem>
 											<TabItem value="detailed" label="Detailed">
-												{value.detailed}
+												{transformEmptyTagElem(value.detailed)}
 											</TabItem>
 										</Tabs>
 									</>
@@ -65,7 +68,7 @@ export default function SwitchView(props) {
 					:
 					(
 						<TabItem value={key} label={langs.get(key)} default={index == 0}>
-							{value}
+							{transformEmptyTagElem(value)}
 						</TabItem>
 					)
 			))}

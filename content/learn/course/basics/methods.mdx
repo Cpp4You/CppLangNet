@@ -33,7 +33,7 @@ we will want to have vehicles that are defined by their
 	- max. speed 🚀
 - **behaviour**, e.g:
 	- acceleration 💨
-	- braking 🛑 🛑
+	- braking 🛑
 
 This way of describing objects, separating features and behaviors, is very common.
 In the lesson on [structures](../structures) we learned how to contain different information
@@ -228,7 +228,7 @@ Outside of a structure, such reordering is not allowed without using a separate 
 void printHelloWorld()
 {
 	// ❌ Error, using `world` function before definition
-	// highlight-next-line
+	// error-next-line
 	std::cout << "Hello, " << world();
 }
 

@@ -1,0 +1,108 @@
+import Columns			from "@site-comps/Columns";
+import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
+import Image			from "@site-comps/Image";
+import Tabs			from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
+import SwitchView		from "@site-comps/SwitchView";
+
+<Image center
+		maxheight={400}
+		alt="std::transform"
+		src="/img/tutorials/course/intermediate/lambdas/std-transform-en.png"
+	/>
+<br/>
+
+#### 1. The source beginning
+The first argument is the beginning of the source of data - in our case it's a vector of ints.
+```cpp
+std::vector<int> data = {1, 2, 3, 4, 5};
+	// highlight-next-line
+std::transform(data.begin(), [...]);
+```
+#### 2. The source end
+The second argument is the end of the source of data.
+```cpp
+// highlight-next-line
+std::transform(data.begin(), data.end(), [...]);
+```
+#### 3. The destination
+The third argument is the beginning to a container that we want to save the data to.
+The other container **has to have the same or bigger size, as the source container**.
+We can use the iterator from our `data` vector, or from some other one.
+```cpp
+std::vector<int> result;
+
+	// highlight-next-line
+result.resize(data.size());
+std::transform(data.begin(), data.end(), result.begin(), [...]);
+
+	//highlight-start
+	// Also correct ✅
+std::transform(data.begin(), data.end(), data.begin(), [...]);
+	// highlight-end
+```
+
+#### 4. Lambda
+The most important part of the algorithm, the fourth argument.
+We send a lambda that:
+ - **Takes** one parameter of **the same type as the source container** (`int` in this case)
+ - **Returns** a value of **the same type as the destination container** (also `int` in this case)
+```cpp
+auto square = [](int a) { return a * a; };
+// highlight-next-line
+std::transform(data.begin(), data.end(), result.begin(), square);
+
+// We can also pass the lambda directly, without first saving it into an object:
+// highlight-next-line
+std::transform(data.begin(), data.end() result.begin(), [](int a) { return a * a; });
+```
+
+#### 5. The whole example
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="Squaring a vector"
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main()
+{
+	std::vector<int> data = {1, 2, 3, 4, 5};
+
+	std::cout << "Before using the algorithm:\n";
+	for(auto elem : data)
+	{
+		std::cout << elem << " ";
+	}
+	std::cout << "\n\n";
+
+	// highlight-next-line
+	auto square = [](int a) { return a * a; };
+	// highlight-next-line
+    std::transform(data.begin(), data.end(), data.begin(), square);
+
+	std::cout << "After using the algorithm:\n";
+	for(auto elem : data)
+	{
+		std::cout << elem << " ";
+	}
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result (console)"
+Before using the algorithm:
+1 2 3 4 5
+
+
+After using the algorithm:
+1 4 9 16 25
+```
+
+</div>
+</Columns>

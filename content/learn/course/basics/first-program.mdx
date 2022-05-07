@@ -1,7 +1,7 @@
 ---
 sidebar_position:	1
 sidebar_label:		"1. First program"
-description:		"Lesson: first program in C++ language"
+description:		"Lesson: First program in C++ language"
 hide_title:			true
 ---
 
@@ -49,7 +49,7 @@ Hello, World!
 Which displays the text given above in the "Result" box.
 
 
-## Explaination
+## Explanation
 
 ### The main function
 
@@ -63,7 +63,12 @@ int main()
 ```
 
 The computer runs the program line by line.
-When it starts the application, it executes the instructions in the `main` code block sequentially.
+When it starts the application, it executes the instructions in the `main` code block sequentially. `main` **is always the first code
+run by the program.**
+
+The first line here is the **function signature**. It consists of a return type `int`, the name `main`, and its parameters inside the `()` (none).
+While most of these terms aren't important now, all that you should pay attention to is the name `main`. The main function will always
+look like this, `int main()`. Your program must always contain this function specified in this format.
 
 A **code block** in C++, is a set of instructions contained inside curly braces:
 
@@ -75,7 +80,7 @@ A **code block** in C++, is a set of instructions contained inside curly braces:
 
 The function `main` has a block of code, and everything between the curly braces will be executed <u>sequentially, top to bottom</u>.
 
-### The `iostream` library
+### The `iostream` header file
 
 At the very beginning of the code there is a line:
 
@@ -145,12 +150,12 @@ Hello, World!1Hello, World!2Hello, World!3
 
 :::caution Semicolon at the end of instructions!
 A semicolon (`;`) separates instructions. The compiler doesn't care about instructions being written on separate lines.
-The semicolon is treated as the end of the statement. For this reason, such a code:
+The semicolon is treated as the end of the statement. For this reason, such code as below is *acceptable* but very illegible.
 ```cpp
 std::cout << "Hello, World!1"; std::cout << "Hello, World!2"; std::cout << "Hello, World!3";
 ```
 
-it is **acceptable** but very illegible. Don't write code like this!
+ Don't write code like this!
 :::
 
 Presentation of the above-created program:
@@ -289,7 +294,7 @@ After starting the program, we will get the correct result of the calculation in
 - `/` divides two numbers by itself
 - `()` parentheses order operations
 
-The order math in C++ is done follows the "PEMDAS" order you may have learned in school.
+C++ adheres to the "PEMDAS" order you may have learned in school.
 
 1. First Parentheses
 2. Then Multiplication/Division from left to right
@@ -302,7 +307,7 @@ Finally, it is worth paying attention to what can cause a **compilation error**.
 When the compiler encounters invalid code, it will stop and tell you what's wrong. You cannot run your program unless compilation is
 completed without errors.
 
-### Omiting `std::`
+### Omitting `std::`
 
 :::tip Good practice
 It's best not to omit the `std::` prefix.
@@ -334,6 +339,80 @@ Common items you may see on your journey and in later tutorials are `cout`, `cin
 
 
 Generally, it is recommended to use the `using std::cout;` style over `using namespace std;` if you wish to omit `std::`.
+
+An error is caused if you omit `std::` without the appropriate `using` statement.
+
+#### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: ‘cout’ was not declared in this scope; did you mean ‘std::cout’?
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - omitting std"
+		src="/img/tutorials/course/basic/first-program/error-omit-std-en.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2065: 'cout': undeclared identifier
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - omitting std"
+		src="/img/tutorials/course/basic/first-program/error-omit-std-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+### Forgotten includes
+
+It's very easy to forget an `#include`, even for experts.
+
+#### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: ‘cout’ is not a member of ‘std’
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing include"
+		src="/img/tutorials/course/basic/first-program/error-missing-include-en.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2039: 'cout': is not a member of 'std'
+predefined C++ types (compiler internal)(341): note: see declaration of 'std'
+error C2065: 'cout': undeclared identifier
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing include"
+		src="/img/tutorials/course/basic/first-program/error-missing-include-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
 
 ### Missing semicolons `;`
 
@@ -423,7 +502,7 @@ error C2143: syntax error: missing ';' before '}'
 
 
 
-### Using `"`
+### Using `"` inside of text
 
 You may be tempted to put quotes inside a message when outputting it to the console.
 However, remember that C++ considers everything inside of `"..."` quotes to be text.
@@ -470,7 +549,7 @@ error C2143: syntax error: missing ';' before 'string'
 #### 🖼 Illustration of the error:
 
 <Image center
-		alt="Illustration of the error - missing quote"
+		alt="Illustration of the error - unescaped quote"
 		src="/img/tutorials/course/basic/first-program/error-unescaped-quote-en-msvc.png"
 	/>
 
@@ -480,3 +559,41 @@ error C2143: syntax error: missing ';' before 'string'
 :::info Unhelpful errors
 These error messages aren't that helpful! Your hint should be the fact that it is treating what you intend to be text as code.
 :::
+
+
+## Exercise
+
+Lord Mux from the Planet Multiplexer has landed on Earth! It was quite a disasterous arrival - portal storms, rabid alien creatures, 
+electromagnetic pulses, and more have shuttered the global infrastructure. Despite this, Mux demands to see humanity's most advanced
+technology. While all silicon-based computers have become inoperable from the radiation surges, the old mechanical teletypes from the 30s
+are still fully functional.
+
+<Image center
+		alt="Old Teletype Machine"
+		src="/img/tutorials/course/basic/first-program/teletype.png"
+		maxwidth="500px"
+	/>
+
+<br/>
+
+Write a C++ program that uses `std::cout` to send a message to Lord Mux. Our engineers have wired up the output stream to be connected
+to one of the last remaining telegraph lines in the downtown area.
+
+Your message should look like this:
+```plaintext
+Hello Lord Mux!
+
+I am "YOUR NAME", a representative for the Planet Earth and all of Humanity.
+
+I have been sent to you to demonstrate our most advanced technology. 
+
+Sadly, your unexpected arrival has destroyed our computing and manufacturing abilities. 
+
+I bring to you an old "teletype" made nearly 100 years ago. It is printing the message you are reading now.
+
+It can even do math! Look: (42 - 37) * (42 + 37) = 395
+
+Give us some time, we can make something even cooler!
+```
+
+(Note: don't hard code the answer to the math equation, you should use what you learned above!)

@@ -1,86 +1,91 @@
-import NotFinished from "@site/i18n/pl/presets/NotFinished.mdx";
 import Columns			from "@site-comps/Columns";
 import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
 import Image			from "@site-comps/Image";
 import Tabs			from '@theme/Tabs';
 import TabItem		from '@theme/TabItem';
-import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
 import SwitchView		from "@site-comps/SwitchView";
 
 <Image center
 		maxheight={400}
 		alt="std::transform"
 		src="/img/tutorials/course/intermediate/lambdas/std-transform-pl.png"
-		desc={<></>}
 	/>
 <br/>
 
-#### 1. Początek
-Jako pierwszy argument wysyłamy początek wektora danych.
+#### 1. Początek źródła
+Jako pierwszy argument wysyłamy początek źródła danych - w naszym przypadku wektor `int`ów.
 ```cpp
-std::vector<int> v = {1, 2, 3, 4, 5};
+std::vector<int> data = {1, 2, 3, 4, 5};
 	// highlight-next-line
-std::transform(v.begin(), [...]);
+std::transform(data.begin(), [...]);
 ```
-#### 2. Koniec
-Jako pierwszy argument wysyłamy koniec wektora danych.
+#### 2. Koniec źródła
+Jako drugi argument wysyłamy koniec naszego wektora źródłowego.
 ```cpp
 // highlight-next-line
-std::transform(v.begin(), v.end(), [...]);
+std::transform(data.begin(), data.end(), [...]);
 ```
 #### 3. Rezultat
-Jako trzeci argument wyślemy początek wektora, do którego chcemy zapisać dane. __Wektor musi mieć taki rozmiar jak wektor, z którego dane są pobierane.__ Możemy również wysłać ten sam wektor jak ten, z którego dane pobieramy.
+Jako drugi argument przesyłamy początek kontenera, do którego chcemy zapisać dane.
+Kontener do którego zapisujemy dane **musi mieć taki sam, lub większy rozmiar od kontenera źródłowego**.
+Możemu użyć iteratora z naszego kontenera źródłowego, lub jakiegoś innego.
 ```cpp
 std::vector<int> result;
 
 	// highlight-next-line
-result.resize(v.size());
-std::transform(v.begin(), v.end(), result.begin(), [...]);
+result.resize(data.size());
+std::transform(data.begin(), data.end(), result.begin(), [...]);
 
 	//highlight-start
 	// Też poprawnie ✅
-std::transform(v.begin(), v.end(), v.begin(), [...]);
+std::transform(data.begin(), data.end(), data.begin(), [...]);
 	// highlight-end
 ```
 
 #### 4. Lambda
-Najważniejsza rzecz w tym przykładzie - argument trzeci. Wysyłamy tu lambdę, która:
-- Przyjmuje jeden argument typu takiego jaki mają elementy wektora, z któego dane pobieramy
-- Zwraca argument typu takiego jak typ elementów wektora, do którego zapisuje dane.
+Najważniejsza rzecz w tym przykładzie - argument trzeci.
+Wysyłamy tu lambdę, która:
+- **Przyjmuje** jeden argument **tego samego typu jak kontener źródłowy** (`int` w tym przypadku)
+- **Zwraca** wartość **tego samego typu jak kontener docelowy**
 
 ```cpp
 auto square = [](int a) { return a * a; };
 // highlight-next-line
-std::transform(v.begin(), v.end(), result.begin(), square);
+std::transform(datv.begin(), v.end(), result.begin(), square);
+
+// Możemy również przesłać bezpośrednio, zamiast zapisaywać ją do obiektu.
+// highlight-next-line
+std::transform(data.begin(), data.end(), result.begin(), [](int a) { return a * a; });
 ```
 
-#### Złączmy teraz części kodu w całość
+#### 4. Całość
 
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
 
-```cpp title="std::transform"
+```cpp title="Cały program"
 #include <iostream>
 #include <vector>
 #include <algorithm>
 
 int main()
 {
+	std::vector<int> data = {1, 2, 3, 4, 5};
+
 	std::cout << "Przed użyciem algorytmu:\n";
-	for(auto a : v)
+	for(auto a : data)
 	{
 		std::cout << a << " ";
 	}
 	std::cout << "\n\n";
 
-	std::vector<int> v = {1, 2, 3, 4, 5};
 	// highlight-next-line
 	auto square = [](int a) { return a * a; };
 	// highlight-next-line
-    std::transform(v.begin(), v.end(), v.begin(), square);
+    std::transform(data.begin(), data.end(), data.begin(), square);
 
 	std::cout << "Po użyciu algorytmu:\n";
-	for(auto a : v)
+	for(auto a : data)
 	{
 		std::cout << a << " ";
 	}
@@ -93,19 +98,11 @@ int main()
 
 ```plaintext title="Wynik (konsola)"
 Przed użyciem algorytmu:
-1
-2
-3
-4
-5
+1 2 3 4 5
 
 
 Po użyciu algorytmu:
-1
-4
-9
-16
-25
+1 4 9 16 25
 ```
 
 </div>

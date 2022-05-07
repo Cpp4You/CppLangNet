@@ -1,30 +1,284 @@
 ---
 sidebar_position:	1
-sidebar_label:		"1. Lambdas (I) 🚧"
+sidebar_label:		"1. Lambdas (I)"
 title:				"Lambdas (I)"
 description:		"Lesson: Lambdas (I) in C++ language"
 hide_title:			true
 ---
 
-import NotFinished from "@site/i18n/en/presets/NotFinished.mdx";
+import Columns			from "@site-comps/Columns";
+import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
+import Image			from "@site-comps/Image";
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
+import SwitchView		from "@site-comps/SwitchView";
 
-<NotFinished />
+import TransformIntroExampleCpp20		from "./lambdas/_codes/transform-example-cpp20.mdx";
+import TransformIntroExampleUntilCpp20	from "./lambdas/_codes/transform-example-until-cpp20.mdx";
 
-# Lambdas
 
-// TODO:
+# Lambda expressions
 
-Basics:
+Lambda expression, more often just called "lambdas", are a convenient way to write a snippet of code in a form of an object,
+so that it can be sent as a function argument and reused later.
+Lambdas are mostly used for:
+ - creating named objects inside functions, that can be later reused just like functions, without polutting the global namespace.
+ - creating "anonymous" snippets of code that can be sent to other functions (e.g. standard library algorithms).
 
-```cpp
-auto five = [] { return 5; };
-std::cout << five();
+We recommend to look at [**Simple examples**](#simple-examples) and [**Practical usage**](#practical-usage) for some examples.
+
+:::important *Anonymous functions, functors, function objects*
+Lambdas are often called **anonymous functions**, **functors** or **function objects**.
+None of these names are correct, although can be used when talking about lambdas.
+Indeed, lambdas create an invisible object, although they are only expressions themselves.
+Because of the way lambdas work (creating a magic, invisible object, of some magic, not-known type), to assign them to an object,
+we need to use the keyword `auto`, or make use of the standard library type - `std::function` (we will learn about it further in the course).
+:::
+
+## The syntax
+<Image center
+		maxheight={470}
+		alt="The syntax of a lambda"
+		src="/img/tutorials/course/intermediate/lambdas/summary-en.png"
+	/>
+<br/>
+
+A lambda must have a body, in which we will write our code and a capture list (that can be empty).
+The parameter list is optional, although very often used.
+We can add various other things to the lambda expression, like attributes, explicit return type, etc.,
+although they are neither mandatory nor often used, so we will talk about them further in the course.
+
+#### Capture list
+As we know from the lesson about functions, local variables (e.g. from the `main` function) are not known in the body of any other function.
+The same thing applies to the lambda expressions. Local variables from a function are not visible inside a lambda expression,
+that's why they need to be **captured** in the **capture list**.
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="A lambda with a capture list"
+int five = 5;
+auto get7 = [five] () { return five + 2; };
+
+std::cout << get7();
 ```
 
+</div>
+
+<div>
+
+```plaintext title="Result (console)"
+7
+```
+
+</div>
+</Columns>
+
+:::note
+In case of a lambda expression with an empty parameter list, the **parentheses** can be **ommited**.
 ```cpp
+int five = 5;
+auto get7 = [five] { return five + 2; };
+
+std::cout << get7();
+```
+:::
+
+:::caution Mutating the captured variables
+The variables captured in the capture list **cannot** be changed for now.
+There's a way to do that, but we will talk about it in the second course lesson.
+:::
+
+#### Parameter list
+
+The parameter list in the lambda expression works just like the one we know from functions.
+It allows us to declare with what parameters our lambda should be called, and then pass arguments to it.
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="A lambda with a parameter list."
+auto multplyBy7 = [] (int a) { return a * 7; }; // a lambda with a parameter of type int
+std::cout << multplyBy7(5); // the lambda called with an argument 5
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result (console)"
+35
+```
+
+</div>
+</Columns>
+
+#### The lambda body
+Just a conventional code block, that we already know. Here we declare variables, make operations on objects, etc.
+We can use the `return` statement inside the lambda body.
+
+### Simple examples
+
+#### A comparision of a lambda and a function returning 5 with every call
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Lambda"
+#include <iostream>
+
+int main()
+{
+	auto five = [] { return 5; };
+	std::cout << five();
+}
+```
+
+</div>
+
+<div>
+
+```cpp title="Function"
+#include <iostream>
+
+int five() 
+{
+	return 5;
+}
+
+int main()
+{
+	std::cout << five();
+}
+```
+
+</div>
+</Columns>
+
+#### A lambda returning the square of its argument
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="Lambda expression with a parameter"
 auto square = [](int x) { return x*x; };
 std::cout << square(5);
 ```
 
-// etc.
+</div>
 
+<div>
+
+```plaintext title="Result (console)"
+25
+```
+
+</div>
+</Columns>
+
+#### Lambda used for code reusage
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
+```cpp title="Lambda as a function in function"
+void print3Hellos(std::string name) {
+	auto print_hello = [name](std::string hello) {
+		std::cout << hello << ", " << name << "!\n";
+	}
+
+	print_hello("Hello");
+	print_hello("Welcome");
+	print_hello("Hi");
+}
+// ...
+print3Hellos("Mark");
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result (console)"
+Hello, Mark!
+Welcome, Mark!
+Hi, Mark!
+```
+
+</div>
+</Columns>
+
+## Common mistakes
+
+### Trying to use a non-captured variable
+
+```cpp title='Trying to use a non-captured variable'
+int main()
+{
+	int A = 5;
+	
+	// highlight-start
+	// ❌ Variable A is not known inside addToA ❌ 
+	// auto addToA = [] (int b) { return A + b; };
+	// highlight-end
+
+	// highlight-start
+	// ✅ Proper lambda declaration ✅
+	auto addToA = [A] (int b) { return A + b; };
+	std::cout << addToA(5) << "\n";
+	// highlight-end
+}
+```
+
+### Trying to modify a captured variable
+
+```cpp title='Trying to modify a captured variable'
+int main()
+{
+	int A = 5;
+	
+	// highlight-start
+	// ❌ We can't modify the variable A ❌
+	// auto addToA = [A] (int b) { A += b; };
+	// highlight-end
+
+	// highlight-start
+	// ✅ For now, we can make use of the fact that we can return values.
+	// You will learn how to modify captured variables later in the course. ✅
+	auto addToA = [A] (int b) { return A + b; };
+	std::cout << addToA(5) << "\n";
+	// highlight-end
+}
+```
+
+## Practical usage
+
+:::caution C++ version
+We suggest to use the newest C++ version (properly called a standard) - **C++20**,
+because it provides a lot of convenient features.
+If you can't use C++20 for some reason, we also provide examples that work on older versions.
+:::
+
+### Using a lambda with the **transform** algorithm
+
+To use this algorithm, you have to include the `algorithm` header.
+
+```cpp
+#include <algorithm>
+```
+
+#### The goal
+In the example, we will create a vector of numbers and square every each of it with the use of the **transform** algorithm.
+
+#### The way to go
+The `transform` algorithm, can be passed a function, function object, or a lambda.
+Since it's a lesson about lambdas, we will make use of them. Our lambda will take one parameter of type `int` and will return a value of the same type.
+
+<SwitchView content={
+		{
+			"cpp20":		<TransformIntroExampleCpp20 />,
+			"until-cpp20":	<TransformIntroExampleUntilCpp20 />,
+		}
+	}/>
+
+We will learn more algorithms in the second lesson.

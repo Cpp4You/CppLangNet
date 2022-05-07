@@ -197,6 +197,7 @@ If we want to convert the number `53` to text form, we **cannot** do it this way
 
 ```cpp
 int number = 53;
+// error-next-line
 std::string numberInStr	= number; // Error
 ```
 
@@ -204,6 +205,7 @@ std::string numberInStr	= number; // Error
 <TabItem value="bad2" label="❌ Incorrect">
 
 ```cpp
+// error-next-line
 std::string numberInStr	= 53; // Error
 ```
 

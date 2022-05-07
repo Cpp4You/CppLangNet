@@ -60,7 +60,7 @@ function HomepageHeader() {
 export default function Home() {
 	return (
 		<Layout
-			description="An ultimate C++ language wiki">
+			description="The modern website for C++ language to improve its accessibility.">
 				
 			<HomepageHeader />
 			<main>

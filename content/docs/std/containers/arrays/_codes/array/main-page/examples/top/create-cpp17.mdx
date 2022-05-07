@@ -8,6 +8,7 @@ int main() {
 	// Content: 1,2,4,8
 
 	// ❌ Error, cannot deduce size only (look C++20 to_array)
-	// std::array<int> numbers{1, 2, 4, 8};
+	// error-next-line
+	std::array<int> numbers{1, 2, 4, 8};
 }
 ```

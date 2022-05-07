@@ -65,7 +65,7 @@ function filterSidebarItems(items)
 
 	i18n: {
 		defaultLocale: 'en',
-		locales: [ 'en', 'pl' ]
+		locales: [ 'en', 'pl', 'de' ]
 	},
 
 	plugins: [
@@ -138,7 +138,7 @@ function filterSidebarItems(items)
 
 	presets: [
 		[
-			'@docusaurus/preset-classic',
+			'classic',
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
 				docs: {
@@ -170,6 +170,10 @@ function filterSidebarItems(items)
 				theme: {
 					customCss: require.resolve('./src/css/custom.scss'),
 				},
+				gtag: {
+					trackingID: 'G-N768FKNY0R',
+					anonymizeIP: true,
+				},
 			}),
 		],
 	],
@@ -177,7 +181,11 @@ function filterSidebarItems(items)
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
-			hideableSidebar: true,
+			docs: {
+				sidebar: {
+					hideable: true,
+				},
+			},
 			colorMode: {
 				defaultMode: 'dark'
 			},
@@ -292,6 +300,17 @@ function filterSidebarItems(items)
 			prism: {
 				theme: 		lightCodeTheme,
 				darkTheme:	darkCodeTheme,
+				magicComments: [
+					{
+						className: 'code-block-highlighted-line',
+						line: 'highlight-next-line',
+						block: { start: 'highlight-start', end: 'highlight-end' }
+					},
+					{
+						className: 'code-block-error-line',
+						line: 'error-next-line',
+					}
+				]
 			},
 		}),
 });
