@@ -18,7 +18,7 @@ import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
 # Wstęp do `std::vector`
 
 W tej lekcji pokażę Ci czym są i do czego służą tablice, w ich
-najprostszej formie, z użyciem narzędzia [`std::vector`](/docs/std/containers/arrays/vector/).
+najprostszej formie, z użyciem typu [`std::vector`](/docs/std/containers/arrays/vector/).
 
 ## Motywacja
 
@@ -46,16 +46,15 @@ int main()
 }
 ```
 
-Zakładając, że mamy trzech graczy na serwerze, możemy skonstruować
-kod taki jak wyżej. W sytuacji, gdy będziemy chcieli mieć
-5 graczy, będziemy musieli bawić się komendą "kopiuj -> wklej"
-dodatkowe razy. Powtarzanie tego bardzo szybko traci sens.
-Czy istnieje narzędzie, które pozwoli nam skrócić ten kod
-i nie używać tyle razy kopiowania?
+Zakładając, że mamy trzech graczy na serwerze, możemy napisać kod taki jak wyżej.
+W sytuacji, gdy będziemy chcieli mieć 5 graczy,
+będziemy musieli bawić się komendą "kopiuj -> wklej" dodatkowe dwa razy.
+Powtarzanie tego bardzo szybko traci sens. 
+Czy istnieje narzędzie, które pozwoli nam skrócić ten kod i nie używać tyle razy kopiowania?
 
 Posłużą nam do tego **tablice**.
 
-## Czym jest tablica
+## Czym jest tablica?
 
 <Image center border
 		maxheight="300px"
@@ -192,8 +191,8 @@ Na ten moment nasza tablica ma 3 elementy, o indeksach `0`, `1` i `2`:
 | 1      | AngryCrab   |
 | 2      | SadWolf     |
 
-Aby dodać kolejny element do tablicy, musimy skorzystać z `push_back`.
-Używamy tego w ten sposób:
+Aby dodać kolejny element do tablicy, musimy skorzystać z metody `push_back`.
+Używamy jej analogicznie jak metod w przypadku `std::string`:
 
 ```cpp title="🔹 Dodawanie elementu do tablicy"
 #include <iostream>
@@ -219,13 +218,6 @@ int main()
 ```
 
 Od momentu wywołania `push_back`, tablica `playerNames` ma już cztery elementy.
-Powyższy zapis używa tzw. *wywołania metody `push_back()`*. O wywołaniach
-i metodach powiemy sobie w przyszłości więcej. Na ten moment zapamiętaj tylko ten
-zapis:
-
-1. po nazwie tablicy dajemy kropkę
-2. piszemy nazwę *metody*, czyli w tym wypadku `push_back`
-3. następnie w nawiasie okrągłym podajemy co chcemy dodać (np. wartość lub zmienną)
 
 :::important Zakres indeksów
 Zwróć uwagę, że tablica o ilości elementów `N`, zawsze ma indeksy
@@ -263,9 +255,6 @@ std::cout << "Dodano nowego gracza.\n";
 // highlight-next-line
 std::cout << "Tablica posiada " << playerNames.size() << " elementów\n";
 ```
-
-Tak jak wyżej z metodą `push_back`, piszemy nazwę po kropce i dajemy
-nawiasy okrągłe, w tym wypadku puste.
 
 ### Usuwanie elementów
 
