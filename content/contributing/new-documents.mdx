@@ -1,0 +1,136 @@
+---
+sidebar_label: "➕ New documents"
+---
+
+# New documents
+
+import ImproveSection from "@site/i18n/en/presets/ImproveSection.mdx";
+
+:::tip
+
+Its highly recommended for you to first view many of already existing docs, to
+learn by example.
+
+:::
+
+If you want to create a new document, please first visit our [Discord server](https://discord.gg/3MeXQ8TvBw),
+then ask if there's a need for such an article, or if the course edit would be reasonable.
+You can do that or create an issue directly on [GitHub](https://github.com/PoetaKodu/CppLangNet/issues), however the communication is
+easier and faster on the Discord server.
+
+## Overview
+
+:::note
+Visit [this link](https://docusaurus.io/docs/create-doc) to learn how to create docs in Docusaurus.
+:::
+
+Let's say that you want to write a lesson (within the course) about class constructors.
+
+First, you have to create an English version of the document, even if you want to write in other language.
+This is because it's our *fallback language*, therefore all locales that doesn't provide translation for
+certain documents will fallback to the English one.
+**Pick a lowercase name without spaces, separated by hyphens**, for example:
+
+```
+class-constructors.mdx
+```
+
+Since we already have a `classes` directory, we can skip the `class-` prefix, and finally end up with:
+
+```
+classes/constructors.mdx
+```
+
+### Document metadata
+
+You'll have to fill the [metadata of the document](https://docusaurus.io/docs/next/api/plugins/@docusaurus/plugin-content-docs#markdown-frontmatter).
+Open it, and at the very top create a **document metadata section**.
+
+```md
+---
+sidebar_label:		"1. Class constructors"
+title:				"Class constructors"
+description:		"Lesson: basics of class constructors in C++ language"
+tags:				[class, constructor, method, object, object-oriented-programming, object-oriented, oop]
+hide_title:			true
+---
+```
+
+:::caution Legacy field
+The `sidebar_position` field was mandatory, but it's not used now. Feel free to remove it from documents that
+still contain it. The position is now strictly managed through order in `/sidebars/<section>.js` file.
+:::
+
+:::danger
+`hide_title: true` should be only used when there is something between metadata and the Markdown H1 heading,
+for example:
+
+```md
+---
+...
+hide_title:			true
+---
+
+<!-- Components -->
+import Columns			from "@site-comps/Columns";
+
+<!-- Presets -->
+import NotFinished		from "@site/i18n/en/presetsNotFinished";
+
+# The title of the document
+```
+
+Do not use it if metadata is directly above `# The title of the document`, because
+Docusaurus will generate an additional H1 heading.
+:::
+
+For complete metadata list, please visit [this page](https://docusaurus.io/docs/next/api/plugins/@docusaurus/plugin-content-docs#markdown-frontmatter).
+
+### Adding to the sidebar
+
+Your document won't be visible in the sidebar at first. Navigate to the `/sidebars` directory,
+and find appropriate file (`learn.js` for [Learn](https://cpp-lang.net/learn/) section, `tools.js` for [Tools](https://cpp-lang.net/tools/) section, etc.)
+then add `constructors` to the list.
+
+Sidebars are configured using JavaScript, but most of the their configuration is done with simple
+arrays and objects so it will be easy for you to use, even if you don't know the language.
+The document we created should be added to the sidebar like this:
+
+```js
+// ...
+{
+	type: 'category',
+	label: '9. Classes',
+	items: [
+		'course/intermediate/classes/intro',
+		// highlight-next-line
+		'course/intermediate/classes/constructors',
+		'course/intermediate/classes/destructors',
+		// ...
+	]
+}
+```
+
+### Adding the content
+
+:::caution
+Please read our [General editing rules and tips](../general-rules)
+:::
+
+#### Templates
+
+Right now we don't have doc templates. We will create them in the future, once we establish
+some kind of a standard.
+
+We have examples of good docs that you should visit and possibly use them as a temporary template:
+
+Documentation:
+
+- [std::array reference](/docs/std/containers/arrays/array/) - a good template for class summary page
+- [std::basic_string constructors](/docs/std/containers/strings/string/constructor/) - a good template for constructors or other methods
+- [std::basic_string::at](/docs/std/containers/strings/string/at/) - a good (?) template for class methods
+
+Learning:
+- [First program (Basics)](/learn/course/basics/first-program/)
+- [Functions (Basics)](/learn/course/basics/functions/)
+- [Structures (Basics)](/learn/course/basics/structures/)

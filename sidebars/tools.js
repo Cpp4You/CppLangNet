@@ -44,6 +44,7 @@ module.exports = {
 								'standalone/editors/vs2022/managing-projects',
 							]
 						},
+						'standalone/editors/setup-emacs',
 						'standalone/editors/setup-clion',
 						'standalone/editors/setup-qtcreator',
 					]
