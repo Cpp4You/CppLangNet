@@ -10,6 +10,7 @@ hide_title:			true
 <!-- Components -->
 import Image			from "@site-comps/Image";
 import Columns			from "@site-comps/Columns";
+import Tabs				from "@theme/Tabs";
 
 <!-- Presets -->
 import ImproveSection	from '@site/i18n/pl/presets/ImproveSection.mdx';
@@ -273,8 +274,197 @@ Zauważ, że użycie `continue` w pętli `for` nie pomija *wyrażenia iteracji* 
 
 ## Potencjalne błędy
 
+### Próba użycia zmiennej zadeklarowanej w `for` poza nią
+
+[`Instrukcja początkowa`](#pętla-for) w pętli for najczęściej służy do zadeklarowania zmiennej iteracyjnej.
+Czasem się zdarza, że chcemy użyć tej zmiennej poza ciałem instrukcji `for`.
+Nie jest to możliwe, ponieważ zmienna ta jest dostępna tylko i wyłącznie wewnątrz ciała tej zmiennej.
+
+<Tabs>
+<TabItem value="good" label="✔ OK" default>
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	for(int i = 0; i < 5; i++)
+		// highlight-next-line
+		std::cout << i; // 🟢 Ok, zmienna użyta wewnątrz pętli
+}
+```
+
+</TabItem>
+<TabItem value="good2" label="✔ OK">
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	for(int i = 0; i < 5; i++) 
+	{ 
+		// highlight-next-line
+		std::cout << i; // 🟢 Ok, zmienna użyta wewnątrz pętli
+	}
+}
+```
+
+</TabItem>
+<TabItem value="bad" label="❌ Źle">
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	for(int i = 0; i < 5; i++)
+		std::cout << i;
+
+	// highlight-next-line
+	std::cout << i; // 🔴 Nie ok, zmienna użyta poza pętlą
+}
+```
+
+</TabItem>
+</Tabs>
+
+### Iteracja od tyłu
+
+Jeśli używamy `auto` lub `std::size_t` jako typ zmiennej iteracyjnej i chcemy iterować od **N** do **0**, możemy się spotkać z przykrą niespodzianką.
+
+Rozważmy przykładowy kod wypisujący liczby z tablicy od tyłu:
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main()
+{
+	std::vector<int> numbers = { 5, 4, 3, 2, 1 };
+
+	std::cout << "Liczby wypisane od tyłu: ";
+	for(auto i = numbers.size() - 1; i >= 0; i--)
+	{
+		std::cout << numbers[i] << ' ';
+	}
+}
+```
+
+Kiedy uruchomimy ten program, wpadnie on w nieskończoną pętlę.
+Wiążę się to z dwoma rzeczami: kolejność wykonywania elementów pętli `for` i działania typów bez znaku (`unsigned`).
+
+#### Kolejność wykonywania
+
+Tak jak poznaliśmy wcześniej, kolejność wykonywania elementów w pętli `for` jest następująca:
+```cpp title="🔹 Kolejność wykonywania elementów for"
+for( /* 0 */; /* 1 */; /* 3 */ ) 
+{
+	/* 2 */
+}
+/* 4 (reszta kodu) */
+```
+
+Instrukcja początkowa jest specjalnie zaznaczona numerem **0**. Wykonuje się ona tylko raz na początku pętli.
+Następnie powtarzane są następujące akcje:
+ - Jeśli warunek (**1**) jest spełniony, to wykonaj ciało (**2**) i wyrażenie iteracji (**3**)
+ - Jeśli warunek (**1**) nie jest spełniony, to pomiń pętlę
+
+Akcje te wykonują się do momentu, do którego warunek nie jest spełniony.
+
+Także proces wykonywania się pętli może przybrać dwie formy:
+ - **0** 123... **4** - kiedy warunek pętli jest spełniony przynajmniej raz
+ - **0** 1 **4** - kiedy warunek pętli od razu będzie fałszywy
+
+#### Zawijanie liczb bez znaku
+
+Liczby bez znaku cechują się zachowaniem, które można opisać jako zawijanie (*ang. wrapping*).
+`std::size_t` to alias na liczbę bez znaku,
+która w teorii ma być zdolna do przechowania wielkości obiektu największego możliwego obiektu na danej architekturze,
+lub indeksacji największej możliwej tablicy - dlatego metoda `.size()` tablicy czy napisu zwraca właśnie wartość tego typu.
+
+
+<ImproveSection />
+
+### Niepoprawny warunek w for
+
 <ImproveSection />
 
 ## Dodatkowe informacje
 
-<ImproveSection />
+### Nieskończona pętla
+
+Nieskończoną pętlę możemy utworzyć na dwa sposoby:
+
+```cpp title="🔹 Nieskończona pętla for"
+for(;;) {
+	// ... kod
+}
+```
+
+```cpp title="🔹 Nieskończona pętla while"
+while(true) {
+	// ... kod
+}
+```
+
+Kod wykonywany w środku będzie się wykonywać w nieskończoność,
+dopóki nie będzie przerwany wewnątrz (np. za pomocą instrukcji `break`, `return` (*którą poznamy w [**lekcji o funkcjach**](/learn/course/basics/functions/)*),
+czy wywołaniem funkcji, która nie powraca, np. [`std::exit`](#))
+
+Tego typu pętle są często wykorzystywane w programach w miejsach, gdzie ma działać kod obsługujący pewnego rodzaju zdarzenia.
+Np. nieskończona pętla obsługująca okienko graficzne, która obsługuje zdarzenia z systemu operacyjnego, pętla główna gry, etc.
+
+### Pętla w pętli
+
+Kod pętli jest takim samym kodem, jaki możemy napisać praktycznie gdziekolwiek indziej, to znaczy,
+że możemy również zapisać pętlę w pętli. Taki rodzaj pętli nazywamy pętlą **zagnieżdżoną** (tak samo instrukcję `if` w instrukcji `if` nazwiemy **zagnieżdżoną** instrukcją `if`).
+
+Możemy to wykorzystać, żeby np. usunąć z listy zawodników drużyny e-sportowej każdego gracza, który przegrał:
+
+<Columns spacing={40} columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="Pętla zagnieżdżona"
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+	std::vector<std::string> teamMembers = { "Marek", "Karolina", "Arek", "Filip", "Maja" };
+	std::vector<std::string> membersThatLost = { "Maja", "Marek", "Arek" };
+
+	for(int i = 0; i < teamMembers.size(); i++)
+	{
+		for(int j = 0; j < membersThatLost.size(); j++)
+		{
+			if(teamMembers[i] == membersThatLost[j])
+				teamMembers.erase(teamMembers.begin() + i);
+		}
+	}
+
+	std::cout << "Gracze, którzy jeszcze żyją: ";
+	for(auto member : teamMembers)
+	{
+		std::cout << member << ' ';
+	}
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Wynik (konsola)"
+Gracze, którzy jeszcze żyją: Karolina Filip
+```
+
+</div>
+</Columns>
+
+### Konwencja `i`, `j`
+
+Konwencją jest nazywanie zmiennej iteracyjnej w pętli `i` (skrót od *iterator*), oraz `j` w pętli zagnieżdżonej.
+Jesli czujemy potrzebę nazwania naszej zmiennej inaczej, bardziej opisowo, to powinniśmy to robić,
+jednak jeśli nasza pętla będzie zawierała stosunkowo mało kodu i będzie wiadomo czym jest `i`, to bez wahania można tę nazwę wykorzystać.
