@@ -65,15 +65,13 @@ This means when we modify num (which has become `x`), we also indirectly modify 
 
 
 ## Modifying elements in a range-based for loop
+A similar problem can be seen in range-based for loops.
 Since references **become** the variable that it is referring to,
 we can use it to access the elements in our arrays.
 
 Here is a simple array
 ```cpp
-std::vector<int> arr(3);
-arr[0] = 2;
-arr[1] = 4;
-arr[2] = 6;
+std::vector<int> arr = {2, 4, 6};
 ```
 
 Let's say we want to add 5 to each element,
@@ -86,18 +84,20 @@ for (int x : arr)
 x = x + 5;
 }
 // Elements remain unchanged after this loop
+std::cout << arr[0]; // Outputs 2
 ```
 But the code above will unfortunately not work.
-This is because only the value of the element is being written into `x`,
+This is because only the value of the element is being copied into `x`,
 not the element itself.
 
 This is where we can use references,
-they can make the actual element of the array be written into `x`.
+they can make the actual element of the array be copied into `x`.
 ```cpp
 for (int& x : arr) 
 {
 x = x + 5;
 }
+std::cout << arr[0]; // Outputs 7
 ```
 Now each each element of the array has successfully increased by five.
 
