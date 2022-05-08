@@ -14,11 +14,18 @@ module.exports = {
 		'index',
 		'initial-setup',
 		'folder-structure',
-		'creating-documents',
-		'improving-documents',
-		'translating-documents',
+		'new-documents',
+		{
+			type: 'category',
+			label: '✍ Writing guide',
+			collapsed: false,
+			items: [
+				'writing-guide/improving',
+				'writing-guide/general-rules',
+				'writing-guide/using-components',
+				'writing-guide/translating',
+			]
+		},
 		'default-documents',
-		'general-rules',
-		'using-components',
 	],
 };
