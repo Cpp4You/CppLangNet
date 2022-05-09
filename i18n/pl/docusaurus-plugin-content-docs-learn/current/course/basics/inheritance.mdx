@@ -1,14 +1,199 @@
 ---
 sidebar_position:	10
-sidebar_label:		"10. Dziedziczenie 🚧"
+sidebar_label:		"10. Dziedziczenie"
 title:				Dziedziczenie
 description:		"Lekcja: podstawy dziedziczenia w języku C++"
-hide_title:			true
 tags:				[dziedziczenie, struktura, klasa, obiekt, programowanie-obiektowe, oop]
 ---
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+<!-- Components -->
+import Image			from "@site-comps/Image";
+import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
 
-<NotFinished/>
+<!-- Codes -->
+import FullCode_DerivedStructs			from "./_codes/inheritance/full-code-step-derived-structs.mdx";
+import FullCode_DerivedStructsUsage		from "./_codes/inheritance/full-code-step-derived-structs-usage.mdx";
+import FullCode_DerivedStructsMethods	from "./_codes/inheritance/full-code-step-derived-structs-methods.mdx";
 
-# Dziedziczenie
+W tej lekcji pokażemy Ci jak współdzielić cechy różnych klas za pomocą dziedziczenia,
+tworząc hierarchię i tym samym zapobiec niepotrzebnym powtórzeniom.
+
+## Motywacja
+
+Tworząc struktury, które odwzorowują elementy z prawdziwego świata, często natrafiamy na sytuację,
+w której dwie struktury mają wspólne cechy. Przykładowo, jeśli tworzymy grę o pojazdach,
+zawierajacą i samoloty ✈ i samochody 🚗, utworzylibyśmy następujące dwie struktury:
+
+```cpp showLineNumbers
+struct Car
+{
+	// highlight-start
+	std::string brand; // marka
+	std::string model;
+	int productionYear; // rok produkcji
+	// highlight-end
+
+	bool isCabrio;
+};
+
+struct Airplane
+{
+	// highlight-start
+	std::string brand; // marka
+	std::string model;
+	int productionYear; // rok produkcji
+	// highlight-end
+
+	int enginesNumber; // liczba silników
+	std::string airlinesName; // nazwa linii lotniczych
+};
+```
+
+Zwróć uwagę na zaznaczone linie kodu. Po krótkiej analizie tego kodu zauważymy, że obydwie struktury mają wspólne cechy:
+
+- marka
+- model
+- rok produkcji
+
+W dalszej części tej lekcji skorzystamy z dziedziczenia, by uwspólnić te elementy.
+
+## Struktura bazowa
+
+Wyłoniliśmy już cechy tzw. **struktury bazowej** (bądź klasy bazowej - o tym w przyszłości). Utworzymy teraz
+strukturę, która będzie się składać tylko z nich:
+
+```cpp
+struct Vehicle
+{
+	std::string brand; // marka
+	std::string model;
+	int productionYear; // rok produkcji
+};
+```
+
+Zauważ, że nazwałem strukturę **`Vehicle`** (z ang. *pojazd*). Jest to struktura opisująca generalna formę pojazdu.
+Utworzenie instancji tej struktury nie ma większego sensu:
+
+```cpp
+Vehicle vehicle;
+```
+
+:::caution Instancja `Vehicle`
+Powyższy zapis nie jest zabroniony. Nie spowoduje on błędu kompilacji. W przyszłości dowiemy się
+jak zablokować możliwość utworzenia klasy takiego obiektu, poznając tzw. *konstruktory prywatne*.
+:::
+
+ Zamiast tego, użyjemy jej, tworząc struktury `Car` i `Airplane`, by **odziedziczyły** one
+jej cechy.
+
+## Struktury pochodne
+
+Aby skorzystać z mechanizmu dziedziczenia, tworząc tzw. **struktury pochodne** podajemy po dwukropku strukturę bazową,
+w ten sposób:
+
+```cpp
+struct Car : Vehicle
+{
+	bool isCabrio;
+};
+
+struct Airplane : Vehicle
+{
+	int enginesNumber; // liczba silników
+	std::string airlinesName; // nazwa linii lotniczych
+};
+```
+
+<details>
+	<summary>Zobacz cały kod</summary>
+	<div>
+		<CustomCodeBlock maxLines={25} resizable>
+			<FullCode_DerivedStructs />
+		</CustomCodeBlock>
+	</div>
+</details>
+
+:::danger Kolejność definicji
+Definicję struktury `Vehicle` musimy umieścić przed definicjami struktur pochodnych.
+:::
+
+### Wykorzystanie
+
+<Image border center
+		src="/img/tutorials/course/basic/inheritance/hierarchy-only-data-pl.png"
+		alt="Schemat utworzonych klas"
+		desc="Schemat utworzonych wyżej klas"
+	/>
+<br/>
+
+Powyższy schemat pokazuje, że elementy odziedziczone ze struktury `Vehicle` równierz znajdują
+się w strukturze `Car` i `Airplane`.
+
+Z tego powodu, tworząc samochód wewnątrz kodu, możemy śmiało korzystać z pól `brand`, `model`, `productionYear`,
+tak jakby były one bezpośrednio w strukturze `Car`:
+
+```cpp
+Car ford;
+ford.brand = "Ford";
+ford.model = "Fiesta";
+ford.productionYear = 2010;
+ford.isCabrio = false;
+```
+
+Analogicznie z samolotem:
+
+```cpp
+Airplane boeing;
+boeing.brand = "Boeing";
+boeing.model = "737";
+boeing.productionYear = 2010;
+boeing.enginesNumber = 2;
+boeing.airlinesName = "Air Canada";
+```
+
+<details>
+	<summary>Zobacz cały kod</summary>
+	<div>
+		<CustomCodeBlock maxLines={25} resizable>
+			<FullCode_DerivedStructsUsage />
+		</CustomCodeBlock>
+	</div>
+</details>
+
+### Dziedziczenie metod
+
+Podobnie jak składowe zmienne, dziedziczone są też metody klasy bazowej. Dodajmy do `Vehicle` metodę
+`completeName()`, która zwróci nam nazwę składającą się z `brand` i `model`:
+
+```cpp
+struct Vehicle
+{
+	// ...
+
+	// highlight-next-line
+	std::string completeName()
+	{
+		return brand + " " + model;
+	}
+};
+```
+
+Następnie możemy użyć tej metody na instancji struktury `Car`:
+
+```cpp
+Car ford;
+ford.brand = "Ford";
+ford.model = "Fiesta";
+
+// highlight-next-line
+std::cout << ford.completeName(); // "Ford Fiesta"
+```
+
+<details>
+	<summary>Zobacz cały kod</summary>
+	<div>
+		<CustomCodeBlock maxLines={25} resizable>
+			<FullCode_DerivedStructsMethods />
+		</CustomCodeBlock>
+	</div>
+</details>

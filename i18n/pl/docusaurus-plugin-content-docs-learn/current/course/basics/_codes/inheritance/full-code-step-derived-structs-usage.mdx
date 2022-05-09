@@ -1,0 +1,43 @@
+```cpp showLineNumbers
+#include <iostream>
+#include <string>
+
+struct Vehicle
+{
+	std::string brand; // marka
+	std::string model;
+	int productionYear; // rok produkcji
+};
+
+struct Car : Vehicle
+{
+	bool isCabrio;
+};
+
+struct Airplane : Vehicle
+{
+	int enginesNumber; // liczba silników
+	std::string airlinesName; // nazwa linii lotniczych
+};
+
+int main()
+{
+	Car ford;
+	ford.brand = "Ford";
+	ford.model = "Fiesta";
+	ford.productionYear = 2010;
+	ford.isCabrio = false;
+
+	Airplane boeing;
+	boeing.brand = "Boeing";
+	boeing.model = "737";
+	boeing.productionYear = 2010;
+	boeing.enginesNumber = 2;
+	boeing.airlinesName = "Air Canada";
+	
+	// highlight-start
+	std::cout << ford.brand << '\n'; // "Ford"
+	std::cout << boeing.brand << '\n'; // "Boeing"
+	// highlight-end
+}
+```
