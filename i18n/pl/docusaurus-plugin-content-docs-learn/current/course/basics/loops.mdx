@@ -302,11 +302,14 @@ int main()
 
 int main()
 {
+	int sum = 0;
 	for(int i = 0; i < 5; i++) 
 	{ 
 		// highlight-next-line
-		std::cout << i; // 🟢 Ok, zmienna użyta wewnątrz pętli
+		sum += i; // 🟢 Ok, zmienna użyta wewnątrz pętli
 	}
+	
+	std::cout << sum << '\n';
 }
 ```
 
@@ -326,8 +329,64 @@ int main()
 }
 ```
 
+W przypadku niepoprawnego kodu wyżej, możemy spotkać się z nastepującymi błędami:
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: use of underclared identifier 'i'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - użycie zmiennej poza pętlą"
+		src="/img/tutorials/course/basic/loops/error-trying-to-use-variable-out-of-loop-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+error: 'i' was not declared in this scope
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - użycie zmiennej poza pętlą"
+		src="/img/tutorials/course/basic/loops/error-trying-to-use-variable-out-of-loop-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2065: 'i': undeclared identifier
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - użycie zmiennej poza pętlą"
+		src="/img/tutorials/course/basic/loops/error-trying-to-use-variable-out-of-loop-msvc.png"
+	/>
+
 </TabItem>
 </Tabs>
+
+</TabItem>
+</Tabs>
+
+### Niepoprawny warunek w for
+
+Jednym z najczęstszych błędow **logicznych** który zdarza się podczas używania pętli `for` to zapisanie złego warunku pętli.
+
+Warunek pętli to wyrażenie, które decyduje o dalszym przebiegu pętli (lub w ogóle zaczęciu przebiegu pętli), więc jeśli zapiszemy niepoprawny warunek,
+nasza pętla może lecieć w nieskończoność, nigdy się nie zacząć, lub wykonać się niepoprawną liczbę razy.
+
+Należy więc dokładnie analizować warunki w bardziej skomplikowanych pętlach.
 
 ### Iteracja od tyłu
 
@@ -335,7 +394,7 @@ Jeśli używamy `auto` lub `std::size_t` jako typ zmiennej iteracyjnej i chcemy 
 
 Rozważmy przykładowy kod wypisujący liczby z tablicy od tyłu:
 
-```cpp
+```cpp title="🔹 Niepoprawna pętla for"
 #include <iostream>
 #include <vector>
 
@@ -352,43 +411,18 @@ int main()
 ```
 
 Kiedy uruchomimy ten program, wpadnie on w nieskończoną pętlę.
-Wiążę się to z dwoma rzeczami: kolejność wykonywania elementów pętli `for` i działania typów bez znaku (`unsigned`).
 
-#### Kolejność wykonywania
+Jak na razie nie będziemy omawiać szczegółów tego problemu, jednak zapamiętajmy, że zamiast `auto` można w tym przypadku użyć `int` i to rozwiąże problem:
 
-Tak jak poznaliśmy wcześniej, kolejność wykonywania elementów w pętli `for` jest następująca:
-```cpp title="🔹 Kolejność wykonywania elementów for"
-for( /* 0 */; /* 1 */; /* 3 */ ) 
-{
-	/* 2 */
-}
-/* 4 (reszta kodu) */
+```cpp
+// ...
+// highlight-next-line
+for(int i = numbers.size() - 1; i >= 0; i--)
+// ...
 ```
 
-Instrukcja początkowa jest specjalnie zaznaczona numerem **0**. Wykonuje się ona tylko raz na początku pętli.
-Następnie powtarzane są następujące akcje:
- - Jeśli warunek (**1**) jest spełniony, to wykonaj ciało (**2**) i wyrażenie iteracji (**3**)
- - Jeśli warunek (**1**) nie jest spełniony, to pomiń pętlę
-
-Akcje te wykonują się do momentu, do którego warunek nie jest spełniony.
-
-Także proces wykonywania się pętli może przybrać dwie formy:
- - **0** 123... **4** - kiedy warunek pętli jest spełniony przynajmniej raz
- - **0** 1 **4** - kiedy warunek pętli od razu będzie fałszywy
-
-#### Zawijanie liczb bez znaku
-
-Liczby bez znaku cechują się zachowaniem, które można opisać jako zawijanie (*ang. wrapping*).
-`std::size_t` to alias na liczbę bez znaku,
-która w teorii ma być zdolna do przechowania wielkości obiektu największego możliwego obiektu na danej architekturze,
-lub indeksacji największej możliwej tablicy - dlatego metoda `.size()` tablicy czy napisu zwraca właśnie wartość tego typu.
-
-
-<ImproveSection />
-
-### Niepoprawny warunek w for
-
-<ImproveSection />
+Bardzo możliwe, że kompilator pokaże nam w tym przypadku ostrzeżenie, jednak nie należy się tym przejmować.
+Później w kursie omówimy szczegóły tego problemu i inne jego rozwiązania.
 
 ## Dodatkowe informacje
 
