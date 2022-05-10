@@ -270,7 +270,8 @@ float number = std::stof(numberInStr);
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::string myName = "Super Coder";
 	std::cout << "Nazywam się " << myName << "!\n";
 }
@@ -296,7 +297,8 @@ Nazywam się Super Coder!
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::string myName = "Super";
 	std::string mySurname = "Coder";
 
@@ -327,7 +329,8 @@ Nazywam się Super Coder!
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::string myWholeName = "Super Coder";
 
 	std::string myName = myWholeName.substr(0, 5);
@@ -362,7 +365,8 @@ Nazywam się Super!
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::string name;
 	std::cin >> name;
 
@@ -396,7 +400,8 @@ Aby móc wczytać napis ze spacjami, należy użyć [`std::getline`](#wczytywani
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::string name;
 	std::getline(std::cin, name);
 
@@ -428,7 +433,8 @@ Domyślnie jest to znak nowej linii, więc `std::getline` wczytuje całą linię
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::string name;
 	std::getline(std::cin, name, '?');
 
@@ -460,7 +466,8 @@ Witaj Super Co!
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	int dayOfTheWeek = 3;
 	float temperature = 17.4f;
 
@@ -500,7 +507,8 @@ Tak powinno być, a sposób manipulowanie precyzją liczb zmiennoprzecinkowych o
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::string cpp20Release = "2020";
 	int howMuchPassed = std::stoi(cpp20Release) - 2017;
 	std::cout << "Standard C++20 wyszedł w roku " << cpp20Release << ", " << howMuchPassed <<" lata po standardzie C++17.\n";
@@ -538,7 +546,8 @@ W naszym przypadku `"Super Coder"` ma 11 liter.
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::string introduction = "Nazywam sie Super Coder";
 	std::string name = introduction.substr(introduction.find("Super Coder"), 11);
 
@@ -570,7 +579,8 @@ wartość z rekordu `NAZWA=WARTOŚĆ`, czy konkretnych elementów z daty w forma
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::string time = "16:04";
 	int position = time.find(':'); // Możemy wyszukiwać pojedyncze znaki lub całe napisy
 
@@ -619,7 +629,8 @@ W pojedynczym zapisujemy tylko i wyłącznie pojedyncze znaki - `'H'`.
 
 ```cpp title="Niepoprawny kod"
 #include <string>
-int main() {
+int main() 
+{
 	std::string s = 'Hej!';
 	// Bardzo możliwe, że osobno dostaniemy komunikat o 'Hej!'
 	// i osobno o samej próbie przypisania (patrz sekcję Treść błędu poniżej):
@@ -769,7 +780,8 @@ Rozważmy przykładowy program:
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::cout << "Wprowadź swój wiek: ";
 	int age;
 	std::cin >> age;
@@ -832,7 +844,8 @@ Po wywołaniu tej funkcji znak nowej linii zostanie usunięty, a wywołanie `std
 #include <iostream>
 #include <string>
 
-int main() {
+int main() 
+{
 	std::cout << "Wprowadź swój wiek: ";
 	int age;
 	std::cin >> age;
