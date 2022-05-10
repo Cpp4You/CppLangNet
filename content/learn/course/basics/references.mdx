@@ -7,23 +7,44 @@ tags:				[reference, pointer, memory]
 hide_title:			true
 ---
 
+import Columns from "@site-comps/Columns";
+
 # References
 This lesson will show you how you can access variables indirectly with references.
 
 ## Motivations
 Let's say that you have a function that doubles the parameter.
+
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
 ```cpp
+#include <iostream>
+
 void doubleNumber(int num) 
 {
-num = num * 2;
+    num = num * 2;
 }
 
 int main()
 {
-int x = 5;
-doubleNumber(x); // x will still be 5!
+    int x = 5;
+    doubleNumber(x); 
+    std::cout << x;
 }
 ```
+
+</div>
+
+<div>
+
+```plaintext title="Output (console)"
+5
+```
+
+</div>
+</Columns>
+
 But this will not work,
 because only the value of `x` is written into `num`.
 
@@ -47,18 +68,35 @@ std::cout << var; // Prints out 23
 Now let's see how we can use references to solve our issue.
 
 We just need to make the function take a `int reference` instead of `int`.
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
 ```cpp
+#include <iostream>
+
 void doubleNumber(int num) 
 {
-num = num * 2;
+    num = num * 2;
 }
 
 int main()
 {
-int x = 5;
-doubleNumber(x); // x is now 10!
+    int x = 5;
+    doubleNumber(x);
 }
 ```
+
+</div>
+
+<div>
+
+```plaintext title="Output (console)"
+10
+```
+
+</div>
+</Columns>
+
 Now the the function `doubleNumber` takes a reference,
 `num` will become whatever variable is passed into the function.
 This means when we modify num (which has become `x`), we also indirectly modify `x`.
@@ -78,27 +116,54 @@ Let's say we want to add 5 to each element,
 It's possible to do that one by one, but it becomes annoying and long if the array is big. <br/>
 So loops will come to our rescue!
 
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
 ```cpp
 for (int x : arr) 
 {
-x = x + 5;
+    x = x + 5;
 }
-// Elements remain unchanged after this loop
-std::cout << arr[0]; // Outputs 2
+std::cout << arr[0];
 ```
+
+</div>
+
+<div>
+
+```plaintext title="Output (console)"
+2
+```
+
+</div>
+</Columns>
+
 But the code above will unfortunately not work.
 This is because only the value of the element is being copied into `x`,
 not the element itself.
 
 This is where we can use references,
 they can make the actual element of the array be copied into `x`.
+<Columns spacing={40} columns={['7fr', '4fr']}>
+<div>
+
 ```cpp
 for (int& x : arr) 
 {
-x = x + 5;
+    x = x + 5;
 }
-std::cout << arr[0]; // Outputs 7
+std::cout << arr[0];
 ```
+
+</div>
+
+<div>
+
+```plaintext title="Output (console)"
+7
+```
+</div>
+</Columns>
 Now each each element of the array has successfully increased by five.
 
 :::note Use references accordingly
