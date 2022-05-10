@@ -356,7 +356,8 @@ Aby móc korzystać z typu `std::vector`, musimy dodać nagłówek `<vector>`:
 
 Jeśli zapomnimy dodać ten nagłówek:
 ```cpp
-int main() {
+int main() 
+{
 	std::vector<int> v;
 	v.push_back(1);
 }
@@ -516,7 +517,8 @@ Rozważmy przykładowy program:
 ```cpp
 #include <vector>
 
-int main() {
+int main() 
+{
 	std::vector<int> ints(3); // tablica 3 elementowa, poprawne indeksy to 0, 1, 2
 	// hightlight-next-line
 	ints[200000] = 3; // Ooops! Parę zer za dużo
@@ -616,7 +618,7 @@ Jeśli korzystamy na windowsie z programu Visual Studio, to w trybie debug może
 </TabItem>
 </Tabs>
 
-:::danger Błędy
+:::danger Niezdefiniowane zachowanie
 Problem z błędem tego typu (wyjście poza zakres tablicy), jest taki, że kompilator nie zawsze jest w stanie udowodnić, że jest to błąd, więc nie dostajemy żadnego błędu kompilacji
 (w jaki sposób kompilator ma udowodnić, czy próba dostania się do tablicy pod indeksem wprowadzonym od użytkownika będzie poprawna czy nie?).
 Wyjście poza zakres tablicy powoduje tzw. **niezdefiniowane zachowanie** (*ang. undefined behaviour*), czyli zachowanie, które waha się zależnie od kompilatora którego użyjemy,
