@@ -30,6 +30,9 @@ export default function Image(props)
 	imgStyle.height		= props.height 		|| undefined;
 	imgStyle.maxHeight	= props.maxheight	|| undefined;
 	imgStyle.display	= "block";
+	// Temp Fix: blurry images on Chrome
+	imgStyle.imageRendering = "-webkit-optimize-contrast";
+
 	if (props.center)
 		imgStyle.margin = "0 auto";
 
