@@ -25,7 +25,7 @@ import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
 # Introduction to variables
 
 In this lesson, we'll talk about how to store different values while a program
-is running, that is, how to use variables.
+is running — that is, how to use variables.
 
 ## Motivation
 
@@ -60,12 +60,13 @@ to change three places in the code. It is tedious.
 
 ### Solution
 
-In order not to change so many things every time, let's assume for a moment
-that the number we are raising to the power of three is called `x`.
+In order to avoid changing so many things every time, let's assume for a moment
+that the number we are exponentiating is called `x`.
 What will the code look like then?
 
 ```cpp
 #include <iostream>
+
 int main()
 {
 	std::cout << x * x * x;
@@ -77,6 +78,7 @@ we first need to create a **variable** named `x`:
 
 ```cpp
 #include <iostream>
+
 int main()
 {
 	int x = 212;
@@ -87,7 +89,7 @@ int main()
 The above program will compile and run correctly.
 
 :::important Variable definition
-A **variable** is a container for data of a certain type.
+A **variable** is a container for data of a certain type. A variable's value can change, but its type cannot.
 :::
 
 ## Creating variables
@@ -107,7 +109,7 @@ Here is a diagram of this notation:
 				alt="Scheme for creating a variable (with initialization)"
 			/>
 	</TabItem>
-	<TabItem value="creation" label="⚪ Without value">
+	<TabItem value="creation" label="⚪ Without initial value">
 		<Image center maxheight={250}
 				src="/img/tutorials/course/basic/variables/creation-en.png"
 				alt="Scheme for creating a variable (without initialization)"
@@ -129,21 +131,21 @@ Element | Description
 The type of a variable tells you what the variable can store. As mentioned before,
 a variable is a container that holds certain things of a **certain type**.
 
-`int` is an abbreviation of the word *integer* that is, a number without the fractional part.
+`int` is an abbreviation of the word *integer* that is, a number without the fractional part (a whole number).
 
 At this stage, you should remember the following types of variables:
 
 Type | Description
 --- | ---
-**`int`** | integer
+**`int`** | integer (whole number)
 **`float`** | real number (with fractional part)
 **`char`** | a single character
 **`bool`** | boolean value, i.e. `true` or `false`
 
 We will cover more types and facts about them in the future.
 
-:::danger
-The above-mentioned types of variables are always written with **lowercase letters**. It matters.
+:::caution
+The above-mentioned types of variables are always written with **lowercase letters**. It matters, C++ is case-sensitive!
 :::
 
 #### Examples of creating variables:
@@ -235,15 +237,28 @@ bool z = false;
 The name can be anything you want, with some important restrictions:
 
 - ❌ must not have spaces (prohibited: ❌ `abc def`)
+- ❌ most symbols not allowed
 - ✔ may consist of:
 	- ✔ characters `a`-`z` and `A`-`Z`
 	- ✔ digits, but not at the beginning (prohibited: ❌ `932abc`)
-	- ✔ underscore `_`
+	- ✔ underscores `_`
+
+<details>
+<summary>Extra notes on underscores</summary>
+<div>
+
+While underscores are allowed in names, there are a few instances that are reserved by C++:
+
+- Leading underscores followed by a capital letter (prohibited: ❌ `_Speed`)
+- Double leading underscores (prohibited: ❌ `__xyz`)
+
+</div>
+</details>
 
 You can create as many variables as you want, but they must have different names
 as they are their unique identifiers (with some exceptions, but more on that later).
 
-Case of the letters is important, variable names are case-sensitive:
+Capitilization is important, variable names are case-sensitive:
 
 ```cpp
 int x = 30;
@@ -286,14 +301,16 @@ an unpredictable value, it won't be reset to 0.
 
 Leaving a variable without its initial value can cause problems later in the code.
 Sometimes, however, we may intentionally skip it, but more on that later.
+
+**You can never read from a variable when it is in an uninitialized state!**
 :::
 
 ### Semicolon at the end
 
-Just a remainder 😀
+Just a reminder 😀
 
 ```cpp
-int name = 40;
+int age = 40;
 ```
 
 ## Opportunities
@@ -303,26 +320,63 @@ while their explaination is in the next lesson.
 
 ### Receiving input from the user
 
+To receive user input, we can make an uninitialized variable, then tell C++ to put the user's response into that variable.
+
 ```cpp
 #include <iostream>
 
 int main()
 {
-	int age; // current age
+	// highlight-next-line
+	int age; // current age (note: uninitialized!)
 	std::cout << "Enter your age: ";
 	std::cin >> age;
 	std::cout << "In 10 years you will be: " << age + 10 << " years\n";
 }
 ```
 
+### Breaking up complex equations
+
+We can use variables to represent intermediate values in complex equations. This helps make the code more readable and maintainable.
+
+```cpp title="🔹 main.cpp"
+#include <iostream>
+
+int main()
+{
+	float currentPos = 10;        // in meters
+	float targetPos = 20;         // in meters 
+	float currentSpeed = 2.5f;    // in meters/second
+	float timeRemaining = 0.5f;   // in seconds
+
+	// Calculate where we will end up once time runs out
+	float endingPos = currentPos + currentSpeed * timeRemaining;
+	
+	// Calculate how far away we landed from the target
+	float error = targetPos - endingPos;
+
+	// Calculate the required speed needed to land directly on the target
+	float requiredSpeed = (targetPos - currentPos) / timeRemaining;
+
+	// Calculate the amount of extra speed we needed to land directly on the target
+	float extraSpeedNeeded = requiredSpeed - currentSpeed;
+
+	std::cout << "We landed " << error << " meters away from the target.\n";
+	std::cout << "We needed to go " << extraSpeedNeeded << "m/s faster to land on the target.";
+}
+```
+
+```plaintext title="Result (console)"
+We landed 8.75 meters away from the target.
+We needed to go 17.5m/s faster to land on the target.
+```
+
 ## Summary
 
-<ImproveSection />
-
-To summarize, we:
-- know how to [create a variable](#creating-variables)
-- understand the difference between [types of variables](#variable-type)
-
+To summarize, we learned:
+- How to [create a variable](#creating-variables) and understand the syntax
+- The difference between [types of variables](#variable-type)
+- Why variables are [useful](#opportunities)
 
 ## Additional info
 
@@ -335,27 +389,42 @@ int main() {
 ```
 
 An uninitialized variable (without an assigned value at the beginning), inside a function block (e.g. inside `main`)
-will have an unpredictable value at the beginning, **won't be set to zero**.
-Leaving a variable without an initial value **can cause problems** later in the code execution.
-However, sometimes we can intentionally skip this, but about that some other time.
+will have an unpredictable value at the beginning, (ie, **it won't be set to zero**).
+Leaving a variable without an initial value **can cause problems** later in the code execution if you read from it before it is assigned.
+
+While it may seem weird to have such a possibility for error in the language, we sometimes want to intentionally do this.
+[Receiving input from the user](#receiving-input-from-the-user) displays one reason for this.
 
 ### Type conversion
 
 A variable has a specific type that cannot be arbitrarily changed in different places in the code.
-The values that we try to write into it must match its type.
-For example, we can write to a variable of type `float` (a real number)
-an integer (`int`):
+The values that we try to write into it must match its type. But, many types will be **converted**
+automatically if you assign without matching types.
+For example, we can write an integer value (`int`) to a variable of type `float` (a real number).
+This triggers a conversion from `int` to `float`.
 
 ```cpp title="🔹 Example"
-float y = 30; // OK
+float y = 30; // OK - 30 is converted to 30.0f
 ```
 
-A variable of type `int` cannot store a fractional part, so when we try to write such a value to it
-it will be **converted**, but no rounding will occur, just a truncation of the fractional part.
+Going in the other direction is a bit more problematic.
+A variable of type `int` cannot store a fractional part, so when we try to write a `float` value to it,
+it will be **converted** to a number that doesn't have a fractional part.
+
+C++ doesn't do this by rounding - instead, it does it by *truncating*. The fractional part of the number
+is completely chopped off and thrown away. For example, `3.1415` truncates to `3`. 
 
 ```cpp title="⚠ Implicit conversion"
-int y = 30.5f; // OK, converted to 30
+int y = 30.5f; // OK, 30.5f is converted to 30, but information lost!
 ```
 
-The compiler analyzing the code *may* issue a warning that there is an **implicit** conversion.
-Implicit because we could use such a notation unintentionally and get the wrong value.
+A compiler *may* issue a warning that there is an **implicit narrowing conversion**.
+This warning exists because it's common for programmers to accidentally write code like this
+that loses the fractional part, causing errors in our values.
+
+:::caution
+Try to match types whenever you can! Implicit conversions like `float` to `int` causes loss of information!
+This can cause wrong results in the best case, and even disaster in the worst case.
+The [Ariane 5 rocketship flight V88](https://en.wikipedia.org/wiki/Ariane_flight_V88) catastrophically exploded 37 seconds after launch due to an erroneous
+conversion from `float` to `int`, causing a loss of precision that halted the navigation computer.
+:::
