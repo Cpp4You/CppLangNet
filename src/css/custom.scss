@@ -55,6 +55,9 @@ html[data-theme='dark'] {
 */
 .prism-code {
 	counter-reset: line-number;
+	>code {
+		overflow-x: auto;
+	}
 }
 
 /*
