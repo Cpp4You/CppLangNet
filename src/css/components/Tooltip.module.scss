@@ -15,10 +15,16 @@
 	}
 }
 
+html[data-theme="dark"] .TooltipTitle {
+	code {
+		background-color: rgba(black, 0.4);
+	}
+}
+
 .TooltipTitle {
 	font-size: 12px;
 	code {
-		background-color: rgba(black, 0.4);
+		font-size: 105%;
 	}
 	a {
 		padding: 2px 2px 0 2px;

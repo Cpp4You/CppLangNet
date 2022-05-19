@@ -1,4 +1,4 @@
-import React, { useEffect }		from 'react';
+import React					from 'react';
 import useBaseUrl				from '@docusaurus/useBaseUrl';
 
 import MUITooltip				from '@mui/material/Tooltip';
