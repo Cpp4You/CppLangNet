@@ -1052,11 +1052,16 @@ int main()
 	std::cout << fun();
 }
 ```
-Bardzo możliwe, że dostaniemy ostrzeżenie o braku zwróconej wartości, ale kod ten powinien się skompilować się.
-Kiedy będziemy jednak próbowali uruchomić nasz program, możemy się zaskoczyć:
+Jak już dowiedzieliśmy się wcześniej - niezdefiniowane zachowanie to czarna magia i to co się stanie zależy od kompilatora, systemu,
+fazy księżyca i innych różnych mistycznych stworzeń.
+
+Bardzo możliwe, że dostaniemy ostrzeżenie o braku zwróconej wartości, jednak kod tak czy siak się skompiluje.
+W przypadku niezdefiniowanego zachowania kompilator może, ale nie musi wystosować błąd.
+
+Po przetestowaniu różnych narzędzi zauważamy następujące rezultaty:
 
 <Tabs groupId="platform">
-<TabItem value="clang" label="CLANG, LINUX" default>
+<TabItem value="clang" label="CLANG" default>
 
 Skompilowany przez `clang` po uruchomieniu sprawia, że niektóre powłoki pokazują błąd "Illegal instruction" lub nie pokazuje nic:
 
@@ -1161,7 +1166,7 @@ W przypadku funkcji wyżej, typ zwracanej wartości to `int`.
 :::note `clamp`
 `clamp` to funkcja często używana np. w gamedevie, aby upewnić się, że gracz znajduje się w pewnym ustalonym przedziale koordynatów na mapie.
 Bierze wartość oraz przedział w postaci dwóch kolejnych argumentów o tym samym typie.
-Jej zadaniem jest upewnienie się, że dana wartość nie przekracza przedziału z żadnej stron.
+Jej zadaniem jest upewnienie się, że dana wartość nie przekracza przedziału z żadnej ze stron.
 
 
 Jeśli wartość jest większa od górnej wartości, zwracana jest górna wartość:
@@ -1283,11 +1288,11 @@ Funkcja ma cel, który ma wykonywać, oraz implementację. Celem będzie np. pol
 Nazwa funkcji powinna odwzorowywać **cel**, nie implementację.
 
 Głównym tego powodem jest to, że osoby wywołującą funkcję nie powinno interesować to **w jaki sposób** dana funkcja coś robi, tylko **co** robi.
-Drugim powód jest taki, że implementacja funkcji może się zmienić na przestrzeni rozwoju naszej aplikacji.
+Drugi powód jest taki, że implementacja funkcji może się zmienić na przestrzeni rozwoju naszej aplikacji.
 Możemy zmieniać, naprawiać, dodawać i usuwać kod w środku (czyt. zmieniać implementację), ale o ile cel naszej funkcji dalej jest taki sam - nazwa pozostanie taka sama,
 co również pozwoli uniknąć tzw. złamania API (*ang. API breakage*).
 
-:::note Łamanie API
+:::danger Łamanie API
 Podstawowe pytanie - czym jest **API**?
 **API**, z angielskiego to **A**plication **P**rogramming **I**nterface.
 
@@ -1302,7 +1307,7 @@ Weźmy dla przykładu taką funkcję:
 ```cpp
 void assignPlayerToTeam(std::string player)
 {
-	...;
+	// ...
 }
 ```
 Mamy tutaj funkcję `assignPlayerToTeam`.
@@ -1314,7 +1319,7 @@ Cóż, wyobraź sobie, że masz całą halę pełną pralek oraz po jednym roboc
 ```cpp
 std::vector<float> washingMachine3000(std::string button, int knob)
 {
-	...
+	// ...
 }
 ```
 Każdy robot jest dokładnie nauczony gdzie znajduje się jaka pralka,
@@ -1330,7 +1335,7 @@ zastąpione innych elementów dotykowymi panelami (zmieniona nazwa funkcji, inny
 ```cpp
 std::string washingMachine5000(float touchPanel, std::string button)
 {
-	...
+	// ...
 }
 ...
 std::vector<float> result = washingMachine3000("click", 123); // oops!
