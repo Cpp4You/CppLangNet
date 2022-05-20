@@ -1,10 +1,10 @@
-```cpp title="Concat two arrays"
+```cpp title="Concat two arrays (C++20)"
 #include <iostream>
 #include <array>
 #include <algorithm>
 
 template <typename T, size_t N1, size_t N2>
-std::array<T, N1 + N2> concat(
+auto concat(
 		std::array<T, N1> const& lhs,
 		std::array<T, N2> const& rhs
 	)
@@ -27,6 +27,6 @@ int main()
 	auto both	= concat(left, right);
 
 	for (int elem : both)
-		std::cout << elem << ", ";
+		std::cout << elem << ' ';
 }
 ```
