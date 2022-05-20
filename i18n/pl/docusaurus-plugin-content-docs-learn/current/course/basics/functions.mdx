@@ -492,3 +492,120 @@ Definicja **musi** pojawić się w kodzie **tylko raz** (deklaracji może być w
 ## Dodatkowe informacje 🚧
 
 <ImproveSection />
+
+## Dobre praktyki
+
+### Dobra nazwa
+
+Każda funkcja to pewien kod, który reprezentuje jedną logiczną operację.
+Nawyk dobrego nazywania funkcji powinien wejść w krew jak najszybciej,
+albowiem nazwy funkcji bardzo wpływają na czytelność kodu oraz kilka innych kluczowych jego aspektów.
+
+Funkcja ma cel, który ma wykonywać, oraz implementację. Celem będzie np. policzenie równania kwadratowego, implementacją będzie sam kod, który będzie to wykonywać.
+Nazwa funkcji powinna odwzorowywać **cel**, nie implementację.
+
+Głównym tego powodem jest to, że osoby wywołującą funkcję nie powinno interesować to **w jaki sposób** dana funkcja coś robi, tylko **co** robi.
+Drugim powód jest taki, że implementacja funkcji może się zmienić na przestrzeni rozwoju naszej aplikacji.
+Możemy zmieniać, naprawiać, dodawać i usuwać kod w środku (czyt. zmieniać implementację), ale o ile cel naszej funkcji dalej jest taki sam - nazwa pozostanie taka sama,
+co również pozwoli uniknąć tzw. złamania API (*ang. API breakage*).
+
+:::note Łamanie API
+Podstawowe pytanie - czym jest **API**?
+**API**, z angielskiego to **A**plication **P**rogramming **I**nterface.
+
+Brzmi tajemniczo, ale przyjrzyjmy się temu trochę bliżej. Czym jest **interfejs**?
+
+Wyobraźmy sobie pralkę. Pralka ma w środku skomplikowaną maszynerię, dużo elementów mechanicznych i elektronicznych,
+których celem jest finalnie wypranie naszych ubrań.
+My do komunikacji z pralką używamy przycisków, pokrętł, ekranów dotykowych, etc. To właśnie jest **interfejs**. Pozwala on na interakcję z pralką.
+
+W przypadku programowania, **API** to również wszystko co pozwala na interakcję. Funkcja ma nazwę, parametry i typ zwracany.
+Weźmy dla przykładu taką funkcję:
+```cpp
+void assignPlayerToTeam(std::string player)
+{
+	...;
+}
+```
+Mamy tutaj funkcję `assignPlayerToTeam`.
+W część jej **interfejsu** wchodzi jej nazwa (`assignPlayerToTeam`), typy jej parametrów (`std::string`) oraz jej typ zwracany (`void`).
+
+Dlaczego łamanie API jest takie niebezpieczne?
+
+Cóż, wyobraź sobie, że masz całą halę pełną pralek oraz po jednym robocie obsługującym każdą pralkę (pralka - funkcja, robot - kod korzystający z funkcji).
+```cpp
+std::vector<float> washingMachine3000(std::string button, int knob)
+{
+	...
+}
+```
+Każdy robot jest dokładnie nauczony gdzie znajduje się jaka pralka,
+gdzie na tej pralce są jakie przyciski i w jakiej kolejności jakie akcje należy wykonać, aby doprowadzić do udanego wyprania ubrań.
+```cpp
+std::vector<float> result = washingMachine3000("click", 123);
+```
+
+Wyobraź sobie teraz, że producent tych pralek nagle podmienia swoją czarodziejską różdżką wszystkie stare pralki na nowszy model.
+Można powiedzieć - powód do radości, w końcu nowszy model, pralki są szybsze, pobierają mniej wody i prądu, super.
+Nie do końca - nowy model pralek ma zmieniony interfejs - poprzestawianie guziki, brak niektórych pokrętł,
+zastąpione innych elementów dotykowymi panelami (zmieniona nazwa funkcji, inny typ zwracany, inne typy czy kolejność argumentów).
+```cpp
+std::string washingMachine5000(float touchPanel, std::string button)
+{
+	...
+}
+...
+std::vector<float> result = washingMachine3000("click", 123); // oops!
+```
+
+Nagle każdy robot (kod korzystający z funkcji) szaleje i wybucha, ponieważ każdy robot jest nauczony korzystać z określonej pralki (funkcji) w określony sposób,
+jednak interfejs się zmienił, więc nic nie działa tak jak powinno.
+
+Łamanie API to bardzo często sytuacja której chcemy uniknąć, ponieważ sprawia dużo kłopotów programistom utrzymującym kod, który korzysta z naszych funkcji.
+Nie zawsze jest to możliwe i wtedy stosuje się różnego rodzaju techniki, które powiadamiają programistów o **przyszłym** złamaniu obietnicy, którą jest interfejs.
+:::
+
+### Jedna logiczna operacja
+
+Funkcje powinny wykonywać tylko i wyłącznie jedną logiczną operację, powinny realizować tylko jeden cel na raz.
+Wydzielanie jak najmniejszych kawałków kodu do funkcji niesie za sobą cały szereg korzyści:
+
+ - :::info Zwiększenie **reużywalności** funkcji
+	Jeśli funkcje wykonują tylko jedną logiczną operację, to jest większa szansa, że będzie można je wykorzystać w wielu miejscach,
+	w porównaniu do funkcji, które robią wiele rzeczy.
+
+	Jeśli mamy funkcję, która usuwa spacje z przodu i z tyłu napisu, to nie użyjemy jej tam, gdzie będziemy potrzebować usunąć tylko spacje z przodu.
+	Za to jeśli będziemy mieć dwie funkcje - jedną usuwającą spacje z przodu, a drugą z tyłu, to nie dość, że będziemy mogli zaimplementować funkcję, która
+	usuwa znaki jednocześnie i z przodu i tyłu na podstawie tamtych dwóch, to jeszcze będzie mieli do dyspozycji dwie inne, bardziej specyficzne,
+	usuwające tyko z przodu lub z tyłu.
+	:::
+
+ - :::info Większa szansa na optymalizacje
+	Nie będziemy się wgłębiać w powody dlaczego tak jest. Warto po prostu zapamiętać, że kompilator potrafi lepiej zoptymalizować kod, który
+	używa małych, dobrze podzielonych funkcji, w przeciwieństwie do takiego, w którym funkcje są duże i nie wykonują małej ilości operacji.
+	:::
+
+ - :::info Łatwiejszy w analizie kod
+	Małe funkcje są zazwyczaj łatwiejsze w analizie niż duże funkcje.
+	Kod korzystający z małych, dobrze nazwanych funkcji również jest zazwyczaj łatwiejszy w analizie, niż taki, który korzysta z funkcji,
+	które ukrywają dużo rzeczy przed programistą.
+
+	Jeśli funkcja nazywa się `stringToInt`, to programista czytając zapis `stringToInt("3113")` spodziewa się tylko i wyłącznie zwrócenia przez tę funkcję
+	liczby o wartości 3113, żadnego wypisywania ani żadnych innych akcji w tle. Wszystko co powinno być widoczne, będzie w takim układzie widoczne.
+	:::
+
+ - :::info Funkcje łatwiejsze w testowaniu
+	Testowanie nie jest tematem dla początkujących, aczkolwiek zdecydowanie jest aspektem ważnym w pracy programisty.
+	Testowanie polega na niczym innym niż sprawdzaniu, czy kod napisany przez programistę jest poprawny (tzn. czy spełnia ustalone założenia).
+
+	Testowanie funkcji, które same za siebie mówią co robią, są podzielone na logiczne operacje i nie mają efektów ubocznych,
+	jest znacznie prostsze, niż testowanie potworów o niebotycznych wielkościach, rozwiązujących wszystkie problemy świata.
+	:::
+
+ - :::info Funkcje łatwiejsze w nazywaniu
+	Tak jak już wcześniej powiedzieliśmy - nazwa funkcji powinna odzwierciedlać operację, którą ta funkcja wykonuje.
+	Funkcje wykonujące pojedyncze operacje nazwać jest dość łatwo i szybko.
+
+	W przypadku funkcji, które nie podążają za tą dobrą praktyką, musimy się namyśleć jak oddać istotę funkcji, która robi wiele rzeczy na raz, co jest
+	oczywiście trudniejsze.
+	:::
