@@ -11,6 +11,7 @@ hide_title:			true
 import Columns			from '@site-comps/Columns';
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
+import Image			from '@site-comps/Image';
 
 <!--  Presets -->
 import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
@@ -301,8 +302,243 @@ o tym dalej w kursie.
 
 ## Przykłady
 
+### Aggregate initialization
+C++ wyróżnia wiele różnych rodzajów typów - typy fundamentalne (*ang. fundamental types*),
+typy trywialne (*ang. trivial types*), typy nietrywialne (*ang. non-trivial types*), typy "agregatowe" (*ang. aggregate types*).
+
+Proste struktury jakie poznaliśmy w dzisiejszej lekcji należą właśnie do typów "agregatowych", co oznacza, że możemy je inicjalizować za pomocą *aggregate initialization*.
+W skrócie oznacza to, że zamiast
+```cpp
+int main()
+{
+	Car car;
+	car.brand = "Ford";
+	car.model = "Focus";
+	car.yearOfProduction = 2010;
+}
+```
+moglibyśmy po prostu zrobić jedno z poniższych:
+
+<Tabs>
+<TabItem value="direct" label="Metoda 1">
+
+```cpp
+int main()
+{
+	Car car{"Ford", "Focus", 2010};
+}
+```
+
+</TabItem>
+<TabItem value="copy" label="Metoda 2">
+
+```cpp
+int main()
+{
+	Car car = {"Ford", "Focus", 2010};
+}
+```
+
+</TabItem>
+<TabItem value="copy2" label="Metoda 3">
+
+```cpp
+int main()
+{
+	Car car = Car{"Ford", "Focus", 2010};
+}
+```
+
+</TabItem>
+</Tabs>
+
+Możemy również zastosować tutaj składnię z `auto`:
+```cpp
+int main()
+{
+	auto car = Car{"Ford", "Focus", 2010};
+}
+```
+
+Oczywiście kolejność argumentów podawanych w nawiasie odpowiada kolejnym składowym struktury, w tym przypadku:
+ - `Car::brand` zostanie zainicjalizowane wartością **"Ford"**
+ - `Car::model` zostanie zainicjalizowane wartością **"Focus"**
+ - `Car::yearOfProduction` zostanie zainicjalizowane wartością **2010**
+
+
+### Designated initializers (C++20)
+
+Od C++20 dostajemy również funkcjonalność, która pozwala nam jasno powiedzieć jakie pola chcemy zainicjalizować.
+Pola musimy wymieniać w tej samej kolejności w jakiej są one zadeklarowane w strukturze:
+
+```cpp title="🔹 Użycie designated initializer"
+int main()
+{
+	auto car = Car {
+		.brand = "Ford",
+		.model = "Focus",
+		.yearOfProduction = 2010
+	};
+}
+```
+
+Oczywiście nowe linie są tutaj opcjonalne i można wszystko dać w jednej linii, aczkolwiek takie podejście jest znacznie bardziej czytelne.
+Głównymi tego zastosowaniami są czytelność i pomijanie inicjalizacji niektórych pól.
+Np. jeśli chcemy na ten moment pominąć inicjalizację pola `brand`, możemy to zrobić na dwa sposoby.
+
+Pierwszy, nadając wartość po zadeklarowaniu obiektu:
+<Tabs>
+<TabItem value="with-auto" label="Z auto">
+
+```cpp
+int main()
+{
+	auto car = Car();
+	car.model = "Focus";
+	car.yearOfProduction = 2010;
+}
+```
+
+</TabItem>
+
+<TabItem value="without-auto" label="Bez auto">
+
+```cpp
+int main()
+{
+	Car car;
+	car.model = "Focus";
+	car.yearOfProduction = 2010;
+}
+```
+
+</TabItem>
+</Tabs>
+
+Lub drugi, używając *designated initializers*:
+
+<Tabs>
+<TabItem value="with-auto" label="Z auto">
+
+```cpp
+int main()
+{
+	auto car = Car {
+		.model = "Focus",
+		.yearOfProduction = 2010
+	};
+}
+```
+
+</TabItem>
+
+<TabItem value="without-auto" label="Bez auto">
+
+```cpp
+int main()
+{
+	Car car = {
+		.model = "Focus",
+		.yearOfProduction = 2010
+	};
+
+	Car car2 = Car { // również poprawne
+		.model = "Focus",
+		.yearOfProduction = 2010
+	};
+}
+```
+
+</TabItem>
+</Tabs>
+
 <ImproveSection />
 
-## Potecjalne błędy
+## Potencjalne błędy
 
-<ImproveSection />
+### Brak typu struktury przy deklarowaniu metody poza nią
+
+Należy pamiętać, że kiedy deklarujemy metodę poza strukturą:
+```cpp title="🔹 Deklaracja metody poza strukturą"
+struct Woobledooble {
+	int wooblines;
+	int skadoodle();
+};
+
+int Woobledooble::skadoodle()
+{
+	return 5;
+}
+
+int main()
+{}
+```
+
+Trzeba uwzględnić informację do jakiej struktury ta metoda należy.
+Jeśli o tym zapomnimy, to nasza struktura formalnie nie będzie miała danej metody, tylko będzie to wolna funkcja.
+
+```cpp title="❌ Brak specyfikacji typu struktury"
+struct Mage {
+	int level = 0;
+	// ...
+	void levelUp();
+};
+
+// highlight-next-line
+void levelUp() {
+	level++;
+}
+
+int main()
+{
+	Mage chris;
+	chris.levelUp();
+}
+```
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: use of undeclared identifier 'level'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak typu struktury"
+		src="/img/tutorials/course/basic/methods/error-no-struct-scope-specified-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: ‘level’ was not declared in this scope; did you mean ‘levelUp’?
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak typu struktury"
+		src="/img/tutorials/course/basic/methods/error-no-struct-scope-specified-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2065: 'level': undeclared identifier
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak typu struktury"
+		src="/img/tutorials/course/basic/methods/error-no-struct-scope-specified-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
