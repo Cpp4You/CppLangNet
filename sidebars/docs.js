@@ -109,6 +109,13 @@ module.exports = {
 						},
 					]
 				},
+				{
+					type: 'category',
+					label: 'Utility',
+					items: [
+						docsMethod('std/utility/forward'),
+					]
+				},
 			],
 		},
 	],

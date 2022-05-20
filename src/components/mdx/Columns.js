@@ -6,10 +6,7 @@ export default function Columns(props) {
 
 	const style = props.style || {};
 
-	style.display = "grid";
-	
-	style.gridGap = props.spacing || 20;
-	
+	style.gridGap = props.spacing || 20;	
 
 	if (!props.columns)
 		style.gridTemplateColumns = `repeat(${props.columns || 2}, 1fr)`;

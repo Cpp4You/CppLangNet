@@ -1,0 +1,45 @@
+.TooltipContent {
+	background-color: rgba(0, 255, 221, 0.03);
+	padding-left: 3px;
+	padding-right: 3px;
+	border-bottom: 2px solid rgba(0, 174, 255, 0.397);
+	box-sizing: border-box;
+	transition: background-color 0.2s;
+	&:hover {
+		background-color: rgba(0, 255, 221, 0.1);
+		cursor: help;
+
+		a {
+			text-decoration: none;
+		}
+	}
+}
+
+html[data-theme="dark"] .TooltipTitle {
+	code {
+		background-color: rgba(black, 0.4);
+	}
+}
+
+.TooltipTitle {
+	font-size: 12px;
+	code {
+		font-size: 105%;
+	}
+	a {
+		padding: 2px 2px 0 2px;
+		color: inherit;
+		background-color: rgba(6, 36, 56, 0.3);
+		transition: 0.2s;
+		box-sizing: border-box;
+		border-bottom: 2px solid rgba(119, 209, 211, 0.404);
+		&:hover {
+			text-decoration: none;
+			border-bottom: 2px solid rgba(119, 209, 211, 0.664);
+			background-color: rgba(0, 120, 124, 0.664);
+		}
+	}
+}
+
+:global(.MuiTooltip-tooltip) {
+}

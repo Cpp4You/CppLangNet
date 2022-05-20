@@ -5,17 +5,23 @@ description:		"Lesson: comments in C++"
 tags:				[comment]
 ---
 
+import Image		from '@site-comps/Image';
+
+
 # Comments
 
 Comments are used to add descriptions and explanations to the code.
 
 ## Motivation
 
-Comments often show the developer intent when the code is complex.
-They are also very useful in a situation like right now when you are
-reading this course and I can use them to explain things 😄
 
-:::caution
+Comments help communicate the intent of complex pieces of code.
+Not only are they helpful for helping others understand code that you wrote,
+but they are also great for your future self when you look back at your old code
+and think "what the heck was I thinking??"
+You'll see them used by me in code snippets to help explain code to you! 😄
+
+:::info
 Comments **do not** affect the operation of the program in any way.
 They are completely ignored during compilation.
 :::
@@ -53,14 +59,52 @@ int main()
 
 ## Good practices
 
-Use comments when you find that the code does not describe the intent well enough.
-You will understand what I am talking about as you learn
-new things from the C++ language.
+### Meaningful comments
 
-:::tip Language (for non-english speakers)
+When looking at code for the first time, programmers often have to sit down for several minutes and work through each step
+it performs. Sometimes these may be obvious steps, such as calculating Pythagorean's Theorem - it's just a few multiplications...
+nice, short, and easy.
+
+But, imagine a big complicated algorithm, such as a rocket engine ignition sequence. You may see a comment block like:
+```cpp title="🚀 IgnitionSequence.cpp"
+/*
+	1. Engage hydraulic engine return
+	2. Activate 4 igniters
+	3. Open LOX valve
+	4. Wait until combustion chamber threshold is reached
+	5. Open main fuel valve
+*/
+```
+You, as a future programmer, may look at this and understand what all of these terms mean. But why are they in this order specifically?
+Why do we need to "Engage the hydraulic engine return?" Why do we open the LOX valve first? Why don't we activate the igniters until
+after the main fuel valve is opened? Questions like these are unanswered by comments that look like the above.
+Just describing what things are isn't enough to explain it.
+
+```cpp
+// Prints UUDDLRLRBA
+std::cout << "UUDDLRLRBA";
+```
+
+While this comment does accurately describe what this line of code does, it doesn't help us understand **why** the heck we 
+are printing a seemingly random series of characters. But consider the next version of the comment:
+
+```cpp
+// Prints the Konami Code, which causes the player to get 30 extra lives in the NES game Contra
+std::cout << "UUDDLRLRBA";
+```
+
+NOW we suddenly see why this line of code is important! We now know that this line of code was necessary for giving
+the player 30 extra lives in Contra! If we didn't know the Konami Code beforehand, we may have thought this code was
+useless and deleted it. But, now we can see that this snippet is meaningful and should not be removed.
+ 
+<Image center
+		alt="Cat with sticker that says 'Cat' on its forehead"
+		src="/img/tutorials/course/basic/comments/cat.webp"
+		maxwidth="375px"
+		desc="An example of a poor comment on a cat. Perhaps a better comment would say its name and its owner."
+	/>
+
+### Comment in English
 It's best to use English to write comments.
-It doesn't really matter at first, but it's definitely worth getting into the habit
-of writing in English, because in the future, someone else may also use your code 😃
-:::
-
-**Comment on your code but don't overdo it.**
+English is a lingua-franca for programming on the Internet.
+While it may not matter now right this moment, someone else may be reading your code in the future! 😃
