@@ -489,9 +489,147 @@ Definicja **musi** pojawić się w kodzie **tylko raz** (deklaracji może być w
 
 <ImproveSection />
 
-## Dodatkowe informacje 🚧
+## Dodatkowe informacje
 
-<ImproveSection />
+### Dedukcja typu i "wiodący typ zwracany"
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/auto-return-type-pl.png"
+		desc="Schemat funkcji z dedukcją typu 'auto'"
+	/>
+
+Tak samo jak możemy użyć słówka kluczowego `auto` w przypadku zmiennych, aby typ zmiennej został wydedukowany przez kompilator,
+możemy również zamiast typu zwracanego funkcji dać `auto`, aby typ zwracanej wartości był wydedukowany, np.
+
+```cpp title="🔹 Dedukcja typu zwracanego funkcji"
+auto println(std::string msg) {
+	std::cout << msg << '\n';
+}
+```
+Tutaj typ zwracany zostaje wydedukowany do `void`, bowiem nie zwracamy żadnej wartości.
+
+```cpp title="🔹 Dedukcja typu zwracanego funkcji"
+auto clamp(int value, int low, int high) {
+	if(value < low) return low;
+	if(value > high) return high;
+
+	return value;
+}
+```
+W przypadku funkcji wyżej, typ zwracanej wartości to `int`.
+
+:::note `clamp`
+`clamp` to funkcja często używana np. w gamedevie, aby upewnić się, że gracz znajduje się w pewnym ustalonym przedziale koordynatów na mapie.
+Bierze wartość oraz przedział w postaci dwóch kolejnych argumentów o tym samym typie.
+Jej zadaniem jest upewnienie się, że dana wartość nie przekracza przedziału z żadnej stron.
+
+
+Jeśli wartość jest większa od górnej wartości, zwracana jest górna wartość:
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/car-clamp-above-pl.png"
+		desc="Auto nad koordynatami"
+	/>
+
+Jeśli wartość jest jest mniejsza od dolnej wartości, zwracana jest dolna wartość:
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/car-clamp-below-pl.png"
+		desc="Auto pod koordynatami"
+	/>
+
+W przeciwnym wypadku zwracana jest oryginalna wartość:
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/car-clamp-in-between-pl.png"
+		desc="Auto między koordynatami"
+	/>
+
+Oczywiście w prawdziwej grze przy próbie przekroczenia poprawnych koordynatów akcja ich "clampowania" dzieje się tak szybko, że gracz
+nie ma nawet szansy zobaczyć, że wyszedł poza ustalone granice, po prostu nie może przejechać dalej.
+
+W C++ nie musimy jej również pisać sami, w standardzie C++ znajdziemy funkcję `std::clamp` znajdującą się w nagłówku `<algorithm>`.
+:::
+
+Problemem z dedukcją wartości jest to, że nie może ona być stosowana zawsze.
+Główne dwa scenariusze w których nie można stosować dedukcji typu zwracanego, to:
+1. Deklaracja funkcji przed jej definicją
+2. Rekurencja
+
+O rekurencji dowiemy się kiedy indziej, jednak co do pierwszego punktu - gdy wywołujemy funkcję, kompilator musi znać wszystkie informacje o niej (nazwa, typ zwracany, argumenty).
+Dedukcja typu zwracanego funkcji, jest możliwa dopiero po poznaniu ciała, definicji funkcji. Dlatego nie możemy użyć funkcji która została zadeklarowana z `auto` zamiast typu,
+przed poznaniem definicji.
+
+
+<Tabs>
+<TabItem value="bad" label="❌ Źle" default>
+
+```cpp
+#include <iostream>
+
+// highlight-next-line
+auto clamp(int value, int low, int high);
+
+int main()
+{
+	int playerY = 300;
+	// highlight-next-line
+	auto clampedPlayerY = clamp(playerY, 100, 200); // typ zwracany nie jest tutaj jeszcze znany, błąd kompilacji
+
+	std::cout << clampedPlayerY << '\n';
+}
+
+auto clamp(int value, int low, int high)
+{
+	if(value < low) return low;
+	if(value > high) return high;
+
+	return value;
+}
+```
+
+</TabItem>
+<TabItem value="good" label="✔ Dobrze" default>
+
+```cpp
+#include <iostream>
+
+// highlight-next-line
+auto clamp(int value, int low, int high)
+{
+	if(value < low) return low;
+	if(value > high) return high;
+
+	return value;
+}
+
+int main()
+{
+	int playerY = 300;
+	// highlight-next-line
+	auto clampedPlayerY = clamp(playerY, 100, 200); // ok, typ zwracany jest znany
+
+	std::cout << clampedPlayerY << '\n';
+}
+
+```
+
+</TabItem>
+</Tabs>
+
+Co ciekawe - C++ pozwala również na podanie typu w tym przypadku.
+Typ ten zapisujemy po strzałce, po deklaracji:
+```cpp
+auto clamp(int value, int low, int high) -> int;
+```
+Jest to równoważne z:
+```cpp
+int clamp(int value, int low, int high);
+```
+Notacja ta nazywa się z angielskiego *trailing return type* (wiodący typ zwracany).
+
+Wiele innych języków używa podobnej składni, funkcje w tego typu notacji lepiej układają się pod sobą + są przypadki,
+kiedy typ zwracany zależy od typu parametru i wtedy trzeba użyć tej notacji.
 
 ## Dobre praktyki
 
