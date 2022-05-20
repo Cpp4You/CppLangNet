@@ -6,12 +6,13 @@ tags:				[compiler, tool, clang, linux]
 hide_title:			true
 ---
 
+import Image from '@site-comps/Image';
 
 # Clang setup on Linux
 
 In this article, we will discuss how to setup Clang on Linux easily.
 
-### What is Clang?
+## Introduction
 
 The Clang tool is a front end compiler that is used to compile programming languages
 such as C++, C, Objective C++ and Objective C into machine code.
@@ -20,12 +21,12 @@ Clang is also used as a compiler for frameworks like OpenMP, OpenCL, RenderScrip
 CUDA and HIP. Clang uses the LLVM compiler as its back end and it has been included
 in the release of the LLVM since the LLVM 2.6.
 
-### How to download/install Clang?
+## Downloading and installing
 
 We will be installing Clang from terminal in Linux.
 
 First, we have to open up the terminal; we can use the shortcut
-`ctrl` + `alt` + `t` or we can manually open it up by searching it in
+`Ctrl` + `Alt` + `t` or we can manually open it up by searching it in
 the menu
 
 **Command 1:** To begin, update the packages list using the below command
@@ -36,9 +37,9 @@ This command is used to download package information from all configured
 sources and to get the info of the updated versions of the packages.
 
 :::important Note
-***sudo** *(Super User DO)* enables a permitted user to run a command as
+**sudo** *(Super User DO)* enables a permitted user to run a command as
 the *superuser* or another user, depending on the security policy. So,
-if required, enter your system *password* to proceed.
+if required, enter your system password to proceed.
 :::
 
 **Command 2:** Now we will download Clang by the following command
@@ -49,9 +50,9 @@ If required enter your system *password* to proceed.
 
 <Image center
        alt="Output for `sudo apt-get install clang`"
-       src="/static/img/tutorials/tools/clang-install.jpg"
-       />
-       
+       src="/img/tutorials/tools/clang-install.jpg"
+    />
+
 **Command 3:** After download, check if Clang had successfully installed on your system.
 ```
 clang --version
@@ -62,10 +63,10 @@ If installed successfully, output would be like this:
 
 <Image center
        alt="Output for `clang --version`"
-       src="/static/img/tutorials/tools/clang-version-output.jpg"
-       />
-       
-### Uninstalling Clang
+       src="/img/tutorials/tools/clang-version-output.jpg"
+    />
+
+## Uninstalling
 
 **Command:** If you want to uninstall Clang, due to any reason, run the following command
 ```
@@ -76,6 +77,6 @@ If required enter your system *password* to proceed.
 **Output:**
 
 <Image center
-       alt="Output for `sudo apt remove clang && sudo apt autoremove`"
-       src="/static/img/tutorials/tools/clang-remove-output.jpg"
-       />
+       alt="Output for `sudo apt remove clang &amp;&amp; sudo apt autoremove`"
+       src="/img/tutorials/tools/clang-remove-output.jpg"
+    />
