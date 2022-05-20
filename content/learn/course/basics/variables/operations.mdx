@@ -7,33 +7,29 @@ tags:				[operation, variable, declaration, definition, int, float, char]
 hide_title:			true
 ---
 
-<!-- Presets -->
-import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
-
 <!-- Components -->
+
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
+import SymbolTable, { Symbol } from '@site-comps/SymbolTable';
 
 import Columns			from '@site-comps/Columns';
 import CustomCodeBlock	from '@site-comps/CustomCodeBlock';
 import GoogleSlides		from '@site-comps/GoogleSlides';
 
-<NotFinished/>
-
 # Operations on variables
 
-In this lesson, you will learn to perform various operations with variables. We will:
-- write values to them,
-- modify them with mathematical expressions,
-- display their contents in the console.
+In this lesson, you will learn to perform various operations with variables by:
+- Writing values to them
+- Modifying them with mathematical expressions
+- Displaying their contents in the console
 
-You will also learn to allow the user a simple interaction with the program.
+You will also learn how to enable simple user interaction with the program.
 
 ### User interaction
 
-Our programs will be a bit more interesting when we let the user type
-something into the console.  
-We will do by adding a new instruction using `cin` (_**c**haracter **in**put_):
+Our programs become more interesting when we let the user interact with them.
+We will do this by adding a new instruction using `cin` (_**c**haracter **in**put_):
 
 ```cpp
 #include <iostream>
@@ -50,23 +46,20 @@ int main()
 }
 ```
 
-`cin` allows us to save the content of the so-called standard input (stdin)
-to the variable that is passed after the characters `>>`.
+`cin` allows us to save the content of the so-called "standard input" (stdin)
+to the variable that is passed after the `>>` characters. 
+This allows the user to type something into the console, and then that value is placed into a variable.
 
-We'll talk about standard input at another time, for now remember that
-`cin` allows the user of the program to type something from the console,
-then writes that value to a variable.
-
-Please not that:
+Please note that:
 - `cout` uses the `<<` operator
 - `cin` uses the `>>` operator
 
-In addition to that, you can see that we didn't assign an initial value to `age`.
-It is not needed, because immediately after its creation, we use `std::cin`
-that assings the value that the user enters from the keyboard.
+In addition, you can see that we didn't assign an initial value to `age`.
+The initial value is not needed because we use `std::cin` immediately after we create the variable,
+which assings a value to the variable. After which, the variable is now *initialized*.
 
 :::tip Remember
-You can remember the direction of the stamps in this operator in an easy way
+You can remember the direction of the arrows in an easy way
 
 - `cout` - the text goes **to the console** - `<<` pointing to the `cout`
 - `cin` -  the text goes **to the variable** - `>>` pointing to the variable
@@ -74,19 +67,31 @@ You can remember the direction of the stamps in this operator in an easy way
 
 ### Math operations
 
-Variables that contain numbers can be freely modified using typical mathematical signs (operators):
+Variables that store numbers can be freely modified using typical mathematical notation (operators):
 
-- `a + b` - adds two numbers together
-- `a - b` - subtracts two numbers from each other
-- `a * b` - multiplies two numbers by itself
-- `a / b` - divides the number `a` by `b`
-- `a % b` - remainder of division `a` by `b`
+<center>
+	<SymbolTable noTraits>
+		<tr>
+			<th>Operation</th>
+			<th>Meaning</th>
+		</tr>
+		<Symbol name="a + b" desc="Adds a and b" />
+		<Symbol name="a - b" desc="Subtracts b from a" />
+		<Symbol name="a * b" desc="Multiplies a and b" />
+		<Symbol name="a / b" desc="Divides the number a by b" />
+		<Symbol name="a % b" desc="Remainder of the division a by b" />
+	</SymbolTable>
+</center>
 
 :::note
 These are not all math operators. We'll talk about the rest later.
 :::
 
-Let's use these operators in practice:
+:::caution
+The `^` symbol is **not** exponentiation!
+:::
+
+Let's see these operators in practice:
 
 ```cpp
 #include <iostream>
@@ -109,12 +114,11 @@ int main()
 ```
 
 :::tip Alignment
-Note that it doesn't matter to the compiler whether we use a single space or align the code
-with the **`Tab`** key.
+Note that it doesn't matter whether you use **`Space`** or **`Tab`** to align code.
 :::
 
-A very important fact is that the use of the above-mentioned operators
-**does not change the content of the variable** `age`.
+None of the aforementioned operators will affect the variable they're used on.
+**The content of `age` does not change**.
 
 By entering the age `20`, we will get the following result:
 
@@ -135,38 +139,52 @@ Someone twice as young is 10 years old
 
 ```plaintext title="Description"
 (age: 20 => + 10 = 30)
-(age: 20 => - 5 = 30)
-(age: 20 => * 2 = 40)
-(age: 20 => / 2 = 10)
-(age: 20 => % 10 = 0)
+(age: 20 => - 5  = 30)
+(age: 20 => * 2  = 40)
+(age: 20 => / 2  = 10)
+(age: 20 => % 10 =  0)
 ```
 
 </div>
 </Columns>
 
-As we can see, the value of the variable `age` remained the same at each stage (having value of `20`).  
+As we can see, the value of the variable `age` remained the same at each step (keeping a value of `20` the entire time).  
 This is because in the notation:
 
 ```cpp
 a + b
 ```
 
-the `a + b` expression **results** in some value and the contents of the **variables are left untouched**.  
+The `a + b` expression **results** in some value and **the contents of the variables are left untouched**.  
+
+### Modifying variables
+
+Often times, we will want to change a variable's value by giving it a new one.
+You can simply use the assignment operator `=` again on a variable to give it a new value.
+
+In the following example, the variable `age` is initially created with a value of `20`.
+Then, we *assign* a new value of `37` to it.
+
+```cpp
+int age = 20;
+//highlight-next-line
+age = 37;
+```
 
 If, for example, we want to increase a variable by `10`, we have to assign the result
-value of this expression to it:
+of an addition expression like so:
 
 ```cpp
 age = age + 10;
 ```
 
-... or in short:
+As this pattern is so common, C++ provides a shorthand syntax for this:
 
 ```cpp
 age += 10;
 ```
 
-See how it works on an example (I type `20` into the console again):
+And you can see how it works in the example below:
 
 <Columns columns={['2fr', '1fr']}>
 <div>
@@ -180,8 +198,10 @@ int main()
 {
 	std::cout << "Please enter your age: ";
 
+	// highlight-start
 	int age;
 	std::cin >> age;
+	// highlight-end
 
 	std::cout << "You're now " << age << " years old\n";
 	// highlight-start
@@ -205,20 +225,32 @@ In 30 years, you'll be 50 years old
 </div>
 </Columns>
 
-### Program execution flow
+Let's analyze the steps this program took in order. Consider the variable `age`:
 
-Variable `age`:
+- Line `7` defines a variable called `age` of type `int` with no initial value.
+- When line `8` is executed, the program waits at this point until the user types something in and presses **`Enter`**.
+	- Once the input is received, `std::cin` places the value it read into `age`. Since we typed in `20`, `age` is now `20`.
+- When line `10` is executed, `std::cout` prints out the value of `age`, which is still 20.
+- Line `11` changes the value to the result of `20 + 30`, which is `50`. `age` now has a value of  `50`.
+- Finally, Line `12` is executed, which displays a value `50`
 
-- when the line `11` is executed, it has the value `20`.
-- the line`12` changes the value to `20 + 30` that is `50`
-- on the line `13` is displayed with the value `50`
+In addition to the operator `+=` presented above, there are many other operators available
+that modify the content of variables; here are the most common ones:
 
-### Modifying variables
+<center>
+	<SymbolTable noTraits>
+		<tr>
+			<th>Shorthand Operator</th>
+			<th>Equivalent To</th>
+		</tr>
+		<Symbol name="a += b" desc="a = a + b" />
+		<Symbol name="a -= b" desc="a = a - b" />
+		<Symbol name="a *= b" desc="a = a * b" />
+		<Symbol name="a /= b" desc="a = a / b" />
+	</SymbolTable>
+</center>
 
-In addition to the operator presented above: `+=`, there are many other operators available
-that modify the content of variables.
-
-The easiest way to show them is an example:
+And a presentation of these operators in action:
 
 <Tabs>
 <TabItem value="presentation" label="Presentation" default>
@@ -281,4 +313,4 @@ int main()
 
 </Tabs>
 
-You will learn more about the possibilities of variables in the next course lessons.
+You will learn more about the possibilities of variables in the coming lessons.
