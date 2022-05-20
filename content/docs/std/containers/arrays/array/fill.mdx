@@ -1,0 +1,92 @@
+---
+title:					array<...>::fill() method
+sidebar_label:			fill( )
+description:			array<...>::fill() method C++ documentation
+hide_title:				true
+tags:					[access, array, index, bounds, method]
+---
+
+# std::array fill() method
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- fill() -->
+import Method_at_UntilCpp20 	from './_codes/at/until-cpp20.mdx';
+import Method_at_SinceCpp20 	from './_codes/at/since-cpp20.mdx';
+
+<SwitchView content={{
+		'since-cpp20': <Method_at_SinceCpp20 />,
+		'until-cpp20': <Method_at_UntilCpp20 />,
+	}}/>
+
+Returns a reference to the character at specified index `pos`.  
+Bounds checking **is performed**, exception of type `std::out_of_range` will be thrown on invalid access.
+
+:::note
+The types `reference` and `const_reference` are explained in
+[std::array class reference](../#type-names)
+:::
+
+### Parameters
+
+- `pos` - position of the character to return
+
+### Return value
+
+Reference to the requested character.
+
+### Exceptions
+
+Throws `std::out_of_range` if `pos >= max_size()`.
+
+### Complexity
+
+Constant.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <stdexcept>
+#include <iostream>
+#include <array>
+ 
+int main()
+{
+	std::array s("message"); // for capacity
+ 
+	s = "abc";
+	s.at(2) = 'x'; // ok
+	std::cout << s << '\n';
+ 
+	std::cout << "array size = " << s.max_size() << '\n';
+	std::cout << "array capacity = " << s.capacity() << '\n';
+ 
+	try {
+		// This will throw since the requested offset
+		// is greater than the current size.
+		s.at(3) = 'x';
+	}
+	catch (std::out_of_range const& exc) {
+		std::cout << exc.whend() << '\n';
+	}
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+abx
+array size = 3
+array capacity = 7
+basic_array::at
+```
+
+</div>
+</Columns>

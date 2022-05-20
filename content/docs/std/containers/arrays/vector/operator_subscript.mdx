@@ -1,0 +1,82 @@
+---
+title:					vector<...>::operator[]
+sidebar_label:			operator[]
+description:			vector<...>::operator[] C++ documentation
+hide_title:				true
+tags:					[subscript, access, vector, index, method]
+---
+
+# std::vector operator[]
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- at() -->
+import Method_OpSub_UntilCpp20 	from './_codes/operator_subscript/until-cpp20.mdx';
+import Method_OpSub_SinceCpp20 	from './_codes/operator_subscript/since-cpp20.mdx';
+
+<SwitchView content={{
+		'since-cpp20': <Method_OpSub_SinceCpp20 />,
+		'until-cpp20': <Method_OpSub_UntilCpp20 />,
+	}}/>
+
+Returns a reference to the element at specified index `pos`. No bounds checking is performed.
+
+:::note
+The types `reference` and `const_reference` are explained in
+[std::vector class reference](../#type-names)
+:::
+
+### Parameters
+
+- `pos` - position of the element to return
+
+### Return value
+
+Reference to the requested element.
+
+### Exceptions
+
+None.
+
+### Complexity
+
+Constant.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <vector>
+#include <iostream>
+ 
+int main()
+{
+	std::vector<int> numbers {2, 4, 6, 8};
+
+	std::cout << "Second element: " << numbers[1] << '\n';
+
+	numbers[0] = 5;
+
+	std::cout << "All numbers:";
+	for (auto i : numbers) {
+		std::cout << ' ' << i;
+	}
+	std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Second element: 4
+All numbers: 5 4 6 8
+```
+
+</div>
+</Columns>

@@ -19,7 +19,9 @@
 
 
 	--sidebar-code-color-class-name: rgb(0, 134, 105);
-	--sidebar-code-color-function: rgb(107, 97, 62);
+	--sidebar-code-color-operator: blue;
+	--sidebar-code-color-method: rgb(61, 52, 18);
+	--sidebar-code-color-function: rgb(124, 75, 18);
 }
 
 footer.footer--dark a {
@@ -43,7 +45,9 @@ html[data-theme='dark'] {
 	--ifm-color-primary-lightest: #64e7ff;
 
 	--sidebar-code-color-class-name: rgb(3, 199, 156);
-	--sidebar-code-color-function: rgb(197, 162, 48);
+	--sidebar-code-color-operator: rgb(49, 155, 255);
+	--sidebar-code-color-method: rgb(224, 215, 183);
+	--sidebar-code-color-function: rgb(235, 235, 235);
 
 	.docusaurus-highlight-code-line {
 		background-color: rgba(0, 0, 0, 0.3);
@@ -170,6 +174,7 @@ html[data-theme='dark']
 	li.sidebar-code.#{$codeElemName}>div {
 		>a {
 			@include SidebarCodeFont;
+			font-weight: normal;
 		}
 	
 		&:not([class$=--active]) {
@@ -186,14 +191,85 @@ html[data-theme='dark']
 	
 	li.sidebar-code.#{$codeElemName}>a {
 		@include SidebarCodeFont;
+		font-weight: normal;
 		&:not([class*=menu__link--active]) {
 			color: var($colorVar);
 		}
 	}
 }
 
+.sidebar-function {
+
+}
+
+@mixin GenerateSidebarFlag($classPostfix, $content, $backgroundColor) {
+	.sidebar-flag-#{$classPostfix} {
+		&>a::after, &>div>a::after {
+			margin-left: auto;
+			content: $content;
+			border: 1px solid gray;
+			background-color: $backgroundColor;
+			border-radius: 15px;
+			padding: 0 5px;
+			font-size: 90%;
+			color: rgb(61, 61, 61);
+			transform: rotateZ(0deg) !important;
+		}
+	}
+
+	html[data-theme="dark"] .sidebar-flag-#{$classPostfix} {
+		&>a::after, &>div>a::after {
+			color: rgb(219, 219, 219);
+		}
+	}
+}
+
+@include GenerateSidebarFlag('cpp98', 'C++98', transparent); // rgb(201, 201, 201));
+@include GenerateSidebarFlag('cpp11', 'C++11', transparent); // rgb(152, 252, 255));
+@include GenerateSidebarFlag('cpp14', 'C++14', transparent); // rgb(152, 255, 203));
+@include GenerateSidebarFlag('cpp17', 'C++17', transparent); // rgb(94, 231, 162));
+@include GenerateSidebarFlag('cpp20', 'C++20', transparent); // rgb(152, 179, 255));
+@include GenerateSidebarFlag('cpp23', 'C++23', transparent); // rgb(183, 145, 255));
+
+@include GenerateSidebarFlag('since-cpp98', '≥ C++98', transparent); // rgb(201, 201, 201));
+@include GenerateSidebarFlag('since-cpp11', '≥ C++11', transparent); // rgb(152, 252, 255));
+@include GenerateSidebarFlag('since-cpp14', '≥ C++14', transparent); // rgb(152, 255, 203));
+@include GenerateSidebarFlag('since-cpp17', '≥ C++17', transparent); // rgb(94, 231, 162));
+@include GenerateSidebarFlag('since-cpp20', '≥ C++20', transparent); // rgb(152, 179, 255));
+@include GenerateSidebarFlag('since-cpp23', '≥ C++23', transparent); // rgb(183, 145, 255));
+@include GenerateSidebarFlag('until-cpp98', '< C++98', transparent); // rgb(201, 201, 201));
+@include GenerateSidebarFlag('until-cpp11', '< C++11', transparent); // rgb(152, 252, 255));
+@include GenerateSidebarFlag('until-cpp14', '< C++14', transparent); // rgb(152, 255, 203));
+@include GenerateSidebarFlag('until-cpp17', '< C++17', transparent); // rgb(94, 231, 162));
+@include GenerateSidebarFlag('until-cpp20', '< C++20', transparent); // rgb(152, 179, 255));
+@include GenerateSidebarFlag('until-cpp23', '< C++23', transparent); // rgb(183, 145, 255));
+
+.sidebar-separator {
+	&:not(.sidebar-category) {
+		padding: 0 !important;
+		margin: 0 !important;
+		border-bottom: 1px dashed gray;
+	}
+	max-width: 150px;
+
+	&.sidebar-category {
+		background-color: rgba(131, 130, 130, 0.2);
+		font-size: 80%;
+		font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+		font-weight: normal;
+		line-height: 100%;
+		padding: 2px 0 2px 5px;
+	}
+}
+
+html[data-theme='dark'] .sidebar-operator-function>a::before {
+	color: rgb(55, 128, 189);
+}
+
 @include GenerateSidebarCodeColor(sidebar-class-name, --sidebar-code-color-class-name);
 @include GenerateSidebarCodeColor(sidebar-function, --sidebar-code-color-function);
+@include GenerateSidebarCodeColor(sidebar-method, --sidebar-code-color-method);
+@include GenerateSidebarCodeColor(sidebar-operator-function, --sidebar-code-color-operator);
 
 .menu__caret::before, .menu__link--sublist-caret::after {
 	background-size: 100% 100%;

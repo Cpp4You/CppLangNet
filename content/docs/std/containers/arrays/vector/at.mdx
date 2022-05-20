@@ -1,0 +1,96 @@
+---
+title:					vector<...>::at() method
+sidebar_label:			at( )
+description:			vector<...>::at() method C++ documentation
+hide_title:				true
+tags:					[access, vector, index, bounds, method]
+---
+
+# std::vector at() method
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- at() -->
+import Method_at_UntilCpp20 	from './_codes/at/until-cpp20.mdx';
+import Method_at_SinceCpp20 	from './_codes/at/since-cpp20.mdx';
+
+<SwitchView content={{
+		'since-cpp20': <Method_at_SinceCpp20 />,
+		'until-cpp20': <Method_at_UntilCpp20 />,
+	}}/>
+
+Returns a reference to the element at specified index `pos`.  
+Bounds checking **is performed**, exception of type `std::out_of_range` will be thrown on invalid access.
+
+:::note
+The types `reference` and `const_reference` are explained in
+[std::vector class reference](../#type-names)
+:::
+
+### Parameters
+
+- `pos` - position of the element to return
+
+### Return value
+
+Reference to the requested element.
+
+### Exceptions
+
+Throws `std::out_of_range` if `pos >= size()`.
+
+### Complexity
+
+Constant.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <vector>
+ 
+int main()
+{
+	std::vector<int> data = { 1, 2, 4, 5, 5, 6 };
+
+	// Set element 1
+	data.at(1) = 88;
+
+	// Read element 2
+	std::cout << "Element at index 2 has value " << data.at(2) << '\n';
+
+	std::cout << "data size = " << data.size() << '\n';
+
+	try {
+		// Set element 6
+		data.at(6) = 666;
+	} catch (std::out_of_range const& exc) {
+		std::cout << exc.what() << '\n';
+	}
+
+	// Print final values
+	std::cout << "data:";
+	for (int elem : data)
+		std::cout << " " << elem;
+	std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+Element at index 2 has value 4
+data size = 6
+vector::_M_range_check: __n (which is 6) >= this->size() (which is 6)
+data: 1 88 4 5 5 6
+```
+
+</div>
+</Columns>

@@ -12,17 +12,74 @@
 const CodeElements = {
 	Class: 'sidebar-code sidebar-class-name',
 	Func: 'sidebar-code sidebar-function',
+	Method: 'sidebar-code sidebar-method',
+	Operator: 'sidebar-code sidebar-operator-function',
 };
 
-const docsClass = (id) => ({
+const parseFlags = (flags) => {
+	if (typeof flags === 'string')
+		return ' sidebar-flag-' + flags;
+	else if (Array.isArray(flags))
+		return ' ' + flags.map(e => 'sidebar-flag-' + e).join(' ');
+	return '';
+}
+
+const docsClass = (id, flags=[]) => ({
 		id,
 		type: 'doc', 
-		className: CodeElements.Class
+		className: CodeElements.Class + parseFlags(flags)
 	});
-const docsMethod = (id) => ({
+const docsMethod = (id, flags=[]) => ({
 		id,
 		type: 'doc', 
-		className: CodeElements.Func
+		className: CodeElements.Method + parseFlags(flags)
+	});
+const docsFunction = (id, flags=[]) => ({
+		id,
+		type: 'doc', 
+		className: CodeElements.Func + parseFlags(flags)
+	});
+const docsOperator = (id, flags=[]) => ({
+		id,
+		type: 'doc', 
+		className: CodeElements.Operator + parseFlags(flags)
+	});
+
+const separatorBase = (content='<span/>', classes='sidebar-separator') => ({
+			type: 'html',
+			value: content,
+			className: classes,
+			defaultStyle: true,
+		});
+
+const sep = separatorBase();
+const cat = (name) => separatorBase(`<span>${name}</span>`, 'sidebar-separator sidebar-category');
+
+const parseClassItemShorthand = (id, e, flags=[]) => {
+	if (typeof e !== 'string')
+	{
+		if (Array.isArray(e))
+			return parseClassItemShorthand(id, e[0], e[1])
+		else
+			return e;
+	}
+
+	if (e.startsWith("f:")) // function
+		return docsFunction(`${id}/${e.substr(2)}`, flags);
+	else if (e.startsWith("m:")) // method
+		return docsMethod(`${id}/${e.substr(2)}`, flags);
+	else if (e.startsWith("op:")) // method
+		return docsOperator(`${id}/${e.substr(3)}`, flags);
+	else
+		return `${id}/${e}`;
+}
+
+const docsClassCat = (label, id, flags, contents) => ({
+		type: 'category',
+		className: CodeElements.Class + parseFlags(flags),
+		label,
+		link: { type: 'doc', id: id },
+		items: contents.map(e => parseClassItemShorthand(id, e))
 	});
 
 
@@ -55,8 +112,63 @@ module.exports = {
 							label: 'Arrays',
 							link: { type: 'doc', id: 'std/containers/arrays/index' },
 							items: [
-								docsClass('std/containers/arrays/array'),
-								docsClass('std/containers/arrays/vector'),
+								docsClassCat('array', 'std/containers/arrays/array', 'since-cpp11', [
+										cat('Element access'),
+										'm:at',
+										'op:operator_subscript',
+										'm:front',
+										'm:back',
+										'm:data',
+										cat('Iterators'),
+										'm:begin',
+										'm:end',
+										'm:rbegin',
+										'm:rend',
+										cat('Capacity'),
+										'm:empty',
+										'm:size',
+										'm:max_size',
+										cat('Operations'),
+										'm:fill',
+										'm:swap',
+										cat('Non-member functions'),
+										['f:to_array', 'since-cpp20'],
+									]),
+								docsClassCat('vector', 'std/containers/arrays/vector', '', [
+									'constructors',
+									'destructor',
+									'op:operator_assign',
+									'm:assign',
+									'm:get_allocator',
+									cat('Element access'),
+									'm:at',
+									'op:operator_subscript',
+									'm:front',
+									'm:back',
+									'm:data',
+									cat('Iterators'),
+									['m:begin', 'since-cpp11'],
+									['m:end', 'since-cpp11'],
+									['m:rbegin', 'since-cpp11'],
+									['m:rend', 'since-cpp11'],
+									cat('Capacity'),
+									'm:empty',
+									'm:size',
+									'm:max_size',
+									'm:capacity',
+									'm:reserve',
+									['m:shrink_to_fit', 'since-cpp11'],
+									cat('Modifiers'),
+									'm:clear',
+									'm:insert',
+									['m:emplace', 'since-cpp11'],
+									'm:erase',
+									'm:push_back',
+									['m:emplace_back', 'since-cpp11'],
+									'm:pop_back',
+									'm:resize',
+									'm:swap',
+								]),
 							]
 						},
 						{
@@ -64,17 +176,7 @@ module.exports = {
 							label: 'Strings',
 							link: { type: 'doc', id: 'std/containers/strings/index' },
 							items: [
-								{
-									type: 'category',
-									className: CodeElements.Class,
-									label: 'string',
-									link: { type: 'doc', id: 'std/containers/strings/string' },
-									items: [
-										'std/containers/strings/string/constructor',
-										docsMethod('std/containers/strings/string/at'),
-										docsMethod('std/containers/strings/string/get_allocator'),
-									]
-								},
+								docsClassCat('string', 'std/containers/strings/string', '', ['constructor', 'm:at', 'm:get_allocator']),
 								docsClass('std/containers/strings/string_view'),
 							]
 						},
@@ -113,7 +215,7 @@ module.exports = {
 					type: 'category',
 					label: 'Utility',
 					items: [
-						docsMethod('std/utility/forward'),
+						docsMethod('std/utility/forward', 'since-cpp11'),
 					]
 				},
 			],
