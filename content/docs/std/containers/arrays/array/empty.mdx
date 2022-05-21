@@ -3,8 +3,66 @@ title:					array<...>::empty() method
 sidebar_label:			empty( )
 description:			array<...>::empty() method C++ documentation
 hide_title:				true
-tags:					[access, array, index, bounds, method]
+tags:					[array, empty, method]
 ---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- empty() -->
+import Method_UntilCpp20 	from './_codes/empty/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/empty/since-cpp20.mdx';
 
 # std::array empty() method
 
+<SwitchView content={{
+        'until-cpp20': <Method_UntilCpp20 />,
+        'since-cpp20': <Method_SinceCpp20 />,
+    }}/>
+
+
+Checks if the container has no elements, i.e. whether `begin() == end()`.
+
+### Parameters
+
+(none)
+
+### Return value
+
+`true` if the container is empty, `false` otherwise.
+
+### Complexity
+
+Constant.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <array>
+#include <iostream>
+ 
+int main()
+{
+    std::array<char, 6> letters {'a', 'b', 'c', 'd', 'e', 'f'};
+ 
+    if (!letters.empty()) {
+        std::cout << "The last character is '" << letters.back() << "'.\n";
+    }  
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+numbers.empty(): false
+no_numbers.empty(): true
+```
+
+</div>
+</Columns>
