@@ -3,8 +3,77 @@ title:					array<...>::back() method
 sidebar_label:			back( )
 description:			array<...>::back() method C++ documentation
 hide_title:				true
-tags:					[access, array, index, bounds, method]
+tags:					[access, array, last, back, method]
 ---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip					from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- back() -->
+import Method_UntilCpp14 	from './_codes/back/until-cpp14.mdx';
+import Method_SinceCpp14 	from './_codes/back/since-cpp14.mdx';
+import Method_SinceCpp17 	from './_codes/back/since-cpp17.mdx';
+
 
 # std::array back() method
 
+<SwitchView content={{
+        'until-cpp14': <Method_UntilCpp14 />,
+        'since-cpp14': <Method_SinceCpp14 />,
+        'since-cpp17': <Method_SinceCpp17 />,
+    }}/>
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the last element in the container.
+Calling back on an empty container is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip>.
+
+### Parameters
+
+(none)
+
+### Return value
+
+Reference to the last element.
+
+### Complexity
+
+Constant.
+
+### Notes
+
+For a container `c`, the expression `c.back()` is equivalent to `*std::prev(c.end())`.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <array>
+#include <iostream>
+ 
+int main()
+{
+    std::array<char, 6> letters {'a', 'b', 'c', 'd', 'e', 'f'};
+ 
+    if (!letters.empty()) {
+        std::cout << "The last character is '" << letters.back() << "'.\n";
+    }  
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+The last character is 'f'.
+```
+
+</div>
+</Columns>
