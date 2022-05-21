@@ -10,6 +10,10 @@ tags:					[access, vector, index, bounds, method]
 
 import Columns					from "@site-comps/Columns";
 import SwitchView				from "@site-comps/SwitchView";
+import Tooltip					from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
 
 <!----------------- Codes ---------------------->
 
@@ -22,13 +26,8 @@ import Method_at_SinceCpp20 	from './_codes/at/since-cpp20.mdx';
 		'until-cpp20': <Method_at_UntilCpp20 />,
 	}}/>
 
-Returns a reference to the element at specified index `pos`.  
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the element at specified index `pos`.
 Bounds checking **is performed**, exception of type `std::out_of_range` will be thrown on invalid access.
-
-:::note
-The types `reference` and `const_reference` are explained in
-[std::vector class reference](../#type-names)
-:::
 
 ### Parameters
 
