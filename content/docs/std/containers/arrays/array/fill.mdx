@@ -5,46 +5,36 @@ description:			array<...>::fill() method C++ documentation
 hide_title:				true
 tags:					[access, array, index, bounds, method]
 ---
-
-# std::array fill() method
-
 import Columns					from "@site-comps/Columns";
 import SwitchView				from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- fill() -->
-import Method_at_UntilCpp20 	from './_codes/at/until-cpp20.mdx';
-import Method_at_SinceCpp20 	from './_codes/at/since-cpp20.mdx';
+import Method_UntilCpp20 	from './_codes/fill/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/fill/since-cpp20.mdx';
+
+# std::array fill() method
 
 <SwitchView content={{
-		'since-cpp20': <Method_at_SinceCpp20 />,
-		'until-cpp20': <Method_at_UntilCpp20 />,
+		'until-cpp20': <Method_UntilCpp20 />,
+		'since-cpp20': <Method_SinceCpp20 />,
 	}}/>
 
-Returns a reference to the character at specified index `pos`.  
-Bounds checking **is performed**, exception of type `std::out_of_range` will be thrown on invalid access.
 
-:::note
-The types `reference` and `const_reference` are explained in
-[std::array class reference](../#type-names)
-:::
+Assigns the given value value to all elements in the container.
 
 ### Parameters
 
-- `pos` - position of the character to return
+ - `value` - the value to assign to the elements.
 
 ### Return value
 
-Reference to the requested character.
-
-### Exceptions
-
-Throws `std::out_of_range` if `pos >= max_size()`.
+(none)
 
 ### Complexity
 
-Constant.
+Linear in the size of the container.
 
 ### Example
 
@@ -52,29 +42,24 @@ Constant.
 <div>
 
 ```cpp
-#include <stdexcept>
-#include <iostream>
 #include <array>
+#include <cstddef>
+#include <iostream>
  
 int main()
 {
-	std::array s("message"); // for capacity
+    constexpr std::size_t xy = 4;
  
-	s = "abc";
-	s.at(2) = 'x'; // ok
-	std::cout << s << '\n';
+    using Cell = std::array<unsigned char, 8>;
  
-	std::cout << "array size = " << s.max_size() << '\n';
-	std::cout << "array capacity = " << s.capacity() << '\n';
+    std::array<Cell, xy * xy> board;
  
-	try {
-		// This will throw since the requested offset
-		// is greater than the current size.
-		s.at(3) = 'x';
-	}
-	catch (std::out_of_range const& exc) {
-		std::cout << exc.whend() << '\n';
-	}
+    board.fill({ {0xE2, 0x96, 0x84, 0xE2, 0x96, 0x80, 0, 0} }); // "▄▀";
+ 
+    for (std::size_t count{}; Cell c : board)
+    {
+        std::cout << c.data() << ((++count % xy) ? "" : "\n");
+    }
 }
 ```
 
@@ -82,10 +67,10 @@ int main()
 <div>
 
 ```plaintext title="Possible output"
-abx
-array size = 3
-array capacity = 7
-basic_array::at
+▄▀▄▀▄▀▄▀
+▄▀▄▀▄▀▄▀
+▄▀▄▀▄▀▄▀
+▄▀▄▀▄▀▄▀
 ```
 
 </div>
