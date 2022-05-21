@@ -3,8 +3,204 @@ title:					array<...>::end() method
 sidebar_label:			end( )
 description:			array<...>::end() method C++ documentation
 hide_title:				true
-tags:					[access, array, index, bounds, method]
+tags:					[access, array, iterator, end, back, method]
 ---
 
-# std::array end() method
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
 
+import ImproveSection           from "@site/i18n/en/presets/ImproveSection.mdx"
+
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- end() -->
+import Method_UntilCpp17 	from './_codes/end/until-cpp17.mdx';
+import Method_SinceCpp17 	from './_codes/end/since-cpp17.mdx';
+
+
+# std::array end()/cend() method
+
+<SwitchView content={{
+        'until-cpp17': <Method_UntilCpp17 />,
+        'since-cpp17': <Method_SinceCpp17 />,
+    }}/>
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the element past the end of the array.
+If the array is empty, the returned iterator will be equal to `begin()`.
+
+Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
+
+### Parameters
+
+(none)
+
+### Return value
+
+Iterator to the past-the-end element.
+
+### Complexity
+
+Constant.
+
+### Notes
+
+For a container `c`, the expression `*std::prev(c.end())` is equivalent to `c.back()`.
+
+### Why past the end?
+
+<ImproveSection />
+
+### Difference between end and cend
+
+For a const container `c`, end and cend are the same - `c.end() == c.cend()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <array>
+
+int main()
+{
+    std::array<int> arr = {1, 2, 3, 4, 5};
+    auto it = arr.end(); // Type: std::array<int>::iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="Cend" default>
+
+```cpp
+#include <array>
+
+int main()
+{
+    std::array<int> arr = {1, 2, 3, 4, 5};
+    auto it = arr.cend(); // Type: std::array<int>::const_iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <array>
+
+int main()
+{
+    const std::array<int> arr = {1, 2, 3, 4, 5};
+    auto it = arr.end(); // Type: std::array<int>::const_iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="Cend" default>
+
+```cpp
+#include <array>
+
+int main()
+{
+    const std::array<int> arr = {1, 2, 3, 4, 5};
+    auto it = arr.cend(); // Type: std::array<int>::const_iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <array>
+#include <iostream>
+#include <algorithm>
+#include <iomanip>
+ 
+int main()
+{
+    std::cout << std::boolalpha;
+ 
+    std::array<int, 0> empty;
+    std::cout << "1) "
+              << (empty.begin() == empty.end()) << ' '     // true
+              << (empty.cbegin() == empty.cend()) << '\n'; // true
+    // *(empty.begin()) = 42; // => undefined behaviour at run-time
+ 
+ 
+    std::array<int, 4> numbers{5, 2, 3, 4};
+    std::cout << "2) "
+              << (numbers.begin() == numbers.end()) << ' '    // false
+              << (numbers.cbegin() == numbers.cend()) << '\n' // false
+              << "3) "
+              << *(numbers.begin()) << ' '    // 5
+              << *(numbers.cbegin()) << '\n'; // 5
+ 
+    *numbers.begin() = 1;
+    std::cout << "4) " << *(numbers.begin()) << '\n'; // 1
+    // *(numbers.cbegin()) = 42; // compile-time error: 
+                                 // read-only variable is not assignable
+ 
+    // print out all elements
+    std::cout << "5) ";
+    std::for_each(numbers.cbegin(), numbers.cend(), [](int x) {
+       std::cout << x << ' ';
+    });
+    std::cout << '\n';
+ 
+ 
+    constexpr std::array constants{'A', 'B', 'C'};
+    static_assert(constants.begin() != constants.end());   // OK
+    static_assert(constants.cbegin() != constants.cend()); // OK
+    static_assert(*constants.begin() == 'A');              // OK
+    static_assert(*constants.cbegin() == 'A');             // OK
+    // *constants.begin() = 'Z'; // compile-time error: 
+                                 // read-only variable is not assignable
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+1) true true
+2) false false
+3) 5 5
+4) 1
+5) 1 2 3 4
+```
+
+</div>
+</Columns>
