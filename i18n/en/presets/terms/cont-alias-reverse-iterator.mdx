@@ -1,0 +1,8 @@
+This is an alias type defined within the class definition. Example:
+```cpp
+using reverse_iterator			= /* some type */;
+using const_reverse_iterator	= /* some type */;
+```
+
+They act like normal iterators, but traverse a container in reverse order.
+`reverse_iterator` allows to change the pointed-to elements, `const_reverse_iterator` doesn't.
