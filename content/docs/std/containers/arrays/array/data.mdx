@@ -3,8 +3,71 @@ title:					array<...>::data() method
 sidebar_label:			data( )
 description:			array<...>::data() method C++ documentation
 hide_title:				true
-tags:					[access, array, index, bounds, method]
+tags:					[access, array, pointer, data, raw, method]
 ---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- data() -->
+import Method_UntilCpp17 	from './_codes/data/until-cpp17.mdx';
+import Method_SinceCpp17 	from './_codes/data/since-cpp17.mdx';
 
 # std::array data() method
 
+<SwitchView content={{
+        'until-cpp17': <Method_UntilCpp17 />,
+        'since-cpp17': <Method_SinceCpp17 />,
+    }}/>
+
+Returns pointer to the underlying array serving as element storage.
+The pointer is such that range **[ `data()`; `data() + size()` )** is always a valid range,
+even if the container is empty (`data()` is not dereferenceable in that case).
+
+### Parameters
+
+(none)
+
+### Return value
+
+Pointer to the underlying element storage.
+For a non-empty container `c`, the returned pointer compares equal to the address of the first element - `c.data() == &c[0]`;
+
+### Complexity
+
+Constant.
+
+### Notes
+
+If `size()` is `0`, `data()` may or may not return a null pointer.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <array>
+#include <iostream>
+ 
+int main()
+{
+    std::array<char, 6> letters {'a', 'b', 'c', 'd', 'e', 'f'};
+ 
+    if (!letters.empty()) {
+        std::cout << "The last character is '" << letters.back() << "'.\n";
+    }  
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+The last character is 'f'.
+```
+
+</div>
+</Columns>
