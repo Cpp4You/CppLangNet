@@ -27,9 +27,9 @@ import Method_SinceCpp17 	from './_codes/rend/since-cpp17.mdx';
 # std::array rend()/crend() method
 
 <SwitchView content={{
-        'since-cpp17': <Method_SinceCpp17 />,
-        'until-cpp17': <Method_UntilCpp17 />,
-    }}/>
+		'since-cpp17': <Method_SinceCpp17 />,
+		'until-cpp17': <Method_UntilCpp17 />,
+	}}/>
 
 It corresponds to the last element of the non-reversed array.
 
@@ -77,30 +77,31 @@ For non-const container of type `c` they return different iterators:
 <TabItem value="rend" label="rend" default>
 
 
-```cpp
+```cpp showLineNumbers
 #include <array> 
 
 int main()
 {
-    std::array<int, 5> arr = {1, 2, 3, 4, 5};
-    auto it = arr.rend(); // Type: std::array<int, 5>::reverse_iterator
-    // highlight-next-line
-    *std::prev(it) = 5; // ✔ Ok
+	std::array<int, 5> arr = {1, 2, 3, 4, 5};
+	auto it = arr.rend(); // Type: std::array<int, 5>::reverse_iterator
+	// highlight-next-line
+	*std::prev(it) = 5; // ✔ Ok
 }
 ```
 
 </TabItem>
 <TabItem value="crend" label="Crend" default>
 
-```cpp
+```cpp showLineNumbers
 #include <array>
 
 int main()
 {
-    std::array<int, 5> arr = {1, 2, 3, 4, 5};
-    auto it = arr.crend(); // Type: std::array<int, 5>::reverse_const_iterator
-    // highlight-next-line
-    *std::prev(it) = 5; // ❌ Error! 
+	std::array<int, 5> arr = {1, 2, 3, 4, 5};
+	auto it = arr.crend(); // Type: std::array<int, 5>::reverse_const_iterator
+	// ❌ Error!
+	// error-next-line
+	*std::prev(it) = 5; 
 }
 ```
 
@@ -113,30 +114,32 @@ int main()
 <Tabs>
 <TabItem value="rend" label="rend" default>
 
-```cpp
+```cpp showLineNumbers
 #include <array>
 
 int main()
 {
-    const std::array<int, 5> arr = {1, 2, 3, 4, 5};
-    auto it = arr.rend(); // Type: std::array<int, 5>::reverse_const_iterator
-    // highlight-next-line
-    *std::prev(it) = 5; // ❌ Error! 
+	const std::array<int, 5> arr = {1, 2, 3, 4, 5};
+	auto it = arr.rend(); // Type: std::array<int, 5>::reverse_const_iterator
+	// ❌ Error!
+	// error-next-line
+	*std::prev(it) = 5;
 }
 ```
 
 </TabItem>
 <TabItem value="crend" label="Crend" default>
 
-```cpp
+```cpp showLineNumbers
 #include <array>
 
 int main()
 {
-    const std::array<int, 5> arr = {1, 2, 3, 4, 5};
-    auto it = arr.crend(); // Type: std::array<int, 5>::reverse_const_iterator
-    // highlight-next-line
-    *std::prev(it) = 5; // ❌ Error! 
+	const std::array<int, 5> arr = {1, 2, 3, 4, 5};
+	auto it = arr.crend(); // Type: std::array<int, 5>::reverse_const_iterator
+	// ❌ Error!
+	// error-next-line
+	*std::prev(it) = 5;
 }
 ```
 
@@ -158,28 +161,28 @@ int main()
  
 int main()
 {
-    std::array<int, 11> a {1, 11, 11, 35, 0, 12, 79, 76, 76, 69, 40};
+	std::array<int, 11> a {1, 11, 11, 35, 0, 12, 79, 76, 76, 69, 40};
  
-    // print elements of array in reverse order using const_reverse_iterator`s
-    std::for_each(a.crbegin(), a.crend(), [](int e){ std::cout << e << ' '; });
-    //              ^^           ^^
-    std::cout << '\n';
+	// print elements of array in reverse order using const_reverse_iterator`s
+	std::for_each(a.crbegin(), a.crend(), [](int e){ std::cout << e << ' '; });
+	//              ^^           ^^
+	std::cout << '\n';
  
-    // modify each element of array using non-const reverse_iterator`s
-    std::for_each(a.rbegin(), a.rend(), [](int& e){ e += 32; });
-    //              ^           ^             ^
+	// modify each element of array using non-const reverse_iterator`s
+	std::for_each(a.rbegin(), a.rend(), [](int& e){ e += 32; });
+	//              ^           ^             ^
  
-    // print elements as chars in reverse order using const_reverse_iterator`s
-    std::for_each(a.crbegin(), a.crend(), [](char e){ std::cout << e; });
-    //              ^^           ^^          ^^^^
-    std::cout << '\n';
+	// print elements as chars in reverse order using const_reverse_iterator`s
+	std::for_each(a.crbegin(), a.crend(), [](char e){ std::cout << e; });
+	//              ^^           ^^          ^^^^
+	std::cout << '\n';
 }
 ```
 
 </div>
 <div>
 
-```plaintext title="Possible output"
+```plaintext title="Output"
 40 69 76 76 79 12 0 35 11 11 1 
 Hello, C++!
 ```
