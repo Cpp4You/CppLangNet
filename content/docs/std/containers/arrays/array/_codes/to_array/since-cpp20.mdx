@@ -1,0 +1,9 @@
+```cpp
+// (1) Lvalue reference argument verison
+template<class T, std::size_t N>
+constexpr std::array<std::remove_cv_t<T>, N> to_array(T (&a)[N]);
+
+// (2) Rvalue reference argument verison
+template<class T, std::size_t N>
+constexpr std::array<std::remove_cv_t<T>, N> to_array(T (&&a)[N]);
+```
