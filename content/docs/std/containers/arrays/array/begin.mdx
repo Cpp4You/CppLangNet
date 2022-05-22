@@ -23,9 +23,9 @@ import Method_SinceCpp17 	from './_codes/begin/since-cpp17.mdx';
 # std::array begin()/cbegin() method
 
 <SwitchView content={{
-        'since-cpp17': <Method_SinceCpp17 />,
-        'until-cpp17': <Method_UntilCpp17 />,
-    }}/>
+		'since-cpp17': <Method_SinceCpp17 />,
+		'until-cpp17': <Method_UntilCpp17 />,
+	}}/>
 
 Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the array.
 If the array is empty, the returned iterator will be equal to `end()`.
@@ -63,10 +63,10 @@ For non-const container of type `c` they return different iterators:
 
 int main()
 {
-    std::array<int, 5> arr = {1, 2, 3, 4, 5};
-    auto it = arr.begin(); // Type: std::array<int, 5>::iterator
-    // highlight-next-line
-    *it = 5; // ✔ Ok
+	std::array<int, 5> arr = {1, 2, 3, 4, 5};
+	auto it = arr.begin(); // Type: std::array<int, 5>::iterator
+	// highlight-next-line
+	*it = 5; // ✔ Ok
 }
 ```
 
@@ -78,10 +78,11 @@ int main()
 
 int main()
 {
-    std::array<int, 5> arr = {1, 2, 3, 4, 5};
-    auto it = arr.cbegin(); // Type: std::array<int, 5>::const_iterator
-    // highlight-next-line
-    *it = 5; // ❌ Error! 
+	std::array<int, 5> arr = {1, 2, 3, 4, 5};
+	auto it = arr.cbegin(); // Type: std::array<int, 5>::const_iterator
+	// ❌ Error! 
+	// error-next-line
+	*it = 5;
 }
 ```
 
@@ -99,10 +100,11 @@ int main()
 
 int main()
 {
-    const std::array<int, 5> arr = {1, 2, 3, 4, 5};
-    auto it = arr.begin(); // Type: std::array<int, 5>::const_iterator
-    // highlight-next-line
-    *it = 5; // ❌ Error! 
+	const std::array<int, 5> arr = {1, 2, 3, 4, 5};
+	auto it = arr.begin(); // Type: std::array<int, 5>::const_iterator
+	// ❌ Error! 
+	// error-next-line
+	*it = 5;
 }
 ```
 
@@ -114,10 +116,11 @@ int main()
 
 int main()
 {
-    const std::array<int, 5> arr = {1, 2, 3, 4, 5};
-    auto it = arr.cbegin(); // Type: std::array<int, 5>::const_iterator
-    // highlight-next-line
-    *it = 5; // ❌ Error! 
+	const std::array<int, 5> arr = {1, 2, 3, 4, 5};
+	auto it = arr.cbegin(); // Type: std::array<int, 5>::const_iterator
+	// ❌ Error! 
+	// error-next-line
+	*it = 5;
 }
 ```
 
@@ -140,43 +143,44 @@ int main()
  
 int main()
 {
-    std::cout << std::boolalpha;
+	std::cout << std::boolalpha;
  
-    std::array<int, 0> empty;
-    std::cout << "1) "
-              << (empty.begin() == empty.end()) << ' '     // true
-              << (empty.cbegin() == empty.cend()) << '\n'; // true
-    // *(empty.begin()) = 42; // => undefined behaviour at run-time
- 
- 
-    std::array<int, 4> numbers{5, 2, 3, 4};
-    std::cout << "2) "
-              << (numbers.begin() == numbers.end()) << ' '    // false
-              << (numbers.cbegin() == numbers.cend()) << '\n' // false
-              << "3) "
-              << *(numbers.begin()) << ' '    // 5
-              << *(numbers.cbegin()) << '\n'; // 5
- 
-    *numbers.begin() = 1;
-    std::cout << "4) " << *(numbers.begin()) << '\n'; // 1
-    // *(numbers.cbegin()) = 42; // compile-time error: 
-                                 // read-only variable is not assignable
- 
-    // print out all elements
-    std::cout << "5) ";
-    std::for_each(numbers.cbegin(), numbers.cend(), [](int x) {
-       std::cout << x << ' ';
-    });
-    std::cout << '\n';
+	std::array<int, 0> empty;
+	std::cout << "1) "
+			  << (empty.begin() == empty.end()) << ' '     // true
+			  << (empty.cbegin() == empty.cend()) << '\n'; // true
+	// *(empty.begin()) = 42; // => undefined behaviour at run-time
  
  
-    constexpr std::array constants{'A', 'B', 'C'};
-    static_assert(constants.begin() != constants.end());   // OK
-    static_assert(constants.cbegin() != constants.cend()); // OK
-    static_assert(*constants.begin() == 'A');              // OK
-    static_assert(*constants.cbegin() == 'A');             // OK
-    // *constants.begin() = 'Z'; // compile-time error: 
-                                 // read-only variable is not assignable
+	std::array<int, 4> numbers{5, 2, 3, 4};
+	std::cout << "2) "
+			  << (numbers.begin() == numbers.end()) << ' '    // false
+			  << (numbers.cbegin() == numbers.cend()) << '\n' // false
+			  << "3) "
+			  << *(numbers.begin()) << ' '    // 5
+			  << *(numbers.cbegin()) << '\n'; // 5
+ 
+	*numbers.begin() = 1;
+	std::cout << "4) " << *(numbers.begin()) << '\n'; // 1
+	// *(numbers.cbegin()) = 42; // compile-time error: 
+								 // read-only variable is not assignable
+ 
+	// print out all elements
+	std::cout << "5) ";
+	std::for_each(numbers.cbegin(), numbers.cend(), [](int x) {
+	   std::cout << x << ' ';
+	});
+	std::cout << '\n';
+ 
+ 
+	constexpr std::array constants{'A', 'B', 'C'};
+	static_assert(constants.begin() != constants.end());   // OK
+	static_assert(constants.cbegin() != constants.cend()); // OK
+	static_assert(*constants.begin() == 'A');              // OK
+	static_assert(*constants.cbegin() == 'A');             // OK
+	// ❌ Compile-time error: read-only variable is not assignable
+	// error-next-line
+	*constants.begin() = 'Z'; 
 }
 ```
 
