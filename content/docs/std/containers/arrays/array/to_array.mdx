@@ -6,22 +6,22 @@ hide_title:				true
 tags:					[array, helper, to_array]
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
-import Tooltip                  from "@site-comps/Tooltip"
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip"
 
-import Term_CTAD                from "@site/i18n/en/presets/terms/ctad.mdx";
-import Tabs						from "@theme/Tabs";
+import Term_CTAD			from "@site/i18n/en/presets/terms/ctad.mdx";
+import Tabs					from "@theme/Tabs";
 
 <!----------------- Codes ---------------------->
 
 <!-- to_array() -->
-import Method_SinceCpp20 	from './_codes/to_array/since-cpp20.mdx';
+import Method_SinceCpp20	from './_codes/to_array/since-cpp20.mdx';
 
 # std::to_array() function
 
 <SwitchView content={{
-    'since-cpp20': <Method_SinceCpp20 />
+	'since-cpp20': <Method_SinceCpp20 />
 }}/>
 
 Creates a `std::array` from the one dimensional built-in array `a`.
@@ -80,9 +80,9 @@ namespace detail {
  
 template <class T, std::size_t N, std::size_t... I>
 constexpr std::array<std::remove_cv_t<T>, N>
-    to_array_impl(T (&a)[N], std::index_sequence<I...>)
+	to_array_impl(T (&a)[N], std::index_sequence<I...>)
 {
-    return { {a[I]...} };
+	return { {a[I]...} };
 }
  
 }
@@ -90,7 +90,7 @@ constexpr std::array<std::remove_cv_t<T>, N>
 template <class T, std::size_t N>
 constexpr std::array<std::remove_cv_t<T>, N> to_array(T (&a)[N])
 {
-    return detail::to_array_impl(a, std::make_index_sequence<N>{});
+	return detail::to_array_impl(a, std::make_index_sequence<N>{});
 }
 ```
 
@@ -101,9 +101,9 @@ namespace detail {
  
 template <class T, std::size_t N, std::size_t... I>
 constexpr std::array<std::remove_cv_t<T>, N>
-    to_array_impl(T (&&a)[N], std::index_sequence<I...>)
+	to_array_impl(T (&&a)[N], std::index_sequence<I...>)
 {
-    return { {std::move(a[I])...} };
+	return { {std::move(a[I])...} };
 }
  
 }
@@ -111,7 +111,7 @@ constexpr std::array<std::remove_cv_t<T>, N>
 template <class T, std::size_t N>
 constexpr std::array<std::remove_cv_t<T>, N> to_array(T (&&a)[N])
 {
-    return detail::to_array_impl(std::move(a), std::make_index_sequence<N>{});
+	return detail::to_array_impl(std::move(a), std::make_index_sequence<N>{});
 }
 ```
 
@@ -125,33 +125,33 @@ constexpr std::array<std::remove_cv_t<T>, N> to_array(T (&&a)[N])
 #include <utility>
 #include <array>
 #include <memory>
- 
+
 int main()
 {
-    // copies a string literal
-    auto a1 = std::to_array("foo");
-    static_assert(a1.size() == 4);
+	// copies a string literal
+	auto a1 = std::to_array("foo");
+	static_assert(a1.size() == 4);
  
-    // deduces both element type and length
-    auto a2 = std::to_array({ 0, 2, 1, 3 });
-    static_assert(std::is_same_v<decltype(a2), std::array<int, 4>>);
+	// deduces both element type and length
+	auto a2 = std::to_array({ 0, 2, 1, 3 });
+	static_assert(std::is_same_v<decltype(a2), std::array<int, 4>>);
  
-    // deduces length with element type specified
-    // implicit conversion happens
-    auto a3 = std::to_array<long>({ 0, 1, 3 });
-    static_assert(std::is_same_v<decltype(a3), std::array<long, 3>>);
+	// deduces length with element type specified
+	// implicit conversion happens
+	auto a3 = std::to_array<long>({ 0, 1, 3 });
+	static_assert(std::is_same_v<decltype(a3), std::array<long, 3>>);
  
-    auto a4 = std::to_array<std::pair<int, float>>(
-        { { 3, .0f }, { 4, .1f }, { 4, .1e23f } });
-    static_assert(a4.size() == 3);
+	auto a4 = std::to_array<std::pair<int, float>>(
+		{ { 3, .0f }, { 4, .1f }, { 4, .1e23f } });
+	static_assert(a4.size() == 3);
  
-    // creates a non-copyable std::array
-    auto a5 = std::to_array({ std::make_unique<int>(3) });
-    static_assert(a5.size() == 1);
+	// creates a non-copyable std::array
+	auto a5 = std::to_array({ std::make_unique<int>(3) });
+	static_assert(a5.size() == 1);
  
-    // error: copying multidimensional arrays is not supported
-    // char s[2][6] = { "nice", "thing" };
-    // auto a6 = std::to_array(s);
+	// error: copying multidimensional arrays is not supported
+	// char s[2][6] = { "nice", "thing" };
+	// auto a6 = std::to_array(s);
 }
 ```
 
