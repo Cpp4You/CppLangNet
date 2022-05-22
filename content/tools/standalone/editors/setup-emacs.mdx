@@ -1,13 +1,49 @@
 ---
 sidebar_position: 5
-title: Emacs setup for C++ Development
+title: Emacs setup
 description:		Learn how to setup Emacs for coding in C++ Compiler easily.
 tags:				[editor, tool, emacs]
 hide_title:			true
 ---
 
+import Image from '@site-comps/Image';
+
 # Emacs setup
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+In this article, we will discuss how to setup Emacs for C++ development on Linux easily.
 
-<NotFinished/>
+## Introduction
+
+Emacs is one of the oldest and most versatile text editors available for Linux and
+UNIX-based systems. It’s been around for a long time (more than twenty years for GNU emacs)
+and is well known for its powerful and rich editing features. Emacs is also more than just
+a text editor; it can be customized and extended with different “modes”, enabling it to be
+used like an Integrated Development Environment (IDE) for programming languages like C++, Java,
+C or Python.
+
+## Downloading and Installing
+
+We will be installing Emacs from terminal in Linux.
+
+First, we have to open up the terminal; we can use the shortcut
+`Ctrl` + `Alt` + `t` or we can manually open it up by searching it in
+the menu
+
+**Command 1:** To begin, update the packages list using the below command
+```
+sudo apt-get update
+```
+This command is used to download package information from all configured
+sources and to get the info of the updated versions of the packages.
+
+:::important Note
+**sudo** *(Super User DO)* enables a permitted user to run a command as
+the *superuser* or another user, depending on the security policy. So,
+if required, enter your system password to proceed.
+:::
+
+**Command 2:** Now we will download Emacs by the following command
+```
+sudo apt-get install emacs
+```
+If required enter your system *password* to proceed.
