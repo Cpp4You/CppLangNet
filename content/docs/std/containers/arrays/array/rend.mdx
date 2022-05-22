@@ -82,8 +82,8 @@ For non-const container of type `c` they return different iterators:
 
 int main()
 {
-    std::array<int> arr = {1, 2, 3, 4, 5};
-    auto it = arr.rend(); // Type: std::array<int>::reverse_iterator
+    std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    auto it = arr.rend(); // Type: std::array<int, 5>::reverse_iterator
     // highlight-next-line
     *std::prev(it) = 5; // ✔ Ok
 }
@@ -97,8 +97,8 @@ int main()
 
 int main()
 {
-    std::array<int> arr = {1, 2, 3, 4, 5};
-    auto it = arr.crend(); // Type: std::array<int>::reverse_const_iterator
+    std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    auto it = arr.crend(); // Type: std::array<int, 5>::reverse_const_iterator
     // highlight-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
@@ -118,8 +118,8 @@ int main()
 
 int main()
 {
-    const std::array<int> arr = {1, 2, 3, 4, 5};
-    auto it = arr.rend(); // Type: std::array<int>::reverse_const_iterator
+    const std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    auto it = arr.rend(); // Type: std::array<int, 5>::reverse_const_iterator
     // highlight-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
@@ -133,8 +133,8 @@ int main()
 
 int main()
 {
-    const std::array<int> arr = {1, 2, 3, 4, 5};
-    auto it = arr.crend(); // Type: std::array<int>::reverse_const_iterator
+    const std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    auto it = arr.crend(); // Type: std::array<int, 5>::reverse_const_iterator
     // highlight-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }

@@ -63,8 +63,8 @@ For non-const container of type `c` they return different iterators:
 
 int main()
 {
-    std::array<int> arr = {1, 2, 3, 4, 5};
-    auto it = arr.begin(); // Type: std::array<int>::iterator
+    std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    auto it = arr.begin(); // Type: std::array<int, 5>::iterator
     // highlight-next-line
     *it = 5; // ✔ Ok
 }
@@ -78,8 +78,8 @@ int main()
 
 int main()
 {
-    std::array<int> arr = {1, 2, 3, 4, 5};
-    auto it = arr.cbegin(); // Type: std::array<int>::const_iterator
+    std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    auto it = arr.cbegin(); // Type: std::array<int, 5>::const_iterator
     // highlight-next-line
     *it = 5; // ❌ Error! 
 }
@@ -99,8 +99,8 @@ int main()
 
 int main()
 {
-    const std::array<int> arr = {1, 2, 3, 4, 5};
-    auto it = arr.begin(); // Type: std::array<int>::const_iterator
+    const std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    auto it = arr.begin(); // Type: std::array<int, 5>::const_iterator
     // highlight-next-line
     *it = 5; // ❌ Error! 
 }
@@ -114,8 +114,8 @@ int main()
 
 int main()
 {
-    const std::array<int> arr = {1, 2, 3, 4, 5};
-    auto it = arr.cbegin(); // Type: std::array<int>::const_iterator
+    const std::array<int, 5> arr = {1, 2, 3, 4, 5};
+    auto it = arr.cbegin(); // Type: std::array<int, 5>::const_iterator
     // highlight-next-line
     *it = 5; // ❌ Error! 
 }
