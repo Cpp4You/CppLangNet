@@ -9,36 +9,21 @@ tags:					[array, swap]
 import Columns					from "@site-comps/Columns";
 import SwitchView				from "@site-comps/SwitchView";
 
-import Tabs						from "@theme/Tabs";
 
 <!----------------- Codes ---------------------->
 
 <!-- swap() -->
-import Method_Simplified_UntilCpp20 	from './_codes/swap/simplified/until-cpp20.mdx';
-import Method_Simplified_SinceCpp20 	from './_codes/swap/simplified/since-cpp20.mdx';
-
-import Method_Detailed_UntilCpp20 	from './_codes/swap/detailed/until-cpp20.mdx';
-import Method_Detailed_SinceCpp20 	from './_codes/swap/detailed/since-cpp20.mdx';
+import Method_UntilCpp20 	from './_codes/swap/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/swap/since-cpp20.mdx';
 
 import NoexceptSpecification_UntilCpp17 	from './_codes/swap/noexcept-specification/until-cpp17.mdx';
 import NoexceptSpecification_SinceCpp17 	from './_codes/swap/noexcept-specification/since-cpp17.mdx';
 
 # std::array swap() method
 
-<Tabs>
-<TabItem value="simplified" label="Simplified"default >
-
 <SwitchView content={{
-    'until-cpp20': <Method_Simplified_UntilCpp20 />,
-    'since-cpp20': <Method_Simplified_SinceCpp20 />
-}}/>
-
-</TabItem>
-<TabItem value="detailed" label="Detailed">
-
-<SwitchView content={{
-    'until-cpp20': <Method_Detailed_UntilCpp20 />,
-    'since-cpp20': <Method_Detailed_SinceCpp20 />
+    'until-cpp20': <Method_UntilCpp20 />,
+    'since-cpp20': <Method_SinceCpp20 />
 }}/>
 
 The noexcept specification for these two looks like follows:
@@ -47,10 +32,6 @@ The noexcept specification for these two looks like follows:
     'until-cpp17': <NoexceptSpecification_UntilCpp17 />,
     'since-cpp17': <NoexceptSpecification_SinceCpp17 />
 }}/>
-
-</TabItem>
-</Tabs>
-
 
 Exchanges the contents of the container with those of other.
 
