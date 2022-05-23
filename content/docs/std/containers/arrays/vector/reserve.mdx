@@ -3,8 +3,184 @@ title:					vector<...>::reserve() method
 sidebar_label:			reserve( )
 description:			vector<...>::reserve() method C++ documentation
 hide_title:				true
-tags:					[access, vector, index, bounds, method]
+tags:					[vector, reserve, resize]
 ---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- reserve() -->
+import Method_UntilCpp20 	from './_codes/reserve/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/reserve/since-cpp20.mdx';
 
 # std::vector reserve() method
 
+<SwitchView content={{
+    'until-cpp20': <Method_UntilCpp20 />,
+    'since-cpp20': <Method_SinceCpp20 />,
+}} />
+
+Increase the capacity of the vector (the total number of elements that the vector can hold without requiring reallocation)
+to a value that's **greater or equal** to `new_cap`.
+If `new_cap` is greater than the current `capacity()`, new storage is allocated, otherwise the function does nothing.
+
+:::important
+`reserve()` does not change the size of the vector.
+:::
+
+:::danger Invalidation
+If `new_cap` is greater than `capacity()`, all **iterators**, including **the past-the-end iterator**, and all **references** to the elements are invalidated.
+
+Otherwise, **no iterators or references** are invalidated.
+:::
+
+### Parameters
+
+- `new_cap` - new capacity of the vector, in number of elements
+
+### Type requirements
+- `T` must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable).
+
+### Return value
+
+(none)
+
+### Complexity
+
+At most linear in the `size()` of the container.
+
+### Exceptions
+
+<!-- TODO add link here -->
+ - [`std::length_error`](#) if `new_cap > max_size()`
+ - any exception thrown by `Allocator::allocate()` (typically [`std::bad_alloc`](#))
+ 
+If an exception is thrown, this function has no effect ([`strong exception guarantee`](#)).
+
+<SwitchView content={{
+    'since-cpp11': <>
+        If <code>T</code>'s move constructor is <b>not noexcept</b> and <code>T</code> is not <a href="/docs/named_req/CopyInsertable">CopyInsertable</a> into <code>*this</code>,
+        vector will use the throwing move constructor. If it throws, the guarantee is waived and the effects are unspecified.
+    </>
+    }} />
+    
+
+### Notes
+
+Correctly using `reserve()` can prevent unnecessary reallocations, but inappropriate uses of `reserve()` 
+(for instance, calling it before every `push_back()` call) may actually increase the number of reallocations (by causing the capacity to grow linearly rather than exponentially)
+and result in increased computational complexity and decreased performance. 
+
+For example, a function that receives an arbitrary vector by reference and appends elements to it should usually not call `reserve()` on the vector, since it does not know of the vector's usage characteristics.
+
+When inserting a range, the range version of `insert()` is generally preferable as it preserves the correct capacity growth behavior, unlike `reserve()` followed by a series of `push_back()`s.
+
+`reserve()` cannot be used to reduce the capacity of the container; to that end `shrink_to_fit()` is provided.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cstddef>
+#include <iostream>
+#include <new>
+#include <vector>
+ 
+// minimal C++11 allocator with debug output
+template <class Tp>
+struct NAlloc {
+    typedef Tp value_type;
+    NAlloc() = default;
+    template <class T> NAlloc(const NAlloc<T>&) {}
+ 
+    Tp* allocate(std::size_t n)
+    {
+        n *= sizeof(Tp);
+        Tp* p = static_cast<Tp*>(::operator new(n));
+        std::cout << "allocating " << n << " bytes @ " << p << '\n';
+        return p;
+    }
+ 
+    void deallocate(Tp* p, std::size_t n)
+    {
+        std::cout << "deallocating " << n*sizeof*p << " bytes @ " << p << "\n\n";
+        ::operator delete(p);
+    }
+};
+template <class T, class U>
+bool operator==(const NAlloc<T>&, const NAlloc<U>&) { return true; }
+template <class T, class U>
+bool operator!=(const NAlloc<T>&, const NAlloc<U>&) { return false; }
+ 
+int main()
+{
+    constexpr int max_elements = 32;
+ 
+    std::cout << "using reserve: \n";
+    {
+        std::vector<int, NAlloc<int>> v1;
+        v1.reserve( max_elements ); // reserves at least max_elements * sizeof(int) bytes
+ 
+        for(int n = 0; n < max_elements; ++n)
+            v1.push_back(n);
+    }
+ 
+    std::cout << "not using reserve: \n";
+    {
+        std::vector<int, NAlloc<int>> v1;
+ 
+        for(int n = 0; n < max_elements; ++n) {
+            if(v1.size() == v1.capacity()) {
+                std::cout << "size() == capacity() == " << v1.size() << '\n';
+            }
+            v1.push_back(n);
+        }
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+using reserve: 
+allocating 128 bytes @ 0xa6f840
+deallocating 128 bytes @ 0xa6f840
+ 
+not using reserve: 
+size() == capacity() == 0
+allocating 4 bytes @ 0xa6f840
+ 
+size() == capacity() == 1
+allocating 8 bytes @ 0xa6f860
+deallocating 4 bytes @ 0xa6f840
+ 
+size() == capacity() == 2
+allocating 16 bytes @ 0xa6f840
+deallocating 8 bytes @ 0xa6f860
+ 
+size() == capacity() == 4
+allocating 32 bytes @ 0xa6f880
+deallocating 16 bytes @ 0xa6f840
+ 
+size() == capacity() == 8
+allocating 64 bytes @ 0xa6f8b0
+deallocating 32 bytes @ 0xa6f880
+ 
+size() == capacity() == 16
+allocating 128 bytes @ 0xa6f900
+deallocating 64 bytes @ 0xa6f8b0
+ 
+deallocating 128 bytes @ 0xa6f900
+```
+
+</div>
+</Columns>

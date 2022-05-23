@@ -3,8 +3,73 @@ title:					vector<...>::max_size() method
 sidebar_label:			max_size( )
 description:			vector<...>::max_size() method C++ documentation
 hide_title:				true
-tags:					[access, vector, index, bounds, method]
+tags:					[vector, max, size, method]
 ---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- max_size() -->
+import Method_UntilCpp11 	from './_codes/max_size/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/max_size/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/max_size/since-cpp20.mdx';
 
 # std::vector max_size() method
 
+<SwitchView content={{
+        'until-cpp11': <Method_UntilCpp11 />,
+        'since-cpp11': <Method_SinceCpp11 />,
+        'since-cpp20': <Method_SinceCpp20 />,
+    }}/>
+
+		
+Returns the **maximum number of elements** the container is able to hold due to system or library implementation limitations,
+i.e. `std::distance(begin(), end())` for the largest container.
+
+### Parameters
+
+(none)
+
+### Return value
+
+Maximum number of elements the container can hold.
+
+### Complexity
+
+Constant.
+
+### Notes
+
+This value typically reflects the theoretical limit on the size of the container,
+at most `std::numeric_limits<difference_type>::max()`.
+At runtime, the size of the container may be limited to a value smaller than `max_size()` by the amount of RAM available.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <locale>
+#include <array>
+ 
+int main()
+{
+    std::vector<char> q;
+    std::cout.imbue(std::locale("en_US.UTF-8"));    
+    std::cout << "Maximum size of the std::array is " << q.max_size() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+Maximum size of the std::array is 10
+```
+
+</div>
+</Columns>
