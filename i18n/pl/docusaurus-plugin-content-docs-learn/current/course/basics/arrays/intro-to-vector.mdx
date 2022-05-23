@@ -12,13 +12,14 @@ import Image			from "@site-comps/Image";
 <!-- Presets -->
 import NotFinished		from "@site/i18n/pl/presets/NotFinished.mdx";
 import ImproveSection	from "@site/i18n/pl/presets/ImproveSection.mdx";
+import Tabs				from '@theme/Tabs';
 
 <NotFinished />
 
 # Wstęp do `std::vector`
 
 W tej lekcji pokażę Ci czym są i do czego służą tablice, w ich
-najprostszej formie, z użyciem narzędzia [`std::vector`](/docs/std/containers/arrays/vector/).
+najprostszej formie, z użyciem typu [`std::vector`](/docs/std/containers/arrays/vector/).
 
 ## Motywacja
 
@@ -46,16 +47,15 @@ int main()
 }
 ```
 
-Zakładając, że mamy trzech graczy na serwerze, możemy skonstruować
-kod taki jak wyżej. W sytuacji, gdy będziemy chcieli mieć
-5 graczy, będziemy musieli bawić się komendą "kopiuj -> wklej"
-dodatkowe razy. Powtarzanie tego bardzo szybko traci sens.
-Czy istnieje narzędzie, które pozwoli nam skrócić ten kod
-i nie używać tyle razy kopiowania?
+Zakładając, że mamy trzech graczy na serwerze, możemy napisać kod taki jak wyżej.
+W sytuacji, gdy będziemy chcieli mieć 5 graczy,
+będziemy musieli bawić się komendą "kopiuj -> wklej" dodatkowe dwa razy.
+Powtarzanie tego bardzo szybko traci sens. 
+Czy istnieje narzędzie, które pozwoli nam skrócić ten kod i nie używać tyle razy kopiowania?
 
 Posłużą nam do tego **tablice**.
 
-## Czym jest tablica
+## Czym jest tablica?
 
 <Image center border
 		maxheight="300px"
@@ -192,8 +192,8 @@ Na ten moment nasza tablica ma 3 elementy, o indeksach `0`, `1` i `2`:
 | 1      | AngryCrab   |
 | 2      | SadWolf     |
 
-Aby dodać kolejny element do tablicy, musimy skorzystać z `push_back`.
-Używamy tego w ten sposób:
+Aby dodać kolejny element do tablicy, musimy skorzystać z metody `push_back`.
+Używamy jej analogicznie jak metod w przypadku `std::string`:
 
 ```cpp title="🔹 Dodawanie elementu do tablicy"
 #include <iostream>
@@ -219,13 +219,6 @@ int main()
 ```
 
 Od momentu wywołania `push_back`, tablica `playerNames` ma już cztery elementy.
-Powyższy zapis używa tzw. *wywołania metody `push_back()`*. O wywołaniach
-i metodach powiemy sobie w przyszłości więcej. Na ten moment zapamiętaj tylko ten
-zapis:
-
-1. po nazwie tablicy dajemy kropkę
-2. piszemy nazwę *metody*, czyli w tym wypadku `push_back`
-3. następnie w nawiasie okrągłym podajemy co chcemy dodać (np. wartość lub zmienną)
 
 :::important Zakres indeksów
 Zwróć uwagę, że tablica o ilości elementów `N`, zawsze ma indeksy
@@ -263,9 +256,6 @@ std::cout << "Dodano nowego gracza.\n";
 // highlight-next-line
 std::cout << "Tablica posiada " << playerNames.size() << " elementów\n";
 ```
-
-Tak jak wyżej z metodą `push_back`, piszemy nazwę po kropce i dajemy
-nawiasy okrągłe, w tym wypadku puste.
 
 ### Usuwanie elementów
 
@@ -358,13 +348,286 @@ wtedy `auto` spowoduje, że typ elementu zostanie wykryty automatycznie.
 
 ### Brak nagłówka `<vector>`
 
-<ImproveSection />
+Aby móc korzystać z typu `std::vector`, musimy dodać nagłówek `<vector>`:
+
+```cpp
+#include <vector>
+// ... reszta kodu
+```
+
+Jeśli zapomnimy dodać ten nagłówek:
+```cpp
+int main() 
+{
+	std::vector<int> v;
+	v.push_back(1);
+}
+```
+możemy spotkać się z jednym z następujących błędów:
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: use of undeclared identifier 'std'
+error: use of undeclared identifier 'v'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak nagłówka vector"
+		src="/img/tutorials/course/basic/arrays/error-no-vector-header-pl-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+error: ‘vector’ is not a member of ‘std’
+error: ‘v’ was not declared in this scope
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak nagłówka vector"
+		src="/img/tutorials/course/basic/arrays/error-no-vector-header-pl-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2039: 'vector': is not a member of 'std'
+error C2065: 'vector': undeclared identifier
+error C2065: 'v': undeclared identifier
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - niepoprawny cudzysłów"
+		src="/img/tutorials/course/basic/arrays/error-no-vector-header-pl-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::danger Błędy
+Treść błędów może się różnić zależnie od tego, czy dołączamy inne nagłówki,
+w ilu miejscach używamy naszego vectora, itd.
+Jest to logiczne, ponieważ jeśli kompilator nie wie czym jest `std::vector`,
+to nie wie też czym jest nasza zmienna `v` o typie `std::vector<int>`, dlatego dostaniemy błąd wszędzie przy próbie użycia jej.
+
+Dodatkowo warto zwrócić uwagę na to, że kod używający vectora może zadziałać, nawet bez dołączenia nagłówka.
+Takie zachowanie może wystąpić, aczkolwiek nie należy na nim polegać i należy dołączać nagłówki wszystkich rzeczy, których się używa
+(np. jeśli używamy `std::cout`, czy `std::cin` należy dołączyć `<iostream>`, dla `std::string` potrzebujemy `<string>`, dla `std::vector` - `<vector>`, etc.)
+:::
 
 ### Mieszanie typów
 
-<ImproveSection />
+`std::vector` jest szablonem, co oznacza, że działa z wieloma różnymi typami.
+
+Typ który podamy pomiędzy nawiasy trójkątne oznacza typ elementów, jaki nasz vector składuje. `std::vector<int>` to vector przechowujący `int`y,
+`std::vector<std::string>` to vector przechowujący `std::string`i, etc.
+
+Wszystkie metody takiego vectora również działają tylko na tym konkretnym typie.
+
+Oznacza to, że np.
+```cpp
+std::vector<int> ints;
+ints.push_back(1);
+```
+jest okej, ale już np.
+```cpp
+std::vector<int> ints;
+ints.push_back("Hejo");
+```
+nie, ponieważ nasz vector operuje tylko na intach.
+
+Błąd jaki możemy dostać zależy od tego jakiego typu elementy przechowuje nasz vektor
+i jakiego typu wartości chcemy do niego dodać. W przykładzie poniżej próbujemy dodać napis do vectora liczb.
+
+```cpp
+std::vector<int> ints;
+ints.push_back("Hejo")
+```
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: no matching member function for call to 'push_back'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - mieszanie typów w vectorze"
+		src="/img/tutorials/course/basic/arrays/error-wrong-push-back-type-pl-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+error: no matching function for call to ‘push_back(const char [5])’
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - mieszanie typów w vectorze"
+		src="/img/tutorials/course/basic/arrays/error-wrong-push-back-type-pl-gcc.png"
+	/>
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2664: 'void std::vector<int,std::allocator<int>>::push_back(const _Ty &)': cannot convert argument 1 from 'const char [5]' to 'const _Ty &'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - mieszanie typów w vectorze"
+		src="/img/tutorials/course/basic/arrays/error-wrong-push-back-type-pl-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
 
 ### Wyjście poza rozmiar tablicy
 
-<ImproveSection />
+Jak już wcześniej ustaliliśmy, tablice mają swój rozmiar, a żeby dostać się do ich konkretnych elementów, używamy indeksów i zapisu `tablica[indeks]`.
+Napotkamy jednak na problem, jeśli indeks ten wyjdzie poza rozmiar tablicy.
 
+Poprawne indeksy dla tablicy o rozmiarze **N** zaczynają się od **0** a kończą na **N - 1**, co oznacza, że jedyne poprawne indeksy dla tablicy
+5 elementowej, to `0`, `1`, `2`, `3` i `4`.
+Wyjście poza zakres tablicy nie spowoduje błędu kompilacji (choć możemy dostać ostrzeżenie od narzędzi z których korzystamy, czyli np. kompilatora),
+ale spowoduje poważne problemy podczas uruchamiania programu.
+
+Tego typu błędy są bardzo niebezpieczne, ponieważ jeśli kompilator ich nie wykryje (a nie zawsze może), to będą one powodować nieprawidłowe działanie programu, które ciężko wykryć.
+Na szczęście system operacyjny czasem wykrywa, że nasz program zachowuje się nieprawidłowo i zakańcza nasz program, zgłaszając błąd.
+
+Rozważmy przykładowy program:
+```cpp
+#include <vector>
+
+int main() 
+{
+	std::vector<int> ints(3); // tablica 3 elementowa, poprawne indeksy to 0, 1, 2
+	// hightlight-next-line
+	ints[200000] = 3; // Ooops! Parę zer za dużo
+}
+```
+
+Zależnie od tego na jakim jesteśmy systemie i w jaki sposób, jakim kompilatorem kompilowaliśmy nasz program, możemy zobaczyć różne wyniki:
+
+<Tabs groupId="platform">
+<TabItem value="linux" label="LINUX & MAC OS" default>
+
+Na linuxie i mac os, to jaką informację dostaniemy zależy od powłoki jakiej używamy:
+
+<Tabs groupId="shell">
+<TabItem value="bash" label="BASH" default>
+
+```plaintext
+Segmentation fault
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Pokazanie segmentation fault - bash"
+		src="/img/tutorials/course/basic/arrays/error-out-of-bounds-bash-segfault.png"
+	/>
+</TabItem>
+<TabItem value="zsh" label="ZSH" default>
+
+```plaintext
+zsh: segmentation fault: <nazwa programu>
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Pokazanie segmentation fault - zsh"
+		src="/img/tutorials/course/basic/arrays/error-out-of-bounds-zsh-segfault.png"
+	/>
+</TabItem>
+<TabItem value="fish" label="FISH" default>
+
+```plaintext
+fish: Job 1, '<nazwa programu>' terminated by signal SIGSEGV (Address boundary error)
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Pokazanie segmentation fault - fish"
+		src="/img/tutorials/course/basic/arrays/error-out-of-bounds-fish-segfault.png"
+	/>
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="windows" label="WINDOWS">
+
+W przypadku windowsa w cmd nie pojawia się nic, program po prostu wisi przez dłuższy czas i nie wyświetla nic.
+
+#### 🖼 Ilustracja zachowania:
+
+<Image center
+		alt="Pokazanie pustego wyniku programu"
+		src="/img/tutorials/course/basic/arrays/error-out-of-bounds-cmd-empty.png"
+	/>
+
+Możemy jednak zobaczyć, że coś poszło nie tak, wyświetlając zmienną środowiskową <code>errorlevel</code>, która zawiera kod zwrócony przez ostatnio wykonany program:
+
+```plaintext
+echo %errorlevel%
+```
+
+
+#### 🖼 Ilustracja zachowania:
+
+<Image center
+		alt="Wyświetlenie errorlevel w konsoli"
+		src="/img/tutorials/course/basic/arrays/error-out-of-bounds-cmd-errorlevel.png"
+	/>
+
+Jak widzimy na zdjęciu powyżej, kod zwrócony przez ostatnie wywołanie naszego programu to dziwna ujemna liczba, co oznacza, że program zakończył się z błędem.
+Poprawnym kodem zakończenia programu jest 0.
+
+</TabItem>
+<TabItem value="windows-vs" label="WINDOWS, VISUAL STUDIO">
+
+Jeśli korzystamy na windowsie z programu Visual Studio, to w trybie debug możem nam wyskoczyć okienko mówiące o błędzie.
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - mieszanie typów w vectorze"
+		src="/img/tutorials/course/basic/arrays/error-out-of-bounds-vs-assertion.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::danger Niezdefiniowane zachowanie
+Problem z błędem tego typu (wyjście poza zakres tablicy), jest taki, że kompilator nie zawsze jest w stanie udowodnić, że jest to błąd, więc nie dostajemy żadnego błędu kompilacji
+(w jaki sposób kompilator ma udowodnić, czy próba dostania się do tablicy pod indeksem wprowadzonym od użytkownika będzie poprawna czy nie?).
+Wyjście poza zakres tablicy powoduje tzw. **niezdefiniowane zachowanie** (*ang. undefined behaviour*), czyli zachowanie, które waha się zależnie od kompilatora którego użyjemy,
+systemu na którym uruchomimy program, czasem nawet kilku innych rzeczy.
+
+Bardzo często możemy mieć w kodzie **niezdefiniowane zachowanie**, jednak nie będzie się ono niczym objawiać - program będzie działać poprawnie.
+Nie powinno się na tym polegać, ponieważ program może przestać działać na innym systemie,
+po rekompilacji z innym kompilatorem, po rekompilacji z inną wersją kompilatora lub z uruchomienia na uruchomienie.
+:::
+
+Błąd w którym wychodzimy poza zakres tablicy (*ang. out of bounds error*) jest również nazywany błędem przepełnienia buforu (*ang. buffer overflow error*).

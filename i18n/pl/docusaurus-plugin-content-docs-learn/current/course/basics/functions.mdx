@@ -485,10 +485,910 @@ Definicja **musi** pojawić się w kodzie **tylko raz** (deklaracji może być w
 
 <ImproveSection />
 
-## Potencjalne błędy 🚧
+## Potencjalne błędy
 
-<ImproveSection />
+### Brak widocznej deklaracji
 
-## Dodatkowe informacje 🚧
+Jednym z bardzo często popełnianych błędów jest próba użycia funkcji, bez jej deklaracji:
 
-<ImproveSection />
+<Tabs>
+<TabItem value="bad" label="❌ Źle" default>
+
+```cpp title="❌ Brak deklaracji"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Suma od 1 do 10 wynosi: " << sum(1, 10) << '\n';
+}
+
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+Kompilator musi wiedzieć, że funkcja istnieje jeszcze przed jej użyciem (konkretniej - musi znać jej typ zwracany, nazwę oraz typy parametrów).
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: use of undeclared identifier 'sum'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak deklaracji funkcji"
+		src="/img/tutorials/course/basic/functions/error-no-declaration-pl-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+error: ‘sum’ was not declared in this scope
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak deklaracji funkcji"
+		src="/img/tutorials/course/basic/functions/error-no-declaration-pl-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C3861: 'sum': identifier not found
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak deklaracji funkcji"
+		src="/img/tutorials/course/basic/functions/error-no-declaration-pl-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="good" label="✔ Dobrze">
+
+```cpp title="✔ Deklaracja przed użyciem"
+#include <iostream>
+
+int sum(int from, int to);
+
+int main()
+{
+	std::cout << "Suma od 1 do 10 wynosi: " << sum(1, 10) << '\n';
+}
+
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+</TabItem>
+<TabItem value="good2" label="✔ Również dobrze">
+
+```cpp title="✔ Definicja przed użyciem"
+#include <iostream>
+
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+
+int main() 
+{
+	std::cout << "Suma od 1 do 10 wynosi: " << sum(1, 10) << '\n';
+}
+```
+
+</TabItem>
+</Tabs>
+
+
+### Brak widocznej definicji
+
+Kolejnym bardzo często spotykanym błędem jest zadeklarowanie funkcji i niedostarczenie jej definicji.
+W takim wypadku dostaniemy błąd **linkera**, nie **kompilatora**.
+
+```cpp title="❌ Brak definicji"
+#include <iostream>
+
+int sum(int from, int to);
+
+int main()
+{
+	std::cout << "Suma od 1 do 10 wynosi: " << sum(1, 10) << '\n';
+}
+```
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+undefined reference to `sum(int, int)`
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak definicji"
+		src="/img/tutorials/course/basic/functions/error-no-definition-pl-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+undefined reference to `sum(int, int)`
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak definicji"
+		src="/img/tutorials/course/basic/functions/error-no-definition-pl-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error LNK2019: unresolved external symbol "int __cdecl sum(int,int)" (?sum@@YAHHH@Z) referenced in function main
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak definicji"
+		src="/img/tutorials/course/basic/functions/error-no-definition-pl-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::important Kompilator vs linker
+Różnica pomiędzy kompilatorem a linkerem jest taka, że kompilator tylko i wyłącznie bierze nasz kod i zamienia kod w **pliki obiektowe**,
+która są niczym innym niż kodem zrozumiałym przez nasz komputer.
+Na plikach obiektowych się jednak nie kończy, ponieważ pliki obiektowe są jedynie efektem skompilowania pojedynczych plików źródłowych (`.cpp`).
+
+Zaraz po kompilatorze wkracza **linker**, który łączy (linkuje) wszystkie nasze pliki obiektowe, biblioteki itd. w jeden, cały **plik wykonywalny**.
+Linker jest trochę głupi, ponieważ linker nie potrafi czytać kodu - on czyta tylko pliki obiektowe wygenerowane przez kompilator.
+W ich środku nie ma kodu (takiego C++owego), ale jest kod binarny i **symbole**.
+
+Wyobraźmy sobie przykładowy, zmyślony proces kompilacji, w którym kompilator zamienia nasz przykładowy kod:
+```cpp
+#include <iostream>
+
+int sum(int from, int to);
+
+int main()
+{
+	std::cout << "Suma od 1 do 10 wynosi: " << sum(1, 10) << '\n';
+}
+```
+w
+```asm
+symbol int_main:
+	cout "Suma od 1 do 10 wynosi"
+	result = call int_sum_int_int
+	cout result
+	cout '\n'
+```
+`symbol int_main` oznaczałby deklarację symbolu, następnie w środku znajdują się instrukcje w naszym mainie.
+Zauważ, że znajduje się tam tylko i wyłącznie odwołanie do `int_sum_int_int`.
+
+Tak mniej więcej wygląda to w pliku obiektowym, tyle, że trochę bardziej strasznie i magicznie.
+Wywołanie funkcji w naszym programie, to po po prostu przejście pod odpowiedni **adres** w pliku wykonywalnym,
+wykonanie kodu, a potem powrócenie (potencjalnie zapisując wartość zwróconą *gdzieś*).
+
+Linker podczas czytania takiego pliku obiektowego próbuje znaleźć **adres** symbolu `int_sum_int_int`,
+żeby można go potem było wstawić do pliku wykonywalnego - **jednak nie może!**, takiego symbolu w ogóle nie ma w naszym pliku obiektowym,
+ponieważ nie napisaliśmy definicji.
+
+Właśnie z tego powodu dostajemy błąd. Dla porównania spójrzmy na inną, hipotetyczną sytuację, w której kod jest poprawny:
+```cpp
+#include <iostream>
+
+int sum(int from, int to);
+
+int main()
+{
+	std::cout << "Suma od 1 do 10 wynosi: " << sum(1, 10) << '\n';
+}
+
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+Kompilator w naszym przykładzie zamieni to na:
+```asm
+symbol int_main:
+	cout "Suma od 1 do 10 wynosi"
+	result = call int_sum_int_int
+	cout result
+	cout '\n'
+
+symbol int_sum_int_int:
+	// kod
+```
+
+Linker czytając taki plik może odnaleźć adres naszej funkcji, wziąć go i wsadzić w miejsce `call int_sum_int_int`.
+Wszystko kompiluje się poprawnie, linkuje się poprawnie i wykonuje się poprawnie.
+:::
+
+
+### Wiele definicji
+
+Weźmy pod lupę taki kod:
+
+```cpp title="🔹 Wiele definicji funkcji"
+#include <iostream>
+
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+
+int main()
+{
+	std::cout << "Suma od 1 do 10 wynosi: " << sum(1, 10) << '\n';
+}
+
+int sum(int from, int to)
+{
+	int result = 0;
+	for (int i = from; i <= to; i++)
+		result += i;
+	return result;
+}
+```
+
+Programista przez przypadek zdefiniował tutaj funkcję `sum` dwa razy.
+Jak wyżej zostało wspomniane - jest to złamanie zasady **ODR** (*ang. One Definition Rule*).
+W programie jest dozwolona tylko jedna definicja funkcji, ponieważ kompilator nie będzie zgadywać która akurat
+jest poprawna, a wiele definicji może oznaczać błąd programisty.
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: redefinition of 'sum'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - wiele definicji"
+		src="/img/tutorials/course/basic/functions/error-multiple-definitions-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+error: redefinition of ‘int sum(int, int)’
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - wiele definicji"
+		src="/img/tutorials/course/basic/functions/error-multiple-definitions-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2084: function 'int sum(int,int)' already has a body
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - wiele definicji"
+		src="/img/tutorials/course/basic/functions/error-multiple-definitions-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+
+### Niezapisanie typu zwracanego
+
+Czasami możemy zobaczyć kod pokroju:
+
+```cpp title="❌ Funkcja bez typu zwracanego"
+main()
+{
+	...
+}
+```
+
+Widzimy tutaj funkcję główną **main** bez typu zwracanego.
+Jest to absolutnie niepoprawny kod. Niektóre kompilatory mogą go zaakceptować i skompilowąć (w ramach rozszerzenia), aczkolwiek kod ten jest nielegalny.
+Jest to zaszłość z C (notabene - zapis ten usunięto również w C, w standardzie C99), która, jeśli typ nie zostaje podany, automatycznie zakłada typ zwracany `int`.
+Fukcjonalność ta jest nazywana *"implicit int"* i nie powinno się na niej w ogóle polegać.
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: C++ requires a type specifier for all declarations
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak typu zwracanego main"
+		src="/img/tutorials/course/basic/functions/error-implicit-int-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+warning: ISO C++ forbids declaration of ‘main’ with no type [-Wreturn-type]
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak typu zwracanego main"
+		src="/img/tutorials/course/basic/functions/error-implicit-int-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak typu zwracanego main"
+		src="/img/tutorials/course/basic/functions/error-implicit-int-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::caution Rozszerzenia kompilatora
+Zauważ, że kompilator gcc w tym przypadku wystosował tylko i wyłącznie ostrzeżenie, zamiast błędu.
+Jak już wcześniej pisałem, jest to dlatego, że niektóre kompilatory mogą zezwalać na pewne rzeczy w kodzie, które technicznie, wg standardu C++ nie powinny się skompilować, w ramach rozszerzeń.
+Jak widać, gcc pozwala na niezapisywanie typu zwracanego, jednak daje nam ostrzeżenie, że nie jest to poprawny kod.
+
+Na rozszerzeniach nie powinno się polegać, ponieważ sprawiają one, że nasz kod jest zależny od kompilatora, mniej przenośny i nie ma w 100% gwarantowanego działania.
+:::
+
+### Zwrócenie wartości innego typu niż oczekiwany
+
+Jak poznaliśmy w tej lekcji, funkcje albo mogą zwracać wartości określonego typu, albo nie zwracać nic.
+W obu przypadkach, musimy albo zwrócić wartość tego typu, albo nie zwracać nic, inaczej dostaniemy błąd.
+
+<Tabs>
+<TabItem value="function-returning-something" label="🔢 Funkcja coś zwracająca" efault>
+
+```cpp
+int foo()
+{
+	return "?";
+}
+
+int main()
+{
+	foo();
+}
+```
+
+W przypadku funkcji która zwraca wartość innego typu, niż zadeklarowany typ zwracany (tutaj zwracamy napis, kiedy typ zwracany to liczba),
+dostaniemy błąd wewnątrz funkcji który mówi o niekompatybilnych typach, czasem ta informacja może być dość nieczytelna.
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: cannot initialize return object of type 'int' with an lvalue of type 'const char [2]'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - niepoprawny cudzysłów"
+		src="/img/tutorials/course/basic/functions/error-returning-string-from-int-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+error: invalid conversion from ‘const char*’ to ‘int’ [-fpermissive]
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - niepoprawny cudzysłów"
+		src="/img/tutorials/course/basic/functions/error-returning-string-from-int-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2440: 'return': cannot convert from 'const char [2]' to 'int'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - niepoprawny cudzysłów"
+		src="/img/tutorials/course/basic/functions/error-returning-string-from-int-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="function-returning-nothing" label="⚪ Funkcja nic nie zwracająca">
+
+```cpp
+void foo()
+{
+	return 5;
+}
+
+int main()
+{
+	foo();
+}
+```
+
+W przypadku zwracania jakiejkolwiek wartości z funkcji, która deklaruje, że żadnej nie zwraca (tutaj zwracamy liczbę, mimo, że mówimy, ze nie zwracamy nic),
+dostaniemy czytelny błąd o tym, że zwracamy z funkcji, która nie powinna nic zwracać.
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="clang" label="CLANG" default>
+
+```plaintext
+error: void function 'foo' should not return a value [-Wreturn-type]
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - zwracanie wartości int z void"
+		src="/img/tutorials/course/basic/functions/error-returning-int-from-void-clang.png"
+	/>
+
+</TabItem>
+<TabItem value="gcc" label="GCC">
+
+```plaintext
+error: return-statement with a value, in function returning ‘void’ [-fpermissive]
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - zwracanie wartości int z void"
+		src="/img/tutorials/course/basic/functions/error-returning-int-from-void-gcc.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2562: 'foo': 'void' function returning a value
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - zwracanie wartości int z void"
+		src="/img/tutorials/course/basic/functions/error-returning-int-from-void-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Niezwracanie wartości
+
+Mówiliśmy wcześniej w lekcji o tablicach o tzw. **niezdefiniowanym zachowaniu**.
+Niezdefiniowane zachowanie nie tyczy się jednak tylko wychodzenia poza tablicę. Tak naprawdę zachowań, która uważa się za niezdefiniowane jest bardzo wiele.
+Jednym z nich jest niezwracanie wartości z funkcji, która deklaruje, że zwraca wartość jakiegoś typu, np.:
+
+```cpp title="❌ Funkcja niezwracająca wartości"
+#include <iostream>
+
+int fun()
+{}
+
+int main()
+{
+	std::cout << fun();
+}
+```
+Jak już dowiedzieliśmy się wcześniej - niezdefiniowane zachowanie to czarna magia i to co się stanie zależy od kompilatora, systemu,
+fazy księżyca i innych różnych mistycznych stworzeń.
+
+Bardzo możliwe, że dostaniemy ostrzeżenie o braku zwróconej wartości, jednak kod tak czy siak się skompiluje.
+W przypadku niezdefiniowanego zachowania kompilator może, ale nie musi wystosować błąd.
+
+Po przetestowaniu różnych narzędzi zauważamy następujące rezultaty:
+
+<Tabs groupId="platform">
+<TabItem value="clang" label="CLANG" default>
+
+Skompilowany przez `clang` po uruchomieniu sprawia, że niektóre powłoki pokazują błąd "Illegal instruction" lub nie pokazuje nic:
+
+<Tabs groupId="shell">
+<TabItem value="bash" label="BASH" default>
+
+```plaintext
+Illegal instruction
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Pokazanie segmentation fault - bash"
+		src="/img/tutorials/course/basic/functions/error-no-return-bash.png"
+	/>
+</TabItem>
+<TabItem value="zsh" label="ZSH">
+
+```plaintext
+zsh: illegal hardware instruction  <nazwa programu>
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Pokazanie segmentation fault - zsh"
+		src="/img/tutorials/course/basic/functions/error-no-return-zsh.png"
+	/>
+</TabItem>
+<TabItem value="fish" label="FISH">
+
+```plaintext
+fish: Job 1, '<nazwa programu>' terminated by signal SIGSEGV (Address boundary error)
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Pokazanie segmentation fault - fish"
+		src="/img/tutorials/course/basic/functions/error-no-return-fish.png"
+	/>
+
+</TabItem>
+</Tabs>
+</TabItem>
+
+<TabItem value="gcc" label="GCC">
+
+Program skompilowany przez `gcc` po uruchomieniu nie pokazuje żadnego błędu, a proces zwraca kod 0 - czyli wykonanie pomyślne.
+
+</TabItem>
+
+<TabItem value="msvc" label="MSVC">
+
+W przypadku kompilatora `MSVC`, dostajemy jednak błąd, że `foo` musi zwracać wartość:
+
+```plaintext
+error C4716: 'foo': must return a value
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - błąd MSVC 'foo must return a value'"
+		src="/img/tutorials/course/basic/functions/error-foo-must-return-a-value.png"
+	/>
+
+</TabItem>
+
+</Tabs>
+
+## Dodatkowe informacje
+
+### Dedukcja typu i "wiodący typ zwracany"
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/auto-return-type-pl.png"
+		desc="Schemat funkcji z dedukcją typu 'auto'"
+	/>
+
+Tak samo jak możemy użyć słówka kluczowego `auto` w przypadku zmiennych, aby typ zmiennej został wydedukowany przez kompilator,
+możemy również zamiast typu zwracanego funkcji dać `auto`, aby typ zwracanej wartości był wydedukowany, np.
+
+```cpp title="🔹 Dedukcja typu zwracanego funkcji"
+auto println(std::string msg) {
+	std::cout << msg << '\n';
+}
+```
+Tutaj typ zwracany zostaje wydedukowany do `void`, bowiem nie zwracamy żadnej wartości.
+
+```cpp title="🔹 Dedukcja typu zwracanego funkcji"
+auto clamp(int value, int low, int high) {
+	if(value < low) return low;
+	if(value > high) return high;
+
+	return value;
+}
+```
+W przypadku funkcji wyżej, typ zwracanej wartości to `int`.
+
+:::note `clamp`
+`clamp` to funkcja często używana np. w gamedevie, aby upewnić się, że gracz znajduje się w pewnym ustalonym przedziale koordynatów na mapie.
+Bierze wartość oraz przedział w postaci dwóch kolejnych argumentów o tym samym typie.
+Jej zadaniem jest upewnienie się, że dana wartość nie przekracza przedziału z żadnej ze stron.
+
+
+Jeśli wartość jest większa od górnej wartości, zwracana jest górna wartość:
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/car-clamp-above-pl.png"
+		desc="Auto nad koordynatami"
+	/>
+
+Jeśli wartość jest jest mniejsza od dolnej wartości, zwracana jest dolna wartość:
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/car-clamp-below-pl.png"
+		desc="Auto pod koordynatami"
+	/>
+
+W przeciwnym wypadku zwracana jest oryginalna wartość:
+
+<Image center border
+		src="/img/tutorials/course/basic/functions/car-clamp-in-between-pl.png"
+		desc="Auto między koordynatami"
+	/>
+
+Oczywiście w prawdziwej grze przy próbie przekroczenia poprawnych koordynatów akcja ich "clampowania" dzieje się tak szybko, że gracz
+nie ma nawet szansy zobaczyć, że wyszedł poza ustalone granice, po prostu nie może przejechać dalej.
+
+W C++ nie musimy jej również pisać sami, w standardzie C++ znajdziemy funkcję `std::clamp` znajdującą się w nagłówku `<algorithm>`.
+:::
+
+Problemem z dedukcją wartości jest to, że nie może ona być stosowana zawsze.
+Główne dwa scenariusze w których nie można stosować dedukcji typu zwracanego, to:
+1. Deklaracja funkcji przed jej definicją
+2. Rekurencja
+
+O rekurencji dowiemy się kiedy indziej, jednak co do pierwszego punktu - gdy wywołujemy funkcję, kompilator musi znać wszystkie informacje o niej (nazwa, typ zwracany, argumenty).
+Dedukcja typu zwracanego funkcji, jest możliwa dopiero po poznaniu ciała, definicji funkcji. Dlatego nie możemy użyć funkcji która została zadeklarowana z `auto` zamiast typu,
+przed poznaniem definicji.
+
+
+<Tabs>
+<TabItem value="bad" label="❌ Źle" default>
+
+```cpp
+#include <iostream>
+
+// highlight-next-line
+auto clamp(int value, int low, int high);
+
+int main()
+{
+	int playerY = 300;
+	// highlight-next-line
+	auto clampedPlayerY = clamp(playerY, 100, 200); // typ zwracany nie jest tutaj jeszcze znany, błąd kompilacji
+
+	std::cout << clampedPlayerY << '\n';
+}
+
+auto clamp(int value, int low, int high)
+{
+	if(value < low) return low;
+	if(value > high) return high;
+
+	return value;
+}
+```
+
+</TabItem>
+<TabItem value="good" label="✔ Dobrze" default>
+
+```cpp
+#include <iostream>
+
+// highlight-next-line
+auto clamp(int value, int low, int high)
+{
+	if(value < low) return low;
+	if(value > high) return high;
+
+	return value;
+}
+
+int main()
+{
+	int playerY = 300;
+	// highlight-next-line
+	auto clampedPlayerY = clamp(playerY, 100, 200); // ok, typ zwracany jest znany
+
+	std::cout << clampedPlayerY << '\n';
+}
+
+```
+
+</TabItem>
+</Tabs>
+
+Co ciekawe - C++ pozwala również na podanie typu w tym przypadku.
+Typ ten zapisujemy po strzałce, po deklaracji:
+```cpp
+auto clamp(int value, int low, int high) -> int;
+```
+Jest to równoważne z:
+```cpp
+int clamp(int value, int low, int high);
+```
+Notacja ta nazywa się z angielskiego *trailing return type* (wiodący typ zwracany).
+
+Wiele innych języków używa podobnej składni, funkcje w tego typu notacji lepiej układają się pod sobą + są przypadki,
+kiedy typ zwracany zależy od typu parametru i wtedy trzeba użyć tej notacji.
+
+## Dobre praktyki
+
+### Dobra nazwa
+
+Każda funkcja to pewien kod, który reprezentuje jedną logiczną operację.
+Nawyk dobrego nazywania funkcji powinien wejść w krew jak najszybciej,
+albowiem nazwy funkcji bardzo wpływają na czytelność kodu oraz kilka innych kluczowych jego aspektów.
+
+Funkcja ma cel, który ma wykonywać, oraz implementację. Celem będzie np. policzenie równania kwadratowego, implementacją będzie sam kod, który będzie to wykonywać.
+Nazwa funkcji powinna odwzorowywać **cel**, nie implementację.
+
+Głównym tego powodem jest to, że osoby wywołującą funkcję nie powinno interesować to **w jaki sposób** dana funkcja coś robi, tylko **co** robi.
+Drugi powód jest taki, że implementacja funkcji może się zmienić na przestrzeni rozwoju naszej aplikacji.
+Możemy zmieniać, naprawiać, dodawać i usuwać kod w środku (czyt. zmieniać implementację), ale o ile cel naszej funkcji dalej jest taki sam - nazwa pozostanie taka sama,
+co również pozwoli uniknąć tzw. złamania API (*ang. API breakage*).
+
+:::danger Łamanie API
+Podstawowe pytanie - czym jest **API**?
+**API**, z angielskiego to **A**plication **P**rogramming **I**nterface.
+
+Brzmi tajemniczo, ale przyjrzyjmy się temu trochę bliżej. Czym jest **interfejs**?
+
+Wyobraźmy sobie pralkę. Pralka ma w środku skomplikowaną maszynerię, dużo elementów mechanicznych i elektronicznych,
+których celem jest finalnie wypranie naszych ubrań.
+My do komunikacji z pralką używamy przycisków, pokrętł, ekranów dotykowych, etc. To właśnie jest **interfejs**. Pozwala on na interakcję z pralką.
+
+W przypadku programowania, **API** to również wszystko co pozwala na interakcję. Funkcja ma nazwę, parametry i typ zwracany.
+Weźmy dla przykładu taką funkcję:
+```cpp
+void assignPlayerToTeam(std::string player)
+{
+	// ...
+}
+```
+Mamy tutaj funkcję `assignPlayerToTeam`.
+W część jej **interfejsu** wchodzi jej nazwa (`assignPlayerToTeam`), typy jej parametrów (`std::string`) oraz jej typ zwracany (`void`).
+
+Dlaczego łamanie API jest takie niebezpieczne?
+
+Cóż, wyobraź sobie, że masz całą halę pełną pralek oraz po jednym robocie obsługującym każdą pralkę (pralka - funkcja, robot - kod korzystający z funkcji).
+```cpp
+std::vector<float> washingMachine3000(std::string button, int knob)
+{
+	// ...
+}
+```
+Każdy robot jest dokładnie nauczony gdzie znajduje się jaka pralka,
+gdzie na tej pralce są jakie przyciski i w jakiej kolejności jakie akcje należy wykonać, aby doprowadzić do udanego wyprania ubrań.
+```cpp
+std::vector<float> result = washingMachine3000("click", 123);
+```
+
+Wyobraź sobie teraz, że producent tych pralek nagle podmienia swoją czarodziejską różdżką wszystkie stare pralki na nowszy model.
+Można powiedzieć - powód do radości, w końcu nowszy model, pralki są szybsze, pobierają mniej wody i prądu, super.
+Nie do końca - nowy model pralek ma zmieniony interfejs - poprzestawianie guziki, brak niektórych pokrętł,
+zastąpione innych elementów dotykowymi panelami (zmieniona nazwa funkcji, inny typ zwracany, inne typy czy kolejność argumentów).
+```cpp
+std::string washingMachine5000(float touchPanel, std::string button)
+{
+	// ...
+}
+...
+std::vector<float> result = washingMachine3000("click", 123); // oops!
+```
+
+Nagle każdy robot (kod korzystający z funkcji) szaleje i wybucha, ponieważ każdy robot jest nauczony korzystać z określonej pralki (funkcji) w określony sposób,
+jednak interfejs się zmienił, więc nic nie działa tak jak powinno.
+
+Łamanie API to bardzo często sytuacja której chcemy uniknąć, ponieważ sprawia dużo kłopotów programistom utrzymującym kod, który korzysta z naszych funkcji.
+Nie zawsze jest to możliwe i wtedy stosuje się różnego rodzaju techniki, które powiadamiają programistów o **przyszłym** złamaniu obietnicy, którą jest interfejs.
+:::
+
+### Jedna logiczna operacja
+
+Funkcje powinny wykonywać tylko i wyłącznie jedną logiczną operację, powinny realizować tylko jeden cel na raz.
+Wydzielanie jak najmniejszych kawałków kodu do funkcji niesie za sobą cały szereg korzyści:
+
+ - :::info Zwiększenie **reużywalności** funkcji
+	Jeśli funkcje wykonują tylko jedną logiczną operację, to jest większa szansa, że będzie można je wykorzystać w wielu miejscach,
+	w porównaniu do funkcji, które robią wiele rzeczy.
+
+	Jeśli mamy funkcję, która usuwa spacje z przodu i z tyłu napisu, to nie użyjemy jej tam, gdzie będziemy potrzebować usunąć tylko spacje z przodu.
+	Za to jeśli będziemy mieć dwie funkcje - jedną usuwającą spacje z przodu, a drugą z tyłu, to nie dość, że będziemy mogli zaimplementować funkcję, która
+	usuwa znaki jednocześnie i z przodu i tyłu na podstawie tamtych dwóch, to jeszcze będzie mieli do dyspozycji dwie inne, bardziej specyficzne,
+	usuwające tyko z przodu lub z tyłu.
+	:::
+
+ - :::info Większa szansa na optymalizacje
+	Nie będziemy się wgłębiać w powody dlaczego tak jest. Warto po prostu zapamiętać, że kompilator potrafi lepiej zoptymalizować kod, który
+	używa małych, dobrze podzielonych funkcji, w przeciwieństwie do takiego, w którym funkcje są duże i nie wykonują małej ilości operacji.
+	:::
+
+ - :::info Łatwiejszy w analizie kod
+	Małe funkcje są zazwyczaj łatwiejsze w analizie niż duże funkcje.
+	Kod korzystający z małych, dobrze nazwanych funkcji również jest zazwyczaj łatwiejszy w analizie, niż taki, który korzysta z funkcji,
+	które ukrywają dużo rzeczy przed programistą.
+
+	Jeśli funkcja nazywa się `stringToInt`, to programista czytając zapis `stringToInt("3113")` spodziewa się tylko i wyłącznie zwrócenia przez tę funkcję
+	liczby o wartości 3113, żadnego wypisywania ani żadnych innych akcji w tle. Wszystko co powinno być widoczne, będzie w takim układzie widoczne.
+	:::
+
+ - :::info Funkcje łatwiejsze w testowaniu
+	Testowanie nie jest tematem dla początkujących, aczkolwiek zdecydowanie jest aspektem ważnym w pracy programisty.
+	Testowanie polega na niczym innym niż sprawdzaniu, czy kod napisany przez programistę jest poprawny (tzn. czy spełnia ustalone założenia).
+
+	Testowanie funkcji, które same za siebie mówią co robią, są podzielone na logiczne operacje i nie mają efektów ubocznych,
+	jest znacznie prostsze, niż testowanie potworów o niebotycznych wielkościach, rozwiązujących wszystkie problemy świata.
+	:::
+
+ - :::info Funkcje łatwiejsze w nazywaniu
+	Tak jak już wcześniej powiedzieliśmy - nazwa funkcji powinna odzwierciedlać operację, którą ta funkcja wykonuje.
+	Funkcje wykonujące pojedyncze operacje nazwać jest dość łatwo i szybko.
+
+	W przypadku funkcji, które nie podążają za tą dobrą praktyką, musimy się namyśleć jak oddać istotę funkcji, która robi wiele rzeczy na raz, co jest
+	oczywiście trudniejsze.
+	:::
