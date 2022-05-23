@@ -3,8 +3,147 @@ title:					vector<...>::emplace_back() method
 sidebar_label:			emplace_back( )
 description:			vector<...>::emplace_back() method C++ documentation
 hide_title:				true
-tags:					[access, vector, index, bounds, method]
+tags:					[vector, emplace, emplace_back, add]
 ---
 
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- emplace_back() -->
+import Method_SinceCpp11 	from './_codes/emplace_back/since-cpp11.mdx';
+import Method_SinceCpp17 	from './_codes/emplace_back/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/emplace_back/since-cpp20.mdx';
+
 # std::vector emplace_back() method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    'since-cpp17': <Method_SinceCpp17 />,
+    'since-cpp20': <Method_SinceCpp20 />,
+    }} />
+
+Appends a new element to the end of the container.
+The element is constructed through `std::allocator_traits<Alloc>::construct()`, which typically uses placement-new to construct the element in-place at the location provided by the container.
+The arguments `args...` are forwarded to the constructor as `std::forward<Args>(args)...`.
+
+:::danger Invalidation
+If the new `size()` is greater than `capacity()` then all iterators and references (including the past-the-end iterator) are **invalidated**.
+
+Otherwise only the past-the-end iterator is **invalidated**.
+:::
+
+
+<!-- todo emplace_back vs push_back -->
+
+### Parameters
+
+ - `args` - arguments to forward to the constructor of the element
+ 
+### Type requirements
+ 
+ - `T` must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable) and [`EmplaceConstructible`](/docs/named_req/DefaultInsertable)
+
+### Return value
+
+<SwitchView content={{
+    'until-cpp17': <>(none)</>,
+    'since-cpp17': <>A reference to the inserted element.</>
+    }} />
+
+### Complexity
+
+<!-- TODO amortized tooltip -->
+Amortized constant
+
+### Exceptions
+
+<!-- TODO add a link here -->
+
+
+If an exception is thrown, this function has no effect ([`strong exception guarantee`](#)).
+
+If `T`'s move constructor is **not noexcept** and `T` is not [`CopyInsertable`](/docs/named_req/CopyInsertable) into `*this`,
+vector will use the throwing move constructor. If it throws, the guarantee is waived and the effects are unspecified.
+
+### Notes
+
+Since reallocation may take place, `emplace_back` requires the element type to be [`MoveInsertable`](/docs/named_req/MoveInsertable) for vectors.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <vector>
+#include <string>
+#include <cassert>
+#include <iostream>
+ 
+struct President
+{
+    std::string name;
+    std::string country;
+    int year;
+ 
+    President(std::string p_name, std::string p_country, int p_year)
+        : name(std::move(p_name)), country(std::move(p_country)), year(p_year)
+    {
+        std::cout << "I am being constructed.\n";
+    }
+    President(President&& other)
+        : name(std::move(other.name)), country(std::move(other.country)), year(other.year)
+    {
+        std::cout << "I am being moved.\n";
+    }
+    President& operator=(const President& other) = default;
+};
+ 
+int main()
+{
+    std::vector<President> elections;
+    std::cout << "emplace_back:\n";
+    auto& ref = elections.emplace_back("Nelson Mandela", "South Africa", 1994);
+    assert(ref.year == 1994 && "uses a reference to the created object (C++17)");
+ 
+    std::vector<President> reElections;
+    std::cout << "\npush_back:\n";
+    reElections.push_back(President("Franklin Delano Roosevelt", "the USA", 1936));
+ 
+    std::cout << "\nContents:\n";
+    for (President const& president: elections) {
+        std::cout << president.name << " was elected president of "
+                  << president.country << " in " << president.year << ".\n";
+    }
+    for (President const& president: reElections) {
+        std::cout << president.name << " was re-elected president of "
+                  << president.country << " in " << president.year << ".\n";
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+emplace_back:
+I am being constructed.
+ 
+push_back:
+I am being constructed.
+I am being moved.
+ 
+Contents:
+Nelson Mandela was elected president of South Africa in 1994.
+Franklin Delano Roosevelt was re-elected president of the USA in 1936.
+```
+
+</div>
+</Columns>
 
