@@ -3,8 +3,120 @@ title:					vector<...>::resize() method
 sidebar_label:			resize( )
 description:			vector<...>::resize() method C++ documentation
 hide_title:				true
-tags:					[access, vector, index, bounds, method]
+tags:					[vector, size, resize, reserve]
 ---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- resize() -->
+import Method_UntilCpp11 	from './_codes/resize/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/resize/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/resize/since-cpp20.mdx';
 
 # std::vector resize() method
 
+<SwitchView content={{
+    'until-cpp11': <Method_UntilCpp11 />,
+    'since-cpp11': <Method_SinceCpp11 />,
+    'since-cpp20': <Method_SinceCpp20 />,
+}} />
+
+Resizes the container to contain count elements.
+If the current size is greater than count, the container is reduced to its first count elements.
+
+If the current size is less than count,
+ - **(1)** - additional default-inserted elements are appended
+ - **(2)** - additional copies of value are appended
+
+
+### Parameters
+
+ - `count` - new size of the container
+ - `value` - the value to initialize the new elements with
+ 
+### Type requirements
+ 
+ - **(1)** - `T` must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable) and [`DefaultInsertable`](/docs/named_req/MoveInsertable)
+ - **(2)** - `T` must meet the requirements of [`CopyInsertable`](/docs/named_req/CopyInsertable)
+
+### Return value
+
+(none)
+
+### Complexity
+
+Linear in the difference between the current size and count.
+
+:::important
+Additional complexity possible due to reallocation if capacity is less than count
+:::
+
+### Exceptions
+
+<!-- TODO add a link here -->
+If an exception is thrown, this function has no effect ([`strong exception guarantee`](#)).
+<SwitchView content={{
+    'since-cpp11': <>
+        In overload <b>(1)</b>, if <code>T</code>s move constructor is <b>not noexcept</b> and <code>T</code> is not <a href="/docs/named_req/CopyInsertable">CopyInsertable</a> into <code>*this</code>,
+        vector will use the throwing move constructor. If it throws, the guarantee is waived and the effects are unspecified.
+    </>
+    }}/>
+
+### Notes
+
+If value-initialization in overload **(1)** is undesirable, for example, if the elements are of non-class type and zeroing out is not needed,
+<!-- TODO add a link here -->
+it can be avoided by providing a custom [`Allocator::construct()`](#).
+Vector capacity is never reduced when resizing to smaller size because that would invalidate all iterators,
+rather than only the ones that would be invalidated by the equivalent sequence of `pop_back()` calls.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <vector>
+int main()
+{
+    std::vector<int> c = {1, 2, 3};
+    std::cout << "The vector holds: ";
+    for(const auto& el: c) std::cout << el << ' ';
+    std::cout << '\n';
+    c.resize(5);
+    std::cout << "After resize up to 5: ";
+    for(const auto& el: c) std::cout << el << ' ';
+    std::cout << '\n';
+    c.resize(2);
+    std::cout << "After resize down to 2: ";
+    for(const auto& el: c) std::cout << el << ' ';
+    std::cout << '\n';
+    c.resize(6, 4);
+    std::cout << "After resize up to 6 (initializer = 4): ";
+    for(const auto& el: c) std::cout << el << ' ';
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+The vector holds: 1 2 3
+After resize up to 5: 1 2 3 0 0
+After resize down to 2: 1 2
+After resize up to 6 (initializer = 4): 1 2 4 4 4 4
+```
+
+</div>
+</Columns>
