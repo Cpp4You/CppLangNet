@@ -3,8 +3,37 @@ title:					vector<...>::get_allocator() method
 sidebar_label:			get_allocator( )
 description:			vector<...>::get_allocator() method C++ documentation
 hide_title:				true
-tags:					[access, vector, index, bounds, method]
+tags:					[vector, allocator, internal, underlying, method]
 ---
+
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- empty() -->
+import Method_UntilCpp11 	from './_codes/get_allocator/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/get_allocator/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/get_allocator/since-cpp20.mdx';
 
 # std::vector get_allocator() method
 
+<SwitchView content={{
+        'until-cpp11': <Method_UntilCpp11 />,
+        'since-cpp11': <Method_SinceCpp11 />,
+        'since-cpp20': <Method_SinceCpp20 />,
+    }}/>
+
+
+Returns the allocator associated with the container.
+
+### Parameters
+
+(none)
+
+### Return value
+
+The associated allocator.
+
+### Complexity
+
+Constant.
