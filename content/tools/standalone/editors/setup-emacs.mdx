@@ -21,6 +21,18 @@ a text editor; it can be customized and extended with different “modes”, ena
 used like an Integrated Development Environment (IDE) for programming languages like C++, Java,
 C or Python.
 
+In this article, we will be configuring `lsp-mode` (Language Server Protocol) of emacs for
+C++ development. It is advised to learn the basic keybinds like saving a file, searchin a file,
+searching in a file, etc of Emacs before satrting using it.
+
+:::important Note
+This article for setting up Emacs is deicated to novice programmers who want to do C++ development
+in Emacs. After configuring Emacs according to this article, user will be able to get basic
+functionality like Code-Completion, Real-time Syntax checking, Code Navigation etc.
+For advance configuration of `lsp-mode` for C++ development, refer [here](https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/)
+:::
+
+
 ## Downloading and Installing
 
 We will be installing Emacs from terminal in Linux.
@@ -47,3 +59,94 @@ if required, enter your system password to proceed.
 sudo apt-get install emacs
 ```
 If required enter your system *password* to proceed.
+After download, you can check if Emacs is successfully installed in your
+system
+```
+emacs --version
+```
+If installed successfully, output would be like this
+
+**Output:**
+
+<Image center
+       alt="Output for `emacs --version`"
+       src="/img/tutorials/tools/emacs-version.jpg"
+    />
+
+
+Now we're good to customize Emacs, just open the *intitialization* file of Emacs
+```
+cd ~/.emacs.d && emacs init.el
+```
+All the customizing code for Emacs will be written in `init.el` file.
+
+:::important Note
+Every time when it is mentioned here to save the file, it is meant to execute
+`C-x``C-s` (`Control + x`, then `Control + s`) keybind and evry time when it is
+mentioned here to execute the latest command/code from Emacs, it is meant to
+execute `C-x``C-e` (`Control + x`, then `Control + e`) with cursor at the very end of the command/code.
+:::
+
+
+## General Customization of Emacs
+
+:::important Note
+This section is completely ***optional***. This section doesn't contribute towards
+C++ development. In this section, we will just configuring looks of Emacs.
+:::
+
+
+When emacs is opened, it generally start with a startup message. If you want to disable it,
+enter this in your `init.el` file
+```lisp title="init.el"
+(setq inhibit-startup-message t)
+```
+
+
+For making scroll bar invisible
+```lisp title="init.el"
+(toggle-scroll-bar -1)
+```
+Save the file and execute this line.
+For making it visibe again, just replace `-1` with `t`.
+
+
+For making menu bar invisible
+```lisp title="init.el"
+(menu-bar-mode -1)
+```
+Save the file and execute this line.
+For making it visibe again, just replace `-1` with `t`.
+
+
+For making tool bar invisible
+```lisp title="init.el"
+(tool-bar-mode -1)
+```
+Save the file and execute this line.
+For making it visibe again, just replace `-1` with `t`.
+
+
+For making line number visible in front of every new line
+```lisp title="init.el"
+(global-linum-mode t)
+```
+Save the file and execute this line.
+For making it invisibe again, just replace `t` with `-1`.
+
+
+## Setting up MELPA
+
+MELPA (Milkypostman's Emacs Lisp Package Archive) is an ELPA-compatible package repository
+that contains an enormous amount of useful Emacs packages.
+Add the following code and execute it in order to download other packages required to configure
+Emacs for C++ Development.
+
+```lisp title="init.el"
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/")
+	     '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(package-initialize)
+```
