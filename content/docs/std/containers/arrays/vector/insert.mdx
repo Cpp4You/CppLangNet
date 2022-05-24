@@ -44,11 +44,11 @@ Inserts elements at the specified location in the container.
 
 :::danger Invalidation
 Causes reallocation if the new `size()` is greater than the old `capacity()`.
-If the new `size()` is greater than `capacity()`, all iterators and references are **invalidated**.
+If the new `size()` is greater than `capacity()`, all **iterators** and **references** are invalidated.
 
-Otherwise, only the iterators and references before the insertion point remain valid. 
+Otherwise, only the **iterators** and **references** before the insertion point remain valid. 
 
-The past-the-end iterator is also **invalidated**.
+The **past-the-end iterator** is also invalidated.
 :::
 
 ### Parameters

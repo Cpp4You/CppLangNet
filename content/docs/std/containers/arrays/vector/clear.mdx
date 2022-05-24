@@ -29,8 +29,8 @@ Erases all elements from the container. After this call, `size()` returns zero.
 Leaves the `capacity()` of the vector unchanged (note: the standard's restriction on the changes to capacity is in the specification of [`vector::reserve`](/docs/std/containers/arrays/vector/reserve))
 
 :::danger Invalidation
-Invalidates any references, pointers, or iterators referring to contained elements.
-Any past-the-end iterators are also invalidated.  
+Invalidates any **references**, **pointers**, or **iterators** referring to contained elements.
+Any **past-the-end iterators** are also invalidated.  
 :::
 
 ### Parameters

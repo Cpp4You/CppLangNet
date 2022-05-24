@@ -31,7 +31,7 @@ The arguments `args...` are forwarded to the constructor as `std::forward<Args>(
 :::danger Invalidation
 If the new `size()` is greater than `capacity()`, all **iterators** and **references** are invalidated. 
 
-Otherwise, **only** the iterators and references before the insertion point remain valid. 
+Otherwise, **only** the **iterators** and **references** before the insertion point __remain valid__. 
 
 The **past-the-end iterator** is also invalidated.
 :::
