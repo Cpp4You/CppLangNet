@@ -33,9 +33,9 @@ The element is constructed through `std::allocator_traits<Alloc>::construct()`, 
 The arguments `args...` are forwarded to the constructor as `std::forward<Args>(args)...`.
 
 :::danger Invalidation
-If the new `size()` is greater than `capacity()` then all iterators and references (including the past-the-end iterator) are **invalidated**.
+If the new `size()` is greater than `capacity()` then all **iterators** and **references** (including the **past-the-end iterator**) are invalidated.
 
-Otherwise only the past-the-end iterator is **invalidated**.
+Otherwise only the **past-the-end iterator** is invalidated.
 :::
 
 

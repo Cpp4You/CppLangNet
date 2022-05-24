@@ -36,7 +36,7 @@ Appends the given element value to the end of the container.
  - **(2)** Value is moved into the new element.
 
 :::danger Invalidation
-If the new `size()` is greater than `capacity()` then all iterators and references (including the past-the-end iterator) are **invalidated**.
+If the new `size()` is greater than `capacity()` then all **iterators** and **references** (including the **past-the-end iterator**) are invalidated.
 
 Otherwise only the past-the-end iterator is **invalidated**.
 :::
