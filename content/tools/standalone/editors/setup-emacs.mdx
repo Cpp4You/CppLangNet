@@ -2,7 +2,7 @@
 sidebar_position: 5
 title: Emacs setup
 description:		Learn how to setup Emacs for coding in C++ Compiler easily.
-tags:				[editor, tool, emacs]
+tags:				[editor, tool, emacs, lsp-mode, linux]
 hide_title:			true
 ---
 
@@ -135,8 +135,9 @@ Save the file and execute this line.
 For making it invisibe again, just replace `t` with `-1`.
 
 
-## Setting up MELPA
+## Setting up MELPA and `use-package`
 
+### Setting up MELPA
 MELPA (Milkypostman's Emacs Lisp Package Archive) is an ELPA-compatible package repository
 that contains an enormous amount of useful Emacs packages.
 Add the following code and execute it in order to download other packages required to configure
@@ -149,4 +150,24 @@ Emacs for C++ Development.
 	     '("melpa" . "https://melpa.org/packages/")
 	     '("melpa-stable" . "https://stable.melpa.org/packages/"))
 (package-initialize)
+```
+After executing the above lines of code, 5000+ packages will be available to you for downloading
+inside emacs. You can see them by running following command
+```
+M-x package-list-packages RET
+```
+
+**Output:**
+<Image center
+       alt="List of packages in Emacs"
+       src="/img/tutorials/tools/package-list.jpg"
+    />
+
+### Setting up `use-package`
+
+Add following code in `init.el` and execute it.
+```lisp title="init.el"
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
 ```
