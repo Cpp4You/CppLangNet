@@ -3,8 +3,87 @@ title:					vector<...>::clear() method
 sidebar_label:			clear( )
 description:			vector<...>::clear() method C++ documentation
 hide_title:				true
-tags:					[access, vector, index, bounds, method]
+tags:					[vector, clear, empty, erase, remove]
 ---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- clear() -->
+import Method_UntilCpp11 	from './_codes/clear/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/clear/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/clear/since-cpp20.mdx';
 
 # std::vector clear() method
 
+<SwitchView content={{
+        'since-cpp20': <Method_SinceCpp20 />,
+        'since-cpp11': <Method_SinceCpp11 />,
+        'until-cpp11': <Method_UntilCpp11 />,
+    }}/>
+
+Erases all elements from the container. After this call, `size()` returns zero.
+
+Leaves the `capacity()` of the vector unchanged (note: the standard's restriction on the changes to capacity is in the specification of [`vector::reserve`](/docs/std/containers/arrays/vector/reserve))
+
+:::danger Invalidation
+Invalidates any **references**, **pointers**, or **iterators** referring to contained elements.
+Any **past-the-end iterators** are also invalidated.  
+:::
+
+### Parameters
+
+(none)
+
+### Return value
+
+(none)
+
+### Complexity
+
+Linear in the size of the container, i.e., the number of elements.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <vector>
+ 
+int main()
+{
+    std::vector<int> container{1, 2, 3};
+ 
+    auto print = [](const int& n) { std::cout << " " << n; };
+ 
+    std::cout << "Before clear:";
+    std::for_each(container.begin(), container.end(), print);
+    std::cout << "\nSize=" << container.size() << ", Capacity=" << container.capacity() << '\n';
+ 
+    std::cout << "Clear\n";
+    container.clear();
+ 
+    std::cout << "After clear:";
+    std::for_each(container.begin(), container.end(), print);
+    std::cout << "\nSize=" << container.size() << ", Capacity=" << container.capacity() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Before clear: 1 2 3
+Size=3, Capacity=3
+Clear
+After clear:
+Size=0, Capacity=3
+```
+
+</div>
+</Columns>

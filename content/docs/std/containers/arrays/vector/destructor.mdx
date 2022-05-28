@@ -1,9 +1,30 @@
 ---
-title:					vector<...> destructor
+title:				vector<...> destructor
 sidebar_label:			Destructor
 description:			vector<...> destructor C++ documentation
-hide_title:				true
-tags:					[access, vector, index, bounds, method]
+hide_title:			true
+tags:				[vector, destruction, destructor]
 ---
 
-# std::vector destructor
+import SwitchView				from "@site-comps/SwitchView";
+
+<!-- destructors -->
+import Method_UntilCpp20 	from './_codes/destructors/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/destructors/since-cpp20.mdx';
+
+# std::vector destructors
+
+<SwitchView content={{
+        'since-cpp20': <Method_SinceCpp20 />,
+        'until-cpp20': <Method_UntilCpp20 />,
+}} />
+
+Destructs the vector. The destructors of the elements are called and the used storage is deallocated. 
+
+:::note
+If the elements are pointers, the pointed-to objects are not destroyed.
+:::
+
+### Complexity
+
+Linear in the size of the vector.

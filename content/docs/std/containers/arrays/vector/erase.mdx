@@ -3,8 +3,131 @@ title:					vector<...>::erase() method
 sidebar_label:			erase( )
 description:			vector<...>::erase() method C++ documentation
 hide_title:				true
-tags:					[access, vector, index, bounds, method]
+tags:					[vector, erase, remove, delete]
 ---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- erase() -->
+import Method_UntilCpp11 	from './_codes/erase/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/erase/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/erase/since-cpp20.mdx';
 
 # std::vector erase() method
 
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+    'since-cpp11': <Method_SinceCpp11 />,
+    'until-cpp11': <Method_UntilCpp11 />,
+}} />
+
+Erases the specified elements from the container.
+ - **(1)** Removes the element at `pos`.
+ - **(2)** Removes the elements in the range **[ first, last )**.
+
+:::danger Invalidation
+Invalidates **iterators** and **references** at or after the point of the erase, including the **`end()` iterator**.
+:::
+
+:::danger Using past-the-end iteraotr
+The iterator pos must be valid and dereferenceable.
+Thus the `end()` iterator (which is valid, but is not dereferenceable) cannot be used as a value for pos.
+:::
+
+The iterator first does not need to be dereferenceable if `first == last`: erasing an empty range is a no-op.
+
+### Parameters
+
+ - `pos` - itertor to the element to remove
+ - `first`, `last` - range of elements to remove
+ 
+### Type requirements
+ 
+ - `T` *(the container's element type)* must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable)
+
+### Return value
+
+Iterator following the last removed element.
+
+ - If `pos` refers to the last element, then the `end()` iterator is returned.
+ - If `last == end()` prior to removal, then the updated `end()` iterator is returned.
+ - If **[ first, last )** is an empty range, then last is returned.
+
+### Complexity
+Linear: the number of calls to the destructor of `T` is the same as the number of elements erased,
+the assignment operator of `T` is called the number of times equal to the number of elements in the vector after the erased elements.
+
+### Exceptions
+
+Does not throw unless an exception is thrown by the **assignment operator** of `T`.
+
+### Notes
+
+If value-initialization in overload **(1)** is undesirable, for example, if the elements are of non-class type and zeroing out is not needed,
+<!-- TODO add a link here -->
+it can be avoided by providing a custom [`Allocator::construct()`](#).
+Vector capacity is never reduced when resizing to smaller size because that would invalidate all iterators,
+rather than only the ones that would be invalidated by the equivalent sequence of `pop_back()` calls.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <vector>
+#include <iostream>
+ 
+ 
+void print_container(const std::vector<int>& c) 
+{
+    for (int i : c) {
+        std::cout << i << " ";
+    }
+    std::cout << '\n';
+}
+ 
+int main( )
+{
+    std::vector<int> c{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    print_container(c);
+ 
+    c.erase(c.begin());
+    print_container(c);
+ 
+    c.erase(c.begin()+2, c.begin()+5);
+    print_container(c);
+ 
+    // Erase all even numbers (C++11 and later)
+    for (std::vector<int>::iterator it = c.begin(); it != c.end(); ) {
+        if (*it % 2 == 0) {
+            it = c.erase(it);
+        } else {
+            ++it;
+        }
+    }
+    print_container(c);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+0 1 2 3 4 5 6 7 8 9
+1 2 3 4 5 6 7 8 9
+1 2 6 7 8 9
+1 7 9
+```
+
+</div>
+</Columns>

@@ -1,0 +1,8 @@
+```cpp
+// (1) Non const version only
+vector& operator=( const vector& other );
+// (2) Non const version only
+vector& operator=( vector&& other ) noexcept(/* see below */);
+// (3) Non const version only
+vector& operator=( std::initializer_list<T> ilist );
+```

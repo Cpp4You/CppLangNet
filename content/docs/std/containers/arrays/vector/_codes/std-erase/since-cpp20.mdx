@@ -1,0 +1,11 @@
+```cpp
+// (1)
+template< class T, class Alloc, class U >
+constexpr typename std::vector<T,Alloc>::size_type
+    erase( std::vector<T,Alloc>& c, const U& value )
+
+// (2) 
+template< class T, class Alloc, class Pred >
+constexpr typename std::vector<T,Alloc>::size_type
+    erase_if( std::vector<T,Alloc>& c, Pred pred );
+```

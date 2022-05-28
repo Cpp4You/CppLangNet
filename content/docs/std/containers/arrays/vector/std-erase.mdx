@@ -3,8 +3,112 @@ title:					std::erase() function
 sidebar_label:			std::erase( ), std::erase_if( )
 description:			std::erase() function C++ documentation
 hide_title:				true
-tags:					[access, vector, index, bounds, method]
+tags:					[vector, erase, remove, delete]
 ---
 
-# std::erase() function
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
 
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- std-erase() -->
+import Method_SinceCpp20 	from './_codes/std-erase/since-cpp20.mdx';
+
+# std::erase() method
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+}} />
+
+ - **(1)** Erases all elements that compare equal to value from the container. Equivalent to
+    ```cpp
+    auto it = std::remove(c.begin(), c.end(), value);
+    auto r = std::distance(it, c.end());
+    c.erase(it, c.end());
+    return r;
+    ```
+ - **(2)** Erases all elements that satisfy the predicate pred from the container. Equivalent to
+    ```cpp
+    auto it = std::remove_if(c.begin(), c.end(), pred);
+    auto r = std::distance(it, c.end());
+    c.erase(it, c.end());
+    return r;
+    ```
+
+### Parameters
+
+ - `c` - container from which to erase
+ - `value` - value to be removed the value to initialize the new elements with
+ - `pred` - unary predicate which returns `true` if the element should be erased
+    The expression `pred(v)` must be convertible to `bool` for every argument `v` of type (possibly `const`) `T`,
+    regardless of value category, and must not modify `v`.
+    Thus, a parameter type of `T&` is not allowed (nor is `T` unless for `T` a move is equivalent to a copy `(since C++11)`).
+ 
+### Return value
+
+The number of erased elements.
+
+### Complexity
+
+Linear.
+
+### Exceptions
+
+(none)
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <numeric>
+#include <string_view>
+#include <vector>
+ 
+void print_container(std::string_view comment, const std::vector<char>& c)
+{
+    std::cout << comment;
+    for (auto x : c) {
+        std::cout << x << ' ';
+    }
+    std::cout << '\n';
+}
+ 
+int main()
+{
+    std::vector<char> cnt(10);
+    std::iota(cnt.begin(), cnt.end(), '0');
+    print_container("Init:\n", cnt);
+ 
+    std::erase(cnt, '3');
+    print_container("Erase '3':\n", cnt);
+ 
+    auto erased = std::erase_if(cnt, [](char x) { return (x - '0') % 2 == 0; });
+    print_container("Erase all even numbers:\n", cnt);
+    std::cout << erased << " even numbers were erased.\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Init:
+0 1 2 3 4 5 6 7 8 9 
+Erase '3':
+0 1 2 4 5 6 7 8 9 
+Erase all even numbers:
+1 5 7 9
+5 even numbers were erased.
+```
+
+</div>
+</Columns>
