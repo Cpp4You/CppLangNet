@@ -1,0 +1,41 @@
+---
+title:					unordered_map<...>::reserve() method
+sidebar_label:			reserve( )
+description:			unordered_map<...>::reserve() method C++ documentation
+hide_title:				true
+tags:					[reserve, buckets, bucket]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- reserve() -->
+import Method_SinceCpp11 	from './_codes/reserve/since-cpp11.mdx';
+
+# std::unordered_map reserve() method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+Sets the number of buckets to the number needed to accomodate at least `count` elements without exceeding maximum load factor and **rehashes the container**,
+i.e. puts the elements into appropriate buckets considering that total number of buckets has changed.
+
+Effectively calls `rehash(std::ceil(count / max_load_factor()))`.
+
+### Parameters
+
+ - `count` - new capacity of the container
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Average case linear in the size of the container, worst case quadratic.
+
+### Exceptions
+
+**(none)**
