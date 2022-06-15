@@ -1,0 +1,140 @@
+---
+title:					unordered_map<...>::operator[] method
+sidebar_label:			operator[]
+description:			unordered_map<...>::operator[] method C++ documentation
+hide_title:				true
+tags:					[operator, subscript, index, indexing, access]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- operator[] -->
+import Explanation_UntilCpp17   from './_codes/operator_subscript/explanation/until-cpp17.mdx';
+import Explanation_SinceCpp17   from './_codes/operator_subscript/explanation/since-cpp17.mdx';
+
+import Notes_InsertOrAssign_Since17 from './_codes/operator_subscript/other/notes-insert-or-assign-since-cpp17.mdx';
+
+import Method_SinceCpp11 	from './_codes/operator_subscript/since-cpp11.mdx';
+
+# std::unordered_map operator[] method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+Returns a reference to the value that is mapped to a key equivalent to `key`, performing an insertion if such key does not already exist.
+
+<SwitchView content={{
+    'since-cpp17': <Explanation_SinceCpp17 />,
+    'until-cpp17': <Explanation_UntilCpp17 />,
+    }} />
+
+:::danger Invalidation
+If an insertion occurs and results in a rehashing of the container, **all iterators** are invalidated.
+
+Otherwise iterators **are not** affected. References are not invalidated.
+
+
+Rehashing occurs only if the new number of elements is greater than `max_load_factor() * bucket_count()`.
+:::
+
+### Parameters
+
+ - `key` - the key of the element to find
+
+### Return value
+
+Reference to the mapped value of the new element if no element with key `key` existed.
+
+Otherwise a reference to the mapped value of the existing element whose key is equivalent to `key`.
+
+### Complexity
+
+Average case: **constant**
+
+Worst case: **linear in size**
+
+### Exceptions
+
+If an exception is thrown by any operation, the insertion has no effect
+
+### Notes
+
+:::important
+`operator[]` is non-const because it inserts the key if it doesn't exist. If this behavior is undesirable or if the container is const, `at()` may be used.
+:::
+
+In the published C++11 and C++14 standards, this function was specified to require `mapped_type` to be [`DefaultInsertable`](/docs/named_req/DefaultInsertable)
+and `key_type` to be [`CopyInsertable`](/docs/named_req/CopyInsertable) or [`MoveInsertable`](/docs/named_req/MoveInsertable) into `*this`.
+This specification was defective and was fixed by [`LWG issue 2469`](https://cplusplus.github.io/LWG/issue2469), and the description above incorporates the resolution of that issue.
+
+However, one implementation (**libc++**) is known to construct the `key_type` and `mapped_type` objects via two separate allocator `construct()` calls,
+as arguably required by the standards as published, rather than emplacing a `value_type` object.
+
+<SwitchView content={{
+    'since-cpp17': <Notes_InsertOrAssign_Since17 />
+    }} />
+    
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <string>
+#include <unordered_map>
+ 
+auto print = [](auto const comment, auto const& map) {
+    std::cout << comment << "{";
+    for (const auto &pair : map) {
+        std::cout << "{" << pair.first << ": " << pair.second << "}";
+    }
+    std::cout << "}\n";
+};
+ 
+int main()
+{
+    std::unordered_map<char, int> letter_counts {{'a', 27}, {'b', 3}, {'c', 1}};
+    print("letter_counts initially contains: ", letter_counts);
+ 
+    letter_counts['b'] = 42;  // updates an existing value
+    letter_counts['x'] = 9;  // inserts a new value
+ 
+    print("after modifications it contains: ", letter_counts);
+ 
+    // count the number of occurrences of each word
+    // (the first call to operator[] initialized the counter with zero)
+    std::unordered_map<std::string, int>  word_map;
+    for (const auto &w : { "this", "sentence", "is", "not", "a", "sentence",
+                           "this", "sentence", "is", "a", "hoax"}) {
+        ++word_map[w];
+    }
+    word_map["that"]; // just inserts the pair {"that", 0}
+ 
+    for (const auto &[word, count] : word_map) {
+        std::cout << count << " occurrences of word '" << word << "'\n";
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+letter_counts initially contains: {{a: 27}{b: 3}{c: 1}}
+after modifications it contains: {{a: 27}{b: 42}{c: 1}{x: 9}}
+2 occurrences of word 'a'
+1 occurrences of word 'hoax'
+2 occurrences of word 'is'
+1 occurrences of word 'not'
+3 occurrences of word 'sentence'
+0 occurrences of word 'that'
+2 occurrences of word 'this'
+```
+
+</div>
+</Columns>
