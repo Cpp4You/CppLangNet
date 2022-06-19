@@ -1,0 +1,47 @@
+---
+title:					map<...>::emplace_hint() method
+sidebar_label:			emplace_hint( )
+description:			map<...>::emplace_hint() method C++ documentation
+hide_title:				true
+tags:					[map, emplace_hint, insert, add]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+<!-- emplace_hint() -->
+import Method_SinceCpp11 	from './_codes/emplace_hint/since-cpp11.mdx';
+
+# std::map emplace_hint() method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+Inserts a new element to the container as close as possible to the position just before `hint`.
+The element is constructed in-place, i.e. no copy or move operations are performed.
+
+The constructor of the new element (i.e. `std::pair<const Key, T>`) is called with exactly the same arguments as supplied to emplace,
+forwarded via `std::forward<Args>(args)...`.
+
+No iterators or references are invalidated.
+
+### Parameters
+
+ - `hint` - iterator to the position before which the new element will be inserted
+ - `args` - arguments to forward to the constructor of the element
+
+### Return value
+
+Returns an iterator to the newly inserted element.
+
+### Complexity
+
+Logarithmic in the size of the container in general, but amortized constant if the new element is inserted just before `hint`.
+
+### Exceptions
+
+If an exception is thrown by any operation, this function has no effect (strong exception guarantee).
