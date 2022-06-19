@@ -1,0 +1,10 @@
+```cpp
+// (1) Non const version only
+multimap& operator=( const multimap& other );
+
+// (2) Non const version only
+multimap& operator=( multimap&& other ) noexcept(/* see below */);
+
+// (3) Non const version only
+multimap& operator=( std::initializer_list<value_type> ilist );
+```
