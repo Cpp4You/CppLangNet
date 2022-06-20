@@ -1,0 +1,103 @@
+---
+title:					map<...>::equal_range() method
+sidebar_label:			equal_range( )
+description:			map<...>::equal_range() method C++ documentation
+hide_title:				true
+tags:					[map, equal_range, compare, equal, range]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- equal_range() -->
+import Method_SinceCpp98 	from './_codes/equal_range/since-cpp98.mdx';
+import Method_SinceCpp14 	from './_codes/equal_range/since-cpp14.mdx';
+
+import ReturnValueOrderNote_SinceCpp11 	from './_codes/equal_range/other/return-value-order-note-since-cpp11.mdx';
+
+# std::map equal_range() method
+
+<SwitchView content={{
+    'since-cpp14': <Method_SinceCpp14 />,
+    'since-cpp98': <Method_SinceCpp98 />,
+    }} />
+
+Returns a range containing all elements with the given key in the container. 
+The range is defined by two iterators, one pointing to the first element that is not less than `key` and another pointing to the first element greater than `key`.
+Alternatively, the first iterator may be obtained with [`lower_bound()`](/docs/std/containers/maps/map/lower_bound), and the second with [`upper_bound()`](/docs/std/containers/maps/map/upper_bound)
+
+ - **(1-2)** Compares the keys to `key`.
+ - **(3-4)** Compares the keys to the value `x`.
+    This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type.
+    It allows calling this function without constructing an instance of `Key`.
+
+### Parameters
+
+- `key` - key value of the elements to count
+- `x` - a value of any type that can be transparently compared with a key
+
+### Return value
+
+`std::pair` containing a pair of iterators defining the wanted range: the first pointing to the first element that is not less than key and the second pointing to the first element greater than `key`.
+
+If there are no elements not less than `key`, past-the-end (see [`end()`](/docs/std/containers/maps/map/end)) iterator is returned as the first element.
+Similarly if there are no elements greater than key, past-the-end iterator is returned as the second element.
+
+<SwitchView content={{
+    'since-cpp11': <ReturnValueOrderNote_SinceCpp11 />
+    }} />
+
+### Complexity
+
+Logarithmic in the size of the container.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+Feature testing macro: `__cpp_lib_generic_associative_lookup` (for overloads **(3)** and **(4)**).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <map>
+ 
+int main()
+{
+    std::multimap<int, char> dict {
+        {1, 'A'},
+        {2, 'B'},
+        {2, 'C'},
+        {2, 'D'},
+        {4, 'E'},
+        {3, 'F'}
+    };
+ 
+    auto range = dict.equal_range(2);
+ 
+    for (auto i = range.first; i != range.second; ++i)
+    {
+        std::cout << i->first << ": " << i->second << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+2: B
+2: C
+2: D
+```
+
+</div>
+</Columns>
