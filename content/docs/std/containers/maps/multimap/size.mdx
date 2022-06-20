@@ -1,0 +1,64 @@
+---
+title:					multimap<...>::size() method
+sidebar_label:			size( )
+description:			multimap<...>::size() method C++ documentation
+hide_title:				true
+tags:					[size]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- size() -->
+import Method_UntilCpp11 	from './_codes/size/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/size/since-cpp11.mdx';
+
+# std::multimap size() method
+
+<SwitchView content={{
+        'since-cpp11': <Method_SinceCpp11 />,
+        'until-cpp11': <Method_UntilCpp11 />,
+    }}/>
+
+Returns the number of elements in the container, i.e. `std::distance(begin(), end())`.
+
+### Parameters
+
+(none)
+
+### Return value
+
+The number of elements in the container.
+
+### Complexity
+
+Constant.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <map>
+#include <iostream>
+ 
+int main()
+{ 
+    std::multimap<int,char> nums {{1, 'a'}, {3, 'b'}, {5, 'c'}, {7, 'd'}};
+ 
+    std::cout << "nums contains " << nums.size() << " elements.\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+nums contains 4 elements.
+```
+
+</div>
+</Columns>
