@@ -1,0 +1,182 @@
+---
+title:					multimap<...>::begin() method
+sidebar_label:			begin( )
+description:			multimap<...>::begin() C++ documentation
+hide_title:				true
+tags:					[access, iterators, begin, get]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+import Columns					from "@site-comps/Columns";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- begin -->
+
+import Method_UntilCpp11 	from './_codes/begin/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/begin/since-cpp11.mdx';
+
+# std::multimap begin() method
+
+<SwitchView content={{
+		'since-cpp11': <Method_SinceCpp11 />,
+		'until-cpp11': <Method_UntilCpp11 />,
+	}}/>
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the multimap.
+If the array is empty, the returned iterator will be equal to `end()`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Iterator to the first element.
+
+### Exceptions
+
+**(none)**
+
+### Complexity
+
+Constant.
+
+### Difference between begin and cbegin
+
+For a const container `c`, begin and cbegin are the same - `c.begin() == c.cbegin()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    std::multimap<int, float> multimap = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = multimap.begin(); // Type: std::multimap<int, float>::iterator
+    // highlight-next-line
+    *it = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    std::multimap<int, float> multimap = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = multimap.cbegin(); // Type: std::multimap<int, float>::const_iterator
+    // highlight-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    const std::multimap<int, float> multimap = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = multimap.begin(); // Type: std::multimap<int, float>::const_iterator
+    // highlight-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    const std::multimap<int, float> multimap = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = multimap.cbegin(); // Type: std::multimap<int, float>::const_iterator
+    // highlight-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <map>
+#include <string>
+ 
+int main()
+{
+    std::multimap<std::string, int> multimap {
+        { "█", 1 },
+        { "▒", 5 },
+        { "░", 3 },
+        { "▓", 7 },
+        { "▓", 8 },
+        { "░", 4 },
+        { "▒", 6 },
+        { "█", 2 },
+    };
+ 
+    std::cout << "Print out in reverse order using const reverse iterators:\n";
+    std::for_each(multimap.crbegin(), multimap.crend(),
+        [](std::pair<const std::string, int> const& e) {
+            std::cout << "{ \"" << e.first << "\", " << e.second << " };\n";
+        });
+ 
+    multimap.rbegin()->second = 42; // OK: non-const value is modifiable
+//  multimap.crbegin()->second = 42; // Error: can't modify the const value
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+Print out in reverse order using const reverse iterators:
+{ "▓", 8 };
+{ "▓", 7 };
+{ "▒", 6 };
+{ "▒", 5 };
+{ "░", 4 };
+{ "░", 3 };
+{ "█", 2 };
+{ "█", 1 };
+```
+
+</div>
+</Columns>

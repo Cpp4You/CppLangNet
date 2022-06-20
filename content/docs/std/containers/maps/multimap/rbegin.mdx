@@ -1,0 +1,186 @@
+---
+title:					multimap<...>::rbegin() method
+sidebar_label:			rbegin( )
+description:		    multimap<...>::rbegin() method C++ documentation
+hide_title:				true
+tags:					[access, multimap, iterator, reverse, rbegin, begin]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- rbegin() -->
+import Method_UntilCpp11 	from './_codes/end/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/end/since-cpp11.mdx';
+
+# std::multimap rbegin() method
+
+<SwitchView content={{
+        'since-cpp11': <Method_SinceCpp11 />,
+        'until-cpp11': <Method_UntilCpp11 />,
+    }}/>
+
+Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the first element of the reversed vector.
+It corresponds to the last element of the non-reversed vector.
+
+:::note
+This method doesn't actually reverse the vector, it just returns an iterator that points to the last element of the vector,
+and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
+
+For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
+:::
+
+If the container is empty, the returned iterator will be equal to `rend()`.
+
+### Parameters
+
+(none)
+
+### Return value
+
+Reverse iterator to the first element.
+
+### Complexity
+
+Constant.
+
+### Difference between rbegin and crbegin
+
+For a const container `c`, rbegin and crbegin are the same - `c.rbegin() == c.crbegin()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="rbegin" label="rbegin" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = multimap.rbegin(); // Type: std::map<int, float>::reverse_iterator
+    // highlight-next-line
+    *it = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="crbegin" label="crbegin" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = multimap.crbegin(); // Type: std::map<int, float>::reverse_const_iterator
+    // highlight-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="rbegin" label="rbegin" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    const std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = multimap.rbegin(); // Type: std::map<int, float>::reverse_const_iterator
+    // highlight-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="crbegin" label="crbegin" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    const std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = multimap.crbegin(); // Type: std::map<int, float>::reverse_const_iterator
+    // highlight-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <map>
+#include <string>
+ 
+int main()
+{
+    std::multimap<std::string, int> multimap {
+        { "█", 1 },
+        { "▒", 5 },
+        { "░", 3 },
+        { "▓", 7 },
+        { "▓", 8 },
+        { "░", 4 },
+        { "▒", 6 },
+        { "█", 2 },
+    };
+ 
+    std::cout << "Print out in reverse order using const reverse iterators:\n";
+    std::for_each(multimap.crbegin(), multimap.crend(),
+        [](std::pair<const std::string, int> const& e) {
+            std::cout << "{ \"" << e.first << "\", " << e.second << " };\n";
+        });
+ 
+    multimap.rbegin()->second = 42; // OK: non-const value is modifiable
+//  multimap.crbegin()->second = 42; // Error: can't modify the const value
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Print out in reverse order using const reverse iterators:
+{ "▓", 8 };
+{ "▓", 7 };
+{ "▒", 6 };
+{ "▒", 5 };
+{ "░", 4 };
+{ "░", 3 };
+{ "█", 2 };
+{ "█", 1 };
+```
+
+</div>
+</Columns>
