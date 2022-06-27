@@ -1,7 +1,0 @@
-- **(1, 2)** May throw implementation-defined exceptions.
-- **(3)** Noexcept specification:
-```cpp
-noexcept(std::allocator_traits<Allocator>::is_always_equal::value
-&& std::is_nothrow_move_assignable<Hash>::value
-&& std::is_nothrow_move_assignable<Pred>::value)
-```
