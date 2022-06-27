@@ -241,7 +241,7 @@ module.exports = {
 									'm:value_comp',
 								]),
 								docsClass('std/containers/maps/multimap'),
-								docsClassCat('unordered_map', 'std/containers/maps/unordered_map', '', [
+								docsClassCat('unordered_map', 'std/containers/maps/unordered-map', '', [
 									'constructors',
 									'destructors',
 									'op:operator_assign',

@@ -1,0 +1,206 @@
+---
+title:					unordered_map<...>::begin() method
+sidebar_label:			begin( )
+description:			unordered_map<...>::begin() method C++ documentation
+hide_title:				true
+tags:					[access, unordered_map, iterator, begin, front]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- begin() -->
+import Method_SinceCpp11 	from './_codes/begin/since-cpp11.mdx';
+
+# std::unordered_map begin()/cbegin() method
+
+<SwitchView content={{
+        'since-cpp11': <Method_SinceCpp11 />,
+    }}/>
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the vector.
+If the array is empty, the returned iterator will be equal to `end()`.
+
+### Parameters
+
+(none)
+
+### Return value
+
+Iterator to the first element.
+
+### Complexity
+
+Constant.
+
+### Difference between begin and cbegin
+
+For a const container `c`, begin and cbegin are the same - `c.begin() == c.cbegin()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <unordered_map>
+#include <string>
+
+int main()
+{
+    std::unordered_map<std::string, int> map = {
+			{ "key1", 1 },
+			{ "key2", 2 },
+			{ "key3", 3 },
+		};
+    auto it = map.begin(); // Type: std::unordered_map<std::string, int>::iterator
+    // highlight-next-line
+    it->second = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <unordered_map>
+#include <string>
+
+int main()
+{
+    std::unordered_map<std::string, int> map = {
+			{ "key1", 1 },
+			{ "key2", 2 },
+			{ "key3", 3 },
+		};
+    auto it = map.cbegin(); // Type: std::unordered_map<std::string, int>::const_iterator    
+    // highlight-next-line
+    it->second = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <unordered_map>
+#include <string>
+
+int main()
+{
+    const std::unordered_map<std::string, int> map = {
+			{ "key1", 1 },
+			{ "key2", 2 },
+			{ "key3", 3 },
+		};
+    auto it = map.begin(); // Type: std::unordered_map<std::string, int>::const_iterator
+    // highlight-next-line
+    it->second = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <unordered_map>
+#include <string>
+
+int main()
+{
+    const std::unordered_map<std::string, int> map = {
+			{ "key1", 1 },
+			{ "key2", 2 },
+			{ "key3", 3 },
+		};
+    auto it = map.cbegin(); // Type: std::unordered_map<std::string, int>::const_iterator
+    // highlight-next-line
+    it->second = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cmath>
+#include <iostream>
+#include <unordered_map>
+ 
+struct Node { double x, y; };
+ 
+int main() {
+    Node nodes[3] = { {1, 0}, {2, 0}, {3, 0} };
+ 
+    //mag is a map mapping the address of a Node to its magnitude in the plane
+    std::unordered_map<Node *, double> mag = {
+        { nodes,     1 },
+        { nodes + 1, 2 },
+        { nodes + 2, 3 }
+    };
+ 
+    //Change each y-coordinate from 0 to the magnitude
+    for(auto iter = mag.begin(); iter != mag.end(); ++iter){
+        auto cur = iter->first; // pointer to Node
+        cur->y = mag[cur]; // could also have used  cur->y = iter->second;
+    }
+ 
+    //Update and print the magnitude of each node
+    for(auto iter = mag.begin(); iter != mag.end(); ++iter){
+        auto cur = iter->first;
+        mag[cur] = std::hypot(cur->x, cur->y);
+        std::cout << "The magnitude of (" << cur->x << ", " << cur->y << ") is ";
+        std::cout << iter->second << '\n';
+    }
+ 
+    //Repeat the above with the range-based for loop
+    for(auto i : mag) {
+        auto cur = i.first;
+        cur->y = i.second;
+        mag[cur] = std::hypot(cur->x, cur->y);
+        std::cout << "The magnitude of (" << cur->x << ", " << cur->y << ") is ";
+        std::cout << mag[cur] << '\n';
+        //Note that in contrast to std::cout << iter->second << '\n'; above, 
+        // std::cout << i.second << '\n'; will NOT print the updated magnitude
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+The magnitude of (3, 3) is 4.24264
+The magnitude of (1, 1) is 1.41421
+The magnitude of (2, 2) is 2.82843
+The magnitude of (3, 4.24264) is 5.19615
+The magnitude of (1, 1.41421) is 1.73205
+The magnitude of (2, 2.82843) is 3.4641
+```
+
+</div>
+</Columns>
