@@ -1,5 +1,0 @@
-If `std::allocator_traits<allocator_type>::propagate_on_container_swap::value` is `true`, then the allocators are exchanged using an unqualified call to non-member swap.
-
-:::danger Undefined behaviour
-Otherwise, they are not swapped (and if `get_allocator() != other.get_allocator()`, the **behavior is undefined**).
-:::

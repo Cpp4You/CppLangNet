@@ -1,6 +1,0 @@
-noexcept specification:
-```cpp
-noexcept(std::allocator_traits<Allocator>::is_always_equal::value
-&& std::is_nothrow_swappable<Hash>::value
-&& std::is_nothrow_swappable<key_equal>::value)
-```
