@@ -1,11 +1,11 @@
 ```cpp
 // (1) Non const version only
 template<class H2, class P2>
-void merge( std::unordered_map<Key, T, H2, P2, Allocator>& source );
+void merge( std::unordered_multimap<Key, T, H2, P2, Allocator>& source );
 
 // (2) Non const version only
 template<class H2, class P2>
-void merge( std::unordered_map<Key, T, H2, P2, Allocator>&& source );
+void merge( std::unordered_multimap<Key, T, H2, P2, Allocator>&& source );
 
 // (3) Non const version only
 template<class H2, class P2>

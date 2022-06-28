@@ -1,9 +1,9 @@
 ---
-title:					unordered_map<...>::erase() method
+title:					unordered_multimap<...>::erase() method
 sidebar_label:			erase()
-description:			unordered_map<...>::erase() method C++ documentation
+description:			unordered_multimap<...>::erase() method C++ documentation
 hide_title:				true
-tags:					[erase, remove, delete, unordered_map]
+tags:					[erase, remove, delete, unordered_multimap]
 ---
 
 import Columns				from "@site-comps/Columns";
@@ -15,7 +15,7 @@ import SwitchView				from "@site-comps/SwitchView";
 import Method_SinceCpp17 	from './_codes/erase/since-cpp11.mdx';
 import Method_SinceCpp23 	from './_codes/erase/since-cpp23.mdx';
 
-# std::unordered_map erase() method
+# std::unordered_multimap erase() method
 
 <SwitchView content={{
     'since-cpp23': <Method_SinceCpp23 />,
@@ -41,7 +41,7 @@ Other iterators and references are not invalidated.
 :::
 
 :::important Valid iterator
-The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std/containers/unordered_map/erase) iterator (which is valid, but is not dereferenceable) cannot be used as a value for `pos`.
+The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std/containers/unordered-multimap/erase) iterator (which is valid, but is not dereferenceable) cannot be used as a value for `pos`.
 :::
 
 ### Parameters
@@ -58,7 +58,7 @@ The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std
 
 ### Complexity
 
-Given an instance `c` of `unordered_map`:
+Given an instance `c` of `unordered_multimap`:
 
  - **(1)** 
    Average case: **Constant**
@@ -99,7 +99,7 @@ Feature testing macro: `__cpp_lib_associative_heterogeneous_erasure` (for overlo
 #include <iostream>
 int main()
 {
-    std::unordered_map<int, std::string> c = {
+    std::unordered_multimap<int, std::string> c = {
         {1, "one" }, {2, "two" }, {3, "three"},
         {4, "four"}, {5, "five"}, {6, "six"  }
     };

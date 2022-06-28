@@ -1,7 +1,7 @@
 ---
-title:					unordered_map<...>::empty() method
+title:					unordered_multimap<...>::empty() method
 sidebar_label:			empty()
-description:			unordered_map<...>::empty() method C++ documentation
+description:			unordered_multimap<...>::empty() method C++ documentation
 hide_title:				true
 tags:					[empty]
 ---
@@ -15,7 +15,7 @@ import SwitchView				from "@site-comps/SwitchView";
 import Method_UntilCpp20 	from './_codes/empty/until-cpp20.mdx';
 import Method_SinceCpp20 	from './_codes/empty/since-cpp20.mdx';
 
-# std::unordered_map empty() method
+# std::unordered_multimap empty() method
 
 <SwitchView content={{
         'since-cpp20': <Method_SinceCpp20 />,
@@ -61,7 +61,7 @@ which would mean - **is this container empty?**) for the verb `empty` (which wou
  
 int main()
 {
-    std::unordered_map<int, int> numbers;
+    std::unordered_multimap<int, int> numbers;
     std::cout << std::boolalpha;
     std::cout << "Initially, numbers.empty(): " << numbers.empty() << '\n';
  

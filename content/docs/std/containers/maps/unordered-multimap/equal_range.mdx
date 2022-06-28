@@ -1,7 +1,7 @@
 ---
-title:					unordered_map<...>::equal_range() method
+title:					unordered_multimap<...>::equal_range() method
 sidebar_label:			equal_range()
-description:			unordered_map<...>::equal_range() method C++ documentation
+description:			unordered_multimap<...>::equal_range() method C++ documentation
 hide_title:				true
 tags:					[equal_range, equal, range]
 ---
@@ -15,7 +15,7 @@ import SwitchView				from "@site-comps/SwitchView";
 import Method_SinceCpp11 	from './_codes/equal_range/since-cpp11.mdx';
 import Method_SinceCpp20 	from './_codes/equal_range/since-cpp20.mdx';
 
-# std::unordered_map equal_range() method
+# std::unordered_multimap equal_range() method
 
 <SwitchView content={{
     'since-cpp20': <Method_SinceCpp20 />,
@@ -37,7 +37,7 @@ import Method_SinceCpp20 	from './_codes/equal_range/since-cpp20.mdx';
 
 [`std::pair`](#) containing a pair of iterators defining the wanted range.
 
-If there are no such elements, past-the-end (see [`end()`](/docs/std/containers/unordered_map/end)) iterators are returned as both elements of the pair.
+If there are no such elements, past-the-end (see [`end()`](/docs/std/containers/unordered-multimap/end)) iterators are returned as both elements of the pair.
 
 ### Complexity
 
@@ -64,7 +64,7 @@ Feature testing macro: `__cpp_lib_generic_unordered_lookup` (for overload **(3-4
  
 int main()
 {  
-    std::unordered_map<int,char> map = {{1,'a'},{1,'b'},{1,'d'},{2,'b'}};
+    std::unordered_multimap<int,char> map = {{1,'a'},{1,'b'},{1,'d'},{2,'b'}};
     auto range = map.equal_range(1);
     for (auto it = range.first; it != range.second; ++it) {
         std::cout << it->first << ' ' << it->second << '\n';

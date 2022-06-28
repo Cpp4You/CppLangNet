@@ -1,7 +1,7 @@
 ---
-title:					unordered_map<...>::max_size() method
+title:					unordered_multimap<...>::max_size() method
 sidebar_label:			max_size()
-description:			unordered_map<...>::max_size() method C++ documentation
+description:			unordered_multimap<...>::max_size() method C++ documentation
 hide_title:				true
 tags:					[max_size, size, elements, amount]
 ---
@@ -14,7 +14,7 @@ import SwitchView				from "@site-comps/SwitchView";
 <!-- max_size() -->
 import Method_SinceCpp11 	from './_codes/max_size/since-cpp11.mdx';
 
-# std::unordered_map max_size() method
+# std::unordered_multimap max_size() method
 
 <SwitchView content={{
     'since-cpp11': <Method_SinceCpp11 />,
@@ -57,7 +57,7 @@ int main()
 {
     std::unordered_multimap<char, char> q;
     std::cout.imbue(std::locale("en_US.UTF-8"));    
-    std::cout << "Maximum size of a std::unordered_map is " << q.max_size() << '\n';
+    std::cout << "Maximum size of a std::unordered_multimap is " << q.max_size() << '\n';
 }
 ```
 
@@ -65,7 +65,7 @@ int main()
 <div>
 
 ```plaintext title="Possible output"
-Maximum size of a std::unordered_map is 768,614,336,404,564,650
+Maximum size of a std::unordered_multimap is 768,614,336,404,564,650
 ```
 
 </div>

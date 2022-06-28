@@ -1,9 +1,9 @@
 ---
-title:					unordered_map<...>::emplace() method
+title:					unordered_multimap<...>::emplace() method
 sidebar_label:			emplace()
-description:			unordered_map<...>::emplace() method C++ documentation
+description:			unordered_multimap<...>::emplace() method C++ documentation
 hide_title:				true
-tags:					[emplace, add, emplace, append, unordered_map]
+tags:					[emplace, add, emplace, append, unordered_multimap]
 ---
 
 import Columns				from "@site-comps/Columns";
@@ -14,7 +14,7 @@ import SwitchView				from "@site-comps/SwitchView";
 <!-- emplace() -->
 import Method_SinceCpp11 	from './_codes/emplace/since-cpp11.mdx';
 
-# std::unordered_map emplace() method
+# std::unordered_multimap emplace() method
 
 <SwitchView content={{
     'since-cpp11': <Method_SinceCpp11 />,
@@ -66,7 +66,7 @@ If an exception is thrown by any operation, this function has no effect (strong 
  
 int main()
 {
-    std::unordered_map<std::string, std::string> m;
+    std::unordered_multimap<std::string, std::string> m;
  
     // uses pair's move constructor
     m.emplace(std::make_pair(std::string("a"), std::string("a")));
