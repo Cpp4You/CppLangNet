@@ -1,0 +1,131 @@
+---
+title:					unordered_map<...>::swap() method
+sidebar_label:			swap()
+description:			unordered_map<...>::swap() method C++ documentation
+hide_title:				true
+tags:					[swap, exchange, unordered_map]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- swap() -->
+import Method_SinceCpp17 	from './_codes/swap/since-cpp17.mdx';
+import Method_UntilCpp17 	from './_codes/swap/until-cpp17.mdx';
+
+
+import NoexceptSpecification_SinceCpp17 from './_codes/swap/noexcept-specification/since-cpp17.mdx';
+import PropagateOnContainerChangNote_SineCpp11 from './_codes/swap/explanation/propagate-on-container-change-note-since-cpp11.mdx';
+
+# std::unordered_map swap() method
+
+<SwitchView content={{
+    'since-cpp17': <Method_SinceCpp17 />,
+    'until-cpp17': <Method_UntilCpp17 />
+    }} />
+
+Exchanges the contents of the container with those of `other`. Does not invoke any move, copy, or swap operations on individual elements.
+
+All iterators and references remain valid. 
+
+:::danger Invalidation
+The past-the-end iterator is invalidated.
+:::
+
+The `Hash` and `KeyEqual` objects must be [`Swappable`](/docs/named_req/Swappable), and they are exchanged using unqualified calls to non-member swap.
+
+<SwitchView content={{
+    'since-cpp11': <PropagateOnContainerChangNote_SineCpp11 />,
+    }} />
+
+### Parameters
+
+ - `other` - container to exchange the contents with
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant.
+
+### Exceptions
+
+<SwitchView content={{
+    'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
+    'until-cpp17': <>
+        Any exception thrown by the swap of the <code>Hash</code> or <code>KeyEqual</code> objects.
+    </>
+    }} />
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <string>
+#include <utility>
+#include <unordered_map>
+ 
+// print out a std::pair
+template <class Os, class U, class V>
+Os& operator<<(Os& os, const std::pair<U, V>& p) {
+    return os << p.first << ":" << p.second;
+}
+ 
+// print out a container
+template <class Os, class Co>
+Os& operator<<(Os& os, const Co& co) {
+    os << "{";
+    for (auto const& i : co) { os << ' ' << i; }
+    return os << " }\n";
+}
+ 
+int main()
+{
+    std::unordered_multimap<std::string, std::string>
+        m1 { {"γ", "gamma"}, {"β", "beta"}, {"α", "alpha"}, {"γ", "gamma"}, },
+        m2 { {"ε", "epsilon"}, {"δ", "delta"}, {"ε", "epsilon"} };
+ 
+    const auto& ref = *(m1.begin());
+    const auto iter = std::next(m1.cbegin());
+ 
+    std::cout << "──────── before swap ────────\n"
+              << "m1: " << m1 << "m2: " << m2 << "ref: " << ref
+              << "\niter: " << *iter << '\n';
+ 
+    m1.swap(m2);
+ 
+    std::cout << "──────── after swap ────────\n"
+              << "m1: " << m1 << "m2: " << m2 << "ref: " << ref
+              << "\niter: " << *iter << '\n';
+ 
+    // Note that every iterator referring to an element in one container before
+    // the swap refers to the same element in the other container after the swap.
+    // Same is true for references.
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+──────── before swap ────────
+m1: { α:alpha β:beta γ:gamma γ:gamma }
+m2: { δ:delta ε:epsilon ε:epsilon }
+ref: α:alpha
+iter: β:beta
+──────── after swap ────────
+m1: { δ:delta ε:epsilon ε:epsilon }
+m2: { α:alpha β:beta γ:gamma γ:gamma }
+ref: α:alpha
+iter: β:beta
+```
+
+</div>
+</Columns>
