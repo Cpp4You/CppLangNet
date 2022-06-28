@@ -1,0 +1,30 @@
+---
+title:				unordered_multimap<...> destructor
+sidebar_label:		Destructor
+description:		unordered_multimap<...> destructor C++ documentation
+hide_title:			true
+tags:				[unordered_multimap, destruction, destructor]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+
+<!-- destructors -->
+import Method_SinceCpp11 	from './_codes/destructors/since-cpp11.mdx';
+
+# std::unordered_multimap destructors
+
+<SwitchView content={{
+        'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+Destructs the `unordered_multimap`.
+
+The destructors of the elements are called and the used storage is deallocated. 
+
+:::note
+If the elements are pointers, the pointed-to objects are not destroyed.
+:::
+
+### Complexity
+
+Linear in the size of the `unordered_multimap`.
