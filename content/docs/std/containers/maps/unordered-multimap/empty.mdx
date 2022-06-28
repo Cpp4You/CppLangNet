@@ -1,0 +1,83 @@
+---
+title:					unordered_map<...>::empty() method
+sidebar_label:			empty()
+description:			unordered_map<...>::empty() method C++ documentation
+hide_title:				true
+tags:					[empty]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- empty() -->
+import Method_UntilCpp20 	from './_codes/empty/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/empty/since-cpp20.mdx';
+
+# std::unordered_map empty() method
+
+<SwitchView content={{
+        'since-cpp20': <Method_SinceCpp20 />,
+        'until-cpp20': <Method_UntilCpp20 />,
+    }} />
+
+Checks if the container has no elements, i.e. whether `begin() == end()`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+`true` if the container is empty, `false` otherwise.
+
+### Complexity
+
+Constant.
+
+### Why `[[nodiscard]]`?
+
+The `[[nodiscard]]` attribute is an attribute that invokes compiler warnings whenever
+a function has been called and it's result has been discarded.
+
+The reason behind the nodiscard being applied only to the `empty` method is that
+it's likely that the programmer might confuse the adjective `empty` (
+which would mean - **is this container empty?**) for the verb `empty` (which would mean - **please empty this container for me.**).
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <unordered_map>
+#include <iostream>
+#include <utility>
+ 
+int main()
+{
+    std::unordered_map<int, int> numbers;
+    std::cout << std::boolalpha;
+    std::cout << "Initially, numbers.empty(): " << numbers.empty() << '\n';
+ 
+    numbers.emplace(42, 13);
+    numbers.insert(std::make_pair(13317, 123));  
+    std::cout << "After adding elements, numbers.empty(): " << numbers.empty() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Initially, numbers.empty(): true
+After adding elements, numbers.empty(): false
+```
+
+</div>
+</Columns>
