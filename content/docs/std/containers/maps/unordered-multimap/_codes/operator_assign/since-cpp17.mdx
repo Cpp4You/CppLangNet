@@ -1,10 +1,10 @@
 ```cpp
 // (1) Non const version only
-unordered_map& operator=( const unordered_map& other );
+unordered_multimap& operator=( const unordered_multimap& other );
 
 // (2) Non const version only
-unordered_map& operator=( unordered_map&& other ) noexcept(/* see below */);
+unordered_multimap& operator=( unordered_multimap&& other ) noexcept(/* see below */);
 
 // (3) Non const version only
-unordered_map& operator=( std::initializer_list<value_type> ilist );
+unordered_multimap& operator=( std::initializer_list<value_type> ilist );
 ```
