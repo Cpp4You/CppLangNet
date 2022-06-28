@@ -197,7 +197,7 @@ module.exports = {
 								docsClass('std/containers/maps/map'),
 								docsClass('std/containers/maps/multimap'),
 								docsClass('std/containers/maps/unordered_map'),
-								docsClass('std/containers/maps/unordered_multimap'),
+								docsClass('std/containers/maps/unordered-multimap'),
 							]
 						},
 						{
