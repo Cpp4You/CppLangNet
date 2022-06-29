@@ -18,6 +18,7 @@ import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-ref
 <!-- operator= -->
 
 import NoexceptSpecification_SinceCpp17 	from './_codes/operator_assign/noexcept-specification/since-cpp17.mdx';
+import PropagateOnContainerChange_SinceCpp11 	from './_codes/operator_assign/explanation/propagate-on-container-change-note-since-cpp11.mdx';
 
 import Method_SinceCpp98 	from './_codes/operator_assign/since-cpp98.mdx';
 import Method_SinceCpp11 	from './_codes/operator_assign/since-cpp11.mdx';
@@ -32,6 +33,27 @@ import Method_SinceCpp17 	from './_codes/operator_assign/since-cpp17.mdx';
 	}}/>
 
 Replaces the contents of the containter.
+
+ - **(1)** **Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.
+    <SwitchView content={{
+		    'since-cpp11': <PropagateOnContainerChange_SinceCpp11 />,
+	    }}/>
+
+    If ``std::allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of `other`.
+    
+    If the allocator of `*this` after assignment would compare unequal to its old value, the old allocator is used to deallocate the memory,
+    then the new allocator is used to allocate it before copying the elements.
+    Otherwise, the memory owned by `*this` may be reused when possible. In any case, the elements originally belong to `*this` may be either destroyed or replaced by element-wise copy-assignment.
+
+ - **(2)** **Move** assignment operator. Replaces the contents with those of other using move semantics (i.e. the data in other is moved from other into this container).
+:::important
+`other` is in a valid but unspecified state afterwards.
+:::
+    If `std::allocator_traits<Alloc>::propagate_on_container_move_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of other.
+    If it is false and the allocators of `*this` and other do not compare equal, `*this` cannot take ownership of the memory owned by other and must move-assign each element individually,
+    allocating additional memory using its own allocator as needed.
+    
+    In any case, all elements originally belong to `*this` are either destroyed or replaced by element-wise move-assignment.
 
 ### Parameters
 
