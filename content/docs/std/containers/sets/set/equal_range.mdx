@@ -1,0 +1,108 @@
+---
+title:					set<...>::equal_range() method
+sidebar_label:			equal_range()
+description:			set<...>::equal_range() method C++ documentation
+hide_title:				true
+tags:					[equal_range, equal, range]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- equal_range() -->
+import Method_SinceCpp14 	from './_codes/equal_range/since-cpp14.mdx';
+import Method_UntilCpp14 	from './_codes/equal_range/until-cpp14.mdx';
+
+# std::set equal_range() method
+ 
+<SwitchView content={{
+    'since-cpp14': <Method_SinceCpp14 />,
+    'until-cpp14': <Method_UntilCpp14 />,
+    }} />
+
+Returns a range containing all elements with the given key in the container. 
+
+The range is defined by two iterators, one pointing to the **first element that is not less than key** and another pointing to the **first element greater than key**.
+Alternatively, the first iterator may be obtained with [`lower_bound()`](/docs/std/containers/sets/set/lower_bound), and the second with [`upper_bound()`](/docs/std/containers/sets/set/upper_bound).
+
+ - **(1-2)** Compares the keys to `key`.
+ - **(3-4)** Compares the keys to the value `x`.
+    This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type.
+    It allows calling this function without constructing an instance of `Key`.
+
+### Parameters
+
+ - `key` - key value to compare the elements to
+ - `x` - alternative value that can be compared to Key
+
+### Return value
+
+[`std::pair`](#) containing a pair of iterators defining the wanted range: the first pointing to the **first element that is not less than key**
+and the second pointing to the **first element greater than key**.
+
+If there are no such elements, past-the-end (see [`end()`](/docs/std/containers/set/end)) iterators are returned as both elements of the pair.
+
+### Complexity
+
+Logarithmic in the size of the container, **O(log(size()))**.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+Feature testing macro: `__cpp_lib_generic_unordered_lookup` (for overload **(3-4)**)
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <set>
+#include <iostream>
+ 
+template <typename I>
+void print_equal_range(I first, I lb, I ub, I last) {
+    for (I i{first}; i != lb; ++i)
+        std::cout << *i << " ";
+    std::cout << "[ ";
+    for (I i{lb}; i != ub; ++i)
+        std::cout << *i << " ";
+    std::cout << ") ";
+    for (I i{ub}; i != last; ++i)
+        std::cout << *i << " ";
+    std::cout << '\n';
+}
+ 
+int main()
+{
+    std::set<int> c{4, 3, 2, 1, 3, 3};
+    std::cout << "c = ";
+    print_equal_range(begin(c), begin(c), end(c), end(c));
+    for (int key{}; key != 6; ++key) {
+        std::cout << "key = " << key << "; equal range = ";
+        const auto [lb, ub] = c.equal_range(key);
+        print_equal_range(begin(c), lb, ub, end(c));
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+c = [ 1 2 3 4 )
+key = 0; equal range = [ ) 1 2 3 4
+key = 1; equal range = [ 1 ) 2 3 4
+key = 2; equal range = 1 [ 2 ) 3 4
+key = 3; equal range = 1 2 [ 3 ) 4
+key = 4; equal range = 1 2 3 [ 4 )
+key = 5; equal range = 1 2 3 4 [ )
+```
+
+</div>
+</Columns>
