@@ -97,7 +97,14 @@ module.exports = {
 					type: 'category',
 					label: 'Math',
 					items: [
-						'std/math/mathematical_functions',
+						{
+							type: 'category',
+							label: 'Mathematical Functions',
+							link: { type: 'doc', id: 'std/math/mathematical_functions/index' },
+							items: [
+								docsClassCat('Abs', 'std/math/mathematical_functions/abs', '', ['f:labs',]),
+							],
+						},
 						'std/math/mathematical_special_functions',
 						'std/math/numeric_algorithms',
 					]
