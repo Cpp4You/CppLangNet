@@ -1,7 +1,7 @@
 ---
-title:					map<...>::begin() method
+title:					set<...>::begin() method
 sidebar_label:			begin( )
-description:			map<...>::begin() C++ documentation
+description:			set<...>::begin() C++ documentation
 hide_title:				true
 tags:					[access, iterators, begin, get]
 ---
@@ -21,14 +21,14 @@ import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iter
 import Method_UntilCpp11 	from './_codes/begin/until-cpp11.mdx';
 import Method_SinceCpp11 	from './_codes/begin/since-cpp11.mdx';
 
-# std::map begi() method
+# std::set begin() method
 
 <SwitchView content={{
 		'since-cpp11': <Method_SinceCpp11 />,
 		'until-cpp11': <Method_UntilCpp11 />,
 	}}/>
 
-Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the map.
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the set.
 If the array is empty, the returned iterator will be equal to `end()`.
 
 ### Parameters
@@ -75,7 +75,7 @@ int main()
 <TabItem value="cbegin" label="cbegin" default>
 
 ```cpp
-#include <map>
+#include <set>
 
 int main()
 {
@@ -96,7 +96,7 @@ int main()
 <TabItem value="begin" label="begin" default>
 
 ```cpp
-#include <map>
+#include <set>
 
 int main()
 {
@@ -111,7 +111,7 @@ int main()
 <TabItem value="cbegin" label="cbegin" default>
 
 ```cpp
-#include <map>
+#include <set>
 
 int main()
 {
