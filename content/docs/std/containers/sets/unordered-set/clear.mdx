@@ -1,0 +1,88 @@
+---
+title:					unordered_set<...>::clear() method
+sidebar_label:			clear()
+description:			unordered_set<...>::clear() method C++ documentation
+hide_title:				true
+tags:					[clear, remove, delete, unordered_set]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- clear() -->
+import Method_SinceCpp11 	from './_codes/clear/since-cpp11.mdx';
+
+# std::unordered_set clear() method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+Erases all elements from the container. After this call, [`size()`](/docs/containers/unordered_set/size) returns zero.
+
+:::danger Invalidation
+Invalidates any **references, pointers, or iterators referring to contained elements**.
+
+May also invalidate **past-the-end iterators**.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Linear in the size of the container, i.e., the number of elements.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <unordered_set>
+ 
+int main()
+{
+    std::unordered_set<int> container{1, 2, 3};
+ 
+    auto print = [](const int& n) { std::cout << " " << n; };
+ 
+    std::cout << "Before clear:";
+    std::for_each(container.begin(), container.end(), print);
+    std::cout << "\nSize=" << container.size() << '\n';
+ 
+    std::cout << "Clear\n";
+    container.clear();
+ 
+    std::cout << "After clear:";
+    std::for_each(container.begin(), container.end(), print);
+    std::cout << "\nSize=" << container.size() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+Before clear: 1 2 3
+Size=3
+Clear
+After clear:
+Size=0
+```
+
+</div>
+</Columns>
