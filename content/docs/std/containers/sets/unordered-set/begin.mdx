@@ -1,0 +1,170 @@
+---
+title:					unordered_set<...>::begin() method
+sidebar_label:			begin( )
+description:			unordered_set<...>::begin() C++ documentation
+hide_title:				true
+tags:					[access, iterators, begin, get]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+import Columns					from "@site-comps/Columns";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- begin() -->
+
+import Method_SinceCpp11 	from './_codes/begin/since-cpp11.mdx';
+
+# std::unordered_set begin() method
+
+<SwitchView content={{
+		'since-cpp11': <Method_SinceCpp11 />,
+	}}/>
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the `unordered_set`.
+If the array is empty, the returned iterator will be equal to `end()`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Iterator to the first element.
+
+### Exceptions
+
+**(none)**
+
+### Complexity
+
+Constant.
+
+### Difference between begin and cbegin
+
+For a const container `c`, begin and cbegin are the same - `c.begin() == c.cbegin()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <unordered_set>
+
+int main()
+{
+    std::unordered_set<int> unordered_set = {1, 2, 3, 4, 5};
+    auto it = unordered_set.begin(); // Type: std::unordered_set<int>::iterator
+    // highlight-next-line
+    *it = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <unordered_set>
+
+int main()
+{
+    std::unordered_set<int> unordered_set = {1, 2, 3, 4, 5};
+    auto it = unordered_set.cbegin(); // Type: std::unordered_set<int>::const_iterator
+    // highlight-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <unordered_set>
+
+int main()
+{
+    const std::unordered_set<int> unordered_set = {1, 2, 3, 4, 5};
+    auto it = unordered_set.begin(); // Type: std::unordered_set<int>::const_iterator
+    // highlight-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <unordered_set>
+
+int main()
+{
+    const std::unordered_set<int> unordered_set = {1, 2, 3, 4, 5};
+    auto it = unordered_set.cbegin(); // Type: std::unordered_set<int>::const_iterator
+    // highlight-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <unordered_set>
+ 
+struct Point { double x, y; };
+ 
+int main() {
+    Point pts[3] = { {1, 0}, {2, 0}, {3, 0} };
+ 
+    //points is a set containing the addresses of points
+    std::unordered_set<Point *> points = { pts, pts + 1, pts + 2 };
+ 
+    //Change each y-coordinate of (i, 0) from 0 into i^2 and print the point
+    for(auto iter = points.begin(); iter != points.end(); ++iter){
+        (*iter)->y = ((*iter)->x) * ((*iter)->x); //iter is a pointer-to-Point*
+        std::cout << "(" << (*iter)->x << ", " << (*iter)->y << ") ";
+    }
+    std::cout << '\n';
+ 
+    //Now using the range-based for loop, we increase each y-coordinate by 10
+    for(Point * i : points) {
+        i->y += 10;
+        std::cout << "(" << i->x << ", " << i->y << ") ";
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+(3, 9) (1, 1) (2, 4) 
+(3, 19) (1, 11) (2, 14)
+```
+
+</div>
+</Columns>
