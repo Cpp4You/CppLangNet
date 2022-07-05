@@ -1,0 +1,91 @@
+---
+title:					unordered_set<...>::count() method
+sidebar_label:			count()
+description:			unordered_set<...>::count() method C++ documentation
+hide_title:				true
+tags:					[count, contains, existence, exists]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- count() -->
+import Method_SinceCpp11 	from './_codes/count/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/count/since-cpp20.mdx';
+
+# std::unordered_set count() method
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+
+ - **(1)** Returns the number of elements with key that compares equal to the specified argument `key`, which is either **1** or **0** since this container does not allow duplicates.
+ - **(2)** Returns the number of elements with key that compares equivalent to the specified argument `x`.
+    This overload participates in overload resolution only if `Hash::is_transparent` and `KeyEqual::is_transparent` are valid and each denotes a type.
+    This assumes that such `Hash` is callable with both `K` and `Key` type, and that the `KeyEqual` is transparent, which, together, allows calling this function without constructing an instance of `Key`.
+
+### Parameters
+
+ - `key` - key value of the elements to count
+ - `x` - a value of any type that can be transparently compared with a key
+
+### Return value
+
+ - **(1)** Number of elements with key `key`, that is either **1** or **0**.
+ - **(2)** Number of elements with key that compares equivalent to `x`.
+
+### Complexity
+
+Average case: **constant**
+
+Worst case: **linear in size**
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+Feature testing macro: `__cpp_lib_generic_unordered_lookup` (for overload **(2)**)
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <unordered_set>
+ 
+int main() {
+    std::unordered_set set{2, 7, 1, 8, 2, 8, 1, 8, 2, 8};
+ 
+    std::cout << "The set is: ";
+    for (int e: set) { std::cout << e << ' '; }
+ 
+    const auto [min, max] = std::ranges::minmax(set);
+ 
+    std::cout << "\nNumbers from " << min << " to " << max << " that are in the set: ";
+    for (int i{min}; i <= max; ++i) {
+        if (set.count(i) == 1) {
+            std::cout << i << ' ';
+        }
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+The set is: 8 1 7 2
+Numbers from 1 to 8 that are in the set: 1 2 7 8
+```
+
+</div>
+</Columns>
