@@ -1,11 +1,11 @@
 ```cpp
 // (1) Non const version only
 template<class C2>
-void merge( std::map<Key, T, C2, Allocator>& source );
+void merge( std::multimap<Key, T, C2, Allocator>& source );
 
 // (2) Non const version only
 template<class C2>
-void merge( std::map<Key, T, C2, Allocator>&& source );
+void merge( std::multimap<Key, T, C2, Allocator>&& source );
 
 // (3) Non const version only
 template<class C2>

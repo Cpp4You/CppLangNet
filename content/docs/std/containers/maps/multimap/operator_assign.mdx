@@ -23,7 +23,7 @@ import Method_SinceCpp98 	from './_codes/operator_assign/since-cpp98.mdx';
 import Method_SinceCpp11 	from './_codes/operator_assign/since-cpp11.mdx';
 import Method_SinceCpp17 	from './_codes/operator_assign/since-cpp17.mdx';
 
-# std::map operator=
+# std::multimap operator=
 
 <SwitchView content={{
 		'since-cpp17': <Method_SinceCpp17 />,
@@ -83,7 +83,7 @@ void print(auto const comment, auto const& container)
  
 int main()
 {
-    std::map<int, int> x { {1,1}, {2,2}, {3,3} }, y, z;
+    std::multimap<int, int> x { {1,1}, {2,2}, {3,3} }, y, z;
     const auto w = { std::pair<const int, int>{4,4}, {5,5}, {6,6}, {7,7} };
  
     std::cout << "Initially:\n";
