@@ -82,7 +82,7 @@ All the customizing code for Emacs will be written in `init.el` file.
 
 :::important Note
 Every time when it is mentioned here to save the file, it is meant to execute
-`C-x``C-s` (`Control + x`, then `Control + s`) keybind and evry time when it is
+`C-x``C-s` (`Control + x`, then `Control + s`) keybind and every time when it is
 mentioned here to execute the latest command/code from Emacs, it is meant to
 execute `C-x``C-e` (`Control + x`, then `Control + e`) with cursor at the very end of the command/code.
 :::
@@ -163,6 +163,7 @@ M-x package-list-packages RET
        src="/img/tutorials/tools/package-list.jpg"
     />
 
+
 ### Setting up `use-package`
 
 Add following code in `init.el` and execute it.
@@ -171,3 +172,147 @@ Add following code in `init.el` and execute it.
   (package-refresh-contents)
   (package-install 'use-package))
 ```
+Now we will be using `use-package` to download and install any other package for emacs. `use-package`
+is a very popular package to organize the Emacs configuration and load the installed packages efficiently.
+
+
+Copy the following code inside the `inti.el` file for downloading and installing the required packages for
+C++ development inside Emacs.
+```lisp title="init.el"
+(use-package lsp-mode
+  :ensure t
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
+  :config (setq lsp-completion-enable-additional-text-edit nil))
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :ensure t)
+(use-package ccls
+  :ensure t
+  :config
+  (setq ccls-executable "ccls")
+  (setq lsp-prefer-flymake nil)
+  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  :hook ((c-mode c++-mode objc-mode) .
+         (lambda () (require 'ccls) (lsp))))
+(use-package flycheck
+  :ensure t)
+(use-package yasnippet
+  :ensure t
+  :config (yas-global-mode))
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+(use-package helm-lsp
+  :ensure t)
+(use-package helm
+  :ensure t
+  :config (helm-mode))
+(use-package lsp-treemacs
+  :ensure t)
+
+;;; This will enable emacs to compile a simple cpp single file without any makefile by just pressing [f9] key
+(defun code-compile()
+  (interactive)
+  (unless (file-exists-p "Makefile")
+    (set (make-local-variable 'compile-command)
+	 (let ((file (file-name-nondirectory buffer-file-name)))
+	   (format "%s -o %s %s"
+		   (if (equal (file-name-extension file) "cpp") "g++" "gcc")
+		   (file-name-sans-extension file)
+		   file)))
+    (compile compile-command)))
+(global-set-key [f9] 'code-compile)
+```
+For properly identing the whole file hit `C-x h`, this will select whole file and then hit `TAB`.
+Now save the file and exit the emacs (`C-x C-c`).
+
+
+Now make a `.cpp` file (like `a.cpp` but not in `.emacs.d/` directory). I recommend to create a directory
+dedicated to programming only and there create the file. First on opening the Emacs, many packages will get
+downloaded and get installed which can take some time. After that, `lsp-mode` will seek the language server
+for cpp development and since this is the first time startup of the emacs after `lsp-mode` installation,
+it will ask to download the required language server for cpp, that is, `clangd`. Below is the snapshot of
+Emacs asking to download `clangd` server.
+
+<Image center
+       alt="Prompt for downloading clangd inside Emacs"
+       src="/img/tutorials/tools/emacs-clangd-server.jpg"
+    />
+
+
+After downloading `clangd` server, run treemacs command by entering minibuffer (`M-x treemacs`)
+(`M-x` means `Alt + x` or `ESC + x`).
+
+When the command is run from minibuffer, output would be like this:-
+
+**Output:**
+<Image center
+       alt="Before initializing treemacs"
+       src="/img/tutorials/tools/before-treemacs-init.jpg"
+    />
+
+
+Select the required directory from the provided options. In my case, my directory name is `Coding/` which
+contains `Java/` and `SFML/` as sub directories. After selecting the rightful directory, output would be
+like this:-
+
+**Output:**
+<Image center
+       alt="After initializing treemacs"
+       src="/img/tutorials/tools/after-treemacs-init.jpg"
+    />
+
+
+Now let us make our first program by selecting the `a.cpp` buffer
+```cpp title="a.cpp"
+#include <iostream>
+
+int main() {
+	std::cout << "Wassup World\n";
+	
+	return 0;
+}
+```
+
+We had already defined a function in our `init.el` file for compiling a simple cpp file by pressing `[f9]`
+key (See function `code-compile()` in the last of `init.el` file). So by pressing `[f9]` key, this
+simple code will get compiled without exiting emacs.
+
+**Output:**
+<Image center
+       alt="Compiling Code by hitting [f9] key"
+       src="/img/tutorials/tools/emacs-compile.jpg"
+    />
+
+
+We can run the program inside the Emacs from Emacs shell, also known as `eshell`.
+Hit `C-x o` to change buffer, then hit `C-x 2` to split the current buffer into two buffers
+and then again hit `C-x o` to change buffer. Changing the buffer can also be done by selecting 
+the buffer by mouse until you are using the GUI version of Emacs. Now for starting `eshell`, run
+`eshell` command from minibuffer (`M-x eshell`). Once the `eshell` is opened run your executable
+file.
+
+**Output:**
+<Image center
+       alt="Compiling Code by hitting [f9] key"
+       src="/img/tutorials/tools/emacs-eshell.jpg"
+    />
+
+
+This is the basic guide for setting up Emacs for CPP development. For enabling and discovering
+more features of `lsp-mode` refer [here](https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/).
+
+
+## Customizing Emacs Themes
+
+Emacs provide variety of built-in themes. User can see and enable the theme which suites them the most.
+For viewing the built-in themes, run command `M-x customize-themes` from minibuffer and select the required
+theme. Emacs used in the snapshots provided in this guide uses material theme which can be downloaded by
+using `use-package`.
+```lisp title="init.el"
+(use-package material-theme
+  :ensure t)
+(load-theme 'material t)
+```
+
+Restart the Emacs and the material theme will be loaded.
