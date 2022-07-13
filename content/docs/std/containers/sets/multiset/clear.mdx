@@ -1,0 +1,85 @@
+---
+title:					multiset<...>::clear() method
+sidebar_label:			clear( )
+description:			multiset<...>::clear() method C++ documentation
+hide_title:				true
+tags:					[multiset, clear, empty, erase, remove]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- clear() -->
+import Method_UntilCpp11 	from './_codes/clear/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/clear/since-cpp11.mdx';
+
+# std::multiset clear() method
+
+<SwitchView content={{
+        'since-cpp11': <Method_SinceCpp11 />,
+        'until-cpp11': <Method_UntilCpp11 />,
+    }}/>
+
+Erases all elements from the container. After this call, `size()` returns zero.
+
+:::danger Invalidation
+Invalidates any **references**, **pointers**, or **iterators** referring to contained elements.
+Any **past-the-end iterator** remains valid.
+:::
+
+### Parameters
+
+(none)
+
+### Return value
+
+(none)
+
+### Complexity
+
+Linear in the size of the container, i.e., the number of elements.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <algorithm>
+#include <iostream>
+#include <set>
+ 
+int main()
+{
+    std::multiset<int> container{1, 2, 3};
+ 
+    auto print = [](const int& n) { std::cout << " " << n; };
+ 
+    std::cout << "Before clear:";
+    std::for_each(container.begin(), container.end(), print);
+    std::cout << "\nSize=" << container.size() << '\n';
+ 
+    std::cout << "Clear\n";
+    container.clear();
+ 
+    std::cout << "After clear:";
+    std::for_each(container.begin(), container.end(), print);
+    std::cout << "\nSize=" << container.size() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Before clear: 1 2 3
+Size=3
+Clear
+After clear:
+Size=0
+```
+
+</div>
+</Columns>
