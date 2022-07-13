@@ -1,0 +1,102 @@
+---
+title:					multiset<...>::value_comp() method
+sidebar_label:			value_comp( )
+description:			multiset<...>::value_comp() method C++ documentation
+hide_title:				true
+tags:					[compare, value_comp, value, comp]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- value_comp() -->
+import Method_SinceCpp98 	from './_codes/value_comp/since-cpp98.mdx';
+
+import ValueComp_Constructor 	from './_codes/value_comp/other/value-comp-constructor.mdx';
+import ValueComp_CallOperator 	from './_codes/value_comp/other/value-comp-call-operator.mdx';
+
+# std::multiset value_comp() method
+
+<SwitchView content={{
+    'since-cpp98': <Method_SinceCpp98 />,
+    }} />
+
+Returns a function object that compares objects of type `std::multiset::value_type` by comparing the first components of the pairs, same as [`key_comp()`](/docs/std/containers/sets/multiset/key_comp).
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+The value comparison function object.
+
+### Complexity
+
+Constant.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+Feature testing macro: `__cpp_lib_generic_associative_lookup` (for overloads **(3)** and **(4)**).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cassert>
+#include <iostream>
+#include <set>
+ 
+// Example module 97 key compare function
+struct ModCmp {
+    bool operator()(const int lhs, const int rhs) const
+    {
+        return (lhs % 97) < (rhs % 97);
+    }
+};
+ 
+int main()
+{
+    std::multiset<int, ModCmp> cont{1, 2, 3, 4, 5};
+ 
+    // Same behaviour as key_comp()
+    auto comp_func = cont.value_comp();
+ 
+    const int val = 100;
+ 
+    for (int key : cont) {
+        bool before = comp_func(key, val);
+        bool after = comp_func(val, key);
+        if (!before && !after)
+            std::cout << key << " equivalent to key " << val << '\n';
+        else if (before)
+            std::cout << key << " goes before key " << val << '\n';
+        else if (after)
+            std::cout << key << " goes after key " << val << '\n';
+        else
+            assert(0); // Cannot happen
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+1 goes before key 100
+2 goes before key 100
+3 equivalent to key 100
+4 goes after key 100
+5 goes after key 100
+```
+
+</div>
+</Columns>
