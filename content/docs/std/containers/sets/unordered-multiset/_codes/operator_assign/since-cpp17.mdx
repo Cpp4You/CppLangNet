@@ -1,0 +1,10 @@
+```cpp
+// (1) Non const version only
+unordered_multiset& operator=( const unordered_multiset& other );
+
+// (2) Non const version only
+unordered_multiset& operator=( unordered_multiset&& other ) noexcept(/* see below */);
+
+// (3) Non const version only
+unordered_multiset& operator=( std::initializer_list<value_type> ilist );
+```
