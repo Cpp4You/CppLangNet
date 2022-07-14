@@ -84,7 +84,7 @@ int main()
 {
     std::multiset<int> multiset = { 1, 2, 3 };
     auto it = multiset.crbegin(); // Type: std::multiset<int>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -105,7 +105,7 @@ int main()
 {
     const std::multiset<int> multiset = { 1, 2, 3 };
     auto it = multiset.rbegin(); // Type: std::multiset<int>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -120,7 +120,7 @@ int main()
 {
     const std::multiset<int> multiset = { 1, 2, 3 };
     auto it = multiset.crbegin(); // Type: std::multiset<int>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```

@@ -79,7 +79,7 @@ int main()
 {
     std::multiset<int> multiset = { 1, 2, 3 };
     auto it = multiset.cbegin(); // Type: std::multiset<int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -100,7 +100,7 @@ int main()
 {
     const std::multiset<int> multiset = { 1, 2, 3 };
     auto it = multiset.begin(); // Type: std::multiset<int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -115,7 +115,7 @@ int main()
 {
     const std::multiset<int> multiset = { 1, 2, 3 };
     auto it = multiset.cbegin(); // Type: std::multiset<int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
