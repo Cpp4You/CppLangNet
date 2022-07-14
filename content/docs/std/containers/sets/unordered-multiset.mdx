@@ -21,21 +21,6 @@ import OverviewSimplifiedRegular from "./unordered-multiset/_codes/main-page/ove
 import OverviewDetailedRegular from "./unordered-multiset/_codes/main-page/overview/overview-detailed-regular.mdx";
 import OverviewDetailedPmr from "./unordered-multiset/_codes/main-page/overview/overview-detailed-pmr.mdx";
 
-import TopExampleCreateCpp17 from "./unordered-multiset/_codes/main-page/examples/top/create-cpp17.mdx"
-import TopExampleCreateUntilCpp17 from "./unordered-multiset/_codes/main-page/examples/top/create-until-cpp17.mdx"
-import TopExampleCreateFromRange from "./unordered-multiset/_codes/main-page/examples/top/create-from-range.mdx"
-
-import TopExampleInsertOrdinary from "./unordered-multiset/_codes/main-page/examples/top/insert-ordinary.mdx"
-import TopExampleInsertInitList from "./unordered-multiset/_codes/main-page/examples/top/insert-many-at-once.mdx"
-import TopExampleInsertFromRange from "./unordered-multiset/_codes/main-page/examples/top/insert-from-range.mdx"
-
-import TopExampleSearchFind from "./unordered-multiset/_codes/main-page/examples/top/search-find.mdx"
-import TopExampleSearchCount from "./unordered-multiset/_codes/main-page/examples/top/search-count.mdx"
-import TopExampleSearchContains from "./unordered-multiset/_codes/main-page/examples/top/search-contains.mdx"
-
-<!-- Advanced Examples -->
-import ExampleAdvancedStudents from "./unordered-multiset/_codes/main-page/examples/further/students-hash-comparators.mdx"
-
 <!-- Deduction Guides -->
 import DeductionGuides from "./unordered-multiset/_codes/main-page/deduction-guides.mdx"
 
@@ -68,61 +53,14 @@ import DeductionGuides from "./unordered-multiset/_codes/main-page/deduction-gui
 </TabItem>
 </Tabs>
 
-The `std::unordered_multiset` is an associative container for storing unique objects.
-### Example usage
-
-The examples in this section are very simple ones. Navigate to [examples section at the bottom](#more-examples) for more.
-
-<Tabs>
-<TabItem value="create" label="Create" default>
-<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
-	<SwitchView content={
-			{
-				"cpp17": <TopExampleCreateCpp17 />,
-				"until-cpp17": <TopExampleCreateUntilCpp17 />,
-				"From range": <TopExampleCreateFromRange />
-			}
-	}/>
-
-:::caution Order of elements
-It's important to notice, that although there's an arbitrary order chosen in the examples' comments,
-the elements inside remain unordered (as the name of the container suggests), which means we aren't guaranteed
-to have any particular order while iterating over the unordered set.
-:::
-
-</div>
-</TabItem>
-
-<TabItem value="insert" label="Insert">
-<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
-	<SwitchView content={
-		{
-			"Ordinary": <TopExampleInsertOrdinary />,
-			"Many at once": <TopExampleInsertInitList />,
-			"From range": <TopExampleInsertFromRange />
-		}
-	}/>
-</div>
-</TabItem>
-
-<TabItem value="search" label="Search">
-<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
-	<SwitchView content={
-		{
-			"Contains (since C++20)": <TopExampleSearchContains />,
-			"Count": <TopExampleSearchCount />,
-			"Find": <TopExampleSearchFind />
-		}
-	}/>
-</div>
-</TabItem>
-</Tabs>
+The `std::unordered_multiset` is an unordered associative container for storing unique objects.
 
 ### Technical details
 
 <details>
 <summary>Technical definition of an unordered_multiset</summary>
 <div>
+
 `std::unordered_multiset` is an associative container that contains a set of unique objects of type `Key`.
 
 Search, insertion, and removal have average constant-time complexity.
@@ -135,6 +73,7 @@ Container elements may not be modified (even by non const iterators) since modif
 
 `std::unordered_multiset` meets the requirements of [`Container`](/docs/named_req/Container), [`AllocatorAwareContainer`](/docs/named_req/AllocatorAwareContainer),
 [`UnorderedAssociativeContainer`](/docs/named_req/UnorderedAssociativeContainer).
+
 </div>
 </details>
 
@@ -372,28 +311,3 @@ This means that any overloaded functions/specializations differing only in the i
 	<DeductionGuides />
 </div>
 </details>
-
-## More examples
-
-### Creating a custom hash and comparator.
-
-<div>
-<CustomCodeBlock withTitle>
-	<ExampleAdvancedStudents />
-</CustomCodeBlock >
-</div>
-<div>
-
-```plaintext title="Result"
-Student: Jacob Jones, 19 years old.
-Student: Philip Smith, 19 years old.
-Student: Philip Davies, 17 years old.
-```
-</div>
-
-:::note Custom hashes
-Note that although we've added four students into the set, we only see information about three of them being displayed.
-This is because there are two students with exactly the same data. When the hashes of both of them are being compared, they turn out to be the same,
-which then leads to a comparision of the two objects themselves (using `operator==`, hence the it's presence inside `student`). If the comparision tests positive,
-the new object (that compared the same as the one already inserted) is not being added.
-:::
