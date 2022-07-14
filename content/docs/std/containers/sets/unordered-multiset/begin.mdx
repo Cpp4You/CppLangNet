@@ -1,0 +1,169 @@
+---
+title:					unordered_multiset<...>::begin() method
+sidebar_label:			begin( )
+description:			unordered_multiset<...>::begin() method C++ documentation
+hide_title:				true
+tags:					[access, unordered_multiset, iterator, begin, front]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- begin() -->
+import Method_SinceCpp11 	from './_codes/begin/since-cpp11.mdx';
+
+# std::unordered_multiset begin()/cbegin() method
+
+<SwitchView content={{
+        'since-cpp11': <Method_SinceCpp11 />,
+    }}/>
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the vector.
+If the array is empty, the returned iterator will be equal to `end()`.
+
+### Parameters
+
+(none)
+
+### Return value
+
+Iterator to the first element.
+
+### Complexity
+
+Constant.
+
+### Difference between begin and cbegin
+
+For a const container `c`, begin and cbegin are the same - `c.begin() == c.cbegin()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <unordered_set>
+#include <string>
+
+int main()
+{
+	std::unordered_multiset<std::string> multiset = { "abc", "Hello World!", "abc", "asd" };
+    auto it = multiset.begin(); // Type: std::unordered_multiset<std::string>::iterator
+    // highlight-next-line
+    it->second = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <unordered_set>
+#include <string>
+
+int main()
+{
+	std::unordered_multiset<std::string> multiset = { "abc", "Hello World!", "abc", "asd" };
+			{ "key1", 1 },
+			{ "key2", 2 },
+			{ "key3", 3 },
+		};
+    auto it = multiset.cbegin(); // Type: std::unordered_multiset<std::string>::const_iterator    
+    // highlight-next-line
+    it->second = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <unordered_set>
+#include <string>
+
+int main()
+{
+	std::unordered_multiset<std::string> multiset = { "abc", "Hello World!", "abc", "asd" };
+    auto it = multiset.begin(); // Type: std::unordered_multiset<std::string>::const_iterator
+    // highlight-next-line
+    it->second = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <unordered_set>
+#include <string>
+
+int main()
+{
+	std::unordered_multiset<std::string> multiset = { "abc", "Hello World!", "abc", "asd" };
+    auto it = multiset.cbegin(); // Type: std::unordered_multiset<std::string>::const_iterator
+    // highlight-next-line
+    it->second = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <iterator>
+#include <string>
+#include <unordered_set>
+ 
+int main() {
+    const std::unordered_multiset<std::string> words = {
+        "some", "words", "to", "count",
+        "count", "these", "words"
+    };
+ 
+    for (auto it = words.begin(); it != words.end(); ) {
+        auto cnt = words.count(*it);
+        std::cout << *it << ":\t" << cnt << '\n';
+        std::advance(it, cnt); // all cnt elements have equivalent keys
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+some:   1
+words:  2
+to:     1
+count:  2
+these:  1
+```
+
+</div>
+</Columns>
