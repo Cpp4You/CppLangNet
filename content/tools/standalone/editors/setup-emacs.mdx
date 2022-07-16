@@ -88,53 +88,6 @@ execute `C-x``C-e` (`Control + x`, then `Control + e`) with cursor at the very e
 :::
 
 
-## General Customization of Emacs
-
-:::important Note
-This section is completely ***optional***. This section doesn't contribute towards
-C++ development. In this section, we will just configuring looks of Emacs.
-:::
-
-
-When emacs is opened, it generally start with a startup message. If you want to disable it,
-enter this in your `init.el` file
-```lisp title="init.el"
-(setq inhibit-startup-message t)
-```
-
-
-For making scroll bar invisible
-```lisp title="init.el"
-(toggle-scroll-bar -1)
-```
-Save the file and execute this line.
-For making it visibe again, just replace `-1` with `t`.
-
-
-For making menu bar invisible
-```lisp title="init.el"
-(menu-bar-mode -1)
-```
-Save the file and execute this line.
-For making it visibe again, just replace `-1` with `t`.
-
-
-For making tool bar invisible
-```lisp title="init.el"
-(tool-bar-mode -1)
-```
-Save the file and execute this line.
-For making it visibe again, just replace `-1` with `t`.
-
-
-For making line number visible in front of every new line
-```lisp title="init.el"
-(global-linum-mode t)
-```
-Save the file and execute this line.
-For making it invisibe again, just replace `t` with `-1`.
-
-
 ## Setting up MELPA and `use-package`
 
 ### Setting up MELPA
@@ -303,9 +256,54 @@ This is the basic guide for setting up Emacs for CPP development. For enabling a
 more features of `lsp-mode` refer [here](https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/).
 
 
-## Customizing Emacs Themes
+## General Customization of Emacs
 
-Emacs provide variety of built-in themes. User can see and enable the theme which suites them the most.
+:::important Note
+This section is completely ***optional***. This section doesn't contribute towards
+C++ development. In this section, we will just configuring looks of Emacs.
+:::
+
+
+When emacs is opened, it generally start with a startup message. If you want to disable it,
+enter this in your `init.el` file
+```lisp title="init.el"
+(setq inhibit-startup-message t)
+```
+
+
+For making scroll bar invisible
+```lisp title="init.el"
+(toggle-scroll-bar -1)
+```
+Save the file and execute this line.
+For making it visibe again, just replace `-1` with `t`.
+
+
+For making menu bar invisible
+```lisp title="init.el"
+(menu-bar-mode -1)
+```
+Save the file and execute this line.
+For making it visibe again, just replace `-1` with `t`.
+
+
+For making tool bar invisible
+```lisp title="init.el"
+(tool-bar-mode -1)
+```
+Save the file and execute this line.
+For making it visibe again, just replace `-1` with `t`.
+
+
+For making line number visible in front of every new line
+```lisp title="init.el"
+(global-linum-mode t)
+```
+Save the file and execute this line.
+For making it invisibe again, just replace `t` with `-1`.
+
+
+Emacs also provides variety of built-in themes. User can see and enable the theme which suites them the most.
 For viewing the built-in themes, run command `M-x customize-themes` from minibuffer and select the required
 theme. Emacs used in the snapshots provided in this guide uses material theme which can be downloaded by
 using `use-package`.
