@@ -79,7 +79,7 @@ If an exception is thrown by any operation, this function has no effect (strong 
 Unlike [`insert`](/docs/std/containers/maps/map/insert] or [`emplace`](/docs/std/containers/maps/map/emplace),
 these functions do not move from rvalue arguments if the insertion does not happen, which makes it easy to manipulate maps whose values are move-only types,
 such as `std::map<std::string, std::unique_ptr<foo>>`.
-In addition, `try_emplace` treats the key and the arguments to the `mapped_type` separately, unlike emplace, which requires the arguments to construct a value_type (that is, a `std::pair`)
+In addition, [`try_emplace`](#) treats the key and the arguments to the `mapped_type` separately, unlike emplace, which requires the arguments to construct a value_type (that is, a [`std::pair`](#))
 
 Feature testing macro: `__cpp_lib_map_try_emplace` 
 

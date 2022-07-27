@@ -1,4 +1,4 @@
----
+#--
 title:					map<...>::operator=
 sidebar_label:			operator=
 description:			map<...>::operator= C++ documentation
@@ -75,7 +75,7 @@ A reference to the container, `*this`.
 
  - **(1)** Linear in the size of `*this` and `other`.
  - **(2)** Linear in the size of `*this` unless the allocators do not compare equal and do not propagate, in which case linear in the size of `*this` and `other`.
- - **(3)** **O(NlogN)** in general, where **N** is `size() + ilist.size()`. Linear if ilist is sorted with respect to `value_comp()`.
+ - **(3)** **O(NlogN)** in general, where **N** is `size() + ilist.size()`. Linear if ilist is sorted with respect to [`value_comp()`](/docs/std/containers/maps/map/value_comp).
 
 ### Notes
 After container move assignment (overload **(2)**), unless element-wise move assignment is forced by incompatible allocators, references, pointers,
