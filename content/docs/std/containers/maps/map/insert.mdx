@@ -76,7 +76,7 @@ Inserts element(s) into the container, if the container doesn't already contain 
  - **(4-6)** - Returns an iterator to the inserted element, or to the element that prevented the insertion.
  - **(7-8)** - **(none)**
  - **(9)** - Returns an `insert_return_type` with the members initialized as follows:
-    - If `nh` is empty, `inserted` is `false`, `position` is `end()`, and `node` is `empty`.
+    - If `nh` is empty, `inserted` is `false`, `position` is [`end()`](/docs/std/containers/maps/map/end), and `node` is `empty`.
     - Otherwise if the insertion took place, `inserted` is `true`, `position` points to the inserted element, and `node` is `empty`.
     - If the insertion failed, `inserted` is `false`, `node` has the previous value of nh, and `position` points to an element with a key equivalent to `nh.key()`.
  = **(10)** - End iterator if `nh` was empty, iterator pointing to the inserted element if insertion took place, and iterator pointing to an element with a key equivalent to `nh.key()` if it failed.
@@ -100,8 +100,8 @@ Inserts element(s) into the container, if the container doesn't already contain 
 <ImproveSection />
 
 ### Notes 
-The hinted insert **(4-6)** does not return a boolean in order to be signature-compatible with positional insert on sequential containers, such as [`std::vector::insert`]. 
-This makes it possible to create generic inserters such as `std::inserter`. One way to check success of a hinted insert is to compare `size()` before and after. 
+The hinted insert **(4-6)** does not return a boolean in order to be signature-compatible with positional insert on sequential containers, such as [`std::vector::insert`](/docs/std/containers/arrays/vector/insert). 
+This makes it possible to create generic inserters such as [`std::inserter`](#). One way to check success of a hinted insert is to compare [`size()`](/docs/std/containers/maps/map/size) before and after. 
 
 ### Example
 
