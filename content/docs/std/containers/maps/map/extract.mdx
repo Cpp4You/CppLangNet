@@ -53,11 +53,10 @@ A `node handle` that owns the extracted element, or empty `node handle` in case 
  - **(1)** - Throws nothing.
  - **(2-3)** - Any exceptions thrown by the `Compare` object.
 
-### Exceptions
+### Complexity
 
- - **(1)** - amortized constant
- - **(2,3)** - `log(a.size())`
-
+ - **(1)** Amortized constant.
+ - **(2,3)** Logarithmic in the size of the container - **O(log size())**.
 ### Notes
 
 extract is the only way to change a key of a map element without reallocation:

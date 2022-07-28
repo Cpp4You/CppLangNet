@@ -42,7 +42,8 @@ If the insertion failed because the element already exists, returns an iterator 
 
 ### Complexity
 
-Logarithmic in the size of the container in general, but amortized constant if the new element is inserted just before `hint`.
+Logarithmic in the size of the container in general - **O(log size())**.  
+Amortized constant if the new element is inserted just before `hint` - **O(1)**.
 
 ### Exceptions
 
