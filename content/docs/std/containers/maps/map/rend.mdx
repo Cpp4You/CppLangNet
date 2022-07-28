@@ -92,7 +92,7 @@ int main()
 {
     std::map<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
     auto it = arr.crend(); // Type: std::map<int, float>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
 ```
@@ -113,7 +113,7 @@ int main()
 {
     const std::map<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
     auto it = arr.rend(); // Type: std::map<int, float>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
 ```
@@ -128,7 +128,7 @@ int main()
 {
     const std::map<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
     auto it = arr.crend(); // Type: std::map<int, float>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
 ```
