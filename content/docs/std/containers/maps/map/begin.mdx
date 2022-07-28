@@ -81,7 +81,7 @@ int main()
 {
     std::map<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
     auto it = map.cbegin(); // Type: std::map<int, float>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -102,7 +102,7 @@ int main()
 {
     const std::map<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
     auto it = map.begin(); // Type: std::map<int, float>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -117,7 +117,7 @@ int main()
 {
     const std::map<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
     auto it = map.cbegin(); // Type: std::map<int, float>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```

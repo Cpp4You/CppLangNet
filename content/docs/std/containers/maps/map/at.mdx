@@ -61,7 +61,8 @@ auto main() -> int {
 
 	std::cout << "player1 zdobył " << playersScores.at("player1") << " punktów.\n";
 
-	// error-next-line Ooops! Zły klucz
+	// Ooops! Incorrect key!
+	// error-next-line
 	std::cout << "super_cader zdobył " << playersScores.at("super_cader") << " punktów.\n";
 }
 ```
