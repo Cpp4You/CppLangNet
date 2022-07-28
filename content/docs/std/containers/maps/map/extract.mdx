@@ -46,7 +46,7 @@ Pointers and references to the extracted element remain valid, but cannot be use
 
 ### Return value
 
-A `node handle` that owns the extracted element, or empty `node handle` in case the element is not found (oveerloads **(2)** and **(3)**.)
+A `node handle` that owns the extracted element, or empty `node handle` in case the element is not found (oveerloads **(2)** and **(3)**).
 
 ### Exceptions
 
@@ -59,7 +59,7 @@ A `node handle` that owns the extracted element, or empty `node handle` in case 
  - **(2,3)** Logarithmic in the size of the container - **O(log size())**.
 ### Notes
 
-extract is the only way to change a key of a map element without reallocation:
+Using [`extract()`](#) is the only way to change a key of a map element without reallocation:
 
 ```cpp showLineNumbers
 std::map<int, std::string> m {{1, "mango"}, {2, "papaya"}, {3, "guava"}};
