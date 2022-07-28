@@ -102,8 +102,8 @@ Logarithmic in the size of the container otherwise - **O(log size())**.
 <ImproveSection />
 
 ### Notes 
-The hinted insert **(4-6)** does not return a boolean in order to be signature-compatible with positional insert on sequential containers, such as [`std::vector::insert`](/docs/std/containers/arrays/vector/insert). 
-This makes it possible to create generic inserters such as [`std::inserter`](#). One way to check success of a hinted insert is to compare [`size()`](/docs/std/containers/maps/map/size) before and after. 
+The hinted insert **(4-6)** does not return a boolean in order to be signature-compatible with positional insert on sequential containers, such as [`std::vector::insert()`](/docs/std/containers/arrays/vector/insert). 
+This makes it possible to create generic inserters such as [`std::inserter()`](#). One way to check success of a hinted insert is to compare [`size()`](/docs/std/containers/maps/map/size) before and after. 
 
 ### Example
 
