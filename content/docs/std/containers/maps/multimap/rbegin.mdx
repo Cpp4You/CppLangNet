@@ -85,7 +85,7 @@ int main()
 {
     std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
     auto it = multimap.crbegin(); // Type: std::map<int, float>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -106,7 +106,7 @@ int main()
 {
     const std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
     auto it = multimap.rbegin(); // Type: std::map<int, float>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -121,7 +121,7 @@ int main()
 {
     const std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
     auto it = multimap.crbegin(); // Type: std::map<int, float>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
