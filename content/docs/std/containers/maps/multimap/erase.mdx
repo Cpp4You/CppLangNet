@@ -26,10 +26,10 @@ import Method_SinceCpp23 	from './_codes/erase/since-cpp23.mdx';
 
 Removes specified elements from the container.
 
-- **(1)** - Removes the element at `pos`.
-- **(2)** - Removes the elements in the range **[ first; last )**, which must be a valid range in `*this`.
-- **(3)** - Removes the element (if one exists) with the key equivalent to `key`.
-- **(4)** - Removes the element (if one exists) with key that compares equivalent to the value `x`.
+- **(1)** Removes the element at `pos`.
+- **(2)** Removes the elements in the range **[ first; last )**, which must be a valid range in `*this`.
+- **(3)** Removes the element (if one exists) with the key equivalent to `key`.
+- **(4)** Removes the element (if one exists) with key that compares equivalent to the value `x`.
     This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type,
     and neither `iterator` nor `const_iterator` is implicitly convertible from `K`. It allows calling this function without constructing an instance of `Key`.
 
