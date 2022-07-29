@@ -64,12 +64,10 @@ The iterator pos must be **valid** and **dereferenceable**. Thus the `end()` ite
 
 ### Complexity
 
-Given an instance `c` of map:
-
- - **(1)** Amortized constant
- - **(2)** `log(c.size()) + std::distance(first, last)`
- - **(3)** `log(c.size()) + c.count(key)`
- - **(4)** `log(c.size()) + c.count(x)`
+ - **(1)** Amortized constant - **O(1)**.
+ - **(2)** **log size() + std::distance(first, last)**.
+ - **(3)** **log size() + count(key)**.
+ - **(4)** **log size() + count(x)**.
 
 ### Notes
 
