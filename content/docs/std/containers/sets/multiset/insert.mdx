@@ -85,15 +85,23 @@ Inserts element(s) into the container, if the container doesn't already contain 
 
 ### Complexity
 
- - **(1-2)** - Logarithmic in the size of the container, **O(log(size()))**.
+ - **(1-2)** Logarithmic in the size of the container - **O(log size())**.
  - **(3-4)** 
 <SwitchView content={{
-    'since-cpp11': <> Amortized constant if the insertion happens in the position just before the hint, logarithmic in the size of the container otherwise. </>,
-    'until-cpp11': <> Amortized constant if the insertion happens in the position just after the hint, logarithmic in the size of the container otherwise. </>,
+    'since-cpp11': <>
+			Amortized constant if the insertion happens in the position <b>just before</b> the <code>hint</code> - <b>O(1)</b>.<br/>
+			Logarithmic in the size of the container otherwise - <b>O(log size())</b>.
+		</>,
+    'until-cpp11': <>
+			Amortized constant if the insertion happens in the position <b>just after</b> the <code>hint</code> - <b>O(1)</b>.<br/>
+			Logarithmic in the size of the container otherwise - <b>O(log size())</b>.
+		</>,
     }} />
- - **(5-6)** - **O(N*log(size() + N))**, where N is the number of elements to insert.
- - **(7)** - Logarithmic in the size of the container, **O(log(size()))**.
- - **(8)** - Amortized constant if the insertion happens in the position **just before** the hint, logarithmic in the size of the container otherwise.
+ - **(5-6)** **O(N * log(size() + N))**, where **N** is the number of elements to insert.
+ - **(7)** Logarithmic in the size of the container - **O(log size())**.
+ - **(8)**  
+	Amortized constant if the insertion happens in the position **just before** the `hint` - **O(1)*.  
+	Logarithmic in the size of the container otherwise - **O(log size())**.
 
 ### Exceptions
 
