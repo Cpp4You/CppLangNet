@@ -210,7 +210,7 @@ module.exports = {
 								docsClassCat('multiset', 'std/containers/sets/multiset', '', [
 									'constructors',
 									'destructors',
-									'm:operator_assign',
+									'op:operator_assign',
 									'm:get_allocator',
 									cat('Iterators'),
 									['m:begin', 'since-cpp11'],
