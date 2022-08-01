@@ -45,12 +45,12 @@ Pointers and references to the extracted element remain valid, but cannot be use
 
 ### Return value
 
-A `node handle` that owns the extracted element, or empty `node handle` in case the element is not found (overloads **(2)** and **(3)**.)
+A `node handle` that owns the extracted element, or empty `node handle` in case the element is not found (overloads **(2)** and **(3)**).
 
 ### Exceptions
 
- - **(1)** - Throws nothing.
- - **(2-3)** - Any exceptions thrown by the `Compare` object.
+ - **(1)** Throws nothing.
+ - **(2-3)** Any exceptions thrown by the `Compare` object.
 
 ### Complexity
 
@@ -59,7 +59,7 @@ A `node handle` that owns the extracted element, or empty `node handle` in case 
 
 ### Notes
 
-extract is the only way to change a key of a multiset element without reallocation:
+Using [`extract()`](/docs/std/containers/sets/multiset/extract) is the only way to change a key of a multiset element without reallocation:
 
 ```cpp showLineNumbers
 std::set<move_only_type> s;
@@ -67,7 +67,7 @@ s.emplace(...);
 move_only_type mot = std::move(s.extract(s.begin()).value());
 ```
 
-Feature testing macro: `__cpp_lib_associative_heterogeneous_erasure` (for overload **(3)**).
+Feature testing macro: [`__cpp_lib_associative_heterogeneous_erasure`](#) (for overload **(3)**).
 
 ### Example
 
