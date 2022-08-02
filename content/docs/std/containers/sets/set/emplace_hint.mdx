@@ -37,9 +37,8 @@ If the insertion failed because the element already exists, returns an iterator 
 
 ### Complexity
 
-Average case: **amortized constant**
-
-Worst case: **Linear in the size of the container**
+Logarithmic in the size of the container in general - **O(log size())**.
+Amortized constant if the new element is inserted **just before** `hint` - **O(1)**.
 
 ### Exceptions
 

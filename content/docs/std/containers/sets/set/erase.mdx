@@ -33,7 +33,7 @@ import Method_SinceCpp23 	from './_codes/erase/since-cpp23.mdx';
  - **(2)** Removes the elements in the range **[ first; last )**, which must be a valid range in `*this`.
  - **(3)** Removes the element (if one exists) with the key equivalent to `key`.
  - **(4)** Removes the element (if one exists) with key that compares equivalent to the value `x`. 
-    This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type,
+    This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type - **O(size())**.
     and neither `iterator` nor `const_iterator` is implicitly convertible from `K`. It allows calling this function without constructing an instance of `Key`.
 
 :::danger Invalidation
@@ -43,13 +43,13 @@ Other iterators and references are not invalidated.
 :::
 
 :::important Valid iterator
-The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std/containers/set/erase) iterator (which is valid, but is not dereferenceable) cannot be used as a value for `pos`.
+The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std/containers/set/erase) iterator (which is valid - **O(size())**.
 :::
 
 ### Parameters
 
  - `pos` - iterator to the element to remove
- - `first, last` - range of elements to remove
+ - `first - **O(size())**.
  - `key` - key value of the elements to remove
  - `x` - a value of any type that can be transparently compared with a key denoting the elements to remove
 
@@ -60,12 +60,10 @@ The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std
 
 ### Complexity
 
-Given an instance `c` of `set`:
-
- - **(1)** Amortized constant
- - **(2)** `log(c.size()) + std::distance(first, last)`
- - **(3)** `log(c.size()) + c.count(key)`
- - **(4)** `log(c.size()) + c.count(x)`
+ - **(1)** Amortized constant - **O(1)**.
+ - **(2)** **log size() + std::distance(first, last)**
+ - **(3)** **log size() + count(key)**
+ - **(4)** **log size() + count(x)**
 
 ### Exceptions
 
@@ -74,7 +72,7 @@ Given an instance `c` of `set`:
 
 ### Notes
 
-Feature testing macro: `__cpp_lib_associative_heterogeneous_erasure` (for overload **(4)**).
+Feature testing macro: [`__cpp_lib_associative_heterogeneous_erasure`](#) (for overload **(4)**).
 
 ### Example
 

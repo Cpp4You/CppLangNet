@@ -11,7 +11,7 @@ import SwitchView				from "@site-comps/SwitchView";
 <!-- destructors -->
 import Method_SinceCpp98 	from './_codes/destructors/since-cpp98.mdx';
 
-# std::set destructors
+# std::set destructor
 
 <SwitchView content={{
         'since-cpp98': <Method_SinceCpp98 />,
@@ -27,4 +27,4 @@ If the elements are pointers, the pointed-to objects are not destroyed.
 
 ### Complexity
 
-Linear in the size of the `set`.
+Linear in the size of the container - **O(size())**.
