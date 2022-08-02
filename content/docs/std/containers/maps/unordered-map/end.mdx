@@ -43,7 +43,7 @@ Iterator to the first element.
 
 ### Complexity
 
-Constant.
+Constant - **O(1)**.
 
 ### Difference between begin and cbegin
 
@@ -89,7 +89,7 @@ int main()
 			{ "key3", 3 },
 		};
     auto it = map.cend(); // Type: std::unordered_map<std::string, int>::const_iterator    
-    // highlight-next-line
+    // error-next-line
     std::prev(it)->second = 5; // ❌ Error! 
 }
 ```
@@ -115,7 +115,7 @@ int main()
 			{ "key3", 3 },
 		};
     auto it = map.end(); // Type: std::unordered_map<std::string, int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     std::prev(it)->second = 5; // ❌ Error! 
 }
 ```
