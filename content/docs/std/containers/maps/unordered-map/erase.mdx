@@ -41,7 +41,7 @@ Other iterators and references are not invalidated.
 :::
 
 :::important Valid iterator
-The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std/containers/unordered_map/erase) iterator (which is valid, but is not dereferenceable) cannot be used as a value for `pos`.
+The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std/containers/maps/unordered-map/erase) iterator (which is valid, but is not dereferenceable) cannot be used as a value for `pos`.
 :::
 
 ### Parameters
@@ -62,16 +62,16 @@ The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std
 	Average case, constant - **O(1)**.  
 	Worst case, linear in size of the container - **O(size())**.
 
- - **(2)** 
+ - **(2)**  
 	Average case, linear in `std::distance(first, last)` - **O(N)**, where **N** is `std::distance(first, last)`.  
 	Worst case, linear in size of the container - **O(size())**.
 
- - **(3)** 
-	Average case, `count(key)` - **O(N)**, where **N** is `count(key)`.
+ - **(3)**  
+	Average case, `count(key)` - **O(N)**, where **N** is `count(key)`.  
 	Worst case, linear in size of the container - **O(size())**.
 
- - **(4)** 
-	Average case, `count(x)` - **O(N)**, where **N** is `count(x)`.
+ - **(4)**  
+	Average case, `count(x)` - **O(N)**, where **N** is `count(x)`.  
 	Worst case, linear in size of the container - **O(size())**.
 
 ### Exceptions
