@@ -7,6 +7,7 @@ tags:					[rehash, hash, buckets, bucket]
 ---
 
 import SwitchView				from "@site-comps/SwitchView";
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
 
 <!----------------- Codes ---------------------->
 
@@ -44,3 +45,7 @@ Average case linear in the size of the container, worst case quadratic.
 ### Notes
 
 `rehash(0)` may be used to force an unconditional rehash, such as after suspension of automatic rehashing by temporarily increasing [`max_load_factor()`](/docs/std/containers/maps/unordered-map/max_load_factor).
+
+### Examples
+
+<ImproveSection />
