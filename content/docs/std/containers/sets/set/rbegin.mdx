@@ -37,7 +37,7 @@ and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
 For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
 :::
 
-If the container is empty, the returned iterator will be equal to `rend()`.
+If the container is empty, the returned iterator will be equal to [`rend()`](/docs/std/containers/sets/set/rend).
 
 ### Parameters
 
@@ -49,7 +49,7 @@ Reverse iterator to the first element.
 
 ### Complexity
 
-Constant.
+Constant - **O(1)**.
 
 ### Difference between rbegin and crbegin
 
@@ -85,7 +85,7 @@ int main()
 {
     std::set<int> set = {1, 2, 3, 4, 5};
     auto it = set.crbegin(); // Type: std::set<int>::const_reverse_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -106,7 +106,7 @@ int main()
 {
     const std::set<int> set = {1, 2, 3, 4, 5};
     auto it = set.rbegin(); // Type: std::set<int>::const_reverse_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -121,7 +121,7 @@ int main()
 {
     const std::set<int> set = {1, 2, 3, 4, 5};
     auto it = set.crbegin(); // Type: std::set<int>::const_reverse_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
