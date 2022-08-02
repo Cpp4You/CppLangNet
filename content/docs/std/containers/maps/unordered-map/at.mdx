@@ -19,7 +19,8 @@ import Method_SinceCpp11 	from './_codes/at/since-cpp11.mdx';
     'since-cpp11': <Method_SinceCpp11 />,
     }} />
 
-Returns a reference to the mapped value of the element with key equivalent to `key`. If no such element exists, an exception of type [`std::out_of_range`](#) is thrown.
+Returns a reference to the mapped value of the element with key equivalent to `key`.  
+If no such element exists, an exception of type [`std::out_of_range`](#) is thrown.
 
 ### Parameters
 
@@ -31,10 +32,9 @@ Reference to the mapped value of the requested element.
 
 ### Complexity
 
-Average case: **constant**
-
-Worst case: **linear in size**
+Average case, constant - **O(1)**.  
+Worst case, linear in size of the containter - **O(log size())**.
 
 ### Exceptions
 
-[`std::out_of_range`](#) if the container does not have an element with the specified key
+[`std::out_of_range`](#) if the container does not have an element with the specified key.

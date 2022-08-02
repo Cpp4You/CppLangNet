@@ -24,7 +24,7 @@ import Method_SinceCpp17 	from './_codes/try_emplace/since-cpp17.mdx';
 Inserts a new element into the container with key `k` and value constructed with `args`, if there is no element with the key in the container.
 
  - **(1)** 
-    If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace`](/docs/std/containers/unordered_map/emplace) except that the element is constructed as
+    If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace()`](/docs/std/containers/unordered_map/emplace) except that the element is constructed as
     ```cpp
     value_type(std::piecewise_construct,
                std::forward_as_tuple(k),
@@ -32,7 +32,7 @@ Inserts a new element into the container with key `k` and value constructed with
     ```
 
  - **(2)** 
-    If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace`](/docs/std/containers/unordered_map/emplace) except that the element is constructed as
+    If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace()`](/docs/std/containers/unordered_map/emplace) except that the element is constructed as
     ```cpp
     value_type(std::piecewise_construct,
                std::forward_as_tuple(std::move(k)),
@@ -40,7 +40,7 @@ Inserts a new element into the container with key `k` and value constructed with
     ```
 
  - **(3)** 
-    If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace_hint`](/docs/std/containers/unordered_map/emplace_hint) except that the element is constructed as
+    If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace_hint()`](/docs/std/containers/unordered_map/emplace_hint) except that the element is constructed as
     ```cpp
     value_type(std::piecewise_construct,
                std::forward_as_tuple(k),
@@ -48,7 +48,7 @@ Inserts a new element into the container with key `k` and value constructed with
     ```
 
  - **(4)** 
-    If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace_hint`](/docs/std/containers/unordered_map/emplace_hint) except that the element is constructed as
+    If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace_hint()`](/docs/std/containers/unordered_map/emplace_hint) except that the element is constructed as
     ```cpp
     value_type(std::piecewise_construct,
                std::forward_as_tuple(std::move(k)),
@@ -72,13 +72,13 @@ Rehashing occurs only if the new number of elements is greater than `max_load_fa
 
 ### Return value
 
- - **(1-2)** Same as for [`emplace`](/docs/std/containers/unordered_map/emplace)
- - **(3-4)** Same as for [`emplace_hint`](/docs/std/containers/unordered_map/emplace_hint)
+ - **(1-2)** Same as for [`emplace()`](/docs/std/containers/unordered_map/emplace).
+ - **(3-4)** Same as for [`emplace_hint()`](/docs/std/containers/unordered_map/emplace_hint).
 
 ### Complexity
 
- - **(1-2)** Same as for [`emplace`](/docs/std/containers/unordered_map/emplace)
- - **(3-4)** Same as for [`emplace_hint`](/docs/std/containers/unordered_map/emplace_hint)
+ - **(1-2)** Same as for [`emplace()`](/docs/std/containers/unordered_map/emplace).
+ - **(3-4)** Same as for [`emplace_hint()`](/docs/std/containers/unordered_map/emplace_hint).
 
 ### Exceptions
 
@@ -86,15 +86,15 @@ If an exception is thrown by any operation, this function has no effect (strong 
 
 ### Notes
 
-Unlike [`insert`](/docs/std/containers/unordered_map/insert) or [`emplace`](/docs/std/containers/unordered_map/emplace),
+Unlike [`insert()`](/docs/std/containers/unordered_map/insert) or [`emplace()`](/docs/std/containers/unordered_map/emplace),
 these functions do not move from rvalue arguments if the insertion does not happen, which makes it easy to manipulate maps whose values are move-only types,
 such as `std::unordered_map<std::string, std::unique_ptr<foo>>`.
 
 
-In addition, `try_emplace` treats the key and the arguments to the `mapped_type` separately, unlike emplace, which requires the arguments to construct a `value_type` (that is, a `std::pair`).
+In addition, [`try_emplace`](#) treats the key and the arguments to the `mapped_type` separately, unlike emplace, which requires the arguments to construct a `value_type` (that is, a [`std::pair`](#)).
 
 
-Feature testing macro: `__cpp_lib_unordered_map_try_emplace`
+Feature testing macro: [`__cpp_lib_unordered_map_try_emplace`](#).
 
 ### Example
 

@@ -57,20 +57,17 @@ A `node handle` that owns the extracted element, or empty node handle in case th
 
 ### Complexity
 
-Average case: **O(1)**
-
-Worst case: **O(a.size())**
+Average case, constant - **O(1)**.  
+Worst case, linear in the size of the container - **O(size())**.
 
 ### Exceptions
 
- - **(1)**
-    Throws nothing.
- - **(2-3)**
-    Any exceptions thrown by the Hash and KeyEqual object.
+ - **(1)** Throws nothing.
+ - **(2-3)** Any exceptions thrown by the `Hash` and `KeyEqual` object.
 
 ### Notes
 
-extract is the only way to change a key of a map element without reallocation:
+Using [`extract()`](#) is the only way to change a key of a map element without reallocation:
 
 ```cpp showLineNumbers
 std::map<int, std::string> m{{1, "mango"}, {2, "papaya"}, {3, "guava"}};
@@ -80,7 +77,7 @@ m.insert(std::move(nh));
 // m == {{1, "mango"}, {3, "guava"}, {4, "papaya"}}
 ```
 
-Feature testing macro: `__cpp_lib_associative_heterogeneous_erasure` (for overload **(3)**)
+Feature testing macro: [`__cpp_lib_associative_heterogeneous_erasure`](#) (for overload **(3)**)
 
 
 ### Example

@@ -47,7 +47,7 @@ The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std
 ### Parameters
 
  - `pos` - iterator to the element to remove
- - `first, last` - range of elements to remove
+ - `first`, `last` - range of elements to remove
  - `key` - key value of the elements to remove
  - `x` - a value of any type that can be transparently compared with a key denoting the elements to remove
 
@@ -58,27 +58,21 @@ The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std
 
 ### Complexity
 
-Given an instance `c` of `unordered_map`:
-
- - **(1)** 
-   Average case: **Constant**
-   
-   Worst case: **Linear in the size of the container**
+ - **(1)**  
+	Average case, constant - **O(1)**.  
+	Worst case, linear in size of the container - **O(size())**.
 
  - **(2)** 
-  Average case: **Linear in `std::distance(first, last)`**
-  
-  Worst case: **Linear in the size of the container**
+	Average case, linear in `std::distance(first, last)` - **O(N)**, where **N** is `std::distance(first, last)`.  
+	Worst case, linear in size of the container - **O(size())**.
 
  - **(3)** 
-  Average case: **`c.count(key)`**
-
-  Worst case: **Linear in the size of the container**
+	Average case, `count(key)` - **O(N)**, where **N** is `count(key)`.
+	Worst case, linear in size of the container - **O(size())**.
 
  - **(4)** 
-  Average case: **`c.count(x)`**
-  
-  Worst case: **Linear in the size of the container**
+	Average case, `count(x)` - **O(N)**, where **N** is `count(x)`.
+	Worst case, linear in size of the container - **O(size())**.
 
 ### Exceptions
 
@@ -87,7 +81,7 @@ Given an instance `c` of `unordered_map`:
 
 ### Notes
 
-Feature testing macro: `__cpp_lib_associative_heterogeneous_erasure` (for overload **(4)**).
+Feature testing macro: [`__cpp_lib_associative_heterogeneous_erasure`](#) (for overload **(4)**).
 
 ### Example
 

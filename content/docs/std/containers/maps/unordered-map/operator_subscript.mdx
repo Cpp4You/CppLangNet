@@ -53,9 +53,8 @@ Otherwise a reference to the mapped value of the existing element whose key is e
 
 ### Complexity
 
-Average case: **constant**
-
-Worst case: **linear in size**
+Average case, constant - **O(1)**.  
+Worst case, linear in the size of the container - **O(size())**.
 
 ### Exceptions
 
@@ -71,13 +70,13 @@ In the published C++11 and C++14 standards, this function was specified to requi
 and `key_type` to be [`CopyInsertable`](/docs/named_req/CopyInsertable) or [`MoveInsertable`](/docs/named_req/MoveInsertable) into `*this`.
 This specification was defective and was fixed by [`LWG issue 2469`](https://cplusplus.github.io/LWG/issue2469), and the description above incorporates the resolution of that issue.
 
-However, one implementation (**libc++**) is known to construct the `key_type` and `mapped_type` objects via two separate allocator `construct()` calls,
+However, one implementation (**libc++**) is known to construct the `key_type` and `mapped_type` objects via two separate allocator [`construct()`](#) calls,
 as arguably required by the standards as published, rather than emplacing a `value_type` object.
 
 <SwitchView content={{
     'since-cpp17': <Notes_InsertOrAssign_Since17 />
     }} />
-    
+
 ### Example
 
 <Columns columns={['8fr', '4fr']}>
