@@ -48,9 +48,8 @@ The behavior is undefined if `get_allocator() != source.get_allocator()`.
 
 ### Complexity
 
-Average case: **O(N)**
-
-Worst case: **O(N*size()+N)** (where **N** is `source.size()`)
+Average case, linear in the size of source - **O(source.size())**.  
+Worst case - **O(N * size() + N)**, where **N** is `source.size()`.
 
 ### Exceptions
 
