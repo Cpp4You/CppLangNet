@@ -1,6 +1,6 @@
 ---
 title:					set<...>::insert() method
-sidebar_label:			insert()
+sidebar_label:			insert( )
 description:			set<...>::insert() method C++ documentation
 hide_title:				true
 tags:					[insert, add, append, set]
@@ -30,12 +30,9 @@ import IteratorDereferenceNote_SinceCpp17 	from './_codes/insert/explanation/ite
 
 Inserts element(s) into the container, if the container doesn't already contain an element with an equivalent key.
 
- - **(1-2)**
-   Inserts value.
+ - **(1-2)** Inserts value.
 
- - **(3-4)**
-   Inserts value in the position as close as possible, just prior(since C++11), to hint.
-   <SwitchView content={{
+ - **(3-4)** <SwitchView content={{
       'since-cpp11': <>
          Inserts value in the position as close as possible, just prior to hint.
       </>,
@@ -121,9 +118,9 @@ The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_al
     }} />
 
  - **(5-6)** **O(N * log(size() + N))**, where **N** is the number of elements to insert.
- - **(7)** Logarithmic in the size of the container, **O(log size())**.
+ - **(7)** Logarithmic in the size of the container - **O(log size())**.
  - **(8)**  
-	Amortized constant if the insertion happens in the position **just before** `hint - **O(1)**,
+	Amortized constant if the insertion happens in the position **just before** `hint` - **O(1)**,
 	Logarithmic in the size of the container otherwise - **O(log size())**.
 
 ### Exceptions

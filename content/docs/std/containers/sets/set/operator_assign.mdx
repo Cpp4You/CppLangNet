@@ -39,7 +39,7 @@ Replaces the contents of the containter.
 		    'since-cpp11': <PropagateOnContainerChange_SinceCpp11 />,
 	    }}/>
 
-    If ``std::allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of `other`.
+    If `std::allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of `other`.
     
     If the allocator of `*this` after assignment would compare unequal to its old value, the old allocator is used to deallocate the memory,
     then the new allocator is used to allocate it before copying the elements.
@@ -75,7 +75,7 @@ A reference to the container, `*this`.
 
  - **(1)** Linear in the size of `*this` and `other` - **O(size() + other.size())**.
  - **(2)**  
-	Linear in the size of `*this` - **O(size())**.
+	Linear in the size of `*this` - **O(size())**.  
 	If allocators do not compare equal and do not propagate, linear in the size of `*this` and `other` - **O(size() + other.size())**.
  - **(3)**  
 	**O(N log N)** in general, where **N** is `size() + ilist.size()`.  
