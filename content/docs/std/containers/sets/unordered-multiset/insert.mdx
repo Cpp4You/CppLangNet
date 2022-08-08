@@ -1,6 +1,6 @@
 ---
 title:					unordered_multiset<...>::insert() method
-sidebar_label:			insert()
+sidebar_label:			insert( )
 description:			unordered_multiset<...>::insert() method C++ documentation
 hide_title:				true
 tags:					[insert, add, append, unordered_multiset]
@@ -73,36 +73,28 @@ The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_al
 
 ### Type requirements
 
- - **(5)** - `InputIt` must meet the requirements of [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator)
+ - **(5)** - `InputIt` must meet the requirements of [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator).
 
 ### Return value
 
- - **(1-4)**  
-   Average case: **O(1)**.  
-   Worst case: **O(size())**.
-
- - **(5-6)**  
-   Average case: **O(N)** (where N is the number of elements to insert)   
-   Worst case: **O(N*size()+N)**
-
- - **(7-8)**  
-   Average case: **O(1)**.  
-   Worst case: **O(size())**.
+ - **(1-4)** Returns an iterator to the inserted element.
+ - **(5-6)** **(none)**
+ - **(7-8)** End iterator if `nh` was empty, iterator pointing to the inserted element otherwise.
 
 ### Complexity
 
- - **(1-4)** 
-   Average case: **O(1)**
-   
-   Worst case: **O(size())**
- - **(5-6)** 
-   Average case: **O(N)** (where N is the number of elements to insert) 
-   
-   Worst case: **O(N*size()+N)**
- - **(7-8)** 
-   Average case: **O(1)**
-   
-   Worst case: **O(size())**
+ - **(1-4)**  
+   Average case, constant - **O(1)**.  
+   Worst case, linear in the size of the container - **O(size())**.
+
+ - **(5-6)**  
+   Average case, linear in the number of elements to insert - **O(N)**, where N is the number of elements to insert.  
+   Worst case - **O(N*size()+N)**, where N is the number of elements to insert.
+
+ - **(7-8)**  
+   Average case, constant - **O(1)**.  
+   Worst case, linear in the size of the container - **O(size())**.
+
 
 ### Exceptions
 

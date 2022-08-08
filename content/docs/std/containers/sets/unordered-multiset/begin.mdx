@@ -26,7 +26,7 @@ import Method_SinceCpp11 	from './_codes/begin/since-cpp11.mdx';
     }}/>
 
 Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the vector.
-If the array is empty, the returned iterator will be equal to `end()`.
+If the array is empty, the returned iterator will be equal to [`end()`](/docs/std/containers/sets/unordered-multiset/end).
 
 ### Parameters
 
@@ -80,7 +80,7 @@ int main()
 			{ "key3", 3 },
 		};
     auto it = multiset.cbegin(); // Type: std::unordered_multiset<std::string>::const_iterator    
-    // highlight-next-line
+    // error-next-line
     it->second = 5; // ❌ Error! 
 }
 ```
@@ -102,7 +102,7 @@ int main()
 {
 	std::unordered_multiset<std::string> multiset = { "abc", "Hello World!", "abc", "asd" };
     auto it = multiset.begin(); // Type: std::unordered_multiset<std::string>::const_iterator
-    // highlight-next-line
+    // error-next-line
     it->second = 5; // ❌ Error! 
 }
 ```
@@ -118,7 +118,7 @@ int main()
 {
 	std::unordered_multiset<std::string> multiset = { "abc", "Hello World!", "abc", "asd" };
     auto it = multiset.cbegin(); // Type: std::unordered_multiset<std::string>::const_iterator
-    // highlight-next-line
+    // error-next-line
     it->second = 5; // ❌ Error! 
 }
 ```
