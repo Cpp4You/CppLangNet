@@ -58,25 +58,21 @@ The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std
 
 ### Complexity
 
- - **(1)** 
-   Average case: **Constant**
+ - **(1)**  
+	Average case, constant - **O(1)**.  
+	Worst case, linear in size of the container - **O(size())**.
 
-   Worst case: **Linear in the size of the container**
+ - **(2)**  
+	Average case, linear in `std::distance(first, last)` - **O(N)**, where **N** is `std::distance(first, last)`.  
+	Worst case, linear in size of the container - **O(size())**.
 
- - **(2)** 
-  Average case: **Linear in `std::distance(first, last)`**
+ - **(3)**  
+	Average case, `count(key)` - **O(N)**, where **N** is `count(key)`.  
+	Worst case, linear in size of the container - **O(size())**.
 
-  Worst case: **Linear in the size of the container**
-
- - **(3)** 
-  Average case: **`count(key)`**
-
-  Worst case: **Linear in the size of the container**
-
- - **(4)** 
-  Average case: **`count(x)`**
-
-  Worst case: **Linear in the size of the container**
+ - **(4)**  
+	Average case, `count(x)` - **O(N)**, where **N** is `count(x)`.  
+	Worst case, linear in size of the container - **O(size())**
 
 ### Exceptions
 
