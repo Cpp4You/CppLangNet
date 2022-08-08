@@ -27,7 +27,7 @@ import Method_SinceCpp11 	from './_codes/end/since-cpp11.mdx';
     }}/>
 
 Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the element past-the-end of the unordered_multiset.
-If the unordered_multiset is empty, the returned iterator will be equal to `begin()`.
+If the unordered_multiset is empty, the returned iterator will be equal to [`begin()`](/docs/std/containers/sets/unordered-multiset/begin).
 
 :::danger
 Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
@@ -81,7 +81,7 @@ int main()
 {
 	std::unordered_multiset<std::string> multiset = { "abc", "Hello World!", "abc", "asd" };
     auto it = multiset.cend(); // Type: std::unordered_multiset<std::string>::iterator
-    // highlight-next-line
+    // error-next-line
     std::prev(it)->second = 5; // ❌ Error! 
 }
 ```
@@ -103,7 +103,7 @@ int main()
 {
 	std::unordered_multiset<std::string> multiset = { "abc", "Hello World!", "abc", "asd" };
     auto it = multiset.end(); // Type: std::unordered_multiset<std::string>::iterator
-    // highlight-next-line
+    // error-next-line
     std::prev(it)->second = 5; // ❌ Error! 
 }
 ```
@@ -119,7 +119,7 @@ int main()
 {
 	std::unordered_multiset<std::string> multiset = { "abc", "Hello World!", "abc", "asd" };
     auto it = multiset.cend(); // Type: std::unordered_multiset<std::string>::iterator
-    // highlight-next-line
+    // error-next-line
     std::prev(it)->second = 5; // ❌ Error! 
 }
 ```

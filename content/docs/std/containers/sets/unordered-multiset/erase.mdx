@@ -1,6 +1,6 @@
 ---
 title:					unordered_multiset<...>::erase() method
-sidebar_label:			erase()
+sidebar_label:			erase( )
 description:			unordered_multiset<...>::erase() method C++ documentation
 hide_title:				true
 tags:					[erase, remove, delete, unordered_multiset]
@@ -31,8 +31,7 @@ import Method_SinceCpp23 	from './_codes/erase/since-cpp23.mdx';
    This assumes that such Hash is callable with both `K` and `Key` type, and that the `KeyEqual` is transparent, which, together, allows calling this function without constructing an instance of `Key`.
 
 
-The order of the elements that are not erased is preserved.
-(This makes it possible to erase individual elements while iterating through the container.)
+The order of the elements that are not erased is preserved (this makes it possible to erase individual elements while iterating through the container).
 
 :::danger Invalidation
 **References** and **iterators** to the erased elements are invalidated.
@@ -67,11 +66,11 @@ The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std
 	Worst case, linear in size of the container - **O(size())**.
 
  - **(3)**  
-	Average case, `count(key)` - **O(N)**, where **N** is `count(key)`.  
+	Average case, linear in `count(key)` - **O(N)**, where **N** is `count(key)`.  
 	Worst case, linear in size of the container - **O(size())**.
 
  - **(4)**  
-	Average case, `count(x)` - **O(N)**, where **N** is `count(x)`.  
+	Average case, linear in `count(x)` - **O(N)**, where **N** is `count(x)`.  
 	Worst case, linear in size of the container - **O(size())**
 
 ### Exceptions
