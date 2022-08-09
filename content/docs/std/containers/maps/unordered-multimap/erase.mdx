@@ -31,8 +31,7 @@ import Method_SinceCpp23 	from './_codes/erase/since-cpp23.mdx';
    This assumes that such Hash is callable with both `K` and `Key` type, and that the `KeyEqual` is transparent, which, together, allows calling this function without constructing an instance of `Key`.
 
 
-The order of the elements that are not erased is preserved.
-(This makes it possible to erase individual elements while iterating through the container.)
+The order of the elements that are not erased is preserved (this makes it possible to erase individual elements while iterating through the container).
 
 :::danger Invalidation
 **References** and **iterators** to the erased elements are invalidated.
