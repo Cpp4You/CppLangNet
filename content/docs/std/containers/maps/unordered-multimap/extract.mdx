@@ -69,7 +69,7 @@ Worst case, linear in size of the container - **O(size())**.
 
 ### Notes
 
-extract is the only way to change a key of a map element without reallocation:
+Using [`extract()`](#) is the only way to change a key of a map element without reallocation:
 
 ```cpp showLineNumbers
 std::map<int, std::string> m{{1, "mango"}, {2, "papaya"}, {3, "guava"}};
@@ -79,7 +79,7 @@ m.insert(std::move(nh));
 // m == {{1, "mango"}, {3, "guava"}, {4, "papaya"}}
 ```
 
-Feature testing macro: `__cpp_lib_associative_heterogeneous_erasure` (for overload **(3)**)
+Feature testing macro: [`__cpp_lib_associative_heterogeneous_erasure`](#) (for overload **(3)**)
 
 
 ### Example

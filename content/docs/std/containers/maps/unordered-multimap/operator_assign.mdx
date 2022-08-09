@@ -27,7 +27,7 @@ import NoexceptSpecification_SinceCpp17  from './_codes/operator_assign/noexcept
 Replaces the contents of the container with the contents of another.
 
  - **(1)** **Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.
-    If ``std::allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of `other`.
+    If `std::allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of `other`.
     
     If the allocator of `*this` after assignment would compare unequal to its old value, the old allocator is used to deallocate the memory,
     then the new allocator is used to allocate it before copying the elements.
@@ -77,7 +77,7 @@ Replaces the contents of the container with the contents of another.
 
 After container move assignment (overload **(2)**), unless element-wise move assignment is forced by incompatible allocators, references, pointers,
 and iterators (other than the end iterator) to other remain valid, but refer to elements that are now in `*this`.
-The current standard makes this guarantee via the blanket statement in [container.requirements.general]/12, and a more direct guarantee is under consideration via **LWG 2321**.
+The current standard makes this guarantee via the blanket statement in [container.requirements.general]/12, and a more direct guarantee is under consideration via [**LWG 2321**](https://cplusplus.github.io/LWG/issue2321).
 
 ### Example
 

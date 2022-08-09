@@ -81,7 +81,7 @@ The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_al
 
 ### Type requirements
 
- - **(5)** - `InputIt` must meet the requirements of [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator)
+ - **(5)** - `InputIt` must meet the requirements of [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator).
 
 ### Return value
 
@@ -111,8 +111,8 @@ The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_al
 
 ### Notes
 
-The hinted insert **(3-4)** does not return a boolean in order to be signature-compatible with positional insert on sequential containers, such as [`std::vector::insert`]. 
-This makes it possible to create generic inserters such as `std::inserter`. One way to check success of a hinted insert is to compare `size()` before and after. 
+The hinted insert **(3-4)** does not return a boolean in order to be signature-compatible with positional insert on sequential containers, such as [`std::vector::insert()`](/docs/std/containers/arrays/vector/insert). 
+This makes it possible to create generic inserters such as [`std::inserter()`](#). One way to check success of a hinted insert is to compare [`size()`](/docs/std/containers/maps/unordered-multimap/size) before and after. 
 
 ### Example
 
