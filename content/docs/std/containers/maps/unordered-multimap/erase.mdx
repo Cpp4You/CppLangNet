@@ -58,27 +58,21 @@ The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std
 
 ### Complexity
 
-Given an instance `c` of `unordered_multimap`:
+ - **(1)**  
+	Average case, constant - **O(1)**.  
+	Worst case, linear in size of the container - **O(size())**.
 
- - **(1)** 
-   Average case: **Constant**
-   
-   Worst case: **Linear in the size of the container**
+ - **(2)**  
+	Average case, linear in `std::distance(first, last)` - **O(N)**, where **N** is `std::distance(first, last)`.  
+	Worst case, linear in size of the container - **O(size())**.
 
- - **(2)** 
-  Average case: **Linear in `std::distance(first, last)`**
-  
-  Worst case: **Linear in the size of the container**
+ - **(3)**  
+	Average case, `count(key)` - **O(N)**, where **N** is `count(key)`.  
+	Worst case, linear in size of the container - **O(size())**.
 
- - **(3)** 
-  Average case: **`c.count(key)`**
-
-  Worst case: **Linear in the size of the container**
-
- - **(4)** 
-  Average case: **`c.count(x)`**
-  
-  Worst case: **Linear in the size of the container**
+ - **(4)**  
+	Average case, `count(x)` - **O(N)**, where **N** is `count(x)`.  
+	Worst case, linear in size of the container - **O(size())**.
 
 ### Exceptions
 

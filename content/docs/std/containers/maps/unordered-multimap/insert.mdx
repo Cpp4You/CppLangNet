@@ -91,18 +91,17 @@ The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_al
 
 ### Complexity
 
- - **(1-4)** 
-   Average case: **O(1)**
-   
-   Worst case: **O(size())**
- - **(5-6)** 
-   Average case: **O(N)** (where N is the number of elements to insert) 
-   
-   Worst case: **O(N*size()+N)**
- - **(7-8)** 
-   Average case: **O(1)**
-   
-   Worst case: **O(size())**
+ - **(1-4)**  
+   Average case, constant - **O(1)**.  
+   Worst case: **O(size())**.
+
+ - **(5-6)**  
+   Average case, linear in the number of elements to insert - **O(N)**, where N is the number of elements to insert.  
+   Worst case - **O(N * size() + N)**.
+
+ - **(7-8)**  
+   Average case, constant - **O(1)**.  
+   Worst case, linear in size of the container - **O(size())**.
 
 ### Exceptions
 
