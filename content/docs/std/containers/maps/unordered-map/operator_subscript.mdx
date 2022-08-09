@@ -63,12 +63,13 @@ If an exception is thrown by any operation, the insertion has no effect
 ### Notes
 
 :::important
-`operator[]` is non-const because it inserts the key if it doesn't exist. If this behavior is undesirable or if the container is const, `at()` may be used.
+[`operator[]`](#) is non-const because it inserts the key if it doesn't exist.  
+If this behavior is undesirable or if the container is const, [`at()`](/docs/std/containers/maps/unordered-map/at) may be used.
 :::
 
 In the published C++11 and C++14 standards, this function was specified to require `mapped_type` to be [`DefaultInsertable`](/docs/named_req/DefaultInsertable)
 and `key_type` to be [`CopyInsertable`](/docs/named_req/CopyInsertable) or [`MoveInsertable`](/docs/named_req/MoveInsertable) into `*this`.
-This specification was defective and was fixed by [`LWG 2469`](https://cplusplus.github.io/LWG/issue2469), and the description above incorporates the resolution of that issue.
+This specification was defective and was fixed by [**LWG 2469**](https://cplusplus.github.io/LWG/issue2469), and the description above incorporates the resolution of that issue.
 
 However, one implementation (**libc++**) is known to construct the `key_type` and `mapped_type` objects via two separate allocator [`construct()`](#) calls,
 as arguably required by the standards as published, rather than emplacing a `value_type` object.
