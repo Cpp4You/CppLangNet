@@ -6,6 +6,7 @@ hide_title:				true
 tags:					[reserve, buckets, bucket]
 ---
 
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
 import SwitchView				from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
@@ -34,9 +35,12 @@ Effectively calls `rehash(std::ceil(count / max_load_factor()))`.
 
 ### Complexity
 
-Average case, linear in the size of the container - **O(size())**.  
-Worst case, quadratic in the size of the container - **O(size() * size())**.
+Average case linear in the size of the container, worst case quadratic.
 
 ### Exceptions
 
 **(none)**
+
+### Examples
+
+<ImproveSection />
