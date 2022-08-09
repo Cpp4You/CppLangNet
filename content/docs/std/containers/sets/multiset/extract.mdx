@@ -27,7 +27,7 @@ import Method_SinceCpp23 	from './_codes/extract/since-cpp23.mdx';
  - **(3)** Same as **(2)**. This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type,
     and neither `iterator` nor `const_iterator` is implicitly convertible from `K`. It allows calling this function without constructing an instance of `Key`.
 
-In either case, no elements are copied or moved, only the internal pointers of the container nodes are repointed (rebalancing may occur, as with [`erase()`](/docs/std/containers/multisets/map/erase)).
+In either case, no elements are copied or moved, only the internal pointers of the container nodes are repointed (rebalancing may occur, as with [`erase()`](/docs/std/containers/sets/multiset/erase)).
 
 :::danger Invalidation
 Extracting a node invalidates only the iterators to the extracted element.
