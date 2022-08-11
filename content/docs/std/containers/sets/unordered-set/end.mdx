@@ -82,7 +82,7 @@ int main()
 {
     std::unordered_set<int> unordered_set = {1, 2, 3, 4, 5};
     auto it = unordered_set.cbegin(); // Type: std::unordered_set<int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
 ```
@@ -103,7 +103,7 @@ int main()
 {
     const std::unordered_set<int> unordered_set = {1, 2, 3, 4, 5};
     auto it = unordered_set.begin(); // Type: std::unordered_set<int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
 ```
@@ -118,7 +118,7 @@ int main()
 {
     const std::unordered_set<int> unordered_set = {1, 2, 3, 4, 5};
     auto it = unordered_set.cbegin(); // Type: std::unordered_set<int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
 ```
