@@ -1,0 +1,158 @@
+---
+title:					set<...>::begin() method
+sidebar_label:			begin( )
+description:			set<...>::begin() C++ documentation
+hide_title:				true
+tags:					[access, iterators, begin, get]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+import Columns					from "@site-comps/Columns";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- begin -->
+
+import Method_UntilCpp11 	from './_codes/begin/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/begin/since-cpp11.mdx';
+
+# std::set begin() method
+
+<SwitchView content={{
+		'since-cpp11': <Method_SinceCpp11 />,
+		'until-cpp11': <Method_UntilCpp11 />,
+	}}/>
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the set.
+If the array is empty, the returned iterator will be equal to [`end()`](/docs/std/containers/sets/set/end).
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Iterator to the first element.
+
+### Exceptions
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Difference between begin and cbegin
+
+For a const container `c`, begin and cbegin are the same - `c.begin() == c.cbegin()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <set>
+
+int main()
+{
+    std::set<int> set = {1, 2, 3, 4, 5};
+    auto it = set.begin(); // Type: std::set<int>::iterator
+    // highlight-next-line
+    *it = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <set>
+
+int main()
+{
+    std::set<int> set = {1, 2, 3, 4, 5};
+    auto it = set.cbegin(); // Type: std::set<int>::const_iterator
+    // error-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="begin" label="begin" default>
+
+```cpp
+#include <set>
+
+int main()
+{
+    const std::set<int> set = {1, 2, 3, 4, 5};
+    auto it = set.begin(); // Type: std::set<int>::const_iterator
+    // error-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="cbegin" label="cbegin" default>
+
+```cpp
+#include <set>
+
+int main()
+{
+    const std::set<int> set = {1, 2, 3, 4, 5};
+    auto it = set.cbegin(); // Type: std::set<int>::const_iterator
+    // error-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <set>
+ 
+int main() {
+  std::set<int> set = { 3, 1, 4, 1, 5, 9, 2, 6, 5 };
+  std::for_each(set.cbegin(), set.cend(), [](int x) {
+    std::cout << x << ' ';
+  });
+  std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1 2 3 4 5 6 9
+```
+
+</div>
+</Columns>

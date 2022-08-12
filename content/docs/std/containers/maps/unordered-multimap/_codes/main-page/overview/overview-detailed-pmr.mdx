@@ -6,7 +6,7 @@ namespace pmr {
         class Hash = std::hash<Key>,
         class KeyEqual = std::equal_to<Key>,
     >
-    using unordered_multimap = std::unordered_map<Key, Value, Hash, KeyEqual,
+    using unordered_multimap = std::unordered_multimap<Key, Value, Hash, KeyEqual,
                                 std::pmr::polymorphic_allocator<std::pair<const Key, Value>>>;
 }
 ```

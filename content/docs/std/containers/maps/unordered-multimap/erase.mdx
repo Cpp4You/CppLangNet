@@ -1,0 +1,122 @@
+---
+title:					unordered_multimap<...>::erase() method
+sidebar_label:			erase( )
+description:			unordered_multimap<...>::erase() method C++ documentation
+hide_title:				true
+tags:					[erase, remove, delete, unordered_multimap]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- erase() -->
+import Method_SinceCpp17 	from './_codes/erase/since-cpp11.mdx';
+import Method_SinceCpp23 	from './_codes/erase/since-cpp23.mdx';
+
+# std::unordered_multimap erase() method
+
+<SwitchView content={{
+    'since-cpp23': <Method_SinceCpp23 />,
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+ - **(1)** Removes the element at `pos`.
+ - **(2)** Removes the elements in the range **[ first; last )**, which must be a valid range in `*this`.
+ - **(3)** Removes the element (if one exists) with the key equivalent to `key`.
+ - **(4)** Removes the element (if one exists) with key that compares equivalent to the value `x`.
+   This overload participates in overload resolution only if `Hash::is_transparent` and `KeyEqual::is_transparent` are valid and each denotes a type,
+   and neither `iterator` nor `const_iterator` is implicitly convertible from `K`.
+   This assumes that such Hash is callable with both `K` and `Key` type, and that the `KeyEqual` is transparent, which, together, allows calling this function without constructing an instance of `Key`.
+
+
+The order of the elements that are not erased is preserved (this makes it possible to erase individual elements while iterating through the container).
+
+:::danger Invalidation
+**References** and **iterators** to the erased elements are invalidated.
+
+Other iterators and references are not invalidated.
+:::
+
+:::important Valid iterator
+The iterator pos must be valid and dereferenceable. Thus the [`end()`](/docs/std/containers/unordered-multimap/erase) iterator (which is valid, but is not dereferenceable) cannot be used as a value for `pos`.
+:::
+
+### Parameters
+
+ - `pos` - iterator to the element to remove
+ - `first, last` - range of elements to remove
+ - `key` - key value of the elements to remove
+ - `x` - a value of any type that can be transparently compared with a key denoting the elements to remove
+
+### Return value
+
+ - **(1-2)** - Iterator following the last removed element.
+ - **(3-4)** - Number of elements removed (**0** or **1**).
+
+### Complexity
+
+ - **(1)**  
+	Average case, constant - **O(1)**.  
+	Worst case, linear in size of the container - **O(size())**.
+
+ - **(2)**  
+	Average case, linear in `std::distance(first, last)` - **O(N)**, where **N** is `std::distance(first, last)`.  
+	Worst case, linear in size of the container - **O(size())**.
+
+ - **(3)**  
+	Average case, `count(key)` - **O(N)**, where **N** is `count(key)`.  
+	Worst case, linear in size of the container - **O(size())**.
+
+ - **(4)**  
+	Average case, `count(x)` - **O(N)**, where **N** is `count(x)`.  
+	Worst case, linear in size of the container - **O(size())**.
+
+### Exceptions
+
+ - **(1-2)** **(none)**
+ - **(3-4)** Any exceptions thrown by the `Hash` and `KeyEqual` object.
+
+### Notes
+
+Feature testing macro: [`__cpp_lib_associative_heterogeneous_erasure`](#) (for overload **(4)**).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <unordered_map>
+#include <iostream>
+int main()
+{
+    std::unordered_multimap<int, std::string> c = {
+        {1, "one" }, {2, "two" }, {3, "three"},
+        {4, "four"}, {5, "five"}, {6, "six"  }
+    };
+ 
+    // erase all odd numbers from c
+    for(auto it = c.begin(); it != c.end(); ) {
+        if(it->first % 2 != 0)
+            it = c.erase(it);
+        else
+            ++it;
+    }
+ 
+    for(auto& p : c) {
+        std::cout << p.second << ' ';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+two four six
+```
+
+</div>
+</Columns>

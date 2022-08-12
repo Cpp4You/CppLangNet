@@ -1,0 +1,30 @@
+---
+title:				set<...> destructor
+sidebar_label:		Destructor
+description:		set<...> destructor C++ documentation
+hide_title:			true
+tags:				[set, destruction, destructor]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+
+<!-- destructors -->
+import Method_SinceCpp98 	from './_codes/destructors/since-cpp98.mdx';
+
+# std::set destructor
+
+<SwitchView content={{
+        'since-cpp98': <Method_SinceCpp98 />,
+}} />
+
+Destructs the `set`.
+
+The destructors of the elements are called and the used storage is deallocated. 
+
+:::note
+If the elements are pointers, the pointed-to objects are not destroyed.
+:::
+
+### Complexity
+
+Linear in the size of the container - **O(size())**.

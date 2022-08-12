@@ -1,0 +1,14 @@
+```cpp
+// (1) Non const version only
+std::pair<iterator, bool> insert( const value_type& value );
+
+// (3) Non const version only
+iterator insert( iterator hint, const value_type& value );
+
+// (5) Non const version only
+template< class InputIt >
+void insert( InputIt first, InputIt last );
+
+// (6) Non const version only
+void insert( std::initializer_list<value_type> ilist );
+```

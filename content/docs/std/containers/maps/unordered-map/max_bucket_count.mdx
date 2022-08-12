@@ -1,0 +1,81 @@
+---
+title:					unordered_map<...>::max_bucket_count() method
+sidebar_label:			max_bucket_count( )
+description:			unordered_map<...>::max_bucket_count() method C++ documentation
+hide_title:				true
+tags:					[max_bucket_count, bucket, count, buckets]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- max_bucket_count() -->
+import Method_SinceCpp11 	from './_codes/max_bucket_count/since-cpp11.mdx';
+
+# std::unordered_map max_bucket_count() method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+Returns the maximum number of buckets the container is able to hold due to system or library implementation limitations.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Maximum number of buckets.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <unordered_map>
+ 
+int main()
+{
+    struct Ha { std::size_t operator()(long x) const { return std::hash<long>{}(x); }; };
+ 
+    auto c1 = std::unordered_map<char, long>{};
+    auto c2 = std::unordered_map<long, long>{};
+    auto c3 = std::unordered_map<long, long, std::hash<int>>{};
+    auto c4 = std::unordered_map<long, long, Ha>{};
+ 
+    std::cout
+        << "Max bucket count of\n" << std::hex << std::showbase
+        << "c1: " << c1.max_bucket_count() << '\n'
+        << "c2: " << c2.max_bucket_count() << '\n'
+        << "c3: " << c3.max_bucket_count() << '\n'
+        << "c4: " << c4.max_bucket_count() << '\n'
+        ;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+Max bucket count of
+c1: 0xfffffffffffffff
+c2: 0xfffffffffffffff
+c3: 0xfffffffffffffff
+c4: 0xaaaaaaaaaaaaaaa
+```
+
+</div>
+</Columns>

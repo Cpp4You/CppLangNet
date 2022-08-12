@@ -1,0 +1,50 @@
+---
+title:					multiset<...>::count() method
+sidebar_label:			count( )
+description:			multiset<...>::count() method C++ documentation
+hide_title:				true
+tags:					[multiset, count, exists, contains]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp98 	from './_codes/count/since-cpp98.mdx';
+import Method_SinceCpp14 	from './_codes/count/since-cpp14.mdx';
+
+# std::multiset count() method
+
+<SwitchView content={{
+    'since-cpp14': <Method_SinceCpp14 />,
+    'since-cpp98': <Method_SinceCpp98 />,
+    }} />
+
+Returns the number of elements with key that compares equivalent to the specified argument.
+
+- **(1)** Returns the number of elements with key `key`.
+- **(2)** Returns the number of elements with key that compares equivalent to the value `x`.
+    This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type.
+    They allow calling this function without constructing an instance of `Key`.
+
+### Parameters
+
+- `key` - key value of the elements to count
+- `x` - alternative value to compare to the keys
+
+### Return value
+
+Number of elements with key that compares equivalent to `key` or `x`.
+
+### Complexity
+
+Logarithmic in the size of the container plus linear in the number of the elements found - **O(log size() + N)**, where **N** is the number of elements found.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<ImproveSection />

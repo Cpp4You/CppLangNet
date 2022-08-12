@@ -1,0 +1,167 @@
+---
+title:					set<...>::rbegin() method
+sidebar_label:			rbegin( )
+description:		    set<...>::rbegin() method C++ documentation
+hide_title:				true
+tags:					[access, set, iterator, reverse, rbegin, begin]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- rbegin() -->
+import Method_UntilCpp11 	from './_codes/end/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/end/since-cpp11.mdx';
+
+# std::set rbegin() method
+
+<SwitchView content={{
+        'since-cpp11': <Method_SinceCpp11 />,
+        'until-cpp11': <Method_UntilCpp11 />,
+    }}/>
+
+Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the first element of the reversed vector.
+It corresponds to the last element of the non-reversed vector.
+
+:::note
+This method doesn't actually reverse the vector, it just returns an iterator that points to the last element of the vector,
+and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
+
+For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
+:::
+
+If the container is empty, the returned iterator will be equal to [`rend()`](/docs/std/containers/sets/set/rend).
+
+### Parameters
+
+(none)
+
+### Return value
+
+Reverse iterator to the first element.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Difference between rbegin and crbegin
+
+For a const container `c`, rbegin and crbegin are the same - `c.rbegin() == c.crbegin()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="rbegin" label="rbegin" default>
+
+```cpp
+#include <set>
+
+int main()
+{
+    std::set<int> set = {1, 2, 3, 4, 5};
+    auto it = set.rbegin(); // Type: std::set<int>::reverse_iterator
+    // highlight-next-line
+    *it = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="crbegin" label="crbegin" default>
+
+```cpp
+#include <set>
+
+int main()
+{
+    std::set<int> set = {1, 2, 3, 4, 5};
+    auto it = set.crbegin(); // Type: std::set<int>::const_reverse_iterator
+    // error-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="rbegin" label="rbegin" default>
+
+```cpp
+#include <set>
+
+int main()
+{
+    const std::set<int> set = {1, 2, 3, 4, 5};
+    auto it = set.rbegin(); // Type: std::set<int>::const_reverse_iterator
+    // error-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="crbegin" label="crbegin" default>
+
+```cpp
+#include <set>
+
+int main()
+{
+    const std::set<int> set = {1, 2, 3, 4, 5};
+    auto it = set.crbegin(); // Type: std::set<int>::const_reverse_iterator
+    // error-next-line
+    *it = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <set>
+ 
+int main()
+{
+    std::set<unsigned> rep{1, 2, 3, 4, 1, 2, 3, 4};
+ 
+    for (auto it = rep.crbegin(); it != rep.crend(); ++it) {
+        for (auto n = *it; n > 0; --n)
+            std::cout << "⏼" << ' ';
+        std::cout << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+⏼ ⏼ ⏼ ⏼ 
+⏼ ⏼ ⏼ 
+⏼ ⏼ 
+⏼
+```
+
+</div>
+</Columns>
