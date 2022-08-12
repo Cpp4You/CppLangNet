@@ -1,0 +1,6 @@
+**(1)** Inserts `value_type(key, T())` if the key does not exist. This function is equivalent to return `insert(std::make_pair(key, T())).first->second`
+If an insertion is performed, the mapped value is value-initialized (default-constructed for class types, zero-initialized otherwise) and a reference to it is returned.
+    
+### Type requirements
+ - `key_type` must meet the requirements of [**CopyConstructible**](/docs/named_req/CopyConstructible).
+ - `mapped_type` must meet the requirements of [**CopyConstructible**](/docs/named_req/CopyConstructible) and [**DefaultConstructible**](/docs/named_req/DefaultConstructible).

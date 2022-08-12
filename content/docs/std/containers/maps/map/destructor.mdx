@@ -1,0 +1,27 @@
+---
+title:					map<...> destructor
+sidebar_label:			Destructor
+description:			map<...> destructor C++ documentation
+hide_title:				true
+tags:					[destructor, destroy]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- destructors -->
+
+import Method_SinceCpp98 	from './_codes/destructors/since-cpp98.mdx';
+
+# std::map destructors
+
+<SwitchView content={{
+		'since-cpp98': <Method_SinceCpp98 />
+	}}/>
+
+Destructs the map. The destructors of the elements are called and the used storage is deallocated. Note, that if the elements are pointers, the pointed-to objects are not destroyed.
+
+### Complexity
+
+Linear in the size of the container - **O(size())**.

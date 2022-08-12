@@ -1,0 +1,52 @@
+---
+title:					multiset<...>::upper_bound() method
+sidebar_label:			upper_bound( )
+description:			multiset<...>::upper_bound() method C++ documentation
+hide_title:				true
+tags:					[multiset, upper_bound, more, greater]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp98 	from './_codes/upper_bound/since-cpp98.mdx';
+import Method_SinceCpp14 	from './_codes/upper_bound/since-cpp14.mdx';
+
+# std::multiset upper_bound() method
+
+<SwitchView content={{
+    'since-cpp14': <Method_SinceCpp14 />,
+    'since-cpp98': <Method_SinceCpp98 />,
+    }} />
+
+ - **(1-2)** Returns an iterator pointing to the first element that is *greater* than `key`.
+ - **(3-4)** Returns an iterator pointing to the first element that compares *greater* to the value `x`.
+    This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type.
+    It allows calling this function without constructing an instance of `Key`.
+
+### Parameters
+
+- `key` - key value of the elements to count
+- `x` - a value of any type that can be transparently compared with a key
+
+### Return value
+
+Iterator pointing to the first element that is **greater** than `key`. If no such element is found, a past-the-end iterator (see [`end()`](/docs/std/containers/multisets/multiset/end)) is returned.
+
+### Complexity
+
+Logarithmic in the size of the container - **O(log size())**.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+Feature testing macro: [`__cpp_lib_generic_associative_lookup`](#) (for overloads **(3)** and **(4)**).
+
+### Example
+
+<ImproveSection />

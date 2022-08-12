@@ -1,0 +1,89 @@
+---
+title:					map<...>::operator[]
+sidebar_label:			operator[]
+description:			map<...>::operator[] C++ documentation
+hide_title:				true
+tags:					[subscript, access, map, key]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip					from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- operator[] -->
+
+import Explanation_UntilCpp11   from './_codes/operator_subscript/explanation/until-cpp11.mdx';
+import Explanation_SinceCpp11   from './_codes/operator_subscript/explanation/since-cpp11.mdx';
+import Method_SinceCpp98 	from './_codes/operator_subscript/since-cpp98.mdx';
+import Method_SinceCpp11 	from './_codes/operator_subscript/since-cpp11.mdx';
+
+# std::map operator[]
+
+<SwitchView content={{
+		'since-cpp11': <Method_SinceCpp11 />,
+		'since-cpp98': <Method_SinceCpp98 />,
+	}}/>
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the value that is mapped to a key equivalent to key,
+performing an insertion if such key does not already exist.
+
+<SwitchView content={{
+		'since-cpp11': <Explanation_SinceCpp11 />,
+		'until-cpp11': <Explanation_UntilCpp11 />,
+	}}/>
+
+### Parameters
+
+- `key` - the key of the element to find
+
+### Return value
+
+<!-- TODO add tooltip to mapped value -->
+<Tooltip title={Term_ContAlias_Reference}>Reference</Tooltip> to the mapped value of the new element if no element with key key existed.
+Otherwise a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the mapped value of the existing element whose key is equivalent to key.
+
+### Exceptions
+
+If an exception is thrown by any operation, the insertion has no effect.
+
+### Complexity
+
+Logarithmic in the size of the container.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <map>
+
+auto main() -> int {
+	std::map<std::string, int> playersScores = {
+		{ "player1", 50 },
+		{ "super_coder", 100 },
+		{ "andrew111", 41 }
+	};
+
+	std::cout << "player1 zdobył " << playersScores["player1"] << " punktów.\n";
+
+	std::cout << "super_cader zdobył " << playersScores["super_cader"] << " punktów.\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+player1 zdobył 50 punktów.
+super_cader zdobył 0 punktów.
+```
+
+</div>
+</Columns>

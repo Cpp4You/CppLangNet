@@ -1,0 +1,74 @@
+---
+sidebar_position:   3
+title:              Abs
+sidebar_label:      std::abs
+description:        Standard abs functions
+tags:               [math, abs]
+# slug:               /std/math/mathematical_functions/abs/
+hide_title:         true
+---
+ 
+import SwitchView   from "@site-comps/SwitchView";
+import Columns		from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import Abs_Function_Declaration_Cpp98_Simple            from "./abs/_codes/abs_function_declaration/cpp98.mdx";
+import Abs_Function_Declaration_Cpp11_Simple            from "./abs/_codes/abs_function_declaration/cpp11.mdx";
+
+# Abs
+
+Defined in headers `<cstdlib>`, `<cmath>`.
+
+### Description
+
+Computes the absolute value of an integer number. The behavior is undefined if the result cannot be represented by the return type.
+
+### Declarations 
+<SwitchView content={{
+    "cpp98" : <Abs_Function_Declaration_Cpp98_Simple />,
+    "cpp11": <Abs_Function_Declaration_Cpp11_Simple />,
+}}/>
+
+### Parameters
+`n` - Integral value.
+
+### Return Value
+The absolute value of n.
+
+### Examples
+
+Here we find the absolute values of the negatives 5 and 2371041 using the abs function from cstdlib.
+<Columns spacing="20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <cstdlib>
+
+int main() {
+
+  std::cout << "Abs value of -5: " 
+            << abs(-5);
+  std::cout << "Abs value of -2371041: " 
+            << abs(-2371041);
+
+  return 0;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+Abs value of -5: 5
+Abs value of -2371041: 2371041
+```
+
+</div>
+</Columns>
+
+:::danger
+No-throw guarantee: this function throws no exceptions.
+
+If the result cannot be represented by the returned type (such as <code>abs(INT_MIN)</code> in an implementation with two's complement signed values), it causes undefined behavior.
+:::
