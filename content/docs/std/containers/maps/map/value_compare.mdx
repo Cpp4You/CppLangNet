@@ -1,0 +1,80 @@
+---
+title:					map<...>::value_compare member class
+sidebar_label:			value_compare
+description:			map<...>::value_compare member class C++ documentation
+hide_title:				true
+tags:					[compare, member, value_comp, value, comp]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp98 	from './_codes/value_compare/since-cpp98.mdx';
+
+import ValueComp_Constructor 	from './_codes/value_compare/other/value-comp-constructor.mdx';
+import ValueComp_CallOperator 	from './_codes/value_compare/other/value-comp-call-operator.mdx';
+
+# std::map value_compare
+
+<SwitchView content={{
+    'since-cpp98': <Method_SinceCpp98 />,
+    }} />
+
+`value_compare` is a function object that compares objects of type `value_type` (key-value pairs) by comparing of the first components of the pairs.
+
+### Member types
+
+<SymbolTable noTraits>
+	<Symbol name={<b><center>Type</center></b>} desc={<b><center>Definition</center></b>}/>
+	<Symbol
+			name={<>result_type <small>(deprecated in C++17) (removed in C++20)</small></>} 
+			desc={<code>bool</code>}
+		/>
+	<Symbol
+			name={<>first_argument_type <small>(deprecated in C++17) (removed in C++20)</small></>}
+			desc={<code>value_type</code>}
+		/>
+	<Symbol
+			name={<>second_argument_type <small>(deprecated in C++17) (removed in C++20)</small></>}
+			desc={<code>value_type</code>}
+		/>
+</SymbolTable>
+
+<SwitchView content={{
+		'until-cpp11': <>
+				These member types are obtained via publicly inheriting <code>std::binary_function&lt;value_type, value_type, bool&gt;</code>.
+		</>
+	}}/>
+
+### Protected member objects
+
+<SymbolTable>
+	<Symbol prot name={<><code>Compare</code> comp</>} desc="the stored comparator"/>
+</SymbolTable>
+
+### Member functions
+
+<details>
+	<summary>
+		<SymbolTable>
+			<Symbol prot name={<b>(constructor)</b>} desc={<>constructs a new <code>value_compare</code> object</>}/>
+		</SymbolTable>
+	</summary>
+	<div>
+		<ValueComp_Constructor />
+	</div>
+</details>
+
+<details>
+	<summary>
+		<SymbolTable>
+			<Symbol pub name="operator()" desc={<>compares two values of type <code>value_type</code></>}/>
+		</SymbolTable>
+	</summary>
+	<div>
+		<ValueComp_CallOperator />
+	</div>
+</details>

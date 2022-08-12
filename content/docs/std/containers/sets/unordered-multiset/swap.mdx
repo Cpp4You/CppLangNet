@@ -1,0 +1,108 @@
+---
+title:					unordered_multiset<...>::swap() method
+sidebar_label:			swap( )
+description:			unordered_multiset<...>::swap() method C++ documentation
+hide_title:				true
+tags:					[swap, exchange, unordered_multiset]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- swap() -->
+import Method_SinceCpp17 	from './_codes/swap/since-cpp17.mdx';
+import Method_UntilCpp17 	from './_codes/swap/until-cpp17.mdx';
+
+
+import NoexceptSpecification_SinceCpp17 from './_codes/swap/noexcept-specification/since-cpp17.mdx';
+import PropagateOnContainerChangNote_SineCpp11 from './_codes/swap/explanation/propagate-on-container-change-note-since-cpp11.mdx';
+
+# std::unordered_multiset swap() method
+
+<SwitchView content={{
+    'since-cpp17': <Method_SinceCpp17 />,
+    'until-cpp17': <Method_UntilCpp17 />
+    }} />
+
+Exchanges the contents of the container with those of `other`. Does not invoke any move, copy, or swap operations on individual elements.
+
+All iterators and references remain valid. 
+
+:::danger Invalidation
+The past-the-end iterator is invalidated.
+:::
+
+The `Hash` and `KeyEqual` objects must be [`Swappable`](/docs/named_req/Swappable), and they are exchanged using unqualified calls to non-member swap.
+
+<SwitchView content={{
+    'since-cpp11': <PropagateOnContainerChangNote_SineCpp11 />,
+    }} />
+
+### Parameters
+
+ - `other` - container to exchange the contents with
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+<SwitchView content={{
+    'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
+    'until-cpp17': <>
+        Any exception thrown by the swap of the <code>Hash</code> or <code>KeyEqual</code> objects.
+    </>
+    }} />
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <unordered_set>
+ 
+template<class Os, class Co> Os& operator<<(Os& os, const Co& co) {
+    os << "{";
+    for (auto const& i : co) { os << ' ' << i; }
+    return os << " } ";
+}
+ 
+int main()
+{
+    std::unordered_multiset<int> a1{3, 1, 3, 2}, a2{5, 4, 5};
+ 
+    auto it1 = std::next(a1.begin());
+    auto it2 = std::next(a2.begin());
+ 
+    const int& ref1 = *(a1.begin());
+    const int& ref2 = *(a2.begin());
+ 
+    std::cout << a1 << a2 << *it1 << ' ' << *it2 << ' ' << ref1 << ' ' << ref2 << '\n';
+    a1.swap(a2);
+    std::cout << a1 << a2 << *it1 << ' ' << *it2 << ' ' << ref1 << ' ' << ref2 << '\n';
+ 
+    // Note that every iterator referring to an element in one container before the swap
+    // refers to the same element in the other container after the swap. Same is true
+    // for references.
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+{ 2 3 3 1 } { 4 5 5 } 3 5 2 4
+{ 4 5 5 } { 2 3 3 1 } 3 5 2 4
+```
+
+</div>
+</Columns>

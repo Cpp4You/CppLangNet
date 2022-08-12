@@ -1,0 +1,110 @@
+### Deduction guides
+```cpp
+// (1)
+template< class InputIt, class Alloc >
+unordered_multiset( InputIt, InputIt, Alloc )
+  -> unordered_multiset<iter_key_t<InputIt>, iter_val_t<InputIt>,
+            std::hash<iter_key_t<InputIt>>,
+            std::equal_to<iter_key_t<InputIt>>, Alloc>;
+```
+```cpp
+// (2)
+template< class InputIt, class Hash, class Alloc >
+unordered_multiset( InputIt, InputIt, typename /*see below*/::size_type, Hash, Alloc )
+  -> unordered_multiset<iter_key_t<InputIt>, iter_val_t<InputIt>, Hash,
+              std::equal_to<iter_key_t<InputIt>>, Alloc>;
+```
+```cpp
+// (3)
+template< class InputIt, class Alloc >
+unordered_multiset( InputIt, InputIt, typename /*see below*/::size_type, Alloc )
+  -> unordered_multiset<iter_key_t<InputIt>, iter_val_t<InputIt>,
+           std::hash<iter_key_t<InputIt>>,
+           std::equal_to<iter_key_t<InputIt>>, Alloc>;
+```
+```cpp
+// (4)
+template< class InputIt,
+          class Hash = std::hash<iter_key_t<InputIt>>,
+          class Pred = std::equal_to<iter_key_t<InputIt>>,
+          class Alloc = std::allocator<iter_to_alloc_t<InputIt>>>
+unordered_multiset( InputIt, InputIt,
+         typename /*see below*/::size_type = /*see below*/,
+         Hash = Hash(), Pred = Pred(), Alloc = Alloc() )
+  -> unordered_multiset<iter_key_t<InputIt>, iter_val_t<InputIt>, Hash, Pred, Alloc>;
+```
+> *`(1 - 4)`* allow deduction from an **iterator range**
+
+```cpp
+// (5)
+template< class Key, class T, typename Alloc >
+unordered_multiset( std::initializer_list<std::pair<Key, T>>, Alloc )
+  -> unordered_multiset<Key, T, std::hash<Key>, std::equal_to<Key>, Alloc>;
+```
+```cpp
+// (6)
+template< class Key, class T, class Hash, class Alloc >
+unordered_multiset( std::initializer_list<std::pair<Key, T>>,
+       typename /*see below*/::size_type, Hash, Alloc )
+  -> unordered_multiset<Key, T, Hash, std::equal_to<Key>, Alloc>;
+```
+```cpp
+// (7)
+template< class Key, class T, typename Alloc >
+unordered_multiset( std::initializer_list<std::pair<Key, T>>,
+     typename /*see below*/::size_type, Alloc )
+  -> unordered_multiset<Key, T, std::hash<Key>, std::equal_to<Key>, Alloc>;
+```
+```cpp
+// (8)
+template< class Key, class T, class Hash = std::hash<Key>,
+          class Pred = std::equal_to<Key>,
+          class Alloc = std::allocator<std::pair<const Key, T>> >
+unordered_multiset( std::initializer_list<std::pair<Key, T>>,
+         typename /*see below*/::size_type = /*see below*/,
+         Hash = Hash(), Pred = Pred(), Alloc = Alloc() )
+-> unordered_multiset<Key, T, Hash, Pred, Alloc>;
+```
+> *`(5 - 8)`* allow deduction from a [**`std::initializer_list`**](#)
+
+Aliases `iter_key_t`, `iter_val_t` and `iter_to_alloc_t` are defined as if follows:
+```cpp
+template< class InputIt >
+using iter_key_t = std::remove_const_t<
+                     typename std::iterator_traits<InputIt>::value_type::first_type>;
+```
+```cpp
+template< class InputIt >
+using iter_val_t = typename std::iterator_traits<InputIt>::value_type::second_type;
+```
+```cpp
+template< class InputIt >
+using iter_to_alloc_t = std::pair<
+  std::add_const_t<typename std::iterator_traits<InputIt>::value_type::first_type>,
+  typename std::iterator_traits<InputIt>::value_type::second_type
+>
+```
+:::note
+Note that these aliases aren't guaranteed to be found anywhere in the standard library. 
+They are defined solely for presentation purposes of these deduction guides and weren't
+present in the standard library at the point of writing of this document.
+:::
+
+### Overload resolution
+In order for any of the deduction guides to participate in overload resolution,
+the folllowing requirements must be met:
+ - `InputIt` satisfies [`LegacyInputIterator`](#)
+ - `Alloc` satisfies [`Allocator`](#)
+ - `Hash` doesn't deduce to an integral type or doesn't satisfy [`Allocator`](#)
+ - `Pred` doesn't satisfy [`Allocator`](#)
+
+:::note
+The extent to which the library determines that a type does not satisfy [`LegacyInputIterator`](#) is **unspecified**,
+except that as a minimum:
+ - Integral types do not qualify as input iterators. 
+
+Likewise, the extent to which it determines that a type does not satisfy [`Allocator`](#) is **unspecified**,
+except that as a minimum:
+ - The member type `Alloc::value_type` must exist.
+ - The expression [`std::declval<Alloc&>().allocate(std::size_t{})`](#) must be well-formed when treated as an unevaluated operand.
+:::

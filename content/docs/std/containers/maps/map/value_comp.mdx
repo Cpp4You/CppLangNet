@@ -1,0 +1,105 @@
+---
+title:					map<...>::value_comp() method
+sidebar_label:			value_comp( )
+description:			map<...>::value_comp() method C++ documentation
+hide_title:				true
+tags:					[compare, value_comp, value, comp]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp98 	from './_codes/value_comp/since-cpp98.mdx';
+
+# std::map value_comp() method
+
+<SwitchView content={{
+    'since-cpp98': <Method_SinceCpp98 />,
+    }} />
+
+Returns a function object that compares objects of type `value_type` (key-value pairs) by using [`key_comp()`](/docs/std/containers/maps/map/key_comp) to compare the first components of the pairs.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+The value comparision function object.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <map>
+#include <iterator>
+#include <iostream>
+#include <utility>
+#include <initializer_list>
+ 
+void print(auto const comment, auto const& container)
+{
+    auto size = std::size(container);
+    std::cout << comment << "{ ";
+    for (auto const& [key, value]: container)
+        std::cout << '{' << key << ',' << value << (--size ? "}, " : "} ");
+    std::cout << "}\n";
+}
+ 
+int main()
+{
+    std::map<int, int> x { {1,1}, {2,2}, {3,3} }, y, z;
+    const auto w = { std::pair<const int, int>{4,4}, {5,5}, {6,6}, {7,7} };
+ 
+    std::cout << "Initially:\n";
+    print("x = ", x);
+    print("y = ", y);
+    print("z = ", z);
+ 
+    std::cout << "Copy assignment copies data from x to y:\n";
+    y = x;
+    print("x = ", x);
+    print("y = ", y);
+ 
+    std::cout << "Move assignment moves data from x to z, modifying both x and z:\n";
+    z = std::move(x);
+    print("x = ", x);
+    print("z = ", z);
+ 
+    std::cout << "Assignment of initializer_list w to z:\n";
+    z = w;
+    print("w = ", w);
+    print("z = ", z);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Initially:
+x = { {1,1}, {2,2}, {3,3} }
+y = { }
+z = { }
+Copy assignment copies data from x to y:
+x = { {1,1}, {2,2}, {3,3} }
+y = { {1,1}, {2,2}, {3,3} }
+Move assignment moves data from x to z, modifying both x and z:
+x = { }
+z = { {1,1}, {2,2}, {3,3} }
+Assignment of initializer_list w to z:
+w = { {4,4}, {5,5}, {6,6}, {7,7} }
+z = { {4,4}, {5,5}, {6,6}, {7,7} }
+```
+
+</div>
+</Columns>

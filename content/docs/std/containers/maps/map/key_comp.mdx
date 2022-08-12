@@ -1,0 +1,95 @@
+---
+title:					map<...>::key_comp() method
+sidebar_label:			key_comp( )
+description:			map<...>::key_comp() method C++ documentation
+hide_title:				true
+tags:					[compare, key_comp, key, comp]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- key_comp() -->
+import Method_SinceCpp98 	from './_codes/key_comp/since-cpp98.mdx';
+
+# std::map key_comp() method
+
+<SwitchView content={{
+    'since-cpp98': <Method_SinceCpp98 />,
+    }} />
+
+Returns the function object that compares the keys, which is a copy of this container's [`constructor`](/docs/std/containers/maps/map/constructors) argument `comp`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+The key comparison function object.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cassert>
+#include <iostream>
+#include <map>
+ 
+// Example module 97 key compare function
+struct ModCmp {
+    bool operator()(const int lhs, const int rhs) const
+    {
+        return (lhs % 97) < (rhs % 97);
+    }
+};
+ 
+int main()
+{
+    std::map<int, char, ModCmp> cont;
+    cont = { { 1, 'a' }, { 2, 'b' }, { 3, 'c' }, { 4, 'd' }, { 5, 'e' } };
+ 
+    auto comp_func = cont.key_comp();
+ 
+    for (auto it : cont) {
+        bool before = comp_func(it.first, 100);
+        bool after = comp_func(100, it.first);
+ 
+        std::cout << '(' << it.first << ',' << it.second;
+        if (!before && !after)
+            std::cout << ") equivalent to key 100\n";
+        else if (before)
+            std::cout << ") goes before key 100\n";
+        else if (after)
+            std::cout << ") goes after key 100\n";
+        else
+            assert(0); // Cannot happen
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+(1,a) goes before key 100
+(2,b) goes before key 100
+(3,c) equivalent to key 100
+(4,d) goes after key 100
+(5,e) goes after key 100
+```
+
+</div>
+</Columns>
