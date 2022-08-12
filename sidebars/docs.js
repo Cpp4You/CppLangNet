@@ -237,7 +237,8 @@ module.exports = {
 									'm:value_comp',
 								]),
 								docsClass('std/containers/maps/multimap'),
-								docsClassCat('unordered_map', 'std/containers/maps/unordered-map', '', [
+								docsClass('std/containers/maps/unordered_map'),
+								docsClassCat('unordered-multimap', 'std/containers/maps/unordered-multimap', '', [
 									'constructors',
 									'destructors',
 									'op:operator_assign',
@@ -251,21 +252,16 @@ module.exports = {
 									'm:max_size',
 									cat('Modifiers'),
 									'm:clear',
-									'm:insert',
-									['m:insert_or_assign', 'since-cpp17'],
-									'm:emplace',
+									'm:insert',									'm:emplace',
 									'm:emplace_hint',
-									['m:try_emplace', 'since-cpp17'],
 									'm:erase',
 									'm:swap',
-									'm:extract',
-									'm:merge',
+									['m:extract', 'since-cpp17'],
+									['m:merge', 'since-cpp17'],
 									cat('Lookup'),
-									'm:at',
-									'op:operator_subscript',
 									'm:count',
 									'm:find',
-									['m:contains', 'since-cpp20'],
+									'm:contains',
 									'm:equal_range',
 									cat('Bucket interface'),
 									'm:begin_size_type',
@@ -281,9 +277,8 @@ module.exports = {
 									'm:reserve',
 									cat('Observers'),
 									'm:hash_function',
-									'm:key_eq',
-								]),
-								docsClass('std/containers/maps/unordered_multimap'),
+									'm:key_eq'
+								])
 							]
 						},
 						{

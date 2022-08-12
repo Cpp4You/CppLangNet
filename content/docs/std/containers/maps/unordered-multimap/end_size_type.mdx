@@ -1,0 +1,47 @@
+---
+title:					unordered_multimap<...>::end( size_type ) method
+sidebar_label:			end( size_type )
+description:			unordered_multimap<...>::end( size_type ) method C++ documentation
+hide_title:				true
+tags:					[iterator, access, bucket]
+---
+
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- end( size_type ) -->
+import Method_SinceCpp11 	from './_codes/end_size_type/since-cpp11.mdx';
+
+# std::unordered_multimap end( size_type ) method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+Returns an iterator to the element following the last element of the bucket with index `n`.
+
+:::danger Placeholder
+This element acts as a placeholder, attempting to access it results in **undefined behavior**.
+:::
+
+### Parameters
+
+ - `n` - the index of the bucket to access
+
+### Return value
+
+Iterator to the element **following** the last element.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Examples
+
+<ImproveSection />

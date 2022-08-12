@@ -1,0 +1,78 @@
+---
+title:					unordered_multimap<...>::contains() method
+sidebar_label:			contains( )
+description:			unordered_multimap<...>::contains() method C++ documentation
+hide_title:				true
+tags:					[contains, existence, exists]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- contains() -->
+import Method_SinceCpp20 	from './_codes/contains/since-cpp20.mdx';
+
+# std::unordered_multimap contains() method
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+    }} />
+
+ - **(1)** Checks if there is an element with key equivalent to `key` in the container.
+ - **(2)** Checks if there is an element with key that compares equivalent to the value `x`.
+    This overload participates in overload resolution only if `Hash::is_transparent` and `KeyEqual::is_transparent` are valid and each denotes a type.
+    This assumes that such `Hash` is callable with both `K` and `Key` type, and that the `KeyEqual` is transparent, which, together, allows calling this function without constructing an instance of `Key`.
+
+### Parameters
+
+ - `key` - key value of the elements to count
+ - `x` - a value of any type that can be transparently compared with a key
+
+### Return value
+
+`true` if there is such an element, otherwise `false`.
+
+### Complexity
+
+Average case, constant - **O(1)**.  
+Worst case, linear in size of the container - **O(size())**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <unordered_map>
+ 
+int main()
+{
+    std::unordered_multimap<int,char> example = {{1,'a'},{2,'b'}};
+ 
+    for(int x: {2, 5}) {
+        if(example.contains(x)) {
+            std::cout << x << ": Found\n";
+        } else {
+            std::cout << x << ": Not found\n";
+        }
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+2: Found
+5: Not found
+```
+
+</div>
+</Columns>
