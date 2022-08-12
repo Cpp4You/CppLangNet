@@ -1,0 +1,4 @@
+```cpp
+// (1) Non const version only
+multimap& operator=( const multimap& other );
+```

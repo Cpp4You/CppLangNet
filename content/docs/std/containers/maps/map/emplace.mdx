@@ -1,0 +1,98 @@
+---
+title:					map<...>::emplace() method
+sidebar_label:			emplace( )
+description:			map<...>::emplace() method C++ documentation
+hide_title:				true
+tags:					[map, emplace, insert, add]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+<!-- emplace() -->
+import Method_SinceCpp11 	from './_codes/emplace/since-cpp11.mdx';
+
+# std::map emplace() method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+Inserts a new element into the container constructed in-place with the given args if there is no element with the key in the container.
+
+Careful use of emplace allows the new element to be constructed while avoiding unnecessary copy or move operations.
+The constructor of the new element (i.e. `std::pair<const Key, T>`) is called with exactly the same arguments as supplied to emplace,
+forwarded via `std::forward<Args>(args)...`.
+The element may be constructed even if there already is an element with the key in the container, in which case the newly constructed element will be destroyed immediately.
+
+No iterators or references are invalidated.
+
+### Parameters
+
+ - `args` - arguments to forward to the constructor of the element
+
+### Return value
+
+Returns a pair consisting of an iterator to the inserted element, or the already-existing element if no insertion happened,
+and a `bool` denoting whether the insertion took place (`true` if insertion happened, `false` if it did not).
+
+### Complexity
+
+Logarithmic in the size of the container - **O(log size())**.
+
+### Exceptions
+
+If an exception is thrown by any operation, this function has no effect (strong exception guarantee).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <utility>
+#include <string>
+#include <map>
+ 
+int main()
+{
+    std::map<std::string, std::string> m;
+ 
+    // uses pair's move constructor
+    m.emplace(std::make_pair(std::string("a"), std::string("a")));
+ 
+    // uses pair's converting move constructor
+    m.emplace(std::make_pair("b", "abcd"));
+ 
+    // uses pair's template constructor
+    m.emplace("d", "ddd");
+ 
+    // uses pair's piecewise constructor
+    m.emplace(std::piecewise_construct,
+              std::forward_as_tuple("c"),
+              std::forward_as_tuple(10, 'c'));
+    // as of C++17, m.try_emplace("c", 10, 'c'); can be used
+ 
+    for (const auto &p : m) {
+        std::cout << p.first << " => " << p.second << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+a => a
+b => abcd
+c => cccccccccc
+d => ddd
+```
+
+</div>
+</Columns>

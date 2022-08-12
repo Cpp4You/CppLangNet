@@ -1,13 +1,316 @@
 ---
 sidebar_position: 5
-title: Emacs setup for C++ Development
+title: Emacs setup
 description:		Learn how to setup Emacs for coding in C++ Compiler easily.
-tags:				[editor, tool, emacs]
+tags:				[editor, tool, emacs, lsp-mode, linux]
 hide_title:			true
 ---
 
+import Image from '@site-comps/Image';
+
 # Emacs setup
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+In this article, we will discuss how to setup Emacs for C++ development on Linux easily.
 
-<NotFinished/>
+## Introduction
+
+Emacs is one of the oldest and most versatile text editors available for Linux and
+UNIX-based systems. It’s been around for a long time (more than twenty years for GNU emacs)
+and is well known for its powerful and rich editing features. Emacs is also more than just
+a text editor; it can be customized and extended with different “modes”, enabling it to be
+used like an Integrated Development Environment (IDE) for programming languages like C++, Java,
+C or Python.
+
+In this article, we will be configuring `lsp-mode` (Language Server Protocol) of emacs for
+C++ development. It is advised to learn the basic keybinds like saving a file, searchin a file,
+searching in a file, etc of Emacs before satrting using it.
+
+:::important Note
+This article for setting up Emacs is deicated to novice programmers who want to do C++ development
+in Emacs. After configuring Emacs according to this article, user will be able to get basic
+functionality like Code-Completion, Real-time Syntax checking, Code Navigation etc.
+For advance configuration of `lsp-mode` for C++ development, refer [here](https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/)
+:::
+
+
+## Downloading and Installing
+
+We will be installing Emacs from terminal in Linux.
+
+First, we have to open up the terminal; we can use the shortcut
+`Ctrl` + `Alt` + `t` or we can manually open it up by searching it in
+the menu
+
+**Command 1:** To begin, update the packages list using the below command
+```
+sudo apt-get update
+```
+This command is used to download package information from all configured
+sources and to get the info of the updated versions of the packages.
+
+:::important Note
+**sudo** *(Super User DO)* enables a permitted user to run a command as
+the *superuser* or another user, depending on the security policy. So,
+if required, enter your system password to proceed.
+:::
+
+**Command 2:** Now we will download Emacs by the following command
+```
+sudo apt-get install emacs
+```
+If required enter your system *password* to proceed.
+After download, you can check if Emacs is successfully installed in your
+system
+```
+emacs --version
+```
+If installed successfully, output would be like this
+
+**Output:**
+
+<Image center
+       alt="Output for `emacs --version`"
+       src="/img/tutorials/tools/emacs-version.jpg"
+    />
+
+
+Now we're good to customize Emacs, just open the *intitialization* file of Emacs
+```
+cd ~/.emacs.d && emacs init.el
+```
+All the customizing code for Emacs will be written in `init.el` file.
+
+:::important Note
+Every time when it is mentioned here to save the file, it is meant to execute
+`C-x``C-s` (`Control + x`, then `Control + s`) keybind and every time when it is
+mentioned here to execute the latest command/code from Emacs, it is meant to
+execute `C-x``C-e` (`Control + x`, then `Control + e`) with cursor at the very end of the command/code.
+:::
+
+
+## Setting up MELPA and `use-package`
+
+### Setting up MELPA
+MELPA (Milkypostman's Emacs Lisp Package Archive) is an ELPA-compatible package repository
+that contains an enormous amount of useful Emacs packages.
+Add the following code and execute it in order to download other packages required to configure
+Emacs for C++ Development.
+
+```lisp title="init.el"
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives
+	     '("melpa" . "https://melpa.org/packages/")
+	     '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(package-initialize)
+```
+After executing the above lines of code, 5000+ packages will be available to you for downloading
+inside emacs. You can see them by running following command
+```
+M-x package-list-packages RET
+```
+
+**Output:**
+<Image center
+       alt="List of packages in Emacs"
+       src="/img/tutorials/tools/package-list.jpg"
+    />
+
+
+### Setting up `use-package`
+
+Add following code in `init.el` and execute it.
+```lisp title="init.el"
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+```
+Now we will be using `use-package` to download and install any other package for emacs. `use-package`
+is a very popular package to organize the Emacs configuration and load the installed packages efficiently.
+
+
+Copy the following code inside the `inti.el` file for downloading and installing the required packages for
+C++ development inside Emacs.
+```lisp title="init.el"
+(use-package lsp-mode
+  :ensure t
+  :hook ((lsp-mode . lsp-enable-which-key-integration))
+  :config (setq lsp-completion-enable-additional-text-edit nil))
+(use-package lsp-ui
+  :commands lsp-ui-mode
+  :ensure t)
+(use-package ccls
+  :ensure t
+  :config
+  (setq ccls-executable "ccls")
+  (setq lsp-prefer-flymake nil)
+  (setq-default flycheck-disabled-checkers '(c/c++-clang c/c++-cppcheck c/c++-gcc))
+  :hook ((c-mode c++-mode objc-mode) .
+         (lambda () (require 'ccls) (lsp))))
+(use-package flycheck
+  :ensure t)
+(use-package yasnippet
+  :ensure t
+  :config (yas-global-mode))
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+(use-package helm-lsp
+  :ensure t)
+(use-package helm
+  :ensure t
+  :config (helm-mode))
+(use-package lsp-treemacs
+  :ensure t)
+
+;;; This will enable emacs to compile a simple cpp single file without any makefile by just pressing [f9] key
+(defun code-compile()
+  (interactive)
+  (unless (file-exists-p "Makefile")
+    (set (make-local-variable 'compile-command)
+	 (let ((file (file-name-nondirectory buffer-file-name)))
+	   (format "%s -o %s %s"
+		   (if (equal (file-name-extension file) "cpp") "g++" "gcc")
+		   (file-name-sans-extension file)
+		   file)))
+    (compile compile-command)))
+(global-set-key [f9] 'code-compile)
+```
+For properly identing the whole file hit `C-x h`, this will select whole file and then hit `TAB`.
+Now save the file and exit the emacs (`C-x C-c`).
+
+
+Now make a `.cpp` file (like `a.cpp` but not in `.emacs.d/` directory). I recommend to create a directory
+dedicated to programming only and there create the file. First on opening the Emacs, many packages will get
+downloaded and get installed which can take some time. After that, `lsp-mode` will seek the language server
+for cpp development and since this is the first time startup of the emacs after `lsp-mode` installation,
+it will ask to download the required language server for cpp, that is, `clangd`. Below is the snapshot of
+Emacs asking to download `clangd` server.
+
+<Image center
+       alt="Prompt for downloading clangd inside Emacs"
+       src="/img/tutorials/tools/emacs-clangd-server.jpg"
+    />
+
+
+After downloading `clangd` server, run treemacs command by entering minibuffer (`M-x treemacs`)
+(`M-x` means `Alt + x` or `ESC + x`).
+
+When the command is run from minibuffer, output would be like this:-
+
+**Output:**
+<Image center
+       alt="Before initializing treemacs"
+       src="/img/tutorials/tools/before-treemacs-init.jpg"
+    />
+
+
+Select the required directory from the provided options. In my case, my directory name is `Coding/` which
+contains `Java/` and `SFML/` as sub directories. After selecting the rightful directory, output would be
+like this:-
+
+**Output:**
+<Image center
+       alt="After initializing treemacs"
+       src="/img/tutorials/tools/after-treemacs-init.jpg"
+    />
+
+
+Now let us make our first program by selecting the `a.cpp` buffer
+```cpp title="a.cpp"
+#include <iostream>
+
+int main() {
+	std::cout << "Wassup World\n";
+	
+	return 0;
+}
+```
+
+We had already defined a function in our `init.el` file for compiling a simple cpp file by pressing `[f9]`
+key (See function `code-compile()` in the last of `init.el` file). So by pressing `[f9]` key, this
+simple code will get compiled without exiting emacs.
+
+**Output:**
+<Image center
+       alt="Compiling Code by hitting [f9] key"
+       src="/img/tutorials/tools/emacs-compile.jpg"
+    />
+
+
+We can run the program inside the Emacs from Emacs shell, also known as `eshell`.
+Hit `C-x o` to change buffer, then hit `C-x 2` to split the current buffer into two buffers
+and then again hit `C-x o` to change buffer. Changing the buffer can also be done by selecting 
+the buffer by mouse until you are using the GUI version of Emacs. Now for starting `eshell`, run
+`eshell` command from minibuffer (`M-x eshell`). Once the `eshell` is opened run your executable
+file.
+
+**Output:**
+<Image center
+       alt="Compiling Code by hitting [f9] key"
+       src="/img/tutorials/tools/emacs-eshell.jpg"
+    />
+
+
+This is the basic guide for setting up Emacs for CPP development. For enabling and discovering
+more features of `lsp-mode` refer [here](https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/).
+
+
+## General Customization of Emacs
+
+:::important Note
+This section is completely ***optional***. This section doesn't contribute towards
+C++ development. In this section, we will just configuring looks of Emacs.
+:::
+
+
+When emacs is opened, it generally start with a startup message. If you want to disable it,
+enter this in your `init.el` file
+```lisp title="init.el"
+(setq inhibit-startup-message t)
+```
+
+
+For making scroll bar invisible
+```lisp title="init.el"
+(toggle-scroll-bar -1)
+```
+Save the file and execute this line.
+For making it visibe again, just replace `-1` with `t`.
+
+
+For making menu bar invisible
+```lisp title="init.el"
+(menu-bar-mode -1)
+```
+Save the file and execute this line.
+For making it visibe again, just replace `-1` with `t`.
+
+
+For making tool bar invisible
+```lisp title="init.el"
+(tool-bar-mode -1)
+```
+Save the file and execute this line.
+For making it visibe again, just replace `-1` with `t`.
+
+
+For making line number visible in front of every new line
+```lisp title="init.el"
+(global-linum-mode t)
+```
+Save the file and execute this line.
+For making it invisibe again, just replace `t` with `-1`.
+
+
+Emacs also provides variety of built-in themes. User can see and enable the theme which suites them the most.
+For viewing the built-in themes, run command `M-x customize-themes` from minibuffer and select the required
+theme. Emacs used in the snapshots provided in this guide uses material theme which can be downloaded by
+using `use-package`.
+```lisp title="init.el"
+(use-package material-theme
+  :ensure t)
+(load-theme 'material t)
+```
+
+Restart the Emacs and the material theme will be loaded.

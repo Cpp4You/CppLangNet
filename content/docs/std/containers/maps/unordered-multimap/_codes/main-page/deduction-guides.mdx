@@ -2,23 +2,23 @@
 ```cpp
 // (1)
 template< class InputIt, class Alloc >
-unordered_multimap( InputIt, InputIt, Alloc )
-  -> unordered_multimap<iter_key_t<InputIt>, iter_val_t<InputIt>,
+unordered_map( InputIt, InputIt, Alloc )
+  -> unordered_map<iter_key_t<InputIt>, iter_val_t<InputIt>,
             std::hash<iter_key_t<InputIt>>,
             std::equal_to<iter_key_t<InputIt>>, Alloc>;
 ```
 ```cpp
 // (2)
 template< class InputIt, class Hash, class Alloc >
-unordered_multimap( InputIt, InputIt, typename /*see below*/::size_type, Hash, Alloc )
-  -> unordered_multimap<iter_key_t<InputIt>, iter_val_t<InputIt>, Hash,
+unordered_map( InputIt, InputIt, typename /*see below*/::size_type, Hash, Alloc )
+  -> unordered_map<iter_key_t<InputIt>, iter_val_t<InputIt>, Hash,
               std::equal_to<iter_key_t<InputIt>>, Alloc>;
 ```
 ```cpp
 // (3)
 template< class InputIt, class Alloc >
-unordered_multimap( InputIt, InputIt, typename /*see below*/::size_type, Alloc )
-  -> unordered_multimap<iter_key_t<InputIt>, iter_val_t<InputIt>,
+unordered_map( InputIt, InputIt, typename /*see below*/::size_type, Alloc )
+  -> unordered_map<iter_key_t<InputIt>, iter_val_t<InputIt>,
            std::hash<iter_key_t<InputIt>>,
            std::equal_to<iter_key_t<InputIt>>, Alloc>;
 ```
@@ -27,43 +27,43 @@ unordered_multimap( InputIt, InputIt, typename /*see below*/::size_type, Alloc )
 template< class InputIt,
           class Hash = std::hash<iter_key_t<InputIt>>,
           class Pred = std::equal_to<iter_key_t<InputIt>>,
-          class Alloc = std::allocator<iter_to_alloc_t<InputIt>>>
-unordered_multimap( InputIt, InputIt,
+          class Alloc = std::allocator<iter_to_alloc_t<InputIt>> >
+unordered_map( InputIt, InputIt,
          typename /*see below*/::size_type = /*see below*/,
          Hash = Hash(), Pred = Pred(), Alloc = Alloc() )
-  -> unordered_multimap<iter_key_t<InputIt>, iter_val_t<InputIt>, Hash, Pred, Alloc>;
+  -> unordered_map<iter_key_t<InputIt>, iter_val_t<InputIt>, Hash, Pred, Alloc>;
 ```
 > *`(1 - 4)`* allow deduction from an **iterator range**
 
 ```cpp
 // (5)
 template< class Key, class T, typename Alloc >
-unordered_multimap( std::initializer_list<std::pair<Key, T>>, Alloc )
-  -> unordered_multimap<Key, T, std::hash<Key>, std::equal_to<Key>, Alloc>;
+unordered_map( std::initializer_list<std::pair<Key, T>>, Alloc )
+  -> unordered_map<Key, T, std::hash<Key>, std::equal_to<Key>, Alloc>;
 ```
 ```cpp
 // (6)
 template< class Key, class T, class Hash, class Alloc >
-unordered_multimap( std::initializer_list<std::pair<Key, T>>,
+unordered_map( std::initializer_list<std::pair<Key, T>>,
        typename /*see below*/::size_type, Hash, Alloc )
-  -> unordered_multimap<Key, T, Hash, std::equal_to<Key>, Alloc>;
+  -> unordered_map<Key, T, Hash, std::equal_to<Key>, Alloc>;
 ```
 ```cpp
 // (7)
 template< class Key, class T, typename Alloc >
-unordered_multimap( std::initializer_list<std::pair<Key, T>>,
+unordered_map( std::initializer_list<std::pair<Key, T>>,
      typename /*see below*/::size_type, Alloc )
-  -> unordered_multimap<Key, T, std::hash<Key>, std::equal_to<Key>, Alloc>;
+  -> unordered_map<Key, T, std::hash<Key>, std::equal_to<Key>, Alloc>;
 ```
 ```cpp
 // (8)
 template< class Key, class T, class Hash = std::hash<Key>,
           class Pred = std::equal_to<Key>,
           class Alloc = std::allocator<std::pair<const Key, T>> >
-unordered_multimap( std::initializer_list<std::pair<Key, T>>,
+unordered_map( std::initializer_list<std::pair<Key, T>>,
          typename /*see below*/::size_type = /*see below*/,
          Hash = Hash(), Pred = Pred(), Alloc = Alloc() )
--> unordered_multimap<Key, T, Hash, Pred, Alloc>;
+-> unordered_map<Key, T, Hash, Pred, Alloc>;
 ```
 > *`(5 - 8)`* allow deduction from a [**`std::initializer_list`**](#)
 
@@ -90,9 +90,10 @@ They are defined solely for presentation purposes of these deduction guides and 
 present in the standard library at the point of writing of this document.
 :::
 
+
 ### Overload resolution
-In order for any of the deduction guides to participate in overload resolution,
-the folllowing requirements must be met:
+In order for any of the deduction guides to participate in overload resolution, the folllowing requirements must be met:
+A deduction guide for an unordered associative container shall not participate in overload resolution if any of the following are true:
  - `InputIt` satisfies [`LegacyInputIterator`](#)
  - `Alloc` satisfies [`Allocator`](#)
  - `Hash` doesn't deduce to an integral type or doesn't satisfy [`Allocator`](#)
