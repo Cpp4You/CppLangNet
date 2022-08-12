@@ -1,0 +1,130 @@
+---
+title:					multiset<...>::erase() method
+sidebar_label:			erase( )
+description:			multiset<...>::erase() method C++ documentation
+hide_title:				true
+tags:					[multiset, remove, erase, delete]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Method_UntilCpp11 	from './_codes/erase/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/erase/since-cpp11.mdx';
+import Method_SinceCpp23 	from './_codes/erase/since-cpp23.mdx';
+
+# std::multiset erase() method
+
+<SwitchView content={{
+		'since-cpp23': <Method_SinceCpp23 />,
+		'since-cpp11': <Method_SinceCpp11 />,
+		'until-cpp11': <Method_UntilCpp11 />,
+	}}/>
+
+Removes specified elements from the container.
+
+- **(1)** Removes the element at `pos`.
+<SwitchView content={{
+		'since-cpp11': <>
+			Only one overload is provided if <code>iterator</code> and <code>const_iterator</code> are the same type.
+		</>
+	}}/>
+- **(2)** Removes the elements in the range **[ first; last )**, which must be a valid range in `*this`.
+- **(3)** Removes the element with the key equivalent to `key`.
+- **(4)** Removes the element with key that compares equivalent to the value `x`.
+    This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type,
+    and neither `iterator` nor `const_iterator` is implicitly convertible from `K`. It allows calling this function without constructing an instance of `Key`.
+
+:::danger Invalidation
+**References** and **iterators** to the erased elements are invalidated. Other references and iterators are not affected.
+:::
+
+:::important
+The iterator pos must be **valid** and **dereferenceable**. Thus the [`end()`](/docs/std/containers/sets/multiset/end) iterator (which is valid, but is not dereferenceable) **cannot be used** as a value for pos.
+:::
+
+### Parameters
+
+ - `pos` - iterator to the element to remove
+ - `first`, `last` -	range of elements to remove
+ - `key` - key value of the elements to remove
+ - `x` - a value of any type that can be transparently compared with a key denoting the elements to remove
+
+### Return value
+
+ - **(1-2)** 
+<SwitchView content={{
+		'since-cpp11': <> Iterator following the last removed element. </>,
+		'until-cpp11': <> <b>(none)</b> </>,
+	}}/>
+ - **(3,4)** Number of elements removed.
+
+### Exceptions
+
+ - **(1,2)** Throws nothing.
+ - **(3,4)** Any exceptions thrown by the `Compare` object.
+
+### Complexity
+
+ - **(1)** Amortized constant - **O(1)**.
+ - **(2)** **log size() + std::distance(first, last)**
+ - **(3)** **log size() + count(key)**
+ - **(4)** **log size() + count(x)**
+
+### Notes
+
+Feature testing macro: [`__cpp_lib_associative_heterogeneous_erasure`](#) (for overload **(4)**).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <set>
+#include <iostream>
+int main()
+{
+    std::multiset<int> c = { 1, 2, 3, 4,    1, 2, 3, 4 };
+ 
+    auto print = [&c] {
+        std::cout << "c = { ";
+        for(int n : c)
+            std::cout << n << ' ';
+        std::cout << "}\n";
+    };
+    print();
+ 
+    std::cout << "Erase all odd numbers:\n";
+    for(auto it = c.begin(); it != c.end(); ) {
+        if(*it % 2 != 0)
+            it = c.erase(it);
+        else
+            ++it;
+    }
+    print();
+ 
+    std::cout << "Erase 1, erased count: " << c.erase(1) << '\n';
+    std::cout << "Erase 2, erased count: " << c.erase(2) << '\n';
+    std::cout << "Erase 2, erased count: " << c.erase(2) << '\n';
+    print();
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+c = { 1 1 2 2 3 3 4 4 }
+Erase all odd numbers:
+c = { 2 2 4 4 }
+Erase 1, erased count: 0
+Erase 2, erased count: 2
+Erase 2, erased count: 0
+c = { 4 4 }
+```
+
+</div>
+</Columns>

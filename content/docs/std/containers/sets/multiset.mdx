@@ -1,0 +1,380 @@
+---
+sidebar_position:	2
+title:				std::multiset reference
+sidebar_label:		set
+hide_title:			true
+description:		Summary of a std::multiset (usage, methods, etc.) - C++ Language
+tags:				[multiset, multi, many, container, associative, key]
+---
+
+import ClassSummary				from "@site-comps/ClassSummary";
+import CustomCodeBlock				from "@site-comps/CustomCodeBlock";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns					from "@site-comps/Columns";
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem					from "@theme/TabItem";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!------------------ Codes ----------------->
+
+<!-- Further Examples -->
+import FurtherExampleCreateInsertPrint from "./multiset/_codes/main-page/examples/further/create-insert-print.mdx"
+import FurtherExampleErasingFromSet from "./multiset/_codes/main-page/examples/further/erasing-from-set.mdx"
+import FurtherExampleMergingTwoSets from "./multiset/_codes/main-page/examples/further/merging-two-sets.mdx"
+
+<!-- Overview -->
+import OverviewSimplifiedRegular from "./multiset/_codes/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedRegular from "./multiset/_codes/main-page/overview/overview-detailed-regular.mdx";
+import OverviewDetailedPmr from "./multiset/_codes/main-page/overview/overview-detailed-pmr.mdx";
+
+<!-- Deduction Guides -->
+import DeductionGuides from "./multiset/_codes/main-page/deduction-guides.mdx"
+
+<NotFinished />
+
+# Multiset class reference
+
+## Overview
+
+<Tabs>
+<TabItem value="simplified" label="Simplified (since C++98)" default>
+
+	<OverviewSimplifiedRegular />
+
+</TabItem>
+<TabItem value="detailed" label="Detailed">
+	<Tabs>
+		<TabItem value="regular" label="Regular (since C++98)" default>
+
+			<OverviewDetailedRegular/>
+
+		</TabItem>
+
+		<TabItem value="pmr" label="Polymorphic (since C++17)">
+
+			<OverviewDetailedPmr/>
+
+		</TabItem>
+	</Tabs>
+</TabItem>
+</Tabs>
+
+The `std::multiset` is a sorted associative container that contains a sorted set of objects.
+Unlike [`set`](/docs/std/containers/sets/set), multiple keys with equivalent values are allowed.
+
+### Technical details
+
+<details>
+<summary>Technical definition of a set</summary>
+<div>
+
+`std::multiset` is an associative container that contains a sorted set of objects of type `Key`.
+Unlike [`set`](/docs/std/containers/sets/set), multiple keys with equivalent values are allowed.
+Sorting is done using the key comparison function `Compare`. 
+
+Search, insertion, and removal operations have logarithmic complexity (**O(size())**).
+
+Everywhere the standard library uses the `Compare` requirements, equivalence is determined by using the equivalence relation as described on `Compare`.
+In imprecise terms, two objects `a` and `b` are considered equivalent if neither compares less than the other: `!comp(a, b) && !comp(b, a)`.
+
+<SwitchView content={{
+		'since-cpp11': <>
+			The order of the elements that compare equivalent is the order of insertion and does not change.
+		</>
+	}}/>
+
+`std::multiset` meets the requirements of [`Container`](/docs/named_req/Container), [`AllocatorAwareContainer`](/docs/named_req/AllocatorAwareContainer),
+[`AssociativeContainer`](/docs/named_req/AssociativeContainer) and [`ReversibleContainer`](/docs/named_req/ReversibleContainer).
+
+</div>
+</details>
+
+<ClassSummary name="multiset" namespaces="std" folder="set" headerName="set">
+
+## Template parameters
+
+<SymbolTable noTraits>
+	<Symbol name="Key"		desc="The type of stored keys."/>
+	<Symbol
+			name="Compare"
+			desc={<>
+				A comparator type satisfying <a href="/docs/named_req/Compare">Compare</a>.
+			</>}
+		/>
+	<Symbol
+			name="Allocator"
+			desc={<>
+					An allocator type responsible for allocating and deallocating memory.
+					Must satisfy <a href="/docs/named_req/Allocator">Allocator</a>.
+				</>}
+		/>
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="key_type"				desc={<code>Key</code>} />
+	<Symbol pub name="value_type" 				desc={<code>Key</code>}/>
+	<Symbol pub name="size_type"			desc={<>Unsigned integer type (usually <code><a href="#">std::size_t</a></code>).</>}/>
+	<Symbol pub
+			name="difference_type"
+			desc={<>
+					Signed integer type (usually <code><a href="#">std::ptrdiff_t</a></code>).
+			</>}
+		/>
+	<Symbol pub name="key_compare"			desc={<code>Compare</code>}/>
+	<Symbol pub name="value_compare"				desc={<code>Compare</code>}/>
+	<Symbol pub name="allocator_type" 				desc={<code>Allocator</code>}/>
+	<Symbol pub name="reference"			desc={<code>value_type&</code>}/>
+	<Symbol pub name="const_reference"				desc={<code>const value_type&</code>}/>
+	<Symbol pub name="pointer">
+		<code>Allocator::pointer</code> <small>(until C++11)</small>
+		<br/>
+		<code><a href="#">std::allocator_traits</a>&lt;Allocator&gt;::pointer</code> <small>(since C++11)</small>
+	</Symbol>
+	<Symbol pub name="const_pointer">
+		<code>Allocator::const_pointer</code> <small>(until C++11)</small>
+		<br/>
+		<code><a href="#">std::allocator_traits</a>&lt;Allocator&gt;::const_pointer</code> <small>(since C++11)</small>
+	</Symbol>
+	<Symbol pub name={<>iterator <a href="#sets-iterators"><sup>❗</sup></a></>}>
+			Constant <a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a> to <code>value_type</code>
+	</Symbol>
+	<Symbol pub name={<>const_iterator <a href="#sets-iterators"><sup>❗</sup></a></>}>
+		<a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a> to <code>const value_type</code>
+	</Symbol>
+	<Symbol pub
+			name="reverse_iterator"
+			desc={<code><a href="#">std::reverse_iterator</a>&lt;iterator&gt;</code>}
+		/>
+	<Symbol pub
+			name="const_reverse_iterator"
+			desc={<code><a href="#">std::reverse_iterator</a>&lt;const_iterator&gt;</code>}
+		/>
+	<Symbol pub
+			name={<>node_type <small>(since C++17)</small></>}
+			desc={<> A specialization of <a href="">node handle</a> representing a container node.</>}
+		/>
+</SymbolTable>
+
+### Multiset's iterators
+
+`iterator` is said to be **constant** because it is impossible to modify the values it's pointing to.
+This is because modyfing a value the iterator is pointing to could possibly invalidate the internal structure of the multiset,
+which could then lead to all kinds of incorrect and unexpected behaviours.
+
+The member <a href="#type-names">type aliases</a> <code>iterator</code> and <code>const_iterator</code> *may* be the same.
+This is left entirely to the implementation.
+This means that any overloaded functions/specializations differing only in the iterator types may be incorrect and may lead to <a href="#"><b>ODR violation</b></a>.
+
+## Member functions
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="constructors" name="(constructor)">
+		Constructs a new set.
+	</Symbol>
+	<Symbol pub autoLink linkName="destructors" name="(destructor)">
+		Destructs a set.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_assign" name="operator=">
+		Assigns one set to another.
+	</Symbol>
+	<Symbol pub autoLink linkName="get_allocator" name="get_allocator">
+		Returns an associated allocator.
+	</Symbol>
+</SymbolTable>
+
+### Iterators
+
+<SymbolTable>
+<SymbolTable>
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin <small>(since C++11)</small></>}>
+		Returns an iterator to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="end" name={<>end<br/>cend <small>(since C++11)</small></>}>
+		Returns an iterator to the end.
+	</Symbol>
+	<Symbol pub autoLink linkName="rbegin" name={<>rbegin<br/>crbegin <small>(since C++11)</small></>}>
+		Returns a reverse iterator to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="rend" name={<>rend<br/>crend <small>(since C++11)</small></>}>
+		Returns a reverse iterator to the end.
+	</Symbol>
+</SymbolTable>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="empty" name="empty">
+		Returns <code>true</code> if a set is empty, otherwise <code>false</code>.
+	</Symbol>
+	<Symbol pub autoLink linkName="size" name="size">
+		Returns the number of elements in a set.
+	</Symbol>
+	<Symbol pub autoLink linkName="max_size" name="max_size">
+		Returns the maximum possible number of elements.
+	</Symbol>
+</SymbolTable>
+
+### Modifiers
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="clear" name="clear">
+		Clears the contents of a set.
+	</Symbol>
+	<Symbol pub autoLink linkName="insert" name="insert">
+		Inserts elements or nodes (extracted with <code>.extract()</code>) <small>(since C++17)</small>.
+	</Symbol>
+	<Symbol pub autoLink linkName="emplace" name={<>emplace <small>(since C++11)</small></>}>
+		Constructs a new element in place.
+	</Symbol>
+	<Symbol pub autoLink linkName="emplace_hint" name={<>emplace_hint <small>(since C++11)</small></>}>
+		Constructs elements in-place using a hint (iterator).
+	</Symbol>
+	<Symbol pub autoLink linkName="erase" name="erase">
+		Erases elements.
+	</Symbol>
+	<Symbol pub autoLink linkName="swap" name="swap">
+		Swaps two sets.
+	</Symbol>
+	<Symbol pub autoLink linkName="extract" name={<>extract <small>(since C++17)</small></>}>
+		Extracts nodes from a set (can be later inserted somewhere else).
+	</Symbol>
+	<Symbol pub autoLink linkName="merge" name={<>merge <small>(since C++17)</small></>}>
+		Merges two sets together.
+	</Symbol>
+</SymbolTable>
+
+### Lookup
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="count" name="count">
+		Returns the number of elements matching a specific key.
+	</Symbol>
+	<Symbol pub autoLink linkName="find" name="find">
+		Searches for an element and returns an iterator to it, or an end iterator if not found.
+	</Symbol>
+	<Symbol pub autoLink linkName="contains" name={<>contains <small>(since C++20)</small></>}>
+		Returns <code>true</code> if an element is inside a set, otherwise <code>false</code>.
+	</Symbol>
+	<Symbol pub autoLink linkName="equal_range" name="equal_range">
+		Returns a range of elements matching a specific key.
+	</Symbol>
+	<Symbol pub autoLink linkName="lower_bound" name="lower_bound">
+		Returns an iterator to the first element <i>not less</i> than the given key.
+	</Symbol>
+	<Symbol pub autoLink linkName="upper_bound" name="upper_bound">
+		Returns an iterator to the first element <i>greater</i> than the given key.
+	</Symbol>
+</SymbolTable>
+
+### Observers
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="key_comp" name="key_comp">
+		Returns an internal function object that compares keys.
+	</Symbol>
+	<Symbol pub autoLink linkName="value_comp" name="value_comp">
+		Returns an internal function object that compares keys in objects of type <code>value_type</code>.
+	</Symbol>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				operator==<br/>
+				operator!= <small>(removed in C++20)</small><br/>
+				operator&lt; <small>(removed in C++20)</small><br/>
+				operator&gt; <small>(removed in C++20)</small><br/>
+				operator&lt;= <small>(removed in C++20)</small><br/>
+				operator&gt;= <small>(removed in C++20)</small><br/>
+				operator&lt;=&gt; <small>(since C++20)</small>
+			</>}
+			desc="Lexicographically compares the values in a set."
+		/>
+	<Symbol name={<>std::swap <small>(std::multiset)</small></>}
+			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
+		/>
+	<Symbol name={<>
+				std::erase_if <small>(std::multiset) (since C++20)</small>
+			</>}
+			desc={<>Overload for a <a href="#">std::erase_if</a> algorithm.</>}
+		/>
+</SymbolTable>
+
+</ClassSummary>
+
+
+## Deduction guides (since C++17)
+<details>
+<summary>Click to expand</summary>
+<div>
+	<DeductionGuides/>
+</div>
+</details>
+
+## More examples
+
+### Basic manipulation
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleCreateInsertPrint />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+Items: 1
+3
+3
+12
+12
+```
+</div>
+</Columns>
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleErasingFromSet />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+1
+3
+5
+7
+9
+```
+</div>
+
+</Columns>
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleMergingTwoSets />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+A B C C D E 
+```
+</div>
+
+</Columns>

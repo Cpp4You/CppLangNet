@@ -1,0 +1,99 @@
+---
+title:					multiset<...>::merge() method
+sidebar_label:			merge( )
+description:			multiset<...>::merge() method C++ documentation
+hide_title:				true
+tags:					[multiset, merge, add, copy]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp17 	from './_codes/merge/since-cpp17.mdx';
+
+# std::multiset merge() method
+
+<SwitchView content={{
+    'since-cpp17': <Method_SinceCpp17 />,
+    }} />
+
+Attempts to extract ("splice") each element in source and insert it into `*this` using the comparison object of `*this`.
+
+No elements are copied or moved, only the internal pointers of the container nodes are repointed. All pointers and references to the transferred elements remain valid, but now refer into `*this`, not into source.
+
+:::danger Undefined behaviour
+The behavior is undefined if `get_allocator() != source.get_allocator()`.
+:::
+
+### Parameters
+
+ - `source` - compatible container to transfer the nodes from
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+
+**O(N * log(size() + N))**, where **N** is `source.size()`.
+
+### Exceptions
+
+Does not throw unless comparison throws.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <set>
+ 
+// print out a container
+template <class Os, class K>
+Os& operator<<(Os& os, const std::multiset<K>& v) {
+    os << '[' << v.size() << "] {";
+    bool o{};
+    for (const auto& e : v)
+        os << (o ? ", " : (o = 1, " ")) << e;
+    return os << " }\n";
+}
+ 
+int main()
+{
+    std::multiset<char>
+        p{ 'C', 'B', 'B', 'A' }, 
+        q{ 'E', 'D', 'E', 'C' };
+ 
+    std::cout << "p: " << p << "q: " << q;
+ 
+    p.merge(q);
+ 
+    std::cout << "p.merge(q);\n" << "p: " << p << "q: " << q;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+p: [4] { A, B, B, C }
+q: [4] { C, D, E, E }
+p.merge(q);
+p: [8] { A, B, B, C, C, D, E, E }
+q: [0] { }
+```
+
+</div>
+</Columns>

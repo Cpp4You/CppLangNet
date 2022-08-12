@@ -1,0 +1,17 @@
+```cpp
+#include <iostream>
+#include <set>
+
+int main() {
+  std::multiset<int> items = {3, 3, 1};
+
+  items.insert(12);
+  items.insert(12);
+
+  std::cout << "Items: \n";
+  for (const auto elem : items)
+    std::cout << elem << '\n';
+
+  return 0;
+}
+```
