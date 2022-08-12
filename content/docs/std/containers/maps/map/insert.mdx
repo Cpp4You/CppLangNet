@@ -1,0 +1,217 @@
+---
+title:					map<...>::insert() method
+sidebar_label:			insert( )
+description:			map<...>::insert() method C++ documentation
+hide_title:				true
+tags:					[map, insert, add]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- insert() -->
+import Method_UntilCpp11 	from './_codes/insert/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/insert/since-cpp11.mdx';
+import Method_SinceCpp17 	from './_codes/insert/since-cpp17.mdx';
+
+import IteratorDereferenceNote 	from './_codes/insert/explanation/iterator-dereference-note.mdx';
+
+# std::map insert() method
+
+<SwitchView content={{
+    'since-cpp17': <Method_SinceCpp17 />,
+    'since-cpp11': <Method_SinceCpp11 />,
+    'until-cpp11': <Method_UntilCpp11 />,
+    }} />
+
+Inserts element(s) into the container, if the container doesn't already contain an element with an equivalent key.
+
+ - **(1-3)** Inserts value.
+    The overload **(2)** is equivalent to `emplace(std::forward<P>(value))` and only participates in overload resolution if `std::is_constructible<value_type, P&&>::value == true`.
+ - **(4-6)** Inserts value in the position as close as possible, just prior, to hint.
+    The overload **(5)** is equivalent to `emplace_hint(hint, std::forward<P>(value))` and only participates in overload resolution if `std::is_constructible<value_type, P&&>::value == true`.
+ - **(7)** Inserts elements from range **[ first, last )**. If multiple elements in the range have keys that compare equivalent, it is unspecified which element is inserted (pending **LWG2844**).
+ - **(8)** Inserts elements from initializer list `ilist`. If multiple elements in the range have keys that compare equivalent, it is unspecified which element is inserted (pending **LWG2844**).
+ - **(9)** If `nh` is an empty node handle, does nothing. Otherwise, inserts the element owned by `nh` into the container,
+    if the container doesn't already contain an element with a key equivalent to `nh.key()`. The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_allocator()`.
+ - **(10)** If `nh` is an empty node handle, does nothing and returns the end iterator.
+    Otherwise, inserts the element owned by `nh` into the container, if the container doesn't already contain an element with a key equivalent to `n.key()`,
+    and returns the iterator pointing to the element with key equivalent to `nh.key()` (regardless of whether the insert succeeded or failed).
+    If the insertion succeeds, `nh` is moved from, otherwise it retains ownership of the element.
+    The element is inserted as close as possible to the position just prior to hint. The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_allocator()`.
+
+<SwitchView content={{
+    'since-cpp17': <> No iterators or references are invalidated. </>,
+    'until-cpp11': <IteratorDereferenceNote />,
+    }} />
+
+### Parameters
+
+ - `hint`
+<SwitchView content={{
+    'since-cpp11': <> iterator to the position before which the new element will be inserted </>,
+    'until-cpp11': <> iterator, used as a suggestion as to where to start the search </>,
+    }} />
+ - `value` - element value to insert
+ - `count` - number of elements to insert
+ - `first`, `last` - the range of elements to insert
+ - `ilist` - initializer list to insert the values from
+ - `nh` - a compatible node handle
+ 
+### Type requirements
+ - **(7)** `InputIt` must meet the requirements of [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator).
+
+### Return value
+
+ - **(1-3)** Returns a pair consisting of an iterator to the inserted element (or to the element that prevented the insertion) and a `bool` denoting whether the insertion took place.
+ - **(4-6)** Returns an iterator to the inserted element, or to the element that prevented the insertion.
+ - **(7-8)** **(none)**
+ - **(9)** Returns an `insert_return_type` with the members initialized as follows:
+    - If `nh` is empty, `inserted` is `false`, `position` is [`end()`](/docs/std/containers/maps/map/end), and `node` is `empty`.
+    - Otherwise if the insertion took place, `inserted` is `true`, `position` points to the inserted element, and `node` is `empty`.
+    - If the insertion failed, `inserted` is `false`, `node` has the previous value of nh, and `position` points to an element with a key equivalent to `nh.key()`.
+ = **(10)** End iterator if `nh` was empty, iterator pointing to the inserted element if insertion took place, and iterator pointing to an element with a key equivalent to `nh.key()` if it failed.
+
+### Complexity
+
+ - **(1-3)** Logarithmic in the size of the container - **O(log size())**.
+ - **(4-6)** 
+<SwitchView content={{
+	'since-cpp11': <> Amortized constant if the insertion happens in the position just before the hint, logarithmic in the size of the container otherwise - <b>O(1)</b>.</>,
+	'until-cpp11': <> Amortized constant if the insertion happens in the position just after the hint, logarithmic in the size of the container otherwise - <b>O(1)</b>.</>,
+    }} />
+ - **(7-8)** **O(N * log(size() + N))**, where **N** is the number of elements to insert.
+ - **(9)** Logarithmic in the size of the container - **O(log size())**.
+ - **(10)**  
+Amortized constant if the insertion happens in the position **just before** the hint - **O(1)**  .
+Logarithmic in the size of the container otherwise - **O(log size())**.
+
+### Exceptions
+
+ - **(1-6)** If an exception is thrown by any operation, the insertion has no effect.
+
+<ImproveSection />
+
+### Notes 
+The hinted insert **(4-6)** does not return a boolean in order to be signature-compatible with positional insert on sequential containers, such as [`std::vector::insert()`](/docs/std/containers/arrays/vector/insert). 
+This makes it possible to create generic inserters such as [`std::inserter()`](#). One way to check success of a hinted insert is to compare [`size()`](/docs/std/containers/maps/map/size) before and after. 
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iomanip>
+#include <iostream>
+#include <map>
+#include <string>
+ 
+using namespace std::literals;
+ 
+template<typename It>
+void printInsertionStatus(It it, bool success)
+{
+    std::cout << "Insertion of " << it->first << (success ? " succeeded\n" : " failed\n");
+}
+ 
+int main()
+{
+    std::map<std::string, float> karasunoPlayerHeights;
+ 
+    // Overload 3: insert from rvalue reference
+    const auto [it_hinata, success] = karasunoPlayerHeights.insert({"Hinata"s, 162.8});
+    printInsertionStatus(it_hinata, success);
+ 
+    {
+        // Overload 1: insert from lvalue reference
+        const auto [it, success2] = karasunoPlayerHeights.insert(*it_hinata);
+        printInsertionStatus(it, success2);
+    }
+    {
+        // Overload 2: insert via forwarding to emplace
+        const auto [it, success] = karasunoPlayerHeights.insert(std::pair{"Kageyama", 180.6});
+        printInsertionStatus(it, success);
+    }
+ 
+    {
+        // Overload 6: insert from rvalue reference with positional hint
+        const std::size_t n = std::size(karasunoPlayerHeights);
+        const auto it = karasunoPlayerHeights.insert(it_hinata, {"Azumane"s, 184.7});
+        printInsertionStatus(it, std::size(karasunoPlayerHeights) != n);
+    }
+    {
+        // Overload 4: insert from lvalue reference with positional hint
+        const std::size_t n = std::size(karasunoPlayerHeights);
+        const auto it = karasunoPlayerHeights.insert(it_hinata, *it_hinata);
+        printInsertionStatus(it, std::size(karasunoPlayerHeights) != n);
+    }
+    {
+        // Overload 5: insert via forwarding to emplace with positional hint
+        const std::size_t n = std::size(karasunoPlayerHeights);
+        const auto it = karasunoPlayerHeights.insert(it_hinata, std::pair{"Tsukishima", 188.3});
+        printInsertionStatus(it, std::size(karasunoPlayerHeights) != n);
+    }
+ 
+    auto node_hinata = karasunoPlayerHeights.extract(it_hinata);
+    std::map<std::string, float> playerHeights;
+ 
+    // Overload 7: insert from iterator range
+    playerHeights.insert(std::begin(karasunoPlayerHeights), std::end(karasunoPlayerHeights));
+ 
+    // Overload 8: insert from initializer_list
+    playerHeights.insert({{"Kozume"s, 169.2}, {"Kuroo", 187.7}});
+ 
+ 
+    // Overload 9: insert node
+    const auto status = playerHeights.insert(std::move(node_hinata));
+    printInsertionStatus(status.position, status.inserted);
+ 
+    node_hinata = playerHeights.extract(status.position);
+    {
+        // Overload 10: insert node with positional hint
+        const std::size_t n = std::size(playerHeights);
+        const auto it = playerHeights.insert(std::begin(playerHeights), std::move(node_hinata));
+        printInsertionStatus(it, std::size(playerHeights) != n);
+    }
+ 
+ 
+    // Print resulting map
+    std::cout << std::left << '\n';
+    for (const auto& [name, height] : playerHeights)
+        std::cout << std::setw(10) << name << " | " << height << "cm\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Insertion of Hinata succeeded
+Insertion of Hinata failed
+Insertion of Kageyama succeeded
+Insertion of Azumane succeeded
+Insertion of Hinata failed
+Insertion of Tsukishima succeeded
+Insertion of Hinata succeeded
+Insertion of Hinata succeeded
+ 
+Azumane    | 184.7cm
+Hinata     | 162.8cm
+Kageyama   | 180.6cm
+Kozume     | 169.2cm
+Kuroo      | 187.7cm
+Tsukishima | 188.3cm
+```
+
+</div>
+</Columns>

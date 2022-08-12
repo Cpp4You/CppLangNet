@@ -1,0 +1,66 @@
+---
+title:					unordered_multiset<...>::size() method
+sidebar_label:			size( )
+description:			unordered_multiset<...>::size() method C++ documentation
+hide_title:				true
+tags:					[size, elements, number, amount]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- size() -->
+import Method_SinceCpp11 	from './_codes/size/since-cpp11.mdx';
+
+# std::unordered_multiset size() method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    }} />
+
+Returns the number of elements in the container, i.e. `std::distance(begin(), end())`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+The number of elements in the container.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <unordered_set>
+#include <iostream>
+ 
+int main()
+{ 
+    std::unordered_multiset<int> nums {1, 3, 5, 7};
+ 
+    std::cout << "nums contains " << nums.size() << " elements.\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+nums contains 4 elements.
+```
+
+</div>
+</Columns>

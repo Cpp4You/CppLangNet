@@ -1,0 +1,194 @@
+---
+title:					multimap<...>::end() method
+sidebar_label:			end( )
+description:			multimap<...>::end() C++ documentation
+hide_title:				true
+tags:					[access, iterators, end, get]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+import Columns					from "@site-comps/Columns";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- end -->
+
+import Method_UntilCpp11 	from './_codes/end/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/end/since-cpp11.mdx';
+
+# std::multimap end() method
+
+<SwitchView content={{
+		'since-cpp11': <Method_SinceCpp11 />,
+		'until-cpp11': <Method_UntilCpp11 />,
+	}}/>
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the element past-the-end of the array.
+If the array is empty, the returned iterator will be equal to [`begin()`](/docs/std/containers/maps/multimap/begin).
+
+Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Iterator to the first element.
+
+### Exceptions
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Difference between end and cend
+
+For a const container `c`, end and cend are the same - `c.end() == c.cend()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = arr.end(); // Type: std::multimap<int, float>::iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="cend" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = arr.cend(); // Type: std::multimap<int, float>::const_iterator
+    // error-next-line
+    *std::prev(it) = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    const std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = arr.end(); // Type: std::multimap<int, float>::const_iterator
+    // error-next-line
+    *std::prev(it) = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="cend" default>
+
+```cpp
+#include <map>
+
+int main()
+{
+    const std::multimap<int, float> map = { {1, 1.f}, {2, 3.f}, {5, 8.f} };
+    auto it = arr.cend(); // Type: std::multimap<int, float>::const_iterator
+    // error-next-line
+    *std::prev(it) = 5; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <map>
+#include <string>
+#include <cstddef>
+ 
+int main()
+{
+    auto show_node = [](const auto& node, char ending = '\n') {
+        std::cout << "{ " << node.first << ", " << node.second << " }" << ending;
+    };
+ 
+    std::multimap<std::size_t, std::string> mmap;
+    assert(mmap.begin() == mmap.end());   // OK
+    assert(mmap.cbegin() == mmap.cend()); // OK
+ 
+    mmap.insert({ sizeof(long), "LONG" });
+    show_node(*(mmap.cbegin()));
+    assert(mmap.begin() != mmap.end());   // OK
+    assert(mmap.cbegin() != mmap.cend()); // OK
+    mmap.begin()->second = "long";
+    show_node(*(mmap.cbegin()));
+ 
+    mmap.insert({ sizeof(int), "int" });
+    show_node(*mmap.cbegin());
+ 
+    mmap.insert({ sizeof(short), "short" });
+    show_node(*mmap.cbegin());
+ 
+    mmap.insert({ sizeof(char), "char" });
+    show_node(*mmap.cbegin());
+ 
+    mmap.insert({{ sizeof(float), "float" }, { sizeof(double), "double" }});
+ 
+    std::cout << "mmap = { ";
+    std::for_each(mmap.cbegin(), mmap.cend(), [&](const auto& n) { show_node(n, ' '); });
+    std::cout << "};\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+{ 8, LONG }
+{ 8, long }
+{ 4, int }
+{ 2, short }
+{ 1, char }
+mmap = { { 1, char } { 2, short } { 4, int } { 4, float } { 8, long } { 8, double } };
+```
+
+</div>
+</Columns>

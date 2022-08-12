@@ -1,0 +1,135 @@
+---
+title:					map<...>::try_emplace() method
+sidebar_label:			try_emplace( )
+description:			map<...>::try_emplace() method C++ documentation
+hide_title:				true
+tags:					[map, try_emplace, insert, add]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip				    from "@site-comps/Tooltip";
+import Tabs				        from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+<!-- try_emplace() -->
+import Method_SinceCpp17 	from './_codes/try_emplace/since-cpp17.mdx';
+
+# std::map try_emplace() method
+
+<SwitchView content={{
+    'since-cpp17': <Method_SinceCpp17 />,
+    }} />
+
+Inserts a new element into the container with key `k` and value constructed with `args`, if there is no element with the key in the container.
+
+ - **(1)** If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace()`](/docs/std/containers/maps/map/emplace) except that the element is constructed as
+```cpp
+value_type(std::piecewise_construct,
+           std::forward_as_tuple(k),
+           std::forward_as_tuple(std::forward<Args>(args)...))
+```
+
+- **(2)** If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace()`](/docs/std/containers/maps/map/emplace) except that the element is constructed as
+```cpp
+value_type(std::piecewise_construct,
+           std::forward_as_tuple(std::move(k)),
+           std::forward_as_tuple(std::forward<Args>(args)...))
+```
+
+- **(3)** If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace_hint()`](/docs/std/containers/maps/map/emplace_hint) except that the element is constructed as
+```cpp
+value_type(std::piecewise_construct,
+           std::forward_as_tuple(k),
+           std::forward_as_tuple(std::forward<Args>(args)...))
+```
+
+- **(4)** If a key equivalent to `k` already exists in the container, does nothing. Otherwise, behaves like [`emplace_hint()`](/docs/std/containers/maps/map/emplace_hint) except that the element is constructed as
+```cpp
+value_type(std::piecewise_construct,
+           std::forward_as_tuple(std::move(k)),
+           std::forward_as_tuple(std::forward<Args>(args)...))
+```
+
+No iterators or references are invalidated.
+
+
+### Parameters
+
+ - `k` - the key used both to look up and to insert if not found
+ - `hint` - iterator to the position before which the new element will be inserted
+ - `args` - arguments to forward to the constructor of the element
+
+### Return value
+
+ - **(1-2)** Same as for [`emplace()`](/docs/std/containers/maps/map/emplace).
+ - **(3-4)** Same as for [`emplace_hint()`](/docs/std/containers/maps/map/emplace).
+
+### Complexity
+
+ - **(1-2)** Same as for [`emplace()`](/docs/std/containers/maps/map/emplace).
+ - **(3-4)** Same as for [`emplace_hint()`](/docs/std/containers/maps/map/emplace).
+
+### Exceptions
+
+If an exception is thrown by any operation, this function has no effect (strong exception guarantee).
+
+### Notes
+Unlike [`insert()`](/docs/std/containers/maps/map/insert) or [`emplace()`](/docs/std/containers/maps/map/emplace),
+these functions do not move from rvalue arguments if the insertion does not happen, which makes it easy to manipulate maps whose values are move-only types,
+such as `std::map<std::string, std::unique_ptr<foo>>`.
+In addition, [`try_emplace()`](#) treats the key and the arguments to the `mapped_type` separately, unlike emplace, which requires the arguments to construct a value_type (that is, a [`std::pair`](#)).
+
+Feature testing macro: [`__cpp_lib_map_try_emplace`](#).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <utility>
+#include <string>
+ 
+#include <map>
+ 
+auto print_node = [](const auto &node) {
+    std::cout << "[" << node.first << "] = " << node.second << '\n';
+};
+ 
+auto print_result = [](auto const &pair) {
+    std::cout << (pair.second ? "inserted: " : "ignored:  ");
+    print_node(*pair.first);
+};
+ 
+int main()
+{
+    using namespace std::literals;
+    std::map<std::string, std::string> m;
+ 
+    print_result( m.try_emplace("a", "a"s) );
+    print_result( m.try_emplace("b", "abcd") );
+    print_result( m.try_emplace("c", 10, 'c') );
+    print_result( m.try_emplace("c", "Won't be inserted") );
+ 
+    for (const auto &p : m) { print_node(p); }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+inserted: [a] = a
+inserted: [b] = abcd
+inserted: [c] = cccccccccc
+ignored:  [c] = cccccccccc
+[a] = a
+[b] = abcd
+[c] = cccccccccc
+```
+
+</div>
+</Columns>

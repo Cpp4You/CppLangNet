@@ -1,0 +1,14 @@
+--- _codes/merge/since-cpp17.mdx
++++ _codes/merge/since-cpp17.mdx
+@@ -9,9 +9,9 @@
+ 
+ // (3) Non const version only
+ template<class C2>
+-void merge( std::multimap<Key, T, C2, Allocator>& source );
++void merge( std::multiset<Key, T, C2, Allocator>& source );
+ 
+ // (4) Non const version only
+ template<class C2>
+-void merge( std::multimap<Key, T, C2, Allocator>&& source );
++void merge( std::multiset<Key, T, C2, Allocator>&& source );
+ ```

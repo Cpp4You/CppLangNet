@@ -1,9 +1,142 @@
 ---
-sidebar_position: 4
+sidebar_position:	4
+sidebar_label:		Using ideone.com
+title:				Using ideone.com
+tags:				[editor, compiler, gcc, clang, tool, ide, ideone]
+description:		"Using ideone.com to program in C++ language"
+hide_title:			true
 ---
+
+<!-- Components -->
+import Image			from '@site-comps/Image';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
 
 # Using ideone.com
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+[**Ideone**](https://ideone.com/) is a really simple online environment that allows you to create
+code in C++. The most important advantage of it is simplicity.
 
-<NotFinished/>
+## Creating an account (optional)
+
+To be able to view your codes and customize the editor, you need to have a free account on their site.
+You can do this by following this link: [https://ideone.com/account/register](https://ideone.com/account/register)
+
+Then complete the information below:
+
+<Image center
+		alt="Creating an ideone account"
+		src="/img/tutorials/tools/ideone/sign-up-form.png"
+	/>
+<br/>
+
+## Using the editor
+
+Once you have entered the website, you will be transferred to the code editing mode:
+
+<Image center
+		alt="Code editor"
+		src="/img/tutorials/tools/ideone/editor-view.png"
+	/>
+<br/>
+
+The main view is made up of two parts:
+
+Part | Contents
+---------|----------
+ Top | **code editor** ✏
+ Bottom | **options** ⚒
+
+Before running any code, you have to choose c++ languge at the bottom.
+You can choose from:
+
+Name | Compiler
+---------|----------
+ C++ | gcc 8.3
+ C++14 | gcc 8.3 (suggested)
+ C++ 4.3.2 | gcc 4.3.2
+ C++14 | clang 8.0
+
+You can also choose if your code is visible for everyone (globe icon), secret (glasses icon) or private (padlock icon, only for signed users).
+
+### Running the code
+
+▶ At the right bottom corner you will find the **Run** button that runs the code.
+
+<Image center
+		alt		="Run button"
+		src		="/img/tutorials/tools/ideone/run-button.png"
+	/>
+<br/>
+
+Before the code can be executed, its code must be compiled. This means that at the beginning
+you will see a **compilation** statement.
+
+- ✔ If the code is correct, the result will be shown in **stdout** section.
+- 🔴 If the code contains errors, it will not be compiled or executed.
+
+<Tabs>
+	<TabItem value="ok" label="✔ Correct code" default>
+		<Image border center
+				alt		="Compilation and running a valid code"
+				src		="/img/tutorials/tools/ideone/run-ok.png"
+				desc	="🟣 Result"
+			/>
+	</TabItem>
+	<TabItem value="error" label="🔴 With an error">
+		<Image border center
+				alt		="Compilation failed because of an error"
+				desc	="🔴 Error"
+				src		="/img/tutorials/tools/ideone/run-error.png"
+			/>
+	</TabItem>
+</Tabs>
+
+:::danger
+Sometimes when trying to run the code, ideone refreshes the page without executing, resulting in the loss of code. It is recommended to copy the code frequently or use other tooling.
+:::
+
+### Editing the source code
+
+This editor supports only syntax highlighting.
+
+<Image center
+		maxheight="400px"
+		alt		="Code editor view"
+		src		="/img/tutorials/tools/ideone/only-editor.png"
+	/>
+<br/>
+
+### Keyboard shortcuts
+
+Ideone has only one keyboard shortcut:
+
+Shortcut | Description
+---------|----------
+`Ctrl + Enter` | Runs the code
+
+### Customizing editor
+
+If you are logged in you can go to customization by clicking `my account` in top right corner and then selecting editor.
+
+<Image center
+		maxheight="400px"
+		alt		="Editor settings view"
+		src		="/img/tutorials/tools/ideone/editor-settings.png"
+	/>
+<br/>
+
+Here you can change all important settings including theme.
+
+### Viewing your codes
+
+If you are logged in you can view all your codes by clicking `my codes` in the menu. Then you will see something like this:
+
+<Image center
+		maxheight="400px"
+		alt		="Your codes view"
+		src		="/img/tutorials/tools/ideone/your-codes.png"
+	/>
+<br/>
+
+Here you can manage all your codes.
