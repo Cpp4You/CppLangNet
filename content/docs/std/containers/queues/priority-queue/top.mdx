@@ -1,0 +1,109 @@
+---
+title:					priority_queue<...>::front()
+sidebar_label:			front( )
+description:			priority_queue<...>::front() C++ documentation
+hide_title:				true
+tags:					[access, front, first]
+---
+
+import Tooltip					from "@site-comps/Tooltip";
+import SwitchView				from "@site-comps/SwitchView";
+import Columns		from '@site-comps/Columns'
+
+<!----------------- Codes ---------------------->
+
+<!-- Terms -->
+
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+
+import Method_SinceCpp98 	from './_codes/top/since-cpp98.mdx';
+
+# std::priority_queue front
+
+<SwitchView content={{
+		'since-cpp98': <Method_SinceCpp98 />,
+	}}/>
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip>  to the top element in the priority queue.  
+This element will be the first element to be removed on a call to [`pop()`](/docs/std/containers/queues/priority-queue/pop).  
+
+:::note
+If default comparison function is used, the returned element is also the greatest among the elements in the queue.
+:::
+
+:::note
+Effectively calls `c.front()`.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Reference to the top element.
+
+### Exceptions
+
+**(none)**
+
+### Complexity
+
+Constant - **(1)**.
+
+### Example
+
+<Columns spacing={40} columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp"
+#include <queue>
+#include <iostream>
+ 
+struct Event
+{
+    int priority{};
+    char data{' '};
+ 
+    friend bool operator< (Event const& lhs, Event const& rhs) {
+        return lhs.priority < rhs.priority;
+    }
+ 
+    friend std::ostream& operator<< (std::ostream& os, Event const& e) {
+        return os << "{ " << e.priority << ", '" << e.data << "' } ";
+    }
+};
+ 
+int main()
+{
+    std::priority_queue<Event> events;
+ 
+    std::cout << "Fill the events queue:\n";
+ 
+    for (auto const e: { Event{6,'L'}, {8,'I'}, {9,'S'}, {1,'T'}, {5,'E'}, {3,'N'} }) {
+        std::cout << e << ' ';
+        events.push(e);
+    }
+ 
+    std::cout << "\n" "Process events:\n";
+ 
+    for (; !events.empty(); events.pop()) {
+        Event const& e = events.top();
+        std::cout << e << ' ';
+    }
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Output"
+Fill the events queue:
+{ 6, 'L' }  { 8, 'I' }  { 9, 'S' }  { 1, 'T' }  { 5, 'E' }  { 3, 'N' }
+Process events:
+{ 9, 'S' }  { 8, 'I' }  { 6, 'L' }  { 5, 'E' }  { 3, 'N' }  { 1, 'T' }
+```
+
+</div>
+</Columns>
