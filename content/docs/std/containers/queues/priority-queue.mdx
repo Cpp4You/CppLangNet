@@ -116,7 +116,7 @@ Working with a `priority_queue` is similar to managing a heap in some random acc
 	<Symbol pub autoLink linkName="constructor" name="(constructor)">
 		Constructs a <code>priority_queue</code>.
 	</Symbol>
-	<Symbol pub autoLink linkName="destructor" name="(destructor)">
+	<Symbol pub autoLink linkName="destructors" name="(destructor)">
 		Destructs a <code>priority_queue</code>.
 	</Symbol>
 	<Symbol pub autoLink linkName="operator_assign" name="operator="
@@ -145,13 +145,13 @@ Working with a `priority_queue` is similar to managing a heap in some random acc
 	<Symbol pub autoLink name="push"
 			desc={<>Inserts an element and sorts the underlying container using <code>Compare</code>.</>}
 		/>
-	<Symbol pub autoLink name="emplace"
+	<Symbol pub autoLink linkName="emplace" name={<>emplace <small>(since C++11)</small> </>}
 			desc="Constructs an element in-place and sorts the underlying container."
 		/>
 	<Symbol pub autoLink name="pop"
 			desc="Removes the top element."
 		/>
-	<Symbol pub autoLink name="swap"
+	<Symbol pub autoLink linkName="swap" name={<>swap <small>(since C++11)</small> </>}
 			desc="Swaps two queues."
 		/>
 </SymbolTable>
