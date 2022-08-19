@@ -1,0 +1,53 @@
+---
+title:					queue<...>::front()
+sidebar_label:			front( )
+description:			queue<...>::front() C++ documentation
+hide_title:				true
+tags:					[access, front, first]
+---
+
+import Tooltip					from "@site-comps/Tooltip";
+import SwitchView				from "@site-comps/SwitchView";
+
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<!----------------- Codes ---------------------->
+
+<!-- Terms -->
+
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+
+import Method_SinceCpp98 	from './_codes/front/since-cpp98.mdx';
+
+# std::queue front
+
+<SwitchView content={{
+		'since-cpp98': <Method_SinceCpp98 />,
+	}}/>
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip>  to the first element in the queue.  
+This element will be the first element to be removed on a call to [`pop()`](/docs/std/containers/queues/queue/pop).  
+
+:::note
+Effectively calls `c.front()`.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Reference to the first element.
+
+### Exceptions
+
+**(none)**
+
+### Complexity
+
+Constant - **(1)**.
+
+### Example
+
+<ImproveSection />
