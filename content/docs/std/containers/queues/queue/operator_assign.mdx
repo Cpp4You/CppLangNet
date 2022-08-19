@@ -29,10 +29,14 @@ Replaces the contents of the container adaptor with those of `other`.
 
  - **(1)**  
 	**Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.  
+	:::note
 	Effectively calls `c = other.c`.
+	:::
  - **(2)**  
 	**Move** assignment operator. Replaces the contents with those of other using move semantics.  
+	:::note
 	Effectively calls `c = std::move(other.c)`.
+	:::
 
 Both operators are implicitly declared, which means that `Container` has to be copyable/movable for them to be generated.
 
