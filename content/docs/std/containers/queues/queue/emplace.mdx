@@ -23,8 +23,9 @@ import Method_SinceCpp17 	from './_codes/emplace/since-cpp17.mdx';
 
 Pushes a new element to the end of the queue. The element is constructed in-place, i.e. no copy or move operations are performed. The constructor of the element is called with exactly the same arguments as supplied to the function.
 
-
+:::note
 Effectively calls `c.emplace_back(std::forward<Args>(args)...)`.
+:::
 
 ### Parameters
 
