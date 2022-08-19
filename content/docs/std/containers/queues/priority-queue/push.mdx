@@ -1,0 +1,103 @@
+---
+title:					priority_queue<...>::push() method
+sidebar_label:			push( )
+description:			priority_queue<...>::push() method C++ documentation
+hide_title:				true
+tags:					[push, add, new]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Method_UntilCpp11 	from './_codes/push/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/push/since-cpp11.mdx';
+
+# std::priority_queue push() method
+
+<SwitchView content={{
+        'since-cpp11': <Method_SinceCpp11 />,
+        'until-cpp11': <Method_UntilCpp11 />,
+    }}/>
+
+Pushes the given element value to the end of the priority queue.
+
+ - **(1)** Effectively calls  
+	```cpp
+	c.push_back(value);
+	std::push_heap(c.begin(), c.end(), comp);
+	```
+ - **(1)** Effectively calls  
+	```cpp
+	c.push_back(std::move(value));
+	std::push_heap(c.begin(), c.end(), comp);
+	```
+
+### Parameters
+
+ - `value` - the value of the element to push
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Logarithmic number of comparisons plus the complexity of `push_back` of the underlying container.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <queue>
+#include <iostream>
+ 
+struct Event
+{
+    int priority{};
+    char data{' '};
+ 
+    friend bool operator< (Event const& lhs, Event const& rhs) {
+        return lhs.priority < rhs.priority;
+    }
+ 
+    friend std::ostream& operator<< (std::ostream& os, Event const& e) {
+        return os << "{ " << e.priority << ", '" << e.data << "' } ";
+    }
+};
+ 
+int main()
+{
+    std::priority_queue<Event> events;
+ 
+    std::cout << "Fill the events queue:\n";
+ 
+    for (auto const e: { Event{6,'L'}, {8,'I'}, {9,'S'}, {1,'T'}, {5,'E'}, {3,'N'} }) {
+        std::cout << e << ' ';
+        events.push(e);
+    }
+ 
+    std::cout << "\n" "Process events:\n";
+ 
+    for (; !events.empty(); events.pop()) {
+        Event const& e = events.top();
+        std::cout << e << ' ';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Fill the events queue:
+{ 6, 'L' }  { 8, 'I' }  { 9, 'S' }  { 1, 'T' }  { 5, 'E' }  { 3, 'N' }
+Process events:
+{ 9, 'S' }  { 8, 'I' }  { 6, 'L' }  { 5, 'E' }  { 3, 'N' }  { 1, 'T' }
+```
+
+</div>
+</Columns>

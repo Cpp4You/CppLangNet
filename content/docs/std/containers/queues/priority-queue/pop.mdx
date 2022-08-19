@@ -1,0 +1,102 @@
+---
+title:					priority_queue<...>::pop()
+sidebar_label:			pop( )
+description:			priority_queue<...>::pop() C++ documentation
+hide_title:				true
+tags:					[remove, pop, last]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+import Columns				from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp98 	from './_codes/pop/since-cpp98.mdx';
+
+# std::priority_queue pop()
+
+<SwitchView content={{
+		'since-cpp98': <Method_SinceCpp98 />,
+	}}/>
+
+Removes the top element from the priority queue.
+
+:::note
+Effectively calls 
+```cpp
+std::pop_heap(c.begin(), c.end(), comp); 
+c.pop_back();
+````
+:::
+
+### Parameters
+
+**(none)**
+
+### Return valued
+
+**(none)**
+
+### Exceptions
+
+Equivalent to that of `operator=` of the underlying container.
+
+### Complexity
+
+Logarithmic number of comparisons plus the complexity of `pop_back` of the underlying container.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <queue>
+#include <iostream>
+ 
+struct Event
+{
+    int priority{};
+    char data{' '};
+ 
+    friend bool operator< (Event const& lhs, Event const& rhs) {
+        return lhs.priority < rhs.priority;
+    }
+ 
+    friend std::ostream& operator<< (std::ostream& os, Event const& e) {
+        return os << "{ " << e.priority << ", '" << e.data << "' } ";
+    }
+};
+ 
+int main()
+{
+    std::priority_queue<Event> events;
+ 
+    std::cout << "Fill the events priority_queue:\n";
+ 
+    for (auto const e: { Event{6,'L'}, {8,'I'}, {9,'S'}, {1,'T'}, {5,'E'}, {3,'N'} }) {
+        std::cout << e << ' ';
+        events.push(e);
+    }
+ 
+    std::cout << "\n" "Process events:\n";
+ 
+    for (; !events.empty(); events.pop()) {
+        Event const& e = events.top();
+        std::cout << e << ' ';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Fill the events priority_queue:
+{ 6, 'L' }  { 8, 'I' }  { 9, 'S' }  { 1, 'T' }  { 5, 'E' }  { 3, 'N' }
+Process events:
+{ 9, 'S' }  { 8, 'I' }  { 6, 'L' }  { 5, 'E' }  { 3, 'N' }  { 1, 'T' }
+```
+
+</div>
+</Columns>
