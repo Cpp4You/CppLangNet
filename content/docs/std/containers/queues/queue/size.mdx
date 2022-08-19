@@ -1,0 +1,69 @@
+---
+title:					queue<...>::size() method
+sidebar_label:			size( )
+description:			queue<...>::size() method C++ documentation
+hide_title:				true
+tags:					[size]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- size() -->
+import Method_SinceCpp98 	from './_codes/size/since-cpp98.mdx';
+
+# std::queue size() method
+
+<SwitchView content={{
+        'since-cpp98': <Method_SinceCpp98 />,
+    }}/>
+
+Returns the number of elements in the underlying container, that is, `c.size()`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+The number of elements in the container.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <queue>
+ 
+int main()
+{
+    std::queue<int> container;
+ 
+    std::cout << "Initially, container.size(): " << container.size() << '\n';
+ 
+    for (int i = 0; i < 7; ++i)
+        container.push(i);
+ 
+    std::cout << "After adding elements, container.size(): " << container.size() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Initially, container.size(): 0
+After adding elements, container.size(): 7
+```
+
+</div>
+</Columns>
