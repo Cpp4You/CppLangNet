@@ -192,7 +192,22 @@ module.exports = {
 							label: 'Queues',
 							link: { type: 'doc', id: 'std/containers/queues/index' },
 							items: [
-								docsClass('std/containers/queues/queue'),
+								docsClassCat('queue', 'std/containers/queues/queue', '', [
+									'constructors',
+									'destructors',
+									'op:operator_assign',
+									cat('Element access'),
+									'm:front',
+									'm:back',
+									cat('Capacity'),
+									'm:empty',
+									'm:size',
+									cat('Modifiers'),
+									'm:push',
+									'm:pop',
+									['m:emplace', 'since-cpp11'],
+									['m:swap', 'since-cpp11'],
+								]),
 								docsClass('std/containers/queues/priority-queue'),
 							]
 						},
