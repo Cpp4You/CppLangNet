@@ -51,7 +51,7 @@ function filterSidebarItems(items)
 	onBrokenLinks:			'ignore',
 	onBrokenMarkdownLinks:	'ignore',
 	favicon:				'img/favicon.png',
-	organizationName:		'PoetaKodu', // Usually your GitHub org/user name.
+	organizationName:		'Cpp4You', // Usually your GitHub org/user name.
 	projectName:			'CppLangNet', // Usually your repo name.
 	trailingSlash: 			true,
 
@@ -85,7 +85,7 @@ function filterSidebarItems(items)
 				path: 'content/learn',
 				routeBasePath: 'learn',
 				sidebarPath: require.resolve('./sidebars/learn.js'),
-				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+				editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
@@ -99,7 +99,7 @@ function filterSidebarItems(items)
 				path: 'content/tools',
 				routeBasePath: 'tools',
 				sidebarPath: require.resolve('./sidebars/tools.js'),
-				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+				editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
@@ -113,7 +113,7 @@ function filterSidebarItems(items)
 				path: 'content/features',
 				routeBasePath: 'features',
 				sidebarPath: require.resolve('./sidebars/features.js'),
-				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+				editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
@@ -127,7 +127,7 @@ function filterSidebarItems(items)
 				path: 'content/contributing',
 				routeBasePath: 'contributing',
 				sidebarPath: require.resolve('./sidebars/contributing.js'),
-				editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+				editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
@@ -146,7 +146,7 @@ function filterSidebarItems(items)
 
 					sidebarPath: require.resolve('./sidebars/docs.js'),
 					// Please change this to your repo.
-					editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/',
+					editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
 					editLocalizedFiles: true,
 					showLastUpdateTime: true,
 					showLastUpdateAuthor: true,
@@ -164,7 +164,7 @@ function filterSidebarItems(items)
 					showReadingTime: true,
 					path: "content/blog",
 					// Please change this to your repo.
-					editUrl: 'https://github.com/PoetaKodu/CppLangNet/edit/main/blog/',
+					editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/blog/',
 					remarkPlugins: remarkConfig,
 				},
 				theme: {
@@ -203,7 +203,7 @@ function filterSidebarItems(items)
 					{ to: '/blog',			label: 'Blog',				position: 'left'},
 					{ to: '/contributing',	label: '💗 Contributing',	position: 'right'},
 					// {
-					// 	href: 'https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum',
+					// 	href: 'https://github.com/Cpp4You/CppLangNet/discussions/categories/forum',
 					// 	label: '🗣 Community',
 					// 	position: 'right',
 					// },
@@ -218,7 +218,7 @@ function filterSidebarItems(items)
 						'aria-label': 'Official Discord server',
 					},
 					{
-						href: 'https://github.com/PoetaKodu/CppLangNet',
+						href: 'https://github.com/Cpp4You/CppLangNet',
 						position: 'right',
 						className: 'header-github-link',
 						'aria-label': 'GitHub repository',
@@ -227,7 +227,7 @@ function filterSidebarItems(items)
 			},
 			announcementBar: {
 				content:
-					'⚠ This site is still in an early phase of construction. You can help us by <a target="_blank" rel="noopener noreferrer" href="/contributing">contributing</a>. Consider giving us a ⭐ star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/PoetaKodu/CppLangNet/stargazers">GitHub</a>',
+					'⚠ This site is still in an early phase of construction. You can help us by <a target="_blank" rel="noopener noreferrer" href="/contributing">contributing</a>. Consider giving us a ⭐ star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/Cpp4You/CppLangNet/stargazers">GitHub</a>',
 				backgroundColor: '#fafbfc',
 				textColor: '#091E42',
 				isCloseable: false,
@@ -269,7 +269,7 @@ function filterSidebarItems(items)
 							},
 							{
 								label: 'Forum',
-								href: 'https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum',
+								href: 'https://github.com/Cpp4You/CppLangNet/discussions/categories/forum',
 							},
 							{
 								label: 'Stack Overflow',
@@ -290,7 +290,7 @@ function filterSidebarItems(items)
 							},
 							{
 								label: 'GitHub',
-								href: 'https://github.com/PoetaKodu/CppLangNet',
+								href: 'https://github.com/Cpp4You/CppLangNet',
 							},
 						],
 					},
