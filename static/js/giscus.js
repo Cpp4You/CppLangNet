@@ -45,7 +45,7 @@ function insertGiscusScript()
 	var d = document,
 		s = d.createElement("script");
 	s.src = "https://giscus.app/client.js";
-	s.setAttribute("data-repo",					"PoetaKodu/CppLangNet");
+	s.setAttribute("data-repo",					"Cpp4You/CppLangNet");
 	s.setAttribute("data-repo-id",				"R_kgDOGHXK8w");
 	s.setAttribute("data-category",				"Site comment section");
 	s.setAttribute("data-category-id",			"DIC_kwDOGHXK884B_uFs");

@@ -98,8 +98,8 @@ Please visit the [Contributing guide](CONTRIBUTING.md).
 
 ## 💗 Contributors
 
-<a href="https://github.com/PoetaKodu/CppLangNet/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=PoetaKodu/CppLangNet" />
+<a href="https://github.com/Cpp4You/CppLangNet/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Cpp4You/CppLangNet" />
 </a>
 
 Graph made with [contrib.rocks](https://contrib.rocks).

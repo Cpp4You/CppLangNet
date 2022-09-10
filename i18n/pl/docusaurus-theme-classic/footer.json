@@ -45,7 +45,7 @@
   },
   "link.item.label.GitHub": {
     "message": "GitHub",
-    "description": "The label of footer link with label=GitHub linking to https://github.com/PoetaKodu/CppLangNet"
+    "description": "The label of footer link with label=GitHub linking to https://github.com/Cpp4You/CppLangNet"
   },
   "copyright": {
     "message": "Copyright © 2021 <a href=\"https://github.com/PoetaKodu\">Paweł Syska</a>, Inc. Built with Docusaurus.",
@@ -57,7 +57,7 @@
   },
   "link.item.label.Forum": {
     "message": "Forum",
-    "description": "The label of footer link with label=Forum linking to https://github.com/PoetaKodu/CppLangNet/discussions/categories/forum"
+    "description": "The label of footer link with label=Forum linking to https://github.com/Cpp4You/CppLangNet/discussions/categories/forum"
   },
   "link.item.label.Reddit": {
     "message": "Reddit",
