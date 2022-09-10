@@ -48,8 +48,8 @@ function filterSidebarItems(items)
 	tagline:				'Learn how to build blazing fast software',
 	url:					'https://cpp-lang.net',
 	baseUrl:				'/',
-	onBrokenLinks:			'warn',
-	onBrokenMarkdownLinks:	'warn',
+	onBrokenLinks:			'ignore',
+	onBrokenMarkdownLinks:	'ignore',
 	favicon:				'img/favicon.png',
 	organizationName:		'PoetaKodu', // Usually your GitHub org/user name.
 	projectName:			'CppLangNet', // Usually your repo name.
