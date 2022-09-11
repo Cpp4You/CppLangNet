@@ -40,23 +40,23 @@ $iconSize: 60px;
 	.pageCardSvg {
 		text-align: center;
 		margin-bottom: 10px;
+	}
 
-		&:not(:hover) {
-			.normalIcon {
-				display: inline;
-			}
-			.hoverIcon {
-				display: none;
-			}
+	&:not(:hover) .pageCardSvg {
+		.normalIcon {
+			display: inline;
 		}
+		.hoverIcon {
+			display: none;
+		}
+	}
 
-		&:hover {
-			.normalIcon {
-				display: none;
-			}
-			.hoverIcon {
-				display: inline;
-			}
+	&:hover .pageCardSvg {
+		.normalIcon {
+			display: none;
+		}
+		.hoverIcon {
+			display: inline;
 		}
 	}
 	
