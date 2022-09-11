@@ -1,10 +1,15 @@
+@import url('https://rsms.me/inter/inter.css');
+
+$InterFont: "Inter", system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
 .features {
 	display: flex;
 	align-items: center;
 	width: 100%;
 	margin: 0 auto;
 	// border-top: 1px solid gray;
-	background-color: rgba(white, 0.85);
+	background-color: white;
+	margin-top: -5px;
 }
 
 .featuresContainer {
@@ -12,9 +17,10 @@
 	justify-content: center;
 	width: 80%;
 	margin: 0 auto;
+	top: -5px;
 }
 
-$iconSize: 80px;
+$iconSize: 60px;
 .pageCardSvg>img {
 	height:	$iconSize;
 	width:	$iconSize;
@@ -34,23 +40,41 @@ $iconSize: 80px;
 	.pageCardSvg {
 		text-align: center;
 		margin-bottom: 10px;
+
+		&:not(:hover) {
+			.normalIcon {
+				display: inline;
+			}
+			.hoverIcon {
+				display: none;
+			}
+		}
+
+		&:hover {
+			.normalIcon {
+				display: none;
+			}
+			.hoverIcon {
+				display: inline;
+			}
+		}
 	}
 	
 	.pageCardText {
 		text-align: center;
 		color: black;
+		font-family: $InterFont;
+		font-weight: normal;
 	}
 
+	border-bottom: 2px solid transparent;
+	box-sizing: border-box;
 	&:hover {
-		background-color: rgba(0, 0, 0, 0.05);
+		border-bottom: 2px solid rgb(0, 204, 255);
 		text-decoration: none;
 
 		.pageCardSvg {
 			filter: brightness(1.2) saturate(1.5);
-		}
-
-		.pageCardText {
-			color: var(--ifm-color-primary-darkest);
 		}
 	}
 }
@@ -82,21 +106,13 @@ html[data-theme='dark']
 {
 
 .features {
-	background-color: rgba(black, 0.9);
+	background-color: black;
 }
 
 .pageCard {
 	.pageCardText {
 		color: white;
 	}
-
-	&:hover {
-		background-color: rgba(255, 255, 255, 0.1);
-		.pageCardText {
-			color: var(--ifm-color-primary);
-		}
-	}
-
 }
 
 .pageCardSvg {
@@ -104,24 +120,36 @@ html[data-theme='dark']
 }
 
 .overview {
-	&:nth-child(even) {
-		background-color: rgba(black, 0.80);
+	background: none;
+	background-color: rgba(black, 0.80);
+	border-top: none;
+	&:nth-child(3) {
+		border-top: none;
+		background: rgb(0,0,0);
+		background: linear-gradient(180deg, rgba(0,0,0,1) 24%, rgba(0,0,0,0.896) 61%, rgba(0,0,0, 0.8) 92%);
 	}
-	&:nth-child(odd) {
-		background-color: rgba(black, 0.85);
+	&:nth-child(even) {
+		background: none;
+		background-color: rgba(black, 0.1);
 	}
 }
 
 }
 
 .overview {
-	&:nth-child(even) {
-		background-color: rgb(245, 245, 245);
-	}
-	&:nth-child(odd) {
-		background-color: white;
+	background: linear-gradient(180deg, rgb(243, 243, 243) 10%, white 30%);
+	background-color: rgb(243, 243, 243);
+	border-top: 1px solid gray;
+	&:nth-child(3) {
+		border-top: none;
+		background: linear-gradient(180deg, rgba(white,1) 24%, rgb(250, 250, 250) 61%, white 92%);
 	}
 
+	display: flex;
+	align-items: center;
+	min-height: 600px;
+ 	background-color: rgb(245, 245, 245);
+	p, h1, h2, h3 { font-family: $InterFont; }
 	figure {
 		display: flex;
 		margin: 0;
@@ -140,6 +168,7 @@ html[data-theme='dark']
 		display: inline-block;
 		color: white;
 		text-decoration: none;
+		margin-top: 10px;
 		padding: 15px 30px;
 		border: none;
 		border-bottom: 3px solid blue;
