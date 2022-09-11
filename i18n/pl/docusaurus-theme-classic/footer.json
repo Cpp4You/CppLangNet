@@ -19,9 +19,9 @@
     "message": "Dokumentacja",
     "description": "The label of footer link with label=Documentation linking to /docs"
   },
-  "link.item.label.Features": {
-    "message": "Możliwości",
-    "description": "The label of footer link with label=Features linking to /features"
+  "link.item.label.Community": {
+    "message": "Społeczność",
+    "description": "The label of footer link with label=Community linking to /community"
   },
   "link.item.label.Tools": {
     "message": "Narzędzia",

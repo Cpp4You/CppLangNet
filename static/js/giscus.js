@@ -93,7 +93,6 @@ function handlePageLoad()
 	const validRoutes = [
 		"/learn",
 		"/docs",
-		"/features",
 		"/tools",
 	];
 

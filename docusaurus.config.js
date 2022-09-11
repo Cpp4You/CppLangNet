@@ -109,10 +109,10 @@ function filterSidebarItems(items)
 		[
 			'@docusaurus/plugin-content-docs',
 			{
-				id: 'features',
-				path: 'content/features',
-				routeBasePath: 'features',
-				sidebarPath: require.resolve('./sidebars/features.js'),
+				id: 'community',
+				path: 'content/community',
+				routeBasePath: 'community',
+				sidebarPath: require.resolve('./sidebars/community.js'),
 				editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
@@ -198,10 +198,10 @@ function filterSidebarItems(items)
 				items: [
 					{ to: '/learn',			label: 'Learn',				position: 'left' },
 					{ to: '/docs',			label: 'Docs',				position: 'left' },
-					{ to: '/features',		label: 'Features',			position: 'left' },
 					{ to: '/tools',			label: 'Tools',				position: 'left' },
-					{ to: '/blog',			label: 'Blog',				position: 'left'},
-					{ to: '/contributing',	label: '💗 Contributing',	position: 'right'},
+					{ to: '/community',		label: 'Community',			position: 'left' },
+					{ to: '/blog',			label: 'Blog',				position: 'left' },
+					{ to: '/contributing',	label: '💗 Contributing',	position: 'right' },
 					// {
 					// 	href: 'https://github.com/Cpp4You/CppLangNet/discussions/categories/forum',
 					// 	label: '🗣 Community',
@@ -247,12 +247,12 @@ function filterSidebarItems(items)
 								to: '/docs',
 							},
 							{
-								label: 'Features',
-								to: '/features',
-							},
-							{
 								label: 'Tools',
 								to: '/tools',
+							},
+							{
+								label: 'Community',
+								to: '/community',
 							},
 							{
 								label: 'Contributing',

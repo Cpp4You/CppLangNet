@@ -54,11 +54,11 @@ Examples:
 - [Choosing compiler](https://www.cpp-lang.net/tools/compilers)
 - [Setup GCC on Windows](https://www.cpp-lang.net/tools/standalone/compilers/setup-gcc-windows)
 
-### 🧱 [The features knowledge base](https://cpp-lang.net/features/)
+### 🙋‍♂️ [Communities](https://cpp-lang.net/community/)
 
-We want programmers to know what C++ is capable of.
-You'll find here the traits that define the language.
-The most modern ways to code.
+Get in touch with other people from the C++ community.
+You'll find here links to blogs, Discord servers, Facebook groups,
+subreddits, etc.
 
 ## 💻 Our tech
 
