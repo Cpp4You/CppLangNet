@@ -26,35 +26,32 @@ function HomepageHeader() {
 					<p className={styles.subtitle}>
 						<Translate>Programming Language</Translate>
 					</p>
-					<div className={styles.callToAction}>
-						<Link
-							className={styles.btnGrad}
-							to="/learn">
-							<Translate>Get started</Translate> 🚀
-						</Link>
-					</div>
-				</div>
-				<div className={styles.interactiveEditor}>
-					<Tabs>
-						<TabItem value="sorting" label="Sorting" default>
-							<CodeBlock className="language-cpp">{Code_Sorting}</CodeBlock>
-						</TabItem>
-						<TabItem value="hello_world" label="Hello, World" default>
-							<CodeBlock className="language-cpp">{Code_HelloWorld}</CodeBlock>
-						</TabItem>
-						<TabItem value="fizzbuzz" label="FizzBuzz" default>
-							<CodeBlock className="language-cpp">{Code_FizzBuzz}</CodeBlock>
-						</TabItem>
-						<TabItem value="read_file" label="Read file" default>
-							<CodeBlock className="language-cpp">{Code_ReadFile}</CodeBlock>
-						</TabItem>
-					</Tabs>
-					
-					{/* <iframe src="https://repl.it/@poetakodu/SortVector-Cpp20?lite=true" /> */}
+					<p className={styles.subtitleMessages}>
+						<Translate>A completely free all-in-one website for C++ developers.</Translate>
+					</p>
 				</div>
 			</div>
 		</header>
 	);
+}
+
+const Waves = () => {
+	return (
+	<div>
+		<svg className={styles.waves} xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
+			viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
+			<defs>
+				<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+			</defs>
+			<g className={styles.wavesParallax}>
+				<use xlinkHref="#gentle-wave" x="48" y="0" />
+				<use xlinkHref="#gentle-wave" x="48" y="3" />
+				<use xlinkHref="#gentle-wave" x="48" y="5" />
+				<use xlinkHref="#gentle-wave" x="48" y="7" />
+			</g>
+		</svg>
+	</div>
+	)
 }
 
 export default function Home() {
@@ -64,6 +61,7 @@ export default function Home() {
 				
 			<HomepageHeader />
 			<main>
+				<Waves />
 				<HomepageFeatures />
 			</main>
 		</Layout>

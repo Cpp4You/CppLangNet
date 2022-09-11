@@ -1,5 +1,4 @@
 import React			from 'react';
-import clsx				from 'clsx';
 import styles			from './HomepageFeatures.module.scss';
 
 import useBaseUrl		from '@docusaurus/useBaseUrl';
@@ -11,8 +10,14 @@ import { translate }	from '@docusaurus/Translate';
 const VscIconsFolder = 'img/icons/vscode/dark';
 const vscIcon = (name) => `${VscIconsFolder}/${name}.svg`;
 const vscThemedIcon = (light, dark = light) => ({
-		light: `img/icons/vscode/light/${light}.svg`,
-		dark: `img/icons/vscode/dark/${dark}.svg`,
+		default: {
+			light: `img/icons/vscode/light/${light}.svg`,
+			dark: `img/icons/vscode/dark/${dark}.svg`,
+		},
+		color: {
+			light: `img/icons/vscode/light/${light}-color.svg`,
+			dark: `img/icons/vscode/dark/${dark}-color.svg`,
+		}
 	});
 
 
@@ -24,8 +29,7 @@ const FeatureList = [
 		svgPath:	vscThemedIcon('book'),
 		description: (
 			<>
-				Docusaurus was designed from the ground up to be easily installed and
-				used to get your website up and running quickly.
+				None yet.
 			</>
 		),
 	},
@@ -35,19 +39,7 @@ const FeatureList = [
 		url:		'docs/',
 		description: (
 			<>
-				Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-				ahead and move your docs into the <code>docs</code> directory.
-			</>
-		),
-	},
-	{
-		title:		translate({ message: 'Features', id: 'langFeature.Features' }),
-		url:		'features/',
-		svgPath:	vscThemedIcon('extensions'),
-		description: (
-			<>
-				Extend or customize your website layout by reusing React. Docusaurus can
-				be extended while reusing the same header and footer.
+				None yet.
 			</>
 		),
 	},
@@ -57,23 +49,33 @@ const FeatureList = [
 		svgPath:	vscThemedIcon('tools'),
 		description: (
 			<>
-				Extend or customize your website layout by reusing React. Docusaurus can
-				be extended while reusing the same header and footer.
+				None yet.
+			</>
+		),
+	},
+	{
+		title:		translate({ message: 'Community', id: 'langFeature.Community' }),
+		url:		'community/',
+		svgPath:	vscThemedIcon('community'),
+		description: (
+			<>
+				None yet.
 			</>
 		),
 	},
 ];
 
-function Feature({svgPath, title, url}) {
+function Feature({svgPath, title, url, description}) {
 	return (
 		<a href={url} className={styles.pageCard}>
 			<div className={styles.pageCardSvg}>
-				{typeof svgPath == "object" && <ThemedImage sources={svgPath} />}
+				{typeof svgPath == "object" && <ThemedImage className={styles.normalIcon} sources={svgPath.default} />}
 				{typeof svgPath == "string" && <img src={svgPath} alt={title} />}
 				
+				{typeof svgPath === "object" && typeof svgPath.color === "object" && <ThemedImage className={styles.hoverIcon} sources={svgPath.color} />}
 			</div>
 			<div className={styles.pageCardText}>
-				<h3>{title}</h3>
+				<p>{title}</p>
 				{/* <p>{description}</p> */}
 			</div>
 		</a>
