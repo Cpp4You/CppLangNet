@@ -1,0 +1,27 @@
+$dark-theme-bgc: rgba(0, 0, 0, 0.3);
+$light-theme-bgc: rgba(0, 0, 0, 0.05);
+
+.container {
+	max-width: 600px;
+	min-height: 60px;
+	padding: 15px;
+	margin: 0 auto;
+	margin-top: 20px;
+	border-radius: 10px;
+	font-size: 80%;
+	text-align: center;
+	background-color: $light-theme-bgc;
+
+	.licenseTooltip {
+		font-size: 80%;
+		text-transform: uppercase;
+	}
+}
+
+html[data-theme="dark"] {
+
+.container {
+	background-color: $dark-theme-bgc;
+}
+
+}
