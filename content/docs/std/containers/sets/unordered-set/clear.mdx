@@ -4,10 +4,12 @@ sidebar_label:			clear( )
 description:			unordered_set<...>::clear() method C++ documentation
 hide_title:				true
 tags:					[clear, remove, delete, unordered_set]
+
+cppreference_origin_rel: w/cpp/container/unordered_set/clear
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
@@ -17,8 +19,8 @@ import Method_SinceCpp11 	from './_codes/clear/since-cpp11.mdx';
 # std::unordered_set clear() method
 
 <SwitchView content={{
-    'since-cpp11': <Method_SinceCpp11 />,
-    }} />
+	'since-cpp11': <Method_SinceCpp11 />,
+	}} />
 
 Erases all elements from the container. After this call, [`size()`](/docs/containers/sets/unordered-set/size) returns zero.
 
@@ -56,20 +58,20 @@ Linear in the size of the container - **O(1)**.
  
 int main()
 {
-    std::unordered_set<int> container{1, 2, 3};
+	std::unordered_set<int> container{1, 2, 3};
  
-    auto print = [](const int& n) { std::cout << " " << n; };
+	auto print = [](const int& n) { std::cout << " " << n; };
  
-    std::cout << "Before clear:";
-    std::for_each(container.begin(), container.end(), print);
-    std::cout << "\nSize=" << container.size() << '\n';
+	std::cout << "Before clear:";
+	std::for_each(container.begin(), container.end(), print);
+	std::cout << "\nSize=" << container.size() << '\n';
  
-    std::cout << "Clear\n";
-    container.clear();
+	std::cout << "Clear\n";
+	container.clear();
  
-    std::cout << "After clear:";
-    std::for_each(container.begin(), container.end(), print);
-    std::cout << "\nSize=" << container.size() << '\n';
+	std::cout << "After clear:";
+	std::for_each(container.begin(), container.end(), print);
+	std::cout << "\nSize=" << container.size() << '\n';
 }
 ```
 
