@@ -4,12 +4,14 @@ sidebar_label:			rend( )
 description:			set<...>::rend() method C++ documentation
 hide_title:				true
 tags:					[access, set, rend, end]
+
+cppreference_origin_rel: w/cpp/container/set/rend
 ---
 
 import Columns					from "@site-comps/Columns";
 import SwitchView				from "@site-comps/SwitchView";
-import Tooltip				    from "@site-comps/Tooltip";
-import Tabs				        from "@theme/Tabs";
+import Tooltip					from "@site-comps/Tooltip";
+import Tabs						from "@theme/Tabs";
 import TabItem					from "@theme/TabItem";
 
 <!-- Terms -->
@@ -25,20 +27,20 @@ import Method_SinceCpp11 	from './_codes/rend/since-cpp11.mdx';
 # std::set rend() method
 
 <SwitchView content={{
-    'since-cpp11': <Method_SinceCpp11 />,
-    'until-cpp11': <Method_UntilCpp11 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
 }} />
 
-It corresponds to the last element of the non-reversed vector.
+It corresponds to the last element of the non-reversed container.
 
-Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the last element of the reversed vector.
-It corresponds to the element **preceding** the first element of the non-reversed vector.
+Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the last element of the container.
+It corresponds to the element **preceding** the first element of the non-reversed container.
 
-It effectively returns an iterator that points past the end of the original vector. 
+It effectively returns an iterator that points past the end of the original container. 
 Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
 
 :::note
-This method doesn't actually reverse the vector, it just returns an iterator that points to the element before the first element of the array,
+This method doesn't actually reverse the container, it just returns an iterator that points to the element before the first element of it,
 and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
 
 For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
@@ -75,10 +77,10 @@ For non-const container of type `c` they return different iterators:
 
 int main()
 {
-    std::set<int> set = {1, 2, 3, 4, 5};
-    auto it = set.rend(); // Type: std::set<int>::reverse_iterator
-    // highlight-next-line
-    *std::prev(it) = 5; // ✔ Ok
+	std::set<int> set = {1, 2, 3, 4, 5};
+	auto it = set.rend(); // Type: std::set<int>::reverse_iterator
+	// highlight-next-line
+	*std::prev(it) = 5; // ✔ Ok
 }
 ```
 
@@ -90,10 +92,10 @@ int main()
 
 int main()
 {
-    std::set<int> set = {1, 2, 3, 4, 5};
-    auto it = set.crend(); // Type: std::set<int>::const_reverse_iterator
-    // error-next-line
-    *std::prev(it) = 5; // ❌ Error! 
+	std::set<int> set = {1, 2, 3, 4, 5};
+	auto it = set.crend(); // Type: std::set<int>::const_reverse_iterator
+	// error-next-line
+	*std::prev(it) = 5; // ❌ Error! 
 }
 ```
 
@@ -111,10 +113,10 @@ int main()
 
 int main()
 {
-    const std::set<int> set = {1, 2, 3, 4, 5};
-    auto it = set.rend(); // Type: std::set<int>::const_reverse_iterator
-    // error-next-line
-    *std::prev(it) = 5; // ❌ Error! 
+	const std::set<int> set = {1, 2, 3, 4, 5};
+	auto it = set.rend(); // Type: std::set<int>::const_reverse_iterator
+	// error-next-line
+	*std::prev(it) = 5; // ❌ Error! 
 }
 ```
 
@@ -126,10 +128,10 @@ int main()
 
 int main()
 {
-    const std::set<int> set = {1, 2, 3, 4, 5};
-    auto it = set.crend(); // Type: std::set<int>::const_reverse_iterator
-    // error-next-line
-    *std::prev(it) = 5; // ❌ Error! 
+	const std::set<int> set = {1, 2, 3, 4, 5};
+	auto it = set.crend(); // Type: std::set<int>::const_reverse_iterator
+	// error-next-line
+	*std::prev(it) = 5; // ❌ Error! 
 }
 ```
 
@@ -151,13 +153,13 @@ int main()
  
 int main()
 {
-    std::set<unsigned> rep{1, 2, 3, 4, 1, 2, 3, 4};
+	std::set<unsigned> rep{1, 2, 3, 4, 1, 2, 3, 4};
  
-    for (auto it = rep.crbegin(); it != rep.crend(); ++it) {
-        for (auto n = *it; n > 0; --n)
-            std::cout << "⏼" << ' ';
-        std::cout << '\n';
-    }
+	for (auto it = rep.crbegin(); it != rep.crend(); ++it) {
+		for (auto n = *it; n > 0; --n)
+			std::cout << "⏼" << ' ';
+		std::cout << '\n';
+	}
 }
 ```
 
