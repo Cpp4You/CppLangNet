@@ -4,23 +4,25 @@ sidebar_label:			empty( )
 description:			array<...>::empty() method C++ documentation
 hide_title:				true
 tags:					[array, empty]
+
+cppreference_origin_rel: w/cpp/container/array/empty
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- empty() -->
-import Method_UntilCpp20 	from './_codes/empty/until-cpp20.mdx';
-import Method_SinceCpp20 	from './_codes/empty/since-cpp20.mdx';
+import Method_UntilCpp20	from './_codes/empty/until-cpp20.mdx';
+import Method_SinceCpp20	from './_codes/empty/since-cpp20.mdx';
 
 # std::array empty() method
 
 <SwitchView content={{
-        'since-cpp20': <Method_SinceCpp20 />,
-        'until-cpp20': <Method_UntilCpp20 />,
-    }}/>
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
+}}/>
 
 
 Checks if the container has no elements, i.e. whether `begin() == end()`.

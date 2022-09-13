@@ -4,23 +4,25 @@ sidebar_label:			data( )
 description:			array<...>::data() method C++ documentation
 hide_title:				true
 tags:					[access, array, pointer, data, raw]
+
+cppreference_origin_rel: w/cpp/container/array/data
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- data() -->
-import Method_UntilCpp17 	from './_codes/data/until-cpp17.mdx';
-import Method_SinceCpp17 	from './_codes/data/since-cpp17.mdx';
+import Method_UntilCpp17	from './_codes/data/until-cpp17.mdx';
+import Method_SinceCpp17	from './_codes/data/since-cpp17.mdx';
 
 # std::array data() method
 
 <SwitchView content={{
-        'since-cpp17': <Method_SinceCpp17 />,
-        'until-cpp17': <Method_UntilCpp17 />,
-    }}/>
+	'since-cpp17': <Method_SinceCpp17 />,
+	'until-cpp17': <Method_UntilCpp17 />,
+}}/>
 
 Returns pointer to the underlying array serving as element storage.
 The pointer is such that range **[ `data()`; `data() + size()` )** is always a valid range,

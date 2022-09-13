@@ -4,6 +4,8 @@ sidebar_label:			front( )
 description:			array<...>::front() method C++ documentation
 hide_title:				true
 tags:					[access, array, first, front]
+
+cppreference_origin_rel: w/cpp/container/array/front
 ---
 
 import Columns					from "@site-comps/Columns";
@@ -12,23 +14,23 @@ import Tooltip					from "@site-comps/Tooltip";
 
 <!-- Terms -->
 import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
-import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
 <!----------------- Codes ---------------------->
 
 <!-- front() -->
-import Method_UntilCpp14 	from './_codes/front//until-cpp14.mdx';
-import Method_SinceCpp14 	from './_codes/front/since-cpp14.mdx';
-import Method_SinceCpp17 	from './_codes/front/since-cpp17.mdx';
+import Method_UntilCpp14		from './_codes/front//until-cpp14.mdx';
+import Method_SinceCpp14		from './_codes/front/since-cpp14.mdx';
+import Method_SinceCpp17		from './_codes/front/since-cpp17.mdx';
 
 
 # std::array front() method
 
 <SwitchView content={{
-		'since-cpp17': <Method_SinceCpp17 />,
-		'since-cpp14': <Method_SinceCpp14 />,
-		'until-cpp14': <Method_UntilCpp14 />,
-	}}/>
+	'since-cpp17': <Method_SinceCpp17 />,
+	'since-cpp14': <Method_SinceCpp14 />,
+	'until-cpp14': <Method_UntilCpp14 />,
+}}/>
 
 Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the first element in the container.
 Calling front on an empty container is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip>.
