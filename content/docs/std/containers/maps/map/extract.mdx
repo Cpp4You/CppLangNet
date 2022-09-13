@@ -4,29 +4,31 @@ sidebar_label:			extract( )
 description:			map<...>::extract() method C++ documentation
 hide_title:				true
 tags:					[map, extract]
+
+cppreference_origin_rel: w/cpp/container/map/extract
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- extract() -->
-import Method_SinceCpp17 	from './_codes/extract/since-cpp17.mdx';
-import Method_SinceCpp23 	from './_codes/extract/since-cpp23.mdx';
+import Method_SinceCpp17	from './_codes/extract/since-cpp17.mdx';
+import Method_SinceCpp23	from './_codes/extract/since-cpp23.mdx';
 
 # std::map extract() method
 
 <SwitchView content={{
-		'since-cpp23': <Method_SinceCpp23 />,
-		'since-cpp17': <Method_SinceCpp17 />,
-	}}/>
+	'since-cpp23': <Method_SinceCpp23 />,
+	'since-cpp17': <Method_SinceCpp17 />,
+}}/>
 
- - **(1)** Unlinks the node that contains the element pointed to by position and returns a node handle that owns it.
- - **(2)** If the container has an element with key equivalent to `k`, unlinks the node that contains that element from the container and returns a node handle that owns it.
-    Otherwise, returns an empty node handle.
- - **(3)** Same as **(2)**. This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type,
-    and neither `iterator` nor `const_iterator` is implicitly convertible from `K`. It allows calling this function without constructing an instance of `Key`.
+- **(1)** Unlinks the node that contains the element pointed to by position and returns a node handle that owns it.
+- **(2)** If the container has an element with key equivalent to `k`, unlinks the node that contains that element from the container and returns a node handle that owns it.
+  Otherwise, returns an empty node handle.
+- **(3)** Same as **(2)**. This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type,
+  and neither `iterator` nor `const_iterator` is implicitly convertible from `K`. It allows calling this function without constructing an instance of `Key`.
 
 In either case, no elements are copied or moved, only the internal pointers of the container nodes are repointed (rebalancing may occur, as with [`erase()`](/docs/std/containers/maps/map/erase)).
 

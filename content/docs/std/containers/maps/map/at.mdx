@@ -4,6 +4,8 @@ sidebar_label:			at( )
 description:			map<...>::at() method C++ documentation
 hide_title:				true
 tags:					[access, map, key, at, element, get]
+
+cppreference_origin_rel: w/cpp/container/map/at
 ---
 
 import Columns					from "@site-comps/Columns";
@@ -59,11 +61,11 @@ auto main() -> int {
 		{ "andrew111", 41 }
 	};
 
-	std::cout << "player1 zdobył " << playersScores.at("player1") << " punktów.\n";
+	std::cout << "player1 gained " << playersScores.at("player1") << " points.\n";
 
 	// Ooops! Incorrect key!
 	// error-next-line
-	std::cout << "super_cader zdobył " << playersScores.at("super_cader") << " punktów.\n";
+	std::cout << "super_cader gained " << playersScores.at("super_cader") << " points.\n";
 }
 ```
 

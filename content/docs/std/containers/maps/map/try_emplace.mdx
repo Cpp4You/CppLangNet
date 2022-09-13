@@ -4,23 +4,25 @@ sidebar_label:			try_emplace( )
 description:			map<...>::try_emplace() method C++ documentation
 hide_title:				true
 tags:					[map, try_emplace, insert, add]
+
+cppreference_origin_rel: w/cpp/container/map/try_emplace
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
-import Tooltip				    from "@site-comps/Tooltip";
-import Tabs				        from "@theme/Tabs";
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
 
 <!----------------- Codes ---------------------->
 
 <!-- try_emplace() -->
-import Method_SinceCpp17 	from './_codes/try_emplace/since-cpp17.mdx';
+import Method_SinceCpp17	from './_codes/try_emplace/since-cpp17.mdx';
 
 # std::map try_emplace() method
 
 <SwitchView content={{
-    'since-cpp17': <Method_SinceCpp17 />,
-    }} />
+	'since-cpp17': <Method_SinceCpp17 />,
+}} />
 
 Inserts a new element into the container with key `k` and value constructed with `args`, if there is no element with the key in the container.
 

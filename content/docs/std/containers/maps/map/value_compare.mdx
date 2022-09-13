@@ -4,6 +4,8 @@ sidebar_label:			value_compare
 description:			map<...>::value_compare member class C++ documentation
 hide_title:				true
 tags:					[compare, member, value_comp, value, comp]
+
+cppreference_origin_rel: w/cpp/container/map/value_compare
 ---
 
 import Columns					from "@site-comps/Columns";
@@ -12,16 +14,16 @@ import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 
 <!----------------- Codes ---------------------->
 
-import Method_SinceCpp98 	from './_codes/value_compare/since-cpp98.mdx';
+import Method_SinceCpp98		from './_codes/value_compare/since-cpp98.mdx';
 
-import ValueComp_Constructor 	from './_codes/value_compare/other/value-comp-constructor.mdx';
-import ValueComp_CallOperator 	from './_codes/value_compare/other/value-comp-call-operator.mdx';
+import ValueComp_Constructor	from './_codes/value_compare/other/value-comp-constructor.mdx';
+import ValueComp_CallOperator	from './_codes/value_compare/other/value-comp-call-operator.mdx';
 
 # std::map value_compare
 
 <SwitchView content={{
-    'since-cpp98': <Method_SinceCpp98 />,
-    }} />
+	'since-cpp98': <Method_SinceCpp98 />,
+}} />
 
 `value_compare` is a function object that compares objects of type `value_type` (key-value pairs) by comparing of the first components of the pairs.
 
