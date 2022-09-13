@@ -4,22 +4,24 @@ sidebar_label:			count( )
 description:			map<...>::count() method C++ documentation
 hide_title:				true
 tags:					[map, count, exists, contains]
+
+cppreference_origin_rel: w/cpp/container/map/count
 ---
 
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- count() -->
-import Method_SinceCpp98 	from './_codes/count/since-cpp98.mdx';
-import Method_SinceCpp14 	from './_codes/count/since-cpp14.mdx';
+import Method_SinceCpp98	from './_codes/count/since-cpp98.mdx';
+import Method_SinceCpp14	from './_codes/count/since-cpp14.mdx';
 
 # std::map count() method
 
 <SwitchView content={{
-    'since-cpp14': <Method_SinceCpp14 />,
-    'since-cpp98': <Method_SinceCpp98 />,
-    }} />
+	'since-cpp14': <Method_SinceCpp14 />,
+	'since-cpp98': <Method_SinceCpp98 />,
+}} />
 
 Returns the number of elements with key that compares equivalent to the specified argument, which is either **1** or **0** since this container does not allow duplicates.
 

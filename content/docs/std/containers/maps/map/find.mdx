@@ -4,10 +4,12 @@ sidebar_label:			find( )
 description:			map<...>::find() method C++ documentation
 hide_title:				true
 tags:					[map, find, exists, contains, get]
+
+cppreference_origin_rel: w/cpp/container/map/find
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
@@ -18,14 +20,14 @@ import Method_SinceCpp14 	from './_codes/find/since-cpp14.mdx';
 # std::map find() method
 
 <SwitchView content={{
-    'since-cpp14': <Method_SinceCpp14 />,
-    'since-cpp98': <Method_SinceCpp98 />,
-    }} />
+	'since-cpp14': <Method_SinceCpp14 />,
+	'since-cpp98': <Method_SinceCpp98 />,
+}} />
 
- - **(1-2)** Finds an element with key equivalent to `key`.
- - **(3-4)** Finds an element with key that compares equivalent to the value `x`.
-    This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type.
-    It allows calling this function without constructing an instance of `Key`.
+- **(1-2)** Finds an element with key equivalent to `key`.
+- **(3-4)** Finds an element with key that compares equivalent to the value `x`.
+  This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type.
+  It allows calling this function without constructing an instance of `Key`.
 
 ### Parameters
 

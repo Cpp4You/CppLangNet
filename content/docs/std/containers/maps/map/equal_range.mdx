@@ -4,32 +4,34 @@ sidebar_label:			equal_range( )
 description:			map<...>::equal_range() method C++ documentation
 hide_title:				true
 tags:					[map, equal_range, compare, equal, range]
+
+cppreference_origin_rel: w/cpp/container/map/equal_range
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- equal_range() -->
-import Method_SinceCpp98 	from './_codes/equal_range/since-cpp98.mdx';
-import Method_SinceCpp14 	from './_codes/equal_range/since-cpp14.mdx';
+import Method_SinceCpp98	from './_codes/equal_range/since-cpp98.mdx';
+import Method_SinceCpp14	from './_codes/equal_range/since-cpp14.mdx';
 
 # std::map equal_range() method
 
 <SwitchView content={{
-    'since-cpp14': <Method_SinceCpp14 />,
-    'since-cpp98': <Method_SinceCpp98 />,
-    }} />
+	'since-cpp14': <Method_SinceCpp14 />,
+	'since-cpp98': <Method_SinceCpp98 />,
+}} />
 
 Returns a range containing all elements with the given key in the container. 
 The range is defined by two iterators, one pointing to the first element that is not less than `key` and another pointing to the first element greater than `key`.
 Alternatively, the first iterator may be obtained with [`lower_bound()`](/docs/std/containers/maps/map/lower_bound), and the second with [`upper_bound()`](/docs/std/containers/maps/map/upper_bound).
 
- - **(1-2)** Compares the keys to `key`.
- - **(3-4)** Compares the keys to the value `x`.
-    This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type.
-    It allows calling this function without constructing an instance of `Key`.
+- **(1-2)** Compares the keys to `key`.
+- **(3-4)** Compares the keys to the value `x`.
+  This overload participates in overload resolution only if the qualified-id `Compare::is_transparent` is valid and denotes a type.
+  It allows calling this function without constructing an instance of `Key`.
 
 ### Parameters
 

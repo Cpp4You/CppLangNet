@@ -4,23 +4,25 @@ sidebar_label:			clear( )
 description:			map<...>::clear() method C++ documentation
 hide_title:				true
 tags:					[map, clear, empty, erase, remove]
+
+cppreference_origin_rel: w/cpp/container/map/clear
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- clear() -->
-import Method_UntilCpp11 	from './_codes/clear/until-cpp11.mdx';
-import Method_SinceCpp11 	from './_codes/clear/since-cpp11.mdx';
+import Method_UntilCpp11	from './_codes/clear/until-cpp11.mdx';
+import Method_SinceCpp11	from './_codes/clear/since-cpp11.mdx';
 
 # std::map clear() method
 
 <SwitchView content={{
-        'since-cpp11': <Method_SinceCpp11 />,
-        'until-cpp11': <Method_UntilCpp11 />,
-    }}/>
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
+}}/>
 
 Erases all elements from the container. After this call, [`size()`](/docs/std/containers/maps/map/size) returns zero.
 
