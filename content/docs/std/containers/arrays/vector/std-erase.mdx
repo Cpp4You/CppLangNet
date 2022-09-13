@@ -4,12 +4,14 @@ sidebar_label:			std::erase( ), std::erase_if( )
 description:			std::erase() function C++ documentation
 hide_title:				true
 tags:					[vector, erase, remove, delete]
+
+cppreference_origin_rel: w/cpp/container/vector/erase2
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
-import Tooltip				    from "@site-comps/Tooltip";
-import Tabs				        from "@theme/Tabs";
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
 
 <!-- Terms -->
 import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
@@ -18,12 +20,12 @@ import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behav
 <!----------------- Codes ---------------------->
 
 <!-- std-erase() -->
-import Method_SinceCpp20 	from './_codes/std-erase/since-cpp20.mdx';
+import Method_SinceCpp20	from './_codes/std-erase/since-cpp20.mdx';
 
 # std::erase() method
 
 <SwitchView content={{
-    'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp20': <Method_SinceCpp20 />,
 }} />
 
  - **(1)** Erases all elements that compare equal to value from the container. Equivalent to

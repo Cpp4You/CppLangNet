@@ -4,11 +4,13 @@ sidebar_label:			swap( )
 description:			vector<...>::swap() method C++ documentation
 hide_title:				true
 tags:					[vector, swap, exchange]
+
+cppreference_origin_rel: w/cpp/container/vector/swap
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
-import Tooltip					from "@site-comps/Tooltip";
+import Columns		from "@site-comps/Columns";
+import SwitchView	from "@site-comps/SwitchView";
+import Tooltip		from "@site-comps/Tooltip";
 
 <!-- Terms -->
 import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
@@ -16,27 +18,27 @@ import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behav
 <!----------------- Codes ---------------------->
 
 <!-- swap() -->
-import Method_UntilCpp17 	from './_codes/swap/until-cpp17.mdx';
-import Method_SinceCpp17 	from './_codes/swap/since-cpp17.mdx';
-import Method_SinceCpp20 	from './_codes/swap/since-cpp20.mdx';
-import NoexceptSpecification_SinceCpp11 	from './_codes/swap/noexcept-specification/since-cpp11.mdx';
+import Method_UntilCpp17				from './_codes/swap/until-cpp17.mdx';
+import Method_SinceCpp17				from './_codes/swap/since-cpp17.mdx';
+import Method_SinceCpp20				from './_codes/swap/since-cpp20.mdx';
+import NoexceptSpecification_SinceCpp11	from './_codes/swap/noexcept-specification/since-cpp11.mdx';
 
 # std::vector swap() method
 
 
 <SwitchView content={{
-        'since-cpp20': <>
-            <Method_SinceCpp20 />
-            The noexcept specification looks as follows:
-            <NoexceptSpecification_SinceCpp11 />
-        </>,
-        'since-cpp17': <>
-            <Method_SinceCpp17 />
-            The noexcept specification looks as follows:
-            <NoexceptSpecification_SinceCpp11 />
-        </>,
-        'until-cpp17': <Method_UntilCpp17 />
-    }}/>
+		'since-cpp20': <>
+			<Method_SinceCpp20 />
+			The noexcept specification looks as follows:
+			<NoexceptSpecification_SinceCpp11 />
+		</>,
+		'since-cpp17': <>
+			<Method_SinceCpp17 />
+			The noexcept specification looks as follows:
+			<NoexceptSpecification_SinceCpp11 />
+		</>,
+		'until-cpp17': <Method_UntilCpp17 />
+	}}/>
 
 
 Exchanges the contents of the container with those of **other**. Does not invoke any move, copy, or swap operations on individual elements.
@@ -48,11 +50,11 @@ The **past-the-end iterator** is invalidated.
 All other iterators and references remain valid.
 
 <SwitchView content={{
-    'since-cpp11': <>
-        If <code>std::allocator_traits&lt;allocator_type&gt;::propagate_on_container_swap::value</code> is <code>true</code>,
-        then the allocators are exchanged using an unqualified call to non-member swap. 
-        Otherwise, they are not swapped (and if <code>get_allocator() != other.get_allocator()</code>, the behavior is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip>).
-    </>
+	'since-cpp11': <>
+		If <code>std::allocator_traits&lt;allocator_type&gt;::propagate_on_container_swap::value</code> is <code>true</code>,
+		then the allocators are exchanged using an unqualified call to non-member swap. 
+		Otherwise, they are not swapped (and if <code>get_allocator() != other.get_allocator()</code>, the behavior is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip>).
+	</>
 }} />
 
 ### Parameters
@@ -80,28 +82,28 @@ Constant.
 #include <vector>
  
 template<class Os, class Co> Os& operator<<(Os& os, const Co& co) {
-    os << "{";
-    for (auto const& i : co) { os << ' ' << i; }
-    return os << " } ";
+	os << "{";
+	for (auto const& i : co) { os << ' ' << i; }
+	return os << " } ";
 }
  
 int main()
 {
-    std::vector<int> a1{1, 2, 3}, a2{4, 5};
+	std::vector<int> a1{1, 2, 3}, a2{4, 5};
  
-    auto it1 = std::next(a1.begin());
-    auto it2 = std::next(a2.begin());
+	auto it1 = std::next(a1.begin());
+	auto it2 = std::next(a2.begin());
  
-    int& ref1 = a1.front();
-    int& ref2 = a2.front();
+	int& ref1 = a1.front();
+	int& ref2 = a2.front();
  
-    std::cout << a1 << a2 << *it1 << ' ' << *it2 << ' ' << ref1 << ' ' << ref2 << '\n';
-    a1.swap(a2);
-    std::cout << a1 << a2 << *it1 << ' ' << *it2 << ' ' << ref1 << ' ' << ref2 << '\n';
+	std::cout << a1 << a2 << *it1 << ' ' << *it2 << ' ' << ref1 << ' ' << ref2 << '\n';
+	a1.swap(a2);
+	std::cout << a1 << a2 << *it1 << ' ' << *it2 << ' ' << ref1 << ' ' << ref2 << '\n';
  
-    // Note that after swap the iterators and references stay associated with their
-    // original elements, e.g. it1 that pointed to an element in 'a1' with value 2
-    // still points to the same element, though this element was moved into 'a2'.
+	// Note that after swap the iterators and references stay associated with their
+	// original elements, e.g. it1 that pointed to an element in 'a1' with value 2
+	// still points to the same element, though this element was moved into 'a2'.
 }
 ```
 
