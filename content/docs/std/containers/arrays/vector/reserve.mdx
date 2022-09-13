@@ -4,11 +4,13 @@ sidebar_label:			reserve( )
 description:			vector<...>::reserve() method C++ documentation
 hide_title:				true
 tags:					[vector, reserve, resize]
+
+cppreference_origin_rel: w/cpp/container/vector/reserve
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
-import Tooltip				    from "@site-comps/Tooltip";
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
 
 <!-- Terms -->
 import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
@@ -16,14 +18,14 @@ import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behav
 <!----------------- Codes ---------------------->
 
 <!-- reserve() -->
-import Method_UntilCpp20 	from './_codes/reserve/until-cpp20.mdx';
-import Method_SinceCpp20 	from './_codes/reserve/since-cpp20.mdx';
+import Method_UntilCpp20	from './_codes/reserve/until-cpp20.mdx';
+import Method_SinceCpp20	from './_codes/reserve/since-cpp20.mdx';
 
 # std::vector reserve() method
 
 <SwitchView content={{
-    'since-cpp20': <Method_SinceCpp20 />,
-    'until-cpp20': <Method_UntilCpp20 />,
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
 }} />
 
 Increase the capacity of the vector (the total number of elements that the vector can hold without requiring reallocation)
