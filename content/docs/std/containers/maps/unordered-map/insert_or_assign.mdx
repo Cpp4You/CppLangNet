@@ -4,21 +4,23 @@ sidebar_label:			insert_or_assign()
 description:			unordered_map<...>::insert_or_assign() method C++ documentation
 hide_title:				true
 tags:					[insert_or_assign, add, append, insert, assign, unordered_map]
+
+cppreference_origin_rel: w/cpp/container/unordered_map/insert_or_assign
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- insert_or_assign() -->
-import Method_SinceCpp17 	from './_codes/insert_or_assign/since-cpp17.mdx';
+import Method_SinceCpp17	from './_codes/insert_or_assign/since-cpp17.mdx';
 
 # std::unordered_map insert_or_assign() method
 
 <SwitchView content={{
-    'since-cpp17': <Method_SinceCpp17 />,
-    }} />
+	'since-cpp17': <Method_SinceCpp17 />,
+}} />
 
  - **(1-3)** 
     If a key equivalent to `k` already exists in the container, assigns `std::forward<M>(obj)` to the `mapped_type` corresponding to the key `k`.

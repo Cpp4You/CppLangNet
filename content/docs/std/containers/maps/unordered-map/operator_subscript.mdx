@@ -4,33 +4,35 @@ sidebar_label:			operator[]
 description:			unordered_map<...>::operator[] method C++ documentation
 hide_title:				true
 tags:					[operator, subscript, index, indexing, access]
+
+cppreference_origin_rel: w/cpp/container/unordered_map/operator_at
 ---
 
-import Columns				from "@site-comps/Columns";
+import Columns					from "@site-comps/Columns";
 import SwitchView				from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- operator[] -->
-import Explanation_UntilCpp17   from './_codes/operator_subscript/explanation/until-cpp17.mdx';
-import Explanation_SinceCpp17   from './_codes/operator_subscript/explanation/since-cpp17.mdx';
+import Explanation_UntilCpp17		from './_codes/operator_subscript/explanation/until-cpp17.mdx';
+import Explanation_SinceCpp17		from './_codes/operator_subscript/explanation/since-cpp17.mdx';
 
-import Notes_InsertOrAssign_Since17 from './_codes/operator_subscript/other/notes-insert-or-assign-since-cpp17.mdx';
+import Notes_InsertOrAssign_Since17	from './_codes/operator_subscript/other/notes-insert-or-assign-since-cpp17.mdx';
 
-import Method_SinceCpp11 	from './_codes/operator_subscript/since-cpp11.mdx';
+import Method_SinceCpp11			from './_codes/operator_subscript/since-cpp11.mdx';
 
 # std::unordered_map operator[] method
 
 <SwitchView content={{
-    'since-cpp11': <Method_SinceCpp11 />,
-    }} />
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
 
 Returns a reference to the value that is mapped to a key equivalent to `key`, performing an insertion if such key does not already exist.
 
 <SwitchView content={{
-    'since-cpp17': <Explanation_SinceCpp17 />,
-    'until-cpp17': <Explanation_UntilCpp17 />,
-    }} />
+	'since-cpp17': <Explanation_SinceCpp17 />,
+	'until-cpp17': <Explanation_UntilCpp17 />,
+}} />
 
 :::danger Invalidation
 If an insertion occurs and results in a rehashing of the container, **all iterators** are invalidated.

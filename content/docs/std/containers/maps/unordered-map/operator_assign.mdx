@@ -4,24 +4,26 @@ sidebar_label:			operator=
 description:			unordered_map<...>::operator= method C++ documentation
 hide_title:				true
 tags:					[unordered_map, assign, copy, operator_assign]
+
+cppreference_origin_rel: w/cpp/container/unordered_map/operator=
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- operator_assign() -->
-import Method_UntilCpp17 	from './_codes/operator_assign/until-cpp17.mdx';
-import Method_SinceCpp17 	from './_codes/operator_assign/since-cpp17.mdx';
+import Method_UntilCpp17	from './_codes/operator_assign/until-cpp17.mdx';
+import Method_SinceCpp17	from './_codes/operator_assign/since-cpp17.mdx';
 
 import NoexceptSpecification_SinceCpp17  from './_codes/operator_assign/noexcept-specification/since-cpp17.mdx';
 
 # std::unordered_map operator=
 
 <SwitchView content={{
-    'since-cpp17': <Method_SinceCpp17 />,
-    'until-cpp17': <Method_UntilCpp17 />
+	'since-cpp17': <Method_SinceCpp17 />,
+	'until-cpp17': <Method_UntilCpp17 />
 }} />
 
 Replaces the contents of the container with the contents of another.
