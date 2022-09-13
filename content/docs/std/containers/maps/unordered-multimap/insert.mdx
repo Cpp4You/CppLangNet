@@ -4,16 +4,18 @@ sidebar_label:			insert( )
 description:			unordered_multimap<...>::insert() method C++ documentation
 hide_title:				true
 tags:					[insert, add, append, unordered_multimap]
+
+cppreference_origin_rel: w/cpp/container/unordered_multimap/insert
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- insert() -->
-import Method_SinceCpp17 	from './_codes/insert/since-cpp17.mdx';
-import Method_UntilCpp17 	from './_codes/insert/until-cpp17.mdx';
+import Method_SinceCpp17	from './_codes/insert/since-cpp17.mdx';
+import Method_UntilCpp17	from './_codes/insert/until-cpp17.mdx';
 
 import IteratorDereferenceNote_UntilCpp17 	from './_codes/insert/explanation/iterator-dereference-note-until-cpp17.mdx';
 import IteratorDereferenceNote_SinceCpp17 	from './_codes/insert/explanation/iterator-dereference-note-since-cpp17.mdx';
@@ -21,9 +23,9 @@ import IteratorDereferenceNote_SinceCpp17 	from './_codes/insert/explanation/ite
 # std::unordered_multimap insert() method
 
 <SwitchView content={{
-    'since-cpp17': <Method_SinceCpp17 />,
-    'until-cpp17': <Method_UntilCpp17 />
-    }} />
+	'since-cpp17': <Method_SinceCpp17 />,
+	'until-cpp17': <Method_UntilCpp17 />
+}} />
 
 Inserts element(s) into the container, if the container doesn't already contain an element with an equivalent key.
 
