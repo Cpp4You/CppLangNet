@@ -4,10 +4,12 @@ sidebar_label:			swap( )
 description:			array<...>::swap() method C++ documentation
 hide_title:				true
 tags:					[array, swap]
+
+cppreference_origin_rel: w/cpp/container/array/swap
 ---
 
-import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
 
 
 <!----------------- Codes ---------------------->
@@ -16,21 +18,21 @@ import SwitchView				from "@site-comps/SwitchView";
 import Method_UntilCpp20 	from './_codes/swap/until-cpp20.mdx';
 import Method_SinceCpp20 	from './_codes/swap/since-cpp20.mdx';
 
-import NoexceptSpecification_UntilCpp17 	from './_codes/swap/noexcept-specification/until-cpp17.mdx';
-import NoexceptSpecification_SinceCpp17 	from './_codes/swap/noexcept-specification/since-cpp17.mdx';
+import NoexceptSpecification_UntilCpp17	from './_codes/swap/noexcept-specification/until-cpp17.mdx';
+import NoexceptSpecification_SinceCpp17	from './_codes/swap/noexcept-specification/since-cpp17.mdx';
 
 # std::array swap() method
 
 <SwitchView content={{
-    'since-cpp20': <Method_SinceCpp20 />,
-    'until-cpp20': <Method_UntilCpp20 />,
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
 }}/>
 
 The noexcept specification for these two looks like follows:
 
 <SwitchView content={{
-    'until-cpp17': <NoexceptSpecification_UntilCpp17 />,
-    'since-cpp17': <NoexceptSpecification_SinceCpp17 />
+	'until-cpp17': <NoexceptSpecification_UntilCpp17 />,
+	'since-cpp17': <NoexceptSpecification_SinceCpp17 />
 }}/>
 
 Exchanges the contents of the container with those of other.
