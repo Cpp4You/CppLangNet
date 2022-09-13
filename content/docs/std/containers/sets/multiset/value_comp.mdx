@@ -4,6 +4,8 @@ sidebar_label:			value_comp( )
 description:			multiset<...>::value_comp() method C++ documentation
 hide_title:				true
 tags:					[compare, value_comp, value, comp]
+
+cppreference_origin_rel: w/cpp/container/multiset/value_comp
 ---
 
 import Columns					from "@site-comps/Columns";
@@ -11,16 +13,16 @@ import SwitchView				from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
-import Method_SinceCpp98 	from './_codes/value_comp/since-cpp98.mdx';
+import Method_SinceCpp98		from './_codes/value_comp/since-cpp98.mdx';
 
-import ValueComp_Constructor 	from './_codes/value_comp/other/value-comp-constructor.mdx';
-import ValueComp_CallOperator 	from './_codes/value_comp/other/value-comp-call-operator.mdx';
+import ValueComp_Constructor	from './_codes/value_comp/other/value-comp-constructor.mdx';
+import ValueComp_CallOperator	from './_codes/value_comp/other/value-comp-call-operator.mdx';
 
 # std::multiset value_comp() method
 
 <SwitchView content={{
-    'since-cpp98': <Method_SinceCpp98 />,
-    }} />
+	'since-cpp98': <Method_SinceCpp98 />,
+}} />
 
 Returns a function object that compares objects of type `value_type` by comparing the first components of the pairs, same as [`key_comp()`](/docs/std/containers/sets/multiset/key_comp).
 
