@@ -1,0 +1,51 @@
+.inline-danger {
+	background-color: rgba(red, 0.1);
+	padding: 2px 3px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid red;
+	code {
+		background-color: rgb(255, 232, 232);
+	}
+}
+
+.inline-caution {
+	background-color: rgba(255, 145, 0, 0.1);
+	padding: 2px 3px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid rgb(255, 153, 0);
+	code {
+		background-color: rgb(255, 232, 205);
+	}
+}
+
+.inline-note {
+	background-color: rgba(187, 187, 187, 0.15);
+	padding: 2px 3px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid rgb(116, 116, 116);
+	code {
+		background-color: white;
+	}
+}
+
+html[data-theme="dark"] {
+
+.inline-danger {
+	code {
+		background-color: rgb(53, 8, 8);
+	}
+}
+
+.inline-caution {
+	code {
+		background-color: rgb(53, 22, 8);
+	}
+}
+
+.inline-note {
+	// code {
+	// 	// background-color: ;
+	// }
+}
+
+}

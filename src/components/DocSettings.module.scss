@@ -1,0 +1,34 @@
+.menuButton {
+	float: right;
+	position: absolute !important;
+	top: -4px;
+	right: 0;
+	background-color: var(--ifm-background-color) !important;
+	border: 1px solid rgba(gray, 0.4) !important;
+
+	transition: 0.2s;
+	&:hover {
+		background-color: rgba(black, 0.1) !important;
+	}
+}
+
+.menu {
+	background-color: var(--ifm-navbar-background-color) !important;
+	color: var(--ifm-font-color-base) !important;
+	padding: 0;
+	ul {
+		padding: 0;
+		overflow: hidden;
+	}
+	li:global(.MuiMenuItem-root) {
+		display: flex;
+		justify-content: space-between;
+		>*:first-child {
+			min-width: 100px;
+			margin-right: 20px;
+		}
+		>span {
+			display: block;
+		}
+	}
+}

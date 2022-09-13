@@ -2,3 +2,9 @@ root = true
 [*]
 # Most of the standard properties are supported
 indent_size=4
+
+[*.{mdx,js,jsx,ts,tsx}]
+indent_style = tab
+
+[*.{mdx}]
+trim_trailing_whitespace = false
