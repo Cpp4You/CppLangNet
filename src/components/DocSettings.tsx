@@ -28,7 +28,11 @@ export const DocSettings = ({onTextSizeChanged}: DocSettingsProps) => {
 		setAnchorEl(null);
 	};
 
-	const [textSize, setTextSize] = React.useState( Number.parseInt(getCookie('sizeMode') || "") || 3 );
+	const [textSize, setTextSize] = React.useState(3);
+	React.useEffect(() => {
+		setTextSize(Number.parseInt(getCookie('sizeMode') || '3'));
+	}, []);
+
 	return (
 		<div>
 			<IconButton

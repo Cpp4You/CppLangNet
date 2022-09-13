@@ -1,4 +1,5 @@
-:global(.document-layout-wrapper) :global(.col:first-child)>div>article
-{
-	position: relative;
-}
+.layoutWrapper {
+	:global(.col):first-child div>article {
+		position: relative;
+	}
+} 

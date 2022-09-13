@@ -3,17 +3,22 @@ import Content					from '@theme-original/DocItem/Content';
 import DocSettings				from '@site/src/components/DocSettings';
 import CppRefAttribution		from '@site-comps/CppRefAttribution';
 
+import BrowserOnly				from '@docusaurus/BrowserOnly';
+// import useIsBrowser				from '@docusaurus/useIsBrowser';
 import { useDoc }				from '@docusaurus/theme-common/internal';
 import { setCookie, getCookie }	from '@site/src/helper/Cookies';
 
 import styles					from './Content.module.scss';
 
 export default function ContentWrapper(props) {
-	const {metadata} = useDoc();
-
+	const {metadata}	= useDoc();
+	// const isBrowser		= useIsBrowser();
 	// const customMetadata = metadata.frontMatter;
 
-	const [textSize, setTextSize] = React.useState(Number.parseInt(getCookie('sizeMode')) || 3);
+	const [textSize, setTextSize] = React.useState(3);
+	React.useEffect(() => {
+		setTextSize(Number.parseInt(getCookie('sizeMode')));
+	}, []);
 
 	const handleTextSizeChanged = React.useCallback(
 		(newSize) => {
@@ -26,7 +31,9 @@ export default function ContentWrapper(props) {
 
 	return (
 		<div className={"document-content-wrapper " + styles[`sizeMode-${textSize}`]}>
-			<DocSettings onTextSizeChanged={handleTextSizeChanged}/>
+			<BrowserOnly>
+				{() => <DocSettings onTextSizeChanged={handleTextSizeChanged}/>}
+			</BrowserOnly>
 			<Content {...props} />
 			{(metadata.frontMatter["cppreference_origin"] !== undefined &&
 				<CppRefAttribution fullUrl={metadata.frontMatter["cppreference_origin"]}/>)
