@@ -239,6 +239,7 @@ module.exports = {
 									cat('Observers'),
 									'm:key_comp',
 									'm:value_comp',
+									'm:value_compare',
 
 								]),
 								docsClassCat('multimap', 'std/containers/maps/multimap', '', [
@@ -275,7 +276,7 @@ module.exports = {
 									'm:key_comp',
 									'm:value_comp',
 								]),
-								docsClassCat('unordered-map', 'std/containers/maps/unordered-map', '', [
+								docsClassCat('unordered_map', 'std/containers/maps/unordered-map', '', [
 									'constructors',
 									'destructors',
 									'op:operator_assign',
@@ -322,7 +323,7 @@ module.exports = {
 									'm:hash_function',
 									'm:key_eq'
 								]),
-								docsClassCat('unordered-multimap', 'std/containers/maps/unordered-multimap', '', [
+								docsClassCat('unordered_multimap', 'std/containers/maps/unordered-multimap', '', [
 									'constructors',
 									'destructors',
 									'op:operator_assign',
@@ -405,7 +406,7 @@ module.exports = {
 									'm:key_comp',
 									'm:value_comp',
 								]),
-								docsClassCat('unordered-set', 'std/containers/sets/unordered-set', '', [
+								docsClassCat('unordered_set', 'std/containers/sets/unordered-set', '', [
 									'constructors',
 									'destructors',
 									'op:operator_assign',
@@ -481,7 +482,7 @@ module.exports = {
 									'm:key_comp',
 									'm:value_comp',
 								]),
-								docsClassCat('unordered-multiset', 'std/containers/sets/unordered-multiset', '', [
+								docsClassCat('unordered_multiset', 'std/containers/sets/unordered-multiset', '', [
 									'constructors',
 									'destructors',
 									'op:operator_assign',
