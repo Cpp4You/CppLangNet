@@ -4,10 +4,12 @@ sidebar_label:			merge()
 description:			unordered_map<...>::merge() method C++ documentation
 hide_title:				true
 tags:					[merge, copy, connect, unordered_map]
+
+cppreference_origin_rel: w/cpp/container/unordered_map/merge
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
@@ -16,8 +18,8 @@ import Method_SinceCpp17 	from './_codes/merge/since-cpp17.mdx';
 # std::unordered_map merge() method
 
 <SwitchView content={{
-    'since-cpp17': <Method_SinceCpp17 />,
-    }} />
+	'since-cpp17': <Method_SinceCpp17 />,
+}} />
 
 Attempts to extract ("splice") each element in source and insert it into `*this` using the hash function and key equality predicate of `*this`.
 
