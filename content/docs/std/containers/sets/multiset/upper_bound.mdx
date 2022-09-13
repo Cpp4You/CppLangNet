@@ -4,6 +4,8 @@ sidebar_label:			upper_bound( )
 description:			multiset<...>::upper_bound() method C++ documentation
 hide_title:				true
 tags:					[multiset, upper_bound, more, greater]
+
+cppreference_origin_rel: w/cpp/container/multiset/upper_bound
 ---
 
 import Columns				from "@site-comps/Columns";
@@ -12,15 +14,15 @@ import ImproveSection		from "@site/i18n/en/presets/ImproveSection.mdx";
 
 <!----------------- Codes ---------------------->
 
-import Method_SinceCpp98 	from './_codes/upper_bound/since-cpp98.mdx';
-import Method_SinceCpp14 	from './_codes/upper_bound/since-cpp14.mdx';
+import Method_SinceCpp98	from './_codes/upper_bound/since-cpp98.mdx';
+import Method_SinceCpp14	from './_codes/upper_bound/since-cpp14.mdx';
 
 # std::multiset upper_bound() method
 
 <SwitchView content={{
-    'since-cpp14': <Method_SinceCpp14 />,
-    'since-cpp98': <Method_SinceCpp98 />,
-    }} />
+	'since-cpp14': <Method_SinceCpp14 />,
+	'since-cpp98': <Method_SinceCpp98 />,
+}} />
 
  - **(1-2)** Returns an iterator pointing to the first element that is *greater* than `key`.
  - **(3-4)** Returns an iterator pointing to the first element that compares *greater* to the value `x`.
