@@ -4,22 +4,24 @@ sidebar_label:			extract( )
 description:			unordered_multiset<...>::extract() method C++ documentation
 hide_title:				true
 tags:					[extract, unordered_multiset]
+
+cppreference_origin_rel: w/cpp/container/unordered_multiset/extract
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
-import Method_SinceCpp17 	from './_codes/extract/since-cpp17.mdx';
-import Method_SinceCpp23 	from './_codes/extract/since-cpp23.mdx';
+import Method_SinceCpp17	from './_codes/extract/since-cpp17.mdx';
+import Method_SinceCpp23	from './_codes/extract/since-cpp23.mdx';
 
 # std::unordered_multiset extract() method
 
 <SwitchView content={{
-    'since-cpp23': <Method_SinceCpp23 />,
-    'since-cpp17': <Method_SinceCpp17 />,
-    }} />
+	'since-cpp23': <Method_SinceCpp23 />,
+	'since-cpp17': <Method_SinceCpp17 />,
+}} />
 
  - **(1)**
     Unlinks the node that contains the element pointed to by position and returns a node handle that owns it.

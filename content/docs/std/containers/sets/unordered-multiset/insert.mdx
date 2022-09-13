@@ -4,64 +4,52 @@ sidebar_label:			insert( )
 description:			unordered_multiset<...>::insert() method C++ documentation
 hide_title:				true
 tags:					[insert, add, append, unordered_multiset]
+
+cppreference_origin_rel: w/cpp/container/unordered_multiset/insert
 ---
 
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- insert() -->
-import Method_SinceCpp17 	from './_codes/insert/since-cpp17.mdx';
-import Method_UntilCpp17 	from './_codes/insert/until-cpp17.mdx';
-import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+import Method_SinceCpp17	from './_codes/insert/since-cpp17.mdx';
+import Method_UntilCpp17	from './_codes/insert/until-cpp17.mdx';
+import ImproveSection		from "@site/i18n/en/presets/ImproveSection.mdx";
 
-import IteratorDereferenceNote_UntilCpp17 	from './_codes/insert/explanation/iterator-dereference-note-until-cpp17.mdx';
-import IteratorDereferenceNote_SinceCpp17 	from './_codes/insert/explanation/iterator-dereference-note-since-cpp17.mdx';
+import IteratorDereferenceNote_UntilCpp17 from './_codes/insert/explanation/iterator-dereference-note-until-cpp17.mdx';
+import IteratorDereferenceNote_SinceCpp17 from './_codes/insert/explanation/iterator-dereference-note-since-cpp17.mdx';
 
 # std::unordered_multiset insert() method
 
 <SwitchView content={{
-    'since-cpp17': <Method_SinceCpp17 />,
-    'until-cpp17': <Method_UntilCpp17 />
-    }} />
+	'since-cpp17': <Method_SinceCpp17 />,
+	'until-cpp17': <Method_UntilCpp17 />
+}} />
 
 Inserts element(s) into the container, if the container doesn't already contain an element with an equivalent key.
 
- - **(1-2)** Inserts value.
+- **(1-2)** Inserts value.
+- **(3-4)** Inserts value, using hint as a non-binding suggestion to where the search should start.
+- **(5)** Inserts elements from range **[ first; last )**.
+- **(6)** Inserts elements from initializer list `ilist`.
+- **(7)** If `nh` is an empty node handle, does nothing. 
+  Otherwise, inserts the element owned by `nh` into the container, if the container doesn't already contain an element with a key equivalent to `nh.key()`. 
+  <span className="inline-danger">The behavior is undefined if <code>nh</code> is not empty and <code>get_allocator() != nh.get_allocator()</code>.</span>
+- **(8)**
+  If `nh` is an empty node handle, does nothing and returns the end iterator.
+  Otherwise, inserts the element owned by `nh` into the container, if the container doesn't already contain an element with a key equivalent to `nh.key()`,
+  and returns the iterator pointing to the element with key equivalent to `nh.key()` (regardless of whether the insert succeeded or failed).
+  If the insertion succeeds, `nh` is moved from, otherwise it retains ownership of the element. 
+  The element is inserted as close as possible to `hint`. 
+  <span className="inline-danger">The behavior is undefined if <code>nh</code> is not empty and <code>get_allocator() != nh.get_allocator()</code>.</span>
 
- - **(3-4)** Inserts value, using hint as a non-binding suggestion to where the search should start.
-
- - **(5)** Inserts elements from range **[ first; last )**.
-
- - **(6)** Inserts elements from initializer list `ilist`.
-
- - **(7)**
-    If `nh` is an empty node handle, does nothing. 
-
-    Otherwise, inserts the element owned by `nh` into the container, if the container doesn't already contain an element with a key equivalent to `nh.key()`.
-
-:::danger Undefined behaviour
-The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_allocator()`.
-:::
-
- - **(8)**
-    If `nh` is an empty node handle, does nothing and returns the end iterator.
-    
-    Otherwise, inserts the element owned by `nh` into the container, if the container doesn't already contain an element with a key equivalent to `nh.key()`,
-    and returns the iterator pointing to the element with key equivalent to `nh.key()` (regardless of whether the insert succeeded or failed).
-
-    If the insertion succeeds, `nh` is moved from, otherwise it retains ownership of the element. 
-    The element is inserted as close as possible to `hint`.
-    
-:::danger Undefined behaviour
-The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_allocator()`.
-:::
 
 
 <SwitchView content={{
-    'since-cpp17': <IteratorDereferenceNote_SinceCpp17 />,
-    'until-cpp17': <IteratorDereferenceNote_UntilCpp17 />,
-    }} />
+	'since-cpp17': <IteratorDereferenceNote_SinceCpp17 />,
+	'until-cpp17': <IteratorDereferenceNote_UntilCpp17 />,
+}} />
 
 ### Parameters
 
@@ -83,17 +71,15 @@ The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_al
 
 ### Complexity
 
- - **(1-4)**  
-   Average case, constant - **O(1)**.  
-   Worst case, linear in the size of the container - **O(size())**.
-
- - **(5-6)**  
-   Average case, linear in the number of elements to insert - **O(N)**, where N is the number of elements to insert.  
-   Worst case - **O(N*size()+N)**, where N is the number of elements to insert.
-
- - **(7-8)**  
-   Average case, constant - **O(1)**.  
-   Worst case, linear in the size of the container - **O(size())**.
+- **(1-4)**  
+  Average case, constant - **O(1)**.  
+  Worst case, linear in the size of the container - **O(size())**.
+- **(5-6)**  
+  Average case, linear in the number of elements to insert - **O(N)**, where N is the number of elements to insert.  
+  Worst case - **O(N*size()+N)**, where N is the number of elements to insert.
+- **(7-8)**  
+  Average case, constant - **O(1)**.  
+  Worst case, linear in the size of the container - **O(size())**.
 
 
 ### Exceptions

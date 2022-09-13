@@ -4,23 +4,25 @@ sidebar_label:			count( )
 description:			unordered_multiset<...>::count() method C++ documentation
 hide_title:				true
 tags:					[count, contains, existence, exists]
+
+cppreference_origin_rel: w/cpp/container/unordered_multiset/count
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- count() -->
-import Method_SinceCpp11 	from './_codes/count/since-cpp11.mdx';
-import Method_SinceCpp20 	from './_codes/count/since-cpp20.mdx';
+import Method_SinceCpp11	from './_codes/count/since-cpp11.mdx';
+import Method_SinceCpp20	from './_codes/count/since-cpp20.mdx';
 
 # std::unordered_multiset count() method
 
 <SwitchView content={{
-    'since-cpp20': <Method_SinceCpp20 />,
-    'since-cpp11': <Method_SinceCpp11 />,
-    }} />
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
 
 
  - **(1)** Returns the number of elements with key that compares equal to the specified argument `key`.
