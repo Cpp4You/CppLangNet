@@ -168,7 +168,7 @@ function filterSidebarItems(items)
 					remarkPlugins: remarkConfig,
 				},
 				theme: {
-					customCss: require.resolve('./src/css/custom.scss'),
+					customCss: require.resolve('./src/css/Custom.scss'),
 				},
 				gtag: {
 					trackingID: 'G-N768FKNY0R',
