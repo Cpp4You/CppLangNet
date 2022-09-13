@@ -4,16 +4,18 @@ sidebar_label:			swap( )
 description:			unordered_multimap<...>::swap() method C++ documentation
 hide_title:				true
 tags:					[swap, exchange, unordered_multimap]
+
+cppreference_origin_rel: w/cpp/container/unordered_multimap/swap
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- swap() -->
-import Method_SinceCpp17 	from './_codes/swap/since-cpp17.mdx';
-import Method_UntilCpp17 	from './_codes/swap/until-cpp17.mdx';
+import Method_SinceCpp17	from './_codes/swap/since-cpp17.mdx';
+import Method_UntilCpp17	from './_codes/swap/until-cpp17.mdx';
 
 
 import NoexceptSpecification_SinceCpp17 from './_codes/swap/noexcept-specification/since-cpp17.mdx';
@@ -22,9 +24,9 @@ import PropagateOnContainerChangNote_SineCpp11 from './_codes/swap/explanation/p
 # std::unordered_multimap swap() method
 
 <SwitchView content={{
-    'since-cpp17': <Method_SinceCpp17 />,
-    'until-cpp17': <Method_UntilCpp17 />
-    }} />
+	'since-cpp17': <Method_SinceCpp17 />,
+	'until-cpp17': <Method_UntilCpp17 />
+}} />
 
 Exchanges the contents of the container with those of `other`. Does not invoke any move, copy, or swap operations on individual elements.
 

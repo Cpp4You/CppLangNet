@@ -4,21 +4,23 @@ sidebar_label:			contains( )
 description:			unordered_multimap<...>::contains() method C++ documentation
 hide_title:				true
 tags:					[contains, existence, exists]
+
+cppreference_origin_rel: w/cpp/container/unordered_multimap/contains
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import SwitchView			from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
 <!-- contains() -->
-import Method_SinceCpp20 	from './_codes/contains/since-cpp20.mdx';
+import Method_SinceCpp20	from './_codes/contains/since-cpp20.mdx';
 
 # std::unordered_multimap contains() method
 
 <SwitchView content={{
-    'since-cpp20': <Method_SinceCpp20 />,
-    }} />
+	'since-cpp20': <Method_SinceCpp20 />,
+}} />
 
  - **(1)** Checks if there is an element with key equivalent to `key` in the container.
  - **(2)** Checks if there is an element with key that compares equivalent to the value `x`.
