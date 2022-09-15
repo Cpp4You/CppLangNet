@@ -26,6 +26,9 @@ import OverviewDetailedReguler from "./queue/_codes/main-page/overview/overview-
 <!-- Deduction Guides -->
 import DeductionGuides from "./queue/_codes/main-page/deduction-guides.mdx";
 
+import TemplateParamContainerExplanation from "./queue/_codes/main-page/template-parameters/container.mdx";
+import TemplateParamTExplanation from "./queue/_codes/main-page/template-parameters/t.mdx";
+
 <NotFinished />
 
 # Queue class reference
@@ -69,18 +72,11 @@ The queue pushes the elements on the back of the underlying container and pops t
 <SymbolTable noTraits>
 	<Symbol
 			name="T"
-			desc={<>
-				The type of the stored elements.
-				The behaviour is undefined if <code>T</code> is not <code>Container::value_type</code>.
-				</>}
+			desc={<TemplateParamTExplanation/>}
 		/>
 	<Symbol
 			name="Container"
-			desc={<>
-				The type of the underlying container used to store the elements.
-				By default <a href="/docs/containers/arays/vector"><code>std::deque&lt;T&gt;</code></a>.
-				The container must satisfy <a href="/docs/named_req/SequenceContainer">SequenceContainer</a>.
-				</>}
+			desc={<TemplateParamContainerExplanation/>}
 		/>
 </SymbolTable>
 
