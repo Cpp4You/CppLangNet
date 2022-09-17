@@ -1,0 +1,10 @@
+The type of the underlying container used to store the elements. By default [`std::vector<T>`](/docs/containers/arrays/vector).
+
+The container must satisfy [SequenceContainer](/docs/named_req/SequenceContainer) and it's iterators must satisfy [LegacyRandomAccesIterator](/docs/named_req/LegacyRandomAccesIterator).  
+Additionally, it must provide the following functions with the usual semantics:
+ - `back()`
+ - `front()`
+ - `push_back()`
+ - `pop_front()`
+
+The standard containers [`std::vector`](/docs/containers/arrays/vector) and [`std::deque`](/docs/containers/queues/queue) satisfy these requirements.
