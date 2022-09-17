@@ -48,11 +48,30 @@ html:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plug
 	font-variant-ligatures: none;
 }
 
+@keyframes waveSlideUpOnLoad {
+	0% {
+		height: 70vh;
+	}
+	30% {
+		height: 70vh;
+	}
+	100% {
+		height: 55vh;
+	}
+}
+
+@media screen and (orientation: landscape) and (min-height: 720px) {
+	.heroBanner {
+		animation: 0.5s ease-in-out 0s 1 waveSlideUpOnLoad;
+	}
+}
+
 .heroBanner {
 	padding: 		4em 0;
 	text-align: 	center;
 	position: 		relative;
 	overflow: 		hidden;
+	height:			55vh;
 
 	transition: 0.01s;
 
