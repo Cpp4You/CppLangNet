@@ -1,0 +1,7 @@
+A [Compare](/docs/named_req/Compare) type providing a **strict weak** ordering.
+
+:::note
+The **Compare** parameter is defined such that it returns `true` if its first argument comes before its second argument in a **weak** ordering.  
+But because the priority queue outputs largest elements first, the elements that "come before" are actually output last.
+That is, the front of the queue contains the "last" element according to the weak ordering imposed by **Compare**.
+:::

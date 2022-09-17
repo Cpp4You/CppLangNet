@@ -29,6 +29,10 @@ import OverviewDetailedReguler from "./priority-queue/_codes/main-page/overview/
 <!-- Deduction Guides -->
 import DeductionGuides from "./priority-queue/_codes/main-page/deduction-guides.mdx"
 
+import TemplateParamContainerExplanation from "./priority-queue/_codes/main-page/template-parameters/container.mdx";
+import TemplateParamTExplanation from "./priority-queue/_codes/main-page/template-parameters/t.mdx";
+import TemplateParamCompareExplanation from "./priority-queue/_codes/main-page/template-parameters/compare.mdx";
+
 <NotFinished />
 
 # Priority queue class reference
@@ -73,25 +77,15 @@ Working with a `priority_queue` is similar to managing a heap in some random acc
 <SymbolTable noTraits>
 	<Symbol
 			name="T"
-			desc={<>
-				The type of the stored elements.
-				The behaviour is undefined if <code>T</code> is not <code>Container::value_type</code>.
-				</>}
+			desc={<TemplateParamTExplanation/>}
 		/>
 	<Symbol
 			name="Container"
-			desc={<>
-				The type of the underlying container used to store the elements.
-				By default <a href="/docs/containers/arays/vector"><code>std::vector&lt;T&gt;</code></a>.
-				The container must satisfy <a href="/docs/named_req/SequenceContainer">SequenceContainer</a> and
-				it's iterators must satisfy <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a>.
-				</>}
+			desc={<TemplateParamContainerExplanation/>}
 		/>
 	<Symbol
 			name="Compare"
-			desc={<>
-				A comparator type satisfying <a href="/docs/named_req/Compare">Compare</a>.
-				</>}
+			desc={<TemplateParamCompareExplanation/>}
 		/>
 </SymbolTable>
 
