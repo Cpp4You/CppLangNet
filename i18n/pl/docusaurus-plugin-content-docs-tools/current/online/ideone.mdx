@@ -1,9 +1,143 @@
 ---
-sidebar_position: 4
+sidebar_position: 	4
+sidebar_label:		Korzystanie z ideone.com
+title:				Korzystanie z ideone.com
+tags:				[editor, compiler, gcc, clang, tool, ide, ideone]
+description:		"Używanie ideone.com do programowania w języku C++"
+hide_title:			true
 ---
+
+<!-- Components -->
+import Image			from '@site-comps/Image';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
 
 # Korzystanie z ideone.com
 
-import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
+[**Ideone**](https://ideone.com/) jest bardzo prostym przeglądarkowym edytorem kodu, który pozwala na pisanie programów w C++. Jego największą zaletą jest prostota.
 
-<NotFinished/>
+## Zakładanie konta (opcjonalne)
+
+Aby móc wyświetlać swoje programy i dostosowywać edytor, musisz posiadać darmowe konto na tej stronie.
+Możesz to zrobić klikając w ten link: [https://ideone.com/account/register](https://ideone.com/account/register)
+
+I wypełniając informacje poniżej:
+
+<Image center
+		alt="Creating an ideone account"
+		src="/img/tutorials/tools/ideone/sign-up-form.png"
+	/>
+<br/>
+
+## Korzystanie z edytora
+
+Po otworzeniu strony w przeglądarce, wyświetli ci się edytor kodu:
+
+<Image center
+		alt="Code editor"
+		src="/img/tutorials/tools/ideone/editor-view.png"
+	/>
+<br/>
+
+Główny widok składa się z dwóch części:
+
+Część | Zawartość
+---------|----------
+ Góra | **edytor kodu** ✏
+ Dół | **opcje** ⚒
+
+Przed uruchomieniem jakiegokolwiek programu, musisz wybrać c++ w polu wyboru w prawym dolnym rogu.
+
+Możesz wybierać spośród:
+
+Nazwa | Kompilator
+---------|----------
+ C++ | gcc 8.3
+ C++14 | gcc 8.3 (zalecane)
+ C++ 4.3.2 | gcc 4.3.2
+ C++14 | clang 8.0
+
+Możesz także zdecydować czy chcesz aby twój kod był widoczny dla wszystkich (ikonka globu), sekretny (ikonka okularów) czy prywatny (ikonka kłódki, tylko dla zalogowanych użytkowników).
+
+### Uruchamianie programu
+
+▶ W prawym dolnym rogu znajduje się przycisk **Run**, który uruchamia program.
+
+<Image center
+		alt		="Run button"
+		src		="/img/tutorials/tools/ideone/run-button.png"
+	/>
+<br/>
+
+Przed wykonaniem, kod musi zostać skompilowany. To oznacza, że na początku wyświetli się komunikat: **compilation**.
+
+- ✔ Jeżeli kod jest poprawny, rezultat będzie widoczny w sekcji: **stdout**.
+- 🔴 Jeżeli kod zawiera błędy, nie będzie mógł być skompilowany i wykonany.
+
+<Tabs>
+	<TabItem value="ok" label="✔ Poprawny kod" default>
+		<Image border center
+				alt		="Compilation and running a valid code"
+				src		="/img/tutorials/tools/ideone/run-ok.png"
+				desc	="🟢 Rezultat"
+			/>
+	</TabItem>
+	<TabItem value="error" label="🔴 Kod z błędem">
+		<Image border center
+				alt		="Compilation failed because of an error"
+				desc	="🔴 Błąd"
+				src		="/img/tutorials/tools/ideone/run-error.png"
+			/>
+	</TabItem>
+</Tabs>
+
+:::danger
+Czasami podczas próby wykonania kodu, ideona odświeża się przed zakończeniem procesu, co powoduje utratę kodu. Zaleca się kopiowanie kodu przed jego wykonaniem lub używanie innych narzędzi.
+:::
+
+### Edycja kodu źródłowego
+
+Ideone wspiera jedynie podświetlanie składni.
+
+<Image center
+		maxheight="400px"
+		alt		="Code editor view"
+		src		="/img/tutorials/tools/ideone/only-editor.png"
+	/>
+<br/>
+
+### Skróty klawiszowe
+
+Ideone posiada tylko jeden skrót klawiszowy:
+
+Skrót | Opis
+---------|----------
+`Ctrl + Enter` | Uruchamia program
+
+### Dostosowywanie edytora
+
+Jeżeli jesteś zalogowany, możesz przejść do dostosowywania klikając `my account` w prawym górnym rogu i wybierając zakładkę `editor`.
+
+<Image center
+		maxheight="400px"
+		alt		="Editor settings view"
+		src		="/img/tutorials/tools/ideone/editor-settings.png"
+	/>
+<br/>
+
+W tym miejscu możesz zmienić wszystkie najważniejsze ustawienia w tym motywy.
+
+### Wyświetlanie twoich programów
+
+Jeżeli jesteś zalogowany, możesz wyświtelić wszystkie swoje programy wybierając `my codes` na pasku nawigacyjnym. 
+
+Zobaczysz wtedy coś takiego:
+
+<Image center
+		maxheight="400px"
+		alt		="Your codes view"
+		src		="/img/tutorials/tools/ideone/your-codes.png"
+	/>
+<br/>
+
+Tutaj możesz zarządzać wszystkimi swoimi programami
