@@ -21,7 +21,7 @@
 			font-size: calc($textScale * 100%);
 			margin-bottom: calc( var(--ifm-list-margin) * $textScale );
 		}
-		>p {
+		>p, >span {
 			font-size: calc($textScale * 100%);
 			margin-bottom: calc( var(--ifm-paragraph-margin-bottom) * $textScale );
 		}

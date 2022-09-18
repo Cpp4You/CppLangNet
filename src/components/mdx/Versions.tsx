@@ -57,7 +57,7 @@ export function Since({children, v}: VersionProps)
 {
 	return (
 		<MarkedText className={styles.since}>{children} 
-			<span className={styles.versionNumber}><small>({LanguageVersions.get(`since-${v}`)})</small>.</span>
+			&nbsp;<span className={styles.versionNumber}><small>({LanguageVersions.get(`since-${v}`)})</small></span>
 		</MarkedText>
 	);
 }
@@ -66,7 +66,7 @@ export function Until({children, v}: VersionProps)
 {
 	return (
 		<MarkedText className={styles.until}>{children} 
-			<span className={styles.versionNumber}><small>({LanguageVersions.get(`until-${v}`)})</small>.</span>
+			&nbsp;<span className={styles.versionNumber}><small>({LanguageVersions.get(`until-${v}`)})</small></span>
 		</MarkedText>
 	);
 }
@@ -75,7 +75,7 @@ export function Deprecated({children, v}: VersionProps)
 {
 	return (
 		<MarkedText className={styles.deprecated}>{children} 
-			<span className={styles.versionNumber}><small>({LanguageVersions.get(`deprecated-${v}`)})</small>.</span>
+			&nbsp;<span className={styles.versionNumber}><small>({LanguageVersions.get(`deprecated-${v}`)})</small></span>
 		</MarkedText>
 	);
 }

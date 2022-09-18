@@ -20,14 +20,14 @@ export default function Tooltip({url, title, maxWidth, children}: TooltipProps) 
 	if (typeof mw === "string" && mw.endsWith("vw")) {
 		mw = `clamp(250px, ${mw}, ${MAX_WIDTH})`;
 	}
-	// const t = typeof title === "function" ? React.createElement(title) : title;
+	const t = typeof title === "function" ? React.createElement(title) : title;
 
 	const u = (url || "").startsWith("/") ? useBaseUrl(url) : url;
 	const wrappedChildren = url ? <a href={u} target="_blank" rel="noreferrer">{children}</a> : children;
 
 	return (
 		<MUITooltip componentsProps={{ tooltip: { style: { maxWidth: mw } } }}
-			title={<span className={styles.TooltipTitle}>{transformEmptyTagElem(title)}</span>} placement="top"
+			title={<span className={styles.TooltipTitle}>{transformEmptyTagElem(t)}</span>} placement="top"
 			arrow
 		>
 			<span className={styles.TooltipContent}>{wrappedChildren}</span>

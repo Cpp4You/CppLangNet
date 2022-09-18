@@ -33,7 +33,8 @@ import Method_SinceCpp17		from './_codes/front/since-cpp17.mdx';
 }}/>
 
 Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the first element in the container.
-Calling front on an empty container is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip>.
+
+<span className="inline-danger">Calling <code>front</code> on an empty container results in an <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.</span>
 
 ### Parameters
 
