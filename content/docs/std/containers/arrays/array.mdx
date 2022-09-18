@@ -133,7 +133,7 @@ An array can also be used as a tuple of `N` elements of the same type.
 <div>
 
 There is a special case for a zero-length array (`N == 0`). In that case, `array.begin() == array.end()`,
-which is some unique value. The effect of calling `front()` or `back()` on a zero-sized array is **undefined**.
+which is some unique value. <span className="inline-danger">The effect of calling `front()` or `back()` on a zero-sized array is undefined</span>.
 
 </div>
 </details>

@@ -38,7 +38,7 @@ import Method_SinceCpp17		from './_codes/end/since-cpp17.mdx';
 Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the element past the end of the array.
 If the array is empty, the returned iterator will be equal to `begin()`.
 
-Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
+<span className="inline-danger">Attempting to dereference a past-the-end iterator results in an <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.</span>
 
 ### Parameters
 

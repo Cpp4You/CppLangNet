@@ -18,6 +18,7 @@ import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
 import SwitchView				from "@site-comps/SwitchView";
 import Tabs						from "@theme/Tabs";
 import TabItem					from "@theme/TabItem";
+import {Since, Until}			from "@site-comps/Versions";
 
 <!------------------ Codes ----------------->
 
@@ -76,8 +77,8 @@ The storage of the `vector` is handled automatically, being expanded and contrac
 Vectors usually occupy more space than static arrays, because more memory is allocated
 to handle future growth. This way a vector does not need to reallocate each time an element
 is inserted, but only when the additional memory is exhausted. The total amount of allocated
-memory can be queried using [`capacity()`](capacity) function. Extra memory can be returned to the
-system via a call to [`shrink_to_fit()`](shrink_to_fit) <i><small>(since C++11)</small></i>.
+memory can be queried using [`capacity()`](capacity) function. <Since v="cpp11">
+Extra memory can be returned to the system via a call to <a href="shrink_to_fit"><code>shrink_to_fit()</code></a></Since>
 
 Reallocations are usually costly operations in terms of performance.
 The [`reserve()`](reserve) function can be used to eliminate reallocations
@@ -107,7 +108,7 @@ The complexity (efficiency) of common operations on vectors is as follows:
 - [`Container`](/docs/named_req/Container)
 - [`AllocatorAwareContainer`](/docs/named_req/AllocatorAwareContainer)
 - [`SequenceContainer`](/docs/named_req/SequenceContainer)
-- [`ContiguousContainer`](/docs/named_req/ContiguousContainer) <small>(since C++17)</small>
+- <Since v="cpp17"><a href="/docs/named_req/ContiguousContainer">ContiguousContainer</a></Since>
 - [`ReversibleContainer`](/docs/named_req/ReversibleContainer)
 
 </div>
@@ -151,11 +152,11 @@ The type must meet the requirements of <a href="/docs/named_req/Allocator">Alloc
 		{
 			"since-cpp20":
 				<>
-					The program is <b>ill-formed</b> if <code>Allocator::value_type</code> is not the same as <code>T</code>.
+					<span className="inline-caution">The program is <b>ill-formed</b> if <code>Allocator::value_type</code> is not the same as <code>T</code></span>.
 				</>,
 			"until-cpp20":
 				<>
-					The behavior is <b>undefined</b> if <code>Allocator::value_type</code> is not the same as <code>T</code>.
+					<span className="inline-danger">The behavior is <b>undefined</b> if <code>Allocator::value_type</code> is not the same as <code>T</code></span>.
 				</>,
 		}
 	}/>
@@ -186,32 +187,36 @@ See [technical details](#technical-details) for more detailed information.
 	<Symbol pub name="reference"				desc={<code>value_type&amp;</code>}/>
 	<Symbol pub name="const_reference"			desc={<code>value_type const&amp;</code>}/>
 	<Symbol pub name="pointer">
-		<code>Allocator::pointer</code> <small>(until C++11)</small><br/>
-		<code>std::allocator_traits&lt;Allocator&gt;::pointer</code> <small>(since C++11)</small>
+		<Until v="cpp11"><code>Allocator::pointer</code></Until><br/>
+		<Since v="cpp11"><code>std::allocator_traits&lt;Allocator&gt;::pointer</code></Since>
 	</Symbol>
 	<Symbol pub name="const_pointer">
-		<code>Allocator::const_pointer</code> <small>(until C++11)</small><br/>
-		<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code> <small>(since C++11)</small>
+		<Until v="cpp11"><code>Allocator::const_pointer</code></Until><br/>
+		<Since v="cpp11"><code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code></Since>
 	</Symbol>
 	<Symbol pub name="iterator">
-		<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
-		<a href="/docs/named_req/LegacyContiguousIterator"><code>LegacyContiguousIterator</code></a> to <code>value_type</code>&nbsp;
-		<small>(until C++20)</small>
+		<Until v="cpp20">
+			<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
+			<a href="/docs/named_req/LegacyContiguousIterator"><code>LegacyContiguousIterator</code></a> to <code>value_type</code>&nbsp;
+		</Until>
 		<br/>
-		<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
-		<a href="/docs/named_req/LegacyConstexprIterator"><code>LegacyConstexprIterator</code></a> and&nbsp;
-		<a href="#"><code>contiguous_iterator</code></a> to <code>value_type</code>&nbsp;
-		<small>(since C++20)</small>
+		<Since v="cpp20">
+			<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
+			<a href="/docs/named_req/LegacyConstexprIterator"><code>LegacyConstexprIterator</code></a> and&nbsp;
+			<a href="#"><code>contiguous_iterator</code></a> to <code>value_type</code>&nbsp;
+		</Since>
 	</Symbol>
 	<Symbol pub name="const_iterator">
-		<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
-		<a href="/docs/named_req/LegacyContiguousIterator"><code>LegacyContiguousIterator</code></a> to <code>value_type</code>&nbsp;
-		<small>(until C++20)</small>
+		<Until v="cpp20">
+			<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
+			<a href="/docs/named_req/LegacyContiguousIterator"><code>LegacyContiguousIterator</code></a> to <code>value_type</code>&nbsp;
+		</Until>
 		<br/>
-		<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
-		<a href="/docs/named_req/LegacyConstexprIterator"><code>LegacyConstexprIterator</code></a> and&nbsp;
-		<a href="#"><code>contiguous_iterator</code></a> to <code>const value_type</code>&nbsp;
-		<small>(since C++20)</small>
+		<Since v="cpp20">
+			<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
+			<a href="/docs/named_req/LegacyConstexprIterator"><code>LegacyConstexprIterator</code></a> and&nbsp;
+			<a href="#"><code>contiguous_iterator</code></a> to <code>const value_type</code>&nbsp;
+		</Since>
 	</Symbol>
 	<Symbol pub name="reverse_iterator"			desc={<><a href="#"><code>std::reverse_iterator&lt;iterator&gt;</code></a></>}/>
 	<Symbol pub name="const_reverse_iterator"	desc={<><a href="#"><code>std::reverse_iterator&lt;const_iterator&gt;</code></a></>}/>
