@@ -39,14 +39,6 @@
     "message": "5. Tablice",
     "description": "The label for category 5. Arrays in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.Golden advices 💰": {
-    "message": "Złote rady 💰",
-    "description": "The label for category Golden advices 💰 in sidebar defaultSidebar"
-  },
-  "sidebar.defaultSidebar.category.9. Classes (I)": {
-    "message": "9. Klasy (I)",
-    "description": "The label for category 9. Classes (I) in sidebar defaultSidebar"
-  },
   "sidebar.defaultSidebar.category.10. Memory (I)": {
     "message": "10. Pamięć (I)",
     "description": "The label for category 10. Memory (I) in sidebar defaultSidebar"
@@ -78,5 +70,13 @@
   "sidebar.defaultSidebar.category.6. Functions and operators": {
     "message": "6. Funkcje i operatory",
     "description": "The label for category 6. Functions and operators in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.9. Classes": {
+    "message": "9. Klasy",
+    "description": "The label for category 9. Classes in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Advices 💰": {
+    "message": "Dobre rady 💰",
+    "description": "The label for category Advices 💰 in sidebar defaultSidebar"
   }
 }

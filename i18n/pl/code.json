@@ -1,7 +1,4 @@
 {
-  "Start learning": {
-    "message": "Zacznij naukę"
-  },
   "theme.NotFound.title": {
     "message": "Strona nie została znaleziona",
     "description": "The title of the 404 page"
@@ -182,9 +179,6 @@
     "message": "Tagi",
     "description": "The title of the tag list page"
   },
-  "Learn how to build blazing fast software": {
-    "message": "Naucz się budować piekielnie szybkie aplikacje"
-  },
   "langFeature.Learn": {
     "message": "Nauka"
   },
@@ -260,9 +254,6 @@
   "Programming Language": {
     "message": "Język Programowania"
   },
-  "Get started": {
-    "message": "Rozpocznij naukę"
-  },
   "theme.ErrorPageContent.title": {
     "message": "Wystąpił błąd podczas wyświetlania strony.",
     "description": "The title of the fallback page when the page crashed"
@@ -278,5 +269,88 @@
   "theme.DocSidebarItem.toggleCollapsedCategoryAriaLabel": {
     "message": "Pokaż/schowaj kategorię bocznego panelu '{label}'",
     "description": "The ARIA label to toggle the collapsible sidebar category"
+  },
+  "A completely free all-in-one website for C++ developers.": {
+    "message": "Całkowicie darmowa, nowoczesna strona dla osób zainteresowanych C++."
+  },
+  "deprecated in C++98": {
+    "message": "wycofane w C++98"
+  },
+  "deprecated in C++03": {
+    "message": "wycofane w C++03"
+  },
+  "deprecated in C++11": {
+    "message": "wycofane w C++11"
+  },
+  "deprecated in C++14": {
+    "message": "wycofane w C++14"
+  },
+  "deprecated in C++17": {
+    "message": "wycofane w C++17"
+  },
+  "deprecated in C++20": {
+    "message": "wycofane w C++20"
+  },
+  "deprecated in C++23": {
+    "message": "wycofane w C++23"
+  },
+  "theme.admonition.note": {
+    "message": "zanotuj",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "dobra rada",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.danger": {
+    "message": "uwaga",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "informacja",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.caution": {
+    "message": "uwaga",
+    "description": "The default label used for the Caution admonition (:::caution)"
+  },
+  "theme.colorToggle.ariaLabel": {
+    "message": "Przełącz pomiędzy ciemnym a jasnym motywem (aktualnie ustawiony {mode})",
+    "description": "The ARIA label for the navbar color mode toggle"
+  },
+  "theme.colorToggle.ariaLabel.mode.dark": {
+    "message": "ciemny motyw",
+    "description": "The name for the dark color mode"
+  },
+  "theme.colorToggle.ariaLabel.mode.light": {
+    "message": "jasny motyw",
+    "description": "The name for the light color mode"
+  },
+  "theme.docs.breadcrumbs.home": {
+    "message": "Strona główna",
+    "description": "The ARIA label for the home page in the breadcrumbs"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "Breadcrumbs",
+    "description": "The ARIA label for the breadcrumbs"
+  },
+  "theme.docs.DocCard.categoryDescription": {
+    "message": "{count} elementów",
+    "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.docs.versionBadge.label": {
+    "message": "Wersja: {versionLabel}"
+  },
+  "theme.CodeBlock.wordWrapToggle": {
+    "message": "Przełącz tryb zawijania",
+    "description": "The title attribute for toggle word wrapping button of code block lines"
+  },
+  "theme.navbar.mobileLanguageDropdown.label": {
+    "message": "Języki",
+    "description": "The label for the mobile language switcher dropdown"
+  },
+  "theme.blog.post.readMoreLabel": {
+    "message": "Czytaj więcej o {title}",
+    "description": "The ARIA label for the link to full blog posts from excerpts"
   }
 }

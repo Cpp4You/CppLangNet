@@ -31,20 +31,8 @@
     "message": "🗣 Social",
     "description": "Navbar item with label 🗣 Social"
   },
-  "item.label.🔵 Facebook": {
-    "message": "🔵 Facebook",
-    "description": "Navbar item with label 🔵 Facebook"
-  },
-  "item.label.🟣 Discord": {
-    "message": "🟣 Discord",
-    "description": "Navbar item with label 🟣 Discord"
-  },
-  "item.label.💬 Forum": {
-    "message": "💬 Forum",
-    "description": "Navbar item with label 💬 Forum"
-  },
-  "item.label.👉 GitHub": {
-    "message": "👉 GitHub",
-    "description": "Navbar item with label 👉 GitHub"
+  "item.label.Community": {
+    "message": "Społeczność",
+    "description": "Navbar item with label Community"
   }
 }

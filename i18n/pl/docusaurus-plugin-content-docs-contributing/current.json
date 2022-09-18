@@ -1,6 +1,10 @@
 {
   "version.label": {
-    "message": "Next",
+    "message": "Aktualna",
     "description": "The label for version current"
+  },
+  "sidebar.defaultSidebar.category.✍ Writing guide": {
+    "message": "✍ Jak pisać",
+    "description": "The label for category ✍ Writing guide in sidebar defaultSidebar"
   }
 }
