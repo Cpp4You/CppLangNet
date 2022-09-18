@@ -8,18 +8,17 @@
 
 This is the official repo of [cpp-lang.net](https://cpp-lang.net) website.
 
-It was originally created and is maintained by Paweł Syska (@PoetaKodu).
+Created and maintained by Paweł Syska (@PoetaKodu).
 
 ## ⚽ Goals
 
-The main goal is to finally give C++ a proper, well designed
+The main goal is to finally give C++ a proper, well-designed
 and open-source website with a modern learning course,
-a good and readable documentation that uses modern technology.
+good and readable documentation that uses modern technology.
 
 ### 🚀 [The learning course](https://cpp-lang.net/learn/)
 
-We focus on simplicity. The teaching that people can't understand
-is a bad teaching.
+We focus on simplicity. The teaching that people can't understand is bad.
 
 Examples:
 
@@ -64,7 +63,7 @@ subreddits, etc.
 
 The website is powered by [Docusaurus](https://docusaurus.io).
 
-We use React to design compontents and pages, and Markdown React (`.mdx`)
+We use React to design components and pages, and Markdown React (`.mdx`)
 to write course lessons, articles, docs etc.
 
 <p align=center>
