@@ -1,0 +1,16 @@
+```cpp
+// 1)
+vector()
+    : vector( Allocator() )
+{
+}
+
+// 2)
+explicit vector( Allocator const& alloc );
+```
+
+<!-- Optional description here  -->
+
+- constructor 1) is `noexcept` if constructor of the `Allocator` is `noexcept` as well
+- constructor 2) is `noexcept`, because `Allocator` was constructed before
+- both constructors are `constexpr`

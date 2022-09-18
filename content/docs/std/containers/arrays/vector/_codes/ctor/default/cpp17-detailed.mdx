@@ -1,0 +1,12 @@
+```cpp
+// 1)
+vector() noexcept(noexcept( Allocator() ))
+    : vector( Allocator() )
+{
+}
+
+// 2)
+explicit vector( Allocator const& alloc ) noexcept;
+```
+
+<!-- Optional description here  -->
