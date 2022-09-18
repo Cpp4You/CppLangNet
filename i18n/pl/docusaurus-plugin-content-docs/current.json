@@ -78,5 +78,65 @@
   "sidebar.defaultSidebar.category.Members of string": {
     "message": "Members of string",
     "description": "The label for category Members of string in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Standard Library": {
+    "message": "Standard Library",
+    "description": "The label for category Standard Library in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Mathematical Functions": {
+    "message": "Mathematical Functions",
+    "description": "The label for category Mathematical Functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Abs": {
+    "message": "Abs",
+    "description": "The label for category Abs in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.array": {
+    "message": "array",
+    "description": "The label for category array in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.vector": {
+    "message": "vector",
+    "description": "The label for category vector in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.string": {
+    "message": "string",
+    "description": "The label for category string in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.queue": {
+    "message": "queue",
+    "description": "The label for category queue in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.map": {
+    "message": "map",
+    "description": "The label for category map in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.multimap": {
+    "message": "multimap",
+    "description": "The label for category multimap in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.unordered_map": {
+    "message": "unordered_map",
+    "description": "The label for category unordered_map in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.unordered_multimap": {
+    "message": "unordered_multimap",
+    "description": "The label for category unordered_multimap in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.set": {
+    "message": "set",
+    "description": "The label for category set in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.unordered_set": {
+    "message": "unordered_set",
+    "description": "The label for category unordered_set in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.multiset": {
+    "message": "multiset",
+    "description": "The label for category multiset in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.unordered_multiset": {
+    "message": "unordered_multiset",
+    "description": "The label for category unordered_multiset in sidebar defaultSidebar"
   }
 }

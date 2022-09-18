@@ -1,6 +1,6 @@
 {
   "version.label": {
-    "message": "Next",
+    "message": "Aktualne",
     "description": "The label for version current"
   },
   "sidebar.defaultSidebar.category.Online tools": {
@@ -18,5 +18,9 @@
   "sidebar.defaultSidebar.category.Compilers": {
     "message": "Kompilatory",
     "description": "The label for category Compilers in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Visual Studio 2022": {
+    "message": "Visual Studio 2022",
+    "description": "The label for category Visual Studio 2022 in sidebar defaultSidebar"
   }
 }
