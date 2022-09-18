@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 import transformEmptyTagElem from "@site/src/helper/TransformEmptyTagElem";
 
-import styles from '@site/src/css/components/SymbolTable.module.scss'
+import styles from "./SymbolTable.module.scss";
 
-import { ClassContext } from './ClassContext';
+import { ClassContext } from "./ClassContext";
 
 export const Access = {
 	None: {
@@ -39,7 +39,7 @@ const readAccess = (props) => {
 	if (props.priv	|| props.private)		return Access.Private;
 	else
 		return Access.None;
-}
+};
 
 
 export default function SymbolTable(props)
@@ -98,11 +98,11 @@ export function Symbol(props) {
 		<tr>
 			<td className={styles.symbolProp}>
 				{mapAccess(props)}
-				{mapModifier(props.static,		'modStatic',	'static')}
-				{mapModifier(props.constexpr,	'modConstexpr',	'constexpr')}
-				{mapModifier(props.const,		'modConst',		'const')}
-				{mapModifier(props.volatile,	'modVolatile',	'volatile')}
-				{mapModifier(props.virtual,		'modVirtual',	'virtual')}
+				{mapModifier(props.static,		"modStatic",	"static")}
+				{mapModifier(props.constexpr,	"modConstexpr",	"constexpr")}
+				{mapModifier(props.const,		"modConst",		"const")}
+				{mapModifier(props.volatile,	"modVolatile",	"volatile")}
+				{mapModifier(props.virtual,		"modVirtual",	"virtual")}
 			</td>
 			<td className={styles.symbolName}>
 				{nameElem}

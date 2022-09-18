@@ -4,7 +4,7 @@
 	grid-template-columns: minmax(0, 128px) 1fr;
 	grid-template-rows: auto 1fr;
 	// Additional row when has actions:
-	&[withactions="true"] {
+	&[data-with-actions="true"] {
 		grid-template-columns: minmax(0, 128px) 5fr 2fr;
 	}
 

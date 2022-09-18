@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import ReactLightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css'; // This only needs to be imported once in your app
+import React, { Component } from "react";
+import ReactLightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
 
 export default class Lightbox extends Component {
 	constructor(props) {
@@ -12,13 +12,13 @@ export default class Lightbox extends Component {
 		};
 
 		this.setScrollEnabled = (enabled) => {
-			document.body.style.overflow = enabled ? 'unset' : 'hidden';
-		}
+			document.body.style.overflow = enabled ? "unset" : "hidden";
+		};
 
 		this.handleOpen = () => {
 			this.setState({ isOpen: true });
 			this.setScrollEnabled(false);
-		}
+		};
 		this.handleClose = () => {
 			this.setState(
 				{
@@ -26,7 +26,7 @@ export default class Lightbox extends Component {
 					photoIndex:	0,
 				});
 			this.setScrollEnabled(true);
-		}
+		};
 
 		this.trigger = React.cloneElement(this.props.trigger,
 			{

@@ -1,0 +1,32 @@
+.markedText {
+	border-radius: 4px;
+	padding: 2px;
+
+	border: 1px dashed;
+}
+
+.markedText.since {
+	border-color: rgba(green, 0.8);
+	background-color: rgba(green, 0.02);
+}
+
+.markedText.until {
+	border-color: rgba(red, 0.4);
+	background-color: rgba(red, 0.02);
+}
+
+.markedText.deprecated {
+	border-color: rgba(orange, 0.8);
+	background-color: rgba(gray, 0.02);
+}
+
+
+.versionNumber {
+	background-color: rgba(black, 0.1);
+}
+
+html[data-theme="dark"] {
+	.versionNumber {
+		background-color: rgba(white, 0.1);
+	}
+}

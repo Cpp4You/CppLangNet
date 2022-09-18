@@ -1,23 +1,43 @@
-import React			from 'react';
-import useBaseUrl		from '@docusaurus/useBaseUrl';
+import React			from "react";
+import useBaseUrl		from "@docusaurus/useBaseUrl";
 
-import transformEmptyTagElem from "@site/src/helper/TransformEmptyTagElem";
+import transformEmptyTagElem from "../../helper/TransformEmptyTagElem";
 
-export default function Image(props)
+type ImageProps = {
+	desc?: React.ReactNode;
+	center?: boolean;
+	fullwidth?: boolean;
+	border?: boolean;
+	style?: React.CSSProperties;
+
+	minwidth?: number;
+	width?: number;
+	maxwidth?: number;
+	minheight?: number;
+	height?: number;
+	maxheight?: number;
+
+	src?: string;
+}
+
+export default function Image(props: ImageProps)
 {
 	// Setup description
 	let desc = null;
 	if (props.desc)
 	{
-		if (props.center)
-			desc = <center><small>{transformEmptyTagElem(props.desc)}</small></center>;
-		else
-			desc = <><small>{transformEmptyTagElem(props.desc)}</small></>;
+		const descStyle: React.CSSProperties =
+			props.center ? {
+				textAlign: "center",
+				display: "block"
+			} : {};
+			
+		desc = <small style={descStyle}>{transformEmptyTagElem(props.desc)}</small>;
 	}
 
 	const fullWidth = props.fullwidth || props.center;
 
-	const style = {
+	const style: React.CSSProperties = {
 		border:		(props.border		? "1px solid gray"	: undefined),
 		display:	(fullWidth			? "block"			: "inline-block"),
 	};

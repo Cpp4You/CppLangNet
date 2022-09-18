@@ -1,24 +1,24 @@
-import React from 'react';
+import React from "react";
 
-import ProductCard		from './ProductCard';
+import ProductCard		from "./ProductCard";
 
-import VSCodeIcon		from '@site/static/img/icons/products/vscode_1_35.svg';
-import VS2022Icon		from '@site/static/img/icons/products/vs_2019.svg';
-import CLionIcon		from '@site/static/img/icons/products/clion.svg';
-import QtCreatorIcon	from '@site/static/img/icons/products/qtcreator.svg';
-import CodeBlocksIcon	from '@site/static/img/icons/products/codeblocks.png';
-import CppBuilderIcon	from '@site/static/img/icons/products/cppbuilder.png';
-import DevCppIcon		from '@site/static/img/icons/products/devcpp.png';
+import VSCodeIcon		from "@site/static/img/icons/products/vscode_1_35.svg";
+import VS2022Icon		from "@site/static/img/icons/products/vs_2019.svg";
+import CLionIcon		from "@site/static/img/icons/products/clion.svg";
+import QtCreatorIcon	from "@site/static/img/icons/products/qtcreator.svg";
+import CodeBlocksIcon	from "@site/static/img/icons/products/codeblocks.png";
+import CppBuilderIcon	from "@site/static/img/icons/products/cppbuilder.png";
+import DevCppIcon		from "@site/static/img/icons/products/devcpp.png";
 
-import GCCIcon			from '@site/static/img/icons/products/gcc.svg';
-import LLVMIcon			from '@site/static/img/icons/products/llvm.png';
+import GCCIcon			from "@site/static/img/icons/products/gcc.svg";
+import LLVMIcon			from "@site/static/img/icons/products/llvm.png";
 
-import ReplitIcon		from '@site/static/img/icons/products/replit.svg';
+import ReplitIcon		from "@site/static/img/icons/products/replit.svg";
 
-import Translate		from '@docusaurus/Translate';
-import useBaseUrl		from '@docusaurus/useBaseUrl';
-import Lightbox			from '@site-comps/Lightbox';
-import thumbnailStyles	from '@site/src/css/components/Thumbnail.module.scss';
+import Translate		from "@docusaurus/Translate";
+import useBaseUrl		from "@docusaurus/useBaseUrl";
+import Lightbox			from "./Lightbox";
+import thumbnailStyles	from "./ToolsSummary.module.scss";
  
 export const ToolSummaryInfo = {
 	"vscode": {
@@ -179,7 +179,7 @@ export default function ToolCard(props)
 			<ProductCard.Actions>
 				<ul style={ { listStyle: "none", margin: 0, padding: 0 } }>
 					<li>
-						<a href={tool.site} target="_blank">
+						<a href={tool.site} target="_blank" rel="noreferrer">
 							<Translate id="tool.projectWebsite">🌐 Project website</Translate>
 						</a>
 					</li>
@@ -188,15 +188,15 @@ export default function ToolCard(props)
 						<li>
 							
 							<Lightbox
-									trigger={
-										tool.galleryThumbnail
+								trigger={
+									tool.galleryThumbnail
 										?
-											<GalleryThumbnail src={useBaseUrl(tool.galleryThumbnail)} />
+										<GalleryThumbnail src={useBaseUrl(tool.galleryThumbnail)} />
 										:
 										<a href="#"><Translate>🖼 Gallery</Translate></a>
-									}
-									images={tool.gallery.map(l => useBaseUrl(l))}
-								/>
+								}
+								images={tool.gallery.map(l => useBaseUrl(l))}
+							/>
 						</li>
 					}
 				</ul>

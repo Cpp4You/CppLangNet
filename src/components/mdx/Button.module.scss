@@ -6,7 +6,7 @@
 	justify-content: center;
 	margin-bottom: 5px;
 
-	&[full-width] {
+	&[data-full-width] {
 		width: 100%;
 	}
 }

@@ -1,17 +1,23 @@
-import React from 'react';
+import React from "react";
 
-import Tooltip from '@site-comps/Tooltip';
-import styles from '../../css/components/CppRefAttribution.module.scss';
+import Tooltip from "./Tooltip";
+import styles from "./CppRefAttribution.module.scss";
 
 
-export const CppRefAttribution = ({ fullUrl = "", relativeUrl = "", lang="en" }) =>
+type CppRefAttribution = {
+	fullUrl: string;
+	relativeUrl: string;
+	lang: string;
+}
+
+export function CppRefAttribution({ fullUrl = "", relativeUrl = "", lang="en" }: CppRefAttribution)
 {
 	const url = fullUrl ? fullUrl : `https://${lang}.cppreference.com/${relativeUrl || ""}`;
 
 	return (
 		<div className={styles.container}>
-			This article originates from <a href={url} target="_blank">this CppReference page</a>.
-			It was likely altered for improvements or editors' preference. Click "Edit this page" to see all
+			This article originates from <a href={url} target="_blank" rel="noreferrer">this CppReference page</a>.
+			It was likely altered for improvements or editors&apos; preference. Click &quot;Edit this page&quot; to see all
 			changes made to this document.
 			<br/>
 			<span className={styles.licenseTooltip}>

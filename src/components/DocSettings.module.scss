@@ -1,14 +1,27 @@
-.menuButton {
+.menuButtonsContainer {
 	float: right;
 	position: absolute !important;
 	top: -4px;
 	right: 0;
+}
+
+.menuButton {
 	background-color: var(--ifm-background-color) !important;
 	border: 1px solid rgba(gray, 0.4) !important;
-
+	margin-left: 5px !important;
 	transition: 0.2s;
 	&:hover {
 		background-color: rgba(black, 0.1) !important;
+	}
+}
+
+.menuButton.enabled {
+	background-color: rgb(167, 220, 255) !important;
+}
+
+html[data-theme="dark"] {
+	.menuButton.enabled {
+		background-color: rgba(0, 76, 82, 0.863) !important;
 	}
 }
 

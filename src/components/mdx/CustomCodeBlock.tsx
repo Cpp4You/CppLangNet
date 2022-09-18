@@ -1,10 +1,15 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 
-export default function CustomCodeBlock(props) {
+type CustomCodeBlockProps = {
+	children: React.ReactNode;
+	maxLines?: number;
+}
+
+export default function CustomCodeBlock(props: CustomCodeBlockProps) {
 
 	const limitLines = typeof props.maxLines === "number";
 
-	const style = { };
+	const style: React.CSSProperties = { };
 	
 	if (limitLines) {
 		const initialHeight = (Math.max(5, props.maxLines)) * 1.43;
@@ -23,12 +28,12 @@ export default function CustomCodeBlock(props) {
 			codeParent.style.overflow		= "hidden";
 			codeParent.style.resize			= "vertical";
 			codeParent.style.minHeight		= "100px";
-			codeParent.style.maxHeight		= `90vh`;
+			codeParent.style.maxHeight		= "90vh";
 			codeParent.style.flexDirection	= "column";
 			code.style.overflowY			= "scroll";
 			code.style.overflowX			= "auto";
 		}
-	}, [limitLines, style]);
+	}, [containerRef]);
 
 	return (
 		<div ref={containerRef}>

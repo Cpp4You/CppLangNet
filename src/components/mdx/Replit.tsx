@@ -1,6 +1,6 @@
-import React		from 'react';
+import React		from "react";
 
-import Translate	from '@docusaurus/Translate';
+import Translate	from "@docusaurus/Translate";
 
 export default function Replit(props) {
 	let params = "lite=true";
