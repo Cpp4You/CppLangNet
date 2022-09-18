@@ -6,6 +6,484 @@ hide_title:				true
 tags:					[access, vector, index, bounds, method]
 
 cppreference_origin_rel: w/cpp/container/vector/vector
+arrow_jumping_preset: overloads
 ---
 
 # std::vector constructors
+
+<!----------------- Components ---------------------->
+
+import CodeBlock					from '@theme/CodeBlock';
+import SwitchView					from '@site-comps/SwitchView';
+import Columns						from '@site-comps/Columns';
+import Tooltip						from '@site-comps/Tooltip';
+import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
+import {Since,Until,Deprecated}		from "@site-comps/Versions";
+
+<!----------------- Terms ---------------------->
+import Term_CTAD					from '@site/i18n/en/presets/terms/ctad.mdx';
+
+<!----------------- Codes ---------------------->
+
+<!-- Ctor Default -->
+import Ctor_Default_UntilCpp17_Simple			from "./_codes/ctor/default/until-cpp17-simple.mdx";
+import Ctor_Default_Cpp17_Detailed 				from "./_codes/ctor/default/cpp17-detailed.mdx";
+import Ctor_Default_Cpp20_Detailed 				from "./_codes/ctor/default/cpp20-detailed.mdx";
+import Ctor_Default_Cpp17_Simple 				from "./_codes/ctor/default/cpp17-simple.mdx";
+import Ctor_Default_Cpp20_Simple 				from "./_codes/ctor/default/cpp20-simple.mdx";
+
+<!-- Ctor repeat value -->
+import Ctor_RepeatValue_UntilCpp11				from "./_codes/ctor/repeat-value-until-cpp11.mdx";
+import Ctor_RepeatValue_UntilCpp20				from "./_codes/ctor/repeat-value-until-cpp20.mdx";
+import Ctor_RepeatValue_Cpp20 					from "./_codes/ctor/repeat-value-cpp20.mdx";
+
+<!-- Ctor default elements -->
+import Ctor_DefaultElements_SinceCpp11			from "./_codes/ctor/default-elems/since-cpp11.mdx"
+import Ctor_DefaultElements_SinceCpp14			from "./_codes/ctor/default-elems/since-cpp14.mdx";
+import Ctor_DefaultElements_Cpp20 				from "./_codes/ctor/default-elems/cpp20.mdx";
+
+<!-- Ctor range-based -->
+import Ctor_RangeBased_UntilCpp20				from "./_codes/ctor/range-based/until-cpp20.mdx";
+import Ctor_RangeBased_Cpp20 					from "./_codes/ctor/range-based/cpp20.mdx";
+
+<!-- Ctor copy -->
+import Ctor_Copy_UntilCpp20						from "./_codes/ctor/copy/until-cpp20.mdx";
+import Ctor_Copy_Cpp20 							from "./_codes/ctor/copy/cpp20.mdx";
+
+<!-- Ctor move -->
+import Ctor_Move_SinceCpp11						from "./_codes/ctor/move/since-cpp11.mdx";
+import Ctor_Move_SinceCpp17						from "./_codes/ctor/move/since-cpp17.mdx";
+import Ctor_Move_Cpp20 							from "./_codes/ctor/move/cpp20.mdx";
+
+<!-- Ctor init list -->
+import Ctor_InitList_UntilCpp20					from "./_codes/ctor/init-list/until-cpp20.mdx";
+import Ctor_InitList_Cpp20 						from "./_codes/ctor/init-list/cpp20.mdx";
+
+<!----------------- End of codes ---------------------->
+
+`std::vector` class can be constructed in many different ways.
+Use the button in the top-right corner to navigate with arrows for convenience.
+
+:::note
+`std::vector` is a **class template**, with following type parameters,
+that are used within constructors:
+
+<SymbolTable noTraits>
+	<Symbol name="T"			desc="element type"/>
+	<Symbol name="Allocator"	desc={<><a href="/docs/named_req/allocator">Allocator</a> type used to allocate internal storage</>}/>
+</SymbolTable>
+
+:::
+
+<!-------------------------------------------------------------------------------------->
+## Default constructor
+
+<SwitchView content={{
+		'cpp20': {
+			simplified:	<Ctor_Default_Cpp20_Simple/>,
+			detailed: 	<Ctor_Default_Cpp20_Detailed/>,
+		},
+		'cpp17': {
+			simplified:	<Ctor_Default_Cpp17_Simple/>,
+			detailed:	<Ctor_Default_Cpp17_Detailed/>,
+		},
+		'until-cpp17':	<Ctor_Default_UntilCpp17_Simple/>,
+	}}/>
+
+Default constructor. Constructs an empty container.
+If no allocator is supplied, allocator is obtained from a default-constructed instance.
+
+
+#### Complexity
+
+Constant.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main() {
+	// Default constructed vector<int>:
+	std::vector<int> v;
+
+	std::cout << "v.size(): " << v.size();
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+v.size(): 0
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Repeat value constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_RepeatValue_Cpp20 />,
+		'until-cpp20':	<Ctor_RepeatValue_UntilCpp20 />,
+		'until-cpp11':	<Ctor_RepeatValue_UntilCpp11 />,
+	}}/>
+
+Constructs the vector with `count` copies of the `value`.
+
+<!--- FIXME: Not sure if this part works the same as in std::string constructor.
+<details>
+	<summary>Deduction guide <small>(since C++17)</small></summary>
+	<div>
+		This constructor is not used for class template argument deduction
+		if the <code>Allocator</code> type that would be deduced does not qualify as an allocator.
+	</div>
+</details>
+--->
+
+#### Complexity
+
+Linear in `count`.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main() {
+	std::vector<int> v(4, 15);
+
+	for (auto elem : v)
+		std::cout << elem << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+15 15 15 15 
+```
+
+</div>
+</Columns>
+
+
+<!-------------------------------------------------------------------------------------->
+## `count` default elements constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_DefaultElements_Cpp20 />,
+		'since-cpp14':	<Ctor_DefaultElements_SinceCpp14 />,
+		'since-cpp11':	<Ctor_DefaultElements_SinceCpp11 />
+	}}/>
+
+
+Constructs the vector with `count` default-inserted elements of type `T`. No copies are made.
+
+#### Complexity
+
+Linear in `count`.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main() {
+
+	// |0,0,0,0|
+	auto vec = std::vector<int>(4);
+	// |0,0,0,0,13|
+	vec.push_back(13);
+
+	for (auto elem : vec)
+		std::cout << elem << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+0 0 0 0 13
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Range-based constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_RangeBased_Cpp20 />,
+		'until-cpp20':	<Ctor_RangeBased_UntilCpp20 />,
+	}}/>
+
+Constructs the container with the contents of the range [`first`, `last`).
+
+<details>
+	<summary>Overload resolution</summary>
+	<div>
+		<SwitchView content={{
+				'since-cpp11': <>
+					This overload participates in overload resolution only if <code>InputIt</code> satisfies <i>LegacyInputIterator</i>,
+					to avoid ambiguity with the <a href="#repeat-value-constructor"><i>repeat value overload</i></a>
+				</>,
+				'until-cpp11': <>
+					<p>If <code>InputIt</code> is an integral type this constructor has the same effect as:</p>
+					<CodeBlock language="cpp">
+						vector(static_cast&lt;size_type&gt;(first), static_cast&lt;value_type&gt;(last), alloc)
+					</CodeBlock>
+					<p>
+						It uses <code>last</code> as the <code>count</code> parameter and <code>last</code> as
+						the <code>value</code> used in the <a href="#repeat-value-constructor"><i>repeat value overload</i></a>.
+					</p>
+				</>
+			}}/>
+	</div>
+</details>
+
+#### Complexity
+
+Given the distance between `first` and `last` as **`N`**:
+
+- if `first` and `last` are both **forward, bidirectional or random-access iterators**,
+  the copy constructor of `T` is only called `N` times, and no reallocation occurs.
+- otherwise (`first` and `last` are just **input iterators**), the copy constructor of `T` is called `O(N)` times,
+  and reallocation occurs `O(log N)` times.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main() {
+	char buf[] = "Hello, World";
+	auto vec = std::vector<char>(
+		std::begin(buf),
+		std::next(std::begin(buf), 5)
+	);
+
+	for (auto elem : vec)
+		std::cout << elem << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+H e l l o
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Copy constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_Copy_Cpp20 />,
+		'until-cpp20':	<Ctor_Copy_UntilCpp20 />,
+	}}/>
+
+Copy constructor. Constructs the container with the copy of the contents of `other`.
+The second version uses `alloc` as the allocator.
+
+<details>
+	<summary>Obtaining the allocator and deduction</summary>
+	<div>
+		<SwitchView content={{
+				'since-cpp11':
+					<>
+						<p>The allocator is obtained as if by calling:</p>
+						<CodeBlock language="cpp">
+							std::allocator_traits&lt;allocator_type&gt;::select_on_container_copy_construction(other.get_allocator())
+						</CodeBlock>
+					</>,
+				'since-cpp23':
+					<>
+						The template parameter <code>Allocator</code> is only deduced from the first argument while used in <Tooltip title={Term_CTAD}>class template argument deduction</Tooltip>.
+					</>,
+			}}/>
+	</div>
+</details>
+
+#### Complexity
+
+Linear in size of `other`.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main() {
+	// ⚠ using C++17 CTAD
+	auto vec = std::vector{5, 21, 37, 11};
+	auto copied = std::vector(vec);
+
+	copied[2] = 38;
+
+	for (auto elem: vec) std::cout << elem << ' ';
+
+	std::cout << '\n';
+
+	for (auto elem: copied) std::cout << elem << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+5 21 37 11
+5 21 38 11
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Move constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_Move_Cpp20 />,
+		'since-cpp17':	<Ctor_Move_SinceCpp17 />,
+		'since-cpp11':	<Ctor_Move_SinceCpp11 />,
+	}}/>
+
+Move constructor. Constructs the container with the contents of `other` using [move semantics](/learn/intermediate/move-semantics/).
+Allocator is obtained by move-construction from the allocator belonging to `other`.
+After the move, `other` is guaranteed to be [`empty()`](../empty).
+
+The second overload accepts an allocator that is used for the constructed container, moving the contents from `other`.
+If `alloc != other.get_allocator()`, this results in an element-wise move (in that case, `other` is not guaranteed to be `empty()` after the move).
+
+<details>
+	<summary>Allocator deduction</summary>
+	<div>
+		<Since v='cpp23'>
+			The template parameter <code>Allocator</code> is only deduced from the first argument while used in <Tooltip title={Term_CTAD}>class template argument deduction</Tooltip>.
+		</Since>
+	</div>
+</details>
+
+#### Complexity
+
+Linear if `alloc != other.get_allocator()`, otherwise constant.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <iomanip>
+
+int main() {
+
+	auto prev = std::vector{15, 3, 8};
+
+	auto current = std::vector( std::move(prev) );
+
+	std::cout << "prev.empty(): " << std::boolalpha << prev.empty() << '\n';
+	std::cout << "current: ";
+	for (auto elem: current)
+		std::cout << elem << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+prev.empty(): true
+15 3 8
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Initializer-list constructor
+
+<SwitchView content={{
+		'cpp20':		<Ctor_InitList_Cpp20 />,
+		'since-cpp11':	<Ctor_InitList_UntilCpp20 />,
+	}}/>
+
+Constructs the container with the contents of the [initializer list](/docs/std/lang-support/initializer-list) `init`.
+
+:::note
+Presence of this overload means list initialization and direct initialization do different things:
+
+```cpp
+std::vector<int> b{3}; // creates a 1-element vector holding {3}
+std::vector<int> a(3); // creates a 3-element vector holding {0, 0, 0}
+ 
+std::vector<int> d{1, 2}; // creates a 2-element vector holding {1, 2}
+std::vector<int> c(1, 2); // creates a 1-element vector holding {2}
+```
+:::
+
+#### Complexity
+
+Linear in size of `init`.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+
+int main() {
+	std::vector<int> v = { 14, 30, 18 };
+
+	for (auto elem : v)
+		std::cout << elem << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+14 30 18
+```
+
+</div>
+</Columns>
+

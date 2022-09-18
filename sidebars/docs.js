@@ -183,7 +183,7 @@ module.exports = {
 							label: 'Strings',
 							link: { type: 'doc', id: 'std/containers/strings/index' },
 							items: [
-								docsClassCat('string', 'std/containers/strings/string', '', ['constructor', 'm:at', 'm:get_allocator']),
+								docsClassCat('string', 'std/containers/strings/string', '', ['constructors', 'm:at', 'm:get_allocator']),
 								docsClass('std/containers/strings/string_view'),
 							]
 						},
