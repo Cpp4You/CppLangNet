@@ -56,7 +56,7 @@ html:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plug
 		height: 70vh;
 	}
 	100% {
-		height: 55vh;
+		height: max(400px, 55vh);
 	}
 }
 
@@ -71,7 +71,7 @@ html:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plug
 	text-align: 	center;
 	position: 		relative;
 	overflow: 		hidden;
-	height:			55vh;
+	height:			max(400px, 55vh);
 
 	transition: 0.01s;
 
