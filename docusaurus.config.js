@@ -1,17 +1,17 @@
-const path				= require('path');
-const lightCodeTheme	= require('prism-react-renderer/themes/github');
-const darkCodeTheme		= require('prism-react-renderer/themes/vsDark');
+const path				= require("path");
+const lightCodeTheme	= require("prism-react-renderer/themes/github");
+const darkCodeTheme		= require("prism-react-renderer/themes/vsDark");
 
-const remarkDisableTokenizers = require('remark-disable-tokenizers');
+const remarkDisableTokenizers = require("remark-disable-tokenizers");
 
 const remarkConfig = [
-		[
-			remarkDisableTokenizers,
-			{
-				"block": ['indentedCode']
-			}
-		]
-	];
+	[
+		remarkDisableTokenizers,
+		{
+			"block": ["indentedCode"]
+		}
+	]
+];
 
 
 function filterSidebarItems(items)
@@ -20,9 +20,9 @@ function filterSidebarItems(items)
 
 	for(let key in items)
 	{
-		if (items[key].type === 'category')
+		if (items[key].type === "category")
 		{
-			if (items[key].label === '_codes')
+			if (items[key].label === "_codes")
 				continue;
 			else
 			{
@@ -44,15 +44,15 @@ function filterSidebarItems(items)
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
 (module.exports = {
-	title:					'C++ Programming Language',
-	tagline:				'Learn how to build blazing fast software',
-	url:					'https://cpp-lang.net',
-	baseUrl:				'/',
-	onBrokenLinks:			'ignore',
-	onBrokenMarkdownLinks:	'ignore',
-	favicon:				'img/favicon.png',
-	organizationName:		'Cpp4You', // Usually your GitHub org/user name.
-	projectName:			'CppLangNet', // Usually your repo name.
+	title:					"C++ Programming Language",
+	tagline:				"Learn how to build blazing fast software",
+	url:					"https://cpp-lang.net",
+	baseUrl:				"/",
+	onBrokenLinks:			"ignore",
+	onBrokenMarkdownLinks:	"ignore",
+	favicon:				"img/favicon.png",
+	organizationName:		"Cpp4You", // Usually your GitHub org/user name.
+	projectName:			"CppLangNet", // Usually your repo name.
 	trailingSlash: 			true,
 
 	scripts: [
@@ -64,28 +64,28 @@ function filterSidebarItems(items)
 	],
 
 	i18n: {
-		defaultLocale: 'en',
-		locales: [ 'en', 'pl', 'de' ]
+		defaultLocale: "en",
+		locales: [ "en", "pl", "de" ]
 	},
 
 	plugins: [
 		[
-			'docusaurus-plugin-module-alias',
+			"docusaurus-plugin-module-alias",
 			{
 				alias: {
-					'@site-comps': path.resolve(__dirname, 'src/components/mdx'),
+					"@site-comps": path.resolve(__dirname, "src/components/mdx"),
 				},
 			},
 		],
-		'docusaurus-plugin-sass',
+		"docusaurus-plugin-sass",
 		[
-			'@docusaurus/plugin-content-docs',
+			"@docusaurus/plugin-content-docs",
 			{
-				id: 'learn',
-				path: 'content/learn',
-				routeBasePath: 'learn',
-				sidebarPath: require.resolve('./sidebars/learn.js'),
-				editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
+				id: "learn",
+				path: "content/learn",
+				routeBasePath: "learn",
+				sidebarPath: require.resolve("./sidebars/learn.js"),
+				editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
@@ -93,13 +93,13 @@ function filterSidebarItems(items)
 			}, 
 		],
 		[
-			'@docusaurus/plugin-content-docs',
+			"@docusaurus/plugin-content-docs",
 			{
-				id: 'tools',
-				path: 'content/tools',
-				routeBasePath: 'tools',
-				sidebarPath: require.resolve('./sidebars/tools.js'),
-				editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
+				id: "tools",
+				path: "content/tools",
+				routeBasePath: "tools",
+				sidebarPath: require.resolve("./sidebars/tools.js"),
+				editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
@@ -107,13 +107,13 @@ function filterSidebarItems(items)
 			},
 		],
 		[
-			'@docusaurus/plugin-content-docs',
+			"@docusaurus/plugin-content-docs",
 			{
-				id: 'community',
-				path: 'content/community',
-				routeBasePath: 'community',
-				sidebarPath: require.resolve('./sidebars/community.js'),
-				editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
+				id: "community",
+				path: "content/community",
+				routeBasePath: "community",
+				sidebarPath: require.resolve("./sidebars/community.js"),
+				editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
@@ -121,13 +121,13 @@ function filterSidebarItems(items)
 			},
 		],
 		[
-			'@docusaurus/plugin-content-docs',
+			"@docusaurus/plugin-content-docs",
 			{
-				id: 'contributing',
-				path: 'content/contributing',
-				routeBasePath: 'contributing',
-				sidebarPath: require.resolve('./sidebars/contributing.js'),
-				editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
+				id: "contributing",
+				path: "content/contributing",
+				routeBasePath: "contributing",
+				sidebarPath: require.resolve("./sidebars/contributing.js"),
+				editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
 				editLocalizedFiles: true,
 				showLastUpdateTime: true,
 				showLastUpdateAuthor: true,
@@ -138,15 +138,15 @@ function filterSidebarItems(items)
 
 	presets: [
 		[
-			'classic',
+			"classic",
 			/** @type {import('@docusaurus/preset-classic').Options} */
 			({
 				docs: {
-					path: 'content/docs',
+					path: "content/docs",
 
-					sidebarPath: require.resolve('./sidebars/docs.js'),
+					sidebarPath: require.resolve("./sidebars/docs.js"),
 					// Please change this to your repo.
-					editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/',
+					editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
 					editLocalizedFiles: true,
 					showLastUpdateTime: true,
 					showLastUpdateAuthor: true,
@@ -155,7 +155,7 @@ function filterSidebarItems(items)
 					sidebarItemsGenerator: async function ({
 						defaultSidebarItemsGenerator,
 						...args
-						}) {
+					}) {
 						const sidebarItems = await defaultSidebarItemsGenerator(args);
 						return filterSidebarItems(sidebarItems);
 					},
@@ -164,14 +164,14 @@ function filterSidebarItems(items)
 					showReadingTime: true,
 					path: "content/blog",
 					// Please change this to your repo.
-					editUrl: 'https://github.com/Cpp4You/CppLangNet/edit/main/blog/',
+					editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/blog/",
 					remarkPlugins: remarkConfig,
 				},
 				theme: {
-					customCss: require.resolve('./src/css/Custom.scss'),
+					customCss: require.resolve("./src/css/Custom.scss"),
 				},
 				gtag: {
-					trackingID: 'G-N768FKNY0R',
+					trackingID: "G-N768FKNY0R",
 					anonymizeIP: true,
 				},
 			}),
@@ -187,110 +187,110 @@ function filterSidebarItems(items)
 				},
 			},
 			colorMode: {
-				defaultMode: 'dark'
+				defaultMode: "dark"
 			},
 			navbar: {
-				title: 'C++ Language',
+				title: "C++ Language",
 				logo: {
-					alt: 'C++ Language Logo',
-					src: 'img/cpp.svg',
+					alt: "C++ Language Logo",
+					src: "img/cpp.svg",
 				},
 				items: [
-					{ to: '/learn',			label: 'Learn',				position: 'left' },
-					{ to: '/docs',			label: 'Docs',				position: 'left' },
-					{ to: '/tools',			label: 'Tools',				position: 'left' },
-					{ to: '/community',		label: 'Community',			position: 'left' },
-					{ to: '/blog',			label: 'Blog',				position: 'left' },
-					{ to: '/contributing',	label: '💗 Contributing',	position: 'right' },
+					{ to: "/learn",			label: "Learn",				position: "left" },
+					{ to: "/docs",			label: "Docs",				position: "left" },
+					{ to: "/tools",			label: "Tools",				position: "left" },
+					{ to: "/community",		label: "Community",			position: "left" },
+					{ to: "/blog",			label: "Blog",				position: "left" },
+					{ to: "/contributing",	label: "💗 Contributing",	position: "right" },
 					// {
 					// 	href: 'https://github.com/Cpp4You/CppLangNet/discussions/categories/forum',
 					// 	label: '🗣 Community',
 					// 	position: 'right',
 					// },
 					{
-						type: 'localeDropdown',
-						position: 'right',
+						type: "localeDropdown",
+						position: "right",
 					},
 					{
-						href: 'https://discord.gg/NvBNvpgUHZ',
-						position: 'right',
-						className: 'header-discord-link',
-						'aria-label': 'Official Discord server',
+						href: "https://discord.gg/NvBNvpgUHZ",
+						position: "right",
+						className: "header-discord-link",
+						"aria-label": "Official Discord server",
 					},
 					{
-						href: 'https://github.com/Cpp4You/CppLangNet',
-						position: 'right',
-						className: 'header-github-link',
-						'aria-label': 'GitHub repository',
+						href: "https://github.com/Cpp4You/CppLangNet",
+						position: "right",
+						className: "header-github-link",
+						"aria-label": "GitHub repository",
 					},
 				],
 			},
 			announcementBar: {
 				content:
-					'⚠ This site is still in an early phase of construction. You can help us by <a target="_blank" rel="noopener noreferrer" href="/contributing">contributing</a>. Consider giving us a ⭐ star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/Cpp4You/CppLangNet/stargazers">GitHub</a>',
-				backgroundColor: '#fafbfc',
-				textColor: '#091E42',
-				isCloseable: false,
+					"⚠ This site is still in an early phase of construction. You can help us by <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"/contributing\">contributing</a>. Consider giving us a ⭐ star on <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"https://github.com/Cpp4You/CppLangNet/stargazers\">GitHub</a>",
+				backgroundColor: "#fafbfc",
+				textColor: "#091E42",
+				// isCloseable: false,
 			},
 			footer: {
-				style: 'dark',
+				style: "dark",
 				links: [
 					{
-						title: 'Shortcut',
+						title: "Shortcut",
 						items: [
 							{
-								label: 'Learn C++',
-								to: '/learn',
+								label: "Learn C++",
+								to: "/learn",
 							},
 							{
-								label: 'Documentation',
-								to: '/docs',
+								label: "Documentation",
+								to: "/docs",
 							},
 							{
-								label: 'Tools',
-								to: '/tools',
+								label: "Tools",
+								to: "/tools",
 							},
 							{
-								label: 'Community',
-								to: '/community',
+								label: "Community",
+								to: "/community",
 							},
 							{
-								label: 'Contributing',
-								to: '/contributing',
+								label: "Contributing",
+								to: "/contributing",
 							},
 						],
 					},
 					{
-						title: 'Community',
+						title: "Community",
 						items: [
 							{
-								label: 'Discord',
-								href: 'https://discord.gg/3MeXQ8TvBw',
+								label: "Discord",
+								href: "https://discord.gg/3MeXQ8TvBw",
 							},
 							{
-								label: 'Forum',
-								href: 'https://github.com/Cpp4You/CppLangNet/discussions/categories/forum',
+								label: "Forum",
+								href: "https://github.com/Cpp4You/CppLangNet/discussions/categories/forum",
 							},
 							{
-								label: 'Stack Overflow',
-								href: 'https://stackoverflow.com/questions/tagged/cpp',
+								label: "Stack Overflow",
+								href: "https://stackoverflow.com/questions/tagged/cpp",
 							},
 							{
-								label: 'Reddit',
-								href: 'https://reddit.com/r/cpp',
+								label: "Reddit",
+								href: "https://reddit.com/r/cpp",
 							}
 						],
 					},
 					{
-						title: 'More',
+						title: "More",
 						items: [
 							{
-								label: 'Blog',
-								to: '/blog',
+								label: "Blog",
+								to: "/blog",
 							},
 							{
-								label: 'GitHub',
-								href: 'https://github.com/Cpp4You/CppLangNet',
+								label: "GitHub",
+								href: "https://github.com/Cpp4You/CppLangNet",
 							},
 						],
 					},
@@ -302,13 +302,13 @@ function filterSidebarItems(items)
 				darkTheme:	darkCodeTheme,
 				magicComments: [
 					{
-						className: 'code-block-highlighted-line',
-						line: 'highlight-next-line',
-						block: { start: 'highlight-start', end: 'highlight-end' }
+						className: "code-block-highlighted-line",
+						line: "highlight-next-line",
+						block: { start: "highlight-start", end: "highlight-end" }
 					},
 					{
-						className: 'code-block-error-line',
-						line: 'error-next-line',
+						className: "code-block-error-line",
+						line: "error-next-line",
 					}
 				]
 			},
