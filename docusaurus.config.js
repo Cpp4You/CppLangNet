@@ -181,6 +181,7 @@ function filterSidebarItems(items)
 	themeConfig:
 		/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 		({
+			image: "img/favicon.png",
 			docs: {
 				sidebar: {
 					hideable: true,
