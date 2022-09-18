@@ -31,7 +31,7 @@
 		}
 
 
-		>details[class*="-theme-common-"] {
+		>details[data-collapsed] {
 			font-size: calc($textScale * 100%);
 			padding: calc(var(--ifm-alert-padding-vertical) * $textScale) calc(var(--ifm-alert-padding-horizontal) * $textScale);
 		}
