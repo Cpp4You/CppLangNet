@@ -37,6 +37,14 @@ LanguageVersions.set("since-cpp17", <Translate>since C++17</Translate>);
 LanguageVersions.set("since-cpp20", <Translate>since C++20</Translate>);
 LanguageVersions.set("since-cpp23", <Translate>since C++23</Translate>);
 
+LanguageVersions.set("removed-cpp98", <Translate>removed in C++98</Translate>);
+LanguageVersions.set("removed-cpp03", <Translate>removed in C++03</Translate>);
+LanguageVersions.set("removed-cpp11", <Translate>removed in C++11</Translate>);
+LanguageVersions.set("removed-cpp14", <Translate>removed in C++14</Translate>);
+LanguageVersions.set("removed-cpp17", <Translate>removed in C++17</Translate>);
+LanguageVersions.set("removed-cpp20", <Translate>removed in C++20</Translate>);
+LanguageVersions.set("removed-cpp23", <Translate>removed in C++23</Translate>);
+
 interface MarkedTextParameters {
 	children: React.ReactNode;
 	className?: string;
@@ -80,5 +88,11 @@ export function Deprecated({children, v}: VersionProps)
 	);
 }
 
-
-
+export function Removed({children, v}: VersionProps)
+{
+	return (
+		<MarkedText className={styles.removed}>{children} 
+			&nbsp;<span className={styles.versionNumber}><small>({LanguageVersions.get(`removed-${v}`)})</small></span>
+		</MarkedText>
+	);
+}
