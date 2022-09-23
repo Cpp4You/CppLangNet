@@ -1,0 +1,6 @@
+```cpp
+namespace pmr {
+    template < class T >
+    using deque = std::deque<T, std::pmr::polymorphic_allocator<T>>;
+}
+````
