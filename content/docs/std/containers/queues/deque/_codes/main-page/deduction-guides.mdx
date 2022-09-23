@@ -1,0 +1,28 @@
+```cpp
+// (1) (since C++17)
+template< class InputIt,
+          class Alloc = std::allocator<
+            typename std::iterator_traits<InputIt>::value_type
+          >
+        >
+deque( InputIt, InputIt, Alloc = Alloc() )
+  -> deque<typename std::iterator_traits<InputIt>::value_type, Alloc>;
+```
+> *`(1)`* allows deduction from an **iterator range**.
+
+### Overload resolution
+In order for **(1)** to participate in overload resolution, 
+the folllowing requirements must be met:
+ - `InputIt` satisfies [`LegacyInputIterator`](/docs/std/named_req/LegacyInputIterator)
+ - `Alo` satisfies [`Allocator`](/docs/std/named_req/Allocator)
+
+:::note
+The extent to which the library determines that a type does not satisfy [`LegacyInputIterator`](#) is **unspecified**,
+except that as a minimum:
+ - Integral types do not qualify as input iterators. 
+
+Likewise, the extent to which it determines that a type does not satisfy [`Allocator`](#) is **unspecified**,
+except that as a minimum:
+ - The member type `Alloc::value_type` must exist.
+ - The expression [`std::declval<Alloc&>().allocate(std::size_t{})`](#) must be well-formed when treated as an unevaluated operand.
+:::

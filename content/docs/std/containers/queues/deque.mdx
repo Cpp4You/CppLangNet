@@ -1,0 +1,304 @@
+---
+sidebar_position:	2
+title:				std::deque reference
+sidebar_label:		deque
+hide_title:			true
+description:		Summary of a std::deque (usage, methods, etc.) - C++ Language
+tags:				[deque, queue, double]
+
+cppreference_origin_rel: w/cpp/container/deque
+---
+
+import ClassSummary				from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns					from "@site-comps/Columns";
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem					from "@theme/TabItem";
+import { Since, Until, Removed }			from "@site-comps/Versions";
+
+<!------------------ Codes ----------------->
+
+<!-- Further Examples -->
+import FurtherExampleCreateAddPrint	from "./deque/_codes/main-page/examples/further/create-add-print.mdx"
+
+<!-- Overview -->
+import OverviewSimplifiedRegular	from "./deque/_codes/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedRegular		from "./deque/_codes/main-page/overview/overview-detailed-regular.mdx";
+import OverviewDetailedPmr		from "./deque/_codes/main-page/overview/overview-detailed-pmr.mdx";
+
+<!-- Deduction Guides -->
+import DeductionGuides				from "./deque/_codes/main-page/deduction-guides.mdx";
+
+import TemplateParamTExplanation from "./deque/_codes/main-page/template-parameters/t.mdx";
+import TemplateParamAllocatorExplanation from "./deque/_codes/main-page/template-parameters/allocator.mdx";
+
+<NotFinished />
+
+# Deque class reference
+
+## Overview
+
+<Tabs>
+<TabItem value="simplified" label="Simplified (since C++98)" default>
+
+	<OverviewSimplifiedRegular />
+
+</TabItem>
+<TabItem value="detailed" label="Detailed">
+	<Tabs>
+		<TabItem value="regular" label="Regular (since C++98)" default>
+
+			<OverviewDetailedRegular/>
+
+		</TabItem>
+
+		<TabItem value="pmr" label="Polymorphic (since C++17)">
+
+			<OverviewDetailedPmr/>
+
+		</TabItem>
+	</Tabs>
+</TabItem>
+</Tabs>
+
+Deque (double-ended queue) is a container that allows fast insertion and deletion from both the beggining and the end.
+
+Unlike [`std::queue`](/docs/std/containers/queues/queue) or [`std::priority_queue`](/docs/std/containers/queues/priority_queue) it's **not** a container adapter.
+
+<details>
+<summary>Technical definition of a deque</summary>
+<div>
+
+[`std::deque`](/docs/std/containers/queues/deque) (double-ended queue) is an indexed sequence container that allows fast insertion and deletion at both its beginning and its end. 
+In addition, insertion and deletion at either end of a deque never invalidates pointers or references to the rest of the elements.
+
+As opposed to [`std::vector`](/docs/std/containers/arrays/vector), the elements of a deque are not stored contiguously: typical implementations use a sequence of individually allocated fixed-size arrays, with additional bookkeeping, which means indexed access to deque must perform two pointer dereferences, compared to vector's indexed access which performs only one.
+
+The storage of a deque is automatically expanded and contracted as needed. Expansion of a deque is cheaper than the expansion of a [`std::vector`](/docs/std/containers/vector) because it does not involve copying of the existing elements to a new memory location. On the other hand, deques typically have large minimal memory cost; a deque holding just one element has to allocate its full internal array (e.g. 8 times the object size on 64-bit libstdc++; 16 times the object size or 4096 bytes, whichever is larger, on 64-bit libc++).
+
+The complexity (efficiency) of common operations on deques is as follows:  
+ - Random access - constant (**O(1)**)
+ - Insertion or removal of elements at the end or beginning - constant (**O(1)**)
+ - Insertion or removal of elements - linear (**O(n)**)
+
+[`std::deque`](/docs/std/containers/queues/deque) meets the requirements of [`Container`](/docs/std/named_req/Container), [`AllocatorAwareContainer`](/docs/std/named_req/AllocatorAwareContainer), [`SequenceContainer`](/docs/std/named_req/SequenceContainer) and [`ReversibleContainer`](/docs/std/named_req/ReversibleContainer).
+
+</div>
+</details>
+
+<ClassSummary name="deque" namespaces="std" folder="queue" headerName="queue">
+
+## Template parameters
+<SymbolTable noTraits>
+	<Symbol
+			name="T"
+			desc={<TemplateParamTExplanation/>}
+		/>
+	<Symbol
+			name="Allocator"
+			desc={<TemplateParamAllocatorExplanation/>}
+		/>
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="value_type"				desc={<code>T</code>}/>
+	<Symbol pub name="allocator_type" 			desc={<code>Allocator</code>}/>
+	<Symbol pub name="size_type"				desc={<>Unsigned integer type (usuallly <code>std::size_t</code>)</>}/>
+	<Symbol pub name="difference_type"			desc={<>Signed integer type (usuallly <code>std::ptrdiff_t</code>)</>}/>
+	<Symbol pub name="reference"				desc={<code>value_type&</code>}/>
+	<Symbol pub name="const_reference"			desc={<code>const value_type&</code>}/>
+	<Symbol pub name="pointer">
+		<Until v="cpp11"><code>Allocator::pointer</code></Until><br/>
+		<Since v="cpp11"><code>std::allocator_traits&lt;Allocator&gt;::pointer</code></Since>
+	</Symbol>
+	<Symbol pub name="const_pointer">
+		<Until v="cpp11"><code>Allocator::const_pointer</code></Until><br/>
+		<Since v="cpp11"><code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code></Since>
+	</Symbol>
+	<Symbol pub name="iterator"					desc={<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a>}/>
+	<Symbol pub name="const_iterator"			desc={<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a>}/>
+	<Symbol pub name="reverse_iterator"			desc={<a href="#"><code>std::reverse_iterator&lt;iterator&gt;</code></a>}/>
+	<Symbol pub name="const_reverse_iterator"	desc={<a href="#"><code>std::reverse_iterator&lt;const_iterator&gt;</code></a>}/>
+</SymbolTable>
+
+## Member functions
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="constructors" name="(constructors)"
+			desc="Constructs a vector."
+		/>
+	<Symbol pub autoLink linkName="destructor" name="(destructor)"
+			desc="Destroys the vector, deallocating internal storage if used."
+		/>
+	<Symbol pub autoLink linkName="operator_assign" name="operator="
+			desc="Assigns values to the container."
+		/>
+	<Symbol pub autoLink name="assign"
+			desc="Assigns values to the container."
+		/>
+	<Symbol pub autoLink name="get_allocator"
+			desc="Returns the associated allocator."
+		/>
+</SymbolTable>
+
+### Element access
+
+<SymbolTable>
+	<Symbol pub autoLink name="at"
+			desc={<>Accesses a specified element <b>with bounds checking.</b></>}
+		/>
+	<Symbol pub autoLink linkName="operator_subscript" name="operator[]"
+			desc="Accesses a specified element."
+		/>
+	<Symbol pub autoLink name="front"
+			desc="Returns the first element."
+		/>
+	<Symbol pub autoLink name="back"
+			desc="Returns the last element."
+		/>
+</SymbolTable>
+
+### Iterators
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/><Since v="cpp11">cbegin</Since></>}
+			desc={<>Returns an <code>iterator/const_iterator</code> to the beginning.</>}
+		/>
+	<Symbol pub autoLink linkName="end" name={<>end<br/><Since v="cpp11">cend</Since></>}
+			desc={<>Returns an <code>iterator/const_iterator</code> to the end.</>}
+		/>
+	<Symbol pub autoLink linkName="rbegin" name={<>rbegin<br/><Since v="cpp11">crbegin</Since></>}
+			desc={<>Returns a reverse <code>iterator/const_iterator</code> to the beginning.</>}
+		/>
+	<Symbol pub autoLink linkName="rend" name={<>rend<br/><Since v="cpp11">crend</Since></>}
+			desc={<>Returns a reverse <code>iterator/const_iterator</code> to the end.</>}
+		/>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>
+	<Symbol pub autoLink name="empty">
+		Returns <code>true</code> if the vector is empty, otherwise <code>false</code>.
+	</Symbol>
+	<Symbol pub autoLink name="size">
+		Returns the number of elements.
+	</Symbol>
+	<Symbol pub autoLink name="max_size">
+		Returns the maximum possible number of elements.
+	</Symbol>
+	<Symbol pub autoLink name={<Since v='cpp11'>shrink_to_fit</Since>} linkName="shrink_to_fit">
+		Reduces memory usage by freeing unused memory.
+	</Symbol>
+</SymbolTable>
+
+### Modifiers
+
+<SymbolTable>
+	<Symbol pub autoLink name="clear">
+		Clears the contents of a deque.
+	</Symbol>
+	<Symbol pub autoLink name="insert">
+		Inserts elements.
+	</Symbol>
+	<Symbol pub autoLink linkName="emplace" name={<Since v='cpp11'>emplace</Since>}>
+		Constructs a new element in place.
+	</Symbol>
+	<Symbol pub autoLink name="erase">
+		Erases elements.
+	</Symbol>
+	<Symbol pub autoLink name="push_back">
+		Appends an element to the end.
+	</Symbol>
+	<Symbol pub autoLink linkName="emplace_back" name={<Since v='cpp11'>emplace_back</Since>}>
+		Constructs new element in-place at the end.
+	</Symbol>
+	<Symbol pub autoLink name="pop_back">
+		Removes the last element.
+	</Symbol>
+	<Symbol pub autoLink name="push_front">
+		Adds a new element to the beggining.
+	</Symbol>
+	<Symbol pub autoLink linkName="emplace_front" name={<Since v='cpp11'>emplace_front</Since>}>
+		Constructs new element in-place at the beginning.
+	</Symbol>
+	<Symbol pub autoLink name="pop_front">
+		Removes the first element.
+	</Symbol>
+	<Symbol pub autoLink name="resize">
+		Changes the number of elements stored.
+	</Symbol>
+	<Symbol pub autoLink name="swap">
+		Swaps two deques.
+	</Symbol>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				operator==<br/>
+				<Removed v="cpp20">operator!=</Removed> <br/>
+				<Until v="cpp20">operator&lt;</Until> <br/>
+				operator&gt; <small>(removed in C++20)</small><br/>
+				operator&lt;= <small>(removed in C++20)</small><br/>
+				operator&gt;= <small>(removed in C++20)</small><br/>
+				operator&lt;=&gt;
+			</>}
+			desc="Lexicographically compares the values in the deque."
+		/>
+	<Symbol name={<>std::swap <small>(std::deque)</small></>}
+			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
+		/>
+	<Symbol name={<>
+				erase <small>(std::deque)</small><br/>
+				erase_if <small>(std::deque)</small>
+			</>}
+			desc={<>Overloads for <a href="#">std::erase/std::erase_if</a> algorithms.</>}
+		/>
+</SymbolTable>
+
+### Helper classes
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+			<a href="#">std::uses_allocator</a> <small>(std::deque)</small>
+		</>}
+			desc={<>Specializes the <code>std::uses_allocator</code> type trait.</>}
+		/>
+</SymbolTable>
+
+</ClassSummary>
+
+
+## Deduction guides (since C++17)
+<details>
+<summary>Click to expand</summary>
+<div>
+	<DeductionGuides />
+</div>
+</details>
+
+## Examples
+
+### Basic manipulation
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleCreateAddPrint />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+13 7 5 16 8 25
+```
+
+</div>
+</Columns>

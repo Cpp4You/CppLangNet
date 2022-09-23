@@ -1,0 +1,15 @@
+import SwitchView		from "@site-comps/SwitchView";
+
+An allocator that is used to acquire/release memory and to construct/destroy the elements in that memory.
+The type must meet the requirements of [`Allocator`](/docs/std/named_req/Allocator).
+
+<SwitchView content={
+	{
+		'since-cpp11': <>
+			The behavior is undefined if <code>Allocator::value_type</code> is not the same as <code>T</code>.
+		</>,
+		'until-cpp11': <>
+			The program is ill-formed if <code>Allocator::value_type</code> is not the same as <code>T</code>.
+		</>
+	}
+	}/>
