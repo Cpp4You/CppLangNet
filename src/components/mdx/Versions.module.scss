@@ -22,6 +22,11 @@
 	background-color: rgba(gray, 0.02);
 }
 
+.markedText.removed {
+	border-color: rgba(red, 1);
+	background-color: rgba(red, 0.15);
+}
+
 
 .versionNumber {
 	background-color: rgba(black, 0.1);
