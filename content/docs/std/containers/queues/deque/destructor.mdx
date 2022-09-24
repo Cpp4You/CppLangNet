@@ -1,0 +1,30 @@
+---
+title:				deque<...> destructor
+sidebar_label:		Destructor
+description:		deque<...> destructor C++ documentation
+hide_title:			true
+tags:				[deque, destruction, destructor]
+
+cppreference_origin_rel: w/cpp/container/deque/~deque
+---
+
+import SwitchView			from "@site-comps/SwitchView";
+
+<!-- destructors -->
+import Method_SinceCpp98	from './_codes/destructor/since-cpp98.mdx';
+
+# std::deque destructor
+
+<SwitchView content={{
+	'since-cpp98': <Method_SinceCpp98 />,
+}} />
+
+Destructs the deque. The destructors of the elements are called and the used storage is deallocated. 
+
+:::note
+If the elements are pointers, the pointed-to objects are not destroyed.
+:::
+
+### Complexity
+
+Linear in the size of the container - **(O(size())**.
