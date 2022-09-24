@@ -238,6 +238,7 @@ The complexity (efficiency) of common operations on deques is as follows:
 
 ## Non-member functions
 
+{/* TODO: Use <Since v="cpp20"... on erase and erase_if once the block is sensibely formatted */}
 <SymbolTable noTraits>
 	<Symbol name={<>
 				operator==<br/>
@@ -247,28 +248,26 @@ The complexity (efficiency) of common operations on deques is as follows:
 				<Removed v="cpp20">operator&lt;=</Removed> <br/>
 				<Removed v="cpp20">operator&gt;=</Removed> <br/>
 				<Since v="cpp20">operator&lt;=&gt;</Since>
-			</>}
-			desc="Lexicographically compares the values in the deque."
-		/>
-	<Symbol name={<>std::swap <small>(std::deque)</small></>}
-			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
-		/>
+			</>}>
+		Lexicographically compares the values in the deque.
+	</Symbol>
+	<Symbol name={<>std::swap <small>(std::deque)</small></>}>
+		An overload for a <a href="#">std::swap</a> algorithm.
+	</Symbol>
 	<Symbol name={<>
 				erase <small>(std::deque)</small><br/>
 				erase_if <small>(std::deque)</small>
-			</>}
-			desc={<>Overloads for <a href="#">std::erase/std::erase_if</a> algorithms.</>}
-		/>
+			</>}>
+		Overloads for <a href="#">std::erase/std::erase_if</a> algorithms.
+	</Symbol>
 </SymbolTable>
 
 ### Helper classes
 
 <SymbolTable noTraits>
-	<Symbol name={<>
-			<a href="#">std::uses_allocator</a> <small>(std::deque)</small>
-		</>}
-			desc={<>Specializes the <code>std::uses_allocator</code> type trait.</>}
-		/>
+	<Symbol name={<><a href="#">std::uses_allocator</a> <small>(std::deque)</small></>}>
+		Specializes the <code>std::uses_allocator</code> type trait.
+	</Symbol>
 </SymbolTable>
 
 </ClassSummary>
