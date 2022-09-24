@@ -1,0 +1,150 @@
+---
+title:					deque<...>::operator=
+sidebar_label:			operator=
+description:			deque<...>::operator= method C++ documentation
+hide_title:				true
+tags:					[deque, assign, copy, operator_assign]
+
+cppreference_origin_rel: w/cpp/container/deque/operator=
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- operator_assign() -->
+import Method_UntilCpp11	from './_codes/operator_assign/until-cpp11.mdx';
+import Method_UntilCpp17	from './_codes/operator_assign/until-cpp17.mdx';
+import Method_SinceCpp17	from './_codes/operator_assign/since-cpp17.mdx';
+
+import NoexceptSpecification_SinceCpp17 from './_codes/operator_assign/noexcept-specification/since-cpp17.mdx';
+import PropagateOnContainerChangeNote_SinceCpp11 from './_codes/operator_assign/explanation/propagate-on-container-change-note-since-cpp11.mdx';
+
+# std::deque operator=
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />,
+	'until-cpp17': <Method_UntilCpp17 />,
+	'until-cpp11': <Method_UntilCpp11 />
+}} />
+
+Replaces the contents of the container with the contents of another.
+
+ - **(1)** **Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.
+    <SwitchView content={{
+		    'since-cpp11': <PropagateOnContainerChangeNote_SinceCpp11 />,
+	    }}/>
+
+ - **(2)** **Move** assignment operator. Replaces the contents with those of other using move semantics (i.e. the data in other is moved from other into this container).
+:::important
+`other` is in a valid but unspecified state afterwards.
+:::
+    If `std::allocator_traits<Alloc>::propagate_on_container_move_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of other.
+
+    If it is false and the allocators of `*this` and other do not compare equal, `*this` cannot take ownership of the memory owned by other and must move-assign each element individually,
+    allocating additional memory using its own allocator as needed.
+
+    In any case, all elements originally belong to `*this` are either destroyed or replaced by element-wise move-assignment.
+
+ - **(3)** Replaces the contents with those identified by initializer list `ilist`.
+
+### Parameters
+
+ - `other` - another container to use as data source
+ - `ilist` - initializer list to use as data source
+ 
+### Return value
+
+`*this`
+
+### Complexity
+
+ - **(1)** Linear in the size of `*this` and `other` - **O(size() + other.size())**.
+ - **(2)**  
+	Linear in the size of `*this` - **O(size())**.  
+	If the allocators do not compare equal and do not propagate, linear in the size of `*this` and other - **O(size() + other.size())**.
+ - **(3)** Linear in the size of `*this` and `ilist` - **O(size() + ilist.size())**.
+
+### Exceptions
+
+<SwitchView content={{
+        'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
+        'until-cpp17': <> 
+        May throw implementation-defined exceptions.
+        </>
+    }} />
+
+### Notes
+
+After container move assignment (overload **(2)**), unless element-wise move assignment is forced by incompatible allocators, references, pointers,
+and iterators (other than the end iterator) to other remain valid, but refer to elements that are now in `*this`.
+The current standard makes this guarantee via the blanket statement in `[container.requirements.general]/12`, and a more direct guarantee is under consideration via [**LWG 2321**](https://cplusplus.github.io/LWG/issue2321).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <deque>
+#include <iterator>
+#include <iostream>
+ 
+void print(auto const comment, auto const& container)
+{
+    auto size = std::size(container);
+    std::cout << comment << "{ ";
+    for (auto const& element: container)
+        std::cout << element << (--size ? ", " : " ");
+    std::cout << "}\n";
+}
+ 
+int main()
+{
+    std::deque<int> x { 1, 2, 3 }, y, z;
+    const auto w = { 4, 5, 6, 7 };
+ 
+    std::cout << "Initially:\n";
+    print("x = ", x);
+    print("y = ", y);
+    print("z = ", z);
+ 
+    std::cout << "Copy assignment copies data from x to y:\n";
+    y = x;
+    print("x = ", x);
+    print("y = ", y);
+ 
+    std::cout << "Move assignment moves data from x to z, modifying both x and z:\n";
+    z = std::move(x);
+    print("x = ", x);
+    print("z = ", z);
+ 
+    std::cout << "Assignment of initializer_list w to z:\n";
+    z = w;
+    print("w = ", w);
+    print("z = ", z);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Initially:
+x = { 1, 2, 3 }
+y = { }
+z = { }
+Copy assignment copies data from x to y:
+x = { 1, 2, 3 }
+y = { 1, 2, 3 }
+Move assignment moves data from x to z, modifying both x and z:
+x = { }
+z = { 1, 2, 3 }
+Assignment of initializer_list w to z:
+w = { 4, 5, 6, 7 }
+z = { 4, 5, 6, 7 }
+```
+
+</div>
+</Columns>
