@@ -1,0 +1,189 @@
+---
+title:					deque<...>::rend() method
+sidebar_label:			rend()
+description:			deque<...>::rend() method C++ documentation
+hide_title:				true
+tags:					[access, deque, rend, end]
+
+cppreference_origin_rel: w/cpp/container/deque/rend
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- rrend() -->
+import Method_UntilCpp11 	from './_codes/rend/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/rend/since-cpp11.mdx';
+
+# std::deque rend() method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />,
+    'until-cpp11': <Method_UntilCpp11 />,
+}} />
+
+Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the last element of the reversed deque.
+It corresponds to the element **preceding** the first element of the non-reversed deque.
+
+It effectively returns an iterator that points before the begin of the original deque.
+Attempting to dereference a before-the-begin iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
+
+:::note
+This member function doesn't actually reverse the deque, it just returns an iterator that points to the element before the first element of the array,
+and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
+
+For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
+:::
+
+If the container is empty, the returned iterator will be equal to [`rbegin()`](/docs/std/containers/queues/deque/rbegin).
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Reverse iterator to the element following the last element.
+
+### Complexity
+
+Constant.
+
+### Difference between rend and crend
+
+For a const container `c`, rend and crend are the same - `c.rend() == c.crend()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="rend" label="rend" default>
+
+
+```cpp
+#include <deque>
+
+int main()
+{
+    std::deque<int> arr = { 1, 2, 3 };
+    auto it = arr.rend(); // Type: std::deque<int>::reverse_iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="crend" label="crend" default>
+
+```cpp
+#include <deque>
+
+int main()
+{
+    std::deque<int> arr = { 1, 2, 3 };
+    auto it = arr.crend(); // Type: std::deque<int>::reverse_const_iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ❌ Error!
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="rend" label="rend" default>
+
+```cpp
+#include <deque>
+
+int main()
+{
+    const std::deque<int> arr = { 1, 2, 3 };
+    auto it = arr.rend(); // Type: std::deque<int>::reverse_const_iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ❌ Error!
+}
+```
+
+</TabItem>
+<TabItem value="crend" label="crend" default>
+
+```cpp
+#include <deque>
+
+int main()
+{
+    const std::deque<int> arr = { 1, 2, 3 };
+    auto it = arr.crend(); // Type: std::deque<int>::reverse_const_iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ❌ Error!
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <numeric>
+#include <string>
+#include <deque>
+
+int main()
+{
+    std::deque<int> nums {1, 2, 4, 8, 16};
+    std::deque<std::string> fruits {"orange", "apple", "raspberry"};
+    std::deque<char> empty;
+
+    // Print deque.
+    std::for_each(nums.rbegin(), nums.rend(), [](const int n) { std::cout << n << ' '; });
+    std::cout << '\n';
+
+    // Sums all integers in the deque nums (if any), printing only the result.
+    std::cout << "Sum of nums: "
+              << std::accumulate(nums.rbegin(), nums.rend(), 0) << '\n';
+
+    // Prints the first fruit in the deque fruits, checking if there is any.
+    if (!fruits.empty())
+        std::cout << "First fruit: " << *fruits.rbegin() << '\n';
+
+    if (empty.rbegin() == empty.rend())
+        std::cout << "deque 'empty' is indeed empty.\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+16 8 4 2 1
+Sum of nums: 31
+First fruit: raspberry
+deque 'empty' is indeed empty.
+```
+
+</div>
+</Columns>
