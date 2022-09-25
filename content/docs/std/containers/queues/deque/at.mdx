@@ -1,0 +1,96 @@
+---
+title:					deque<...>::at() method
+sidebar_label:			at( )
+description:			deque<...>::at() method C++ documentation
+hide_title:				true
+tags:					[access, deque, index, bounds, method]
+
+cppreference_origin_rel: w/cpp/container/deque/at
+---
+
+# std::deque at() method
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip					from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- at() -->
+import Method_at_SinceCpp98 	from './_codes/at/since-cpp98.mdx';
+
+<SwitchView content={{
+		'since-cpp98': <Method_at_SinceCpp98 />,
+	}}/>
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the element at specified index `pos`.
+
+Bounds checking **is performed** and exception of type `std::out_of_range` will be thrown on invalid access, see [**Exceptions**](#exceptions).
+
+### Parameters
+
+- `pos` - position of the element to return
+
+### Return value
+
+Reference to the requested element.
+
+### Exceptions
+
+Throws [`std::out_of_range`](#) if `pos >= size()`.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <deque>
+ 
+int main()
+{
+    std::deque<int> data = { 1, 2, 4, 5, 5, 6 };
+ 
+    // Set element 1
+    data.at(1) = 88;
+ 
+    // Read element 2
+    std::cout << "Element at index 2 has value " << data.at(2) << '\n';
+ 
+    std::cout << "data size = " << data.size() << '\n';
+ 
+    try {
+        // Set element 6
+        data.at(6) = 666;
+    } catch (std::out_of_range const& exc) {
+        std::cout << exc.what() << '\n';
+    }
+ 
+    // Print final values
+    std::cout << "data:";
+    for (int elem : data)
+        std::cout << " " << elem;
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+Element at index 2 has value 4
+data size = 6
+deque::_M_range_check: __n (which is 6) >= this->size() (which is 6)
+data: 1 88 4 5 5 6
+```
+
+</div>
+</Columns>
