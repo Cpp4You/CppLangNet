@@ -1,0 +1,145 @@
+---
+title:					deque<...>::shrink_to_fit() method
+sidebar_label:			shrink_to_fit( )
+description:			deque<...>::shrink_to_fit() method C++ documentation
+hide_title:				true
+tags:					[deque, shrink, clear]
+
+cppreference_origin_rel: w/cpp/container/deque/shrink_to_fit
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- shrink_to_fit() -->
+import Method_SinceCpp11	from './_codes/shrink_to_fit/since-cpp11.mdx';
+
+# std::deque shrink_to_fit() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+Requests to reduce the unused capacity to [`size()`](/docs/std/containers/queues/deque/size).
+
+:::important
+It is implementation-defined whether the capacity will be reduced.
+:::
+
+:::danger Invalidation
+If reallocation occurs, all **iterators**, including the **past-the-end iterator**, and all **references** to the elements are invalidated.
+
+If no reallocation takes place, **no iterators or references** are invalidated.
+:::
+
+### Parameters
+
+**(none)**
+
+### Type requirements
+- `T` *(the container's element type)* must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable).
+
+### Return value
+
+(none)
+
+### Complexity
+
+At most linear in the size of the container - **O(size())**.
+
+### Exceptions
+
+If an exception is thrown other than by `T`'s move constructor, there are no effects.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <new>
+#include <deque>
+
+// minimal C++11 allocator with debug output
+template <class Tp>
+struct NAlloc {
+    typedef Tp value_type;
+    NAlloc() = default;
+    template <class T> NAlloc(const NAlloc<T>&) {}
+    Tp* allocate(std::size_t n)
+    {
+        n *= sizeof(Tp);
+        std::cout << "allocating " << n << " bytes\n";
+        return static_cast<Tp*>(::operator new(n));
+    }
+    void deallocate(Tp* p, std::size_t n)
+    {
+        std::cout << "deallocating " << n*sizeof*p << " bytes\n";
+        ::operator delete(p);
+    }
+};
+template <class T, class U>
+bool operator==(const NAlloc<T>&, const NAlloc<U>&) { return true; }
+template <class T, class U>
+bool operator!=(const NAlloc<T>&, const NAlloc<U>&) { return false; }
+
+int main() {
+    /* std::queue has no capacity() function (like std::vector),
+     * because of this we use a custom allocator to show
+     * the working of shrink_to_fit.  */
+    std::cout << "Default-construct deque:\n";
+    std::deque<int, NAlloc<int>> deq;
+
+    std::cout << "\nAdd 300 elements:\n";
+    for (int i = 1000; i < 1300; ++i)
+        deq.push_back(i);
+
+    std::cout << "\nPop 100 elements:\n";
+    for (int i = 0; i < 100; ++i)
+        deq.pop_front();
+
+    std::cout << "\nRun shrink_to_fit:\n";
+    deq.shrink_to_fit();
+
+    std::cout << "\nDestroy deque as it goes out of scope:\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+Default-construct deque:
+allocating 64 bytes
+allocating 512 bytes
+
+Add 300 elements:
+allocating 512 bytes
+allocating 512 bytes
+
+Pop 100 elements:
+
+Run shrink_to_fit:
+allocating 64 bytes
+allocating 512 bytes
+allocating 512 bytes
+deallocating 512 bytes
+deallocating 512 bytes
+deallocating 512 bytes
+deallocating 64 bytes
+
+Destroy deque as it goes out of scope:
+deallocating 512 bytes
+deallocating 512 bytes
+deallocating 64 bytes
+```
+
+</div>
+</Columns>
