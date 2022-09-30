@@ -1,0 +1,131 @@
+---
+title:					deque<...>::erase() method
+sidebar_label:			erase( )
+description:			deque<...>::erase() method C++ documentation
+hide_title:				true
+tags:					[erase, remove, delete, deque]
+
+cppreference_origin_rel: w/cpp/container/deque/erase
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- erase() -->
+import Method_SinceCpp11	from './_codes/erase/since-cpp11.mdx';
+import Method_UntilCpp11	from './_codes/erase/until-cpp11.mdx';
+
+# std::deque erase() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
+}} />
+
+Erases the specified elements from the container.
+
+  - **(1)** Removes the element at `pos`.
+  - **(2)** Removes the elements in the range **[ first, last )**.
+
+:::danger Invalidation
+**All iterators** and **references** are invalidated, unless the erased elements are at the end or the beginning of the container,
+in which case only the **iterators and references to the erased elements** are invalidated.
+:::
+
+<SwitchView content={{
+	'since-cpp11': <>
+		It is unspecified when the <b>past-the-end</b> iterator is invalidated.
+	</>,
+	'until-cpp11': <>
+		The <b>past-the-end</b> iterator is also invalidated unless the erased elements are at the beginning of the container and the last element is not erased.
+	</>
+}} />
+
+:::important
+The iterator `pos` must be valid and dereferenceable.
+Thus the [`end()`](/docs/std/containers/queues/deque/end) iterator (which is **valid**, but is **not dereferenceable**) cannot be used as a value for `pos`.
+:::
+
+:::note
+For overload **(2)**, the iterator `first` does not need to be dereferenceable if `first == last` - erasing an empty range is a no-op.
+:::
+
+### Parameters
+
+ - `pos` - iterator to the element to remove
+ - `first`, `last` -range of elements to remove
+
+### Type requirements
+
+- `T` *(the container's element type)* must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable)
+
+### Return value
+
+Iterator following the last removed element.
+ - For **(1)**, if `pos` refers to the last element, then the [`end()`](/docs/std/containers/queues/deque/end) iterator is returned.
+ - For **(2)**, if `last == end()` prior to removal, then the updated [`end()`](/docs/std/containers/queues/deque/end) iterator is returned.
+ - For **(2)**, if **[ first, last )** is an empty range, then `last` is returned.
+
+### Complexity
+
+Linear: the number of calls to the destructor of `T` is the same as the number of elements erased,
+the number of calls to the assignment operator of `T` is no more than the lesser of the number of elements before the erased elements and the number of elements after the erased elements.
+
+### Exceptions
+
+Does not throw, unless an exception is thrown by the assignment operator of `T`.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <deque>
+#include <iostream>
+
+
+void print_container(const std::deque<int>& c)
+{
+    for (int i : c)
+        std::cout << i << " ";
+    std::cout << '\n';
+}
+
+int main( )
+{
+    std::deque<int> c{0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    print_container(c);
+
+    c.erase(c.begin());
+    print_container(c);
+
+    c.erase(c.begin()+2, c.begin()+5);
+    print_container(c);
+
+    // Erase all even numbers
+    for (std::deque<int>::iterator it = c.begin(); it != c.end();)
+    {
+        if (*it % 2 == 0)
+            it = c.erase(it);
+        else
+            ++it;
+    }
+    print_container(c);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+0 1 2 3 4 5 6 7 8 9
+1 2 3 4 5 6 7 8 9
+1 2 6 7 8 9
+1 7 9
+```
+
+</div>
+</Columns>
