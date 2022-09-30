@@ -31,7 +31,9 @@ import Method_SinceCpp98	from './_codes/pop_back/since-cpp98.mdx';
 
 Removes the first element of the container.
 
+:::danger Undefined Behavior
 Calling [`pop_front`](#) on an empty container results in <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
+:::
 
 <SwitchView content={{
 	'since-cpp11': <IteratorDereferenceNote_SinceCpp11 />,
