@@ -53,24 +53,24 @@ Replaces the contents of the container with the contents of `other`.
 
  - `other` - another container to use as data source
  - `ilist` - initializer list to use as data source
- 
+
 ### Return value
 
 `*this`
 
 ### Complexity
 
- - **(1)** Linear in the size of `*this` and `other` - **O(size() + other.size())**.
+ - **(1)** - Linear in the size of `*this` and `other` - **O(size() + other.size())**.
  - **(2)**  
 	Linear in the size of `*this` - **O(size())**.  
 	If the allocators do not compare equal and do not propagate, linear in the size of `*this` and other - **O(size() + other.size())**.
- - **(3)** Linear in the size of `*this` and `ilist` - **O(size() + ilist.size())**.
+ - **(3)** - Linear in the size of `*this` and `ilist` - **O(size() + ilist.size())**.
 
 ### Exceptions
 
 <SwitchView content={{
         'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
-        'until-cpp17': <> 
+        'until-cpp17': <>
         May throw implementation-defined exceptions.
         </>
     }} />
@@ -90,7 +90,7 @@ The current standard makes this guarantee via the blanket statement in `[contain
 #include <deque>
 #include <iterator>
 #include <iostream>
- 
+
 void print(auto const comment, auto const& container)
 {
     auto size = std::size(container);
@@ -99,27 +99,27 @@ void print(auto const comment, auto const& container)
         std::cout << element << (--size ? ", " : " ");
     std::cout << "}\n";
 }
- 
+
 int main()
 {
     std::deque<int> x { 1, 2, 3 }, y, z;
     const auto w = { 4, 5, 6, 7 };
- 
+
     std::cout << "Initially:\n";
     print("x = ", x);
     print("y = ", y);
     print("z = ", z);
- 
+
     std::cout << "Copy assignment copies data from x to y:\n";
     y = x;
     print("x = ", x);
     print("y = ", y);
- 
+
     std::cout << "Move assignment moves data from x to z, modifying both x and z:\n";
     z = std::move(x);
     print("x = ", x);
     print("z = ", z);
- 
+
     std::cout << "Assignment of initializer_list w to z:\n";
     z = w;
     print("w = ", w);
