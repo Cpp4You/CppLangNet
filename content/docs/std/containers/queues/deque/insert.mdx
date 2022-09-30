@@ -44,7 +44,7 @@ Inserts element(s) into the container, if the container doesn't already contain 
 	The behavior is undefined if `first` and `last` are iterators into `*this`.
 	:::
 
- - **(5)** Inserts elements from initializer list `Ilist` before `pos`.
+ - **(5)** Inserts elements from initializer list `ilist` before `pos`.
 	:::danger Undefined behaviour
 	**All iterators**, including the **past-the-end iterator**, are invalidated. **References** are invalidated too, unless `pos == begin()` or `pos == end()`, in which case they are not invalidated.
 	:::
@@ -69,23 +69,23 @@ Inserts element(s) into the container, if the container doesn't already contain 
 
 ### Return value
 
- - **(1-2)** - Iterator pointing to the inserted value.
- - **(3)** - Iterator pointing to the first element inserted, or `pos` if `count == 0`.
- - **(4)** - Iterator pointing to the first element inserted, or `pos` if `first == last`.
- - **(5)** - Iterator pointing to the first element inserted, or `pos` if `ilist` is empty.
+ - **(1-2)** Iterator pointing to the inserted value.
+ - **(3)** Iterator pointing to the first element inserted, or `pos` if `count == 0`.
+ - **(4)** Iterator pointing to the first element inserted, or `pos` if `first == last`.
+ - **(5)** Iterator pointing to the first element inserted, or `pos` if `ilist` is empty.
 
 ### Complexity
 
 For all of the below `N` is `std::min(std::distance(pos, begin()), std::distance(pos, end()))`
 
- - **(1-2)** - Linear in the lesser of the distances between `pos` and either of the ends of the container - **O(N)**.
- - **(3)** - Linear in `count` + linear in the lesser of the distances between `pos` and either of the ends of the container - **O(count + N)**.
- - **(4)** - Linear in `std::distance(first, last)` + linear in the lesser of the distances between `pos` and either of the ends of the container - **O(std::distance(first, last) + N)**.
- - **(5)** - Linear in `ilist.size()` + linear in the lesser of the distances between `pos` and either of the ends of the container - **O(ilist.size() + N)**.
+ - **(1-2)** Linear in the lesser of the distances between `pos` and either of the ends of the container - **O(N)**.
+ - **(3)** Linear in `count` + linear in the lesser of the distances between `pos` and either of the ends of the container - **O(count + N)**.
+ - **(4)** Linear in `std::distance(first, last)` + linear in the lesser of the distances between `pos` and either of the ends of the container - **O(std::distance(first, last) + N)**.
+ - **(5)** Linear in `ilist.size()` + linear in the lesser of the distances between `pos` and either of the ends of the container - **O(ilist.size() + N)**.
 
 ### Exceptions
 
-If an exception is thrown when inserting a single element at either end, this function has no effect.
+If an exception is thrown when inserting a single element at either end, this function has no effect ([**strong exception guarantee**](#)).
 
 ### Example
 
