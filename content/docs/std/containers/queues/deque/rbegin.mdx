@@ -34,7 +34,7 @@ Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tool
 It corresponds to the last element of the non-reversed deque.
 
 :::note
-This method doesn't actually reverse the deque, it just returns an iterator that points to the last element of the vector,
+This method doesn't actually reverse the deque, it just returns an iterator that points to the last element of the deque,
 and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
 
 For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
