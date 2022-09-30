@@ -33,13 +33,13 @@ Replaces the contents of the container with the contents of `other`.
 
  - **(1)** **Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.
     <SwitchView content={{
-		    'since-cpp11': <PropagateOnContainerChangeNote_SinceCpp11 />,
-	    }}/>
+		'since-cpp11': <PropagateOnContainerChangeNote_SinceCpp11 />,
+	}}/>
 
  - **(2)** **Move** assignment operator. Replaces the contents with those of other using move semantics (i.e. the data in other is moved from other into this container).
-:::important
-`other` is in a valid but unspecified state afterwards.
-:::
+	:::important
+	`other` is in a valid but unspecified state afterwards.
+	:::
     If `std::allocator_traits<Alloc>::propagate_on_container_move_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of other.
 
     If it is false and the allocators of `*this` and other do not compare equal, `*this` cannot take ownership of the memory owned by other and must move-assign each element individually,
@@ -69,11 +69,9 @@ Replaces the contents of the container with the contents of `other`.
 ### Exceptions
 
 <SwitchView content={{
-        'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
-        'until-cpp17': <>
-        May throw implementation-defined exceptions.
-        </>
-    }} />
+	'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
+	'until-cpp17': <>May throw implementation-defined exceptions.</>
+}} />
 
 ### Notes
 
