@@ -41,7 +41,7 @@ Attempting to dereference a before-the-begin iterator is <Tooltip title={Term_Un
 :::
 
 :::note
-This member function doesn't actually reverse the deque, it just returns an iterator that points to the element before the first element of the array,
+This member function doesn't actually reverse the deque, it just returns an iterator that points to the element before the first element of the deque,
 and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
 
 For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
