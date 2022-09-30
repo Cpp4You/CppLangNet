@@ -34,8 +34,8 @@ Resizes the container to contain `count` elements.
 
 If the current size is greater than `count`, the container is reduced to its first `count` elements.  
 If the current size is less than `count`:  
- - **(1)** - additional default-inserted elements are appended.
- - **(2)** - additional copies of `value` are appended.
+ - **(1)** additional default-inserted elements are appended.
+ - **(2)** additional copies of `value` are appended.
 
 ### Parameters
 
@@ -63,8 +63,8 @@ Linear in the difference between the current size and `count` - **O(size() - cou
 
 ### Notes
 
-If value-initialization in overload **(1)** is undesirable, for example, if the elements are of non-class type and zeroing out is not needed,
 <!-- TODO add a link here -->
+If value-initialization in overload **(1)** is undesirable, for example, if the elements are of non-class type and zeroing out is not needed,
 it can be avoided by providing a custom [`Allocator::construct()`](#).
 
 ### Example
