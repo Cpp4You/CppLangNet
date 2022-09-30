@@ -1,0 +1,131 @@
+---
+title:					deque<...>::emplace() method
+sidebar_label:			emplace( )
+description:			deque<...>::emplace() method C++ documentation
+hide_title:				true
+tags:					[emplace, add, emplace, append, deque]
+
+cppreference_origin_rel: w/cpp/container/deque/emplace
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- emplace() -->
+import Method_SinceCpp11 	from './_codes/emplace/since-cpp11.mdx';
+
+# std::deque emplace() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+Inserts a new element into the container directly before `pos`.
+
+The element is constructed through `std::allocator_traits::construct`, which typically uses placement-new to construct the element in-place at a location provided by the container.  
+However, if the required location has been occupied by an existing element, the inserted element is constructed at another location at first, and then move assigned into the required location.
+
+The arguments `args...` are forwarded to the constructor as `std::forward<Args>(args)...`. `args...` may directly or indirectly refer to a value in the container.
+
+:::danger Invalidation
+**All iterators**, including the **past-the-end iterator**, are invalidated.  
+**References** are invalidated too, unless **pos == begin()** or **pos == end()**, in which case they are not invalidated.
+:::
+
+### Parameters
+
+ - `pos` - iterator before which the new element will be constructed
+ - `args` - arguments to forward to the constructor of the element
+
+### Type requirements
+
+ - `T` *(the container's element type)* must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable), [`MoveInsertable`](/docs/named_req/MoveInsertable) and [`EmplaceConstructible`](/docs/named_req/EmplaceConstructible)
+
+### Return value
+
+Iterator to the inserted element.
+
+### Complexity
+
+Linear in the lesser of the distances between `pos` and either of the ends of the container - **O(std::min(N, M))**, where:
+ - `N` is `std::distance(pos, begin())`  
+ - `M` is `std::distance(pos, end())`
+
+### Exceptions
+
+If an exception is thrown other than by the copy constructor, move constructor, assignment operator, or move assignment operator of the value type, or if an exception is thrown while emplace is used to insert a single element at the either end, there are no effects (strong exception guarantee).
+
+Otherwise, the effects are unspecified.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <string>
+#include <deque>
+ 
+struct A {
+    std::string s;
+    A(std::string str) : s(std::move(str))  { std::cout << " constructed\n"; }
+    A(const A& o) : s(o.s) { std::cout << " copy constructed\n"; }
+    A(A&& o) : s(std::move(o.s)) { std::cout << " move constructed\n"; }
+    A& operator=(const A& other) {
+        s = other.s;
+        std::cout << " copy assigned\n";
+        return *this;
+    }
+    A& operator=(A&& other) {
+        s = std::move(other.s);
+        std::cout << " move assigned\n";
+        return *this;
+    }
+};
+ 
+int main()
+{
+    std::deque<A> container;
+ 
+    std::cout << "construct 2 times A:\n";
+    A two { "two" };
+    A three { "three" };
+ 
+    std::cout << "emplace:\n";
+    container.emplace(container.end(), "one");
+ 
+    std::cout << "emplace with A&:\n";
+    container.emplace(container.end(), two);
+ 
+    std::cout << "emplace with A&&:\n";
+    container.emplace(container.end(), std::move(three));
+ 
+    std::cout << "content:\n";
+    for (const auto& obj : container)
+        std::cout << ' ' << obj.s;
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+construct 2 times A:
+ constructed
+ constructed
+emplace:
+ constructed
+emplace with A&:
+ copy constructed
+emplace with A&&:
+ move constructed
+content:
+ one two three
+```
+
+</div>
+</Columns>

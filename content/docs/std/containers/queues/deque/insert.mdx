@@ -1,0 +1,148 @@
+---
+title:					deque<...>::insert() method
+sidebar_label:			insert( )
+description:			deque<...>::insert() method C++ documentation
+hide_title:				true
+tags:					[insert, add, append, deque]
+
+cppreference_origin_rel: w/cpp/container/deque/insert
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import { Since }			from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+<!-- insert() -->
+import Method_SinceCpp11	from './_codes/insert/since-cpp11.mdx';
+import Method_UntilCpp11	from './_codes/insert/until-cpp11.mdx';
+
+import Explanation_Overload4_SinceCpp11	from './_codes/insert/explanation/overload4-since-cpp11.mdx';
+import Explanation_Overload4_UntilCpp11	from './_codes/insert/explanation/overload4-until-cpp11.mdx';
+
+import TypeRequirements_45_SinceCpp17	from './_codes/insert/other/type-requirements-45-since-cpp17.mdx';
+
+# std::deque insert() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />
+}} />
+
+Inserts element(s) into the container, if the container doesn't already contain an element with an equivalent key.
+
+ - **(1-2)** Inserts `value` before `pos`.  
+ - **(3)** Inserts `count` copies of the value before `pos`.  
+ - **(4)** Inserts elements from range **[ first; last )** before `pos`.
+	<SwitchView content={{
+		'since-cpp11': <Explanation_Overload4_SinceCpp11 />,
+		'until-cpp11': <Explanation_Overload4_UntilCpp11 />
+	}} />
+	:::danger Undefined behaviour
+	The behavior is undefined if `first` and `last` are iterators into `*this`.
+	:::
+
+ - **(5)** Inserts elements from initializer list `Ilist` before `pos`.
+	:::danger Undefined behaviour
+	**All iterators**, including the **past-the-end iterator**, are invalidated. **References** are invalidated too, unless `pos == begin()` or `pos == end()`, in which case they are not invalidated.
+	:::
+
+### Parameters
+
+ - `pos` - iterator before which the content will be inserted. pos may be the [`end()`](/docs/std/containers/queues/deque/end) iterator
+ - `value` - element value to insert
+ - `count` - number of elemnts to insert
+ - `first`, `last` - range of elements to insert
+ - `ilist` - initializer list to insert the values from
+
+### Type requirements
+
+ - **(1)** - `T` must meet the requirements of [`CopyAssignable`](/docs/named_req/CopyAssignable) and [`CopyInsertable`](/docs/named_req/CopyInsertable).
+ - **(2)** - `T` must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable) and [`MoveInsertable`](/docs/named_req/MoveInsertable).
+ - **(3)** - `T` must meet the requirements of [`CopyAssignable`](/docs/named_req/CopyAssignable) and [`CopyInsertable`](/docs/named_req/CopyInsertable).
+ - **(4-5)** - `T` must meet the requirements of [`EmplaceConstructible`](/docs/named_req/EmplaceConstructible).
+ - <SwitchView content={{
+	'since-cpp17': <TypeRequirements_45_SinceCpp17 />
+ }} />
+
+### Return value
+
+ - **(1-2)** - Iterator pointing to the inserted value.
+ - **(3)** - Iterator pointing to the first element inserted, or `pos` if `count == 0`.
+ - **(4)** - Iterator pointing to the first element inserted, or `pos` if `first == last`.
+ - **(5)** - Iterator pointing to the first element inserted, or `pos` if `ilist` is empty.
+
+### Complexity
+
+For all of the below `N` is `std::min(std::distance(pos, begin()), std::distance(pos, end()))`
+
+ - **(1-2)** - Linear in the lesser of the distances between `pos` and either of the ends of the container - **O(N)**.
+ - **(3)** - Linear in `count` + linear in the lesser of the distances between `pos` and either of the ends of the container - **O(count + N)**.
+ - **(4)** - Linear in `std::distance(first, last)` + linear in the lesser of the distances between `pos` and either of the ends of the container - **O(std::distance(first, last) + N)**.
+ - **(5)** - Linear in `ilist.size()` + linear in the lesser of the distances between `pos` and either of the ends of the container - **O(ilist.size() + N)**.
+
+### Exceptions
+
+If an exception is thrown when inserting a single element at either end, this function has no effect.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <iterator>
+#include <deque>
+ 
+void print(int id, const std::deque<int>& container)
+{
+    std::cout << id << ". ";
+    for (const int x: container)
+        std::cout << x << ' ';
+    std::cout << '\n';
+}
+ 
+int main ()
+{
+    std::deque<int> c1(3, 100);
+    print(1, c1);
+ 
+    auto it = c1.begin();
+    it = c1.insert(it, 200);
+    print(2, c1);
+ 
+    c1.insert(it, 2, 300);
+    print(3, c1);
+ 
+    // reset `it` to the begin:
+    it = c1.begin();
+ 
+    std::deque<int> c2(2, 400);
+    c1.insert(std::next(it, 2), c2.begin(), c2.end());
+    print(4, c1);
+ 
+    int arr[] = {501, 502, 503};
+    c1.insert(c1.begin(), arr, arr + std::size(arr));
+    print(5, c1);
+ 
+    c1.insert(c1.end(), {601, 602, 603});
+    print(6, c1);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+1. 100 100 100
+2. 200 100 100 100
+3. 300 300 200 100 100 100
+4. 300 300 400 400 200 100 100 100
+5. 501 502 503 300 300 400 400 200 100 100 100
+6. 501 502 503 300 300 400 400 200 100 100 100 601 602 603
+```
+
+</div>
+</Columns>

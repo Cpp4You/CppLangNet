@@ -1,0 +1,104 @@
+---
+title:					deque<...>::pop_back() method
+sidebar_label:			pop_back( )
+description:			deque<...>::pop_back() method C++ documentation
+hide_title:				true
+tags:					[deque, pop_back, pop, back, last, remove, erase]
+
+cppreference_origin_rel: w/cpp/container/deque/pop_back
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+import IteratorDereferenceNote_UntilCpp11 from './_codes/pop_back/explanation/iterator-dereference-note-until-cpp11.mdx'
+import IteratorDereferenceNote_SinceCpp11 from './_codes/pop_back/explanation/iterator-dereference-note-since-cpp11.mdx'
+
+<!----------------- Codes ---------------------->
+
+<!-- pop_back() -->
+import Method_SinceCpp98	from './_codes/pop_back/since-cpp98.mdx';
+
+# std::deque pop_back() method
+
+<SwitchView content={{
+	'since-cpp98': <Method_SinceCpp98 />,
+}} />
+
+Removes the last element of the container.
+
+Calling [`pop_back`](#) on an empty container results in <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
+
+<SwitchView content={{
+	'since-cpp11': <IteratorDereferenceNote_SinceCpp11 />,
+	'until-cpp11': <IteratorDereferenceNote_UntilCpp11 />,
+}} />
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <deque>
+#include <iostream>
+ 
+template<typename T>
+void print(T const & xs)
+{
+    std::cout << "[ ";
+    for(auto const & x : xs) {
+        std::cout << x << ' ';
+    }
+    std::cout << "]\n";
+}
+ 
+int main()
+{
+    std::deque<int> numbers;
+ 
+    print(numbers); 
+ 
+    numbers.push_back(5);
+    numbers.push_back(3);
+    numbers.push_back(4);
+ 
+    print(numbers); 
+ 
+    numbers.pop_back();
+ 
+    print(numbers); 
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+[ ]
+[ 5 3 4 ]
+[ 5 3 ]
+```
+
+</div>
+</Columns>
