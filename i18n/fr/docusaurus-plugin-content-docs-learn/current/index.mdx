@@ -1,0 +1,108 @@
+---
+sidebar_position: 1
+slug: /
+---
+
+# Introduction dans la programmation
+
+import CustomCodeBlock from '@site-comps/CustomCodeBlock';
+
+Vous êtes dans la section de l'apprentissage de programmation. Vous pouvez trouver ici un cour sur le langage de C++, avec d'autres pages, dans lesquelles le sujet fait le tour de la programmation dans le langage en question.
+
+Avant de passer au cours, renseignez-vous sur quoi est la programmation en général.
+
+## C'est quoi la programmation
+
+La programmation est utilisée dans l'automatisation des tâches grâce aux machines, qui effectuent des instructions. 
+Dans le cours C++, vous allez apprendre comment créer un programme, qui peut être utilisé par un ordinateur.
+Grâce à ce cours tu pourras créer une application, qui par exemple:
+
+- fais des calculs à ta place ➕ ➖ ✖ ➗
+- est un jeu vidéo 🎮 😄
+- te remplacera dans des routines, monotones dans le domaine informatique 🖨 ☕
+
+:::tip Jeu vidéo 🎮
+Quelques mots de la part de l'auteur de la page: j'adore créer des jeux vidéo. J'aime beaucoup apprendre la programmation, par l'utilisation des exemples prise dans des jeux et t'en trouvai de sûr dans ce cours. Je trouve ça en tant que très bonne forme d'apprentissage, qui réunit les connaissances et le plaisir!
+:::
+
+### Cela ressemble à quoi
+
+**L'informaticien écrit le code.** Nous allons te montrer comment coder de manière, à ce que cela soit cohérent avec les règles du langage de C++ et nous allons t'apprendre les bonnes pratiques de programmation.
+
+Voici un bloc de code facile écrit dans le langage C++, qui calcule l'aire du trapèze:
+
+<CustomCodeBlock maxLines={15} resizable>
+
+```cpp title="main.cpp" showLineNumbers
+#include <iostream>
+
+int main()
+{
+	float a = 15;
+	float b = 10;
+	float h = 5;
+
+	std::cout << "LE LOGICIEL CALCULE L'AIRE DU TRAPÈZE\n";
+
+	std::cout << "Donnez la valeur de a: ";
+	std::cin >> a;
+
+	std::cout << "Donnez la valeur de b: ";
+	std::cin >> b;
+
+	std::cout << "Donnez la valeur de h: ";
+	std::cin >> h;
+
+	if (a > 0 && b > 0 && h > 0)
+	{
+		std::cout << "L'aire du trapèze avec les valeurs:\n";
+		std::cout << "a = " << a << "\n";
+		std::cout << "b = " << b << "\n";
+		std::cout << "h = " << h << "\n";
+		std::cout << "est égale: ";
+		std::cout << (a + b) * h / 2;
+	}
+	else
+	{
+		std::cout << "Toutes les valeurs doivent être positives!\n";
+	}
+}
+```
+
+</CustomCodeBlock>
+
+Jeśli chcesz się dowiedzieć jak to działa, **odpowiedź znajdziesz w kursie**!
+
+Kod C++ nie jest bezpośrednio zrozumiały dla komputera. Zanim będziemy mogli go uruchomić,
+trzeba przepuścić kod przez tzw. **kompilator** (o tym później), który najpierw sprawdzi
+czy kod jest zgodny z zasadami języka C++, i jeśli tak, to potem przetłumaczy go na taki,
+który jest rozumiany przez komputery.
+
+### Do czego służy C++
+
+C++ jest językiem programowania **ogólnego przeznaczenia**. Możesz używać go do stworzenia
+tak naprawdę czegokolwiek co wpadnie Ci na myśl. Warto jednak wiedzieć, gdzie C++
+sprawdza się najlepiej:
+
+- w branży gier komputerowych 🕹 (np. z użyciem silnika Unreal Engine 4)
+- w tworzeniu aplikacji komputerowych 💻 (tych, w których wydajność jest kluczowa)
+- w tworzeniu serwerów ⏫ 🖥 ⏬
+- w programowaniu mikrokontrolerów 🤖
+
+Aktualnie C++ nie jest najlepszym rozwiązaniem jeśli chcesz:
+
+- tworzyć strony internetowe 🌐 (wtedy wybierz JavaScript)
+- aplikacje mobilne 📱 i biurowe 🏢, które nie wymagają bardzo dużej wydajności
+
+### O czym warto pamiętać
+
+Nauka języka programowania to proces długotrwały, a język C++ jest **bardzo** obszerny i rozbudowany.
+Nie oznacza to, że uczenie się go musi być trudne - wręcz przeciwnie! Ta strona powstała głównie
+po to, by przełamać myślenie o C++ jak o języku, który jest postrachem uczniów lub studentów.
+
+Rozbudowany nie musi oznaczać trudny!
+
+## Naukę czas zacząć
+
+Życzę Ci cierpliwości i wytrwałości w nauce, zobaczysz że może być to bardzo ciekawe
+i satysfakcjonujące.

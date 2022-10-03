@@ -1,0 +1,82 @@
+{
+    "version.label": {
+      "message": "Suivant",
+      "description": "The label for version current"
+    },
+    "sidebar.defaultSidebar.category.🟢 Basics": {
+      "message": "🟢 Bases",
+      "description": "The label for category 🟢 Basics in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.🟡 Intermediate": {
+      "message": "🟡 Niveau moyen",
+      "description": "The label for category 🟡 Intermediate in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.🟠 Advanced": {
+      "message": "🟠 Niveau difficile",
+      "description": "The label for category 🟠 Advanced in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.📰 Articles": {
+      "message": "📰 Articles",
+      "description": "The label for category 📰 Articles in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.Compilation": {
+      "message": "Compilation du code",
+      "description": "The label for category Compilation in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.Editing code": {
+      "message": "Édition du code",
+      "description": "The label for category Editing code in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.📖 C++ Course": {
+      "message": "📖 Cours C++",
+      "description": "The label for category 📖 C++ Course in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.💻 Examples": {
+      "message": "💻 Exemples",
+      "description": "The label for category 💻 Examples in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.5. Arrays": {
+      "message": "5. Tableaux",
+      "description": "The label for category 5. Arrays in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.10. Memory (I)": {
+      "message": "10. Mémoire (I)",
+      "description": "The label for category 10. Memory (I) in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.Compiler flags 🚩": {
+      "message": "Drapeaux de compilation 🚩",
+      "description": "The label for category Compiler flags 🚩 in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.3. Variables": {
+      "message": "3. Variables",
+      "description": "The label for category 3. Variables in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.2. Templates (II)": {
+      "message": "2. Templates (II)",
+      "description": "The label for category 2. Templates (II) in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.4. Classes (II)": {
+      "message": "4. Classes (II)",
+      "description": "The label for category 4. Classes (II) in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.5. Exceptions (II)": {
+      "message": "5. Exceptions (II)",
+      "description": "The label for category 5. Exceptions (II) in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.9. Memory (II)": {
+      "message": "9. Mémoire (II)",
+      "description": "The label for category 9. Memory (II) in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.6. Functions and operators": {
+      "message": "6. Fonctions et opérateurs",
+      "description": "The label for category 6. Functions and operators in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.9. Classes": {
+      "message": "9. Classes",
+      "description": "The label for category 9. Classes in sidebar defaultSidebar"
+    },
+    "sidebar.defaultSidebar.category.Advices 💰": {
+      "message": "Conseil 💰",
+      "description": "The label for category Advices 💰 in sidebar defaultSidebar"
+    }
+}
