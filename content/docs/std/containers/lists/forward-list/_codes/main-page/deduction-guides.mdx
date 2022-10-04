@@ -1,0 +1,19 @@
+import ExtentNote from "@site/i18n/en/presets/DeductionGuidesExtentNote.mdx";
+
+### Deduction guides
+```cpp
+// (1)
+template< class InputIt,
+          class Alloc = std::allocator<typename std::iterator_traits<InputIt>::value_type>>
+forward_list(InputIt, InputIt, Alloc = Alloc())
+  -> forward_list<typename std::iterator_traits<InputIt>::value_type, Alloc>;
+```
+> *`(1)`* allows deduction from an **iterator range**.
+
+### Overload resolution
+In order for any of the deduction guides to participate in overload resolution,
+the folllowing requirements must be met:
+ - `InputIt` satisfies the requirements of [`LegacyInputIterator`](#)
+ - `Alloc` satisfies the requirements of [`Allocator`](#)
+
+<ExtentNote />

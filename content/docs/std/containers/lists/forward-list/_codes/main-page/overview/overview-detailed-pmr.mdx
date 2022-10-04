@@ -1,0 +1,6 @@
+```cpp
+namespace pmr {
+    template< class T >
+    using forward_list = std::forward_list<T, std::pmr::polymorphic_allocator<T>>;
+}
+```

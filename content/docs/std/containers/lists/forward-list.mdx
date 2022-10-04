@@ -1,0 +1,260 @@
+---
+sidebar_position:	2
+title:				std::forward_list reference
+sidebar_label:		forward_list
+hide_title:			true
+description:		Summary of a std::forward_list (usage, methods, etc.) - C++ Language
+tags:				[list, forward_list, forward]
+
+cppreference_origin_rel: w/cpp/container/forward_list
+---
+
+import ClassSummary				            from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }	            from "@site-comps/SymbolTable";
+import Columns					            from "@site-comps/Columns";
+import NotFinished				            from "@site/i18n/en/presets/NotFinished.mdx";
+import Tabs						            from "@theme/Tabs";
+import TabItem					            from "@theme/TabItem";
+import ImproveSection	                    from '@site/i18n/en/presets/ImproveSection.mdx';
+import { Since, Until, Removed }            from "@site-comps/Versions";
+
+<!------------------ Codes ----------------->
+
+import OverviewSimplifiedRegular	from "./forward-list/_codes/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedRegular		from "./forward-list/_codes/main-page/overview/overview-detailed-regular.mdx";
+import OverviewDetailedPmr			from "./forward-list/_codes/main-page/overview/overview-detailed-pmr.mdx";
+
+import DeductionGuides				from "./forward-list/_codes/main-page/deduction-guides.mdx";
+
+<NotFinished />
+
+# Forward list class reference
+
+## Overview
+
+<Tabs>
+<TabItem value="simplified" label="Simplified (since C++11)" default>
+
+	<OverviewSimplifiedRegular />
+
+</TabItem>
+<TabItem value="detailed" label="Detailed">
+	<Tabs>
+		<TabItem value="regular" label="Regular (since C++11)" default>
+
+			<OverviewDetailedRegular />
+
+		</TabItem>
+		<TabItem value="pmr" label="Polymorphic (since C++17)">
+
+			<OverviewDetailedPmr />
+
+		</TabItem>
+	</Tabs>
+</TabItem>
+</Tabs>
+
+Forward list is a container that supports fast insertion and removal of elements from anywhere in the container.
+
+<details>
+<summary>Technical definition of a forward list</summary>
+<div>
+
+[`std::forward_list`](#) is a container that supports fast insertion and removal of elements from anywhere in the container.
+:::important
+Fast random access is not supported.
+:::
+
+It is implemented as a singly-linked list. Compared to [`std::list`](forward-list.mdx) this container provides more space efficient storage when bidirectional iteration is not needed.
+
+Adding, removing and moving the elements within the list, or across several lists, does not invalidate the iterators currently referring to other elements in the list. However, an iterator or reference referring to an element is invalidated when the corresponding element is removed (via [`erase_after`](forward-list/erase-after.mdx)) from the list.
+
+[`std::forward_list`](#) meets the requirements of [`Container`](/docs/named_req/Container) (except for the size member function and that [`operator==`](forward-list/operator_eq.mdx)'s complexity is always linear), [`AllocatorAwareContainer`](/docs/named_req/AllocatorAwareContainer) and [`SequenceContainer`](/docs/named_req/SequenceContainer).
+
+</div>
+</details>
+
+<ClassSummary name="forward_list" namespaces="std" folder="forward_list" headerName="forward_list">
+
+## Template parameters
+
+See [technical details](#technical-details) for more detailed information.
+
+<SymbolTable noTraits>
+	<Symbol name="T" desc="Type of the elements." />
+	<Symbol name="Allocator">
+		Allocator that is used to acquire/release memory and to construct/destroy the elements in that memory.
+	</Symbol>
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="value_type" 				desc={<code>T</code>}/>
+	<Symbol pub name="allocator_type"			desc={<code>Allocator</code>}/>
+	<Symbol pub name="size_type"				desc={<>Unsigned integer type (usually <code>std::size_t</code>)</>}/>
+	<Symbol pub name="difference_type"			desc={<>Signed integer type (usually <code>std::ptrdiff_t</code>)</>}/>
+	<Symbol pub name="reference"				desc={<code>value_type&amp;</code>}/>
+	<Symbol pub name="const_reference"			desc={<code>value_type const&amp;</code>}/>
+	<Symbol pub name="pointer">
+		<Until v="cpp11"><code>Allocator::pointer</code></Until><br/>
+		<Since v="cpp11"><code>std::allocator_traits&lt;Allocator&gt;::pointer</code></Since>
+	</Symbol>
+	<Symbol pub name="const_pointer">
+		<Until v="cpp11"><code>Allocator::const_pointer</code></Until><br/>
+		<Since v="cpp11"><code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code></Since>
+	</Symbol>
+	<Symbol pub name="iterator">
+		<a href="#"><code>LegacyForwardIterator</code></a> to <code>value_type</code>&nbsp;
+	</Symbol>
+	<Symbol pub name="const_iterator">
+		<a href="#"><code>LegacyForwardIterator</code></a> to <code>const value_type</code>&nbsp;
+	</Symbol>
+</SymbolTable>
+
+## Member functions
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="constructors" name="(constructors)">
+		Constructs a vector.
+	</Symbol>
+	<Symbol pub autoLink linkName="destructor" name="(destructor)">
+		Destroys the vector, deallocating internal storage if used.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_assign" name="operator=">
+		Assigns values to the container.
+	</Symbol>
+	<Symbol pub autoLink name="assign">
+		Assigns values to the container.
+	</Symbol>
+	<Symbol pub autoLink name="get_allocator">
+		Returns the associated allocator.
+	</Symbol>
+</SymbolTable>
+
+### Element access
+
+<SymbolTable>
+	<Symbol pub autoLink name="front">
+		Access the first element.
+	</Symbol>
+</SymbolTable>
+
+### Iterators
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="before_begin" name={<>before_begin<br/>cbefore_begin</>}>
+		Returns an <code>iterator/const_iterator</code> to the element before the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
+		Returns an <code>iterator/const_iterator</code> to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
+		Returns an <code>iterator/const_iterator</code> to the end.
+	</Symbol>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>
+	<Symbol pub autoLink name="empty">
+		Returns <code>true</code> if the list is empty, otherwise <code>false</code>.
+	</Symbol>
+	<Symbol pub autoLink name="max_size">
+		Returns the maximum possible number of elements.
+	</Symbol>
+</SymbolTable>
+
+### Modifiers
+
+<SymbolTable>
+	<Symbol pub autoLink name="clear">
+		Clears the contents.
+	</Symbol>
+	<Symbol pub autoLink name="insert_after">
+		Inserts elements after the elements.
+	</Symbol>
+	<Symbol pub autoLink name="emplace_after">
+		Constructs elements in-place after an element.
+	</Symbol>
+	<Symbol pub autoLink name="erase_after">
+		Erases an element after an element.
+	</Symbol>
+	<Symbol pub autoLink name="push_front">
+		Inserts an element to the beginning.
+	</Symbol>
+	<Symbol pub autoLink name="emplace_front">
+		Constructs an element in-place at the beginning.
+	</Symbol>
+	<Symbol pub autoLink name="pop_front">
+		Removes the first element.
+	</Symbol>
+	<Symbol pub autoLink name="resize">
+		Changes the number of elements stored.
+	</Symbol>
+	<Symbol pub autoLink name="swap">
+		Swaps the contents.
+	</Symbol>
+</SymbolTable>
+
+### Operations
+
+<SymbolTable>
+	<Symbol pub autoLink name="merge">
+		Merges two sorted lists.
+	</Symbol>
+	<Symbol pub autoLink name="splice_after">
+		Moves elements from another forward list.
+	</Symbol>
+	<Symbol pub autoLink name={<>remove<br/>remove_if</>}>
+		Removes elements satisfying specific criteria.
+	</Symbol>
+	<Symbol pub autoLink name="reverse">
+		Reverses the order of the elements.
+	</Symbol>
+	<Symbol pub autoLink name="unique">
+		Removes consecutive duplicate elements.
+	</Symbol>
+	<Symbol pub autoLink name="sort">
+		Sorts the elements.
+	</Symbol>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				operator==<br/>
+				<Removed v="cpp20">operator!=</Removed> <br/>
+				<Removed v="cpp20">operator&lt;</Removed> <br/>
+				<Removed v="cpp20">operator&gt;</Removed> <br/>
+				<Removed v="cpp20">operator&lt;=</Removed> <br/>
+				<Removed v="cpp20">operator&gt;=</Removed> <br/>
+				<Since v="cpp20">operator&lt;=&gt;</Since>
+			</>}
+			desc="Lexicographically compares the values in the list."
+		/>
+	<Symbol name={<>std::swap <small>(std::forward_list)</small></>}
+			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
+		/>
+	<Symbol name={<>
+				erase <small>(std::forward_list)</small><br/>
+				erase_if <small>(std::forward_list)</small>
+			</>}
+			desc={<>Overloads for <a href="#">std::erase/std::erase_if</a> algorithms.</>}
+		/>
+</SymbolTable>
+
+</ClassSummary>
+
+## Deduction guides (since C++17)
+<details>
+<summary>Click to expand</summary>
+<div>
+	<DeductionGuides />
+</div>
+</details>
+
+## Examples
+
+<ImproveSection />
