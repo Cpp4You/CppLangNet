@@ -1,0 +1,182 @@
+---
+title:					forward_list<...>::end() method
+sidebar_label:			end( )
+description:			forward_list<...>::end() method C++ documentation
+hide_title:				true
+tags:					[access, forward_list, iterator, end, back]
+
+cppreference_origin_rel: w/cpp/container/forward_list/end
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- end() -->
+import Method_SinceCpp11 	from './_codes/end/since-cpp11.mdx';
+
+# std::forward_list end() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the element past-the-end of the array.
+If the array is empty, the returned iterator will be equal to `begin()`.
+
+:::danger Undefined Behavior
+Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Iterator to the first element.
+
+### Complexity
+
+Constant - **O(1)*8.
+
+### Notes
+
+For a container `c`, the expression `*c.begin()` is equivalent to `c.front()`.
+
+### Difference between end and cend
+
+For a const container `c`, `end` and `cend` are the same - `c.end() == c.cend()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <forward_list>
+
+int main()
+{
+    std::forward_list<int> arr = {1, 2, 3, 4, 5};
+    auto it = arr.end(); // Type: std::forward_list<int>::iterator
+    // highlight-next-line
+    *std::prev(it) = 5; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="cend" default>
+
+```cpp
+#include <forward_list>
+
+int main()
+{
+    std::forward_list<int> arr = {1, 2, 3, 4, 5};
+    auto it = arr.cend(); // Type: std::forward_list<int>::const_iterator
+    // error-next-line
+    *std::prev(it) = 5; // ❌ Error!
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <forward_list>
+
+int main()
+{
+    const std::forward_list<int> arr = {1, 2, 3, 4, 5};
+    auto it = arr.end(); // Type: std::forward_list<int>::const_iterator
+    // error-next-line
+    *std::prev(it) = 5; // ❌ Error!
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="cend" default>
+
+```cpp
+#include <forward_list>
+
+int main()
+{
+    const std::forward_list<int> arr = {1, 2, 3, 4, 5};
+    auto it = arr.cend(); // Type: std::forward_list<int>::const_iterator
+    // error-next-line
+    *std::prev(it) = 5; // ❌ Error!
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <numeric>
+#include <string>
+#include <forward_list>
+ 
+int main()
+{
+    std::forward_list<int> nums {1, 2, 4, 8, 16};
+    std::forward_list<std::string> fruits {"orange", "apple", "raspberry"};
+    std::forward_list<char> empty;
+ 
+    // Print forward_list.
+    std::for_each(nums.begin(), nums.end(), [](const int n) { std::cout << n << ' '; });
+    std::cout << '\n';
+ 
+    // Sums all integers in the forward_list nums (if any), printing only the result.
+    std::cout << "Sum of nums: "
+              << std::accumulate(nums.begin(), nums.end(), 0) << '\n';
+ 
+    // Prints the first fruit in the forward_list fruits, checking if there is any.
+    if (!fruits.empty())
+        std::cout << "First fruit: " << *fruits.begin() << '\n';
+ 
+    if (empty.begin() == empty.end())
+        std::cout << "forward_list 'empty' is indeed empty.\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1 2 4 8 16
+Sum of nums: 31
+First fruit: orange
+forward_list 'empty' is indeed empty.
+```
+
+</div>
+</Columns>
