@@ -1,0 +1,5 @@
+ - **(1, 3)** May throw implementation-defined exceptions.
+ - **(2)** noexcept specification:
+    ```cpp
+	noexcept(std::allocator_traits<Allocator>::is_always_equal::value)
+    ```
