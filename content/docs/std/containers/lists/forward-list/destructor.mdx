@@ -1,0 +1,30 @@
+---
+title:				forward_list<...> destructor
+sidebar_label:		Destructor
+description:		forward_list<...> destructor C++ documentation
+hide_title:			true
+tags:				[forward_list, destruction, destructor]
+
+cppreference_origin_rel: w/cpp/container/forward_list/~forward_list
+---
+
+import SwitchView			from "@site-comps/SwitchView";
+
+<!-- destructors -->
+import Method_SinceCpp11	from './_codes/destructors/since-cpp11.mdx';
+
+# std::forward_list destructors
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+Destructs the forward_list. The destructors of the elements are called and the used storage is deallocated.
+
+:::note
+If the elements are pointers, the pointed-to objects are not destroyed.
+:::
+
+### Complexity
+
+Linear in the size of the container - **O(size())**.

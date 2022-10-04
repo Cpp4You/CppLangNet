@@ -1,0 +1,119 @@
+---
+title:					forward_list<...>::assign() method
+sidebar_label:			assign( )
+description:			forward_list<...>::assign() method C++ documentation
+hide_title:				true
+tags:					[forward_list, assign, copy]
+
+cppreference_origin_rel: w/cpp/container/forward_list/assign
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator	from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour			from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- assign() -->
+import Method_SinceCpp11 	from './_codes/assign/since-cpp11.mdx';
+
+# std::forward_list assign() method
+
+<SwitchView content={{
+    'since-cpp11': <Method_SinceCpp11 />
+}} />
+
+Replaces the contents of the container with the contents of another.
+
+ - **(1)** Replaces the contents with `count` copies of value `value`.
+ - **(2)** Replaces the contents with copies of those in the range **[ first, last )**.
+
+	:::danger Undefined Behavior
+    The behavior is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip> if either argument is an iterator into `*this`.
+	:::
+
+	<SwitchView content={{
+		'since-cpp11': <>
+			This overload participates in overload resolution only if <code>InputIt</code> satisfies <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>.
+		</>,
+		'until-cpp11': <>
+			This overload has the same effect as overload <b>(1)</b> if <code>InputIt</code> is an integral type.
+		</>,
+	}} />
+
+ - **(3)** Replaces the contents with the elements from the initializer list `ilist`.
+
+:::danger Invalidation
+All **iterators**, **pointers** and **references** to the elements of the container are invalidated.
+:::
+
+### Parameters
+
+ - `count` - the new size of the container
+ - `value` - the value to initialize elements of the container with
+ - `first, last` - the range to copy the elements from
+ - `ilist` - initializer list to copy the values from
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+ - **(1)** Linear in `count` - **O(count)**.
+ - **(2)** Linear in distance between `first` and `last` - **O(std::distance(first, last))**.
+ - **(3)** Linear in `ilist.size()` - **O(ilist.size())**.
+
+### Exceptions
+
+**(none)**
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <forward_list>
+#include <iostream>
+#include <string>
+
+int main()
+{
+    std::forward_list<char> characters;
+
+    auto print_forward_list = [&](){
+        for (char c : characters)
+            std::cout << c << ' ';
+        std::cout << '\n';
+    };
+
+    characters.assign(5, 'a');
+    print_forward_list();
+
+    const std::string extra(6, 'b');
+    characters.assign(extra.begin(), extra.end());
+    print_forward_list();
+
+    characters.assign({'C', '+', '+', '1', '1'});
+    print_forward_list();
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+a a a a a
+b b b b b b
+C + + 1 1
+```
+
+</div>
+</Columns>
