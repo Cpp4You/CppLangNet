@@ -1,0 +1,88 @@
+---
+title:					forward_list<...>::reverse() method
+sidebar_label:			reverse( )
+description:			forward_list<...>::reverse() method C++ documentation
+hide_title:				true
+tags:					[reverse, order]
+
+cppreference_origin_rel: w/cpp/container/forward_list/reverse
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import { Since, Until }		from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- reverse() -->
+import Method_SinceCpp11		from './_codes/reverse/since-cpp11.mdx';
+
+# std::forward_list reverse() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />
+}}/>
+
+#### Reverses the order of the elements in the container.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Linear in the size of the container - **O(size())**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <forward_list>
+ 
+std::ostream& operator<<(std::ostream& ostr, const std::forward_list<int>& list)
+{
+    for (auto &i : list) {
+        ostr << " " << i;
+    }
+    return ostr;
+}
+ 
+int main()
+{
+    std::forward_list<int> list = { 8,7,5,9,0,1,3,2,6,4 };
+ 
+    std::cout << "before:     " << list << "\n";
+    list.sort();
+    std::cout << "ascending:  " << list << "\n";
+    list.reverse();
+    std::cout << "descending: " << list << "\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+before:      8 7 5 9 0 1 3 2 6 4
+ascending:   0 1 2 3 4 5 6 7 8 9
+descending:  9 8 7 6 5 4 3 2 1 0
+```
+
+</div>
+</Columns>
+/Columns>
