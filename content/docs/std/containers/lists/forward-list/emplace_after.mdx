@@ -1,0 +1,99 @@
+---
+title:					forward_list<...>::emplace_after() method
+sidebar_label:			emplace_after( )
+description:			forward_list<...>::emplace_after() method C++ documentation
+hide_title:				true
+tags:					[forward_list, emplace_after, add]
+
+cppreference_origin_rel: w/cpp/container/forward_list/emplace_after
+---
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- emplace_after() -->
+import Method_SinceCpp11	from './_codes/emplace_after/since-cpp11.mdx';
+
+# std::forward_list emplace_after() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+#### Inserts a new element into a position after the specified position in the container.  
+
+The element is constructed in-place, i.e. no copy or move operations are performed. The constructor of the element is called with exactly the same arguments, as supplied to the function.
+
+### Parameters
+
+ - `pos` - iterator before which the new element will be constructed
+ - `args` - arguments to forward to the constructor of the element
+
+### Return value
+
+Iterator pointing to the new element.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+If an exception is thrown by any operation, the are no effect ([**strong exception guarantee**](#)).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <forward_list>
+#include <iostream>
+#include <string>
+
+struct Sum {
+    std::string remark;
+    int sum;
+
+    Sum(std::string remark, int sum)
+        : remark{std::move(remark)}, sum{sum} {}
+
+    void print() const {
+        std::cout << remark << " = " << sum << '\n';
+    }
+};
+
+int main()
+{
+    std::forward_list<Sum> list;
+
+    auto iter = list.before_begin();
+    std::string str{"1"};
+    for (int i{1}, sum{1}; i != 10; sum += i) {
+        iter = list.emplace_after(iter, str, sum);
+        ++i;
+        str += " + " + std::to_string(i);
+    }
+
+    for (const Sum& s : list) s.print();
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1 = 1
+1 + 2 = 3
+1 + 2 + 3 = 6
+1 + 2 + 3 + 4 = 10
+1 + 2 + 3 + 4 + 5 = 15
+1 + 2 + 3 + 4 + 5 + 6 = 21
+1 + 2 + 3 + 4 + 5 + 6 + 7 = 28
+1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 = 36
+1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 = 45
+```
+
+</div>
+</Columns>

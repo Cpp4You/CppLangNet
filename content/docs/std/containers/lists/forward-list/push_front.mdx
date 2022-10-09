@@ -1,0 +1,85 @@
+---
+title:					forward_list<...>::push_front() method
+sidebar_label:			push_front( )
+description:			forward_list<...>::push_front() method C++ documentation
+hide_title:				true
+tags:					[forward_list, push, add, push_front]
+
+cppreference_origin_rel: w/cpp/container/forward_list/push_front
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- push_front() -->
+import Method_SinceCpp11 	from './_codes/push_front/since-cpp11.mdx';
+
+# std::forward_list push_front() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+#### Prepends the given element value to the beginning of the container.
+
+### Parameters
+
+ - `value` - the value of the element to prepend
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+If an exception is thrown, this function has no effect ([**strong exception guarantee**](#)).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <forward_list>
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+int main()
+{
+    std::forward_list<std::string> letters;
+
+    letters.push_front("abc");
+    std::string s{"def"};
+    letters.push_front(std::move(s));
+
+    std::cout << "std::forward_list `letters` holds: ";
+    for (auto&& e : letters) std::cout << std::quoted(e) << ' ';
+
+    std::cout << "\nMoved-from string `s` holds: " << std::quoted(s) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+std::forward_list `letters` holds: "def" "abc"
+Moved-from string `s` holds: ""
+```
+
+</div>
+</Columns>
+
