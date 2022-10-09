@@ -1,0 +1,10 @@
+import Tooltip		from "@site-comps/Tooltip";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+If `std::allocator_traits&lt;allocator_type&gt;::propagate_on_container_swap::value` is `true`.
+then the allocators are exchanged using an unqualified call to non-member swap.  
+Otherwise, they are not swapped.
+
+:::danger Undefined Behavior
+If `get_allocator() != other.get_allocator()`, the behavior is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip>.
+:::

@@ -1,0 +1,85 @@
+---
+title:					forward_list<...>::clear() method
+sidebar_label:			clear( )
+description:			forward_list<...>::clear() method C++ documentation
+hide_title:				true
+tags:					[forward_list, clear, empty, erase, remove]
+
+cppreference_origin_rel: w/cpp/container/forward_list/clear
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- clear() -->
+import Method_SinceCpp11 	from './_codes/clear/since-cpp11.mdx';
+
+# std::forward_list clear() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+#### Erases all elements from the container.
+
+After this call, [`size()`](size) returns zero.
+
+:::danger Invalidation
+Invalidates any **references**, or **iterators** referring to contained elements.
+Any past-the-end iterators remains valid.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Linear in the size of the container - **O(size())**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="Main.cpp" showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <forward_list>
+
+int main()
+{
+    std::forward_list<int> container{1, 2, 3};
+
+    auto print = [](const int& n) { std::cout << " " << n; };
+
+    std::cout << "Before clear:";
+    std::for_each(container.begin(), container.end(), print);
+    std::cout << '\n';
+
+    std::cout << "Clear\n";
+    container.clear();
+
+    std::cout << "After clear:";
+    std::for_each(container.begin(), container.end(), print);
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Before clear: 1 2 3
+Clear
+After clear:
+```
+
+</div>
+</Columns>

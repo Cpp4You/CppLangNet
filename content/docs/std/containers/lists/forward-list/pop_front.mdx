@@ -1,0 +1,86 @@
+---
+title:					forward_list<...>::pop_front() method
+sidebar_label:			pop_front( )
+description:			forward_list<...>::pop_front() method C++ documentation
+hide_title:				true
+tags:					[forward_list, pop_front, pop, back, last, remove, erase]
+
+cppreference_origin_rel: w/cpp/container/forward_list/pop_front
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- pop_front() -->
+import Method_SinceCpp11	from './_codes/pop_front/since-cpp11.mdx';
+
+# std::forward_list pop_front() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+#### Removes the first element of the container.
+
+:::danger Undefined Behavior
+Calling [`pop_front`](#) on an empty container results in <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
+:::
+
+:::danger Invalidation
+**Iterators** and **references** to the last element, are invalidated.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <forward_list>
+#include <iostream>
+
+int main()
+{
+    std::forward_list<char> chars{'A', 'B', 'C', 'D'};
+
+    for (; !chars.empty(); chars.pop_front())
+    {
+        std::cout << "chars.front(): '" << chars.front() << "'\n";
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+chars.front(): 'A'
+chars.front(): 'B'
+chars.front(): 'C'
+chars.front(): 'D'
+```
+
+</div>
+</Columns>
