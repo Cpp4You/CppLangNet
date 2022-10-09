@@ -1,0 +1,154 @@
+---
+title:					forward_list<...>::splice_after() method
+sidebar_label:			splice_after( )
+description:			forward_list<...>::splice_after() method C++ documentation
+hide_title:				true
+tags:					[splice_after, exchange]
+
+cppreference_origin_rel: w/cpp/container/forward_list/splice_after
+---
+import Columns		from "@site-comps/Columns";
+import SwitchView	from "@site-comps/SwitchView";
+import Tooltip		from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- splice_after() -->
+import Method_SinceCpp11				from './_codes/splice_after/since-cpp11.mdx';
+
+# std::forward_list splice_after() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />
+}}/>
+
+### Moves elements from another forward list to `*this`.
+
+No elements are copied. `pos` must be either a deferenceable valid iterator into `*this` or the [`before_begin()`](before_begin) iterator (in particular, [`end()`](end) is not a valid argument for `pos`).
+
+  - **(1)** **Moves all elements from `other` into `*this`.**  
+	The elements are inserted after the element pointed to by `pos`. The container `other` becomes empty after the operation.  
+	:::danger Undefined Behavior
+	The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if `other` refers to the same object as `*this`.
+	:::
+
+  - **(2)** **Moves the element pointed to by the iterator following it from `other` into `*this`.**  
+	The element is inserted after the element pointed to by `pos`. Has no effect if `pos == it` or if `pos == ++it`.
+
+  - **(3)** **Moves the elements in the range (first, last) from `other` into `*this`.**  
+	The elements are inserted after the element pointed to by `pos`. The element pointed-to by first is not moved.  
+	:::danger Undefined Behavior
+	The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if `pos` is an iterator in the range **( first, last )**.
+	:::
+
+
+:::important
+No iterators or references become invalidated, except that the iterators of moved elements now refer into `*this`, not into `other`.
+:::
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip>). if `get_allocator() != other.get_allocator()`.
+:::
+
+### Parameters
+
+ - `pos` - element after which the content will be inserted
+ - `other` - another container to move the content from
+ - `it` - iterator preceding the iterator to the element to move from other to *this
+ - `first`, `last` - the range of elements to move from other to *this
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+ - **(1)** Linear in the size of `other` - **O(other.size())**.
+ - **(2)** Constant - **O(1)**.
+ - **(3)** Linear in `std::distance(first, last)` - **O(std::distance(first, last))**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cassert>
+#include <forward_list>
+#include <initializer_list>
+#include <iostream>
+
+using F = std::forward_list<int>;
+
+std::ostream& operator<< (std::ostream& os, F const& l) {
+    for (int e : l) os << e << ' ';
+    return os;
+}
+
+int main()
+{
+    {
+        F l1 = { 1, 2, 3, 4, 5 };
+        F l2 = { 10, 11, 12 };
+
+        l2.splice_after(l2.cbegin(), l1, l1.cbegin(), l1.cend());
+        // not equivalent to l2.splice_after(l2.cbegin(), l1);
+        // which is equivalent to
+        // l2.splice_after(l2.cbegin(), l1, l1.cbefore_begin(), l1.end());
+
+        std::cout << "l1: " << l1 << "\n"
+                     "l2: " << l2 << '\n';
+    }
+
+
+    // Compare two given lists and abort the program if they are not equal.
+    auto equ = [] (F const& p, std::initializer_list<int> const& q) {
+        assert(std::ranges::equal(p, q));
+    };
+
+    // The following code demonstrates all three overloads (1),..(3).
+
+    {
+        F x = { 1, 2, 3, 4, 5 };
+        F y = { 10, 11, 12 };
+        x.splice_after(x.cbegin(), y); // (1)
+        equ( x, { 1, 10, 11, 12, 2, 3, 4, 5 } );
+        equ( y, { } );
+    }
+
+    {
+        F x = { 1, 2, 3, 4, 5 };
+        F y = { 10, 11, 12 };
+        x.splice_after(x.cbegin(), y, y.cbegin()); // (2)
+        equ( x, { 1, 11, 2, 3, 4, 5 } );
+        equ( y, { 10, 12 } );
+    }
+
+    {
+        F x = { 1, 2, 3, 4, 5 };
+        F y = { 10, 11, 12 };
+        x.splice_after(x.cbegin(), y, y.cbegin(), y.cend()); // (3)
+        equ( x, { 1, 11, 12, 2, 3, 4, 5 } );
+        equ( y, { 10 } );
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+l1: 1
+l2: 10 2 3 4 5 11 12
+```
+
+</div>
+</Columns>

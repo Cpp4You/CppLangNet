@@ -1,0 +1,25 @@
+```cpp
+// (1) Non const version only
+void splice_after( const_iterator pos, forward_list& other );
+
+// (1) Non const version only
+void splice_after( const_iterator pos, forward_list&& other );
+
+// (2) Non const version only
+void splice_after( const_iterator pos, forward_list& other, const_iterator it );
+
+// (2) Non const version only
+void splice_after( const_iterator pos, forward_list&& other, const_iterator it );
+
+// (3) Non const version only
+void splice_after(
+  const_iterator pos, forward_list& other,
+  const_iterator first, const_iterator last
+);
+
+// (3) Non const version only
+void splice_after(
+  const_iterator pos, forward_list&& other,
+  const_iterator first, const_iterator last
+);
+```

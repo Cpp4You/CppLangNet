@@ -1,0 +1,102 @@
+---
+title:					forward_list<...>::remove() method
+sidebar_label:			remove( )
+description:			forward_list<...>::remove() method C++ documentation
+hide_title:				true
+tags:					[remove, exchange]
+
+cppreference_origin_rel: w/cpp/container/forward_list/remove
+---
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import { Since, Until }		from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- remove() -->
+import Method_SinceCpp20		from './_codes/remove/since-cpp20.mdx';
+import Method_SinceCpp11		from './_codes/remove/since-cpp11.mdx';
+
+# std::forward_list remove() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp11': <Method_SinceCpp11 />
+}}/>
+
+#### Removes all elements satisfying specific criteria.
+
+ - **(1)** Removes all elements that are equal to `value`.
+ - **(2)** Removes all elements for which predicate `p` returns `true`.
+
+### Parameters
+
+ - `value` - value of the elements to remove
+ - `p` - unary predicate which returns `true` if the element should be removed.
+	The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly `const`) `T`, regardless of value category, and must not modify `v`. Thus, a parameter type of `T&` is not allowed, nor is `T` unless for `T` a move is equivalent to a copy.
+
+### Return value
+
+<Since v='cpp20'>The number of elements removed.</Since>
+<br />
+<Until v='cpp20'><b>(none)</b></Until>
+
+### Complexity
+
+Linear in the size of the container - **O(size())**.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+<!--
+
+feature testing macro component doe
+
+-->
+Feature testing macro: [`__cpp_lib_generic_associative_lookup`](#).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <forward_list>
+#include <iostream>
+ 
+int main()
+{
+    std::forward_list<int> l = { 1,100,2,3,10,1,11,-1,12 };
+ 
+    auto count1 = l.remove(1);
+    std::cout << count1 << " elements equal to 1 were removed\n";
+ 
+    auto count2 = l.remove_if([](int n){ return n > 10; });
+    std::cout << count2 << " elements greater than 10 were removed\n";
+ 
+    std::cout << "Finally, the list contains: ";
+    for (int n : l) {
+        std::cout << n << ' ';
+    }
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+2 elements equal to 1 were removed
+3 elements greater than 10 were removed
+Finally, the list contains: 2 3 10 -1
+```
+
+</div>
+</Columns>

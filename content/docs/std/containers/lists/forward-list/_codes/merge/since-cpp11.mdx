@@ -1,0 +1,15 @@
+```cpp
+// (1) Non const version only
+void merge( forward_list& other );
+
+// (1) Non const version only
+void merge( forward_list&& other );
+
+// (2) Non const version only
+template <class Compare>
+void merge( forward_list& other, Compare comp );
+
+// (2) Non const version only
+template <class Compare>
+void merge( forward_list&& other, Compare comp );
+```
