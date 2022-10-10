@@ -63,8 +63,8 @@ Approximately `N log N` comparisons, where `N` is the number of elements in the 
 
 ### Notes
 
-[`std::sort`](#) requires [`random access iterators`](#) and so cannot be used with `forward_list`.  
-This function also differs from [`std::sort`](#) in that it does not require the element type of the `forward_list` to be `swappable`, preserves the values of all iterators, and performs a `stable sort`.
+[`std::sort`](#) requires [`RandomAccessIterator`](/named_req/RandomAccessIterator)s and so cannot be used with `forward_list`.  
+This function also differs from [`std::sort`](#) in that it does not require the element type of the `forward_list` to be [`Swappable`](/named_req/Swappable), preserves the values of all iterators, and performs a [**stable sort**](#).
 
 ### Example
 

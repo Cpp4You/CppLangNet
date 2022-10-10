@@ -25,7 +25,7 @@ import Method_SinceCpp11				from './_codes/splice_after/since-cpp11.mdx';
 	'since-cpp11': <Method_SinceCpp11 />
 }}/>
 
-### Moves elements from another forward list to `*this`.
+#### Moves elements from another forward list to `*this`.
 
 No elements are copied. `pos` must be either a deferenceable valid iterator into `*this` or the [`before_begin()`](before_begin) iterator (in particular, [`end()`](end) is not a valid argument for `pos`).
 
@@ -57,8 +57,8 @@ The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip>). i
 
  - `pos` - element after which the content will be inserted
  - `other` - another container to move the content from
- - `it` - iterator preceding the iterator to the element to move from other to *this
- - `first`, `last` - the range of elements to move from other to *this
+ - `it` - iterator preceding the iterator to the element to move from other to `*this`
+ - `first`, `last` - the range of elements to move from other to `*this`
 
 ### Return value
 
