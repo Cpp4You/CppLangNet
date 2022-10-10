@@ -26,9 +26,11 @@ import NoexceptSpecification_SinceCpp17  from './_codes/operator_assign/noexcept
 	'until-cpp17': <Method_UntilCpp17 />
 }} />
 
-Replaces the contents of the container with the contents of another.
+#### Replaces the contents of the container with the contents of another.
 
- - **(1)** **Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.
+ - **(1)** **Copy assignment operator.**  
+	Replaces the contents with a copy of the contents of `other`. 
+
     If `std::allocator_traits<allocator_type>::propagate_on_container_copy_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of `other`.
 
     If the allocator of `*this` after assignment would compare unequal to its old value, the old allocator is used to deallocate the memory,
@@ -36,7 +38,8 @@ Replaces the contents of the container with the contents of another.
 
     Otherwise, the memory owned by `*this` may be reused when possible. In any case, the elements originally belong to `*this` may be either destroyed or replaced by element-wise copy-assignment.
 
- - **(2)** **Move** assignment operator. Replaces the contents with those of other using move semantics (i.e. the data in other is moved from other into this container).
+ - **(2)** **Move assignment operator.**  
+	Replaces the contents with those of other using move semantics (i.e. the data in other is moved from other into this container).
 :::important
 `other` is in a valid but unspecified state afterwards.
 :::
