@@ -9,11 +9,14 @@ tags:				[string, container, text, char, word, phrase]
 cppreference_origin_rel: w/cpp/string/basic_string
 ---
 
-import ClassSummary				from "@site-comps/ClassSummary";
-import CustomCodeBlock				from "@site-comps/CustomCodeBlock";
-import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
-import Columns					from "@site-comps/Columns";
-import Image					from "@site-comps/Image";
+import ClassSummary							from "@site-comps/ClassSummary";
+import CustomCodeBlock						from "@site-comps/CustomCodeBlock";
+import SymbolTable, { Symbol }				from "@site-comps/SymbolTable";
+import Columns								from "@site-comps/Columns";
+import Image								from "@site-comps/Image";
+import Tooltip								from "@site-comps/Tooltip";
+import { Since, Until, Removed }            from "@site-comps/Versions";
+
 import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
 import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
 import Tabs						from "@theme/Tabs";
@@ -28,6 +31,8 @@ import FurtherExampleSplittingAString from "./string/_codes/main-page/examples/f
 import FurtherExampleConvertStringToInt from "./string/_codes/main-page/examples/further/convert-string-to-int.mdx"
 import FurtherExampleConvertStringToFloat from "./string/_codes/main-page/examples/further/convert-string-to-float.mdx"
 import FurtherExampleConvertNumbersToString from "./string/_codes/main-page/examples/further/convert-string-to-float.mdx"
+
+import Term_IllFormed from "@site/i18n/en/presets/terms/ill-formed.mdx";
 
 <!-- Overview -->
 import OverviewSimplifiedRegular from "./string/_codes/main-page/overview/overview-simplified-regular.mdx";
@@ -88,14 +93,14 @@ Type `std::string` is in fact an alias to: `std::basic_string<char>`.
 		<SymbolTable noTraits>
 			<Symbol name="std::string"			desc={<code>std::basic_string&lt;char&gt;</code>}/>
 			<Symbol name="std::wstring" 		desc={<code>std::basic_string&lt;wchar_t&gt;</code>}/>
-			<Symbol name={<>std::u8string <small>(C++20)</small></>}		desc={<code>std::basic_string&lt;char8_t&gt;</code>}/>
-			<Symbol name={<>std::u16string <small>(C++11)</small></>}		desc={<code>std::basic_string&lt;char16_t&gt;</code>}/>
-			<Symbol name={<>std::u32string <small>(C++11)</small></>}		desc={<code>std::basic_string&lt;char32_t&gt;</code>}/>
-			<Symbol name={<>std::pmr::string <small>(C++17)</small></>}		desc={<code>std::pmr::basic_string&lt;char&gt;</code>}/>
-			<Symbol name={<>std::pmr::wstring <small>(C++17)</small></>} 	desc={<code>std::pmr::basic_string&lt;wchar_t&gt;</code>}/>
-			<Symbol name={<>std::pmr::u8string <small>(C++20)</small></>}	desc={<code>std::pmr::basic_string&lt;char8_t&gt;</code>}/>
-			<Symbol name={<>std::pmr::u16string <small>(C++17)</small></>}	desc={<code>std::pmr::basic_string&lt;char16_t&gt;</code>}/>
-			<Symbol name={<>std::pmr::u32string <small>(C++17)</small></>}	desc={<code>std::pmr::basic_string&lt;char32_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp20'>std::u8string</Since>}		desc={<code>std::basic_string&lt;char8_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp11'>std::u16string</Since>}		desc={<code>std::basic_string&lt;char16_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp11'>std::u32string</Since>}		desc={<code>std::basic_string&lt;char32_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp17'>std::pmr::string</Since>}	desc={<code>std::pmr::basic_string&lt;char&gt;</code>}/>
+			<Symbol name={<Since v='cpp17'>std::pmr::wstring</Since>} 	desc={<code>std::pmr::basic_string&lt;wchar_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp20'>std::pmr::u8string</Since>}	desc={<code>std::pmr::basic_string&lt;char8_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp17'>std::pmr::u16string</Since>}	desc={<code>std::pmr::basic_string&lt;char16_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp17'>std::pmr::u32string</Since>}	desc={<code>std::pmr::basic_string&lt;char32_t&gt;</code>}/>
 		</SymbolTable>
 	</div>
 </details>
@@ -108,17 +113,18 @@ Type `std::string` is in fact an alias to: `std::basic_string<char>`.
 <div>
 
 The class template `basic_string` stores and manipulates sequences of `char`-like objects,
-which are non-array objects of [trivial](/docs/named_req/triavial_type)
-[standard-layout](/docs/named_req/standard_layout_type) type. The class is dependent neither
+which are non-array objects of [trivial](/docs/named_req/TrivialType)
+[standard-layout](/docs/named_req/StandardLayoutType) type. The class is dependent neither
 on the character type nor on the nature of operations on that type.
-The definitions of the operations are supplied via the Traits template parameter - a specialization
-of [`std::char_traits`](char_traits) or a compatible traits class. `Traits::char_type` and `CharT`
-must name the same type; otherwise the program is ill-formed.
 
-The elements of a basic_string are stored contiguously, that is, for a basic_string s,
-`&*(s.begin() + n) == &*s.begin() + n` for any n in `[0, s.size())`, or, equivalently,
+The definitions of the operations are supplied via the `Traits` template parameter - a specialization
+of [`std::char_traits`](char_traits) or a compatible traits class. `Traits::char_type` and `CharT`
+must name the same type; otherwise the program is <Tooltip title={Term_IllFormed}>ill-formed</Tooltip>.
+
+The elements of a basic_string are stored contiguously, that is, for a `basic_string` s,
+`&*(s.begin() + n) == &*s.begin() + n` for any **n** in **[ 0, s.size() )**, or, equivalently,
 a pointer to `s[0]` can be passed to functions that expect a pointer to the first element
-of a null-terminated <small>(since C++11)</small> `CharT[]` array.
+of a <Since v='cpp11'>null-terminated</Since>  `CharT[]` array.
 
 </div>
 </details>
@@ -140,32 +146,34 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 	<Symbol pub name="value_type" 				desc={<code>CharT</code>}/>
 	<Symbol pub name="allocator_type"			desc={<code>Allocator</code>}/>
 	<Symbol pub name="size_type">
-		<code>Allocator::size_type</code> <small>(until C++11)</small><br/>
-		<code>std::allocator_traits&lt;Allocator&gt;::size_type</code> <small>(since C++11)</small>
+		<Until v='cpp11'>Allocator::size_type</Until> <br/>
+		<Since v='cpp11'>std::allocator_traits&lt;Allocator&gt;::size_type</Since>
 	</Symbol>
 	<Symbol pub name="difference_type">
-		<code>Allocator::difference_type</code> <small>(until C++11)</small><br/>
-		<code>std::allocator_traits&lt;Allocator&gt;::difference_type</code> <small>(since C++11)</small>
+		<Until v='cpp11'>Allocator::difference_type</Until> <br/>
+		<Since v='cpp11'>std::allocator_traits&lt;Allocator&gt;::difference_type</Since>
 	</Symbol>
 	<Symbol pub name="reference"				desc={<code>value_type&amp;</code>}/>
 	<Symbol pub name="const_reference"			desc={<code>value_type const&amp;</code>}/>
 	<Symbol pub name="pointer">
-		<code>Allocator::pointer</code> <small>(until C++11)</small><br/>
-		<code>std::allocator_traits&lt;Allocator&gt;::pointer</code> <small>(since C++11)</small>
+		<Until v='cpp11'>Allocator::pointer</Until> <br/>
+		<Since v='cpp11'>std::allocator_traits&lt;Allocator&gt;::pointer</Since>
 	</Symbol>
 	<Symbol pub name="const_pointer">
-		<code>Allocator::const_pointer</code> <small>(until C++11)</small><br/>
-		<code>std::allocator_traits&lt;Allocator&gt;::const_pointer</code> <small>(since C++11)</small>
+		<Until v='cpp11'>Allocator::const_pointer</Until> <br/>
+		<Since v='cpp11'>std::allocator_traits&lt;Allocator&gt;::const_pointer</Since>
 	</Symbol>
 	<Symbol pub name="iterator">
-		<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
-		<a href="/docs/named_req/LegacyContiguousIterator"><code>LegacyContiguousIterator</code></a> to <code>value_type</code>&nbsp;
-		<small>(until C++20)</small>
+		<Since v='cpp20'>
+			<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
+			<a href="/docs/named_req/LegacyContiguousIterator"><code>LegacyContiguousIterator</code></a> to <code>value_type</code>&nbsp;
+		</Since>
 		<br/>
-		<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
-		<a href="/docs/named_req/LegacyConstexprIterator"><code>LegacyConstexprIterator</code></a> and&nbsp;
-		<a href="#"><code>contiguous_iterator</code></a> to <code>value_type</code>&nbsp;
-		<small>(since C++20)</small>
+		<Since v='cpp20'>
+			<a href="/docs/named_req/LegacyRandomAccessIterator"><code>LegacyRandomAccessIterator</code></a> and&nbsp;
+			<a href="/docs/named_req/LegacyConstexprIterator"><code>LegacyConstexprIterator</code></a> and&nbsp;
+			<a href="#"><code>contiguous_iterator</code></a> to <code>value_type</code>&nbsp;
+		</Since>
 	</Symbol>
 	<Symbol pub name="reverse_iterator"			desc={<><a href="#"><code>std::reverse_iterator&lt;iterator&gt;</code></a></>}/>
 	<Symbol pub name="const_reverse_iterator"	desc={<><a href="#"><code>std::reverse_iterator&lt;const_iterator&gt;</code></a></>}/>
@@ -177,7 +185,7 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 	<Symbol pub autoLink linkName="constructors" name="(constructors)">
 		Constructs a <code>basic_string</code>.
 	</Symbol>
-	<Symbol pub autoLink linkName="destructor" name="(destructor)">
+	<Symbol pub name="(destructor)">
 		Destroys the string, deallocating internal storage if used.
 	</Symbol>
 	<Symbol pub autoLink linkName="operator_assign" name="operator="
@@ -200,10 +208,10 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 	<Symbol pub autoLink linkName="operator_index" name="operator[]"
 			desc={<>Accesses the specified character.</>}
 		/>
-	<Symbol pub autoLink name={<>front <small>(C++11)</small></>}
+	<Symbol pub autoLink linkName="front" name={<Since v="cpp11">front</Since>}
 			desc="Returns the first character."
 		/>
-	<Symbol pub autoLink name={<>back <small>(C++11)</small></>}
+	<Symbol pub autoLink linkName="back" name={<Since v="cpp11">back</Since>}
 			desc="Returns the last character."
 		/>
 	<Symbol pub autoLink name="data"
@@ -212,7 +220,7 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 	<Symbol pub autoLink name="c_str"
 			desc="Returns a non-modifiable standard C character array version of the string."
 		/>
-	<Symbol pub autoLink linkName="operator_basic_string_view" name={<>operator basic_string_view <small>(C++17)</small></>}
+	<Symbol pub autoLink linkName="operator_basic_string_view" name={<Since v="cpp17">operator basic_string_view</Since>}
 			desc={<>Returns a non-modifiable <code>string_view</code> into the entire string.</>}
 		/>
 </SymbolTable>
@@ -220,16 +228,16 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 ### Iterators
 
 <SymbolTable>
-	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin <small>(C++11)</small></>}
+	<Symbol pub autoLink linkName="begin" name={<Since v="cpp11">begin<br/>cbegin</Since>}
 			desc={<>Returns an <code>iterator/const_iterator</code> to the beginning.</>}
 		/>
-	<Symbol pub autoLink linkName="end" name={<>end<br/>cend <small>(C++11)</small></>}
+	<Symbol pub autoLink linkName="end" name={<Since v="cpp11">end<br/>cend</Since>}
 			desc={<>Returns an <code>iterator/const_iterator</code> to the end.</>}
 		/>
-	<Symbol pub autoLink linkName="rbegin" name={<>rbegin<br/>crbegin <small>(C++11)</small></>}
+	<Symbol pub autoLink linkName="rbegin" name={<Since v="cpp11">rbegin<br/>crbegin</Since>}
 			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the beginning.</>}
 		/>
-	<Symbol pub autoLink linkName="rend" name={<>rend<br/>crend <small>(C++11)</small></>}
+	<Symbol pub autoLink linkName="rend" name={<Since v="cpp11">rend<br/>crend</Since>}
 			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the end.</>}
 		/>
 </SymbolTable>
@@ -252,7 +260,7 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 	<Symbol pub autoLink name="capacity."
 			desc="Returns the number of characters that can be held in currently allocated storage"
 		/>
-	<Symbol pub autoLink name={<>shrink_to_fit <small>(C++11)</small></>}
+	<Symbol pub autoLink linkName="shrink_to_fit" name={<Since v="cpp11">shrink_to_fit</Since>}
 			desc="Reduces memory usage by freeing unused memory."
 		/>
 </SymbolTable>
@@ -272,7 +280,7 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 	<Symbol pub autoLink name="push_back"
 			desc="Appends a character to the end."
 		/>
-	<Symbol pub autoLink name={<>pop_back <small>(C++11)</small></>}
+	<Symbol pub autoLink linkName="pop_back" name={<Since v="cpp11">pop_back</Since>}
 			desc="Removes the last character."
 		/>
 	<Symbol pub autoLink name="append"
@@ -284,13 +292,13 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 	<Symbol pub autoLink name="compare"
 			desc="Compares two strings."
 		/>
-	<Symbol pub autoLink name={<>starts_with <small>(C++20)</small></>}
+	<Symbol pub autoLink linkName="starts_with" name={<Since v="cpp20">starts_with</Since>}
 			desc="Checks if the string starts with the given prefix."
 		/>
-	<Symbol pub autoLink name={<>ends_with <small>(C++20)</small></>}
+	<Symbol pub autoLink linkName="ends_with" name={<Since v="cpp20">ends_with</Since>}
 			desc="Checks if the string ends with the given suffix."
 		/>
-	<Symbol pub autoLink name={<>contains <small>(C++23)</small></>}
+	<Symbol pub autoLink linkName="contains" name={<Since v="cpp23">contains</Since>}
 			desc="Checks if the string contains the given substring or character."
 		/>
 	<Symbol pub autoLink name="replace"
@@ -305,7 +313,7 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 	<Symbol pub autoLink name="resize"
 			desc="Changes the number of characters stored."
 		/>
-	<Symbol pub autoLink name={<>resize_and_overwrite <small>(C++23)</small></>}>
+	<Symbol pub autoLink linkName="resize_and_overwrite" name={<Since v="cpp23">resize_and_overwrite</Since>}>
 			Changes the number of characters stored and possibly overwrites indeterminate contents via user-provided operation.
 	</Symbol>
 	<Symbol pub autoLink name="swap"
@@ -352,11 +360,11 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 		/>
 	<Symbol name={<>
 				operator==<br/>
-				operator!= <small>(removed in C++20)</small><br/>
-				operator&lt; <small>(removed in C++20)</small><br/>
-				operator&gt; <small>(removed in C++20)</small><br/>
-				operator&lt;= <small>(removed in C++20)</small><br/>
-				operator&gt;= <small>(removed in C++20)</small><br/>
+				<Removed v="cpp20">operator!= </Removed> <br />
+				<Removed v="cpp20">operator&lt; </Removed> <br />
+				<Removed v="cpp20">operator&gt; </Removed> <br />
+				<Removed v="cpp20">operator&lt;= </Removed> <br />
+				<Removed v="cpp20">operator&gt;= </Removed> <br />
 				operator&lt;=&gt;
 			</>}
 			desc="Lexicographically compares two strings."
@@ -431,16 +439,16 @@ of a null-terminated <small>(since C++11)</small> `CharT[]` array.
 
 <SymbolTable noTraits>
 	<Symbol name={<>
-				std::hash<small>&lt;std::string&gt;</small> <small>(C++11)</small> <br/>
-				std::hash<small>&lt;std::u8string&gt;</small> <small>(C++20)</small> <br/>
-				std::hash<small>&lt;std::u16string&gt;</small> <small>(C++11)</small> <br/>
-				std::hash<small>&lt;std::u32string&gt;</small> <small>(C++11)</small> <br/>
-				std::hash<small>&lt;std::wstring&gt;</small> <small>(C++11)</small> <br/>
-				std::hash<small>&lt;std::pmr::string&gt;</small> <small>(C++17)</small> <br/>
-				std::hash<small>&lt;std::pmr::u8string&gt;</small> <small>(C++20)</small> <br/>
-				std::hash<small>&lt;std::pmr::u16string&gt;</small> <small>(C++17)</small> <br/>
-				std::hash<small>&lt;std::pmr::u32string&gt;</small> <small>(C++17)</small> <br/>
-				std::hash<small>&lt;std::pmr::wstring&gt;</small> <small>(C++17)</small> <br/>
+				<Since v="cpp11"> std::hash<small>&lt;std::string&gt;</small> </Since> <br />
+				<Since v="cpp20"> std::hash<small>&lt;std::u8string&gt;</small> </Since> <br />
+				<Since v="cpp11"> std::hash<small>&lt;std::u16string&gt;</small> </Since> <br />
+				<Since v="cpp11"> std::hash<small>&lt;std::u32string&gt;</small> </Since> <br />
+				<Since v="cpp11"> std::hash<small>&lt;std::wstring&gt;</small> </Since> <br />
+				<Since v="cpp17"> std::hash<small>&lt;std::pmr::string&gt;</small> </Since> <br />
+				<Since v="cpp20"> std::hash<small>&lt;std::pmr::u8string&gt;</small> </Since> <br />
+				<Since v="cpp17"> std::hash<small>&lt;std::pmr::u16string&gt;</small> </Since> <br />
+				<Since v="cpp17"> std::hash<small>&lt;std::pmr::u32string&gt;</small> </Since> <br />
+				<Since v="cpp17"> std::hash<small>&lt;std::pmr::wstring&gt;</small> </Since>
 			</>}
 			desc={<>Specializations for <code>std::hash</code> to support string hashing.</>}
 		/>
