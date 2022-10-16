@@ -1,0 +1,163 @@
+---
+title:					string<...>::operator=
+sidebar_label:			operator=
+description:			string<...>::operator= method C++ documentation
+hide_title:				true
+tags:					[assign, copy, move, operator_assign]
+
+cppreference_origin_rel: w/cpp/container/string/operator=
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import { Since }	from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+<!-- operator_assign() -->
+import Method_UntilCpp11	from './_codes/operator_assign/until-cpp11.mdx';
+import Method_SinceCpp11	from './_codes/operator_assign/since-cpp11.mdx';
+import Method_SinceCpp17	from './_codes/operator_assign/since-cpp17.mdx';
+import Method_SinceCpp20	from './_codes/operator_assign/since-cpp20.mdx';
+import Method_SinceCpp23	from './_codes/operator_assign/since-cpp23.mdx';
+
+import NoexceptSpecification_SinceCpp17 from './_codes/operator_assign/noexcept-specification/since-cpp17.mdx';
+
+# std::string operator=
+
+<SwitchView content={{
+    'since-cpp23': <Method_SinceCpp23 />,
+    'since-cpp20': <Method_SinceCpp20 />,
+    'since-cpp17': <Method_SinceCpp17 />,
+    'since-cpp11': <Method_SinceCpp11 />,
+    'until-cpp11': <Method_UntilCpp11 />
+}} />
+
+Replaces the contents of the string.
+
+ - **(1)** **Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.
+
+	:::note
+	If `*this` and `str` are the same object, this function has no effect.
+	:::
+
+ - **(2)** **Move** assignment operator. Replaces the contents with those of other using move semantics (i.e. the data in other is moved from other into this container).
+
+	:::important
+	`other` is in a valid but unspecified state afterwards.
+	:::
+
+	If `std::allocator_traits<Allocator>::propagate_on_container_move_assignment::value` is `true`, the allocator of `*this` is replaced by a copy of that of `str`.
+
+	If it is `false` and the allocators of `*this` and `str` do not compare equal, `*this` cannot take ownership of the memory owned by `str` and must assign each character individually, allocating additional memory using its own allocator as needed. 
+
+	:::danger Invalidation
+	Unlike other container move assignments, **references**, **pointers**, and **iterators** to `str` may be invalidated.
+	:::
+
+ - **(3)** Replaces the contents with those of null-terminated character string pointed to by `s` as if by `assign(s, Traits::length(s))`.
+
+ - **(4)** Replaces the contents with character `ch` as if by `assign(std::addressof(ch), 1)`.
+
+ - **(5)** Replaces the contents with those of the initializer list `ilist` as if by `assign(ilist.begin(), ilist.size())`.
+
+ - **(6)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then replaces the contents with those of the `sv` as if by `assign(sv)`. 
+	:::important Overload Resolution
+	This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+	:::
+
+ - **(7)** Deleted constructor for `std::nullptr_t` makes it so that `std::string` cannot be assigned from `nullptr`.
+
+### Parameters
+
+ - `ch` - value to initialize characters of the string with
+ - `str` - string to be used as source to initialize the string with
+ - `s` - pointer to a null-terminated character string to use as source to initialize the string with
+ - `ilist` - [`std::initializer_list`](#) to initialize the string with
+ - `t` - object convertible to [`std::basic_string_view`](../string_view) to initialize the string with
+
+### Return value
+
+`*this`
+
+### Complexity
+
+ - **(1)** Linear in the size of `str` - **O(str.size())**.
+ - **(2)**  
+	Linear in the size of `*this` - **O(size())**.  
+	If allocators do not compare equal and do not propagate, then also linear in the size of `str` - **O(size() + str.size())**.
+ - **(3)** Linear in the size of `s` - **O(s.size())**.
+ - **(4)** Constant - **O(1)**.
+ - **(5)** Linear in size of `ilist` - **O(ilist.size())**.
+
+### Exceptions
+
+<SwitchView content={{
+	'since-cpp17': <NoexceptSpecification_SinceCpp17 />
+}} />
+
+If the operation would result in `size() > max_size()`, throws [`std::length_error`](#).
+
+<Since v='cpp11'>
+
+If an exception is thrown for any reason, this function has no effect ([**strong exception guarantee**](#)).
+
+</Since>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <string>
+#include <iostream>
+#include <iomanip>
+
+int main()
+{
+    std::string str1;
+    std::string str2 { "alpha" };
+
+    // (1) operator=( const basic_string& );
+    str1 = str2;
+    std::cout << std::quoted(str1) << ' ' // "alpha"
+              << std::quoted(str2) << '\n'; // "alpha"
+
+    // (2) operator=( basic_string&& );
+    str1 = std::move(str2);
+    std::cout << std::quoted(str1) << ' ' // "alpha"
+              << std::quoted(str2) << '\n'; // "" or "alpha" (unspecified)
+
+    // (3) operator=( const CharT* );
+    str1 = "beta";
+    std::cout << std::quoted(str1) << '\n'; // "beta"
+
+    // (4) operator=( CharT );
+    str1 = '!';
+    std::cout << std::quoted(str1) << '\n'; // "!"
+
+    // (5) operator=( std::initializer_list<CharT> );
+    str1 = {'g','a','m','m','a'};
+    std::cout << std::quoted(str1) << '\n'; // "gamma"
+
+    // (6) operator=( const T& );
+    str1 = 35U; // equivalent to str1 = static_cast<char>(35U);
+    std::cout << std::quoted(str1) << '\n'; // "#" (ASCII = 35)
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+"alpha" "alpha"
+"alpha" ""
+"beta"
+"!"
+"gamma"
+"#"
+```
+
+</div>
+</Columns>

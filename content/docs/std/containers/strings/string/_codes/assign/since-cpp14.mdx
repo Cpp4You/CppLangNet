@@ -1,0 +1,27 @@
+```cpp
+// (1) Non const version only
+basic_string& assign( size_type count, CharT ch );
+
+// (2) Non const version only
+basic_string& assign( const basic_string& str );
+
+// (3) Non const version only
+basic_string& assign( const basic_string& str,
+                      size_type pos, size_type count = npos);
+
+// (4) Non const version only
+basic_string& assign( basic_string&& str );
+
+// (5) Non const version only
+basic_string& assign( const CharT* s, size_type count );
+
+// (6) Non const version only
+basic_string& assign( const CharT* s );
+
+// (7) Non const version only
+template< class InputIt >
+basic_string& assign( InputIt first, InputIt last );
+
+// (8) Non const version only
+basic_string& assign( std::initializer_list<CharT> ilist );
+```
