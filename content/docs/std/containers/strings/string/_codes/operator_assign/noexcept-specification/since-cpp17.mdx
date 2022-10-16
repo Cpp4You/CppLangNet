@@ -1,0 +1,5 @@
+ - **(2)** noexcept specification:
+```cpp
+noexcept(std::allocator_traits<Allocator>::propagate_on_container_move_assignment::value
+ || std::allocator_traits<Allocator>::is_always_equal::value)
+```
