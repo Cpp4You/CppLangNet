@@ -1,0 +1,166 @@
+---
+title:					string<...>::operator=
+sidebar_label:			operator=
+description:			string<...>::operator= method C++ documentation
+hide_title:				true
+tags:					[assign, copy, move, operator_assign]
+
+cppreference_origin_rel: w/cpp/container/string/operator=
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import { Since }	from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+<!-- operator_assign() -->
+import Method_UntilCpp11	from './_codes/assign/until-cpp11.mdx';
+import Method_SinceCpp11	from './_codes/assign/since-cpp11.mdx';
+import Method_SinceCpp17	from './_codes/assign/since-cpp17.mdx';
+import Method_SinceCpp20	from './_codes/assign/since-cpp20.mdx';
+
+import NoexceptSpecification_SinceCpp17 from './_codes/assign/noexcept-specification/since-cpp17.mdx';
+
+# std::string operator=
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+    'since-cpp17': <Method_SinceCpp17 />,
+    'since-cpp11': <Method_SinceCpp11 />,
+    'until-cpp11': <Method_UntilCpp11 />
+}} />
+
+Replaces the contents of the string.
+
+ - **(1)** Replaces the contents with `count` copies of character `ch`.
+
+ - **(2)** Replaces the contents with a copy of `str`. Equivalent to `*this = str;`. <Since v='cpp11'>In particular, allocator propagation may take place.</Since>
+
+ - **(3)** Replaces the contents with a substring **[ pos, pos + `count` )** of `str`. If the requested substring lasts past the end of the string, or if `count == npos`, the resulting substring is **[ pos, str.size() )**. If `pos > str.size()`, [`std::out_of_range`](#) is thrown.
+
+ - **(4)** Replaces the contents with those of `str` using move semantics. Equivalent to `*this = std::move(str)`. In particular, allocator propagation may take place.
+
+ - **(5)** Replaces the contents with copies of the characters in the range **[ s, s+`count` )**. This range can contain null characters.
+
+ - **(6)** Replaces the contents with those of null-terminated character string pointed to by `s`. The length of the string is determined by the first null character using `Traits::length(s)`.
+
+ - **(7)** Replaces the contents with copies of the characters in the range **[ first, last )**. <Since v='cpp11'>This overload does not participate in overload resolution if `InputIt` does not satisfy [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator).</Since>
+
+ - **(8)** Replaces the contents with those of the initializer list `ilist`.
+
+ - **(9)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then replaces the contents with those of `sv`, as if by `assign(sv.data(), sv.size())`. This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+
+ - **(10)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then replaces the contents with the characters from the subview **[ pos, pos + count )** of `sv`. If the requested subview lasts past the end of `sv`, or if `count == npos`, the resulting subview is **[ pos, sv.size() )**. If `pos > sv.size()`, [`std::out_of_range`](#) is thrown. This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+
+### Parameters
+
+ - `count` - size of the resulting string
+ - `pos` - index of the first character to take
+ - `ch` - value to initialize characters of the string with
+ - `first`, `last` - range to copy the characters from
+ - `str` - string to be used as source to initialize the characters with
+ - `s` - pointer to a character string to use as source to initialize the string with
+ - `ilist` - `std::initializer_list` to initialize the characters of the string with
+ - `t` - object (convertible to `std::basic_string_view`) to initialize the characters of the string with
+
+### Type requirements
+
+ - **(7)** - `InputIt` must meet the requirements of [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator).
+
+### Return value
+
+`*this`
+
+### Complexity
+
+ - **(1)** Linear in `count` - **O(count)**.
+ - **(2)** Linear in size of `str` - **O(str.size())**.
+ - **(3)** Linear in `count` - **O(count)**.
+ - **(4)**  
+	Constant - **O(1)**.
+	If `alloc` is given and `alloc != other.get_allocator()`, then linear in size - **O(size())**.
+ - **(5)** Linear in `count` - **O(count)**.
+ - **(6)** Linear in size of `s` - **O(s.size())**.
+ - **(7)** Linear in distance **[ first, last )** - **O(std::distance(first, last))**.
+ - **(8)** Linear in size of `ilist` - **O(ilist.size())**.
+
+### Exceptions
+
+<SwitchView content={{
+	'since-cpp17': <NoexceptSpecification_SinceCpp17 />
+}} />
+
+If the operation would result in `size() > max_size()`, throws [`std::length_error`](#).
+
+<Since v='cpp11'>
+
+If an exception is thrown for any reason, this function has no effect ([**strong exception guarantee**](#)).
+
+</Since>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <iterator>
+#include <string>
+
+int main()
+{
+  std::string s;
+  // assign(size_type count, CharT ch)
+  s.assign(4, '=');
+  std::cout << s << '\n'; // "===="
+
+  std::string const c("Exemplary");
+  // assign(basic_string const& str)
+  s.assign(c);
+  std::cout << c << " == " << s <<'\n'; // "Exemplary == Exemplary"
+
+  // assign(basic_string const& str, size_type pos, size_type count)
+  s.assign(c, 0, c.length()-1);
+  std::cout << s << '\n'; // "Exemplar";
+
+  // assign(basic_string&& str)
+  s.assign(std::string("C++ by ") + "example");
+  std::cout << s << '\n'; // "C++ by example"
+
+  // assign(charT const* s, size_type count)
+  s.assign("C-style string", 7);
+  std::cout << s << '\n'; // "C-style"
+
+  // assign(charT const* s)
+  s.assign("C-style\0string");
+  std::cout << s << '\n'; // "C-style"
+
+  char mutable_c_str[] = "C-style string";
+  // assign(InputIt first, InputIt last)
+  s.assign(std::begin(mutable_c_str), std::end(mutable_c_str)-1);
+  std::cout << s << '\n'; // "C-style string"
+
+  // assign(std::initializer_list<charT> ilist)
+  s.assign({ 'C', '-', 's', 't', 'y', 'l', 'e' });
+  std::cout << s << '\n'; // "C-style"
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+====
+Exemplary == Exemplary
+Exemplar
+C++ by example
+C-style
+C-style
+C-style string
+C-style
+```
+
+</div>
+</Columns>

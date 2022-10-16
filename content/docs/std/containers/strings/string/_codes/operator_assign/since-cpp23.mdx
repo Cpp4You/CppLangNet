@@ -1,0 +1,23 @@
+```cpp
+// (1) Non const version only
+constexpr basic_string& operator=( const basic_string& str );
+
+// (2) Non const version only
+constexpr basic_string& operator=( basic_string&& str ) noexcept(/* see below */);
+
+// (3) Non const version only
+constexpr basic_string& operator=( const CharT* s );
+
+// (4) Non const version only
+constexpr basic_string& operator=( CharT ch );
+
+// (5) Non const version only
+constexpr basic_string& operator=( std::initializer_list<CharT> ilist );
+
+// (6) Non const version only
+template<class StringViewLike>
+constexpr basic_string& operator=( const StringViewLike& t );
+
+// (7) Non const version only
+constexpr basic_string& operator=( std::nullptr_t ) = delete;
+```
