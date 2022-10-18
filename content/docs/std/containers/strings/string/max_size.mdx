@@ -1,0 +1,80 @@
+---
+title:					vector<...>::max_size() method
+sidebar_label:			max_size( )
+description:			vector<...>::max_size() method C++ documentation
+hide_title:				true
+tags:					[vector, max, size, method]
+
+cppreference_origin_rel: w/cpp/container/vector/max_size
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- max_size() -->
+import Method_UntilCpp11	from './_codes/max_size/until-cpp11.mdx';
+import Method_SinceCpp11	from './_codes/max_size/since-cpp11.mdx';
+import Method_SinceCpp20	from './_codes/max_size/since-cpp20.mdx';
+
+# std::vector max_size() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
+}}/>
+
+Returns the **maximum number of elements** the container is able to hold due to system or library implementation limitations,
+i.e. `std::distance(begin(), end())` for the largest container.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Maximum number of elements the container can hold.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Notes
+
+This value typically reflects the theoretical limit on the size of the container,
+at most `std::numeric_limits<difference_type>::max()`.
+At runtime, the size of the container may be limited to a value smaller than [`max_size()`](#) by the amount of RAM available.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <string>
+#include <climits>
+
+int main()
+{
+    std::string s;
+    std::cout
+        << "Maximum size of a string is " << s.max_size() << " ("
+        << std::hex << std::showbase << s.max_size()
+        << "), pointer size: " << std::dec
+        << CHAR_BIT*sizeof(void*) << " bits\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+
+Maximum size of a string is 9223372036854775807 (0x7fffffffffffffff), pointer size: 64 bits
+```
+
+</div>
+</Columns>

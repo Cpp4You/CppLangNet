@@ -1,0 +1,95 @@
+---
+title:					string<...>::size() method
+sidebar_label:			size( )
+description:			string<...>::size() method C++ documentation
+hide_title:				true
+tags:					[string, size]
+
+cppreference_origin_rel: w/cpp/container/string/size
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- size() -->
+import Method_UntilCpp11	from './_codes/size/until-cpp11.mdx';
+import Method_SinceCpp11	from './_codes/size/since-cpp11.mdx';
+import Method_SinceCpp20	from './_codes/size/since-cpp20.mdx';
+
+# std::string size() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
+}} />
+
+Returns the number of elements (`CharT`s) in the container, i.e. `std::distance(begin(), end())`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+The number of elements (`CharT`s) in the container.
+
+### Complexity
+
+<SwitchView content={{
+	'since-cpp11': <>
+		Constant - <b>O(1)</b>.
+	</>,
+	'until-cpp11': <>
+		Unspecified.
+	</>
+}} />
+
+### Notes
+
+For [`std::string`](../string), the elements are bytes (objects of type `char`), which are not the same as characters if a multibyte encoding such as UTF-8 is used.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cassert>
+#include <iterator>
+#include <string>
+
+int main()
+{
+    std::string s("Exemplar");
+    assert(8 == s.size());
+    assert(s.size() == s.length());
+    assert(s.size() == static_cast<std::string::size_type>(
+        std::distance(s.begin(), s.end())));
+
+    std::u32string a(U"ハロー・ワールド"); // 8 code points
+    assert(8 == a.size()); // 8 code units in UTF-32
+
+    std::u16string b(u"ハロー・ワールド"); // 8 code points
+    assert(8 == b.size()); // 8 code units in UTF-16
+
+    std::string c("ハロー・ワールド"); // 8 code points
+    assert(24 == c.size()); // 24 code units in UTF-8
+
+    #if __cplusplus >= 202002
+    std::u8string d(u8"ハロー・ワールド"); // 8 code points
+    assert(24 == d.size()); // 24 code units in UTF-8
+    #endif
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+```
+
+</div>
+</Columns>

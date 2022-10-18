@@ -1,0 +1,4 @@
+import { Since } from "@site-comps/Versions";
+
+- If `new_cap` is less than the current [`capacity()`](capacity), this is a non-binding shrink request.
+- If `new_cap` is less than the current [`size()`](size), this is a non-binding shrink-to-fit request <Since v='cpp11'>equivalent to <a href="shrink_to_fit"><code>shrink_to_fit()</code></a>.</Since>
