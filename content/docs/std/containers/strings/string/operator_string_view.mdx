@@ -1,0 +1,103 @@
+---
+title:					string<...>::operator std::string_view
+sidebar_label:			operator std::string_view
+description:			string<...>::operator std::string_view method C++ documentation
+hide_title:				true
+tags:					[string_view, view, operator_string_view]
+
+cppreference_origin_rel: w/cpp/container/string/operator std::string_view
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import { Since }	from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp17	from './_codes/operator_string_view/since-cpp17.mdx';
+import Method_SinceCpp20	from './_codes/operator_string_view/since-cpp20.mdx';
+
+# std::string operator std::string_view
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+    'since-cpp17': <Method_SinceCpp17 />,
+}} />
+
+Returns a [`std::basic_string_view`](../string_view), constructed as if by
+```cpp
+std::basic_string_view<CharT, Traits>(data(), size())
+```
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+A string view representing the entire contents of the string.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+It is the programmer's responsibility to ensure that the resulting string view does not outlive the string.
+
+```cpp showLineNumbers
+std::string get_string();
+int f(std::string_view sv);
+
+int x = f(get_string()); // OK
+std::string_view sv = get_string(); // Bad: holds a dangling pointer
+```
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <string>
+#include <string_view>
+ 
+void show_wstring_size(std::wstring_view wcstr_v)
+{
+  std::cout << wcstr_v.size() << " code points\n";
+}
+ 
+int main()
+{
+  std::string cppstr = "ラーメン";   // narrow string
+  std::wstring wcstr = L"ラーメン";  // wide string
+ 
+  // Implicit conversion from string to string_view
+  // via std::string::operator string_view:
+  std::string_view cppstr_v = cppstr;
+ 
+  std::cout << cppstr_v << '\n'
+            << cppstr_v.size() << " code units\n";
+ 
+  // Implicit conversion from wstring to wstring_view
+  // via std::wstring::operator wstring_view:
+  show_wstring_size(wcstr);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+ラーメン
+12 code units
+4 code points
+```
+
+</div>
+</Columns>
