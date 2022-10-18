@@ -1,0 +1,169 @@
+---
+title:					string<...>::end() method
+sidebar_label:			end( )
+description:			string<...>::end() method C++ documentation
+hide_title:				true
+tags:					[access, string, iterator, end, back]
+
+cppreference_origin_rel: w/cpp/container/string/end
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- end() -->
+import Method_UntilCpp11 	from './_codes/end/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/end/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/end/since-cpp20.mdx';
+
+# std::string end() method
+
+<SwitchView content={{
+        'since-cpp20': <Method_SinceCpp20 />,
+        'since-cpp11': <Method_SinceCpp11 />,
+        'until-cpp11': <Method_UntilCpp11 />,
+    }}/>
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the element past-the-end of the array.
+If the array is empty, the returned iterator will be equal to `begin()`.
+
+Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
+
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Iterator to the character following the last character
+
+### Complexity
+
+Constant - **O(1)**..
+
+### Notes
+
+For a container `c`, the expression `*c.begin()` is equivalent to `c.front()`.
+
+### Difference between end and cend
+
+For a const container `c`, end and cend are the same - `c.end() == c.cend()`
+
+For non-const container of type `c` they return different iterators:
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <string>
+
+int main()
+{
+    std::string str = "Hello";
+    auto it = str.end(); // Type: std::string::iterator
+    // highlight-next-line
+    *std::prev(it) = 'J'; // ✔ Ok
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="cend" default>
+
+```cpp
+#include <string>
+
+int main()
+{
+    std::string str = "Hello";
+    auto it = str.cend(); // Type: std::string::const_iterator
+    // error-next-line
+    *std::prev(it) = 'J'; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <string>
+
+int main()
+{
+    const std::string str = "Hello";
+    auto it = str.end(); // Type: std::string::const_iterator
+    // error-next-line
+    *std::prev(it) = 'J'; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="cend" default>
+
+```cpp
+#include <string>
+
+int main()
+{
+    const std::string str = "Hello";
+    auto it = str.cend(); // Type: std::string::const_iterator
+    // error-next-line
+    *std::prev(it) = 'J'; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <algorithm>
+#include <iterator>
+#include <string>
+ 
+int main()
+{
+    std::string s("Exemparl");
+    std::next_permutation(s.begin(), s.end());
+ 
+    std::string c;
+    std::copy(s.cbegin(), s.cend(), std::back_inserter(c));
+    std::cout << c <<'\n'; // "Exemplar"
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Exemplar
+```
+
+</div>
+</Columns>
