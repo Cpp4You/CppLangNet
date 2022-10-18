@@ -1,0 +1,110 @@
+---
+title:					vector<...>::shrink_to_fit() method
+sidebar_label:			shrink_to_fit( )
+description:			vector<...>::shrink_to_fit() method C++ documentation
+hide_title:				true
+tags:					[vector, shrink, clear]
+
+cppreference_origin_rel: w/cpp/container/vector/shrink_to_fit
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- shrink_to_fit() -->
+import Method_SinceCpp11	from './_codes/shrink_to_fit/since-cpp11.mdx';
+import Method_SinceCpp20	from './_codes/shrink_to_fit/since-cpp20.mdx';
+
+# std::vector shrink_to_fit() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+}} />
+
+Requests the removal of unused capacity.  
+It is a non-binding request to reduce [`capacity()`](capacity) to [`size()`](size).
+It depends on the implementation whether the request is fulfilled.
+
+:::caution Invalidation
+If reallocation takes place, **all pointers**, **references**, and **iterators** are invalidated.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+<SwitchView content={{
+	'since-cpp17': <>
+		Linear in the size of the container - <b>O(size())</b>.
+	</>,
+	'until-cpp17': <>
+		Unspecified.
+	</>
+}} />
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <string>
+ 
+int main()
+{
+    std::string s;
+    std::cout << "Size of std::string is " << sizeof s << " bytes\n"
+        << "Default-constructed capacity is " << s.capacity() 
+        << " and size is " << s.size() << '\n';
+    for (int i=0; i<42; i++)
+        s.append(" 42 ");
+    std::cout << "Capacity after 42 appends is " << s.capacity() 
+        << " and size is " << s.size() << '\n';
+    s.clear();
+    std::cout << "Capacity after clear() is " << s.capacity() 
+        << " and size is " << s.size() << '\n';
+    s.shrink_to_fit();
+    std::cout << "Capacity after shrink_to_fit() is " << s.capacity() 
+        << " and size is " << s.size() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+GCC output:
+Size of std::string is 32 bytes
+Default-constructed capacity is 15 and size 0
+Capacity after 42 appends is 240 and size 168
+Capacity after clear() is 240 and size 0
+Capacity after shrink_to_fit() is 15 and size 0
+ 
+clang output (with -stdlib=libc++):
+Size of std::string is 24 bytes
+Default-constructed capacity is 22 and size is 0
+Capacity after 42 appends is 191 and size is 168
+Capacity after clear() is 191 and size is 0
+Capacity after shrink_to_fit() is 22 and size is 0
+```
+
+</div>
+</Columns>

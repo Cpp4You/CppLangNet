@@ -1,0 +1,117 @@
+---
+title:					string<...>::reserve() method
+sidebar_label:			reserve( )
+description:			string<...>::reserve() method C++ documentation
+hide_title:				true
+tags:					[string, reserve, resize, shrink_to_fit, shrink]
+
+cppreference_origin_rel: w/cpp/container/string/reserve
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- reserve() -->
+import Method_UntilCpp20	from './_codes/reserve/until-cpp20.mdx';
+import Method_SinceCpp20	from './_codes/reserve/since-cpp20.mdx';
+
+import Explanation_UntilCpp20	from './_codes/reserve/explanation/until-cpp20.mdx';
+import Explanation_SinceCpp20	from './_codes/reserve/explanation/since-cpp20.mdx';
+
+# std::string reserve() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
+}} />
+
+ - **(1)** Informs a [`std::basic_string`](../string) object of a planned change in size, so that it can manage the storage allocation appropriately.
+	- If `new_cap` is greater than the current [`capacity()`](capacity), new storage is allocated, and [`capacity()`](capacity) is made equal or greater than `new_cap`.
+	<SwitchView content={{
+		'since-cpp20': <Explanation_SinceCpp20 />,
+		'until-cpp20': <Explanation_UntilCpp20 />
+	}} />
+
+ - **(2)** A call to reserve with no argument is a non-binding shrink-to-fit request. After this call, capacity() has an unspecified value greater than or equal to size().
+
+:::caution Invalidation
+If a capacity change takes place, **all iterators** and **references**, including the **past-the-end iterator**, are invalidated.
+:::
+
+### Parameters
+
+- `new_cap` - new capacity of the string, in number of elements
+
+### Type requirements
+- `T` *(the container's element type)* must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable).
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+At most linear in the [`size()`](size) of the container - **O(size())**.
+
+### Exceptions
+
+<!-- TODO add link here -->
+ - [`std::length_error`](#) if `new_cap > max_size()`
+ - any exception thrown by `Allocator::allocate()` (typically [`std::bad_alloc`](#))
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cassert>
+#include <iostream>
+#include <string>
+ 
+int main()
+{
+    std::string s;
+    const std::string::size_type new_capacity{ 100u };
+    std::cout << "Before: " << s.capacity() << "\n";
+ 
+    s.reserve(new_capacity);
+    std::cout << "After:  " << s.capacity() << "\n";
+    assert(new_capacity <= s.capacity());
+ 
+    // observing the capacity growth factor
+    auto cap{ s.capacity() };
+    for (int check{}; check != 4; ++check) {
+        while(cap == s.capacity())
+            s += '$';
+        cap = s.capacity();
+        std::cout << "New capacity: " << cap << '\n';
+    }
+ 
+    // s.reserve(); //< deprecated in C++20, use:
+    s.shrink_to_fit();
+    std::cout << "After:  " << s.capacity() << "\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+Before: 15
+After:  100
+New capacity: 200
+New capacity: 400
+New capacity: 800
+New capacity: 1600
+After:  801
+```
+
+</div>
+</Columns>
