@@ -1,0 +1,5 @@
+The pointer is such that the range: ** [ data(); data() + size() ]** is valid and the values in it correspond to the values stored in the string.
+
+The returned array is null-terminated, that is, [`data()`](#) and [`c_str()`](c_str) perform the same function.
+
+If [`empty()`](empty) returns `true`, the pointer points to a single null character.
