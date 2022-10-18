@@ -1,0 +1,103 @@
+---
+title:					string<...>::data() method
+sidebar_label:			data( )
+description:			string<...>::data() method C++ documentation
+hide_title:				true
+tags:					[access, data, pointer]
+
+cppreference_origin_rel: w/cpp/container/string/data
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip			from "@site-comps/Tooltip";
+import { Since, Until }			from "@site-comps/Versions";
+
+<!-- data() -->
+import Method_UntilCpp11	from './_codes/data/until-cpp11.mdx';
+import Method_SinceCpp11	from './_codes/data/since-cpp11.mdx';
+import Method_SinceCpp17	from './_codes/data/since-cpp17.mdx';
+import Method_SinceCpp20	from './_codes/data/since-cpp20.mdx';
+
+import Explanation_SinceCpp11	from './_codes/data/explanation/since-cpp11.mdx';
+import Explanation_UntilCpp11	from './_codes/data/explanation/until-cpp11.mdx';
+
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+# std::string data() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp17': <Method_SinceCpp11 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />
+}} />
+
+<SwitchView content={{
+	'since-cpp11': <Explanation_SinceCpp11 />,
+	'until-cpp11': <Explanation_UntilCpp11 />
+}} />
+
+:::caution Invalidation
+
+The pointer obtained from [`data()`](#) may be invalidated by:
+ - Passing a non-const reference to the string to any standard library function, or
+ - Calling non-const member functions on the string, excluding [`operator[]`](operator_subscript), [`at()`](at), [`front()`](front), [`back()`](back), [`begin()`](begin), [`end()`](end), [`rbegin()`](rbegin), [`rend()`](rend).
+:::
+
+:::danger Undefined Behavior
+- **(1)** Modifying the character array accessed through the const overload of data results in <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
+- **(2)** Modifying the past-the-end null terminator stored at `data() + size()` to any value other than `CharT()` has <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+A pointer to the underlying character storage.
+
+
+<SwitchView content={{
+	'since-cpp11': <>
+		<code>data()[i] == operator[](i)</code> for every <code>i</code> in <b>[ 0, size() )</b>.
+	</>,
+	'until-cpp11': <>
+		<code>data() + i == std::addressof(operator[](i))</code> for every <code>i</code> in <b>[ 0, size() ]</b>.
+	</>
+}} />
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cassert>
+#include <cstring>
+#include <string>
+ 
+int main()
+{
+  std::string const s("Emplary");
+  assert(s.size() == std::strlen(s.data()));
+  assert(std::equal(s.begin(), s.end(), s.data()));
+  assert(std::equal(s.data(), s.data() + s.size(), s.begin()));
+  assert(0 == *(s.data() + s.size()));
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+```
+
+</div>
+</Columns>

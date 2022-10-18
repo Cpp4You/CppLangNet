@@ -1,0 +1,110 @@
+---
+title:					string<...>::c_str() method
+sidebar_label:			c_str( )
+description:			string<...>::c_str() method C++ documentation
+hide_title:				true
+tags:					[access, c_str, pointer, raw]
+
+cppreference_origin_rel: w/cpp/container/string/c_str
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip			from "@site-comps/Tooltip";
+import { Since, Until }			from "@site-comps/Versions";
+
+<!-- c_str() -->
+import Method_UntilCpp11	from './_codes/c_str/until-cpp11.mdx';
+import Method_SinceCpp11	from './_codes/c_str/since-cpp11.mdx';
+import Method_SinceCpp20	from './_codes/c_str/since-cpp20.mdx';
+
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+# std::string c_str() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />
+}} />
+
+Returns a pointer to a null-terminated character array with data equivalent to those stored in the string.
+
+The pointer is such that the range **[ c_str(); c_str() + size() ]** is valid and the values in it correspond to the values stored in the string with an additional null character after the last position.
+
+
+:::caution Invalidation
+The pointer obtained from `c_str()` may be invalidated by:
+
+ - Passing a non-const reference to the string to any standard library function, or
+ - Calling non-const member functions on the string, <Since v='cpp11'>excluding <a href="operator_subscript"><code>operator[]</code></a>, <a href="at"><code>at()</code></a>, <a href="front"><code>front()</code></a>, <a href="back"><code>back()</code></a>, <a href="begin"><code>begin()</code></a>, <a href="rbegin"><code>rbegin()</code></a>, <a href="end"><code>end()</code></a> and <a href="rend"><code>rend()</code></a></Since>.
+:::
+
+:::danger Undefined Behavior
+Writing to the character array accessed through [`c_str`](#) is <Tooltip title={Term_UndefinedBehaviour}> undefined behavior</Tooltip>.
+:::
+
+<Since v='cpp11'><a href="c_str"><code>c_str()</code></a> and <a href="data"><code>data()</code></a> perform the same function.</Since>
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+A pointer to the underlying character storage.
+
+<SwitchView content={{
+	'since-cpp11': <>
+		<code>c_str()[i] == operator[](i)</code> for every <code>i</code> in <b>[ 0, size() )</b>.
+	</>,
+	'until-cpp11': <>
+		<code>c_str() + i == std::addressof(operator[](i))</code> for every <code>i</code> in <b>[ 0, size() ]</b>.
+	</>
+}} />
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Notes
+
+The pointer obtained from [`c_str()`](#) may only be treated as a pointer to a null-terminated character string if the string object does not contain other null characters.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cassert>
+#include <cstring>
+#include <string>
+
+extern "C" {
+void c_func(const char* c_str) { printf("c_func called with '%s'\n", c_str); }
+}
+
+int main() {
+  std::string const s("Emplary");
+  const char* p = s.c_str();
+  assert(s.size() == std::strlen(p));
+  assert(std::equal(s.begin(), s.end(), p));
+  assert(std::equal(p, p + s.size(), s.begin()));
+  assert('\0' == *(p + s.size()));
+
+  c_func(s.c_str());
+}
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+c_func called with 'Emplary'
+```
+
+</div>
+</Columns>

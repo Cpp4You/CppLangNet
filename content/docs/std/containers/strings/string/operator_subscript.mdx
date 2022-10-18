@@ -1,0 +1,97 @@
+---
+title:					string<...>::operator[]
+sidebar_label:			operator[]
+description:			string<...>::operator[] C++ documentation
+hide_title:				true
+tags:					[subscript, access, index]
+
+cppreference_origin_rel: w/cpp/container/string/operator_at
+---
+
+# std::string operator[]
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip					from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- at() -->
+import Method_OpSub_UntilCpp20	from './_codes/operator_subscript/until-cpp20.mdx';
+import Method_OpSub_SinceCpp20	from './_codes/operator_subscript/since-cpp20.mdx';
+
+import Explanation_UntilCpp11	from './_codes/operator_subscript/explanation/until-cpp11.mdx';
+import Explanation_SinceCpp11	from './_codes/operator_subscript/explanation/since-cpp11.mdx';
+
+<SwitchView content={{
+	'since-cpp20': <Method_OpSub_SinceCpp20 />,
+	'until-cpp20': <Method_OpSub_UntilCpp20 />,
+}} />
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the element at specified index `pos`.
+
+:::caution
+No bounds checking is performed.
+:::
+
+<SwitchView content={{
+	'since-cpp11': <Explanation_SinceCpp11 />,
+	'until-cpp11': <Explanation_UntilCpp11 />,
+}} />
+
+### Parameters
+
+- `pos` - position of the character to return
+
+### Return value
+
+Reference to the requested character.
+
+### Exceptions
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <string>
+ 
+int main()
+{
+    std::string const e("Exemplar");
+    for (unsigned i = e.length() - 1; i != 0; i /= 2)
+        std::cout << e[i];
+    std::cout << '\n';
+ 
+    const char* c = &e[0];
+    std::cout << c << '\n'; // print as a C string
+ 
+    //Change the last character of s into a 'y'
+    std::string s("Exemplar ");
+    s[s.size()-1] = 'y'; // equivalent to s.back() = 'y';
+    std::cout << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+rmx
+Exemplar
+Exemplary
+```
+
+</div>
+</Columns>

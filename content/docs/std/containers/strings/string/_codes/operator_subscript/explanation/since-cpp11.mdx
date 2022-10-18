@@ -1,0 +1,7 @@
+import Tooltip					from "@site-comps/Tooltip";
+
+import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+If `pos == size()`, a reference to the character with value `CharT()` (the **null character**) is returned.
+
+For the first (non-const) version, the <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if this character is modified to any value other than `CharT()`.
