@@ -3,28 +3,30 @@ sidebar_position:	3
 sidebar_label:		"3. Strings"
 title:				"Strings"
 description:		"Lesson: basics of string/text type in C++"
-tags:				[string, text, type, variable, declaration, definition, initialization]
+tags:				[string, text, type, variable, declaration, definition, initialization, conversion, float, int, concatenation, append]
 hide_title:			true
 ---
 
 <!-- Presets -->
-import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
 import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
 
 <!-- Components -->
+import Columns			from '@site-comps/Columns';
+
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
 
-<NotFinished/>
 
 # Strings
 
 In this lesson, you will learn how to use variables that store text.
+As humans, text is the primary medium through which we interact with computer programs.
+Learning basic text storage and manipulation is crucial to making functional applications that people can and want to use.
 
 ## Motivation
 
-Text type variables are quite useful. An example would be a program which
-reads the user's name, then greets him with the number of characters in his name.
+The world runs on text. Variables that can store text turn out to quite useful because of this.
+Consider a program which reads the user's name, then greets them with the number of characters in their name.
 
 ```cpp title="🔹 Program that loads a name"
 #include <iostream>
@@ -36,23 +38,24 @@ int main()
 	// highlight-next-line
 	std::string name;
 	std::cout << "Enter your name: ";
+	//highlight-next-line
 	std::cin >> name;
 	std::cout << "Welcome, " << name << "!\n";
 	std::cout << "Your name has " << name.size() << " characters.\n";
 }
 ```
 
-## Type for storing text
+## A type for storing text
 
-In previous lessons, we talked about different types of variables, mainly those
-that store numbers. We also mentioned the `char' type, which stores
+In previous lessons, we talked about different types of variables, though we focused on those
+that store numbers. We mentioned the `char` type, which stores
 **a single character**.
 
-In programming, text is referred to as a *string of characters*.
-In C++, there is a type that allows us to store such strings, and it is [`std::string`](/docs/std/containers/strings/string).
+In programming, text is a series of characters ⁠— known as a **string**.
+C++ provides us with the type [`std::string`](/docs/std/containers/strings/string) to store and manipulate strings.
 
-:::caution Header file
-To be able to use `std::string` properly we **must** add the `string` header to the code,
+:::important Header file
+You must include the `string` header to use `std::string` in your code,
 in the same way as we did earlier with `iostream`:
 
 ```cpp
@@ -60,9 +63,10 @@ in the same way as we did earlier with `iostream`:
 ```
 :::
 
-The `std::string` type is used just like any other, that is:
+The `std::string` type is used just like any other.
+Here, we make two variables — one of type `int`, and another of type `std::string`:
 
-```cpp title="🔹 Using the string type"
+```cpp
 int number;
 std::string text;
 ```
@@ -70,14 +74,15 @@ std::string text;
 ### Initialization
 
 Assigning the initial value is the same as for variables of other types,
-but note that **text is specified between double quotes**, not single quotes:
+but note that text is specified between **double quotes**, not single quotes:
 
-```cpp
+```cpp title="🔹 Initializing and outputting a string variable"
 std::string welcome = "Hello, World!";
 std::cout << welcome;
 ```
 
-If no value is given, the variable will be a string of length 0, i.e. it will be empty text.
+If no value is given, the string will be *empty*. The text is length 0,
+and printing it to the console will show nothing.
 
 ## String operations
 
@@ -85,7 +90,7 @@ If no value is given, the variable will be a string of length 0, i.e. it will be
 
 We can display the strings using `std::cout` and load them using `std::cin`.
 
-```cpp title="🔹 Name reading and welcome message"
+```cpp title="🔹 A welcome message"
 #include <iostream>
 #include <string>
 
@@ -98,123 +103,162 @@ int main()
 }
 ```
 
-Note that `std::cin` takes the text until it encounters the first whitespace character, such as a space.
+Note that `std::cin` takes the input text until it encounters the first whitespace character, such as a space, tab, or newline.
 Because of this, if we enter our first and last name, only the first name will go into the `name` variable.
-To get the whole line of text we write:
+To get the whole line of text, you can use `std::getline`:
 
 ```cpp title="🔹 Reading a whole line of text"
-std::string name;
-std::getline(std::cin, name);
+std::string fullName;
+std::getline(std::cin, fullName);
 ```
 
-### Appending
+`std::getline` is a *function* that takes two arguments - an *input stream* to read the line from, and an `std::string` variable to store the line in.
+This example shows how you can use this function to read a line from `std::cin`. 
+So, this function is "called" by putting the name of the function `std::getline`, then parentheses `(...)`, and inside the parentheses the 
+arguments we want to provide `std::cin, fullName`.
 
-To append some text to the end of a string, we can use the `+=` operator:
+### Combinging Strings
 
-```cpp
-std::string name = "John";
-name += " Smith";
+The `+` and `+=` operators can be used to *concatenate* and *append* strings together.
+Consider the following abridged example with an input of `Dwayne Johnson`:
 
-std::cout << name;
-```
+<Columns columns={['2fr', '1fr']}>
+<div>
 
-If we play around with the order of operations, using the `=` and `+` operators we can
-add a piece of text to the beginning:
+```cpp title="🔹 Concatenation and Appending"
+std::string firstName;
+std::string lastName;
 
-```cpp
-std::string name = "John";
+std::cin >> firstName;
+std::cin >> lastName;
+
+// Concatenation
 // highlight-next-line
-name = "Smith " + name;
+std::string coolName = firstName + " \"The Rock\" " + lastName;
+std::cout << "Your cool name is:\n" << coolName << "\n\n";
 
-std::cout << name;
+// Appending
+// highlight-next-line
+coolName += " Mk II";
+std::cout << "Your new name is:\n" << coolName;
 ```
+</div>
+<div>
+
+```plaintext title="Result"
+Your cool name is:
+Dwayne "The Rock" Johnson
+
+Your new name is:
+Dwayne "The Rock" Johnson Mk II
+```
+</div>
+</Columns>
+
+Notice how `coolName` is the result of *concatenating* three strings - `firstName`, `"The Rock"`, and `lastName`.
+Then, see how we modify `coolName` by *appending* `" Mk II"` to it.
 
 ### Reading the length
 
 To check how many characters are in a string we use the so-called *method* `size`.
-We'll talk more about functions and methods later in the course, for now remember that
-we use them like this:
+We'll talk more about functions and methods later in the course, as they are a very important concept.
 
-```cpp title="🔹 Program that loads a name"
+Let's see how to use the `size` method in practice. Consider the following example with an input of `Johnny`:
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Program that counts the size of a name"
 #include <iostream>
-// highlight-next-line
 #include <string>
 
 int main()
 {
-	// highlight-next-line
 	std::string name;
 	std::cout << "Enter your name: ";
 	std::cin >> name;
-	std::cout << "Welcome, " << name << "!\n";
+
+	std::cout << "\nWelcome, " << name << "!\n";
+	// highlight-next-line
 	std::cout << "Your name has " << name.size() << " characters.\n";
 }
 ```
+</div>
+<div>
 
-that is, we specify the variable (`name`), then we write `size` after the period and then **empty** round brackets:
+```plaintext title="Result"
+Welcome, Johnny!
+Your name has 6 characters.
+```
+</div>
+</Columns>
+
+We call the `size` method by doing `name.size()`. The `.` indicates that we are accessing something on
+our `name` variable. `size` is the name of the method we are accessing. The `()` *calls* the `size` method.
+This gives back to us the total number of characters in the string. These terms aren't crucial to remember now,
+but you will see them later in the Functions and Methods lessons; just remember how to use it.
+
+Just to reiterate, we specify the variable (`name`), then we write `size` after the period and then **empty** round brackets:
 
 ```cpp title="🔹 Calling the size method"
 name.size()
 ```
 
-### Retreiving a substring
+### Conversions between numbers and strings
 
-Analogous to the `size` method, we can retrieve a portion of the string using the `substr` method:
-
-```cpp title="🔹 Calling the substr method"
-std::string name = "John Smith";
-std::cout << name.substr(0, 4);
-```
-
-Zauważ, że w nawiasach okrągłych podajemy zakres znaków, które chcemy uzyskać:
-
-```cpp
-substr( [starting position], [count] )
-```
-
-that is, in the case above, we copy three characters starting at position `0`.
-
-:::caution Indexing
-In the strings, we count characters from `0`, not from `1`. The first character is located at position `0`.
-:::
-
-### Converting numbers to strings
-
-Because of the way the program stores numbers and text, these values
-are not convertible between them by default. To understand this, we need to be able to distinguish between
-these two things:
+Numbers and strings cannot be freely converted to each other without a specialized *function* that does it for us.
+This is because number types and string types in C++ are disinctly **different**, and not generally compatible.
+While it may be annoying, this is actually very important for making bug-free code.
 
 ```cpp
 53
 "53"
 ```
 
-The first value is the number 53, and the second is a text consisting of the characters `'5'` and `'3'`.
-If we want to convert the number `53` to text form, we **cannot** do it this way:
+The first value is the arithmetic number `53`. It represents a value that we can perform mathematical operations on.
+The second value is text consisting of the characters `'5'` and `'3'`. We can't perform math on strings; rather,
+the string operations we can perform are concatenations.
+
+These are the incorrect ways of trying to convert between strings and numbers, all causing compilation errors:
 
 <Tabs>
 <TabItem value="bad1" label="❌ Incorrect" default>
 
-```cpp
+```cpp title="❌ Assigning a number variable into a string"
 int number = 53;
 // error-next-line
-std::string numberInStr	= number; // Error
+std::string str	= number; // Error
 ```
 
 </TabItem>
 <TabItem value="bad2" label="❌ Incorrect">
 
-```cpp
+```cpp title="❌ Assigning an integer literal into a string"
 // error-next-line
-std::string numberInStr	= 53; // Error
+std::string str	= 53; // Error
+```
+
+</TabItem>
+<TabItem value="bad3" label="❌ Incorrect">
+
+```cpp title="❌ Assigning an string into a number"
+std::string str	= "53";
+// error-next-line
+int number = str; // Error
+```
+
+</TabItem>
+<TabItem value="bad4" label="❌ Incorrect">
+
+```cpp title="❌ Assigning an string literal into a number"
+// error-next-line
+int number = "53"; // Error
 ```
 
 </TabItem>
 </Tabs>
 
-
-Instead, we must use the so-called `std::to_string` function (we'll talk about functions later in the course).
-It is done in this way:
+To convert from a number type (like `int` or `float`) to string, we need to use the `std::to_string` function.
 
 ```cpp title="✔ Converting a number to a text"
 int number = 53;
@@ -228,8 +272,7 @@ to `float` type with `std::stof` (_**s**tring **to** **f**loat_):
 <Tabs>
 <TabItem value="stoi" label="🔵 std::stoi" default>
 
-Convert `std::string` to `int`:
-```cpp
+```cpp title="Convert std::string to int"
 std::string numberInStr = "53";
 int number = std::stoi(numberInStr);
 ```
@@ -237,8 +280,7 @@ int number = std::stoi(numberInStr);
 </TabItem>
 <TabItem value="stof" label="🟣 std::stof">
 
-Convert `std::string` to `float`:
-```cpp
+```cpp title="Convert std::string to float"
 std::string numberInStr = "53.5"; // do not put `f` at the end in the text
 float number = std::stof(numberInStr);
 ```
@@ -249,8 +291,373 @@ float number = std::stof(numberInStr);
 
 ## Examples
 
-<ImproveSection />
+### Personal details
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// Setup the four variables we will read the user's information into
+	std::string firstName;
+	std::string lastName;
+	std::string favoriteColor;
+	int age;
+
+	// Ask the user 4 questions and store their answers
+	std::cout << "What is your first name? ";
+	std::cin >> firstName;
+
+	std::cout << "What is your last name? ";
+	std::cin >> lastName;
+
+	std::cout << "What is your age? ";
+	std::cin >> age;
+
+	std::cout << "What is your favorite color? ";
+	std::cin >> favoriteColor;
+
+	// Output the user's information whilst calculating the difference between their age and first name's length
+	std::cout << "\n\nWelcome, " << firstName << " " << lastName << "!\n";
+	std::cout << "You are " << age << " years old, and your favorite color is " << favoriteColor << "\n";
+	std::cout << "There are " << firstName.size() << " characters in your first name... ";
+	std::cout << (age - firstName.size()) << " less than your age!\n";
+}
+```
+
+### Team Name
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string animal;
+	std::string adjective;
+	int teamSize;
+
+	std::cout << "I'm going to help you make a team name!\n";
+
+	std::cout << "Enter an animal: ";
+	std::cin >> animal;
+
+	std::cout << "Enter an adjective: ";
+	std::cin >> adjective;
+
+	std::cout << "Enter the size of the team: ";
+	std::cin >> teamSize;
+
+	// Form the team name by concatenating the three answers we have so far
+	std::string teamName = adjective + animal + std::to_string(teamSize);
+	std::cout << "Your current team name is \"" << teamName << "\"!";
+
+	std::string pluralNoun;
+	std::cout << "Enter a plural noun: ";
+	std::cin >> pluralNoun;
+
+	// Finalize the team name by appending the plural noun
+	teamName += " sans " + pluralNoun;
+	std::cout << "Your final team name is \"" << teamName << "\"!";
+}
+```
+
+### Numbers and Strings
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	int a;
+	int b;
+
+	std::cout << "Input two numbers: ";
+	std::cin >> a >> b;
+
+	int sum = a + b;
+	// Use an int-to-string conversion to concatenate the two numbers
+	std::string concatStr = std::to_string(a) + std::to_string(b);
+
+	std::cout << "Their sum is " << sum << " and their concatenation is " << concatStr << "\n";
+
+	// Perform a string-to-int conversion and compute the difference
+	int concatVal = std::stoi(concatStr);
+	int diff = concatVal - sum;
+
+	std::cout << "Their difference is " << diff;
+}
+```
 
 ## Potential errors
 
-<ImproveSection />
+### Forgotten include
+
+```cpp title="❌ Erroneous Code"
+int main()
+{
+	// error-next-line
+    std::string s = "Hello";
+}
+```
+
+#### Potential error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+In function 'int main()':
+error: 'string' is not a member of 'std'
+    2 |     std::string s = "Hello";
+      |          ^~~~~~
+note: 'std::string' is defined in header '<string>'; did you forget to '#include <string>'?
+  +++ |+#include <string>
+    1 | int main() {
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2039: 'string': is not a member of 'std'
+predefined C++ types (compiler internal)(339): message : see declaration of 'std'
+error C2065: 'string': undeclared identifier 
+```
+
+</TabItem>
+</Tabs>
+
+#### Solution
+
+Add `#include <string>` to the top of your file.
+
+### Treating numbers as strings
+
+```cpp title="❌ Erroneous Code"
+#include <string>
+
+int main()
+{
+	// error-next-line
+    std::string s = 123;
+}
+```
+
+#### Potential error message:
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+In function 'int main()':
+error: conversion from 'int' to non-scalar type 'std::string' {aka 'std::__cxx11::basic_string<char>'} requested
+    4 |     std::string s = 123;
+      |                     ^~~
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2440: 'initializing': cannot convert from 'int' to 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+note: No constructor could take the source type, or constructor overload resolution was ambiguous
+```
+
+</TabItem>
+</Tabs>
+
+#### Solution
+
+Use `std::to_string` to convert an integer to a string.
+See [Conversions between numbers and strings](#conversions-between-numbers-and-strings)
+and [Numbers and Strings](#numbers-and-strings) for more information.
+
+### Treating strings as numbers
+
+```cpp title="❌ Erroneous Code"
+#include <string>
+
+int main()
+{
+    std::string s = "123";
+	// error-next-line
+	s *= 15;
+}
+```
+
+#### Potential error message:
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+In function 'int main()':
+error: no match for 'operator*=' (operand types are 'std::string' {aka 'std::__cxx11::basic_string<char>'} and 'int')
+    5 |     s *= 15;
+      |     ~~^~~~~
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2676: binary '*=': 'std::string' does not define this operator or a conversion to a type acceptable to the predefined operator
+```
+
+</TabItem>
+</Tabs>
+
+#### Solution
+
+Use `std::stoi` or `std::stof` to convert a string into an algebreic value.
+See [Conversions between numbers and strings](#conversions-between-numbers-and-strings)
+and [Numbers and Strings](#numbers-and-strings) for more information.
+
+### Concatenating two string literals
+
+```cpp title="❌ Erroneous Code"
+#include <string>
+
+int main()
+{
+	//error-next-line
+    std::string s = "Hello " + "World";
+}
+```
+
+#### Potential error message:
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+In function 'int main()':
+error: invalid operands of types 'const char [7]' and 'const char [6]' to binary 'operator+'
+    5 |     std::string s = "Hello " + "World";
+      |                     ~~~~~~~~ ^ ~~~~~~~
+      |                     |          |
+      |                     |          const char [6]
+      |                     const char [7]
+```
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2110: '+': cannot add two pointers
+```
+
+</TabItem>
+</Tabs>
+
+#### Solution
+
+Whenever you see `"TEXT"` in a C++ file, that is known as a *string literal*. Basically, a fancy term for saying that
+this is a hardcoded text value. Crucially, however, the type of a string literal is not `std::string`.
+Rather, it is `const char[N]` where `N` is the length of the text + 1. The GCC error above showcases this best.
+
+`const char[N]` is called an *array*. We will cover arrays in a later chapter, but the important knowledge here is that
+you cannot add two arrays together as they are not numbers. `std::string` is what provides us ability to concatenate strings
+via `+`.
+
+The easiest way to fix this is to simply combine the string literals yourself like `"Hello World"`.
+
+### Skipping input with std::getline
+
+```cpp title="⚠️ Buggy Code"
+#include <string>
+
+int main()
+{
+	int age;
+	int fullName;
+
+	std::cout << "Enter your age: ";
+	std::cin >> age;
+
+	std::cout << "Enter your full name: ";
+	// warning-next-line
+	std::getline(std::cin, fullName); // This line is seemingly skipped
+
+	std::cout << "\nYour name is " << fullName << " and your age is " << age;
+}
+```
+#### Unexpected Behavior
+You may find that when using `std::getline` after doing some form of `std::cin >> ...`, that it appears to skip the `std::getline`.
+In the above example, it will ask your age, you would input say `23`, and it will ask your full name but not let you enter a name.
+Instead, it will immedaitely output `Your name is  and your age is 23`. 
+
+
+#### Solution
+
+Understanding why it does this is a bit tricky. The key aspect to remember is when you use `std::cin >> ...`, it will take input
+from *stdin* until it sees whitespace (a space, a newline, or a tab). When you press `Enter` on your keyboard to input your age,
+it places a *newline character* `\n` onto *stdin*. `std::cin` then reads the number you typed, and stops at that newline
+**without removing the `\n` character**.
+
+`std::getline` uses the presence of these `\n` characters to determine where a full line ends.
+So, when it attempts to read from *stdin* (`std::cin`) to read a line up to the next `\n`,
+it immediately sees the `\n` character that was left by the previous `std::cin >> age;`.
+Therefore, it interprets this as an empty line and sets `fullName` to be an empty string `""`.
+
+The solution to this is another *method* called `ignore`. This method will tell `std::cin` to 
+skip past any remaining characters that were left from previous operations. Whenever you plan on using `std::getline` after
+a `std::cin >> ...` operation, you should put the method call `std::cin.ignore();` in between, like in the abridged example below:
+
+```cpp title="🔹 How to use the ignore method"
+int age;
+std::string fullName;
+
+std::cin >> age;
+
+//highlight-next-line
+std::cin.ignore();
+
+std::getline(std::cin, fullName);
+```
+
+## Exercise
+
+Lord Mux has returned with another request. He would like to see how good we are at naming rocketships.
+Your task is to build a C++ program that generates a spaceship name adhering to the following format:
+
+`Digi-[MISSION NO] [CODENAME] Mk. [REVISION]`
+
+However, due to the poor attention span of the Muxian population, you are only allowed to 
+ask the user two questions. 
+
+The first question shall ask for the **CODENAME**, which can be any single word.
+
+The second question shall ask for a **MODIFIER**, which should be a single whole number.
+
+You will generate the remaining two parameters by the following rules:
+
+**MISSION NO** - The number of characters in **CODENAME** concatenated with the string representation of **MODIFIER**.
+For example, if **CODENAME** is `Raven` and **MODIFIER** is `20`, then **MISSION NO** should be `520`.
+
+**REVISION** - The integral value of **MISSION NO** multiplied by 16 (as Muxians have 16 fingers to count on).
+
+**Additional requirements** The final name of the rocketship should be stored in a single `std::string` variable
+before being output to the terminal.
+
+### Example Execution
+```plaintext
+Welcome to the Rocketship Name Generator 9000!
+
+Enter a CODENAME: Raven
+Enter a MODIFIER: 20
+
+Your new rocketship name is:
+Digi-520 Raven Mk. 8320
+```
+
+### Hints
+
+If you are stuck on generating **CODENAME** or **MODIFIER**, see example [Personal details](#personal-details).
+
+If you are stuck on generating **MISSION NO**, see example [Team Name](#team-name).
+
+If you are stuck on generating **REVISION**, see example [Numbers and Strings](#numbers-and-strings).
