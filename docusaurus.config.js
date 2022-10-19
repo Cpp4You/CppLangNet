@@ -310,6 +310,10 @@ function filterSidebarItems(items)
 					{
 						className: "code-block-error-line",
 						line: "error-next-line",
+					},
+					{
+						className: "code-block-warning-line",
+						line: "warning-next-line",
 					}
 				]
 			},
