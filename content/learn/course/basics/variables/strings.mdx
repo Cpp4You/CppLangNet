@@ -604,7 +604,7 @@ it immediately sees the `\n` character that was left by the previous `std::cin >
 Therefore, it interprets this as an empty line and sets `fullName` to be an empty string `""`.
 
 The solution to this is another *method* called `ignore`. This method will tell `std::cin` to 
-skip past any remaining characters that were left from previous operations. Whenever you plan on using `std::getline` after
+skip the remaining newline character that was left from the previous operation. Whenever you plan on using `std::getline` after
 a `std::cin >> ...` operation, you should put the method call `std::cin.ignore();` in between, like in the abridged example below:
 
 ```cpp title="🔹 How to use the ignore method"
