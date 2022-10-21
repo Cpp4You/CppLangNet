@@ -1,0 +1,77 @@
+---
+title:					string<...>::copy() method
+sidebar_label:			copy( )
+description:			string<...>::copy() method C++ documentation
+hide_title:				true
+tags:					[string, copy, subrange, sub, range]
+
+cppreference_origin_rel: w/cpp/container/string/copy
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- copy() -->
+import Method_UntilCpp20 	from './_codes/copy/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/copy/since-cpp20.mdx';
+
+# std::string copy() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
+}}/>
+
+Copies a substring **[ pos, pos + count )** to character string pointed to by `dest`.  
+If the requested substring lasts past the end of the string, or if `count == npos`, the copied substring is **[ pos, size() )**.
+
+
+The resulting character string **is not** null-terminated.
+
+### Parameters
+
+ - `dest` - pointer to the destination character string
+ - `count` - length of the substring
+ - `pos` - position of the first character to include
+
+### Return value
+
+Number of characters copied.
+
+### Complexity
+
+Linear in `count` - **O(count)**.
+
+### Exceptions
+
+Throws [`std::out_of_range`](#) if `pos > size()`.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string>
+#include <iostream>
+ 
+int main()
+{
+  std::string foo("quuuux");
+  char bar[7]{};
+  foo.copy(bar, sizeof bar);
+  std::cout << bar << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+quuuux
+```
+
+</div>
+</Columns>

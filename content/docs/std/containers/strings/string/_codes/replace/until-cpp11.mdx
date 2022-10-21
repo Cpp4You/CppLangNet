@@ -1,0 +1,43 @@
+```cpp
+// (1) Non const version only
+basic_string& replace( size_type pos, size_type count,
+                       const basic_string& str );
+
+// (1) Non const version only
+basic_string& replace( const_iterator first, const_iterator last,
+                       const basic_string& str );
+
+// (2) Non const version only
+basic_string& replace( const_iterator first, const_iterator last,
+                       const basic_string& str );
+
+
+// (3) Non const version only
+template< class InputIt >
+basic_string& replace( const_iterator first, const_iterator last,
+                       InputIt first2, InputIt last2 );
+
+// (4) Non const version only
+basic_string& replace( size_type pos, size_type count,
+                       const CharT* cstr, size_type count2 );
+
+// (4) Non const version only
+basic_string& replace( const_iterator first, const_iterator last,
+                       const CharT* cstr, size_type count2 );
+
+// (5) Non const version only
+basic_string& replace( size_type pos, size_type count,
+                       const CharT* cstr );
+
+// (5) Non const version only
+basic_string& replace( const_iterator first, const_iterator last,
+                       const CharT* cstr );
+
+// (6) Non const version only
+basic_string& replace( size_type pos, size_type count,
+                       size_type count2, CharT ch );
+
+// (6) Non const version only
+basic_string& replace( const_iterator first, const_iterator last,
+                       size_type count2, CharT ch );
+```

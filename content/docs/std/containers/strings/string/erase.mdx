@@ -1,0 +1,112 @@
+---
+title:					string<...>::erase() method
+sidebar_label:			erase( )
+description:			string<...>::erase() method C++ documentation
+hide_title:				true
+tags:					[string, erase, remove, delete]
+
+cppreference_origin_rel: w/cpp/container/string/erase
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- erase() -->
+import Method_UntilCpp11 	from './_codes/erase/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/erase/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/erase/since-cpp20.mdx';
+
+# std::string erase() method
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+    'since-cpp11': <Method_SinceCpp11 />,
+    'until-cpp11': <Method_UntilCpp11 />,
+}} />
+
+Erases specified characters from the string.
+
+ - **(1)** Removes `std::min(count, size() - index)` characters starting at `index`.
+ - **(2)** Removes the character at `position`.
+ - **(3)** Removes the characters in the range **[ first, last )**.
+
+### Parameters
+
+ - `index` - first character to remove
+ - `count` - number of characters to remove
+ - `position` - iterator to the character to remove
+ - `first`, `last` - range of the characters to remove
+
+### Return value
+
+ - **(1)** `*this`
+ - **(2)** Iterator pointing to the character immediately following the character erased, or [`end()`](end) if no such character exists.
+ - **(3)** Iterator pointing to the character last pointed to before the erase, or [`end()`](end) if no such character exists
+
+### Complexity
+
+<!-- research on string complexity, there's some basic requirement that all methods have O(1) but thats surely not the case for insert, probably the same as vector's insert in most cases -->
+
+<ImproveSection />
+
+### Exceptions
+
+ - **(1)** [`std::out_of_range`](#) if `index > size()`.
+ - **(2-3)** **(none)**
+
+<Since v='cpp11'> In any case, if an exception is thrown for any reason, this function has no effect (<a href="#"><b>strong exception guarantee</b></a>). </Since>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <string>
+ 
+int main()
+{
+    std::string s = "This Is An Example";
+    std::cout << "1) " << s << '\n';
+ 
+    s.erase(7, 3); // erases " An" using overload (1)
+    std::cout << "2) " << s << '\n';
+ 
+    s.erase(std::find(s.begin(), s.end(), ' ')); // erases first ' '; overload (2)
+    std::cout << "3) " << s << '\n';
+ 
+    s.erase(s.find(' ')); // trims from ' ' to the end of the string; overload (1)
+    std::cout << "4) " << s << '\n';
+ 
+    auto it = std::next(s.begin(), s.find('s')); // obtains iterator to the first 's'
+    s.erase(it, std::next(it, 2)); // erases "sI"; overload (3)
+    std::cout << "5) " << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1) This Is An Example
+2) This Is Example
+3) ThisIs Example
+4) ThisIs
+5) This
+```
+
+</div>
+</Columns>

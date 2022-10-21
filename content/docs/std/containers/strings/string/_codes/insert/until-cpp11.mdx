@@ -1,0 +1,30 @@
+```cpp
+// (1) Non const version only
+basic_string& insert( size_type index, size_type count, CharT ch );
+
+// (2) Non const version only
+basic_string& insert( size_type index, const CharT* s );
+
+// (3) Non const version only
+basic_string& insert( size_type index, const CharT* s, size_type count );
+
+// (4) Non const version only
+basic_string& insert( size_type index, const basic_string& str );
+
+// (5) Non const version only
+basic_string& insert( size_type index, const basic_string& str,
+                      size_type index_str, size_type count );
+
+// (6) Non const version only
+iterator insert( iterator pos, CharT ch );
+
+// (7) Non const version only
+void insert( iterator pos, size_type count, CharT ch );
+
+// (8) Non const version only
+template< class InputIt >
+void insert( iterator pos, InputIt first, InputIt last );
+
+// (9) Non const version only
+iterator insert( const_iterator pos, std::initializer_list<CharT> ilist );
+```

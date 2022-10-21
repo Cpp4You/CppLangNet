@@ -1,0 +1,21 @@
+```cpp
+// (1) Non const version only
+basic_string& append( size_type count, CharT ch );
+
+// (2) Non const version only
+basic_string& append( const basic_string& str );
+
+// (3) Non const version only
+basic_string& append( const basic_string& str,
+                      size_type pos, size_type count );
+
+// (4) Non const version only
+basic_string& append( const CharT* s, size_type count );
+
+// (5) Non const version only
+basic_string& append( const CharT* s );
+
+// (6) Non const version only
+template< class InputIt >
+basic_string& append( InputIt first, InputIt last );
+```

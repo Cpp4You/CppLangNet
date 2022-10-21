@@ -1,0 +1,150 @@
+---
+title:					string<...>::resize() method
+sidebar_label:			resize( )
+description:			string<...>::resize() method C++ documentation
+hide_title:				true
+tags:					[string, size, resize, reserve]
+
+cppreference_origin_rel: w/cpp/container/string/resize
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import ImproveSection		from "@site/i18n/en/presets/ImproveSection.mdx";
+import Tabs					from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+<!-- resize() -->
+import Method_UntilCpp20	from './_codes/resize/until-cpp20.mdx';
+import Method_SinceCpp20	from './_codes/resize/since-cpp20.mdx';
+
+# std::string resize() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
+}} />
+
+Resizes the string to contain `count` characters.
+
+If the current size is less than `count`, additional characters are appended:
+ - **(1)** Initializes appended characters to `CharT()` (`'\0'` if `CharT` is `char`).
+ - **(2)** Initializes appended characters to `ch`.
+
+:::important
+If the current size **is greater** than `count`, the string is reduced to its first `count` elements.
+:::
+
+### Parameters
+
+ - `count` - new size of the string
+ - `ch` - character to initialize the new characters with
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+<ImproveSection />
+
+### Exceptions
+
+[`std::length_error`](#) if `count > max_size()`. Any exceptions thrown by corresponding `Allocator`.
+
+<Since v='cpp11'> If an exception is thrown for any reason, this function has no effect (<a href="#"><b>strong exception guarantee</b></a>). </Since>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <iomanip>
+#include <stdexcept>
+ 
+int main()
+{
+    const unsigned  desired_length{ 8 };
+    std::string     long_string( "Where is the end?" );
+    std::string     short_string( "H" );
+ 
+ 
+    std::cout << "Basic functionality:\n"
+              << "Shorten:\n"
+              << "1. Before: " << quoted( long_string ) << '\n';
+    long_string.resize( desired_length );
+    std::cout << "2. After:  " << quoted( long_string ) << '\n';
+ 
+ 
+    std::cout << "Lengthen with a given value 'a':\n"
+              << "3. Before: " << quoted( short_string ) << '\n';
+    short_string.resize( desired_length, 'a' );
+    std::cout << "4. After:  " << quoted( short_string ) << '\n';
+ 
+ 
+    std::cout << "Lengthen with char() == " << static_cast<int>(char()) << '\n'
+              << "5. Before: " << quoted( short_string ) << '\n';
+    short_string.resize( desired_length + 3 );
+    std::cout << "6. After:  \"";
+    for (char c : short_string) {
+        std::cout << (c == char() ? '@' : c);
+    }
+    std::cout << "\"\n\n";
+ 
+ 
+    std::cout << "Errors:\n";
+    {
+        std::string s;
+ 
+        try {
+            // size is OK, no length_error
+            // (may throw bad_alloc)
+            s.resize(s.max_size() - 1, 'x');
+        } catch (const std::bad_alloc& ex) {
+            std::cout << "1. Exception: " << ex.what() << '\n';
+        }
+ 
+        try {
+            // size is OK, no length_error
+            // (may throw bad_alloc)
+            s.resize(s.max_size(), 'x');
+        } catch (const std::bad_alloc& ex) {
+            std::cout << "2. Exception: " << ex.what() << '\n';
+        }
+ 
+        try {
+            // size is BAD, throw length_error
+            s.resize(s.max_size() + 1, 'x');
+        } catch (const std::length_error& ex) {
+            std::cout << "3. Length error: " << ex.what() << '\n';
+        }
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Basic functionality:
+Shorten:
+1. Before: "Where is the end?"
+2. After:  "Where is"
+Lengthen with a given value 'a':
+3. Before: "H"
+4. After:  "Haaaaaaa"
+Lengthen with char() == 0
+5. Before: "Haaaaaaa"
+6. After:  "Haaaaaaa@@@"
+ 
+Errors:
+1. Exception: std::bad_alloc
+2. Exception: std::bad_alloc
+3. Length error: basic_string::_M_replace_aux
+```
+
+</div>
+</Columns>

@@ -1,0 +1,168 @@
+---
+title:					string<...>::append() method
+sidebar_label:			append( )
+description:			string<...>::append() method C++ documentation
+hide_title:				true
+tags:					[string, append, back, add]
+
+cppreference_origin_rel: w/cpp/container/string/append
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import { Since }			from "@site-comps/Versions";
+import Tabs					from "@theme/Tabs";
+
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<!----------------- Codes ---------------------->
+
+<!-- append() -->
+import Method_UntilCpp11 	from './_codes/append/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/append/since-cpp11.mdx';
+import Method_SinceCpp14 	from './_codes/append/since-cpp14.mdx';
+import Method_SinceCpp17 	from './_codes/append/since-cpp17.mdx';
+import Method_SinceCpp20 	from './_codes/append/since-cpp20.mdx';
+
+import Explanation_SinceCpp11 from './_codes/append/explanation/since-cpp11.mdx';
+import Explanation_UntilCpp11 from './_codes/append/explanation/until-cpp11.mdx';
+
+# std::string append() method
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+    'since-cpp17': <Method_SinceCpp17 />,
+    'since-cpp14': <Method_SinceCpp14 />,
+    'since-cpp11': <Method_SinceCpp11 />,
+    'until-cpp11': <Method_UntilCpp11 />,
+}} />
+
+Appends characters into the string.
+
+ - **(1)** Appends `count` copies of character `ch`.
+
+ - **(2)** Appends string `str`.
+
+ - **(3)** Appends a substring ** [pos, pos + count)** of `str`.  
+	If the requested substring lasts past the end of the string, or if `count == npos`, the appended substring is **[ pos, size() )**.  
+	If `pos > str.size()`, [`std::out_of_range`](#) is thrown.
+
+ - **(4)** Appends characters in the range **[ s, s + count )**.  
+	This range can contain null characters.
+
+ - **(5)** Appends the null-terminated character string pointed to by `s`.  
+	The length of the string is determined by the first null character using `Traits::length(s)`.
+
+ - **(6)** Appends characters in the range **[ first, last )**.
+
+	<SwitchView content={{
+		'since-cpp11': <Explanation_SinceCpp11 />,
+		'until-cpp11': <Explanation_UntilCpp11 />
+	}} />
+
+ - **(7)** Appends characters from the initializer list `ilist`.
+
+ - **(8)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then appends all characters from `sv` as if by `append(sv.data(), sv.size())`.  
+	:::important Overload Resolution
+	This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+	:::
+
+ - **(9)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then appends the characters from the subview **[ pos, pos + count )** of `sv`.  
+	If the requested subview extends past the end of `sv`, or if `count == npos`, the appended subview is **[ pos, sv.size() )**.  
+	If `pos >= sv.size()`, [`std::out_of_range`](#) is thrown.  
+	:::important Overload Resolution 
+	This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+	:::
+
+### Parameters
+
+ - `count` - number of characters to append
+ - `pos` - the index of the first character to append
+ - `ch` - character value to append
+ - `first`, `last` - range of characters to append
+ - `str` - string to append
+ - `s` - pointer to the character string to append
+ - `ilist` - [`std::initializer_list`](#) with the characters to append
+ - `t` - object convertible to [`std::basic_string_view`](../string_view.mdx) with the characters to append
+
+### Return value
+
+`*this`
+
+### Complexity
+
+<!-- research on string complexity, there's some basic requirement that all methods have O(1) but thats surely not the case for append, probably the same as vector's insert in most cases -->
+
+<ImproveSection />
+
+There are no standard complexity guarantees, typical implementations behave similar to [`std::vector::insert()`](../../arrays/vector/insert).
+
+### Exceptions
+
+If the operation would result in `size() > max_size()`, throws [`std::length_error`](#).
+
+<Since v='cpp11'> In any case, if an exception is thrown for any reason, this function has no effect (<a href="#"><b>strong exception guarantee</b></a>). </Since>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <string>
+#include <iostream>
+ 
+int main() {
+    std::basic_string<char> str = "string";
+    const char* cptr = "C-string";
+    const char carr[] = "Two and one";
+ 
+    std::string output;
+ 
+    // 1) Append a char 3 times. 
+    // Notice, this is the only overload accepting chars.
+    output.append(3, '*');
+    std::cout << "1) " << output << "\n";
+ 
+    //  2) Append a whole string
+    output.append(str);
+    std::cout << "2) " << output << "\n";
+ 
+    // 3) Append part of a string (last 3 letters, in this case)
+    output.append(str, 3, 3);
+    std::cout << "3) " << output << "\n";
+ 
+    // 4) Append part of a C-string
+    // Notice, because `append` returns *this, we can chain calls together
+    output.append(1, ' ').append(carr, 4);
+    std::cout << "4) " << output << "\n";
+ 
+    // 5) Append a whole C-string
+    output.append(cptr);
+    std::cout << "5) " << output << "\n";
+ 
+    // 6) Append range
+    output.append(&carr[3], std::end(carr));
+    std::cout << "6) " << output << "\n";
+ 
+    // 7) Append initializer list
+    output.append({ ' ', 'l', 'i', 's', 't' });
+    std::cout << "7) " << output << "\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1) ***
+2) ***string
+3) ***stringing
+4) ***stringing Two 
+5) ***stringing Two C-string
+6) ***stringing Two C-string and one
+7) ***stringing Two C-string and one list
+```
+
+</div>
+</Columns>

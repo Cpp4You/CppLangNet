@@ -1,0 +1,33 @@
+```cpp
+// (1) Non const version only
+basic_string& append( size_type count, CharT ch );
+
+// (2) Non const version only
+basic_string& append( const basic_string& str );
+
+// (3) Non const version only
+basic_string& append( const basic_string& str,
+                      size_type pos, size_type count = npos );
+
+// (4) Non const version only
+basic_string& append( const CharT* s, size_type count );
+
+// (5) Non const version only
+basic_string& append( const CharT* s );
+
+// (6) Non const version only
+template< class InputIt >
+basic_string& append( InputIt first, InputIt last );
+
+// (7) Non const version only
+basic_string& append( std::initializer_list<CharT> ilist );
+
+// (8) Non const version only
+template < class StringViewLike >
+basic_string& append( const StringViewLike& t );
+
+// (9) Non const version only
+template < class StringViewLike >
+basic_string& append( const StringViewLike& t,
+                      size_type pos, size_type count = npos );
+```

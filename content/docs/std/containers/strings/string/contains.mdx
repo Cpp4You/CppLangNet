@@ -1,0 +1,106 @@
+---
+title:					string<...>::contains() method
+sidebar_label:			contains( )
+description:			string<...>::contains() method C++ documentation
+hide_title:				true
+tags:					[string, contains, prefix, start]
+
+cppreference_origin_rel: w/cpp/container/string/contains
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+import ImproveSection		from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- contains() -->
+import Method_SinceCpp23 	from './_codes/contains/since-cpp23.mdx';
+
+# std::string contains() method
+
+<SwitchView content={{
+	'since-cpp23': <Method_SinceCpp23 />,
+}}/>
+
+Checks if the string contains the given substring
+
+The prefix may be one of the following:
+ - **(1)** A string view `sv` (which may be a result of implicit conversion from another [`std::basic_string`](../string)).
+
+ - **(2)** A single character `c`.
+
+ - **(3)** A null-terminated character string `s`.
+
+All three overloads effectively do
+```cpp
+find(x) != npos;
+```
+where `x` is the parameter.
+
+### Parameters
+
+ - `s` - a string view which may be a result of implicit conversion from another [`std::basic_string`](../string)
+ - `c` - a single character
+ - `s` - a null-terminated character string
+
+### Return value
+
+`true` if the string contains the provided substring, `false` otherwise.
+
+### Complexity
+
+<ImproveSection />
+
+### Notes
+
+Feature testing macro: [`__cpp_lib_string_contains`](#).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include <string_view>
+#include <type_traits>
+ 
+template <typename SubstrType>
+void test_substring(const std::string& str, SubstrType subs)
+{
+    constexpr char delim = std::is_scalar_v<SubstrType> ? '\'' : '\"';
+    std::cout << std::quoted(str)
+              << (str.contains(subs) ? " contains "
+                                     : " does not contain ")
+              << std::quoted(std::string{subs}, delim) << '\n';
+}
+ 
+int main()
+{
+    using namespace std::literals;
+ 
+    auto helloWorld = "hello world"s;
+ 
+    test_substring(helloWorld, "hello"sv);
+    test_substring(helloWorld, "goodbye"sv);
+    test_substring(helloWorld, 'w');
+    test_substring(helloWorld, 'x');
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+"hello world" contains "hello"
+"hello world" does not contain "goodbye"
+"hello world" contains 'w'
+"hello world" does not contain 'x'
+```
+
+</div>
+</Columns>
