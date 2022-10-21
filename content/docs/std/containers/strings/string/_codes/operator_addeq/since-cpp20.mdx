@@ -1,0 +1,17 @@
+```cpp
+// (1) Non const version only
+constexpr basic_string& operator+=( const basic_string& str );
+
+// (2) Non const version only
+constexpr basic_string& operator+=( CharT ch );
+
+// (3) Non const version only
+constexpr basic_string& operator+=( const CharT* s );
+
+// (4) Non const version only
+constexpr basic_string& operator+=( std::initializer_list<CharT> ilist );
+
+// (5) Non const version only
+template < class StringViewLike >
+constexpr basic_string& operator+=( const StringViewLike& t );
+```

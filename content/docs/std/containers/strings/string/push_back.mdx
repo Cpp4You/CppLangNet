@@ -1,0 +1,84 @@
+---
+title:					string<...>::push_back() method
+sidebar_label:			push_back( )
+description:			string<...>::push_back() method C++ documentation
+hide_title:				true
+tags:					[string, push, add, push_back]
+
+cppreference_origin_rel: w/cpp/container/string/push_back
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import { Since }			from "@site-comps/Versions";
+import Tabs					from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+<!-- push_back() -->
+import Method_UntilCpp20 	from './_codes/push_back/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/push_back/since-cpp20.mdx';
+
+# std::string push_back() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
+}} />
+
+Appends the given character ch to the end of the string.
+
+### Parameters
+
+ - `ch` - the character to append
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+<!-- TODO amortized tooltip -->
+
+Amortized constant - **O(1)**.
+
+### Exceptions
+
+If the operation would result in `size() > max_size()`, throws []std::length_error`](#).
+
+<Since v='cpp11'> In any case, if an exception is thrown for any reason, this function has no effect (<a href="#"><b>strong exception guarantee</b></a>). </Since>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cassert>
+#include <string>
+#include <iomanip>
+#include <iostream>
+ 
+int main()
+{
+    std::string str{"Short string"};
+    std::cout << "before=" << std::quoted(str) << '\n';
+    assert(str.size() == 12);
+ 
+    str.push_back('!');
+    std::cout << " after=" << quoted(str) << '\n';
+    assert(str.size() == 13);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+before="Short string"
+ after="Short string!"
+```
+
+</div>
+</Columns>
+

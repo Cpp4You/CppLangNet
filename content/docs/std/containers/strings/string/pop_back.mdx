@@ -1,0 +1,91 @@
+---
+title:					string<...>::pop_back() method
+sidebar_label:			pop_back( )
+description:			string<...>::pop_back() method C++ documentation
+hide_title:				true
+tags:					[string, pop_back, pop, back, last, remove, erase]
+
+cppreference_origin_rel: w/cpp/container/string/pop_back
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- pop_back() -->
+import Method_SinceCpp11	from './_codes/pop_back/since-cpp11.mdx';
+import Method_SinceCpp20	from './_codes/pop_back/since-cpp20.mdx';
+
+# std::string pop_back() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+	'since-cpp20': <Method_SinceCpp20 />,
+}} />
+
+Removes the last character from the string as if by
+```cpp
+erase(end()-1)
+````
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if the string is empty.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cassert>
+#include <string>
+#include <iomanip>
+#include <iostream>
+ 
+int main()
+{
+    std::string str("Short string!");
+    std::cout << "before=" << quoted(str) << '\n';
+    assert(str.size() == 13);
+ 
+    str.pop_back();
+    std::cout << " after=" << quoted(str) << '\n';
+    assert(str.size() == 12);
+ 
+    str.clear();
+//  str.pop_back(); // UB!
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+before="Short string!"
+ after="Short string"
+```
+
+</div>
+</Columns>
