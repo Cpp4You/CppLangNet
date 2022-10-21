@@ -1,0 +1,101 @@
+---
+title:					vector<...>::swap() method
+sidebar_label:			swap( )
+description:			vector<...>::swap() method C++ documentation
+hide_title:				true
+tags:					[vector, swap, exchange]
+
+cppreference_origin_rel: w/cpp/container/vector/swap
+---
+
+import Columns		from "@site-comps/Columns";
+import SwitchView	from "@site-comps/SwitchView";
+import { Since }	from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+<!-- swap() -->
+import Method_UntilCpp17				from './_codes/swap/until-cpp17.mdx';
+import Method_SinceCpp17				from './_codes/swap/since-cpp17.mdx';
+import Method_SinceCpp20				from './_codes/swap/since-cpp20.mdx';
+
+import PropagateOnContainerSwap_Note_SinceCpp11 from './_codes/swap/explanation/propagate-on-container-swap-since-cpp11.mdx'
+
+import NoexceptSpecification_SinceCpp17	from './_codes/swap/noexcept-specification/since-cpp17.mdx';
+
+# std::vector swap() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp17': <Method_SinceCpp17 />,
+	'until-cpp17': <Method_UntilCpp17 />
+}} />
+
+Exchanges the contents of the string with those of `other`.
+
+:::caution Possible invalidation
+**All iterators** and **references** may be invalidated.
+:::
+
+<SwitchView content={{
+	'since-cpp11': <PropagateOnContainerSwap_Note_SinceCpp11 />
+}} />
+
+### Parameters
+
+ - `other` - the string to exchange the contents with
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+<SwitchView content={{
+	'since-cpp17': <NoexceptSpecification_SinceCpp17 />
+}} />
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <string>
+#include <iostream>
+ 
+int main() 
+{
+    std::string a = "AAA";
+    std::string b = "BBB";
+ 
+    std::cout << "before swap" << '\n';
+    std::cout << "a: " << a << '\n';
+    std::cout << "b: " << b << '\n';
+ 
+    a.swap(b);
+ 
+    std::cout << "after swap" << '\n';
+    std::cout << "a: " << a << '\n';
+    std::cout << "b: " << b << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+before swap
+a: AAA
+b: BBB
+after swap
+a: BBB
+b: AAA
+```
+
+</div>
+</Columns>
