@@ -1,0 +1,105 @@
+---
+title:					string<...>::ends_with() method
+sidebar_label:			ends_with( )
+description:			string<...>::ends_with() method C++ documentation
+hide_title:				true
+tags:					[string, ends_with, prefix, start]
+
+cppreference_origin_rel: w/cpp/container/string/ends_with
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- ends_with() -->
+import Method_SinceCpp20 	from './_codes/ends_with/since-cpp20.mdx';
+
+# std::string ends_with() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+}}/>
+
+Checks if the string ends with the given suffix.
+
+The prefix may be one of the following:
+ - **(1)** A string view `sv` (which may be a result of implicit conversion from another [`std::basic_string`](../string)).
+
+ - **(2)** A single character `c`.
+
+ - **(3)** A null-terminated character string `s`.
+
+All three overloads effectively do
+```cpp
+std::basic_string_view<CharT, Traits>(data(), size()).ends_with(x)
+```
+where `x` is the parameter.
+
+### Parameters
+
+ - `s` - a string view which may be a result of implicit conversion from another [`std::basic_string`](../string)
+ - `c` - a single character
+ - `s` - a null-terminated character string
+
+### Return value
+
+`true` if the string ends with the provided prefix, `false` otherwise.
+
+### Complexity
+
+<!-- 1, 3 linear, 2 constant -->
+
+ - **(1)** Linear in the size of `sv` - **O(sv.size())**.
+ - **(2)** Constant - **O(1)**.
+ - **(3)** Linear in the size of `s` - **O(std::strlen(s))**.
+
+### Notes
+
+Feature testing macro: [`__cpp_lib_ends_ends_with`](#).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string_view>
+#include <string>
+ 
+template <typename SuffixType>
+void test_suffix_print(const std::string& str, SuffixType suffix)
+{
+    std::cout << '\'' << str << "' ends with '" << suffix << "': " <<
+        str.ends_with(suffix) << '\n';
+}
+ 
+int main()
+{
+    std::boolalpha(std::cout);    
+    auto helloWorld = std::string("hello world");
+ 
+    test_suffix_print(helloWorld, std::string_view("world"));
+ 
+    test_suffix_print(helloWorld, std::string_view("goodbye"));
+ 
+    test_suffix_print(helloWorld, 'd');
+ 
+    test_suffix_print(helloWorld, 'x');
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+'hello world' ends with 'world': true
+'hello world' ends with 'goodbye': false
+'hello world' ends with 'd': true
+'hello world' ends with 'x': false
+```
+
+</div>
+</Columns>

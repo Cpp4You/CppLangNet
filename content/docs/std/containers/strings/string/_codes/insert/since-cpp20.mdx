@@ -1,0 +1,39 @@
+```cpp
+// (1) Non const version only
+constexpr basic_string& insert( size_type index, size_type count, CharT ch );
+
+// (2) Non const version only
+constexpr basic_string& insert( size_type index, const CharT* s );
+
+// (3) Non const version only
+constexpr basic_string& insert( size_type index, const CharT* s, size_type count );
+
+// (4) Non const version only
+constexpr basic_string& insert( size_type index, const basic_string& str );
+
+// (5) Non const version only
+constexpr basic_string& insert( size_type index, const basic_string& str,
+                      size_type index_str, size_type count = npos );
+
+// (6) Non const version only
+constexpr iterator insert( const_iterator pos, CharT ch );
+
+// (7) Non const version only
+constexpr iterator insert( const_iterator pos, size_type count, CharT ch );
+
+// (8) Non const version only
+template< class InputIt >
+constexpr iterator insert( const_iterator pos, InputIt first, InputIt last );
+
+// (9) Non const version only
+constexpr iterator insert( const_iterator pos, std::initializer_list<CharT> ilist );
+
+// (10) Non const version only
+template< class StringViewLike >
+constexpr basic_string& insert( size_type pos, const StringViewLike& t );
+
+// (11) Non const version only
+template< class StringViewLike >
+constexpr basic_string& insert( size_type index, const StringViewLike& t,
+                      size_type index_str, size_type count = npos );
+```

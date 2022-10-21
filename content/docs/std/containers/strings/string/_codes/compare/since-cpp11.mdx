@@ -1,0 +1,24 @@
+```cpp
+// (1) Const version only
+int compare( const basic_string& str ) const noexcept;
+
+// (2) Const version only
+int compare( size_type pos1, size_type count1,
+			 const basic_string& str ) const;
+
+// (3) Const version only
+int compare( size_type pos1, size_type count1,
+             const basic_string& str,
+             size_type pos2, size_type count2 ) const;
+
+// (4) Const version only
+int compare( const CharT* s ) const;
+
+// (5) Const version only
+int compare( size_type pos1, size_type count1,
+             const CharT* s ) const;
+
+// (6) Const version only
+int compare( size_type pos1, size_type count1,
+             const CharT* s, size_type count2 ) const;
+```

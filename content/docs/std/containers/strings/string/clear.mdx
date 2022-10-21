@@ -1,0 +1,79 @@
+---
+title:					string<...>::clear() method
+sidebar_label:			clear( )
+description:			string<...>::clear() method C++ documentation
+hide_title:				true
+tags:					[string, clear, empty, erase, remove]
+
+cppreference_origin_rel: w/cpp/container/string/clear
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- clear() -->
+import Method_UntilCpp11 	from './_codes/clear/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/clear/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/clear/since-cpp20.mdx';
+
+# std::string clear() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
+}}/>
+
+Removes all characters from the string as if by executing
+```cpp
+erase(begin(), end())
+```
+
+:::caution Invalidation
+**All pointers**, **references**, and **iterators** are invalidated.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+The standard guarantees at least linear in the size of the container - **O(size())**.  
+But existing implementations operate in constant time - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <cassert>
+#include <string>
+ 
+int main()
+{
+    std::string s{ "Exemplar" };
+    std::string::size_type const capacity = s.capacity();
+ 
+    s.clear();
+    assert(s.capacity() == capacity); // <- not guaranteed
+    assert(s.empty());
+    assert(s.size() == 0);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+```
+
+</div>
+</Columns>
