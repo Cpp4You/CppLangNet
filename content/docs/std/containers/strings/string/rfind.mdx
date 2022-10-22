@@ -1,0 +1,140 @@
+---
+title:					string<...>::rfind() method
+sidebar_label:			rfind( )
+description:			string<...>::rfind() method C++ documentation
+hide_title:				true
+tags:					[string, rfind, search]
+
+cppreference_origin_rel: w/cpp/container/string/rfind
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- rfind() -->
+import Method_UntilCpp11 	from './_codes/rfind/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/rfind/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/rfind/since-cpp20.mdx';
+import Method_SinceCpp17 	from './_codes/rfind/since-cpp17.mdx';
+
+# std::string rfind() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp17': <Method_SinceCpp17 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
+}}/>
+
+Finds the last substring equal to the given character sequence.  
+Search begins at `pos`, i.e. the found substring must not begin in a position following `pos`.  
+
+ - **(1)** Finds the last substring equal to `str`.
+
+ - **(2)** Finds the last substring equal to the range **[ s, s + count )**.  
+	This range may contain null characters.
+
+ - **(3)** Finds the last substring equal to the character string pointed to by `s`.  
+	The length of the string is determined by the last null character using `Traits::length(s)`.
+
+ - **(4)** Finds the last character `ch`.
+
+ - **(5)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then finds the last substring equal to `sv`.  
+	:::important Overload Resolution
+	This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+	:::
+
+:::note
+If `npos` or any value not smaller than `size() - 1` is passed as pos, whole string will be searched.
+:::
+
+### Parameters
+
+ - `str` - string to search for
+ - `pos` - position at which to start the search
+ - `count` - length of substring to search for
+ - `s` - pointer to a character string to search for
+ - `ch` - character to search for
+ - `t` - object (convertible to [`std::basic_string_view`](../string_view)) to search for
+
+### Return value
+
+Position of the first character of the found substring or `npos` if no such substring is found.  
+:::note
+That this is an offset from the start of the string, not the end.
+:::
+
+If searching for an empty string (`str.size()`, `count`, or `Traits::length(s)` is zero) returns `pos` (the empty string is found immediately) unless `pos > size()` (including the case where `pos == npos`), in which case returns [`size()`](size).
+
+Otherwise, if [`size()`](size) is zero, [`npos`](#) is always returned.
+
+### Complexity
+
+<ImproveSection />
+
+### Exceptions
+
+ - **(1-4)** **(none)**
+ - **(5)** noexcept specification:
+	```cpp
+	noexcept(std::is_nothrow_convertible_v<const T&, std::basic_string_view<CharT, Traits>>)
+	```
+
+### Notes
+
+`Traits::eq()` is used for comparison. By default `Traits` is [`std::char_traits<CharT>`](#).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string>
+#include <iostream>
+ 
+void print(std::string::size_type n, std::string const &s)
+{
+    if (n == std::string::npos) {
+        std::cout << "not found\n";
+    } else {
+        std::cout << "found: \"" << s.substr(n) << "\" at " << n << '\n';
+    }
+}
+ 
+int main()
+{
+    std::string::size_type n;
+    std::string const s = "This is a string";
+ 
+    // search backwards from end of string
+    n = s.rfind("is");
+    print(n, s);
+    // search backwards from position 4
+    n = s.rfind("is", 4);
+    print(n, s);
+    // find a single character
+    n = s.rfind('s');
+    print(n, s);
+    // find a single character
+    n = s.rfind('q');
+    print(n, s);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+found: "is a string" at 5
+found: "is is a string" at 2
+found: "string" at 10
+not found
+```
+
+</div>
+</Columns>

@@ -1,0 +1,138 @@
+---
+title:					string<...>::find() method
+sidebar_label:			find( )
+description:			string<...>::find() method C++ documentation
+hide_title:				true
+tags:					[string, find, search]
+
+cppreference_origin_rel: w/cpp/container/string/find
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- find() -->
+import Method_UntilCpp11 	from './_codes/find/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/find/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/find/since-cpp20.mdx';
+import Method_SinceCpp17 	from './_codes/find/since-cpp17.mdx';
+
+# std::string find() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp17': <Method_SinceCpp17 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
+}}/>
+
+Finds the first substring equal to the given character sequence.  
+Search begins at `pos`, i.e. the found substring **must not** begin in a position preceding **pos**.
+
+ - **(1)** Finds the first substring equal to `str`.
+
+ - **(2)** Finds the first substring equal to the range **[ s, s + count )**.  
+	This range may contain null characters.
+
+ - **(3)** Finds the first substring equal to the character string pointed to by `s`.  
+	The length of the string is determined by the first null character using `Traits::length(s)`.
+
+ - **(4)** Finds the first character `ch` (treated as a single-character substring by the formal rules below).
+
+ - **(5)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then finds the first substring equal to `sv`.  
+	:::important Overload Resolution
+	This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+	:::
+
+Formally, a substring `str` is said to be found at position `xpos` if all of the following are `true`:
+ - `xpos >= pos`
+ - `xpos + str.size() <= size()`
+ - for all positions `n` in `str`, `Traits::eq(at(xpos + n), str.at(n))`
+
+In particular, this implies that
+ - a substring can be found only if `pos <= size() - str.size()`
+ - an empty substring is found at `pos` if and only if `pos <= size()`
+ - for a non-empty substring, if `pos >= size()`, the function always returns [`npos`](#).
+
+### Parameters
+
+ - `str` - string to search for
+ - `pos` - position at which to start the search
+ - `count` - length of substring to search for
+ - `s` - pointer to a character string to search for
+ - `ch` - character to search for
+ - `t` - object (convertible to [`std::basic_string_view`](../string_view)) to search for
+
+### Return value
+
+Position of the first character of the found substring or [`npos`](#) if no such substring is found.
+
+### Complexity
+
+<ImproveSection />
+
+### Exceptions
+
+ - **(1-4)** **(none)**
+ - **(5)** noexcept specification:
+	```cpp
+	noexcept(std::is_nothrow_convertible_v<const T&, std::basic_string_view<CharT, Traits>>)
+	```
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string>
+#include <iostream>
+ 
+void print(std::string::size_type n, std::string const &s)
+{
+    if (n == std::string::npos) {
+        std::cout << "not found\n";
+    } else {
+        std::cout << "found: " << s.substr(n) << '\n';
+    }
+}
+ 
+int main()
+{
+    std::string::size_type n;
+    std::string const s = "This is a string";
+ 
+    // search from beginning of string
+    n = s.find("is");
+    print(n, s);
+ 
+    // search from position 5
+    n = s.find("is", 5);
+    print(n, s);
+ 
+    // find a single character
+    n = s.find('a');
+    print(n, s);
+ 
+    // find a single character
+    n = s.find('q');
+    print(n, s);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+found: is is a string
+found: is a string
+found: a string
+not found
+```
+
+</div>
+</Columns>
