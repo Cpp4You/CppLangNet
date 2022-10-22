@@ -1,0 +1,140 @@
+---
+title:					string<...>::find_first_of() method
+sidebar_label:			find_first_of( )
+description:			string<...>::find_first_of() method C++ documentation
+hide_title:				true
+tags:					[string, find_first_of, search]
+
+cppreference_origin_rel: w/cpp/container/string/find_first_of
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- find_first_of() -->
+import Method_UntilCpp11 	from './_codes/find_first_of/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/find_first_of/since-cpp11.mdx';
+import Method_SinceCpp20 	from './_codes/find_first_of/since-cpp20.mdx';
+import Method_SinceCpp17 	from './_codes/find_first_of/since-cpp17.mdx';
+
+# std::string find_first_of() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp17': <Method_SinceCpp17 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
+}}/>
+
+Finds the first character equal to one of the characters in the given character sequence.  
+The search considers only the interval **[ pos, size() )**.  
+
+ - **(1)** Finds the first character equal to one of the characters in `str`.
+
+ - **(2)** Finds the first character equal to one of the characters in the range **[ s, s + count )**.  
+	This range can include null characters.
+
+ - **(3)** Finds the first character equal to one of the characters in character string pointed to by `s`.  
+	 The length of the string is determined by the first null character using Traits::length(s).
+
+ - **(4)** Finds the first character equal to `ch`.
+
+ - **(5)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then finds the first character equal to one of the characters in `sv`.  
+	:::important Overload Resolution
+	This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+	:::
+
+### Parameters
+
+ - `str` - string identifying characters to search for
+ - `pos` - position at which to start the search
+ - `count` - length of character string identifying characters to search for
+ - `s` - pointer to a character string identifying characters to search for
+ - `ch` - character to search for
+ - `t` - object (convertible to [`std::basic_string_view`](../string_view)) identifying characters to search for
+
+### Return value
+
+Position of the first character of the found substring or [`npos`](#) if no such substring is found.
+
+### Complexity
+
+<ImproveSection />
+
+### Exceptions
+
+ - **(1-4)** **(none)**
+ - **(5)** noexcept specification:
+	```cpp
+	noexcept(std::is_nothrow_convertible_v<const T&, std::basic_string_view<CharT, Traits>>)
+	```
+
+### Notes
+
+`Traits::eq()` is used for comparison. By default `Traits` is [`std::char_traits<CharT>`](#).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <cassert>
+#include <iostream>
+#include <string>
+#include <string_view>
+ 
+int main() {
+    using namespace std::string_literals;
+    std::string::size_type sz;
+ 
+    // (1)
+    sz = "alignas"s.find_first_of("klmn"s);
+    //     └────────────────────────┘
+    assert(sz == 1);
+    sz = "alignof"s.find_first_of("wxyz"s);
+    //
+    assert(sz == std::string::npos);
+ 
+    // (2)
+    const char* buf = "xyzabc";
+    sz = "consteval"s.find_first_of(buf, 0, 3);
+    //
+    assert(sz == std::string::npos);
+    sz = "consteval"s.find_first_of(buf, 0, 6);
+    //    └─────────────────────────┘c in buf
+    assert(sz == 0);
+ 
+    // (3)
+    sz = "decltype"s.find_first_of(buf);
+    //      └──────────────────────┘c in buf
+    assert(sz == 2);
+ 
+    // (4)
+    sz = "co_await"s.find_first_of('a');
+    //       └──────────────────────┘
+    assert(sz == 3);
+ 
+    // (5)
+    std::string_view sv{"int"};
+    sz = "constinit"s.find_first_of(sv);
+    //      └───────────────────────┘n in sv
+    assert(sz == 2);
+ 
+    std::cout << "All tests passed.\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+All tests passed.
+```
+
+</div>
+</Columns>
