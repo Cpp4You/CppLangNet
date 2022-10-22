@@ -46,7 +46,10 @@ Constant - **O(1)**.
 
 ### Notes
 
-Memory locations obtained from the allocator but not available for storing any element are not counted in the allocated storage. Note that the null terminator is not an element of the `std::basic_string`.
+Memory locations obtained from the allocator but not available for storing any element are not counted in the allocated storage.
+:::note
+The null terminator is not an element of the [`std::basic_string`](../string).
+:::
 
 ### Example
 
