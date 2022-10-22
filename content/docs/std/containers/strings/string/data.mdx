@@ -47,7 +47,7 @@ The pointer obtained from [`data()`](#) may be invalidated by:
 
 :::danger Undefined Behavior
 - **(1)** Modifying the character array accessed through the const overload of data results in <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
-- **(2)** Modifying the past-the-end null terminator stored at `data() + size()` to any value other than `CharT()` has <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>
+- **(2)** Modifying the past-the-end null terminator stored at `data() + size()` to any value other than `CharT()` is <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
 :::
 
 ### Parameters
@@ -71,6 +71,10 @@ A pointer to the underlying character storage.
 ### Complexity
 
 Constant - **O(1)**.
+
+### Notes
+
+<Since v='cpp11'><a href="c_str"><code>c_str()</code></a> and <a href="data"><code>data()</code></a> perform the same function.</Since>
 
 ### Example
 
