@@ -41,13 +41,13 @@ It corresponds to the element **preceding** the first element of the non-reverse
 Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
 
 :::note
-This method doesn't actually reverse the string, it just returns an iterator that points to the element before the first element of the array,
-and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
+This method doesn't actually reverse the string, it just returns an iterator that points to the element before the first element of the string,
+and which `+`, `-`, `--`, `++` operators have slightly changed implementations.
 
 For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
 :::
 
-If the container is empty, the returned iterator will be equal to `rbegin()`.
+If the container is empty, the returned iterator will be equal to [`rbegin()`](rbegin).
 
 ### Parameters
 
