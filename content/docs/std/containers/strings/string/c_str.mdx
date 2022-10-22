@@ -44,8 +44,6 @@ The pointer obtained from `c_str()` may be invalidated by:
 Writing to the character array accessed through [`c_str`](#) is <Tooltip title={Term_UndefinedBehaviour}> undefined behavior</Tooltip>.
 :::
 
-<Since v='cpp11'><a href="c_str"><code>c_str()</code></a> and <a href="data"><code>data()</code></a> perform the same function.</Since>
-
 ### Parameters
 
 **(none)**
@@ -70,6 +68,8 @@ Constant - **O(1)**.
 ### Notes
 
 The pointer obtained from [`c_str()`](#) may only be treated as a pointer to a null-terminated character string if the string object does not contain other null characters.
+
+<Since v='cpp11'><a href="c_str"><code>c_str()</code></a> and <a href="data"><code>data()</code></a> perform the same function.</Since>
 
 ### Example
 
