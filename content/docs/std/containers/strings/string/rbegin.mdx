@@ -32,12 +32,12 @@ import Method_SinceCpp20	from './_codes/end/since-cpp20.mdx';
 	'until-cpp11': <Method_UntilCpp11 />,
 }}/>
 
-Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the first element of the reversed string.
+Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the first element of the reversed string.  
 It corresponds to the last element of the non-reversed string.
 
 :::note
-This method doesn't actually reverse the string, it just returns an iterator that points to the last element of the vector,
-and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
+This method doesn't actually reverse the string, it returns an iterator that points to the last element of the string,
+and which `+`, `-`, `--`, `++` operators have slightly changed implementations.
 
 For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
 :::
