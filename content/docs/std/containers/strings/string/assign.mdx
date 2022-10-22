@@ -35,23 +35,36 @@ Replaces the contents of the string.
 
  - **(1)** Replaces the contents with `count` copies of character `ch`.
 
- - **(2)** Replaces the contents with a copy of `str`. Equivalent to `*this = str;`. <Since v='cpp11'>In particular, allocator propagation may take place.</Since>
+ - **(2)** Replaces the contents with a copy of `str`. Equivalent to `*this = str;`.  
+	<Since v='cpp11'>In particular, allocator propagation may take place.</Since>
 
- - **(3)** Replaces the contents with a substring **[ pos, pos + `count` )** of `str`. If the requested substring lasts past the end of the string, or if `count == npos`, the resulting substring is **[ pos, str.size() )**. If `pos > str.size()`, [`std::out_of_range`](#) is thrown.
+ - **(3)** Replaces the contents with a substring **[ pos, pos + `count` )** of `str`.  
+	If the requested substring lasts past the end of the string, or if `count == npos`, the resulting substring is **[ pos, str.size() )**. If `pos > str.size()`, [`std::out_of_range`](#) is thrown.
 
- - **(4)** Replaces the contents with those of `str` using move semantics. Equivalent to `*this = std::move(str)`. In particular, allocator propagation may take place.
+ - **(4)** Replaces the contents with those of `str` using move semantics. 
+	Equivalent to `*this = std::move(str)`. In particular, allocator propagation may take place.
 
- - **(5)** Replaces the contents with copies of the characters in the range **[ s, s+`count` )**. This range can contain null characters.
+ - **(5)** Replaces the contents with copies of the characters in the range **[ s, s+`count` )**. 
+	This range can contain null characters.
 
- - **(6)** Replaces the contents with those of null-terminated character string pointed to by `s`. The length of the string is determined by the first null character using `Traits::length(s)`.
+ - **(6)** Replaces the contents with those of null-terminated character string pointed to by `s`.  
+	The length of the string is determined by the first null character using `Traits::length(s)`.
 
- - **(7)** Replaces the contents with copies of the characters in the range **[ first, last )**. <Since v='cpp11'>This overload does not participate in overload resolution if `InputIt` does not satisfy [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator).</Since>
+ - **(7)** Replaces the contents with copies of the characters in the range **[ first, last )**. 
+	<Since v='cpp11'> This overload does not participate in overload resolution if <code>InputIt</code> does not satisfy <a href="/docs/named_req/LegacyInputIterator"><code>LegacyInputIterator</code></a>. </Since>
 
  - **(8)** Replaces the contents with those of the initializer list `ilist`.
 
- - **(9)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then replaces the contents with those of `sv`, as if by `assign(sv.data(), sv.size())`. This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+ - **(9)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then replaces the contents with those of `sv`, as if by `assign(sv.data(), sv.size())`.  
+	:::important Overload Resolution
+	This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+	:::
 
- - **(10)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then replaces the contents with the characters from the subview **[ pos, pos + count )** of `sv`. If the requested subview lasts past the end of `sv`, or if `count == npos`, the resulting subview is **[ pos, sv.size() )**. If `pos > sv.size()`, [`std::out_of_range`](#) is thrown. This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+ - **(10)** Implicitly converts `t` to a string view `sv` as if by `std::basic_string_view<CharT, Traits> sv = t;`, then replaces the contents with the characters from the subview **[ pos, pos + count )** of `sv`.  
+	If the requested subview lasts past the end of `sv`, or if `count == npos`, the resulting subview is **[ pos, sv.size() )**. If `pos > sv.size()`, [`std::out_of_range`](#) is thrown.  
+	:::important Overload Resolution
+	This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+	:::
 
 ### Parameters
 
@@ -61,8 +74,8 @@ Replaces the contents of the string.
  - `first`, `last` - range to copy the characters from
  - `str` - string to be used as source to initialize the characters with
  - `s` - pointer to a character string to use as source to initialize the string with
- - `ilist` - `std::initializer_list` to initialize the characters of the string with
- - `t` - object (convertible to `std::basic_string_view`) to initialize the characters of the string with
+ - `ilist` - [`std::initializer_list`](#) to initialize the characters of the string with
+ - `t` - object (convertible to [`std::basic_string_view`](../string)) to initialize the characters of the string with
 
 ### Type requirements
 
@@ -93,7 +106,7 @@ Replaces the contents of the string.
 
 If the operation would result in `size() > max_size()`, throws [`std::length_error`](#).
 
-<Since v='cpp11'> If an exception is thrown for any reason, this function has no effect ([**strong exception guarantee**](#)). </Since>
+<Since v='cpp11'> If an exception is thrown for any reason, this function has no effect (<a href="#"><b>strong exception guarantee</b></a>). </Since>
 
 ### Example
 
