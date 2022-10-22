@@ -1,0 +1,17 @@
+```cpp
+// (1) Const version only
+constexpr size_type find_first_of( const basic_string& str, size_type pos = 0 ) const noexcept;
+
+// (2) Const version only
+constexpr size_type find_first_of( const CharT* s, size_type pos, size_type count ) const;
+
+// (3) Const version only
+constexpr size_type find_first_of( const CharT* s, size_type pos = 0 ) const;
+
+// (4) Const version only
+constexpr size_type find_first_of( CharT ch, size_type pos = 0 ) const noexcept;
+
+// (5) Const version only
+template < class StringViewLike >
+constexpr size_type find_first_of( const StringViewLike& t, size_type pos = 0 ) const noexcept(/* see below */);
+```
