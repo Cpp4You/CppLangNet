@@ -48,6 +48,11 @@ erase(begin(), end())
 The standard guarantees at least linear in the size of the container - **O(size())**.  
 But existing implementations operate in constant time - **O(1)**.
 
+### Notes
+
+Unlike for [`std::vector::clear()`](../../arrays/vector/clear), the C++ standard does not explicitly require that capacity is unchanged by this function, but existing implementations do not change capacity.  
+This means that they do not release the allocated memory (see also [`shrink_to_fit()`](shrink_to_fit)).
+
 ### Example
 
 <Columns columns={['8fr', '4fr']}>
