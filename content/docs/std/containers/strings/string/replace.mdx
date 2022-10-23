@@ -24,6 +24,9 @@ import Method_SinceCpp14 	from './_codes/replace/since-cpp14.mdx';
 import Method_SinceCpp17 	from './_codes/replace/since-cpp17.mdx';
 import Method_SinceCpp20 	from './_codes/replace/since-cpp20.mdx';
 
+import Explanation_SinceCpp11 from './_codes/replace/explanation/since-cpp11.mdx';
+import Explanation_UntilCpp11 from './_codes/replace/explanation/until-cpp11.mdx';
+
 # std::string replace() method
 
 <SwitchView content={{
@@ -41,12 +44,8 @@ The new string can be one of:
  - **(2)** Substring **[ pos2, pos2 + count2 )** of `str`, except if `count2 == npos` or if would extend past `str.size()`, `[ pos2, str.size() )` is used.
  - **(3)** Characters in the range **[ first2, last2 )**.
 	<SwitchView content={{
-		'since-cpp11': <>
-			This overload only participates in overload resolution if <code>InputIt</code> qualifies as an <a href="/docs/named_req/LegacyInputIterator"><code>LegacyInputIterator</code></a>.
-		</>,
-		'until-cpp11': <>
-			This overload has the same effect as overload <b>(6)</b> if <code>InputIt</code> is an integral type.
-		</>
+		'since-cpp11': <Explanation_SinceCpp11 />,
+		'until-cpp11': <Explanation_UntilCpp11 />,
 	}} />
 
  - **(4)** Characters in the range **[ cstr, cstr + count2 )**.
