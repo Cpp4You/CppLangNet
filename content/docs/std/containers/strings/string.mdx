@@ -188,58 +188,58 @@ of a <Since v='cpp11'>null-terminated</Since>  `CharT[]` array.
 	<Symbol pub name="(destructor)">
 		Destroys the string, deallocating internal storage if used.
 	</Symbol>
-	<Symbol pub autoLink linkName="operator_assign" name="operator="
-			desc="Assigns values to the string."
-		/>
-	<Symbol pub autoLink name="assign"
-			desc="Assigns characters to the string."
-		/>
-	<Symbol pub autoLink name="get_allocator"
-			desc="Returns the associated allocator."
-		/>
+	<Symbol pub autoLink linkName="operator_assign" name="operator=">
+		Assigns values to the string.
+	</Symbol>
+	<Symbol pub autoLink name="assign">
+		Assigns characters to the string.
+	</Symbol>
+	<Symbol pub autoLink name="get_allocator">
+		Returns the associated allocator.
+	</Symbol>
 </SymbolTable>
 
 ### Element access
 
 <SymbolTable>
-	<Symbol pub autoLink name="at"
-			desc={<>Accesses the specified character <b>with bounds checking</b>.</>}
-		/>
-	<Symbol pub autoLink linkName="operator_subscript" name="operator[]"
-			desc={<>Accesses the specified character.</>}
-		/>
-	<Symbol pub autoLink linkName="front" name={<Since v="cpp11">front</Since>}
-			desc="Returns the first character."
-		/>
-	<Symbol pub autoLink linkName="back" name={<Since v="cpp11">back</Since>}
-			desc="Returns the last character."
-		/>
-	<Symbol pub autoLink name="data"
-			desc="Returns a pointer to the first character of a string."
-		/>
-	<Symbol pub autoLink name="c_str"
-			desc="Returns a non-modifiable standard C character array version of the string."
-		/>
-	<Symbol pub autoLink linkName="operator_string_view" name={<Since v="cpp17">operator basic_string_view</Since>}
-			desc={<>Returns a non-modifiable <code>string_view</code> into the entire string.</>}
-		/>
+	<Symbol pub autoLink name="at">
+		Accesses the specified character <b>with bounds checking</b>.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_subscript" name="operator[]">
+		Accesses the specified character.
+	</Symbol>
+	<Symbol pub autoLink linkName="front" name={<Since v="cpp11">front</Since>}>
+		Returns the first character.
+	</Symbol>
+	<Symbol pub autoLink linkName="back" name={<Since v="cpp11">back</Since>}>
+		Returns the last character.
+	</Symbol>
+	<Symbol pub autoLink name="data">
+		Returns a pointer to the first character of a string.
+	</Symbol>
+	<Symbol pub autoLink name="c_str">
+		Returns a non-modifiable standard C character array version of the string.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_string_view" name={<Since v="cpp17">operator basic_string_view</Since>}>
+		Returns a non-modifiable <code>string_view</code> into the entire string.
+	</Symbol>
 </SymbolTable>
 
 ### Iterators
 
 <SymbolTable>
-	<Symbol pub autoLink linkName="begin" name={<Since v="cpp11">begin<br/>cbegin</Since>}
-			desc={<>Returns an <code>iterator/const_iterator</code> to the beginning.</>}
-		/>
-	<Symbol pub autoLink linkName="end" name={<Since v="cpp11">end<br/>cend</Since>}
-			desc={<>Returns an <code>iterator/const_iterator</code> to the end.</>}
-		/>
-	<Symbol pub autoLink linkName="rbegin" name={<Since v="cpp11">rbegin<br/>crbegin</Since>}
-			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the beginning.</>}
-		/>
-	<Symbol pub autoLink linkName="rend" name={<Since v="cpp11">rend<br/>crend</Since>}
-			desc={<>Returns an reverse <code>iterator/const_iterator</code> to the end.</>}
-		/>
+	<Symbol pub autoLink linkName="begin" name={<Since v="cpp11">begin<br/>cbegin</Since>}>
+		Returns an <code>iterator/const_iterator</code> to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="end" name={<Since v="cpp11">end<br/>cend</Since>}>
+		Returns an <code>iterator/const_iterator</code> to the end.
+	</Symbol>
+	<Symbol pub autoLink linkName="rbegin" name={<Since v="cpp11">rbegin<br/>crbegin</Since>}>
+		Returns an reverse <code>iterator/const_iterator</code> to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="rend" name={<Since v="cpp11">rend<br/>crend</Since>}>
+		Returns an reverse <code>iterator/const_iterator</code> to the end.
+	</Symbol>
 </SymbolTable>
 
 ### Capacity
@@ -248,116 +248,116 @@ of a <Since v='cpp11'>null-terminated</Since>  `CharT[]` array.
 	<Symbol pub autoLink name="empty">
 		Returns <code>true</code> if the string is empty, otherwise <code>false</code>.
 	</Symbol>
-	<Symbol pub autoLink linkName="size" name={<>size<br/>length</>}
-			desc="Returns the number of characters."
-		/>
-	<Symbol pub autoLink name="max_size"
-			desc="Returns the maximum number of characters."
-		/>
-	<Symbol pub autoLink name="reserve"
-			desc="Reserves storage"
-		/>
-	<Symbol pub autoLink name="capacity"
-			desc="Returns the number of characters that can be held in currently allocated storage"
-		/>
-	<Symbol pub autoLink linkName="shrink_to_fit" name={<Since v="cpp11">shrink_to_fit</Since>}
-			desc="Reduces memory usage by freeing unused memory."
-		/>
+	<Symbol pub autoLink linkName="size" name={<>size<br/>length</>}>
+		Returns the number of characters.
+	</Symbol>
+	<Symbol pub autoLink name="max_size">
+		Returns the maximum number of characters.
+	</Symbol>
+	<Symbol pub autoLink name="reserve">
+		Reserves storage
+	</Symbol>
+	<Symbol pub autoLink name="capacity">
+		Returns the number of characters that can be held in currently allocated storage
+	</Symbol>
+	<Symbol pub autoLink linkName="shrink_to_fit" name={<Since v="cpp11">shrink_to_fit</Since>}>
+		Reduces memory usage by freeing unused memory.
+	</Symbol>
 </SymbolTable>
 
 ### Operations
 
 <SymbolTable>
-	<Symbol pub autoLink name="clear"
-			desc="Clears the contents."
-		/>
-	<Symbol pub autoLink name="insert"
-			desc="Inserts characters."
-		/>
-	<Symbol pub autoLink name="erase"
-			desc="Removes characters."
-		/>
-	<Symbol pub autoLink name="push_back"
-			desc="Appends a character to the end."
-		/>
-	<Symbol pub autoLink linkName="pop_back" name={<Since v="cpp11">pop_back</Since>}
-			desc="Removes the last character."
-		/>
-	<Symbol pub autoLink name="append"
-			desc="Appends characters to the end."
-		/>
-	<Symbol pub autoLink linkName="operator_addeq" name="operator+="
-			desc="Appends characters to the end."
-		/>
-	<Symbol pub autoLink name="compare"
-			desc="Compares two strings."
-		/>
-	<Symbol pub autoLink linkName="starts_with" name={<Since v="cpp20">starts_with</Since>}
-			desc="Checks if the string starts with the given prefix."
-		/>
-	<Symbol pub autoLink linkName="ends_with" name={<Since v="cpp20">ends_with</Since>}
-			desc="Checks if the string ends with the given suffix."
-		/>
-	<Symbol pub autoLink linkName="contains" name={<Since v="cpp23">contains</Since>}
-			desc="Checks if the string contains the given substring or character."
-		/>
-	<Symbol pub autoLink name="replace"
-			desc="Replaces specified portion of a string."
-		/>
-	<Symbol pub autoLink name="substr"
-			desc="Returns a substring."
-		/>
-	<Symbol pub autoLink name="copy"
-			desc="Copies characters."
-		/>
-	<Symbol pub autoLink name="resize"
-			desc="Changes the number of characters stored."
-		/>
-	<Symbol pub autoLink linkName="resize_and_overwrite" name={<Since v="cpp23">resize_and_overwrite</Since>}>
-			Changes the number of characters stored and possibly overwrites indeterminate contents via user-provided operation.
+	<Symbol pub autoLink name="clear">
+		Clears the contents.
 	</Symbol>
-	<Symbol pub autoLink name="swap"
-			desc="Swaps the contents."
-		/>
+	<Symbol pub autoLink name="insert">
+		Inserts characters.
+	</Symbol>
+	<Symbol pub autoLink name="erase">
+		Removes characters.
+	</Symbol>
+	<Symbol pub autoLink name="push_back">
+		Appends a character to the end.
+	</Symbol>
+	<Symbol pub autoLink linkName="pop_back" name={<Since v="cpp11">pop_back</Since>}>
+		Removes the last character.
+	</Symbol>
+	<Symbol pub autoLink name="append">
+		Appends characters to the end.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_addeq" name="operator+=">
+		Appends characters to the end.
+	</Symbol>
+	<Symbol pub autoLink name="compare">
+		Compares two strings.
+	</Symbol>
+	<Symbol pub autoLink linkName="starts_with" name={<Since v="cpp20">starts_with</Since>}>
+		Checks if the string starts with the given prefix.
+	</Symbol>
+	<Symbol pub autoLink linkName="ends_with" name={<Since v="cpp20">ends_with</Since>}>
+		Checks if the string ends with the given suffix.
+	</Symbol>
+	<Symbol pub autoLink linkName="contains" name={<Since v="cpp23">contains</Since>}>
+		Checks if the string contains the given substring or character.
+	</Symbol>
+	<Symbol pub autoLink name="replace">
+		Replaces specified portion of a string.
+	</Symbol>
+	<Symbol pub autoLink name="substr">
+		Returns a substring.
+	</Symbol>
+	<Symbol pub autoLink name="copy">
+		Copies characters.
+	</Symbol>
+	<Symbol pub autoLink name="resize">
+		Changes the number of characters stored.
+	</Symbol>
+	<Symbol pub autoLink linkName="resize_and_overwrite" name={<Since v="cpp23">resize_and_overwrite</Since>}>
+		Changes the number of characters stored and possibly overwrites indeterminate contents via user-provided operation.
+	</Symbol>
+	<Symbol pub autoLink name="swap">
+		Swaps the contents.
+	</Symbol>
 </SymbolTable>
 
 ### Search
 
 <SymbolTable>
-	<Symbol pub autoLink name="find"
-			desc="Find characters in the string."
-		/>
-	<Symbol pub autoLink name="rfind"
-			desc="Find the last occurrence of a substring."
-		/>
-	<Symbol pub autoLink name="find_first_of"
-			desc="Find first occurrence of characters."
-		/>
-	<Symbol pub autoLink name="find_first_not_of"
-			desc="Find first absence of characters."
-		/>
-	<Symbol pub autoLink name="find_last_of"
-			desc="Find last occurrence of characters."
-		/>
-	<Symbol pub autoLink name="find_last_not_of"
-			desc="Find last absence of characters."
-		/>
+	<Symbol pub autoLink name="find">
+		Find characters in the string.
+	</Symbol>
+	<Symbol pub autoLink name="rfind">
+		Find the last occurrence of a substring.
+	</Symbol>
+	<Symbol pub autoLink name="find_first_of">
+		Find first occurrence of characters.
+	</Symbol>
+	<Symbol pub autoLink name="find_first_not_of">
+		Find first absence of characters.
+	</Symbol>
+	<Symbol pub autoLink name="find_last_of">
+		Find last occurrence of characters.
+	</Symbol>
+	<Symbol pub autoLink name="find_last_not_of">
+		Find last absence of characters.
+	</Symbol>
 </SymbolTable>
 
 ## Constants
 
 <SymbolTable>
-	<Symbol pub static constexpr name="npos"
-			desc="A special value. The exact meaning depends on the context."
-		/>
+	<Symbol pub static constexpr name="npos">
+		A special value. The exact meaning depends on the context.
+	</Symbol>
 </SymbolTable>
 
 ## Non-member functions
 
 <SymbolTable noTraits>
-	<Symbol name="operator+"
-			desc="Concatenates two strings or a string and a char."
-		/>
+	<Symbol name="operator+">
+		Concatenates two strings or a string and a char.
+	</Symbol>
 	<Symbol name={<>
 				operator==<br/>
 				<Removed v="cpp20">operator!= </Removed> <br />
@@ -366,18 +366,18 @@ of a <Since v='cpp11'>null-terminated</Since>  `CharT[]` array.
 				<Removed v="cpp20">operator&lt;= </Removed> <br />
 				<Removed v="cpp20">operator&gt;= </Removed> <br />
 				operator&lt;=&gt;
-			</>}
-			desc="Lexicographically compares two strings."
-		/>
-	<Symbol name={<>std::swap <small>(std::basic_string)</small></>}
-			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
-		/>
+			</>}>
+		Lexicographically compares two strings.
+	</Symbol>
+	<Symbol name={<>std::swap <small>(std::basic_string)</small></>}>
+		An overload for a <a href="#">std::swap</a> algorithm.
+	</Symbol>
 	<Symbol name={<>
 				erase <small>(std::basic_string)</small><br/>
 				erase_if <small>(std::basic_string)</small>
-			</>}
-			desc={<>Overloads for <a href="#">std::erase/std::erase_if</a> algorithms.</>}
-		/>
+			</>}>
+		Overloads for <a href="#">std::erase/std::erase_if</a> algorithms.
+	</Symbol>
 </SymbolTable>
 
 ### Input/output
@@ -386,12 +386,12 @@ of a <Since v='cpp11'>null-terminated</Since>  `CharT[]` array.
 	<Symbol name={<>
 				operator&lt;&lt;<br/>
 				operator&gt;&gt;
-			</>}
-			desc="Performs stream input and output on strings."
-		/>
-	<Symbol name="getline"
-			desc="Read data from an I/O stream into a string."
-		/>
+			</>}>
+		Performs stream input and output on strings.
+	</Symbol>
+	<Symbol name="getline">
+			Read data from an I/O stream into a string.
+	</Symbol>
 </SymbolTable>
 
 ### Numeric conversions
@@ -401,38 +401,38 @@ of a <Since v='cpp11'>null-terminated</Since>  `CharT[]` array.
 				stoi<br/>
 				stol<br/>
 				stoll
-			</>}
-			desc="Converts a string to a signed integer."
-		/>
+			</>}>
+		Converts a string to a signed integer.
+	</Symbol>
 	<Symbol name={<>
 				stoui<br/>
 				stoul<br/>
 				stoull
-			</>}
-			desc="Converts a string to an unsigned integer."
-		/>
+			</>}>
+		Converts a string to an unsigned integer.
+	</Symbol>
 	<Symbol name={<>
 				stof<br/>
 				stod<br/>
 				stold
-			</>}
-			desc="Converts a string to a floating point value."
-		/>
-	<Symbol name="to_string"
-			desc={<>Converts an integral or floating point value to <code>std::string</code>.</>}
-		/>
-	<Symbol name="to_wstring"
-			desc={<>Converts an integral or floating point value to <code>std::wstring</code>.</>}
-		/>
+			</>}>
+		Converts a string to a floating point value.
+	</Symbol>
+	<Symbol name="to_string">
+		Converts an integral or floating point value to <code>std::string</code>.
+	</Symbol>
+	<Symbol name="to_wstring">
+		Converts an integral or floating point value to <code>std::wstring</code>.
+	</Symbol>
 </SymbolTable>
 
 ## Literals
 
 <small>Defined in namespace <code>std::literals::string_literals</code></small>
 <SymbolTable noTraits>
-	<Symbol name='operator ""s'
-			desc={<>Converts a character array literal to <code>std::string</code>.</>}
-		/>
+	<Symbol name='operator ""s'>
+		Converts a character array literal to <code>std::string</code>.
+	</Symbol>
 </SymbolTable>
 
 ## Helper classes
@@ -449,9 +449,9 @@ of a <Since v='cpp11'>null-terminated</Since>  `CharT[]` array.
 				<Since v="cpp17"> std::hash<small>&lt;std::pmr::u16string&gt;</small> </Since> <br />
 				<Since v="cpp17"> std::hash<small>&lt;std::pmr::u32string&gt;</small> </Since> <br />
 				<Since v="cpp17"> std::hash<small>&lt;std::pmr::wstring&gt;</small> </Since>
-			</>}
-			desc={<>Specializations for <code>std::hash</code> to support string hashing.</>}
-		/>
+			</>}>
+		Specializations for <code>std::hash</code> to support string hashing.
+	</Symbol>
 </SymbolTable>
 
 </ClassSummary>
