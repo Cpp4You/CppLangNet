@@ -82,7 +82,7 @@ Otherwise, if an exception is thrown, this function has no effect ([**strong exc
 
 Implementations may assume that the contents of the string are not aliased after the call to [`resize_and_overwrite()`](#).
 
-Implementations are recommended to avoid unnecessary copies and allocations by, e.g., making `p` equal to the pointer to beginning of storage of characters allocated for `*this` after the call, which can be identical to the existing storage of `*this` if `count` is less than or equal to `this->capacity()`.
+Implementations are recommended to avoid unnecessary copies and allocations by, e.g., making `p` equal to the pointer to beginning of storage of characters allocated for `*this` after the call, which can be identical to the existing storage of `*this` if `count` is less than or equal to [`capacity()`](capacity).
 
 Feature testing macro: [`__cpp_lib_string_resize_and_overwrite`](#)
 
