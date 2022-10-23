@@ -11,6 +11,7 @@ cppreference_origin_rel: w/cpp/container/string/erase
 import Columns				from "@site-comps/Columns";
 import SwitchView			from "@site-comps/SwitchView";
 import Tooltip				from "@site-comps/Tooltip";
+import { Since }			from "@site-comps/Versions";
 import Tabs					from "@theme/Tabs";
 
 import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
@@ -50,8 +51,12 @@ Erases specified characters from the string.
 ### Return value
 
  - **(1)** `*this`
- - **(2)** Iterator pointing to the character immediately following the character erased, or [`end()`](end) if no such character exists.
- - **(3)** Iterator pointing to the character last pointed to before the erase, or [`end()`](end) if no such character exists
+ - **(2)**  
+	Iterator pointing to the character immediately following the character erased.  
+	[`end()`](end) if no such character exists.
+ - **(3)**  
+	 Iterator pointing to the character last pointed to before the erase.  
+	 [`end()`](end) if no such character exists.
 
 ### Complexity
 
