@@ -46,7 +46,7 @@ Throws [`std::out_of_range`](#) if `pos > size()`.
 
 ### Notes
 
-The returned string is constructed as if by `basic_string(data() + pos, count)`, which implies that the returned string's allocator will be default-constructed — the new allocator **might not** be a copy of `this->get_allocator()`.
+The returned string is constructed as if by `basic_string(data() + pos, count)`, which implies that the returned string's allocator will be default-constructed — the new allocator **might not** be a copy of [`get_allocator()`](get_allocator).
 
 ### Example
 
