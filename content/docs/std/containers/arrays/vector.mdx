@@ -225,58 +225,58 @@ See [technical details](#technical-details) for more detailed information.
 ## Member functions
 
 <SymbolTable>
-	<Symbol pub autoLink linkName="constructors" name="(constructors)"
-			desc="Constructs a vector."
-		/>
-	<Symbol pub autoLink linkName="destructor" name="(destructor)"
-			desc="Destroys the vector, deallocating internal storage if used."
-		/>
-	<Symbol pub autoLink linkName="operator_assign" name="operator="
-			desc="Assigns values to the container."
-		/>
-	<Symbol pub autoLink name="assign"
-			desc="Assigns values to the container."
-		/>
-	<Symbol pub autoLink name="get_allocator"
-			desc="Returns the associated allocator."
-		/>
+	<Symbol pub autoLink linkName="constructors" name="(constructors)">
+		Constructs a vector.
+	</Symbol>
+	<Symbol pub autoLink linkName="destructor" name="(destructor)">
+		Destroys the vector, deallocating internal storage if used.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_assign" name="operator=">
+		Assigns values to the container.
+	</Symbol>
+	<Symbol pub autoLink name="assign">
+		Assigns values to the container.
+	</Symbol>
+	<Symbol pub autoLink name="get_allocator">
+		Returns the associated allocator.
+	</Symbol>
 </SymbolTable>
 
 ### Element access
 
 <SymbolTable>
-	<Symbol pub autoLink name="at"
-			desc={<>Accesses a specified element <b>with bounds checking.</b></>}
-		/>
-	<Symbol pub autoLink linkName="operator_index" name="operator[]"
-			desc="Accesses a specified element."
-		/>
-	<Symbol pub autoLink name="front"
-			desc="Returns the first element."
-		/>
-	<Symbol pub autoLink name="back"
-			desc="Returns the last element."
-		/>
-	<Symbol pub autoLink name="data"
-			desc="Returns a pointer to the first element of the underlying array."
-		/>
+	<Symbol pub autoLink name="at">
+		Accesses a specified element <b>with bounds checking.</b>
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_index" name="operator[]">
+		Accesses a specified element.
+	</Symbol>
+	<Symbol pub autoLink name="front">
+		Returns the first element.
+	</Symbol>
+	<Symbol pub autoLink name="back">
+		Returns the last element.
+	</Symbol>
+	<Symbol pub autoLink name="data">
+		Returns a pointer to the first element of the underlying array.
+	</Symbol>
 </SymbolTable>
 
 ### Iterators
 
 <SymbolTable>
-	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}
-			desc={<>Returns an <code>iterator/const_iterator</code> to the beginning.</>}
-		/>
-	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}
-			desc={<>Returns an <code>iterator/const_iterator</code> to the end.</>}
-		/>
-	<Symbol pub autoLink linkName="rbegin" name={<>rbegin<br/>crbegin</>}
-			desc={<>Returns a reverse <code>iterator/const_iterator</code> to the beginning.</>}
-		/>
-	<Symbol pub autoLink linkName="rend" name={<>rend<br/>crend</>}
-			desc={<>Returns a reverse <code>iterator/const_iterator</code> to the end.</>}
-		/>
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
+		Returns an <code>iterator/const_iterator</code> to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
+		Returns an <code>iterator/const_iterator</code> to the end.
+	</Symbol>
+	<Symbol pub autoLink linkName="rbegin" name={<>rbegin<br/>crbegin</>}>
+		Returns a reverse <code>iterator/const_iterator</code> to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="rend" name={<>rend<br/>crend</>}>
+		Returns a reverse <code>iterator/const_iterator</code> to the end.
+	</Symbol>
 </SymbolTable>
 
 ### Capacity
@@ -285,53 +285,53 @@ See [technical details](#technical-details) for more detailed information.
 	<Symbol pub autoLink name="empty">
 		Returns <code>true</code> if the vector is empty, otherwise <code>false</code>.
 	</Symbol>
-	<Symbol pub autoLink name="size"
-			desc="Returns the number of elements."
-		/>
-	<Symbol pub autoLink name="max_size"
-			desc="Returns the maximum possible number of elements."
-		/>
-	<Symbol pub autoLink name="reserve"
-			desc="Reserves storage."
-		/>
-	<Symbol pub autoLink name="capacity"
-			desc="Returns the number of elements that can be held in currently allocated storage."
-		/>
-	<Symbol pub autoLink name={<>shrink_to_fit <small>(since C++11)</small></>} linkName="shrink_to_fit"
-			desc="Reduces memory usage by freeing unused memory."
-		/>
+	<Symbol pub autoLink name="size">
+		Returns the number of elements.
+	</Symbol>
+	<Symbol pub autoLink name="max_size">
+		Returns the maximum possible number of elements.
+	</Symbol>
+	<Symbol pub autoLink name="reserve">
+		Reserves storage.
+	</Symbol>
+	<Symbol pub autoLink name="capacity">
+		Returns the number of elements that can be held in currently allocated storage.
+	</Symbol>
+	<Symbol pub autoLink name={<>shrink_to_fit <small>(since C++11)</small></>} linkName="shrink_to_fit">
+		Reduces memory usage by freeing unused memory.
+	</Symbol>
 </SymbolTable>
 
 ### Operations
 
 <SymbolTable>
-	<Symbol pub autoLink name="clear"
-			desc="Clears the contents."
-		/>
-	<Symbol pub autoLink name="insert"
-			desc="Inserts elements."
-		/>
-	<Symbol pub autoLink name={<>emplace <small>(C++11)</small></>} linkName="emplace"
-			desc="Constructs elements in-place."
-		/>
-	<Symbol pub autoLink name="erase"
-			desc="Removes elements."
-		/>
-	<Symbol pub autoLink name="push_back"
-			desc="Appends an element to the end."
-		/>
-	<Symbol pub autoLink name={<>emplace_back <small>(C++11)</small></>} linkName="emplace_back"
-			desc="Constructs elements in-place at the end."
-		/>
-	<Symbol pub autoLink name="pop_back"
-			desc="Removes the last element."
-		/>
-	<Symbol pub autoLink name="resize"
-			desc="Changes the number of elements stored."
-		/>
-	<Symbol pub autoLink name="swap"
-			desc="Swaps the contents."
-		/>
+	<Symbol pub autoLink name="clear">
+		Clears the contents.
+	</Symbol>
+	<Symbol pub autoLink name="insert">
+		Inserts elements.
+	</Symbol>
+	<Symbol pub autoLink name={<>emplace <small>(C++11)</small></>} linkName="emplace">
+		Constructs elements in-place.
+	</Symbol>
+	<Symbol pub autoLink name="erase">
+		Removes elements.
+	</Symbol>
+	<Symbol pub autoLink name="push_back">
+		Appends an element to the end.
+	</Symbol>
+	<Symbol pub autoLink name={<>emplace_back <small>(C++11)</small></>} linkName="emplace_back">
+		Constructs elements in-place at the end.
+	</Symbol>
+	<Symbol pub autoLink name="pop_back">
+		Removes the last element.
+	</Symbol>
+	<Symbol pub autoLink name="resize">
+		Changes the number of elements stored.
+	</Symbol>
+	<Symbol pub autoLink name="swap">
+		Swaps the contents.
+	</Symbol>
 </SymbolTable>
 
 ## Non-member functions
@@ -345,18 +345,18 @@ See [technical details](#technical-details) for more detailed information.
 				operator&lt;= <small>(removed in C++20)</small><br/>
 				operator&gt;= <small>(removed in C++20)</small><br/>
 				operator&lt;=&gt;
-			</>}
-			desc="Lexicographically compares the values in the vector."
-		/>
-	<Symbol name={<>std::swap <small>(std::vector)</small></>}
-			desc={<>An overload for a <a href="#">std::swap</a> algorithm.</>}
-		/>
+			</>}>
+			Lexicographically compares the values in the vector.
+	</Symbol>
+	<Symbol name={<>std::swap <small>(std::vector)</small></>}>
+			An overload for a <a href="#">std::swap</a> algorithm.
+	</Symbol>
 	<Symbol name={<>
 				erase <small>(std::vector)</small><br/>
 				erase_if <small>(std::vector)</small>
-			</>}
-			desc={<>Overloads for <a href="#">std::erase/std::erase_if</a> algorithms.</>}
-		/>
+			</>}>
+			Overloads for <a href="#">std::erase/std::erase_if</a> algorithms.
+	</Symbol>
 </SymbolTable>
 
 </ClassSummary>
