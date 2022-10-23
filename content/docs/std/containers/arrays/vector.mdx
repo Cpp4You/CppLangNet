@@ -9,16 +9,16 @@ hide_title:			true
 cppreference_origin_rel: w/cpp/container/vector
 ---
 
-import ClassSummary				from "@site-comps/ClassSummary";
-import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
-import Columns					from "@site-comps/Columns";
-import Image					from "@site-comps/Image";
-import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
-import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
-import SwitchView				from "@site-comps/SwitchView";
-import Tabs						from "@theme/Tabs";
-import TabItem					from "@theme/TabItem";
-import {Since, Until}			from "@site-comps/Versions";
+import ClassSummary					from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }		from "@site-comps/SymbolTable";
+import Columns						from "@site-comps/Columns";
+import Image						from "@site-comps/Image";
+import NotFinished					from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection				from "@site/i18n/en/presets/ImproveSection.mdx";
+import SwitchView					from "@site-comps/SwitchView";
+import Tabs							from "@theme/Tabs";
+import TabItem						from "@theme/TabItem";
+import { Since, Until, Removed }	from "@site-comps/Versions";
 
 <!------------------ Codes ----------------->
 
@@ -297,7 +297,7 @@ See [technical details](#technical-details) for more detailed information.
 	<Symbol pub autoLink name="capacity">
 		Returns the number of elements that can be held in currently allocated storage.
 	</Symbol>
-	<Symbol pub autoLink name={<>shrink_to_fit <small>(since C++11)</small></>} linkName="shrink_to_fit">
+	<Symbol pub autoLink name={<Since v='cpp11'>shrink_to_fit </Since>} linkName="shrink_to_fit">
 		Reduces memory usage by freeing unused memory.
 	</Symbol>
 </SymbolTable>
@@ -311,7 +311,7 @@ See [technical details](#technical-details) for more detailed information.
 	<Symbol pub autoLink name="insert">
 		Inserts elements.
 	</Symbol>
-	<Symbol pub autoLink name={<>emplace <small>(C++11)</small></>} linkName="emplace">
+	<Symbol pub autoLink name={<Since v='cpp1'> emplace <Since/>} linkName="emplace">
 		Constructs elements in-place.
 	</Symbol>
 	<Symbol pub autoLink name="erase">
@@ -320,7 +320,7 @@ See [technical details](#technical-details) for more detailed information.
 	<Symbol pub autoLink name="push_back">
 		Appends an element to the end.
 	</Symbol>
-	<Symbol pub autoLink name={<>emplace_back <small>(C++11)</small></>} linkName="emplace_back">
+	<Symbol pub autoLink name={<Since v='cpp11'> emplace_back <Since/>} linkName="emplace_back">
 		Constructs elements in-place at the end.
 	</Symbol>
 	<Symbol pub autoLink name="pop_back">
@@ -339,11 +339,11 @@ See [technical details](#technical-details) for more detailed information.
 <SymbolTable noTraits>
 	<Symbol name={<>
 				operator==<br/>
-				operator!= <small>(removed in C++20)</small><br/>
-				operator&lt; <small>(removed in C++20)</small><br/>
-				operator&gt; <small>(removed in C++20)</small><br/>
-				operator&lt;= <small>(removed in C++20)</small><br/>
-				operator&gt;= <small>(removed in C++20)</small><br/>
+				<Removed v='cpp20'> operator!= </Removed> <br />
+				<Removed v='cpp20'> operator&lt; </Removed> <br />
+				<Removed v='cpp20'> operator&gt; </Removed> <br />
+				<Removed v='cpp20'> operator&lt;= </Removed> <br />
+				<Removed v='cpp20'> operator&gt;= </Removed> <br />
 				operator&lt;=&gt;
 			</>}>
 			Lexicographically compares the values in the vector.
