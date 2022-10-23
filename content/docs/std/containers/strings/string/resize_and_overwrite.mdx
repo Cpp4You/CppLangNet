@@ -52,8 +52,6 @@ The program is **ill-formed** if `r` does not have an integer-like type.
 The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if `std::move(op)(p, count)` throws an exception or modifies `p` or `count`, `r` is not in the range **[ 0, count ]**, or any character in range **[ p, p + r )** has an indeterminate value.
 :::
 
-Implementations are recommended to avoid unnecessary copies and allocations by, e.g., making `p` equal to the pointer to beginning of storage of characters allocated for `*this` after the call, which can be identical to the existing storage of `*this` if `count` is less than or equal to `this->capacity()`.
-
 ### Parameters
 
  - `count` - the maximal possible new size of the string
@@ -83,6 +81,8 @@ Otherwise, if an exception is thrown, this function has no effect ([**strong exc
 :::
 
 Implementations may assume that the contents of the string are not aliased after the call to [`resize_and_overwrite()`](#).
+
+Implementations are recommended to avoid unnecessary copies and allocations by, e.g., making `p` equal to the pointer to beginning of storage of characters allocated for `*this` after the call, which can be identical to the existing storage of `*this` if `count` is less than or equal to `this->capacity()`.
 
 Feature testing macro: [`__cpp_lib_string_resize_and_overwrite`](#)
 
