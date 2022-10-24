@@ -29,10 +29,10 @@ import Method_SinceCpp20	from './_codes/shrink_to_fit/since-cpp20.mdx';
 }} />
 
 Requests the removal of unused capacity.
-It is a non-binding request to reduce `capacity()` to `size()`.
+It is a non-binding request to reduce [`capacity()`](capacity) to [`size()`](size).
 It depends on the implementation whether the request is fulfilled.
 
-:::danger Invalidation
+:::caution Invalidation
 If reallocation occurs, all **iterators**, including the **past-the-end iterator**, and all **references** to the elements are invalidated.
 
 If no reallocation takes place, **no iterators or references** are invalidated.
@@ -40,22 +40,22 @@ If no reallocation takes place, **no iterators or references** are invalidated.
 
 ### Parameters
 
-(none)
+**(none)**
 
 ### Type requirements
 - `T` *(the container's element type)* must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable).
 
 ### Return value
 
-(none)
+**(none)**
 
 ### Complexity
 
-At most linear in the size of the container.
+At most linear in the size of the container - **O(size())**.
 
 ### Exceptions
 
-If an exception is thrown other than by `T`'s move constructor, there are no effects.
+If an exception is thrown other than by `T`'s move constructor, there are no effects ([**strong exception guarantee**](#)).
 
 ### Example
 
