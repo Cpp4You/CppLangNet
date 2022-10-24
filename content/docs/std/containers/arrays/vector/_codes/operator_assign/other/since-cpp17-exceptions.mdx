@@ -1,6 +1,0 @@
-- **(1, 2)** May throw implementation-defined exceptions.
-- **(3)** Noexcept specification:
-```cpp
-noexcept(std::allocator_traits<Alloc>::propagate_on_container_move_assignment::value
-|| std::allocator_traits<Alloc>::is_always_equal::value)
-```
