@@ -1,8 +1,10 @@
 ```cpp
 // (1) Non const version only
 constexpr vector& operator=( const vector& other );
+
 // (2) Non const version only
 constexpr vector& operator=( vector&& other ) noexcept(/* see below */);
+
 // (3) Non const version only
 constexpr vector& operator=( std::initializer_list<T> ilist );
 ```
