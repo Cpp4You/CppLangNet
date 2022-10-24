@@ -10,6 +10,9 @@ cppreference_origin_rel: w/cpp/container/vector/data
 
 import Columns				from "@site-comps/Columns";
 import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+import Term_UndefinedBehaviour			from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
 <!-- data() -->
 import Method_UntilCpp11	from './_codes/data/until-cpp11.mdx';
@@ -24,26 +27,32 @@ import Method_SinceCpp20	from './_codes/data/since-cpp20.mdx';
 	'until-cpp11': <Method_UntilCpp11 />,
 }}/>
 
-Returns pointer to the underlying array serving as element storage.
+Returns pointer to the underlying array serving as element storage. 
+
 The pointer is such that range **[ `data()`; `data() + size()` )** is always a valid range,
-even if the container is empty (`data()` is not dereferenceable in that case).
+even if the container is empty.
+
+:::danger Undefined Behaviour
+If the container is empty, dereferencing the pointer returned by [`data()`](#) is <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
+:::
 
 ### Parameters
 
-(none)
+**(none)**
 
 ### Return value
 
-Pointer to the underlying element storage.
+Pointer to the underlying element storage.  
 For a non-empty container `c`, the returned pointer compares equal to the address of the first element - `c.data() == &c[0]`;
 
 ### Complexity
 
-Constant.
+Constant - *O*(1)**.
 
 ### Notes
 
-If `size()` is `0`, `data()` may or may not return a null pointer.
+
+If the container is empty, [`data()`](#) may or may not return a null pointer.
 
 ### Example
 
