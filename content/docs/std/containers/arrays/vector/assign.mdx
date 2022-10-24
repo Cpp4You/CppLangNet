@@ -35,13 +35,15 @@ import Method_SinceCpp20 	from './_codes/assign/since-cpp20.mdx';
 Replaces the contents of the container with the contents of another.
 
  - **(1)** Replaces the contents with `count` copies of value `value`.
- - **(2)** Replaces the contents with copies of those in the range **[ first, last )**.
+ - **(2)** Replaces the contents with copies of those in the range **[ first, last )**.  
+	:::danger Undefined Behavior
     The behavior is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip> if either argument is an iterator into `*this`.
+	:::
 
  - **(3)** Replaces the contents with the elements from the initializer list `ilist`.
 
-:::danger Invalidation
-All **iterators**, **pointers** and **references** to the elements of the container are invalidated.
+:::caution Invalidation
+All **iterators**, **pointers** and **references** to the elements of the container are invalidated.  
 The **past-the-end iterator** is also invalidated.
 :::
 
@@ -49,22 +51,22 @@ The **past-the-end iterator** is also invalidated.
 
  - `count` - the new size of the container
  - `value` - the value to initialize elements of the container with
- - `first, last` - the range to copy the elements from
+ - `first`, `last` - the range to copy the elements from
  - `ilist` - initializer list to copy the values from
 
 ### Return value
 
-(none)
+**(none)**
 
 ### Complexity
 
- - **(1)** Linear in count
- - **(2)** Linear in distance between `first` and `last`
- - **(3)** Linear in `ilist.size()`
+ - **(1)** Linear in count - **O(count)**.
+ - **(2)** Linear in distance between `first` and `last` - **O(std::distance(firs,t last))**.
+ - **(3)** Linear in `ilist.size()` - **O(ilist.size())**.
 
 ### Exceptions
 
-(none)
+**(none)**
 
 ### Examples
 
