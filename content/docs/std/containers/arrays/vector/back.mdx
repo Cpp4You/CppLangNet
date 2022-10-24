@@ -22,20 +22,23 @@ import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behav
 import Method_UntilCpp20 	from './_codes/back/until-cpp20.mdx';
 import Method_SinceCpp20 	from './_codes/back/since-cpp20.mdx';
 
-
 # std::vector back() method
 
 <SwitchView content={{
-		'since-cpp20': <Method_SinceCpp20 />,
-		'until-cpp20': <Method_UntilCpp20 />,
-	}}/>
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
+}}/>
 
 Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the last element in the container.
-Calling back on an empty container is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip>.
+
+:::danger Undefined Behavior
+Calling [`back()`](#) on an empty container is <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
+:::
+
 
 ### Parameters
 
-(none)
+**(none)**
 
 ### Return value
 
@@ -43,11 +46,11 @@ Reference to the last element.
 
 ### Complexity
 
-Constant.
+Constant - **O(1)**.
 
 ### Notes
 
-For a container `c`, the expression `c.back()` is equivalent to `*std::prev(c.end())`.
+For a container `c`, the expression `c.back()` is equivalent to `*std::prev(c.end())` and `c[c.size() - 1]`.
 
 ### Example
 
