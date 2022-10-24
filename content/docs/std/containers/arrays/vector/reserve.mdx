@@ -30,13 +30,13 @@ import Method_SinceCpp20	from './_codes/reserve/since-cpp20.mdx';
 
 Increase the capacity of the vector (the total number of elements that the vector can hold without requiring reallocation)
 to a value that's **greater or equal** to `new_cap`.
-If `new_cap` is greater than the current `capacity()`, new storage is allocated, otherwise the function does nothing.
+If `new_cap` is greater than the current [`capacity()`](capacity), new storage is allocated, otherwise the function does nothing.
 
 :::important
 `reserve()` does not change the size of the vector.
 :::
 
-:::danger Invalidation
+:::caution Invalidation
 If `new_cap` is greater than `capacity()`, all **iterators**, including **the past-the-end iterator**, and all **references** to the elements are invalidated.
 
 Otherwise, **no iterators or references** are invalidated.
@@ -51,39 +51,39 @@ Otherwise, **no iterators or references** are invalidated.
 
 ### Return value
 
-(none)
+**(none)**
 
 ### Complexity
 
-At most linear in the `size()` of the container.
+At most linear in the `size()` of the container - **O(sizes())**.
 
 ### Exceptions
 
 <!-- TODO add link here -->
  - [`std::length_error`](#) if `new_cap > max_size()`
  - any exception thrown by `Allocator::allocate()` (typically [`std::bad_alloc`](#))
- 
-If an exception is thrown, this function has no effect ([`strong exception guarantee`](#)).
+
+If an exception is thrown, this function has no effect ([**strong exception guarantee**](#)).
 
 <SwitchView content={{
     'since-cpp11': <>
         If <code>T</code>'s move constructor is <b>not noexcept</b> and <code>T</code> is not <a href="/docs/named_req/CopyInsertable">CopyInsertable</a> into <code>*this</code>,
         vector will use the throwing move constructor. If it throws, the guarantee is waived and the effects are unspecified.
     </>
-    }} />
-    
+}} />
+
 
 ### Notes
 
-Correctly using `reserve()` can prevent unnecessary reallocations, but inappropriate uses of `reserve()` 
-(for instance, calling it before every `push_back()` call) may actually increase the number of reallocations (by causing the capacity to grow linearly rather than exponentially)
+Correctly using [`reserve()`](reserve) can prevent unnecessary reallocations, but inappropriate uses of [`reserve()`](reserve) 
+(for instance, calling it before every [`push_back()`](push_back) call) may actually increase the number of reallocations (by causing the capacity to grow linearly rather than exponentially)
 and result in increased computational complexity and decreased performance. 
 
-For example, a function that receives an arbitrary vector by reference and appends elements to it should usually not call `reserve()` on the vector, since it does not know of the vector's usage characteristics.
+For example, a function that receives an arbitrary vector by reference and appends elements to it should usually not call [`reserve()`](reserve) on the vector, since it does not know of the vector's usage characteristics.
 
-When inserting a range, the range version of `insert()` is generally preferable as it preserves the correct capacity growth behavior, unlike `reserve()` followed by a series of `push_back()`s.
+When inserting a range, the range version of [`insert()`](insert) is generally preferable as it preserves the correct capacity growth behavior, unlike [`reserve()`](reserve) followed by a series of [`push_back()`](push_back)s.
 
-`reserve()` cannot be used to reduce the capacity of the container; to that end `shrink_to_fit()` is provided.
+[`reserve()`](reserve) cannot be used to reduce the capacity of the container; to that end [`shrink_to_fit()`](shrink_to_fit) is provided.
 
 ### Example
 
