@@ -20,16 +20,17 @@ import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-ref
 <!----------------- Codes ---------------------->
 
 <!-- at() -->
-import Method_at_UntilCpp20 	from './_codes/at/until-cpp20.mdx';
-import Method_at_SinceCpp20 	from './_codes/at/since-cpp20.mdx';
+import Method_UntilCpp20 	from './_codes/at/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/at/since-cpp20.mdx';
 
 <SwitchView content={{
-		'since-cpp20': <Method_at_SinceCpp20 />,
-		'until-cpp20': <Method_at_UntilCpp20 />,
-	}}/>
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
+}}/>
 
 Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the element at specified index `pos`.
-Bounds checking **is performed**, exception of type `std::out_of_range` will be thrown on invalid access.
+
+Bounds checking **is performed**.
 
 ### Parameters
 
@@ -41,11 +42,11 @@ Reference to the requested element.
 
 ### Exceptions
 
-Throws `std::out_of_range` if `pos >= size()`.
+Throws [`std::out_of_range`](#) if `pos >= size()`.
 
 ### Complexity
 
-Constant.
+Constant - **O(1)**.
 
 ### Example
 
