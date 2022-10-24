@@ -27,17 +27,18 @@ import Method_SinceCpp20 	from './_codes/begin/since-cpp20.mdx';
 # std::vector begin()/cbegin() method
 
 <SwitchView content={{
-        'since-cpp20': <Method_SinceCpp20 />,
-        'since-cpp11': <Method_SinceCpp11 />,
-        'until-cpp11': <Method_UntilCpp11 />,
-    }}/>
+	'since-cpp20': <Method_SinceCpp20 />,
+	'since-cpp11': <Method_SinceCpp11 />,
+	'until-cpp11': <Method_UntilCpp11 />,
+}}/>
 
-Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the vector.
-If the array is empty, the returned iterator will be equal to `end()`.
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the first element of the container.
+
+If the container is empty, the returned iterator will be equal to [`end()`](end).
 
 ### Parameters
 
-(none)
+**(none)**
 
 ### Return value
 
@@ -45,7 +46,7 @@ Iterator to the first element.
 
 ### Complexity
 
-Constant.
+Constant - **O(1)**.
 
 ### Notes
 
@@ -85,7 +86,7 @@ int main()
 {
     std::vector<int> arr = {1, 2, 3, 4, 5};
     auto it = arr.cbegin(); // Type: std::vector<int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -106,7 +107,7 @@ int main()
 {
     const std::vector<int> arr = {1, 2, 3, 4, 5};
     auto it = arr.begin(); // Type: std::vector<int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
@@ -121,7 +122,7 @@ int main()
 {
     const std::vector<int> arr = {1, 2, 3, 4, 5};
     auto it = arr.cbegin(); // Type: std::vector<int>::const_iterator
-    // highlight-next-line
+    // error-next-line
     *it = 5; // ❌ Error! 
 }
 ```
