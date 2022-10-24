@@ -21,7 +21,9 @@ import Method_SinceCpp20	from './_codes/destructors/since-cpp20.mdx';
 	'until-cpp20': <Method_UntilCpp20 />,
 }} />
 
-Destructs the vector. The destructors of the elements are called and the used storage is deallocated. 
+Destructs the `vector`.
+
+The destructors of the elements are called and the used storage is deallocated. 
 
 :::note
 If the elements are pointers, the pointed-to objects are not destroyed.
@@ -29,4 +31,4 @@ If the elements are pointers, the pointed-to objects are not destroyed.
 
 ### Complexity
 
-Linear in the size of the vector.
+Linear in the size of the container - **O(size())**.
