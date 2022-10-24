@@ -33,13 +33,15 @@ import Method_SinceCpp20 	from './_codes/rend/since-cpp20.mdx';
     'until-cpp11': <Method_UntilCpp11 />,
 }} />
 
-It corresponds to the last element of the non-reversed vector.
+Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the last element of the reversed container.
 
-Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the last element of the reversed vector.
-It corresponds to the element **preceding** the first element of the non-reversed vector.
+It corresponds to the element **preceding** the first element of the non-reversed container.
 
-It effectively returns an iterator that points past the end of the original vector. 
-Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
+It effectively returns an iterator that points past the end of the original container.
+
+:::danger Undefined Behaviour
+Attempting to dereference a past-the-end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
+:::
 
 :::note
 This method doesn't actually reverse the vector, it just returns an iterator that points to the element before the first element of the array,
@@ -48,11 +50,11 @@ and whose `+`, `-`, `--`, `++` operators have slightly changed implementations.
 For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
 :::
 
-If the container is empty, the returned iterator will be equal to `rbegin()`.
+If the container is empty, the returned iterator will be equal to [`rbegin()`](rbegin).
 
 ### Parameters
 
-(none)
+**(none)**
 
 ### Return value
 
@@ -60,7 +62,7 @@ Reverse iterator to the first element.
 
 ### Complexity
 
-Constant.
+Constant - **O(1)**.
 
 ### Difference between rend and crend
 
@@ -97,7 +99,7 @@ int main()
 {
     std::vector<int> arr = {1, 2, 3, 4, 5};
     auto it = arr.crend(); // Type: std::vector<int>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
 ```
@@ -118,7 +120,7 @@ int main()
 {
     const std::vector<int> arr = {1, 2, 3, 4, 5};
     auto it = arr.rend(); // Type: std::vector<int>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
 ```
@@ -133,7 +135,7 @@ int main()
 {
     const std::vector<int> arr = {1, 2, 3, 4, 5};
     auto it = arr.crend(); // Type: std::vector<int>::reverse_const_iterator
-    // highlight-next-line
+    // error-next-line
     *std::prev(it) = 5; // ❌ Error! 
 }
 ```
