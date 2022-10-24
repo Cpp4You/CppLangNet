@@ -24,11 +24,15 @@ import Method_OpSub_UntilCpp20	from './_codes/operator_subscript/until-cpp20.mdx
 import Method_OpSub_SinceCpp20	from './_codes/operator_subscript/since-cpp20.mdx';
 
 <SwitchView content={{
-		'since-cpp20': <Method_OpSub_SinceCpp20 />,
-		'until-cpp20': <Method_OpSub_UntilCpp20 />,
-	}}/>
+	'since-cpp20': <Method_OpSub_SinceCpp20 />,
+	'until-cpp20': <Method_OpSub_UntilCpp20 />,
+}}/>
 
-Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the element at specified index `pos`. No bounds checking is performed.
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the element at specified index `pos`.
+
+:::caution
+No bounds checking is performed.
+:::
 
 ### Parameters
 
@@ -40,11 +44,11 @@ Reference to the requested element.
 
 ### Exceptions
 
-None.
+**(none)**
 
 ### Complexity
 
-Constant.
+Constant - **O(1)**.
 
 ### Example
 
