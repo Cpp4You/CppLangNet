@@ -1,0 +1,439 @@
+---
+sidebar_position:	4
+sidebar_label:		"1. Intro"
+title:				"Introduction to Conditions"
+description:		"Lesson: condition basics in C++"
+tags:				[condition, if, else, else-if, compound, boolean, bool]
+hide_title:			true
+---
+
+<!-- Components -->
+import Tabs			from "@theme/Tabs";
+import TabItem		from "@theme/TabItem";
+
+<!-- Presets -->
+import NotFinished	from "@site/i18n/en/presets/NotFinished.mdx";
+
+# Introduction to Conditions
+
+So far, we've been creating programs that worked the same way every time.
+Our creations could not make decisions. Now is the time to change that.
+In this lesson we will provide branching paths for our programs to execute
+based on what the user types in. This will be a guided lesson in which we
+will make an application that checks if the user can legally get a Driver's License. 😎
+
+## Code preparation
+
+Let's first ask the user for their year of birth.
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 2000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// Year 2022 at the moment of writing this lesson
+	int age = 2022 - yearOfBirth;
+
+	// highlight-start
+	// Case A:
+	std::cout << "You can legally get a driver's license\n";
+	// highlight-end
+
+	// highlight-start
+	// Case B:
+	std::cout << "You cannot legally get a driver's license\n";
+	// highlight-end
+}
+```
+
+Here, I've highlighted two pieces of code — one where the user can legally get a driver's license,
+and another where they cannot. We only want one of these segments to execute, not both. How can we do that?
+First, we should specify what the "cases" are, and under what conditions they should execute.
+
+- Case A — Legal — This should be executed only when `age` is greater than or equal to `18`
+- Case B — Illegal — This should be executed only when `age` is less than `18`
+
+Continue on and you'll see how we can translate these cases into code.
+
+## Conditional statements
+
+The simplest form of a condition in C++ is the `if` statement, the basic form of which is as follows:
+
+```cpp title="🔹 Anatomy of an if statement"
+if (/* boolean condition */) 
+{
+	// The code in here executes only if the condition evaluates to true
+}
+
+// The code out here executes regardless of whether the condition is true or false
+```
+
+To use an `if` statement, we need two things:
+1. A condition that results in a boolean `true`/`false` value when evaluated
+2. Code to execute when the condition evaluates to `true`
+
+After an `if` keyword, we put a boolean condition inside of parentheses.
+Then, the braces that surround #2 create what's known as a **block of code**. <u>Everything inside this code block will be
+executed if and only if the condition is true</u>. Variables that are created in a code block live and die with that 
+code block — they are destroyed when the block ends (with the closing brace `}` ) and are completely inaccessible
+from outside it.
+
+Let's apply this to our Driver's License example by combining the if statement with the cases we previously determined:
+
+```cpp title="🔹 First attempt at using if statements"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 2000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// Year 2022 at the moment of writing this lesson
+	int age = 2022 - yearOfBirth;
+
+	// highlight-start
+	// Case A:
+	if (/* age is greater than or equal to 18*/)
+	{
+		std::cout << "You can legally get a driver's license\n";
+	}
+	// highlight-end
+
+	// highlight-start
+	// Case B:
+	if (/* age is less than 18 */)
+	{
+		std::cout << "You cannot legally get a driver's license\n";
+	}
+	// highlight-end
+}
+```
+
+Notice here how we have two `if` statements, one for each case.
+The first one handles our Case A, where they can legally obtain a driver's license.
+The second one handles our Case B, where they cannot legally obtain a driver's license.
+
+Upon closer inspection, one fact should quickly become obvious — these cases are **mutually exclusive**.
+This means that it is not possible for both cases to be true; only one or the other can execute.
+C++ provides the `else` keyword to delineate mutually exclusive conditions. While the above code
+will work as expected, we can improve it like so:
+
+```cpp title="🔹 Anatomy of an if-else statement"
+if (/* boolean condition */)
+{
+	// The code in here executes only if the condition evalutes to true
+}
+else
+{
+	// The code in here executes only if the condition evalutes to false
+}
+
+// The code out here executes regardless of whether the condition is true or false
+```
+This `else` block is optional, and you should only use it if you want mutual exclusion.
+
+Now we can turn back to our example and see only one condition is necessary,
+as if one is true then the other must be false.
+
+
+```cpp title="🔹 First attempt at using an if-else statement"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 2000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// Year 2022 at the moment of writing this lesson
+	int age = 2022 - yearOfBirth;
+
+	// highlight-start
+	if (/* age is greater than or equal to 18*/)
+	{
+		std::cout << "You can legally get a driver's license\n";
+	}
+	else
+	{
+		std::cout << "You cannot legally get a driver's license\n";
+	}
+	// highlight-end
+}
+```
+
+:::danger No semicolon `;`
+
+Don't put semicolon (`;`) after the parentheses of the `if` statement.
+This won't cause a compiler error but it **will** cause your code to
+not behave correctly. The conditional code block will always be executed.
+
+<Tabs>
+<TabItem value="right" label="✔ Right" default>
+
+```cpp
+if (age >= 18) 
+// ...
+else
+// ...
+```
+
+</TabItem>
+<TabItem value="wrong" label="❌ Wrong">
+
+```cpp
+if (age >= 18);
+// ...
+else;
+// ...
+```
+
+</TabItem>
+</Tabs>
+
+:::
+
+To recap, we have learned how to separate conditionally executed cases in our code into
+dedicated if statements. This allows us to choose what code gets run depending on various
+values in our program. Now that we have the basic structure of our if-else statement,
+we can see how to finish our program by creating the boolean condition.
+
+## Boolean expressions
+
+Inside the parenthesis of an `if` statement is the **boolean expression**, i.e. an expression
+that evaluates to either `true` or `false`. C++ provides several new operators that allow
+us to form such an expression.
+
+### Boolean operators
+
+Below is a table that shows some of the **boolean operators** available in C++. A boolean operator
+is one that returns a boolean `true`/`false` based on its input(s). 
+They are like the other mathematical operators you've seen in previous lessons, but instead
+of evaluating to a number like `int`, they evaluate to a `bool` (`true`/`false`).
+
+| C++ operator | Math equivalent | Description |
+| -------- | -------------- | ----------- |
+| `a == b` | a **=** b |Is `a` equal to `b`? |
+| `a != b` | a ≠ b | Is `a` not equal to `b`? |
+| `a > b` | a **&gt;** b | Is `a` strictly greater than `b`? |
+| `a >= b` | a ≥ b | Is `a` greater than or equal to `b`? |
+| `a < b` | a **&lt;** b | Is `a` strictly less than `b`? |
+| `a <= b` | a ≤ b | Is `a` less than or equal to `b`? |
+
+#### Equality operators
+The first two rows of our table `==` and `!=` make up the **equality operators**.
+These two operators allow us to check if two values are the same. 
+The equality operators work on most C++ types, including numbers, strings, bools, and more.
+
+:::danger
+A single `=` is different from a double `==`. The single `=` is the **assignment operator**, such as when you create or change a variable.
+The double `==` is the **equality operator**, used when you want to check if two variables have the same value.
+
+So inside an `if` statement's condition, when you want to check for equality:
+- ✔ `if (a == b)`
+- ❌ `if (a = b)`
+:::
+
+#### Relational operators
+The next four rows of our table make up the **relational operators**.
+These two operators allow us to compare two values positionally (such as on a number line
+or alphabetically).
+The relational operators work on some C++ types, like numbers and strings; however,
+many other types that we have not covered yet cannot be compared like this.
+
+We now know enough to get the first version of our program functioning. As a reminder,
+we need to make a condition that checks whether the user's age is greater than 
+or equal to 18. Using the table above, the closest match is `age >= 18`.
+Now we can fill in our `if` statement:
+
+```cpp title="🔹 Driver's License Oracle 2000"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 2000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// Year 2022 at the moment of writing this lesson
+	int age = 2022 - yearOfBirth;
+
+	// highlight-next-line
+	if (age >= 18)
+	{
+		std::cout << "You can legally get a driver's license\n";
+	}
+	else
+	{
+		std::cout << "You cannot legally get a driver's license\n";
+	}
+}
+```
+
+As a bonus challenge, try to form three other equivalent formulations of `age >= 18`, using the other remaining relational operators for each one.
+
+### Compound boolean expressions
+
+You can transform and combine boolean expressions by what are called the **logical operators**.
+These are a subset of the boolean operators initially introduced above, but they are intended to take 
+boolean value(s) as input. 
+
+C++ supports two equivalent forms of these operators, a textual version
+and a symbolic version. While the symbolic representation is more common in the wild, you may find
+the textual representation to be easier to understand and remember. You can use whichever you like
+best, but try to be consistent!
+
+| C++ operator | Alternative representation | Description |
+| -------- | -------------- | ----------- |
+| `a and b` | `a && b` | Are **both** `a` AND `b` true? |
+| `a or b` | <code>a &#x7C;&#x7C;  b</code>  | Is **either** `a` OR `b` true? |
+| `not c` | `!c` | Is `c` false? |
+
+#### Logical AND operator
+
+The logical AND operator `and`/`&&` takes two boolean inputs and returns `true` if and only if 
+both of its inputs are `true`. It's best to use this when you want to check if multiple conditions are
+all true, or whether multiple conditions are `false` (by also using the negation operator).
+
+For example, `false && true` is `false`, while `true and true` is `true`.
+
+#### Logical OR operator
+
+Similar to AND, the logical OR operator `or`/`||` takes two boolean inputs and returns `true` if 
+one or both of its inputs are `true`. It's best to use this when you want to check if any of multiple 
+conditions are true, or if one variable is one of many possibilites. 
+
+For example, `false or false` is `false`, while `false || true` is `true`
+
+#### Logical NOT operator
+Pay close attention to the last row in the above table; `not`/`!` is also known as the **logical negation operator**.
+This operator will flip the truth value of a *single* boolean input. So in the expression `!c`, `c` is 
+a boolean ( `true`/`false` ), and the `!` negation operator will turn `true→false` and `false→true`.
+This is equivalent to asking whether `c` is `false`. This operator is useful when you want
+to check whether some condition does not hold.
+
+For example, `!(a == b)` is equivalent to `a != b`.
+Likewise, `not (a <= b)` is equivalent to `a > b`.
+Take note of how parentheses are used here to evaluate the inner expression first before logically
+negating it.
+
+#### Upgrading the Oracle
+
+The state has passed new regulations and now we must upgrade our Oracle program to comply.
+The new law stipulates a maximum age for driver's licenses — <u>those 65 years and older are
+no longer allowed to operate a motor vehicle</u>.
+
+We need to expand on our boolean condition to abide by this new requirement. Currently,
+`age >= 18` sets the *lower bound* for the range of acceptable values.
+We are missing something that sets the *upper bound*, which should be 65. 
+A boolean expression that checks if the age is less than 65 could look like `age < 65`.
+Note that we use `<` instead of `<=` because 65 year olds are banned from driving.
+
+Now we have `age >= 18` and `age < 65`, which must be combined in some way.
+We need to somehow specify that BOTH must be true — the person must be 
+18 or older AND younger than 65 to get a driver's license. 
+
+Looking back at the table in [Compound boolean expressions](#compound-boolean-expressions), 
+we can see that the `and`/`&&` operator fits this situation best.
+We can write this compound condition like `age >= 18 and age < 65`. Note
+that the left/right order here does not matter, meaning that
+`age < 65 and age >= 18` is an equivalent condition.
+
+
+```cpp title="🔹 Driver's License Oracle 3000"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 3000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// Year 2022 at the moment of writing this lesson
+	int age = 2022 - yearOfBirth;
+
+	// highlight-next-line
+	if (age >= 18 and age < 65)
+	{
+		std::cout << "You can legally get a driver's license\n";
+	}
+	else
+	{
+		std::cout << "You cannot legally get a driver's license\n";
+	}
+}
+```
+
+:::danger Chaining equality or relational operators
+You may be tempted to rewrite the above compound condition like `18 <= age < 65`.
+However, this **will not work**. While it will compile, it will result in incorrect
+behavior as it will always evaluate to `true`. 
+
+The same incorrect behavior also occurs with the equality operators. 
+For example, `age1 == age2 == 18` or `age1 != age2 != 35` will both behave similarly
+to the above example, either always returning false or always returning true.
+
+Never attempt to chain equality or relational operators.
+Always use the logical operators `and`/`&&` or `or`/`||` to combine boolean expressions.
+For more information as to the reasoning behind this,
+see [Additional information » int↔bool conversions](/learn/course/basics/conditions/additional/#intbool-conversions).
+:::
+
+### Order of Operations
+Like the mathematical operators, the boolean operators also have their own priority schedule
+they strictly adhere to. Similar to "PEMDAS", those inside parentheses always gets evaluated
+first, and the other operators are computed according to their priorities listed below. 
+Highest priority is on top.
+
+| Operator | Name | Associativity |
+| -------- | -------------- | ----------- |
+| `!` `not` | Logical NOT | Right-to-left 🡠 |
+| `*` `/` `%` | Multiplication/Division  | Left-to-right 🡢 |
+| `+` `-` | Addition/Substraction  | Left-to-right 🡢 |
+| `<` `<=` `>` `>=` | Relational operators  | Left-to-right 🡢 |
+| `==` `!=` | Equality operators | Left-to-right 🡢 |
+| `&&` `and` | Logical AND | Left-to-right 🡢 |
+| <code>&#x7C;&#x7C;</code> `or` | Logical OR | Left-to-right 🡢 |
+
+Let's use this to analyze some examples.
+
+```cpp title="🔹 Order of Operations showcase"
+a > 10 and a < 100 or a == 150
+// equivalent to
+(a > 10 and a < 100) or a == 150
+
+a * 4 == b + 5
+// equivalent to
+(a * 4) == (b + 5)
+
+not a or b < 3701
+// equivalent to
+(not a) or (b < 3701)
+
+not a != false
+// equivalent to
+(not a) != false
+```
+:::tip Use parentheses for disambiguation
+It's best practice to not rely on the implicit rules of operator precedence too much.
+It can be hard for programmers to remember all of the rules about which operator gets
+evaluated first, so writing too much code that depends on these rules can make it 
+harder to read and understand. If you intend for a subexpression to be evaluated first,
+it's a good idea to put it in parentheses.
+
+So, instead of writing `a and b and c or a and not b`, consider doing `(a and b and c) or (a and not b)` instead.
+:::

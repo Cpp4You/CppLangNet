@@ -1,0 +1,402 @@
+---
+sidebar_position:	4
+sidebar_label:		"2. Compound conditions"
+title:				"Compound Conditions"
+description:		"Lesson: compound conditions in C++"
+tags:				[condition, if, else, else-if, compound, bool, boolean]
+hide_title:			true
+---
+
+<!-- Components -->
+import Tabs			from "@theme/Tabs";
+import TabItem		from "@theme/TabItem";
+
+<!-- Presets -->
+import NotFinished	from "@site/i18n/en/presets/NotFinished.mdx";
+
+
+# Compound Conditions
+
+So far, we know how to represent a series of potential cases in our C++ code using the `if` block.
+We also learned how we can write two mutually exclusive cases by utilizing the `if/else` construct.
+Then, we saw how to combine boolean expressions together via the logical operators.
+
+Further on, it is very common for programmers to be faced with three or more mutually exclusive cases.
+We can effectively deal with this situation by a new concept: the `if/else if/else` statement.
+
+## Compound Conditional Statements
+
+```cpp title="🔹 Anatomy of an if/else if/else statement"
+if (/* boolean condition */) 
+{
+	// The code in here executes only if the condition evaluates to true
+} 
+else if (/* boolean condition */)
+{
+	// The code in here executes only if the previous condition evaluates to false
+	// and the this condition evaluates to true
+}
+else
+{
+	// This code in here executes if and only if all of the previous conditions
+	// evaluated to false
+}
+```
+
+The `if/else if/else` statement can represent multiple mutually exclusive cases.
+The cases' conditions are evaluated from top to bottom, and if any of them
+are true then it will execute that case's code then jump out of the entire structure.
+If none of the boolean conditions evaluate to true, then the `else` block will
+finally be executed. Thus, all of these cases in entire chain are *mutually exclusive*.
+
+The `else` is totally optional, and there can be any number of `else if` blocks. 
+In fact, you may realize that the `if/else` discussed earlier is the case where
+there are zero `else if`'s.
+
+Thus, we can now see how all of `if`, `if/else`, and `if/else if/else` are really
+just one greater system that we call the **if statement.** An if statement 
+always starts with an `if` block, optionally followed by any number of `else if`
+blocks, and optionally followed by an `else` block.
+
+You should only combine cases into additional `else if/else` clauses when they
+are mutually exclusive. If you have multiple sets of independent cases where
+you want multiple to potentially execute, you should keep them as separate if statements.
+
+Let's use this new tool to upgrade our program even further.
+
+### Reinventing the Oracle
+
+More regulations have been passed down from above. Now, there is a new license system
+being put in place. Drivers shall be segmented into different classes of 
+license by their age. The rules are as follows:
+
+- Drivers between the ages of `18` and `21` inclusive are given a Class C license
+- Drivers between the ages of `22` and `30` inclusive are given a Class B license
+- Drivers between the ages of `31` and `50` inclusive are given a Class A license
+- Drivers between the ages of `51` and `64` inclusive are given a Class C license
+- Drivers outside of these age ranges cannot receive a driver's license.
+
+```cpp title="🔹 Driver's License Oracle 4000"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 4000\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	// Year 2022 at the moment of writing this lesson
+	int age = 2022 - yearOfBirth;
+
+	// highlight-start
+	if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+		std::cout << "You can legally get a Class C driver's license\n";
+	} else if (age >= 22 and age <= 30) {
+		std::cout << "You can legally get a Class B driver's license\n";
+	} else if (age >= 31 and age <= 50) {
+		std::cout << "You can legally get a Class A driver's license\n";
+	} else {
+		std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
+	}
+	// highlight-end
+}
+```
+
+Analyzing this new if statement should hopefully be straightforward. Our first case, for Class C drivers,
+has two conditions under which it it will be issued: the person is between 18 and 21 years old,
+or they are between 51 and 64 years old. So, we use a [compound condition](#compound-conditions) to build this logic by combining
+two `and` expressions with a single `or` operator. Thus, we are separetly checking the two ranges 
+simultaneously.
+
+Now, you could certainly do the Class C case without the `or` operator by putting the second `and` expression
+into a dedicated `else if` clause. However, because they both end up executing the same code (giving the user
+a Class C license), it's best to combine them into a single condition to avoid repeating the code.
+The general practice of avoiding repetition is called **Don't Repeat Yourself** aka DRY, and it's a very good 
+philosophy to keep in mind. 
+Following the DRY principle will lead to more maintainable, more readable code with fewer chances for bugs.
+
+Back to the main topic at hand, the other cases are clearly laid out with `else if` clauses. 
+We build each of these using an `and` operator to build a *lower bound* and *upper bound* for each of the cases.
+Finally, we use the `else` clause as the "catch-all" to reject anyone whose ages didn't fall into the predefined boundaries.
+
+### Using variables to reduce repetition
+
+It may seem odd that after all that talk of not repeating yourself, that we have nearly the same line of code repeated three times.
+Notice how the `std::cout << "..."` is almost identical for all of Class A, B, and C licenses — only a single letter is different
+in each of the cases. We can use this to our advantage by creating a *variable* that stores a single character.
+Then, we change our if statements to assign this variable the respective license class. Finally, we output 
+the final message combined with the license variable we created.
+
+
+```cpp title="⚠️ Driver's License Oracle 4500"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 4500\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	// Year 2022 at the moment of writing this lesson
+	int age = 2022 - yearOfBirth;
+
+	// highlight-next-line
+	char licenseClass = 'X'; // X is chosen as a default value to signal if we miss one of our cases
+
+	if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+		licenseClass = 'C';
+	} else if (age >= 22 and age <= 30) {
+		licenseClass = 'B';
+	} else if (age >= 31 and age <= 50) {
+		licenseClass = 'A';
+	} else {
+		std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
+	}
+
+	// warning-next-line
+	std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+}
+```
+
+The code above does exactly what we described. We created a `char` variable to hold our license class,
+then we used the if statements to assign the respective class to that variable. However, this code
+will not work as intended!
+Look back to the [Anatomy of an if statement](/learn/course/basics/conditions/intro/#conditional-statements),
+and notice the comment underneath the entire if statement — it says
+"The code out here executes regardless of whether the condition is true or false."
+
+So, the code will work correctly if we can legally get a driver's license. If we input `2000` as our
+birth year, then it will print out `You can legally get a Class C driver's license` as expected.
+But, if we say we were born in `2015`, it will print out:
+
+```
+You cannot legally get a driver's license because you are not between 18 and 64 years old
+You can legally get a Class X driver's license
+```
+
+... which is incorrect! It's printing out both of the cases *because* we moved the legal output to outside of the if statement. 
+What we need to do is create then another if statement that checks to see if we gave the user a valid license or not.
+We can easily do this because of how we set `'X'` to be the default license value. This means that anyone that 
+did not receive a license will still have an `'X'` as the value of `licenseClass`, and we can check this with a condition.
+
+
+```cpp title="🔹 Driver's License Oracle 4500"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 4500\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	// Year 2022 at the moment of writing this lesson
+	int age = 2022 - yearOfBirth;
+
+	char licenseClass = 'X'; // X is chosen as a default value to signal if we miss one of our cases
+
+	if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+		licenseClass = 'C';
+	} else if (age >= 22 and age <= 30) {
+		licenseClass = 'B';
+	} else if (age >= 31 and age <= 50) {
+		licenseClass = 'A';
+	// highlight-next-line
+	} // This else statement was removed to make the print a part of the following if instead
+
+	// highlight-start
+	if (licenseClass != 'X') {
+		std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	} else {
+		std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
+	}
+	// highlight-end
+}
+```
+
+You can see here how we've made a new if statement that checks `licenseClass != 'X'`. This serves as the conditional
+statement for choosing whether we gave a license to the user or not; then, we dispatch the *control flow* to
+the proper print statement depending on the answer to that condition. 
+We have now reenabled the mutual exclusion of these two outputs.
+
+By using variables and applying the DRY principle,
+you can see that we reduced the repetition of our code.
+This has made it more readable, more maintainable, and easier to debug.
+
+### Nesting conditional statements
+
+The inside of an if statement is nothing special. You can put any valid executable code inside of an if statement's body,
+just like how all the code inside the body of `main` is valid executable code. Thus, it should be easy to "nest"
+if statements by putting one inside of the body of another.
+
+```cpp title="🔹 Example of a nested if statement"
+if (/* Condition 1 */) {
+	// Code here gets run if Condition 1 is true
+
+	// Since this if statement is inside another if statement,
+	// it only gets evaluated if the outer if statement's body is entered;
+	// ie., only if Condition 1 is true
+	// highlight-start
+	if (/* Condition 2 */) {
+		// Code here gets run if Condition 2 is true
+	} else if (/* Condition 3 */) {
+		// Code here gets run if Condition 2 is false, and Condition 3 is true
+	}
+	// highlight-end
+
+	// Code here gets run regardless of whether Condition 2 or 3 are true,
+	// however note this is still inside the body of the outer if statement!
+} else {
+	// Code here gets run if Condition 1 is false
+}
+
+// Code out here gets run no matter the outcome of the above if statement
+```
+
+Here we can see a stubbed out example of what a nested if statement may look like in the wild.
+Here, we have one outer if/else statement, with an if/else if statement inside of the outer one's body.
+
+When the program runs this code, the first step it performs is checking the result of 
+Condition 1. If it is true, it will step into its body and execute the code in there. Else, if
+Condition 1 is false, it will jump into the else's body and execute that code. After this whole
+process is done, it will then exit the entire conditional statement and continue execution
+below.
+
+Notice here that, in the case of Condition 1 being true, part of its body is *another if statement*.
+So, this means that it will again make a true/false decision. So, if Condition 1 is true, it will
+continue until it reaches the nested if statement. Then, it checks Condition 2. If that is true,
+it executes that body. Else, if Condition 2 is false, it checks Condition 3. If Condition 3 is true,
+it executes that body.
+
+Take note of how similar these processes are overall. Nothing really changed when analyzing the behavior
+of the outer if statement versus the inner if statement. If statements are extremely *modular* in this way —
+their behavior is the same in any context... at the beginning of `main`, at the end of `main`, inside
+another if statement, inside two if statements, inside an else body, etc.
+
+Let's use this new tool to upgrade our Oracle even further:
+
+The Overseer Council of Transportation Safety has issued a new requirement:
+those with two or more accidents are not eligble for any class license regardless of their age.
+
+```cpp title="🔹 Driver's License Oracle 5000"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 5000\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	int numCrashes;
+	std::cout << "Please enter the number of crashes you have had: \n";
+	std::cin >> numCrashes;
+
+	// highlight-next-line
+	if (numCrashes < 2) {
+		// Year 2022 at the moment of writing this lesson
+		int age = 2022 - yearOfBirth;
+
+		char licenseClass = 'X'; // X is chosen as a default value to signal if we miss one of our cases
+
+		if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+			licenseClass = 'C';
+		} else if (age >= 22 and age <= 30) {
+			licenseClass = 'B';
+		} else if (age >= 31 and age <= 50) {
+			licenseClass = 'A';
+		}
+
+		if (licenseClass != 'X') {
+			std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+		} else {
+			std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
+		}
+	// highlight-start
+	} else {
+		std::cout << "You cannot legally get a driver's license because you have " << numCrashes << " accidents\n";
+	}
+	// highlight-end
+}
+```
+
+You can see here how we have moved a large chunk of the previous code into the body of the `numsCrashes` if statement.
+This means that we will only perform that code if and only if the user has less than two crashes.
+Otherwise, if the user has two or more crashes, the system prints out the requisite notification that they cannot
+get a driver's license.
+
+Now take notice again how we are repeating the same message twice in our code. This means there is another opportunity
+to apply the DRY principles and simplify our code for future maintenance. Let's take a look:
+
+#### Applying DRY principles once more
+
+```cpp title="🔹 Driver's License Oracle 5500"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 5500\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	int numCrashes;
+	std::cout << "Please enter the number of crashes you have had: \n";
+	std::cin >> numCrashes;
+
+	char licenseClass = 'X'; // X is chosen as a default value to signal if we miss one of our cases
+	// highlight-next-line
+	std::string illegalReason;
+
+	if (numCrashes < 2) {
+		// Year 2022 at the moment of writing this lesson
+		int age = 2022 - yearOfBirth;
+
+		if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+			licenseClass = 'C';
+		} else if (age >= 22 and age <= 30) {
+			licenseClass = 'B';
+		} else if (age >= 31 and age <= 50) {
+			licenseClass = 'A';
+		} else {
+			// highlight-next-line
+			illegalReason = "you are not between 18 and 64 years old";
+		}
+	} else {
+		// highlight-next-line
+		illegalReason = "you have " + std::to_string(numCrashes) + " accidents";
+	}
+
+	if (licenseClass != 'X') {
+		std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	} else {
+		// highlight-next-line
+		std::cout << "You cannot legally get a driver's license because " << illegalReason << "\n";
+	}
+}
+```
+
+We can see that this code has been improved for multiple reasons. Firstly, we are no longer repeating
+ourselves, meaning that future maintenance is significantly easier in case the Overseer Council decides
+to add more regulations. 
+
+Secondly, we have now made a clean split between our "logic code" and the "display code".
+If you intersperse your console i/o commands with your logical computation commands,
+it can make the code become very confusing very quickly. In the Oracle 5000 program, all of our logic
+for determining the `licenseClass` and `illegalReason` are in one if statement, and the
+code for displaying the results ot the user are in a separate if statement.
+
+## Conclusion
+
+In summary, we learned about:
+- How to break down conditional cases in our code into [if statements](/learn/course/basics/conditions/intro/#conditional-statements)
+- How to form a logical expression out of [boolean operations](/learn/course/basics/conditions/intro/#boolean-expressions)
+- How to [combine multiple conditions](#compound-conditional-statements) into a mutually exclusive group
+- How to [nest if statements](#nesting-conditional-statements) inside of each other
+- How to reduce reptition by applying the [DRY Principle](#using-variables-to-reduce-repetition)
+
+This was a long journey, but the skills you have picked up here in this lesson are very fundamental
+to the road ahead. Read over the concepts presented in this lesson multiple times, as the basics
+of logic and conditions are a very important skill to have.
