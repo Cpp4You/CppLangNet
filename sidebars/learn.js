@@ -55,7 +55,19 @@ module.exports = {
 								}
 							]
 						},
-						"course/basics/conditions",
+						{
+							type: "category",
+							label: "4. Conditions",
+							items: [
+								"course/basics/conditions/intro",
+								"course/basics/conditions/compound",
+								doc("👀 Additional information", "course/basics/conditions/additional"),
+								doc("✅ Tips and style", "course/basics/conditions/tips"),
+								doc("💡 Examples", "course/basics/conditions/examples"),
+								doc("🐞 Common problems", "course/basics/conditions/common-problems"),
+								doc("📚 Exercises", "course/basics/conditions/exercises")
+							]
+						},
 						{
 							type: "category",
 							label: "5. Arrays",

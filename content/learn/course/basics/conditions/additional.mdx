@@ -1,0 +1,62 @@
+---
+title:				"Conditions » Additional Information"
+description:		"Lesson: additional information on conditions in C++"
+tags:				[condition, if, else, else-if, compound, bool, boolean]
+hide_title:			true
+---
+
+# Conditions » Additional information
+
+## The `bool` type
+
+The data type `bool` is used to store Boolean values - `true` and `false`.
+
+Example:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	int age = 2021 - yearOfBirth;
+
+	// highlight-next-line
+	bool isAdult = age >= 18;
+
+	// highlight-next-line
+	if (isAdult)
+		std::cout << "You can get a driver's license.";
+	else
+		std::cout << "You're not allowed to get a driver's license yet.";
+}
+```
+
+The result of the expression `age >= 18` (either `true` or `false`) is assigned
+to a variable `isAdult`. Then, if `isAdult` is true, we'll see the following text
+in the console:
+
+```
+You can get a driver's license.
+```
+
+otherwise:
+
+```
+You're not allowed to get a driver's license yet.
+```
+
+By using the negation operator on a variable of type `bool`, we can easily toggle its state:
+
+```cpp
+bool isButtonPressed = true; // 👍
+
+isButtonPressed = !isButtonPressed; // changes from true 👍 to false 👎
+isButtonPressed = !isButtonPressed; // now it changes from false 👎 to true 👍
+
+isButtonPressed = !!isButtonPressed; // double negation -> no effect
+```
+
+## `int`↔`bool` conversions

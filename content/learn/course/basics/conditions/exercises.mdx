@@ -1,0 +1,53 @@
+---
+title:				"Conditions » Exercises"
+description:		"Lesson: exercises for conditions in C++"
+tags:				[condition, if, else, else-if, compound, bool, boolean, exercise]
+hide_title:			true
+---
+
+# Conditions » Exercises
+
+
+
+
+Suppose we want to sell pool tickets at different prices depending on age.
+Here are the criteria:
+
+- children under 6: free
+- persons aged 6 to 17 inclusive: $4
+- adults up to 59 years of age inclusive: $8
+- people from 60 years of age: $6
+
+We will use a `else if` construct to check the following conditions:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "SWIMMING POOL - TICKETS\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int age;
+	std::cin >> age;
+
+	if (age < 6)
+		std::cout << "You can enter for free";
+	// highlight-next-line
+	else if (age <= 17)
+		std::cout << "Ticket price: $4";
+	// highlight-next-line
+	else if (age <= 59)
+		std::cout << "Ticket price: $8";
+	else
+		std::cout << "Ticket price: $6";
+}
+```
+
+Meeting the condition in any one of `if`s (including `else if`s) interrupts a further checking
+of next `else if` statements.
+
+:::important
+Neither `else if`, nor `else` is even taken into account when one of the previous `if`s or `else if`s
+condition in the chain was evaluated to `true`.
+:::
