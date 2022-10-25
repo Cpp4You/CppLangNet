@@ -26,26 +26,30 @@ import Method_SinceCpp20 	from './_codes/clear/since-cpp20.mdx';
         'until-cpp11': <Method_UntilCpp11 />,
     }}/>
 
-Erases all elements from the container. After this call, `size()` returns zero.
+Erases all elements from the container. After this call, [`size()`](size) returns zero.
 
-Leaves the `capacity()` of the vector unchanged (note: the standard's restriction on the changes to capacity is in the specification of [`vector::reserve`](/docs/std/containers/arrays/vector/reserve))
+Leaves the [`capacity()`](capacity) of the vector unchanged.
 
-:::danger Invalidation
+:::note
+The standard's restriction on the changes to capacity is in the specification of [`reserve()`](reserve).
+:::
+
+:::caution Invalidation
 Invalidates any **references**, **pointers**, or **iterators** referring to contained elements.
-Any **past-the-end iterators** are also invalidated.  
+Any **past-the-end iterators** are also invalidated.
 :::
 
 ### Parameters
 
-(none)
+**(none)**
 
 ### Return value
 
-(none)
+**(none)**
 
 ### Complexity
 
-Linear in the size of the container, i.e., the number of elements.
+Linear in the size of the container - **O(size())**.
 
 ### Example
 
