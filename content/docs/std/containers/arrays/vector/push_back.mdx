@@ -37,8 +37,8 @@ Appends the given element value to the end of the container.
  - **(1)** The new element is initialized as a copy of value.
  - **(2)** Value is moved into the new element.
 
-:::danger Invalidation
-If the new `size()` is greater than `capacity()` then all **iterators** and **references** (including the **past-the-end iterator**) are invalidated.
+:::caution Invalidation
+If the new [`size()`](size) is greater than [`capacity()`](capacity) then all **iterators** and **references** (including the **past-the-end iterator**) are invalidated.
 
 Otherwise only the past-the-end iterator is **invalidated**.
 :::
@@ -48,38 +48,38 @@ Otherwise only the past-the-end iterator is **invalidated**.
 ### Parameters
 
  - `value` - the value of the element to append
- 
+
 ### Type requirements
- 
+
 `T` is the container's element type in this list.
 
- - **(1)** - `T` must meet the requirements of [`CopyInsertable`](/docs/named_req/CopyInsertable)
- - **(2)** - `T` must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable)
+ - **(1)** - `T` must meet the requirements of [`CopyInsertable`](/docs/named_req/CopyInsertable).
+ - **(2)** - `T` must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable).
 
 ### Return value
 
-(none)
+**(none)**
 
 ### Complexity
 
 <!-- TODO amortized tooltip -->
-Amortized constant.
+Amortized constant - **O(1)**.
 
 ### Exceptions
 
 <!-- TODO add a link here -->
-If an exception is thrown (which can be due to `Allocator::allocate()` or element copy/move constructor/assignment), this function has no effect ([`strong exception guarantee`](#)).
+If an exception is thrown (which can be due to `Allocator::allocate()` or element copy/move constructor/assignment), this function has no effect ([**strong exception guarantee**](#)).
 
 <SwitchView content={{
     'since-cpp11': <>
         If <code>T</code>s move constructor is <b>not noexcept</b> and <code>T</code> is not <a href="/docs/named_req/CopyInsertable">CopyInsertable</a> into <code>*this</code>,
         vector will use the throwing move constructor. If it throws, the guarantee is waived and the effects are unspecified.
     </>
-    }}/>
+}}/>
 
 ### Notes
 
-Some implementations also throw `std::length_error` when `push_back()` causes a reallocation that would exceed `max_size()`, due to implicitly calling an equivalent of `reserve(size()+1)`.
+Some implementations also throw [`std::length_error`](#) when [`push_back()`](#) causes a reallocation that would exceed [`max_size()`](max_size), due to implicitly calling an equivalent of `reserve(size()+1)`.
 
 ### Example
 
