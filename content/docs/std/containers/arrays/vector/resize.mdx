@@ -32,42 +32,44 @@ import Method_SinceCpp20	from './_codes/resize/since-cpp20.mdx';
 	'until-cpp11': <Method_UntilCpp11 />,
 }} />
 
-Resizes the container to contain count elements.
-If the current size is greater than count, the container is reduced to its first count elements.
+Resizes the container to contain `count` elements.
+If the current size is greater than `count`, the container is reduced to its first `count` elements.
 
-If the current size is less than count,
- - **(1)** - additional default-inserted elements are appended.
- - **(2)** - additional copies of value are appended.
+If the current size is less than `count`,
+ - **(1)** Additional default-inserted elements are appended.
+ - **(2)** Additional copies of value are appended.
 
 
 ### Parameters
 
  - `count` - new size of the container
  - `value` - the value to initialize the new elements with
- 
+
 ### Type requirements
- 
+
 `T` is the container's element type in this list.
 
- - **(1)** - `T` must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable) and [`DefaultInsertable`](/docs/named_req/MoveInsertable)
- - **(2)** - `T` must meet the requirements of [`CopyInsertable`](/docs/named_req/CopyInsertable)
+ - **(1)** - `T` must meet the requirements of [`MoveInsertable`](/docs/named_req/MoveInsertable) and [`DefaultInsertable`](/docs/named_req/MoveInsertable).
+ - **(2)** - `T` must meet the requirements of [`CopyInsertable`](/docs/named_req/CopyInsertable).
 
 ### Return value
 
-(none)
+**(none)**
 
 ### Complexity
 
-Linear in the difference between the current size and count.
+Linear in the difference between the [`size()`](size) and `count` - **O(size() - count)**.
 
 :::important
-Additional complexity possible due to reallocation if capacity is less than count
+Additional complexity possible due to reallocation if [`capacity()`](capacity) is less than `count`.
 :::
 
 ### Exceptions
 
 <!-- TODO add a link here -->
-If an exception is thrown, this function has no effect ([`strong exception guarantee`](#)).
+
+If an exception is thrown, this function has no effect ([**strong exception guarantee**](#)).
+
 <SwitchView content={{
     'since-cpp11': <>
         In overload <b>(1)</b>, if <code>T</code>s move constructor is <b>not noexcept</b> and <code>T</code> is not <a href="/docs/named_req/CopyInsertable">CopyInsertable</a> into <code>*this</code>,
@@ -78,10 +80,10 @@ If an exception is thrown, this function has no effect ([`strong exception guara
 ### Notes
 
 If value-initialization in overload **(1)** is undesirable, for example, if the elements are of non-class type and zeroing out is not needed,
-<!-- TODO add a link here -->
-it can be avoided by providing a custom [`Allocator::construct()`](#).
+
+it can be avoided by providing a custom `Allocator::construct()`.
 Vector capacity is never reduced when resizing to smaller size because that would invalidate all iterators,
-rather than only the ones that would be invalidated by the equivalent sequence of `pop_back()` calls.
+rather than only the ones that would be invalidated by the equivalent sequence of [`pop_back()`](pop_back) calls.
 
 ### Example
 
