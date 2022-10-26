@@ -36,13 +36,13 @@ Erases the specified elements from the container.
  - **(1)** Removes the element at `pos`.
  - **(2)** Removes the elements in the range **[ first, last )**.
 
-:::danger Invalidation
+:::caution Invalidation
 Invalidates **iterators** and **references** at or after the point of the erase, including the **`end()` iterator**.
 :::
 
-:::danger Using past-the-end iteraotr
-The iterator pos must be valid and dereferenceable.
-Thus the `end()` iterator (which is valid, but is not dereferenceable) cannot be used as a value for pos.
+:::caution Using past-the-end iteraotr
+The iterator `pos` must be valid and dereferenceable.
+Thus the `end()` iterator (which is valid, but is not dereferenceable) cannot be used as a value for `pos`.
 :::
 
 The iterator first does not need to be dereferenceable if `first == last`: erasing an empty range is a no-op.
@@ -51,10 +51,10 @@ The iterator first does not need to be dereferenceable if `first == last`: erasi
 
  - `pos` - itertor to the element to remove
  - `first`, `last` - range of elements to remove
- 
+
 ### Type requirements
- 
- - `T` *(the container's element type)* must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable)
+
+ - `T` *(the container's element type)* must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable).
 
 ### Return value
 
@@ -65,6 +65,7 @@ Iterator following the last removed element.
  - If **[ first, last )** is an empty range, then last is returned.
 
 ### Complexity
+
 Linear: the number of calls to the destructor of `T` is the same as the number of elements erased,
 the assignment operator of `T` is called the number of times equal to the number of elements in the vector after the erased elements.
 
@@ -78,7 +79,7 @@ If value-initialization in overload **(1)** is undesirable, for example, if the 
 <!-- TODO add a link here -->
 it can be avoided by providing a custom [`Allocator::construct()`](#).
 Vector capacity is never reduced when resizing to smaller size because that would invalidate all iterators,
-rather than only the ones that would be invalidated by the equivalent sequence of `pop_back()` calls.
+rather than only the ones that would be invalidated by the equivalent sequence of [`pop_back()`](pop_back) calls.
 
 ### Example
 
