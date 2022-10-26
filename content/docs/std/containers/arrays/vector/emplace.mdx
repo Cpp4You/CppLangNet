@@ -30,8 +30,8 @@ However, if the required location has been occupied by an existing element, the 
 
 The arguments `args...` are forwarded to the constructor as `std::forward<Args>(args)...`. `args...` may directly or indirectly refer to a value in the container.
 
-:::danger Invalidation
-If the new `size()` is greater than `capacity()`, all **iterators** and **references** are invalidated. 
+:::caution Invalidation
+If the new [`size()`](#) is greater than [`capacity()`](capacity), all **iterators** and **references** are invalidated. 
 
 Otherwise, **only** the **iterators** and **references** before the insertion point __remain valid__. 
 
@@ -42,9 +42,9 @@ The **past-the-end iterator** is also invalidated.
 
  - `pos` - ierator before which the new element will be constructed
  - `args` - arguments to forward to the constructor of the element
- 
+
 ### Type requirements
- 
+
  - `T` *(the container's element type)* must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable), [`MoveInsertable`](/docs/named_req/MoveInsertable) and [`EmplaceConstructible`](/docs/named_req/EmplaceConstructible)
 
 ### Return value
@@ -53,7 +53,7 @@ Iterator pointing to the emplaced element
 
 ### Complexity
 
-Linear in the distance between pos and end of the container.
+Linear in the distance between `pos` and end of the container - **O(std::distance(pos, end()))**.
 
 ### Exceptions
 
@@ -61,10 +61,10 @@ If an exception is thrown other than by the **copy constructor**, **move constru
 or **move assignment** operator of the value type, 
 
 or if an exception is thrown while `emplace()` is used to insert a single element at the end and the value type is either [`CopyInsertable`](/docs/named_req/CopyInsertable) or nothrow move constructible,
-there are no effects ([`strong exception guarantee`](#)).
+there are no effects ([**strong exception guarantee**](#)).
 <!-- TODO add link here -->
 
-Otherwise, the effects are unspecified.
+**Otherwise, the effects are unspecified**.
 
 ### Example
 
