@@ -33,7 +33,7 @@ module.exports = {
 							link: { type: "doc", id: "course/basics/first-program" },
 							items: [
 								doc("🐞 Common problems", "course/basics/first-program/common-problems"),
-								doc("🤾‍♂️ Exercises", "course/basics/first-program/exercises"),
+								doc("📚 Exercises", "course/basics/first-program/exercises"),
 							]
 						},
 						"course/basics/comments",
@@ -43,7 +43,16 @@ module.exports = {
 							items: [
 								"course/basics/variables/intro",
 								"course/basics/variables/operations",
-								"course/basics/variables/strings",
+								{
+									type: "category",
+									label: "3. Strings",
+									link: { type: "doc", id: "course/basics/variables/strings" },
+									items: [
+										doc("💡 Examples", "course/basics/variables/strings/examples"),
+										doc("🐞 Common problems", "course/basics/variables/strings/common-problems"),
+										doc("📚 Exercises", "course/basics/variables/strings/exercises"),
+									]
+								}
 							]
 						},
 						"course/basics/conditions",

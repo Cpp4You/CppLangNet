@@ -1,0 +1,44 @@
+import Image from "@site-comps/Image";
+
+# Variables » Strings » Exercises
+
+Lord Mux has returned with another request. He would like to see how good we are at naming rocketships.
+Your task is to build a C++ program that generates a spaceship name adhering to the following format:
+
+`Digi-[MISSION NO] [CODENAME] Mk. [REVISION]`
+
+However, due to the poor attention span of the Muxian population, you are only allowed to 
+ask the user two questions. 
+
+The first question shall ask for the **CODENAME**, which can be any single word.
+
+The second question shall ask for a **MODIFIER**, which should be a single whole number.
+
+You will generate the remaining two parameters by the following rules:
+
+**MISSION NO** - The number of characters in **CODENAME** concatenated with the string representation of **MODIFIER**.
+For example, if **CODENAME** is `Raven` and **MODIFIER** is `20`, then **MISSION NO** should be `520`.
+
+**REVISION** - The integral value of **MISSION NO** multiplied by 16 (as Muxians have 16 fingers to count on).
+
+**Additional requirements** The final name of the rocketship should be stored in a single `std::string` variable
+before being output to the terminal.
+
+### Example Execution
+```plaintext
+Welcome to the Rocketship Name Generator 9000!
+
+Enter a CODENAME: Raven
+Enter a MODIFIER: 20
+
+Your new rocketship name is:
+Digi-520 Raven Mk. 8320
+```
+
+## Hints
+
+If you are stuck on generating **CODENAME** or **MODIFIER**, see example [Personal details](../examples/#personal-details).
+
+If you are stuck on generating **MISSION NO**, see example [Team Name](../examples/#team-name).
+
+If you are stuck on generating **REVISION**, see example [Numbers and Strings](../examples/#numbers-and-strings).

@@ -1,0 +1,103 @@
+import Image from "@site-comps/Image";
+
+# Variables » Strings » Examples
+
+## Personal details
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// Setup the four variables we will read the user's information into
+	std::string firstName;
+	std::string lastName;
+	std::string favoriteColor;
+	int age;
+
+	// Ask the user 4 questions and store their answers
+	std::cout << "What is your first name? ";
+	std::cin >> firstName;
+
+	std::cout << "What is your last name? ";
+	std::cin >> lastName;
+
+	std::cout << "What is your age? ";
+	std::cin >> age;
+
+	std::cout << "What is your favorite color? ";
+	std::cin >> favoriteColor;
+
+	// Output the user's information whilst calculating the difference between their age and first name's length
+	std::cout << "\n\nWelcome, " << firstName << " " << lastName << "!\n";
+	std::cout << "You are " << age << " years old, and your favorite color is " << favoriteColor << "\n";
+	std::cout << "There are " << firstName.size() << " characters in your first name... ";
+	std::cout << (age - firstName.size()) << " less than your age!\n";
+}
+```
+
+## Team Name
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string animal;
+	std::string adjective;
+	int teamSize;
+
+	std::cout << "I'm going to help you make a team name!\n";
+
+	std::cout << "Enter an animal: ";
+	std::cin >> animal;
+
+	std::cout << "Enter an adjective: ";
+	std::cin >> adjective;
+
+	std::cout << "Enter the size of the team: ";
+	std::cin >> teamSize;
+
+	// Form the team name by concatenating the three answers we have so far
+	std::string teamName = adjective + animal + std::to_string(teamSize);
+	std::cout << "Your current team name is \"" << teamName << "\"!";
+
+	std::string pluralNoun;
+	std::cout << "Enter a plural noun: ";
+	std::cin >> pluralNoun;
+
+	// Finalize the team name by appending the plural noun
+	teamName += " sans " + pluralNoun;
+	std::cout << "Your final team name is \"" << teamName << "\"!";
+}
+```
+
+## Numbers and Strings
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	int a;
+	int b;
+
+	std::cout << "Input two numbers: ";
+	std::cin >> a >> b;
+
+	int sum = a + b;
+	// Use an int-to-string conversion to concatenate the two numbers
+	std::string concatStr = std::to_string(a) + std::to_string(b);
+
+	std::cout << "Their sum is " << sum << " and their concatenation is " << concatStr << "\n";
+
+	// Perform a string-to-int conversion and compute the difference
+	int concatVal = std::stoi(concatStr);
+	int diff = concatVal - sum;
+
+	std::cout << "Their difference is " << diff;
+}
+```
