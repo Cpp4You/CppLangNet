@@ -1,0 +1,206 @@
+---
+toc_max_heading_level: 2
+hide_title: true
+title: "Variables » Strings » Common Problems"
+---
+
+import Columns		from '@site-comps/Columns';
+import GoogleSlides	from '@site-comps/GoogleSlides';
+import Image		from '@site-comps/Image';
+import Tooltip		from '@site-comps/Tooltip';
+import NotFinished	from '@site/i18n/en/presets/NotFinished.mdx';
+
+import Tabs			from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
+
+<!-- Error messages -->
+
+import ErrorMessage_ForgottenIncludeGCC		from "./_error-messages/forgotten-include-gcc.mdx";
+import ErrorMessage_ForgottenIncludeMSVC	from "./_error-messages/forgotten-include-msvc.mdx";
+
+import ErrorMessage_WrongIntToStringGCC		from "./_error-messages/wrong-int-to-string-gcc.mdx";
+import ErrorMessage_WrongIntToStringMSVC	from "./_error-messages/wrong-int-to-string-msvc.mdx";
+
+import ErrorMessage_StringIsNotIntGCC		from "./_error-messages/string-is-not-int-gcc.mdx";
+import ErrorMessage_StringIsNotIntMSVC		from "./_error-messages/string-is-not-int-msvc.mdx";
+
+import ErrorMessage_AddingLiteralsGCC		from "./_error-messages/adding-literals-gcc.mdx";
+import ErrorMessage_AddingLiteralsMSVC		from "./_error-messages/adding-literals-msvc.mdx";
+
+# Variables » Strings » Common Problems
+
+## Forgotten include
+
+```cpp showLineNumbers title="❌ Erroneous Code"
+int main()
+{
+	// error-next-line
+    std::string s = "Hello";
+}
+```
+
+### Potential error message
+
+<Tabs groupId="compiler">
+	<TabItem value="gcc" label="GCC" default>
+		<ErrorMessage_ForgottenIncludeGCC />
+	</TabItem>
+<TabItem value="msvc" label="MSVC">
+		<ErrorMessage_ForgottenIncludeMSVC />
+</TabItem>
+</Tabs>
+
+### Solution
+
+Add `#include <string>` to the top of your file.
+
+## Treating numbers as strings
+
+```cpp title="❌ Erroneous Code"
+#include <string>
+
+int main()
+{
+	// error-next-line
+    std::string s = 123;
+}
+```
+
+### Potential error message:
+
+<Tabs groupId="compiler">
+	<TabItem value="gcc" label="GCC" default>
+		<ErrorMessage_WrongIntToStringGCC />
+	</TabItem>
+	<TabItem value="msvc" label="MSVC">
+		<ErrorMessage_WrongIntToStringMSVC />
+	</TabItem>
+</Tabs>
+
+### Solution
+
+Use `std::to_string` to convert an integer to a string.
+See [Conversions between numbers and strings](#conversions-between-numbers-and-strings)
+and [Numbers and Strings](#numbers-and-strings) for more information.
+
+## Treating strings as numbers
+
+```cpp title="❌ Erroneous Code"
+#include <string>
+
+int main()
+{
+    std::string s = "123";
+	// error-next-line
+	s *= 15;
+}
+```
+
+### Potential error message:
+
+<Tabs groupId="compiler">
+	<TabItem value="gcc" label="GCC" default>
+		<ErrorMessage_StringIsNotIntGCC />
+	</TabItem>
+	<TabItem value="msvc" label="MSVC">
+		<ErrorMessage_StringIsNotIntMSVC />
+	</TabItem>
+</Tabs>
+
+### Solution
+
+Use `std::stoi` or `std::stof` to convert a string into an algebreic value.
+See [Conversions between numbers and strings](#conversions-between-numbers-and-strings)
+and [Numbers and Strings](#numbers-and-strings) for more information.
+
+## Concatenating two string literals
+
+```cpp title="❌ Erroneous Code"
+#include <string>
+
+int main()
+{
+	//error-next-line
+    std::string s = "Hello " + "World";
+}
+```
+
+### Potential error message:
+
+<Tabs groupId="compiler">
+	<TabItem value="gcc" label="GCC" default>
+		<ErrorMessage_AddingLiteralsGCC />
+	</TabItem>
+	<TabItem value="msvc" label="MSVC">
+		<ErrorMessage_AddingLiteralsMSVC />
+	</TabItem>
+</Tabs>
+
+### Solution
+
+Whenever you see `"TEXT"` in a C++ file, that is known as a *string literal*. Basically, a fancy term for saying that
+this is a hardcoded text value. Crucially, however, the type of a string literal is not `std::string`.
+Rather, it is `const char[N]` where `N` is the length of the text + 1. The GCC error above showcases this best.
+
+`const char[N]` is called an *array*. We will cover arrays in a later chapter, but the important knowledge here is that
+you cannot add two arrays together as they are not numbers. `std::string` is what provides us ability to concatenate strings
+via `+`.
+
+The easiest way to fix this is to simply combine the string literals yourself like `"Hello World"`.
+
+## Skipping input with std::getline
+
+```cpp title="⚠️ Buggy Code"
+#include <string>
+
+int main()
+{
+	int age;
+	int fullName;
+
+	std::cout << "Enter your age: ";
+	std::cin >> age;
+
+	std::cout << "Enter your full name: ";
+	// warning-next-line
+	std::getline(std::cin, fullName); // This line is seemingly skipped
+
+	std::cout << "\nYour name is " << fullName << " and your age is " << age;
+}
+```
+
+### Unexpected Behavior
+You may find that when using `std::getline` after doing some form of `std::cin >> ...`, that it appears to skip the `std::getline`.
+In the above example, it will ask your age, you would input say `23`, and it will ask your full name but not let you enter a name.
+Instead, it will immedaitely output `Your name is  and your age is 23`. 
+
+
+### Solution
+
+Understanding why it does this is a bit tricky. The key aspect to remember is when you use `std::cin >> ...`, it will take input
+from *stdin* until it sees whitespace (a space, a newline, or a tab). When you press `Enter` on your keyboard to input your age,
+it places a *newline character* `\n` onto *stdin*. `std::cin` then reads the number you typed, and stops at that newline
+**without removing the `\n` character**.
+
+`std::getline` uses the presence of these `\n` characters to determine where a full line ends.
+So, when it attempts to read from *stdin* (`std::cin`) to read a line up to the next `\n`,
+it immediately sees the `\n` character that was left by the previous `std::cin >> age;`.
+Therefore, it interprets this as an empty line and sets `fullName` to be an empty string `""`.
+
+The solution to this is another *method* called `ignore`. This method will tell `std::cin` to 
+skip the remaining newline character that was left from the previous operation. Whenever you plan on using `std::getline` after
+a `std::cin >> ...` operation, you should put the method call `std::cin.ignore();` in between, like in the abridged example below:
+
+```cpp title="🔹 How to use the ignore method"
+int age;
+std::string fullName;
+
+std::cin >> age;
+
+//highlight-next-line
+std::cin.ignore();
+
+std::getline(std::cin, fullName);
+```
+
+
