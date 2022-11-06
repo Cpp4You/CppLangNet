@@ -17,53 +17,7 @@ It is worth paying attention to what can cause a **compilation error**. Compilat
 When the compiler encounters invalid code, it will stop and tell you what's wrong. You cannot run your program unless compilation is
 completed without errors.
 
-## Omitting `std::`
-
-If you have trouble with the `std::` prefix, consider using it
-locally, **always inside a function** (as shown in the example):
-
-```cpp title="🔹 Acceptable use"
-#include <iostream>
-int main()
-{
-	// highlight-next-line
-	using namespace std;
-	cout << "Hello, World!";
-}
-```
-
-I emphasize this because it is possible to place `using namespace std;` at the top of your file,
-but **don't do this** (even though it's all over the Internet!), as it can lead to mysterious errors stemming from ambiguity.
-This is because `std` has a **huge** amount of names that you will commonly use in your code.
-
-:::tip Good practice
-It's best not to omit the `std::` prefix.
-:::
-
-### Know the difference!
-
-There are two ways to omit the `std::` prefix:
-
-```cpp
-using namespace std;
-```
-
-and
-
-```cpp
-using std::cout;
-```
-
-`using namespace std` and `using std::cout`
-
-- `using namespace std;` means that you don't need to prepend `std::` for any member of the standard library you use.
-Common items you may see on your journey and in later tutorials are `cout`, `cin`, `string`, `array`, and `vector`.
-
-- `using std::cout;` means that only `cout` has the privilege to not require `std::` in front of it. You can do this for multiple items at once like:
-`using std::cout, std::cin, std::string;`
-
-
-Generally, it is recommended to use the `using std::cout;` style over `using namespace std;` if you wish to omit `std::`.
+## Forgetting about `std::` prefix
 
 An error is caused if you omit `std::` without the appropriate `using` statement.
 
@@ -99,6 +53,18 @@ error C2065: 'cout': undeclared identifier
 
 </TabItem>
 </Tabs>
+
+### 👌 Solution
+
+Add `using std::cout;` to the top of your `main` function:
+
+```cpp
+#include <iostream>
+int main() {
+	using std::cout;
+	cout << "Hello, World!";
+}
+```
 
 ## Forgotten includes
 
