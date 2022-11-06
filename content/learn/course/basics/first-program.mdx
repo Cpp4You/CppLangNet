@@ -9,7 +9,8 @@ hide_title:			true
 import Columns		from '@site-comps/Columns';
 import GoogleSlides	from '@site-comps/GoogleSlides';
 import Image		from '@site-comps/Image';
-import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
+import Tooltip		from '@site-comps/Tooltip';
+import NotFinished	from '@site/i18n/en/presets/NotFinished.mdx';
 
 import Tabs			from '@theme/Tabs';
 import TabItem		from '@theme/TabItem';
@@ -46,7 +47,7 @@ Hello, World!
 </div>
 </Columns>
 
-Which displays the text given above in the "Result" box.
+It displays the "Hello, World" text in the console.
 
 
 ## Explanation
@@ -62,13 +63,12 @@ int main()
 }
 ```
 
-The computer runs the program line by line.
-When it starts the application, it executes the instructions in the `main` code block sequentially. `main` **is always the first code
-run by the program.**
 
-The first line here is the **function signature**. It consists of a return type `int`, the name `main`, and its parameters inside the `()` (none).
-While most of these terms aren't important now, all that you should pay attention to is the name `main`. The main function will always
-look like this, `int main()`. Your program must always contain this function specified in this format.
+The first line starts the **function definition**. It consists of a return type `int`, the name `main`, and its parameters inside the `()` (none in our case).
+While most of these terms aren't important now, all that you should pay attention to is the name `main`. It will always look like this,
+`int main()`. Your program must always contain the `main` function specified in this format.
+
+The computer runs the program line by line. When it starts the application, it executes the instructions in the `main` code block sequentially.
 
 A **code block** in C++, is a set of instructions contained inside curly braces:
 
@@ -78,7 +78,11 @@ A **code block** in C++, is a set of instructions contained inside curly braces:
 }
 ```
 
-The function `main` has a block of code, and everything between the curly braces will be executed <u>sequentially, top to bottom</u>.
+The `main` function has a block of code, and everything between its curly braces will be executed <u>top to bottom</u>.
+
+:::important Remember
+The content of the `main` function **is always the first code run by the program.**
+:::
 
 ### The `iostream` header file
 
@@ -97,44 +101,39 @@ We'll tell more about `#include` itself in the future. Enough for the moment.
 The "console" or "terminal" is the most basic form of communication for a program. It allows for a simple, two-way text interface between the program and the user.
 You're going to become very familiar with this tool, as you will be using it every step of the way on your journey to becoming an expert programmer.
 
-Below are some examples of consoles after running our Hello World program. While not every terminal is the same, they will look very similar
-by only displaying simple text with little to no color.
+Below are some examples of running <Tooltip title="It is an example that calculates the area of a trapezoid. We'll cover similar topic later in the course.">the same code</Tooltip>
+in multiple environments. While not every terminal is the same, they will look very similar by only displaying simple text with little to no color.
 
-#### 🖼 Examples of some consoles:
+#### 🖼 Overview:
 
-<Tabs groupId="consoles">
-<TabItem value="windows" label="Windows" default>
-	<Image center
-			alt="Example of what a Windows console may look like"
-			src="/img/tutorials/course/basic/first-program/example-terminal-windows.png"
-		/>
-</TabItem>
-<TabItem value="linux" label="Linux">
-	<Image center
-			alt="Example of what a Linux console may look like"
-			src="/img/tutorials/course/basic/first-program/example-terminal-linux.png"
-		/>
-</TabItem>
-</Tabs>
+<center>
+<iframe
+	width="560"
+	height="315"
+	src="https://www.youtube.com/embed/yJ_7jRcvp_E"
+	title="YouTube video player"
+	frameBorder="0"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+	allowFullScreen>
+</iframe>
+</center>
 
-Many coding applications like Visual Studio, VSCode, CLion, Vim, etc., have a console window integrated directly into the interface.
+As you can see, many code editors like Visual Studio, VS Code, Replit.com, CLion, Vim, etc., have a console window integrated directly into the interface.
 
-TODO: We will provide a tutorial for how to use a terminal and perform common operations.
+<!--- TODO: We will provide a tutorial for how to use a terminal and perform common operations. --->
 
 ### Printing text to the console
 
 
-
-We used this statement inside a `main` block:
+To display text to the console we used the following statement inside the `main` block:
 
 ```cpp
 std::cout << "Hello, World!";
 ```
 
-`cout` is the a **c**haracter **out**put stream, however, for the moment,
-remember that it just displays the quoted text to the console.
+The name `cout` stands for a **c**haracter **out**put. 
 
-If I now copy this line several times:
+I can now duplicate the line above like this:
 
 ```cpp
 std::cout << "Hello, World!1";
@@ -142,7 +141,7 @@ std::cout << "Hello, World!2";
 std::cout << "Hello, World!3";
 ```
 
-then I will get the following effect:
+to get the following effect:
 
 ```
 Hello, World!1Hello, World!2Hello, World!3
@@ -167,21 +166,21 @@ Presentation of the above-created program:
 		centered
 	/>
 
-Note that the text typed to the console without any spaces,
-on a single line, and wrapped only towards the end of the available space.
+Note that the text was written to the console without any spaces,
+in a single line, and wrapped when it reached the end of the available space.
 
 The program does exactly what it says in the code - no more, no less.
-We only "told" it that it should display the given characters... and it does.
-We have to "break" the line in the right place. This will cause the following characters
+We told it that it should display the given characters... and it does.
+We have to explicitly "break" the line in the right place. This will cause the following characters
 to be displayed from the very beginning of the next line. To do this,
-put a special newline character inside the text: `\n`, like this:
+we put a special newline character inside the text: `\n`, like this:
 
 ```cpp
 std::cout << "Hello, World!\n";
 ```
 
 :::caution Backslash
-Note that **backslash** (`\n`) is used, not slash (`/n`).
+Note that we used the **backslash** (`\n`), and not the forward slash (`/n`).
 :::
 
 Program execution after adding newline characters:
@@ -194,10 +193,10 @@ Program execution after adding newline characters:
 	/>
 
 :::important Newline Character
-`\n` is a **single character**, although to get it we have to write two characters <u>in the code</u>.
-This is because inside the text in the code, we can't put an Enter/Return.
-Backslash (`\`) tells computer that the character that follows it has a special meaning.
-(its called an *escape sequence*, more on that later).
+The `\n` sequence represents a **single character**. We have to write two characters <u>in the code</u> but for the program, it is a single special character.
+This is because we cannot simply insert an Enter or Return directly inside the text in the code.
+Backslash (`\`) is used to sign that the character that follows it <Tooltip title={<>It is called an <b>escape sequence</b>, more on that later</>}>has a special meaning</Tooltip>.
+
 :::
 
 ### Prefix of the standard namespace
@@ -301,299 +300,10 @@ C++ adheres to the "PEMDAS" order you may have learned in school.
 3. Finally Addition/Subtraction from left to right
 :::
 
-## Potential errors
+## Summary
 
-Finally, it is worth paying attention to what can cause a **compilation error**. Compilation errors are caused by invalid C++.
-When the compiler encounters invalid code, it will stop and tell you what's wrong. You cannot run your program unless compilation is
-completed without errors.
+You've learned about the structure of the first program's code.
 
-### Omitting `std::`
-
-:::tip Good practice
-It's best not to omit the `std::` prefix.
+:::tip
+For exercises visit [this page](exercises).
 :::
-
-If you have trouble with the `std::` prefix, consider using it
-locally, **always inside a function** (as shown in the example):
-
-```cpp title="🔹 Acceptable use"
-#include <iostream>
-int main()
-{
-	// highlight-next-line
-	using namespace std;
-	cout << "Hello, World!";
-}
-```
-
-I emphasize this because it is possible to place `using namespace std;` 
-at the top of your file, but **don't do this** (even though it's all over the Internet!), as it can lead to mysterious errors stemming from ambiguity.
-This is because `std` has a **huge** amount of names that you will commonly use in your code.
-
-#### `using namespace std` vs `using std::cout`
-- `using namespace std;` means that you don't need to prepend `std::` for any member of the standard library you use.
-Common items you may see on your journey and in later tutorials are `cout`, `cin`, `string`, `array`, and `vector`.
-
-- `using std::cout;` means that only `cout` has the privilege to not require `std::` in front of it. You can do this for multiple items at once like:
-`using std::cout, std::cin, std::string;`
-
-
-Generally, it is recommended to use the `using std::cout;` style over `using namespace std;` if you wish to omit `std::`.
-
-An error is caused if you omit `std::` without the appropriate `using` statement.
-
-#### 🔴 Error message
-
-<Tabs groupId="compiler">
-<TabItem value="gcc" label="GCC" default>
-
-```plaintext
-error: ‘cout’ was not declared in this scope; did you mean ‘std::cout’?
-```
-
-#### 🖼 Illustration of the error:
-
-<Image center
-		alt="Illustration of the error - omitting std"
-		src="/img/tutorials/course/basic/first-program/error-omit-std-en.png"
-	/>
-
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-error C2065: 'cout': undeclared identifier
-```
-
-#### 🖼 Illustration of the error:
-
-<Image center
-		alt="Illustration of the error - omitting std"
-		src="/img/tutorials/course/basic/first-program/error-omit-std-en-msvc.png"
-	/>
-
-</TabItem>
-</Tabs>
-
-### Forgotten includes
-
-It's very easy to forget an `#include`, even for experts.
-
-#### 🔴 Error message
-
-<Tabs groupId="compiler">
-<TabItem value="gcc" label="GCC" default>
-
-```plaintext
-error: ‘cout’ is not a member of ‘std’
-```
-
-#### 🖼 Illustration of the error:
-
-<Image center
-		alt="Illustration of the error - missing include"
-		src="/img/tutorials/course/basic/first-program/error-missing-include-en.png"
-	/>
-
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-error C2039: 'cout': is not a member of 'std'
-predefined C++ types (compiler internal)(341): note: see declaration of 'std'
-error C2065: 'cout': undeclared identifier
-```
-
-#### 🖼 Illustration of the error:
-
-<Image center
-		alt="Illustration of the error - missing include"
-		src="/img/tutorials/course/basic/first-program/error-missing-include-en-msvc.png"
-	/>
-
-</TabItem>
-</Tabs>
-
-### Missing semicolons `;`
-
-Beginners often forget the semicolons (`;`) at the end of statements.
-Study the code examples provided in this lesson carefully, paying attention
-to where they should go.
-
-#### 🔴 Error message
-
-<Tabs groupId="compiler">
-<TabItem value="gcc" label="GCC" default>
-
-```plaintext
-error: expected `;` before (...)
-```
-
-#### 🖼 Illustration of the error:
-
-<Image center
-		alt="Illustration of the error - missing semicolon"
-		src="/img/tutorials/course/basic/first-program/error-no-semicolon-en.png"
-	/>
-
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-error C2143: syntax error: missing ';' before 'std::cout'
-```
-
-#### 🖼 Illustration of the error:
-
-<Image center
-		alt="Illustration of the error - missing semicolon"
-		src="/img/tutorials/course/basic/first-program/error-no-semicolon-en-msvc.png"
-	/>
-
-</TabItem>
-</Tabs>
-
-:::info Flaky Error Messages
-Compilers have to guess where you missed a semicolon. Therefore if you are sure that you didn't miss
-a semicolon on the line it tells you about, try looking up a few lines.
-
-Additionally missing semicolons can also cause unrelated errors further down your code.
-Usually the first error message given by the compiler is the most helpful one.
-:::
-
-### Unterminated text
-
-Text is always between the quote characters `"TEXT IS HERE!"`. 
-Forgetting to add the second quotation mark leads to C++ thinking the rest of your program is text.
-
-#### 🔴 Error message
-
-<Tabs groupId="compiler">
-<TabItem value="gcc" label="GCC" default>
-
-```plaintext
-error: missing terminating " character
-```
-
-#### 🖼 Illustration of the error:
-
-<Image center
-		alt="Illustration of the error - missing quote"
-		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en.png"
-	/>
-
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-error C2001: newline in constant
-error C2143: syntax error: missing ';' before '}'
-```
-
-#### 🖼 Illustration of the error:
-
-<Image center
-		alt="Illustration of the error - missing quote"
-		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en-msvc.png"
-	/>
-
-</TabItem>
-</Tabs>
-
-
-
-### Using `"` inside of text
-
-You may be tempted to put quotes inside a message when outputting it to the console.
-However, remember that C++ considers everything inside of `"..."` quotes to be text.
-
-Thus, if you write:
-```cpp
-"Hi! My name is "Slim Shady". Nice to meet you!"
-```
-
-C++ will interpret this as:
-```plaintext
-"TEXT" C++ CODE "TEXT"
-```
-
-You can prevent this by using the `\` backslash character to *escape* the quote.
-
-```cpp
-"Hi! My name is \"Slim Shady\". Nice to meet you!"
-```
-
-#### 🔴 Error message
-
-<Tabs groupId="compiler">
-<TabItem value="gcc" label="GCC" default>
-
-```plaintext
-error: unable to find string literal operator ‘operator""Slim’ with ‘const char [16]’, ‘long unsigned int’ arguments
-```
-
-#### 🖼 Illustration of the error:
-
-TODO
-
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-error C3688: invalid literal suffix 'Slim'; literal operator or literal operator template 'operator ""Slim' not found
-error C2146: syntax error: missing ';' before identifier 'Shady'
-error C2065: 'Shady': undeclared identifier
-error C2143: syntax error: missing ';' before 'string'
-```
-
-#### 🖼 Illustration of the error:
-
-<Image center
-		alt="Illustration of the error - unescaped quote"
-		src="/img/tutorials/course/basic/first-program/error-unescaped-quote-en-msvc.png"
-	/>
-
-</TabItem>
-</Tabs>
-
-:::info Unhelpful errors
-These error messages aren't that helpful! Your hint should be the fact that it is treating what you intend to be text as code.
-:::
-
-
-## Exercise
-
-Lord Mux from the Planet Multiplexer has landed on Earth! It was quite a disasterous arrival - portal storms, rabid alien creatures, 
-electromagnetic pulses, and more have shuttered the global infrastructure. Despite this, Mux demands to see humanity's most advanced
-technology. While all silicon-based computers have become inoperable from the radiation surges, the old mechanical teletypes from the 30s
-are still fully functional.
-
-<Image center
-		alt="Old Teletype Machine"
-		src="/img/tutorials/course/basic/first-program/teletype.png"
-		maxwidth="500px"
-	/>
-
-<br/>
-
-Write a C++ program that uses `std::cout` to send a message to Lord Mux. Our engineers have wired up the output stream to be connected
-to one of the last remaining telegraph lines in the downtown area.
-
-Your message should look like this:
-```plaintext
-Hello Lord Mux!
-
-I am "YOUR NAME", a representative for the Planet Earth and all of Humanity.
-
-I have been sent to you to demonstrate our most advanced technology. 
-
-Sadly, your unexpected arrival has destroyed our computing and manufacturing abilities. 
-
-I bring to you an old "teletype" made nearly 100 years ago. It is printing the message you are reading now.
-
-It can even do math! Look: (42 - 37) * (42 + 37) = 395
-
-Give us some time, we can make something even cooler!
-```
-
-(Note: don't hard code the answer to the math equation, you should use what you learned above!)
