@@ -1,0 +1,285 @@
+---
+toc_max_heading_level: 2
+---
+
+import Columns		from '@site-comps/Columns';
+import GoogleSlides	from '@site-comps/GoogleSlides';
+import Image		from '@site-comps/Image';
+import Tooltip		from '@site-comps/Tooltip';
+import NotFinished	from '@site/i18n/en/presets/NotFinished.mdx';
+
+import Tabs			from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
+
+# First Program » Common Problems
+
+It is worth paying attention to what can cause a **compilation error**. Compilation errors are caused by invalid C++.
+When the compiler encounters invalid code, it will stop and tell you what's wrong. You cannot run your program unless compilation is
+completed without errors.
+
+## Omitting `std::`
+
+If you have trouble with the `std::` prefix, consider using it
+locally, **always inside a function** (as shown in the example):
+
+```cpp title="🔹 Acceptable use"
+#include <iostream>
+int main()
+{
+	// highlight-next-line
+	using namespace std;
+	cout << "Hello, World!";
+}
+```
+
+I emphasize this because it is possible to place `using namespace std;` at the top of your file,
+but **don't do this** (even though it's all over the Internet!), as it can lead to mysterious errors stemming from ambiguity.
+This is because `std` has a **huge** amount of names that you will commonly use in your code.
+
+:::tip Good practice
+It's best not to omit the `std::` prefix.
+:::
+
+### Know the difference!
+
+There are two ways to omit the `std::` prefix:
+
+```cpp
+using namespace std;
+```
+
+and
+
+```cpp
+using std::cout;
+```
+
+`using namespace std` and `using std::cout`
+
+- `using namespace std;` means that you don't need to prepend `std::` for any member of the standard library you use.
+Common items you may see on your journey and in later tutorials are `cout`, `cin`, `string`, `array`, and `vector`.
+
+- `using std::cout;` means that only `cout` has the privilege to not require `std::` in front of it. You can do this for multiple items at once like:
+`using std::cout, std::cin, std::string;`
+
+
+Generally, it is recommended to use the `using std::cout;` style over `using namespace std;` if you wish to omit `std::`.
+
+An error is caused if you omit `std::` without the appropriate `using` statement.
+
+### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: ‘cout’ was not declared in this scope; did you mean ‘std::cout’?
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - omitting std"
+		src="/img/tutorials/course/basic/first-program/error-omit-std-en.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2065: 'cout': undeclared identifier
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - omitting std"
+		src="/img/tutorials/course/basic/first-program/error-omit-std-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+## Forgotten includes
+
+It's very easy to forget an `#include`, even for experts.
+
+### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: ‘cout’ is not a member of ‘std’
+```
+
+### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing include"
+		src="/img/tutorials/course/basic/first-program/error-missing-include-en.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2039: 'cout': is not a member of 'std'
+predefined C++ types (compiler internal)(341): note: see declaration of 'std'
+error C2065: 'cout': undeclared identifier
+```
+
+### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing include"
+		src="/img/tutorials/course/basic/first-program/error-missing-include-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+## Missing semicolons `;`
+
+Beginners often forget the semicolons (`;`) at the end of statements.
+Study the code examples provided in this lesson carefully, paying attention
+to where they should go.
+
+### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: expected `;` before (...)
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing semicolon"
+		src="/img/tutorials/course/basic/first-program/error-no-semicolon-en.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2143: syntax error: missing ';' before 'std::cout'
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing semicolon"
+		src="/img/tutorials/course/basic/first-program/error-no-semicolon-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::info Flaky Error Messages
+Compilers have to guess where you missed a semicolon. Therefore if you are sure that you didn't miss
+a semicolon on the line it tells you about, try looking up a few lines.
+
+Additionally missing semicolons can also cause unrelated errors further down your code.
+Usually the first error message given by the compiler is the most helpful one.
+:::
+
+## Unterminated text
+
+Text is always between the quote characters `"TEXT IS HERE!"`. 
+Forgetting to add the second quotation mark leads to C++ thinking the rest of your program is text.
+
+### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: missing terminating " character
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing quote"
+		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2001: newline in constant
+error C2143: syntax error: missing ';' before '}'
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - missing quote"
+		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+
+## Using `"` inside of text
+
+You may be tempted to put quotes inside a message when outputting it to the console.
+However, remember that C++ considers everything inside of `"..."` quotes to be text.
+
+Thus, if you write:
+```cpp
+"Hi! My name is "Slim Shady". Nice to meet you!"
+```
+
+C++ will interpret this as:
+```plaintext
+"TEXT" C++ CODE "TEXT"
+```
+
+You can prevent this by using the `\` backslash character to *escape* the quote.
+
+```cpp
+"Hi! My name is \"Slim Shady\". Nice to meet you!"
+```
+
+### 🔴 Error message
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: unable to find string literal operator ‘operator""Slim’ with ‘const char [16]’, ‘long unsigned int’ arguments
+```
+
+#### 🖼 Illustration of the error:
+
+TODO
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C3688: invalid literal suffix 'Slim'; literal operator or literal operator template 'operator ""Slim' not found
+error C2146: syntax error: missing ';' before identifier 'Shady'
+error C2065: 'Shady': undeclared identifier
+error C2143: syntax error: missing ';' before 'string'
+```
+
+#### 🖼 Illustration of the error:
+
+<Image center
+		alt="Illustration of the error - unescaped quote"
+		src="/img/tutorials/course/basic/first-program/error-unescaped-quote-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::info Unhelpful errors
+These error messages aren't that helpful! Your hint should be the fact that it is treating what you intend to be text as code.
+:::
