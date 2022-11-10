@@ -1,0 +1,81 @@
+---
+title:					string_view<...>::size() method
+sidebar_label:			size( )
+description:			string_view<...>::size() method C++ documentation
+hide_title:				true
+tags:					[string_view, size]
+
+cppreference_origin_rel: w/cpp/container/string_view/size
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- size() -->
+import Method_SinceCpp17	from './_codes/size/since-cpp17.mdx';
+
+# std::string_view size() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />,
+}} />
+
+Returns the number of elements (`CharT`s) in the container, i.e. `std::distance(begin(), end())`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+The number of elements (`CharT`s) in the container.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Notes
+
+For [`std::string_view`](../string_view), the elements are bytes (objects of type `char`), which are not the same as characters if a multibyte encoding such as UTF-8 is used.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <string_view>
+#include <iostream>
+ 
+void check_string(std::string_view ref)
+{
+        // Print a string surrounded by single quotes, its length
+        // and whether it is considered empty.
+        std::cout << std::boolalpha
+                  << "'" << ref << "' has " << ref.size()
+                  << " character(s); emptiness: " << ref.empty() << '\n';
+}
+ 
+int main(int argc, char **argv)
+{
+        // An empty string
+        check_string("");
+ 
+        // Almost always not empty: argv[0]
+        if (argc > 0)
+                check_string(argv[0]);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+'' has 0 character(s); emptiness: true
+'./a.out' has 7 character(s); emptiness: false
+```
+
+</div>
+</Columns>
