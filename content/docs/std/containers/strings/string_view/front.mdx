@@ -1,0 +1,80 @@
+---
+title:					string_view<...>::front() method
+sidebar_label:			front( )
+description:			string_view<...>::front() method C++ documentation
+hide_title:				true
+tags:					[access, first, front]
+
+cppreference_origin_rel: w/cpp/container/string_view/front
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- front() -->
+import Method_SinceCpp17	from './_codes/front/since-cpp17.mdx';
+
+# std::string_view front() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />,
+}} />
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the first character in the view.
+
+:::danger Undefined Behavior
+Calling [`front()`](#) on an empty view is <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Reference to the first character.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Notes
+
+For a view `str`, the expression `str.front()` is equivalent to `*str.begin()` and `str[0]`.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <string_view>
+#include <iostream>
+ 
+int main() {
+    for (std::string_view str{"ABCDEF"}; !str.empty(); str.remove_prefix(1))
+        std::cout << str.front() << ' ' << str << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+A ABCDEF
+B BCDEF
+C CDEF
+D DEF
+E EF
+F F
+```
+
+</div>
+</Columns>
