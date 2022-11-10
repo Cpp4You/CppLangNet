@@ -1,0 +1,68 @@
+---
+title:					string_view<...>::operator=
+sidebar_label:			operator=
+description:			string_view<...>::operator= method C++ documentation
+hide_title:				true
+tags:					[assign, copy, operator_assign]
+
+cppreference_origin_rel: w/cpp/container/string_view/operator=
+---
+
+import Columns		from "@site-comps/Columns";
+import SwitchView	from "@site-comps/SwitchView";
+import { Since }	from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+<!-- operator_assign() -->
+import Method_SinceCpp17	from './_codes/operator_assign/since-cpp17.mdx';
+
+# std::string_view operator=
+
+<SwitchView content={{
+    'since-cpp17': <Method_SinceCpp17 />,
+}} />
+
+Replaces the view with that of `view`.
+
+### Parameters
+
+ - `view` - view to copy
+
+### Return value
+
+`*this`
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <string_view>
+int main()
+{
+    std::string_view v = "Hello, world";
+    v = v.substr(7);
+    std::cout << v << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+world
+```
+
+</div>
+</Columns>
