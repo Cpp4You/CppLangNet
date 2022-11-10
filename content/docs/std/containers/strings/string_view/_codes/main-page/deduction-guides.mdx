@@ -1,0 +1,20 @@
+```cpp
+// (1)
+template<class It, class End>
+basic_string_view(It, End) -> basic_string_view<std::iter_value_t<It>>;
+```
+> *`(1)`* allows deduction from an **iterator-sentinel pair**.
+
+```cpp
+// (2)
+template<class R>
+basic_string_view(R&&) -> basic_string_view<ranges::range_value_t<R>>;
+```
+> *`(2)`* allows the character type to be deduced from an arbitrary range.
+
+### Overload resolution
+
+In order for any of the deduction guides to participate in overload resolution,
+the folllowing requirements must be met:
+ - for *`(1)`*, `It` satisfies [`contiguous_iterator`](#) and `End` satisfies [`sized_sentinel_for`](#) for `It`
+ - for *`(2)`*, `R` satisfies [`contiguous_range`](#)
