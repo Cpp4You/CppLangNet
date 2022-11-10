@@ -1,0 +1,18 @@
+```cpp title='Splitting a string'
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// Split by the comma.
+	//                    v
+	std::string a = "Hello, World!";
+	size_t pos = a.find(',');
+
+	std::string hello = a.substr(0, pos);
+	// 1 for a comma, and 1 for a space before "World"
+	std::string world = a.substr(pos + 1 + 1);
+
+	std::cout << hello << '\n' << world;
+}
+```
