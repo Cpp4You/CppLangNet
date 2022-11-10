@@ -1,17 +1,476 @@
 ---
-sidebar_position: 2
-title: string_view
+sidebar_position:	2
+title:				std::string_view reference
+sidebar_label:		string_view
+hide_title:			true
+description:		Summary of a std::string_view (usage, methods, etc.) - C++ Language
+tags:				[string, string_view, container, text, char, word, phrase]
 
 cppreference_origin_rel: w/cpp/string/basic_string_view
 ---
 
-# String class
+import ClassSummary							from "@site-comps/ClassSummary";
+import CustomCodeBlock						from "@site-comps/CustomCodeBlock";
+import SymbolTable, { Symbol }				from "@site-comps/SymbolTable";
+import Columns								from "@site-comps/Columns";
+import Image								from "@site-comps/Image";
+import Tooltip								from "@site-comps/Tooltip";
+import SwitchView							from "@site-comps/SwitchView";
 
-import Class from "@site-comps/ClassSummary";
-import NotFinished from "@site/i18n/en/presets/NotFinished.mdx";
+import { Since, Until, Removed }            from "@site-comps/Versions";
+
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem					from "@theme/TabItem";
+
+<!------------------ Codes ----------------->
+
+<!-- Further Examples -->
+import FurtherExampleCreateAndPrintSimpleString from "./string/_codes/main-page/examples/further/create-and-print-simple-string.mdx"
+import FurtherExampleConcatenatingStrings from "./string/_codes/main-page/examples/further/concatenating-strings.mdx"
+import FurtherExampleSplittingAString from "./string/_codes/main-page/examples/further/splitting-a-string.mdx"
+import FurtherExampleConvertStringToInt from "./string/_codes/main-page/examples/further/convert-string-to-int.mdx"
+import FurtherExampleConvertStringToFloat from "./string/_codes/main-page/examples/further/convert-string-to-float.mdx"
+import FurtherExampleConvertNumbersToString from "./string/_codes/main-page/examples/further/convert-string-to-float.mdx"
+
+import Term_IllFormed from "@site/i18n/en/presets/terms/ill-formed.mdx";
+
+import TemplateParameterDesc_Traits from "./string_view/_codes/main-page/template-parameters/traits.mdx";
+
+import HelperTemplate_BorrowedRange from "./string_view/_codes/main-page/helper-templates/borrowed-range.mdx";
+import HelperTemplate_EnableView from "./string_view/_codes/main-page/helper-templates/enable-view.mdx";
+
+<!-- Overview -->
+import OverviewSimplifiedRegular from "./string/_codes/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedReguler from "./string/_codes/main-page/overview/overview-detailed-regular.mdx";
+import OverviewDetailedPmr from "./string/_codes/main-page/overview/overview-detailed-pmr.mdx";
+
+<!-- Deduction Guides -->
+import DeductionGuides from "./string_view/_codes/main-page/deduction-guides.mdx"
 
 <NotFinished />
 
-<Class name="basic_string_view" namespaces="std" folder="string_view">
-	
-</Class>
+# String view class reference
+
+## Overview
+
+<Tabs>
+<TabItem value="simplified" label="Simplified" default>
+
+	<OverviewSimplifiedRegular />
+
+</TabItem>
+<TabItem value="detailed" label="Detailed">
+
+	<OverviewDetailedReguler />
+
+</TabItem>
+</Tabs>
+
+A class that is used as a lightweight view over a sequence of characters.
+
+### Memory
+
+<ImproveSection />
+
+### Aliases
+
+Type `std::string_view` is in fact an alias to: `std::basic_string_view_view<char>`.
+
+<details>
+	<summary>Available <code>std::basic_string_view</code> aliases</summary>
+	<div>
+		<SymbolTable noTraits>
+			<Symbol name="std::string_view"			desc={<code>std::basic_string_view&lt;char&gt;</code>}/>
+			<Symbol name="std::wstring_view" 		desc={<code>std::basic_string_view&lt;wchar_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp20'>std::u8string_view</Since>}		desc={<code>std::basic_string_view&lt;char8_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp11'>std::u16string_view</Since>}		desc={<code>std::basic_string_view&lt;char16_t&gt;</code>}/>
+			<Symbol name={<Since v='cpp11'>std::u32string_view</Since>}		desc={<code>std::basic_string_view&lt;char32_t&gt;</code>}/>
+		</SymbolTable>
+	</div>
+</details>
+
+### Technical details
+
+<details>
+<summary>Technical definition of a string view</summary>
+<div>
+
+The class template `basic_string_view` describes an object that can refer to a constant contiguous sequence of char-like objects with the first element of the sequence at position zero.
+
+A typical implementation holds only two members: a pointer to constant `CharT` and a size.
+
+<Since v='cpp11'> Every specialization of <a href="string"><code>std::basic_string_view</code></a> is a <a href="/docs/named_req/TriviallyCopyable"><code>TriviallyCopyable</code></a> type. </Since>
+
+</div>
+</details>
+
+<details>
+<summary>Named requirements</summary>
+<div>
+
+`std::basic_string_view` meets the requirements of:
+- <Since v="cpp23"><a href="/docs/named_req/TriviallyCopyable">TriviallyCopyable</a></Since>
+
+	-
+		:::note
+		Specializations of `std::basic_string_view` are already trivially copyable types in all existing implementations, even before the formal requirement introduced in C++23.
+		:::
+
+</div>
+</details>
+
+<details>
+<summary>Feature testing macros</summary>
+<div>
+
+<ImproveSection />
+
+</div>
+</details>
+
+<ClassSummary name="string_view" namespaces="std" folder="string" headerName="string_view">
+
+## Template parameters
+
+<SymbolTable noTraits>
+	<Symbol name="CharT"		desc="A character type." />
+	<Symbol name="Traits"		desc={<TemplateParameterDesc_Traits />} />
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="traits_type"				desc={<code>Traits</code>} />
+	<Symbol pub name="value_type" 				desc={<code>CharT</code>} />
+	<Symbol pub name="pointer"					desc={<code>CharT*</code>} />
+	<Symbol pub name="const_pointer"			desc={<code>const CharT*</code>} />
+	<Symbol pub name="reference"				desc={<code>CharT</code>} />
+	<Symbol pub name="const_reference"			desc={<code>const CharT&</code>} />
+
+	<Symbol pub name="const_iterator">
+		implementation-defined constant <a href="/docs/named_req/LegacyInputIterator"><code>LegacyInputIterator</code></a><Since v='cpp20'>, <a href="/docs/named_req/ConstexprIterator"><code>ConstexprIterator</code></a> </Since> and <Until v='cpp20'> <a href="/docs/named_req/LegacyContiguousIterator"><code>LegacyContiguousIterator</code></a> </Until> <Since v='cpp20'> <a href="#"><code>contiguous_iterator</code></a> </Since> whose <code>value_type</code> is <code>CharT</code>
+	</Symbol>
+
+	<Symbol pub name="const_reverse_iterator"	desc={<a href="#"><code>std::reverse_iterator&lt;const_iterator&gt;</code></a>} />
+	<Symbol pub name="reverse_iterator"			desc={<code>const_reverse_iterator</code>} />
+
+	<Symbol pub name="size_type"				desc={<code>std::size_t</code>} />
+	<Symbol pub name="difference_type"			desc={<code>std::ptrdiff_t</code>} />
+</SymbolTable>
+
+## Member functions
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="constructors" name="(constructors)">
+		Constructs a string view.
+	</Symbol>
+	<Symbol pub name="(destructor)">
+		Destroys the string view.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_assign" name="operator=">
+		Assigns values to the string string view.
+	</Symbol>
+</SymbolTable>
+
+### Element access
+
+<SymbolTable>
+	<Symbol pub autoLink name="at">
+		Accesses the specified character <b>with bounds checking</b>.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_subscript" name="operator[]">
+		Accesses the specified character.
+	</Symbol>
+	<Symbol pub autoLink linkName="front" name="front">
+		Returns the first character.
+	</Symbol>
+	<Symbol pub autoLink linkName="back" name="back">
+		Returns the last character.
+	</Symbol>
+	<Symbol pub autoLink name="data">
+		Returns a pointer to the first character of a view.
+	</Symbol>
+</SymbolTable>
+
+### Iterators
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="begin" name={<>begin<br/>cbegin</>}>
+		Returns an <code>iterator/const_iterator</code> to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="end" name={<>end<br/>cend</>}>
+		Returns an <code>iterator/const_iterator</code> to the end.
+	</Symbol>
+	<Symbol pub autoLink linkName="rbegin" name={<>rbegin<br/>crbegin</>}>
+		Returns a reverse <code>iterator/const_iterator</code> to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="rend" name={<>rend<br/>crend</>}>
+		Returns a reverse <code>iterator/const_iterator</code> to the end.
+	</Symbol>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>
+	<Symbol pub autoLink name="empty">
+		Returns <code>true</code> if the view is empty, otherwise <code>false</code>.
+	</Symbol>
+	<Symbol pub autoLink linkName="size" name={<>size<br/>length</>}>
+		Returns the number of characters.
+	</Symbol>
+	<Symbol pub autoLink name="max_size">
+		Returns the maximum number of characters.
+	</Symbol>
+</SymbolTable>
+
+### Modifiers
+
+<SymbolTable>
+	<Symbol pub autoLink name="remove_prefix">
+		Shrinks the view by moving its start forward.
+	</Symbol>
+	<Symbol pub autoLink name="remove_suffix">
+		Shrinks the view by moving its end backward.
+	</Symbol>
+	<Symbol pub autoLink name="swap">
+		Swaps the contents.
+	</Symbol>
+</SymbolTable>
+
+### Operations
+
+<SymbolTable>
+	<Symbol pub autoLink name="copy">
+		Copies characters.
+	</Symbol>
+	<Symbol pub autoLink name="substr">
+		Returns a substring.
+	</Symbol>
+	<Symbol pub autoLink name="compare">
+		Compares two views.
+	</Symbol>
+	<Symbol pub autoLink linkName="starts_with" name={<Since v="cpp20">starts_with</Since>}>
+		Checks if the view starts with the given prefix.
+	</Symbol>
+	<Symbol pub autoLink linkName="ends_with" name={<Since v="cpp20">ends_with</Since>}>
+		Checks if the view ends with the given suffix.
+	</Symbol>
+	<Symbol pub autoLink linkName="contains" name={<Since v="cpp23">contains</Since>}>
+		Checks if the view contains the given substring or character.
+	</Symbol>
+	<Symbol pub autoLink name="find">
+		Find the first occurrence of a substring.
+	</Symbol>
+	<Symbol pub autoLink name="rfind">
+		Find the last occurrence of a substring.
+	</Symbol>
+	<Symbol pub autoLink name="find_first_of">
+		Find first occurrence of characters.
+	</Symbol>
+	<Symbol pub autoLink name="find_first_not_of">
+		Find first absence of characters.
+	</Symbol>
+	<Symbol pub autoLink name="find_last_of">
+		Find last occurrence of characters.
+	</Symbol>
+	<Symbol pub autoLink name="find_last_not_of">
+		Find last absence of characters.
+	</Symbol>
+</SymbolTable>
+
+## Constants
+
+<SymbolTable>
+	<Symbol pub static constexpr name="npos">
+		A special value. The exact meaning depends on the context.
+	</Symbol>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				operator==<br/>
+				<Removed v="cpp20">operator!= </Removed> <br />
+				<Removed v="cpp20">operator&lt; </Removed> <br />
+				<Removed v="cpp20">operator&gt; </Removed> <br />
+				<Removed v="cpp20">operator&lt;= </Removed> <br />
+				<Removed v="cpp20">operator&gt;= </Removed> <br />
+				operator&lt;=&gt;
+			</>}>
+		Lexicographically compares two string views.
+	</Symbol>
+</SymbolTable>
+
+### Input/output
+
+<SymbolTable noTraits>
+	<Symbol name="operator<<">
+		Performs stream output on views.
+	</Symbol>
+</SymbolTable>
+
+## Literals
+
+<small>Defined in namespace <code>std::literals::string_view_literals</code></small>
+<SymbolTable noTraits>
+	<Symbol name='operator ""sv'>
+		Creates a string view out of a character literal.
+	</Symbol>
+</SymbolTable>
+
+## Helper classes
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				<Since v="cpp11"> std::hash<small>&lt;std::string_view&gt;</small> </Since> <br />
+				<Since v="cpp11"> std::hash<small>&lt;std::wstring_view&gt;</small> </Since> <br />
+				<Since v="cpp20"> std::hash<small>&lt;std::u8string_view&gt;</small> </Since> <br />
+				<Since v="cpp11"> std::hash<small>&lt;std::u16string_view&gt;</small> </Since> <br />
+				<Since v="cpp11"> std::hash<small>&lt;std::u32string_view&gt;</small> </Since> <br />
+			</>}>
+		Specializations for <code>std::hash</code> to support string view hashing.
+	</Symbol>
+</SymbolTable>
+
+## Specializations
+
+<SwitchView content={{
+	'since-cpp20': <HelperTemplate_BorrowedRange />
+}} />
+
+This specialization of [`ranges::enable_borrowed_range`](#) makes [`basic_string_view`](#) satisfy [`borrowed_range`](#).
+
+<SwitchView content={{
+	'since-cpp20': <HelperTemplate_EnableView />
+}} />
+
+This specialization of [`ranges::enable_view`](#) makes [`basic_string_view`](#) satisfy [`view`](#).
+
+</ClassSummary>
+
+## Deduction guides (since C++20)
+
+<details>
+<summary>Click to expand</summary>
+<div>
+
+	<DeductionGuides />
+
+</div>
+</details>
+
+## Examples
+
+### Basic manipulation
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleCreateAndPrintSimpleString />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+Hello, World!
+```
+
+</div>
+</Columns>
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleConcatenatingStrings />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+Hello, World!
+```
+
+</div>
+</Columns>
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleSplittingAString />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+Hello
+World!
+```
+
+</div>
+</Columns>
+
+### Conversions
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleConvertStringToInt />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+Number: 8314
+```
+
+</div>
+</Columns>
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleConvertStringToFloat />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Result"
+Number: 3.141
+```
+
+</div>
+</Columns>
+
+#### Convert numbers to `std::string`
+
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+<CustomCodeBlock withTitle>
+	<FurtherExampleConvertNumbersToString />
+</CustomCodeBlock>
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+s1: 123
+s2: 456.200012
+s3: 3.141590
+```
+
+</div>
+</Columns>
