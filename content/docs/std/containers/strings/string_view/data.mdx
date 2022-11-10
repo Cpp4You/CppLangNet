@@ -1,0 +1,86 @@
+---
+title:					string_view<...>::data() method
+sidebar_label:			data( )
+description:			string_view<...>::data() method C++ documentation
+hide_title:				true
+tags:					[access, data, pointer]
+
+cppreference_origin_rel: w/cpp/container/string_view/data
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip			from "@site-comps/Tooltip";
+import { Since, Until }			from "@site-comps/Versions";
+
+<!-- data() -->
+import Method_SinceCpp17	from './_codes/data/since-cpp17.mdx';
+
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+# std::string_view data() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />,
+}} />
+
+Returns a pointer to the underlying character array.  
+
+The pointer is such that the range **[ data(); data() + size() )** is valid and the values in it correspond to the values of the view.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+A pointer to the underlying character storage.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Notes
+
+Unlike [`std::string::data()`](../string/data) and string literals, [`std::string_view::data()`](../string/data) returns a pointer to a buffer that is not necessarily null-terminated, for example a substring view (e.g. from [`remove_suffix()`](remove_suffix)).  
+
+Therefore, it is typically a mistake to pass [`data()`](#) to a routine that takes just a `const CharT*` and expects a null-terminated string.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <cstring>
+#include <cwchar>
+#include <string>
+#include <string_view>
+int main()
+{
+    std::wstring_view wcstr_v = L"xyzzy";
+    std::cout << std::wcslen(wcstr_v.data()) << '\n';
+    // OK: the underlying character array is null-terminated
+ 
+    char array[3] = {'B', 'a', 'r'};
+    std::string_view array_v(array, sizeof array);
+    // std::cout << std::strlen(array_v.data()) << '\n';
+    // error: the underlying character array is not null-terminated
+ 
+    std::string str(array_v.data(), array_v.size()); // OK
+    std::cout << std::strlen(str.data()) << '\n';
+    // OK: the underlying character array of a std::string is always null-terminated
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+5
+3
+```
+
+</div>
+</Columns>

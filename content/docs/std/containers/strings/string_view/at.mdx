@@ -1,0 +1,90 @@
+---
+sidebar_position:		2
+title:					std::string_view::at() method
+sidebar_label:			at( )
+description:			std::string_view::at() method C++ documentation
+hide_title:				true
+tags:					[access, text, index, bounds]
+
+cppreference_origin_rel: w/cpp/string_view/basic_string_view/at
+---
+
+# std::string_view at() method
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import Tooltip					from "@site-comps/Tooltip";
+
+<!-- Terms -->
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- at() -->
+import Method_at_SinceCpp17 	from './_codes/at/since-cpp17.mdx';
+
+<SwitchView content={{
+	'since-cpp17': <Method_at_SinceCpp17 />,
+}} />
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the character at specified index `pos`.
+
+Bounds checking **is performed**.
+
+### Parameters
+
+- `pos` - position of the character to return
+
+### Return value
+
+Reference to the requested character.
+
+### Exceptions
+
+Throws [`std::out_of_range`](#) if `pos >= size()`.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <stdexcept>
+#include <string_view>
+ 
+int main()
+{
+    std::string_view str_view("abcdef");
+ 
+    try {
+        for (std::size_t i = 0; true; ++i)
+            std::cout << i << ": " << str_view.at(i) << '\n';
+    }
+    catch (const std::out_of_range& e) {
+        std::cout << "Whooops. Index is out of range.\n";
+        std::cout << e.what() << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+0: a
+1: b
+2: c
+3: d
+4: e
+5: f
+6: Whooops. Index is out of range.
+basic_string_view::at: __pos (which is 6) >= this->size() (which is 6)
+```
+
+</div>
+</Columns>
