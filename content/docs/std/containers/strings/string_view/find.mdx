@@ -1,0 +1,90 @@
+---
+title:					string_view<...>::find() method
+sidebar_label:			find( )
+description:			string_view<...>::find() method C++ documentation
+hide_title:				true
+tags:					[string_view, find, search]
+
+cppreference_origin_rel: w/cpp/container/string_view/find
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- find() -->
+import Method_SinceCpp17 	from './_codes/find/since-cpp17.mdx';
+
+# std::string_view find() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />,
+}}/>
+
+Finds the first substring equal to the given character sequence.
+
+ - **(1)** Finds the first occurence of `v` in this view, starting at position `pos`.
+ - **(2)** Equivalent to `find(basic_string_view(std::addressof(ch), 1), pos)`.
+ - **(3)** Equivalent to `find(basic_string_view(s, count), pos)`.
+ - **(4)** Equivalent to `find(basic_string_view(s), pos)`.
+
+### Parameters
+
+ - `v` - view to search for
+ - `pos` - position at which to start the search
+ - `count` - length of substring to search for
+ - `s` - pointer to a character string to search for
+ - `ch` - character to search for
+
+### Return value
+
+Position of the first character of the found substring, or [`npos`](#) if no such substring is found.
+
+### Complexity
+
+**O(size() * v.size())** at worst.
+
+<ImproveSection />
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string_view>
+ 
+int main()
+{
+    using namespace std::literals;
+ 
+    constexpr auto str{" long long int;"sv};
+ 
+    static_assert(
+        1 == str.find("long"sv)            && "<- find(v , pos = 0)" &&
+        6 == str.find("long"sv, 2)         && "<- find(v , pos = 2)" &&
+        0 == str.find(' ')                 && "<- find(ch, pos = 0)" &&
+        2 == str.find('o', 1)              && "<- find(ch, pos = 1)" &&
+        2 == str.find("on")                && "<- find(s , pos = 0)" &&
+        6 == str.find("long double", 5, 4) && "<- find(s , pos = 5, count = 4)"
+    );
+ 
+    static_assert(str.npos == str.find("float"));
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+```
+
+</div>
+</Columns>
