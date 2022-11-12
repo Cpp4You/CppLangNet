@@ -1,0 +1,74 @@
+---
+title:					string_view<...>::remove_suffix() method
+sidebar_label:			remove_suffix( )
+description:			string_view<...>::remove_suffix() method C++ documentation
+hide_title:				true
+tags:					[string_view, suffix, substr, remove, remove_prefix]
+
+cppreference_origin_rel: w/cpp/container/string_view/remove_suffix
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp17	from './_codes/remove_suffix/since-cpp17.mdx';
+
+# std::string_view remove_suffix() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />
+}}/>
+
+Moves the end of the view back by `n` characters.
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if `n > size()`.
+:::
+
+### Parameters
+
+ - `n` - number of characters to remove from the end of the view
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <string_view>
+int main()
+{
+    char arr[] = {'a', 'b', 'c', 'd', '\0', '\0', '\0'};
+    std::string_view v(arr, sizeof arr);
+    auto trim_pos = v.find('\0');
+    if(trim_pos != v.npos)
+        v.remove_suffix(v.size() - trim_pos);
+    std::cout << "Array: '" << arr << "', size=" << sizeof arr << '\n'
+              << "View : '" << v << "', size=" << v.size() << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+Array: 'abcd', size=7
+View : 'abcd', size=4
+```
+
+</div>
+</Columns>

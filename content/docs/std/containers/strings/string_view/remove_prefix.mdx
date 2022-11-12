@@ -1,0 +1,73 @@
+---
+title:					string_view<...>::remove_prefix() method
+sidebar_label:			remove_prefix( )
+description:			string_view<...>::remove_prefix() method C++ documentation
+hide_title:				true
+tags:					[string_view, prefix, substr, remove, remove_prefix]
+
+cppreference_origin_rel: w/cpp/container/string_view/remove_prefix
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp17	from './_codes/remove_prefix/since-cpp17.mdx';
+
+# std::string_view remove_prefix() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />
+}}/>
+
+Moves the start of the view forward by `n` characters.
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if `n > size()`.
+:::
+
+### Parameters
+
+ - `n` - number of characters to remove from the end of the view
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <algorithm>
+#include <string_view>
+int main()
+{
+    std::string str = "   trim me";
+    std::string_view v = str;
+    v.remove_prefix(std::min(v.find_first_not_of(" "), v.size()));
+    std::cout << "String: '" << str << "'\n"
+              << "View  : '" << v << "'\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+String: '   trim me'
+View  : 'trim me'
+```
+
+</div>
+</Columns>
