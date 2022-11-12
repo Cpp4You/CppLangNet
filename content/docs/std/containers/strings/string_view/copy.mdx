@@ -1,0 +1,106 @@
+---
+title:					string_view<...>::copy() method
+sidebar_label:			copy( )
+description:			string_view<...>::copy() method C++ documentation
+hide_title:				true
+tags:					[string_view, copy, subrange, sub, range]
+
+cppreference_origin_rel: w/cpp/container/string_view/copy
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- copy() -->
+import Method_UntilCpp20 	from './_codes/copy/until-cpp20.mdx';
+import Method_SinceCpp20 	from './_codes/copy/since-cpp20.mdx';
+
+# std::string_view copy() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+	'until-cpp20': <Method_UntilCpp20 />,
+}}/>
+
+Copies the substring **[ pos, pos + rcount )** to the character array pointed to by `dest`, where `rcount` is `std::min(count, size() - pos)`.
+
+Equivalent to
+```cpp
+Traits::copy(dest, data() + pos, rcount)
+```
+
+The resulting character string_view **is not** null-terminated.
+
+### Parameters
+
+ - `dest` - pointer to the destination character string
+ - `count` - length of the substring
+ - `pos` - position of the first character
+
+### Return value
+
+Number of characters copied.
+
+### Complexity
+
+Linear in `rcount` - **O(rcount)**.
+
+### Exceptions
+
+Throws [`std::out_of_range`](#) if `pos > size()`.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <array>
+#include <cstddef>
+#include <iostream>
+#include <stdexcept>
+#include <string_view>
+ 
+int main()
+{
+    constexpr std::basic_string_view<char> source{"ABCDEF"};
+    std::array<char, 8> dest;
+    std::size_t count{}, pos{};
+ 
+    dest.fill('\0');
+    source.copy(dest.data(), count = 4); // pos = 0
+    std::cout << dest.data() << '\n'; // ABCD
+ 
+    dest.fill('\0');
+    source.copy(dest.data(), count = 4, pos = 1);
+    std::cout << dest.data() << '\n'; // BCDE
+ 
+    dest.fill('\0');
+    source.copy(dest.data(), count = 42, pos = 2); // ok, count -> 4
+    std::cout << dest.data() << '\n'; // CDEF
+ 
+    try
+    {
+        source.copy(dest.data(), count = 1, pos = 666); // throws: pos > size()
+    }
+    catch(std::out_of_range const& ex)
+    {
+        std::cout << ex.what() << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+ABCD
+BCDE
+CDEF
+basic_string_view::copy: __pos (which is 666) > __size (which is 6)
+```
+
+</div>
+</Columns>

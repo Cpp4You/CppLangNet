@@ -1,0 +1,106 @@
+---
+title:					string_view<...>::compare() method
+sidebar_label:			compare( )
+description:			string_view<...>::compare() method C++ documentation
+hide_title:				true
+tags:					[compare, string_view, equality]
+
+cppreference_origin_rel: w/cpp/container/string_view/compare
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import { Since }	from "@site-comps/Versions";
+
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp17	from './_codes/compare/since-cpp17.mdx';
+
+# std::string_view compare() method
+
+<SwitchView content={{
+    'since-cpp17': <Method_SinceCpp17 />,
+}} />
+
+Compares two character sequences.
+
+ - **(1)** The length `rlen` of the sequences to compare is `std::min(size(), v.size())`.  
+	The function compares the two views by calling `Traits::compare(data(), v.data(), rlen)`, and returns a value according to the following table:
+	<!-- NOTE: somehow insert that table here -->
+	<ImproveSection />
+
+ - **(2)** Equivalent to `substr(pos1, count1).compare(v)`.
+ - **(3)** Equivalent to `substr(pos1, count1).compare(v.substr(pos2, count2))`.
+ - **(4)** Equivalent to `compare(basic_string_view(s))`.
+ - **(5)** Equivalent to `substr(pos1, count1).compare(basic_string_view(s))`.
+ - **(6)** Equivalent to `substr(pos1, count1).compare(basic_string_view(s, count2))`.
+
+
+### Parameters
+
+ - `v` - view to compare
+ - `s` - pointer to the character string to compare to
+ - `count1` - number of characters of this view to compare
+ - `pos1` - position of the first character in this view to compare
+ - `count2` - number of characters of the given view to compare
+ - `pos2` - position of the first character of the given view to compare
+
+### Returns value
+
+ - Negative value if `*this` appears before the character sequence specified by the arguments, in lexicographical order.
+ - Zero if both character sequences compare equivalent.
+ - Positive value if `*this` appears after the character sequence specified by the arguments, in lexicographical order.
+
+### Complexity
+
+<ImproveSection />
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+```cpp showLineNumbers
+template<class CharT, class Traits, class Alloc>
+int basic_string_view<CharT, Traits, Alloc>::compare(std::basic_string_view s) const noexcept
+{
+    size_type lhs_sz = size();
+    size_type rhs_sz = s.size();
+    int result = traits_type::compare(data(), s.data(), std::min(lhs_sz, rhs_sz));
+    if (result != 0)
+        return result;
+    if (lhs_sz < rhs_sz)
+        return -1;
+    if (lhs_sz > rhs_sz)
+        return 1;
+    return 0;
+}
+```
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <string_view>
+int main() {
+    using std::operator""sv;
+    static_assert( "abc"sv.compare("abcd"sv) < 0 );
+    static_assert( "abcd"sv.compare("abc"sv) > 0 );
+    static_assert( "abc"sv.compare("abc"sv) == 0 );
+    static_assert( ""sv.compare(""sv) == 0 );
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+```
+
+</div>
+</Columns>

@@ -1,0 +1,95 @@
+---
+title:					string_view<...>::ends_with() method
+sidebar_label:			ends_with( )
+description:			string_view<...>::ends_with() method C++ documentation
+hide_title:				true
+tags:					[string_view, ends_with, end, suffix]
+
+cppreference_origin_rel: w/cpp/container/string_view/ends_with
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- ends_with() -->
+import Method_SinceCpp20 	from './_codes/ends_with/since-cpp20.mdx';
+
+# std::string_view ends_with() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+}}/>
+
+Checks if the string view ends with the given suffix, where
+
+ - **(1)** The suffix is a string view.  
+	Effectively returns `size() >= sv.size() && compare(size() - sv.size(), npos, sv) == 0`.
+
+ - **(2)** The suffix is a single character.  
+	Effectively returns `!empty() && Traits::eq(back(), c)`.
+
+ - **(3)** The suffix is a null-terminated character string.  
+	Effectively returns `ends_with(basic_string_view(s))`.
+
+### Parameters
+
+ - `s` - a string view view which may be a result of implicit conversion from another [`std::basic_string_view`](../string_view)
+ - `c` - a single character
+ - `s` - a null-terminated character string view
+
+### Return value
+
+`true` if the view ends with the provided suffix, `false` otherwise.
+
+### Complexity
+
+ - **(1)** Linear in the size of `sv` - **O(sv.size())**.
+ - **(2)** Constant - **O(1)**.
+ - **(3)** Linear in the size of `s` - **O(std::strlen(s))**.
+
+### Notes
+
+Feature testing macro: [`__cpp_lib_ends_ends_with`](#).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string_view>
+ 
+auto main() -> int
+{
+    using namespace std::literals;
+ 
+    std::cout
+        << std::boolalpha
+ 
+        // (1) bool ends_with( basic_string_view sv ) const noexcept;
+        << std::string_view("https://cppreference.com").ends_with(".com"sv) << ' ' // true
+        << std::string_view("https://cppreference.com").ends_with(".org"sv) << ' ' // false
+ 
+        // (2) bool ends_with( CharT c ) const noexcept;
+        << std::string_view("C++20").ends_with('0') << ' ' // true
+        << std::string_view("C++20").ends_with('3') << ' ' // false
+ 
+        // (3) bool ends_with( const CharT* s ) const;
+        << std::string_view("string_view").ends_with("view") << ' ' // true
+        << std::string_view("string_view").ends_with("View") << ' ' // false
+        << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+true false true false true false
+```
+
+</div>
+</Columns>
