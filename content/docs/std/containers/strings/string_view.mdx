@@ -160,6 +160,13 @@ A typical implementation holds only two members: a pointer to constant `CharT` a
 	<Symbol pub name="difference_type"			desc={<code>std::ptrdiff_t</code>} />
 </SymbolTable>
 
+
+:::note Iterators
+`iterator` and `const_iterator` are the same type because string views are views into **constant** character sequences.
+
+All requirements on the iterator types of a [`Container`](/docs/named_req/Container) applies to the `iterator` and `const_iterator` types of [`std::basic_string_view`](#) as well.
+:::
+
 ## Member functions
 
 <SymbolTable>
