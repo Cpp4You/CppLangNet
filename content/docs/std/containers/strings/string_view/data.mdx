@@ -42,9 +42,11 @@ Constant - **O(1)**.
 
 ### Notes
 
+:::caution
 Unlike [`std::string::data()`](../string/data) and string literals, [`std::string_view::data()`](../string/data) returns a pointer to a buffer that is not necessarily null-terminated, for example a substring view (e.g. from [`remove_suffix()`](remove_suffix)).  
 
 Therefore, it is typically a mistake to pass [`data()`](#) to a routine that takes just a `const CharT*` and expects a null-terminated string.
+:::
 
 ### Example
 
