@@ -1,0 +1,162 @@
+---
+sidebar_position:	3
+title:				std::initializer_list reference
+sidebar_label:		initializer_list
+description:		Summary of a std::initializer_list (usage, methods, etc.) - C++ Language
+tags:				[initializer_list, container, array, static]
+hide_title:			true
+
+cppreference_origin_rel: w/cpp/container/initializer_list
+---
+
+import ClassSummary					from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }		from "@site-comps/SymbolTable";
+import Columns						from "@site-comps/Columns";
+import Image						from "@site-comps/Image";
+import NotFinished					from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection				from "@site/i18n/en/presets/ImproveSection.mdx";
+import SwitchView					from "@site-comps/SwitchView";
+import Tabs							from "@theme/Tabs";
+import Tooltip						from "@site-comps/Tooltip";
+import TabItem						from "@theme/TabItem";
+import { Since, Until, Removed }	from "@site-comps/Versions";
+
+<!------------------ Codes ----------------->
+
+import Term_IllFormed from "@site/i18n/en/presets/terms/ill-formed.mdx";
+
+# Initializer list class reference
+
+## Overview
+
+```cpp
+template< class T >
+class initializer_list;
+```
+
+`std::initializer_list` is a light container that holds objects from list initialization or braced initialization.
+
+### Memory
+
+<ImproveSection />
+
+### Technical details
+
+<details>
+<summary>Feature testing macros</summary>
+<div>
+
+<ImproveSection />
+
+</div>
+</details>
+
+<details>
+<summary>Technical definition</summary>
+<div>
+
+An object of type `std::initializer_list<T>` is a lightweight proxy object that provides access to an array of objects of type `const T`.
+
+A `std::initializer_list<T>` object is automatically constructed when:
+
+ - A braced-init-list is used to list-initialize an object, where the corresponding constructor accepts an `std::initializer_list<T>` parameter
+ - A braced-init-list is used as the right operand of assignment or as a function call argument, and the corresponding assignment operator/function accepts an `std::initializer_list<T>` parameter
+ - A braced-init-list is bound to auto, including in a ranged for loop
+
+Initializer lists may be implemented as a pair of pointers or pointer and length.
+
+:::note
+Copying a [`std::initializer_list`](#) does not copy the underlying objects.
+:::
+
+The underlying array is a temporary array of type `const T[N]`, in which each element is copy-initialized (except that narrowing conversions are invalid) from the corresponding element of the original initializer list. The lifetime of the underlying array is the same as any other temporary object, except that initializing an initializer list object from the array extends the lifetime of the array exactly like binding a reference to a temporary (with the same exceptions, such as for initializing a non-static class member). The underlying array may be allocated in read-only memory.
+
+:::danger
+The program is <Tooltip title={Term_IllFormed}>ill-formed</Tooltip> if an explicit or partial specialization of [`std::initializer_list`](#) is declared.
+:::
+
+</div>
+</details>
+
+<ClassSummary name="initializer_list" namespaces="std" folder="initializer_list" headerName="initializer_list">
+
+## Template parameters
+
+<SymbolTable noTraits>
+	<Symbol name="T" desc="Type of the elements." />
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="value_type" 				desc={<code>T</code>}/>
+	<Symbol pub name="reference"				desc={<code>const T&amp;</code>}/>
+	<Symbol pub name="const_reference"			desc={<code>const T&amp;</code>}/>
+	<Symbol pub name="size_type"				desc={<>Unsigned integer type (usually <code>std::size_t</code>)</>}/>
+	<Symbol pub name="iterator"					desc={<code>const T*</code>}/>
+	<Symbol pub name="const_iterator"			desc={<code>const T*</code>}/>
+</SymbolTable>
+
+## Member functions
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="constructors" name="(constructors)">
+		Constructs a initializer list.
+	</Symbol>
+	<Symbol pub name="(destructor)">
+		Destroys the initializer list.
+	</Symbol>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>
+	<Symbol pub autoLink name="size">
+		Returns the number of elements.
+	</Symbol>
+</SymbolTable>
+
+### Iterators
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="begin" name={ <Since v='cpp11'> begin<br/>cbegin </Since> }>
+		Returns an <code>iterator/const_iterator</code> to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="end" name={ <Since v='cpp11'> end<br/>cend </Since> }>
+		Returns an <code>iterator/const_iterator</code> to the end.
+	</Symbol>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>std::begin <small>(std::initializer_list)</small> </>}>
+		An overload for a <a href="#">std::begin</a>.
+	</Symbol>
+	<Symbol name={<>std::end <small>(std::initializer_list)</small> </>}>
+		An overload for a <a href="#">std::end</a>.
+	</Symbol>
+</SymbolTable>
+
+## Free function templates overloaded for `std::initializer_list`
+
+<SymbolTable noTraits>
+	<Symbol pub autoLink linkName="rbegin" name={ <Since v='cpp14'> rbegin<br/>crbegin </Since> }>
+		Returns a reverse <code>iterator/const_iterator</code> to the beginning.
+	</Symbol>
+	<Symbol pub autoLink linkName="rend" name={ <Since v='cpp14'> rend<br/>crend </Since> }>
+		Returns a reverse <code>iterator/const_iterator</code> to the end.
+	</Symbol>
+	<Symbol pub autoLink linkName="empty" name={ <Since v='cpp17'> empty </Since> }>
+		Returns <code>true</code> if the initializer list is empty, otherwise <code>false</code>.
+	</Symbol>
+	<Symbol pub autoLink linkName="data" name={ <Since v='cpp17'> data </Since> }>
+		Returns a pointer to the first element of the underlying array.
+	</Symbol>
+</SymbolTable>
+
+</ClassSummary>
+
+## Examples
+
+<ImproveSection />
