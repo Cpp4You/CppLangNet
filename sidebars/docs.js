@@ -141,6 +141,14 @@ module.exports = {
 										cat('Non-member functions'),
 										['f:to_array', 'since-cpp20'],
 									]),
+								docsClassCat('initializer_list', 'std/containers/arrays/initializer_list', 'since-cpp11', [
+										'constructor',
+										cat('Capacity'),
+										'm:size',
+										cat('Iterators'),
+										'm:begin',
+										'm:end',
+									]),
 								docsClassCat('vector', 'std/containers/arrays/vector', '', [
 									'constructors',
 									'destructor',
