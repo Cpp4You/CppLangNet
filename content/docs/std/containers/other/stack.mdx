@@ -1,0 +1,190 @@
+---
+sidebar_position:	2
+title:				std::stack reference
+sidebar_label:		stack
+hide_title:			true
+description:		Summary of a std::stack (usage, methods, etc.) - C++ Language
+tags:				[stack, adapter, lifo]
+
+cppreference_origin_rel: w/cpp/container/stack
+---
+
+import ClassSummary				from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns					from "@site-comps/Columns";
+import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+import Tabs						from "@theme/Tabs";
+import TabItem					from "@theme/TabItem";
+
+<!------------------ Codes ----------------->
+
+<!-- Overview -->
+import OverviewSimplifiedRegular	from "./stack/_codes/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedReguler		from "./stack/_codes/main-page/overview/overview-detailed-regular.mdx";
+
+<!-- Deduction Guides -->
+import DeductionGuides				from "./stack/_codes/main-page/deduction-guides.mdx";
+
+import TemplateParamContainerExplanation from "./stack/_codes/main-page/template-parameters/container.mdx";
+import TemplateParamTExplanation from "./stack/_codes/main-page/template-parameters/t.mdx";
+
+<NotFinished />
+
+# Stack class reference
+
+## Overview
+
+<Tabs>
+<TabItem value="simplified" label="Simplified" default>
+
+	<OverviewSimplifiedRegular />
+
+</TabItem>
+<TabItem value="detailed" label="Detailed">
+
+	<OverviewDetailedReguler />
+
+</TabItem>
+</Tabs>
+
+Stack is a container **adapter** - it adapts a container by providing a new interface to it.
+
+The new interface is a **LIFO** (**L**ast **I**n **F**irst **O**ut) data structure.
+This means that the last element to be pushed is the first one to be accessed (like a plate stack - the last plate to be pushed on the top is the first one to be taken from it).
+
+<details>
+<summary>Technical definition of a stack</summary>
+<div>
+
+The `std::stack` class is a container adaptor that gives the programmer the functionality of a stack - specifically, a *LIFO* (last-in, first-out) data structure.
+
+The class template acts as a wrapper to the underlying container - only a specific set of functions is provided. The stack pushes and pops the element from the back of the underlying container, known as the top of the stack.
+
+</div>
+</details>
+
+<ClassSummary name="stack" namespaces="std" folder="queue" headerName="queue">
+
+## Template parameters
+
+<SymbolTable noTraits>
+	<Symbol name="T">
+		<TemplateParamTExplanation />
+	</Symbol>
+	<Symbol name="Container">
+		<TemplateParamContainerExplanation />
+	</Symbol>
+</SymbolTable>
+
+## Type names
+
+<SymbolTable>
+	<Symbol pub name="container_type"			desc={<code>Container</code>}/>
+	<Symbol pub name="value_type" 				desc={<code>Container::value_type</code>}/>
+	<Symbol pub name="size_type"					desc={<code>Container::size_type</code>}/>
+	<Symbol pub name="reference"					desc={<code>Container::reference</code>}/>
+	<Symbol pub name="const_reference"		desc={<code>Container::const_reference</code>}/>
+</SymbolTable>
+
+## Member functions
+
+<SymbolTable>
+	<Symbol pub autoLink linkName="constructors" name="(constructors)">
+		Constructs a <code>stack</code>.
+	</Symbol>
+	<Symbol pub autoLink linkName="destructors" name="(destructor)">
+		Destructs a <code>stack</code>.
+	</Symbol>
+	<Symbol pub autoLink linkName="operator_assign" name="operator=">
+		Assigns one <code>stack</code> to another
+	</Symbol>
+</SymbolTable>
+
+### Element access
+
+<SymbolTable>
+	<Symbol pub autoLink name="front"
+			desc="Accesses the element at the top (first pushed)."
+		/>
+	<Symbol pub autoLink name="back"
+			desc="Accesses the element at the back (last pushed)."
+		/>
+</SymbolTable>
+
+### Capacity
+
+<SymbolTable>
+	<Symbol pub autoLink name="empty"
+			desc={<>Returns <code>true</code> if the stack is empty, otherwise <code>false</code>.</>}
+		/>
+	<Symbol pub autoLink name="size" desc="Returns the number of elements in the stack." />
+</SymbolTable>
+
+### Modifiers
+
+<SymbolTable>
+	<Symbol pub autoLink name="push"
+			desc="Inserts a new element at the end."
+		/>
+	<Symbol pub autoLink name={<>emplace <small>(since C++11)</small></>} linkName="emplace"
+			desc="Constructs a new element in-place at the end."
+		/>
+	<Symbol pub autoLink name="pop"
+			desc={<>Removes the first pushed element (the one that would've been returned by <code>stack.front()</code>).</>}
+		/>
+	<Symbol pub autoLink name={<>swap <small>(since C++11)</small></>} linkName="swap"
+			desc="Swaps two stacks."
+		/>
+</SymbolTable>
+
+## Member objects
+
+<SymbolTable>
+	<Symbol prot name={<><code>Container</code> C</>}
+			desc={<>The underlying container. By default <a href="/docs/containers/stacks/deque"><code>std::deque&lt;T&gt;</code></a>.</>}
+		/>
+</SymbolTable>
+
+## Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+				operator== <br/>
+				operator!= <br/>
+				operator&lt; <br/>
+				operator&gt; <br/>
+				operator&lt;= <br/>
+				operator&gt;= <br/>
+				operator&lt;=&gt; <small>(C++20)</small>
+			</>}
+			desc="Lexicographically compares values in a stack."
+		/>
+	<Symbol name={<>std::swap <small>(std::stack)</small></>}
+			desc={<>An overload for the <a href="#">std::swap</a> algorithm.</>}
+		/>
+</SymbolTable>
+
+### Helper classes
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+			<a href="#">std::uses_allocator</a> <small>(std::stack)</small>
+		</>}
+			desc={<>Specializes the <code>std::uses_allocator</code> type trait.</>}
+		/>
+</SymbolTable>
+
+</ClassSummary>
+
+
+## Deduction guides (since C++17)
+<details>
+<summary>Click to expand</summary>
+<div>
+	<DeductionGuides />
+</div>
+</details>
+
+## Examples
+
+<ImproveSection />
