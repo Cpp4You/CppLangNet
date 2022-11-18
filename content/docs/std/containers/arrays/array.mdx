@@ -46,8 +46,6 @@ import FurtherExampleMinimalValue		from "./_codes/array/main-page/examples/furth
 <!-- Deduction Guides -->
 import DeductionGuides			from "./_codes/array/main-page/deduction-guides.mdx";
 
-# Array class reference
-
 ## Overview
 
 ```cpp
@@ -55,46 +53,34 @@ template <typename T, size_t N>
 class array
 ```
 
-`std::array` is a container that encapsulates fixed size arrays.  
+`std::array` is a container that encapsulates fixed size arrays. It is a safer alternative to C-style arrays - `T arr[N]`.
 
 ### Example usage
 
 The examples in this section are very simple ones. Navigate to [examples section at the bottom](#more-examples) for more.
 
 <Tabs>
-<TabItem value="create" label="Create" default>
-<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
-
-<SwitchView content={
-		{
-			"cpp20": <TopExampleCreateCpp20 />,
-			"cpp17": <TopExampleCreateCpp17 />,
-			"until-cpp17": <TopExampleCreateUntilCpp17 />,
-			"String literal": <TopExampleStringLiteral />
-		}
-	}/>
-
-</div>
-</TabItem>
-<TabItem value="fill" label="Fill and print">
-<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
-
-	<TopExampleFillAndPrint />
-
-</div>
-</TabItem>
-<TabItem value="sort" label="Sort">
-<div style={{ padding: "10px 20px", border: "1px solid gray" }}>
-
-<SwitchView content={
-		{
-			"cpp20":		<TopExampleSortCpp20 />,
-			"until-cpp20":	<TopExampleSortUntilCpp20 />,
-		}
-	}/>
-
-</div>
-</TabItem>
+	<TabItem value="create" label="Create" default>
+		<SwitchView content={
+				{
+					"cpp20": <TopExampleCreateCpp20 />,
+					"cpp17": <TopExampleCreateCpp17 />,
+					"until-cpp17": <TopExampleCreateUntilCpp17 />,
+					"String literal": <TopExampleStringLiteral />
+				}
+			}/>
+	</TabItem>
+	<TabItem value="fill" label="Fill and print">
+		<TopExampleFillAndPrint />
+	</TabItem>
+	<TabItem value="sort" label="Sort">
+		<SwitchView content={
+				{
+					"cpp20":		<TopExampleSortCpp20 />,
+					"until-cpp20":	<TopExampleSortUntilCpp20 />,
+				}
+			}/>
+	</TabItem>
 </Tabs>
 
 ### Memory
