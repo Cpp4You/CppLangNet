@@ -1,0 +1,10 @@
+.navbar {
+	background: rgba(255, 255, 255, 0.5);
+	background: radial-gradient(circle, rgb(255, 255, 255) 0%, rgba(247, 245, 245) 80%, rgba(243, 240, 240) 100%);
+	// backdrop-filter: blur(15px);
+}
+
+html[data-theme='dark'] .navbar {
+	background: rgb(29,31,41);
+	background: radial-gradient(circle, rgb(23, 24, 26) 25%, rgb(20, 19, 22) 85%, rgba(23,22,22,1) 95%);
+}
