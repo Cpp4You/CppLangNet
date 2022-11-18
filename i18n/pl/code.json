@@ -352,5 +352,26 @@
   "theme.blog.post.readMoreLabel": {
     "message": "Czytaj więcej o {title}",
     "description": "The ARIA label for the link to full blog posts from excerpts"
+  },
+  "removed in C++98": {
+    "message": "removed in C++98"
+  },
+  "removed in C++03": {
+    "message": "removed in C++03"
+  },
+  "removed in C++11": {
+    "message": "removed in C++11"
+  },
+  "removed in C++14": {
+    "message": "removed in C++14"
+  },
+  "removed in C++17": {
+    "message": "removed in C++17"
+  },
+  "removed in C++20": {
+    "message": "removed in C++20"
+  },
+  "removed in C++23": {
+    "message": "removed in C++23"
   }
 }

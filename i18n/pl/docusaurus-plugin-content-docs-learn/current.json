@@ -78,5 +78,25 @@
   "sidebar.defaultSidebar.category.Advices 💰": {
     "message": "Dobre rady 💰",
     "description": "The label for category Advices 💰 in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.1. First program": {
+    "message": "1. Pierwszy program",
+    "description": "The label for category 1. First program in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.3. Strings": {
+    "message": "3. Napisy",
+    "description": "The label for category 3. Strings in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.doc.🐞 Common problems": {
+    "message": "🐞 Częste problemy",
+    "description": "The label for the doc item 🐞 Common problems in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/common-problems"
+  },
+  "sidebar.defaultSidebar.doc.📚 Exercises": {
+    "message": "📚 Ćwiczenia",
+    "description": "The label for the doc item 📚 Exercises in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/exercises"
+  },
+  "sidebar.defaultSidebar.doc.💡 Examples": {
+    "message": "💡 Przykłady",
+    "description": "The label for the doc item 💡 Examples in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/examples"
   }
 }

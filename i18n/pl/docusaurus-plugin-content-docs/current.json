@@ -138,5 +138,17 @@
   "sidebar.defaultSidebar.category.unordered_multiset": {
     "message": "unordered_multiset",
     "description": "The label for category unordered_multiset in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.deque": {
+    "message": "deque",
+    "description": "The label for category deque in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Lists": {
+    "message": "Lists",
+    "description": "The label for category Lists in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.forward-list": {
+    "message": "forward-list",
+    "description": "The label for category forward-list in sidebar defaultSidebar"
   }
 }
