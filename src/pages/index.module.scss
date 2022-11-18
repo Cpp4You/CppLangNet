@@ -203,11 +203,6 @@ html:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plug
 	>* {
 		flex-basis: 100%;
 	}
-	a {
-		
-		// flex-basis: 30%;
-		// padding: 20px 45px;
-	}
 }
 
 
@@ -219,7 +214,7 @@ html:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plug
 	text-transform: uppercase;
 	transition: 0.5s;
 	background-size: 200% auto;
-	color: white !important;            
+	color: white !important;
 	box-shadow: 0 0 20px aqua;
 	border-radius: 50px;
 	border: 0;

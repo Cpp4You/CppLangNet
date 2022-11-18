@@ -119,6 +119,8 @@ html[data-theme='dark']
 	background: none;
 	background-color: rgba(black, 0.80);
 	border-top: none;
+	backdrop-filter: blur(10px);
+
 	&:nth-child(3) {
 		border-top: none;
 		background: rgb(0,0,0);
@@ -133,6 +135,8 @@ html[data-theme='dark']
 }
 
 .overview {
+	backdrop-filter: blur(10px);
+
 	background: linear-gradient(180deg, rgb(243, 243, 243) 10%, white 30%);
 	background-color: rgb(243, 243, 243);
 	border-top: 1px solid gray;

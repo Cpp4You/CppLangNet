@@ -55,3 +55,46 @@ html[data-theme='dark']
 }
 
 }
+
+
+:root {
+	// for light theme
+	--codeblock-title-bg: rgb(255, 255, 255);
+
+	// blueish radial gradient
+	--codeblock-title-bg-gradient: rgb(252, 247, 214);
+
+	--codeblock-title-color: rgb(20, 20, 20);
+	--codeblock-title-border: rgb(128, 128, 128);
+	--codeblock-border-color: rgb(207, 207, 207);
+}
+
+
+html[data-theme="dark"]
+{
+	--codeblock-title-bg: rgb(26, 30, 43);
+	--codeblock-title-bg-gradient: radial-gradient(circle, rgb(27, 35, 37) 0%, rgb(28, 32, 41) 40%, rgb(18, 25, 44) 70%);
+
+	--codeblock-title-color: rgb(228, 228, 228);
+	--codeblock-title-border: rgb(73, 73, 73);
+
+	--codeblock-border-color: rgb(19, 19, 19);
+}
+
+
+.theme-code-block {
+	border: 2px solid var(--codeblock-border-color);
+	border-radius: 4px;
+	>div[class*='codeBlockTitle'] {
+		padding: 4px 15px;
+		color: var(--codeblock-title-color);
+		font-weight: normal;
+		background: var(--codeblock-title-bg);
+		background: var(--codeblock-title-bg-gradient);
+		border-bottom: 1px solid var(--codeblock-title-border);
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+	}
+}
+
+
