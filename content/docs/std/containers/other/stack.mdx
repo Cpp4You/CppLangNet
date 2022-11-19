@@ -79,10 +79,10 @@ The class template acts as a wrapper to the underlying container - only a specif
 ## Type names
 
 <SymbolTable>
-	<Symbol pub name="container_type"			desc={<code>Container</code>}/>
-	<Symbol pub name="value_type" 				desc={<code>Container::value_type</code>}/>
-	<Symbol pub name="size_type"					desc={<code>Container::size_type</code>}/>
-	<Symbol pub name="reference"					desc={<code>Container::reference</code>}/>
+	<Symbol pub name="container_type"		desc={<code>Container</code>}/>
+	<Symbol pub name="value_type" 			desc={<code>Container::value_type</code>}/>
+	<Symbol pub name="size_type"			desc={<code>Container::size_type</code>}/>
+	<Symbol pub name="reference"			desc={<code>Container::reference</code>}/>
 	<Symbol pub name="const_reference"		desc={<code>Container::const_reference</code>}/>
 </SymbolTable>
 
@@ -103,46 +103,48 @@ The class template acts as a wrapper to the underlying container - only a specif
 ### Element access
 
 <SymbolTable>
-	<Symbol pub autoLink name="front"
-			desc="Accesses the element at the top (first pushed)."
-		/>
-	<Symbol pub autoLink name="back"
-			desc="Accesses the element at the back (last pushed)."
-		/>
+	<Symbol pub autoLink name="front">
+		Accesses the element at the top (first pushed)
+	</Symbol>
+	<Symbol pub autoLink name="back">
+		Accesses the element at the back (last pushed)
+	</Symbol>
 </SymbolTable>
 
 ### Capacity
 
 <SymbolTable>
-	<Symbol pub autoLink name="empty"
-			desc={<>Returns <code>true</code> if the stack is empty, otherwise <code>false</code>.</>}
-		/>
-	<Symbol pub autoLink name="size" desc="Returns the number of elements in the stack." />
+	<Symbol pub autoLink name="empty">
+		Returns <code>true</code> if the stack is empty, otherwise <code>false</code>.
+	</Symbol>
+	<Symbol pub autoLink name="size">
+		Returns the number of elements in the stack.
+	</Symbol>
 </SymbolTable>
 
 ### Modifiers
 
 <SymbolTable>
-	<Symbol pub autoLink name="push"
-			desc="Inserts a new element at the end."
-		/>
-	<Symbol pub autoLink name={<>emplace <small>(since C++11)</small></>} linkName="emplace"
-			desc="Constructs a new element in-place at the end."
-		/>
-	<Symbol pub autoLink name="pop"
-			desc={<>Removes the first pushed element (the one that would've been returned by <code>stack.front()</code>).</>}
-		/>
-	<Symbol pub autoLink name={<>swap <small>(since C++11)</small></>} linkName="swap"
-			desc="Swaps two stacks."
-		/>
+	<Symbol pub autoLink name="push">
+		Inserts a new element at the end
+	</Symbol>
+	<Symbol pub autoLink name={<>emplace <small>(since C++11)</small></>} linkName="emplace">
+		Constructs a new element in-place at the end
+	</Symbol>
+	<Symbol pub autoLink name="pop">
+		Removes the first pushed element (the one that would've been returned by <code>stack.front()</code>).
+	</Symbol>
+	<Symbol pub autoLink name={<>swap <small>(since C++11)</small></>} linkName="swap">
+		Swaps two stacks
+	</Symbol>
 </SymbolTable>
 
 ## Member objects
 
 <SymbolTable>
-	<Symbol prot name={<><code>Container</code> C</>}
-			desc={<>The underlying container. By default <a href="/docs/containers/stacks/deque"><code>std::deque&lt;T&gt;</code></a>.</>}
-		/>
+	<Symbol prot name={<><code>Container</code> c</>}>
+		The underlying container. By default <a href="/docs/containers/stacks/deque"><code>std::deque&lt;T&gt;</code></a>.
+	</Symbol>
 </SymbolTable>
 
 ## Non-member functions
@@ -156,22 +158,20 @@ The class template acts as a wrapper to the underlying container - only a specif
 				operator&lt;= <br/>
 				operator&gt;= <br/>
 				operator&lt;=&gt; <small>(C++20)</small>
-			</>}
-			desc="Lexicographically compares values in a stack."
-		/>
-	<Symbol name={<>std::swap <small>(std::stack)</small></>}
-			desc={<>An overload for the <a href="#">std::swap</a> algorithm.</>}
-		/>
+			</>}>
+		Lexicographically compares values in a stack.
+	</Symbol>
+	<Symbol name={<>std::swap <small>(std::stack)</small></>}>
+		An overload for the <a href="#">std::swap</a> algorithm.
+	</Symbol>
 </SymbolTable>
 
 ### Helper classes
 
 <SymbolTable noTraits>
-	<Symbol name={<>
-			<a href="#">std::uses_allocator</a> <small>(std::stack)</small>
-		</>}
-			desc={<>Specializes the <code>std::uses_allocator</code> type trait.</>}
-		/>
+	<Symbol name={<> <a href="#">std::uses_allocator</a> <small>(std::stack)</small> </>}>
+		Specializes the <code>std::uses_allocator</code> type trait.
+	</Symbol>
 </SymbolTable>
 
 </ClassSummary>
