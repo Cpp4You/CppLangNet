@@ -1,0 +1,6 @@
+noexcept specification:
+```cpp
+noexcept(noexcept(swap(c, other.c)))
+```
+
+In the expression above, the identifier swap is looked up in the same manner as the one used by the C++17 [`std::is_nothrow_swappable`](#) trait.
