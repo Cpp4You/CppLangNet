@@ -1,0 +1,25 @@
+{
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/Thumbs.db": true,
+		"blog": false,
+		".vscode": true,
+		".github": true,
+		".docusaurus": true,
+		"node_modules": false,
+		"i18n/*/docusaurus-plugin-content-blog": true,
+		"i18n/*/docusaurus-plugin-content-docs": true,
+		"i18n/*/docusaurus-plugin-content-docs-features": true,
+		"i18n/*/docusaurus-plugin-content-docs-learn": true,
+		"i18n/*/docusaurus-plugin-content-docs-tools": true,
+		"i18n/*/docusaurus-plugin-content-docs-contributing": true,
+		"i18n/*/docusaurus-theme-classic": true,
+		"build": true,
+		".vscode-template": false
+	},
+	"explorerExclude.backup": null
+}
