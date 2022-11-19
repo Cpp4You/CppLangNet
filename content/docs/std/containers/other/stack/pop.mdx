@@ -1,0 +1,51 @@
+---
+title:					stack<...>::pop()
+sidebar_label:			pop( )
+description:			stack<...>::pop() C++ documentation
+hide_title:				true
+tags:					[remove, pop, last]
+---
+
+import SwitchView				from "@site-comps/SwitchView";
+
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp98 	from './_codes/pop/since-cpp98.mdx';
+
+# std::stack pop()
+
+<SwitchView content={{
+	'since-cpp98': <Method_SinceCpp98 />,
+}}/>
+
+Removes an element from the front of the stack.
+
+:::note
+Effectively calls
+```cpp
+c.pop_front()
+```
+:::
+
+### Parameters
+
+**(none)**
+
+### Return valued
+
+**(none)**
+
+### Exceptions
+
+Equivalent to that of `pop_front` of the underlying container.
+
+### Complexity
+
+Equivalent to that of `pop_front` of the underlying container.
+
+### Example
+
+<ImproveSection />
+
