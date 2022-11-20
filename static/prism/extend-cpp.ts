@@ -76,10 +76,32 @@ const standardLibraryTypes = [
 	"filebuf",			"wfilebuf",
 	"ios",				"wios",
 
-	// syncbuf and spanstream
 	"syncbuf",			"wsyncbuf",
 	"spanstream",		"wspanstream",
+
+	"high_resolution_clock",
+	"steady_clock",
+	"system_clock",
+
+	"scoped_lock",
+	"shared_lock",
+	"unique_lock",
+	"lock_guard",
+
+	"mutex",
+	"thread",
+	"jthread"
 ];
+
+const standardLibrarySubNamespaces = [
+	"ranges",
+	"chrono",
+	"filesystem",
+	"this_thread",
+	"string_literals",
+	"string_view_literals"
+];
+
 
 Prism.languages.cpp["class-name"] = [
 	...Prism.languages.cpp["class-name"],
@@ -89,12 +111,12 @@ Prism.languages.cpp["class-name"] = [
 Prism.languages.insertBefore("cpp", "keyword", {
 	"namespace": [
 		{
-			pattern: /(\b(?:namespace|using)\s+)[a-zA-Z_]+/g,
+			pattern: /(\b(?:namespace|using)\s+)[a-zA-Z_][a-zA-Z0-9_]+/g,
 			lookbehind: true,
 		},
 		{
 			// ranges, chrono, filesystem preceded by std::
-			pattern: /(std::)(ranges|chrono|filesystem|this_thread)/g,
+			pattern: new RegExp(`(std::)(${standardLibrarySubNamespaces.join("|")})`),
 			lookbehind: true,
 		},
 		{ pattern: /\b(std)/g },
