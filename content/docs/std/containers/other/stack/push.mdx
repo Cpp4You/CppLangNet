@@ -23,8 +23,14 @@ import Method_SinceCpp11 	from './_codes/push/since-cpp11.mdx';
 
 Pushes the given element value to the end of the stack
 
- - **(1)** Effectively calls `c.push_back(value)`.
- - **(2)** Effectively calls `c.push_back(std::move(value))`.
+ - **(1)** Effectively calls
+	```cpp
+	c.push_back(value)
+	```
+ - **(2)** Effectively calls
+	```cpp
+	c.push_back(std::move(value))
+	```
 
 ### Parameters
 
