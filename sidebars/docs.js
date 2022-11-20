@@ -666,6 +666,28 @@ module.exports = {
 									'm:sort',
 								]),
 							]
+						},
+						{
+							type: 'category',
+							label: 'Other',
+							link: { type: 'doc', id: 'std/containers/other/index' },
+							items: [
+								docsClassCat('stack', 'std/containers/other/stack', '', [
+									'constructors',
+									'destructors',
+									'op:operator_assign',
+									cat('Element access'),
+									'm:top',
+									cat('Capacity'),
+									'm:empty',
+									'm:size',
+									cat('Modifiers'),
+									'm:push',
+									['m:emplace', 'since-cpp11'],
+									'm:pop',
+									['m:swap', 'since-cpp11'],
+								]),
+							]
 						}
 					]
 				},
