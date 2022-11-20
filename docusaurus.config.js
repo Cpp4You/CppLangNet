@@ -301,6 +301,8 @@ function filterSidebarItems(items)
 			prism: {
 				theme: 		lightCodeTheme,
 				darkTheme:	darkCodeTheme,
+				scripts: ["extend-cpp"],
+				additionalLanguages: ["log"],
 				magicComments: [
 					{
 						className: "code-block-highlighted-line",
