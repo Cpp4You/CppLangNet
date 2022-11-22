@@ -7,22 +7,35 @@ $sidebarNavigationClass:	"navbar-sidebar--show";
 	--dark-theme-navbar-bgc: rgba(0,0,0, 0.9);
 	--light-theme-navbar-bgc: rgba(255, 255, 255, 0.95);
 
-	--darktheme-link-color: white;
-	--darktheme-hovered-link-color: #12dbff;
-	--darktheme-navbar-button-bgc: rgba(0,0,0,0.6);
+	--dark-theme-link-color: white;
+	--light-theme-link-color: white;
+
+	--dark-theme-hovered-link-color: #12dbff;
+	--light-theme-hovered-link-color: #12dbff;
+	
+	--dark-theme-navbar-button-bgc: rgba(126,126,126,0.4);
+	--light-theme-navbar-button-bgc: rgba(126,126,126,0.4);
 }
 
-// Default settings
-.navbar {
-	// Navbar-level variables:
+// Light theme:
+:root {
 	--navbar-bgc: var(--light-theme-navbar-bgc);
-
-	background: var(--navbar-bgc);
+	--navbar-link-color: var(--light-theme-link-color);
+	--navbar-button-bgc: var(--light-theme-navbar-button-bgc);
+	--navbar-hovered-link-color: var(--light-theme-hovered-link-color);
 }
 
-// Dark-mode
-html[data-theme='dark'] .navbar {
+// Dark theme:
+html[data-theme='dark']
+{
 	--navbar-bgc: var(--dark-theme-navbar-bgc);
+	--navbar-link-color: var(--dark-theme-link-color);
+	--navbar-button-bgc: var(--dark-theme-navbar-button-bgc);
+	--navbar-hovered-link-color: var(--dark-theme-hovered-link-color);
+}
+
+.navbar {
+	background: var(--navbar-bgc);
 }
 
 //////////////////////////////////////////////////////////
@@ -69,14 +82,14 @@ html
 				// Theme Switch Button
 				div[class*=#{$themeSwitchButtonClass}]
 				{
-					button:hover { background-color: var(--darktheme-navbar-button-bgc); }
+					button:hover { background-color: var(--dark-theme-navbar-button-bgc); }
 					path { fill: white; } // SVG icon color
 				}
 	
 				// Each link within the navbar
 				.navbar__link {
-					color: var(--darktheme-link-color);
-					&:hover { color: var(--darktheme-hovered-link-color); }
+					color: var(--dark-theme-link-color);
+					&:hover { color: var(--dark-theme-hovered-link-color); }
 				}
 		
 				// Fade out animation
@@ -99,7 +112,14 @@ html
 	}
 }
 
-}	
+}
+
+
+// Custom settings for the Theme Switch Button
+div[class*=#{$themeSwitchButtonClass}]
+{
+	button:hover { background-color: var(--navbar-button-bgc); }
+}
 
 
 //////////////////////////////////////////////////////////

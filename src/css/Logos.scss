@@ -22,7 +22,7 @@
 		}
 
 		.header-#{$name}-link:hover {
-			background-color: rgba(0,0,0,0.6);	
+			background-color: var(--dark-theme-navbar-button-bgc);	
 		}
 	}
 
@@ -32,12 +32,12 @@
 		}
 
 		.header-#{$name}-link:hover {
-			background-color: rgba(126,126,126,0.4);	
+			background-color: var(--dark-theme-navbar-button-bgc);
 		}
 	}
 
 	.header-#{$name}-link:hover {
-		background-color: rgba(126,126,126,0.4);	
+		background-color: var(--light-theme-navbar-button-bgc);
 	}
 }
 
