@@ -58,7 +58,7 @@ html[data-theme='dark'] .navbar {
 @media screen and (min-width: 997px) {
 
 html {
-	div[class*="ColorModeToggle"] {
+	div[class*="colorModeToggle"] {
 		button:hover {
 			background-color: rgba(126,126,126,0.6);
 		}
@@ -70,7 +70,7 @@ html {
 		// Is at top?
 		&[data-scroll="0"] {
 			.navbar:not([class*="navbar-sidebar--show"]) {
-				div[class*="ColorModeToggle"] {
+				div[class*="colorModeToggle"] {
 					button:hover {
 						background-color: rgba(0,0,0,0.6);
 					}
