@@ -57,6 +57,7 @@ function filterSidebarItems(items)
 
 	scripts: [
 		"/js/giscus.js",
+		"/js/scroll.js",
 		{
 			src: "https://tenor.com/embed.js",
 			async: true,
