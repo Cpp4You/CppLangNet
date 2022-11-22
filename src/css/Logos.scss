@@ -16,16 +16,28 @@
 		background: $srcLight no-repeat;
 	}
 	
-	[data-theme='dark'] .header-#{$name}-link::before {
-		background: $srcDark no-repeat;
+	html[data-scroll="0"]:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plugin-docs"]) {	
+		.header-#{$name}-link::before {
+			background: $srcDark no-repeat;
+		}
+
+		.header-#{$name}-link:hover {
+			background-color: rgba(0,0,0,0.6);	
+		}
+	}
+
+	html[data-theme='dark'] {
+		.header-#{$name}-link::before {
+			background: $srcDark no-repeat;
+		}
+
+		.header-#{$name}-link:hover {
+			background-color: rgba(126,126,126,0.4);	
+		}
 	}
 
 	.header-#{$name}-link:hover {
-		background-color: rgb(235, 237, 240);
-	}
-
-	[data-theme='dark'] .header-#{$name}-link:hover {
-		background-color: rgb(68, 73, 80);		
+		background-color: rgba(126,126,126,0.4);	
 	}
 }
 

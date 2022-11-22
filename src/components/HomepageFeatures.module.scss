@@ -1,11 +1,26 @@
+
+@keyframes featuresSlideUp {
+	0%, 30% {
+		transform: translateY(120px);
+		opacity: 0;
+	}
+	60% {
+		opacity: 1;
+	}
+	100% {
+	}
+}
+@media screen and (orientation: landscape) and (min-height: 720px) {
+	.features {
+		animation: 0.5s ease-in-out 0s 1 featuresSlideUp;
+	}
+}
+
 .features {
 	display: flex;
 	align-items: center;
 	width: 100%;
-	margin: 0 auto;
-	// border-top: 1px solid gray;
-	background-color: white;
-	margin-top: -5px;
+	margin-bottom: 100px;
 }
 
 .featuresContainer {
@@ -13,10 +28,9 @@
 	justify-content: center;
 	width: 80%;
 	margin: 0 auto;
-	top: -5px;
 }
 
-$iconSize: 60px;
+$iconSize: 50px;
 .pageCardSvg>img {
 	height:	$iconSize;
 	width:	$iconSize;
@@ -26,62 +40,142 @@ $iconSize: 60px;
 // White mode
 ////////////////////////
 
-.pageCard
-{
+.pageCard {
 
+	display: flex;
+
+	// Variables set up
+	&:nth-child(1)>.pageCardInner {
+		--bg-gradient-color-inner: rgba(146, 255, 164, 0.9);
+		--bg-gradient-color-outer: rgba(146, 255, 164, 0.9);
+	}
+	&:nth-child(2)>.pageCardInner {
+		--bg-gradient-color-inner: rgba(180, 159, 255, 0.9);
+		--bg-gradient-color-outer: rgba(180, 159, 255, 0.9);
+	}
+	&:nth-child(3)>.pageCardInner {
+		--bg-gradient-color-inner: rgba(255, 194, 159, 0.9);
+		--bg-gradient-color-outer: rgba(255, 194, 159, 0.9);
+	}
+	&:nth-child(4)>.pageCardInner {
+		--bg-gradient-color-inner: rgba(159, 236, 255, 0.9);
+		--bg-gradient-color-outer: rgba(159, 236, 255, 0.9);
+	}
+
+	// Properties
 	cursor: pointer;
-	padding: 20px 0 !important;
-	min-width: calc(min(250px,25vw));
-	
-	.pageCardSvg {
-		text-align: center;
-		margin-bottom: 10px;
+
+	&:not(:last-child)
+	{
+		margin-right: 60px;
+	}
+
+	&:not(:hover) .pageCardSvg {
+		// display: none;
 	}
 
 	&:not(:hover) .pageCardSvg {
 		.normalIcon {
 			display: inline;
 		}
-		.hoverIcon {
-			display: none;
-		}
 	}
 
-	&:hover .pageCardSvg {
-		.normalIcon {
-			display: none;
-		}
-		.hoverIcon {
-			display: inline;
-		}
+	// &:hover .pageCardSvg {
+	// 	.normalIcon {
+	// 		display: none;
+	// 	}
+	// 	.hoverIcon {
+	// 		display: inline;
+	// 	}
+	// }
+
+	&:hover>.pageCardInner {
+		text-decoration: none;
+		transform: translate(-4px, -4px);
+		filter: brightness(1.2) saturate(1.5);
+
+		background: radial-gradient(circle, var(--bg-gradient-color-inner) 30%, var(--bg-gradient-color-outer) 100%);
+	}
+}
+
+.pageCardInner
+{
+	// Variables set up
+	--border-color: rgba(36, 36, 36, 0.4);
+	--bg-default-gradient-color-inner: rgba(255, 255, 255, 0.9);
+	--bg-default-gradient-color-outer: rgba(255, 255, 255, 0.8);
+
+	padding: 15px 40px;
+	min-width: calc(min(200px,25vw));
+	width: 100%;
+	height: 100%;
+
+	border-radius: 20px;
+	border-bottom: 6px solid var(--border-color);
+	border-right: 3px solid var(--border-color);
+
+	box-shadow: 8px 11px 20px 2px rgba(12, 24, 29, 0.6);
+	backdrop-filter: contrast(120%) opacity(40%);
+
+	background: radial-gradient(circle, var(--bg-default-gradient-color-inner) 30%, var(--bg-default-gradient-color-outer) 100%);
+	// padding: 60px 65px;
+
+	
+
+	.pageCardSvg {
+		text-align: center;
+		margin-bottom: 10px;
+	}
+	
+	.pageCardSvg .hoverIcon {
+		display: none;
 	}
 	
 	.pageCardText {
-		text-align: center;
 		color: black;
-		font-family: var(--font-inter);
+		text-align: center;
+		// font-family: var(--font-inter);
 		font-weight: normal;
-	}
-
-	border-bottom: 2px solid transparent;
-	box-sizing: border-box;
-	&:hover {
-		border-bottom: 2px solid rgb(0, 204, 255);
-		text-decoration: none;
-
-		.pageCardSvg {
-			filter: brightness(1.2) saturate(1.5);
+		font-size: 1.4em;
+		>p {
+			margin: 0;
+			padding: 0;
+			line-height: 100%;
 		}
 	}
+
+	transition: background-color 0.5s, transform 0.1s;
+
+	box-sizing: border-box;
+}
+
+@media (max-width: 1100px) {
+
+.featuresContainer {
+	width: 100%;
+	justify-content: space-evenly;
+}
+
+.pageCard:not(:last-child) {
+	margin-right: 0;
+}
+
 }
 
 @media (max-width: 900px) {
 .featuresContainer {
 	flex-wrap: wrap;
+	width: 90%;
 }
 .pageCard {
-	min-width: 0;
-	width: 50%;
+	width: 45%;
+	&>.pageCardInner {
+		padding-top: 40px;
+		padding-bottom: 40px;
+	}
+	&:nth-child(1), &:nth-child(2) {
+		margin-bottom: 20px;
+	}
 }
 
 }
@@ -89,8 +183,11 @@ $iconSize: 60px;
 @media (max-width: 600px) {
 
 .pageCard {
-	min-width: 0;
 	width: 100%;
+	margin: 0;
+	&:not(:last-child) {
+		margin-bottom: 20px;
+	}
 }
 
 }
@@ -102,40 +199,72 @@ html[data-theme='dark']
 {
 
 .features {
-	background-color: black;
+	// background-color: rgba(0, 0, 0, 0.8);
+	// backdrop-filter: contrast(100%) blur(8px);
+
+	// -webkit-clip-path: polygon(25% 0, 75% 0%, 100% 10%, 100% 100%, 0% 100%, 0% 10%);
+	// clip-path: polygon(0% 20%, 3% 0, 97% 0%, 100% 20%, 100% 100%, 0% 100%, 0% 80%);
 }
 
 .pageCard {
-	.pageCardText {
-		color: white;
+	&:nth-child(1)>.pageCardInner {
+		--bg-gradient-color-inner: rgba(4, 133, 4, 0.6);
+		--bg-gradient-color-outer: rgba(8, 139, 30, 0.5);
+	}
+
+	&:nth-child(2)>.pageCardInner {
+		--bg-gradient-color-inner: rgba(109, 23, 83, 0.6);
+		--bg-gradient-color-outer: rgba(136, 20, 97, 0.5);
+	}
+
+	&:nth-child(3)>.pageCardInner {
+		--bg-gradient-color-inner: rgba(80, 52, 26, 0.8);
+		--bg-gradient-color-outer: rgba(95, 62, 34, 0.7);
+	}
+	
+	&:nth-child(4)>.pageCardInner {
+		--bg-gradient-color-inner: rgba(9, 75, 129, 0.8);
+		--bg-gradient-color-outer: rgba(20, 35, 68, 0.7);
 	}
 }
 
-.pageCardSvg {
-	filter: none;
+.pageCardInner {
+	--border-color: rgba(200, 200, 200, 0.2);
+
+	--bg-default-gradient-color-inner: rgba(0,0,0, 0.8);
+	--bg-default-gradient-color-outer: rgba(0,0,0, 0.75);
+
+	.pageCardText {
+		color: rgb(244, 244, 244);
+		text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.6);
+	}
+
+	.pageCardSvg img {
+		filter: drop-shadow(4px 4px 1px rgba(0, 0, 0, 0.3));
+	}	
 }
 
 .overview {
 	background: none;
 	background-color: rgba(black, 0.80);
 	border-top: none;
-	backdrop-filter: blur(10px);
+	backdrop-filter: contrast(150%) blur(8px);
 
 	&:nth-child(3) {
 		border-top: none;
 		background: rgb(0,0,0);
-		background: linear-gradient(180deg, rgba(0,0,0,1) 24%, rgba(0,0,0,0.896) 61%, rgba(0,0,0, 0.8) 92%);
+		background: linear-gradient(180deg, rgba(0,0,0, 0.92) 24%, rgba(0,0,0, 0.8) 92%);
 	}
 	&:nth-child(even) {
-		background: none;
-		background-color: rgba(black, 0.1);
+		backdrop-filter: contrast(100%) blur(20px);
+		background-color: rgba(0,0,0, 0.20);
 	}
 }
 
 }
 
 .overview {
-	backdrop-filter: blur(10px);
+	backdrop-filter: blur(16px) opacity(95%);
 
 	background: linear-gradient(180deg, rgb(243, 243, 243) 10%, white 30%);
 	background-color: rgb(243, 243, 243);

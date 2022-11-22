@@ -1,32 +1,32 @@
-import React			from 'react';
-import styles			from './HomepageFeatures.module.scss';
+import React			from "react";
+import styles			from "./HomepageFeatures.module.scss";
 
-import useBaseUrl		from '@docusaurus/useBaseUrl';
-import ThemedImage		from '@theme/ThemedImage';
+import useBaseUrl		from "@docusaurus/useBaseUrl";
+import ThemedImage		from "@theme/ThemedImage";
 
 
-import { translate }	from '@docusaurus/Translate';
+import { translate }	from "@docusaurus/Translate";
 
-const VscIconsFolder = 'img/icons/vscode/dark';
+const VscIconsFolder = "img/icons/vscode/dark";
 const vscIcon = (name) => `${VscIconsFolder}/${name}.svg`;
 const vscThemedIcon = (light, dark = light) => ({
-		default: {
-			light: `img/icons/vscode/light/${light}.svg`,
-			dark: `img/icons/vscode/dark/${dark}.svg`,
-		},
-		color: {
-			light: `img/icons/vscode/light/${light}-color.svg`,
-			dark: `img/icons/vscode/dark/${dark}-color.svg`,
-		}
-	});
+	default: {
+		light: `img/icons/vscode/light/${light}.svg`,
+		dark: `img/icons/vscode/dark/${dark}.svg`,
+	},
+	color: {
+		light: `img/icons/vscode/light/${light}-color.svg`,
+		dark: `img/icons/vscode/dark/${dark}-color.svg`,
+	}
+});
 
 
 
 const FeatureList = [
 	{
-		title:		translate({ message: 'Learn', id: 'langFeature.Learn' }),
-		url:		'learn/',
-		svgPath:	vscThemedIcon('book'),
+		title:		translate({ message: "Learn", id: "langFeature.Learn" }),
+		url:		"learn/",
+		svgPath:	vscThemedIcon("book"),
 		description: (
 			<>
 				None yet.
@@ -34,9 +34,9 @@ const FeatureList = [
 		),
 	},
 	{
-		title:		translate({ message: 'Docs', id: 'langFeature.Docs' }),
-		svgPath:	vscThemedIcon('repo'),
-		url:		'docs/',
+		title:		translate({ message: "Docs", id: "langFeature.Docs" }),
+		svgPath:	vscThemedIcon("repo"),
+		url:		"docs/",
 		description: (
 			<>
 				None yet.
@@ -44,9 +44,9 @@ const FeatureList = [
 		),
 	},
 	{
-		title:		translate({ message: 'Tools', id: 'langFeature.Tools' }),
-		url:		'tools/',
-		svgPath:	vscThemedIcon('tools'),
+		title:		translate({ message: "Tools", id: "langFeature.Tools" }),
+		url:		"tools/",
+		svgPath:	vscThemedIcon("tools"),
 		description: (
 			<>
 				None yet.
@@ -54,9 +54,9 @@ const FeatureList = [
 		),
 	},
 	{
-		title:		translate({ message: 'Community', id: 'langFeature.Community' }),
-		url:		'community/',
-		svgPath:	vscThemedIcon('community'),
+		title:		translate({ message: "Community", id: "langFeature.Community" }),
+		url:		"community/",
+		svgPath:	vscThemedIcon("community"),
 		description: (
 			<>
 				None yet.
@@ -67,31 +67,26 @@ const FeatureList = [
 
 function Feature({svgPath, title, url, description}) {
 	return (
-		<a href={url} className={styles.pageCard}>
-			<div className={styles.pageCardSvg}>
-				{typeof svgPath == "object" && <ThemedImage className={styles.normalIcon} sources={svgPath.default} />}
-				{typeof svgPath == "string" && <img src={svgPath} alt={title} />}
-				
-				{typeof svgPath === "object" && typeof svgPath.color === "object" && <ThemedImage className={styles.hoverIcon} sources={svgPath.color} />}
-			</div>
-			<div className={styles.pageCardText}>
-				<p>{title}</p>
-				{/* <p>{description}</p> */}
-			</div>
-		</a>
+		<div className={styles.pageCard}>
+			<a href={url} className={styles.pageCardInner}>
+				<div className={styles.pageCardSvg}>
+					{typeof svgPath == "object" && <ThemedImage className={styles.normalIcon} sources={svgPath.default} />}
+					{typeof svgPath == "string" && <img src={svgPath} alt={title} />}
+					
+					{typeof svgPath === "object" && typeof svgPath.color === "object" && <ThemedImage className={styles.hoverIcon} sources={svgPath.color} />}
+				</div>
+				<div className={styles.pageCardText}>
+					<p>{title}</p>
+					{/* <p>{description}</p> */}
+				</div>
+			</a>
+		</div>
 	);
 }
 
-export default function HomepageFeatures() {
+export function HomepageOverview() {
 	return (
 		<>
-			<section className={styles.features}>
-				<div className={styles.featuresContainer}>
-					{FeatureList.map((props, idx) => (
-						<Feature key={idx} {...props} />
-					))}
-				</div>
-			</section>
 			<section className={styles.overview}>
 				<div className={styles.overviewContainer}>
 					<div className={styles.overviewContent}>
@@ -134,5 +129,17 @@ export default function HomepageFeatures() {
 				</div>
 			</section>
 		</>
+	);
+}
+
+export function HomepageFeatures() {
+	return (
+		<section className={styles.features}>
+			<div className={styles.featuresContainer}>
+				{FeatureList.map((props, idx) => (
+					<Feature key={idx} {...props} />
+				))}
+			</div>
+		</section>
 	);
 }
