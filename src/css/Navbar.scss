@@ -1,134 +1,152 @@
-@keyframes fadeOut {
-	from {
-		user-select: unset;
-		opacity: 1;
-		z-index: unset;
-	}
-	to {
-		user-select: none;
-		opacity: 0;
-		z-index: -999;
-	}
-}
-@keyframes fadeIn {
-	from {
-		user-select: none;
-		opacity: 0;
-		z-index: -999;
-	}
-	to {
-		user-select: unset;
-		opacity: 1;
-		z-index: unset;
-	}
+// SASS variables
+$themeSwitchButtonClass:	"colorModeToggle";
+$sidebarNavigationClass:	"navbar-sidebar--show";
+
+// CSS variables
+:root {
+	--dark-theme-navbar-bgc: rgba(0,0,0, 0.9);
+	--light-theme-navbar-bgc: rgba(255, 255, 255, 0.95);
+
+	--darktheme-link-color: white;
+	--darktheme-hovered-link-color: #12dbff;
+	--darktheme-navbar-button-bgc: rgba(0,0,0,0.6);
 }
 
-@keyframes fadeOutBackground {
-	from {
-		background: var(--bgc);
-	}
-	to {
-		background: none;
-	}
-}
-@keyframes fadeInBackground {
-	from {
-		background: none;
-	}
-	to {
-		background: var(--bgc);
-	}
-}
-
-
+// Default settings
 .navbar {
-	--bgc: rgba(255, 255, 255, 0.95);
+	// Navbar-level variables:
+	--navbar-bgc: var(--light-theme-navbar-bgc);
 
-	background: var(--bgc);
-
-	&[class*="scrolled"].navbar__inner>div.navbar__items:not(.navbar__items--right) {
-		animation: fadeIn 0.2s forwards;
-	}
+	background: var(--navbar-bgc);
 }
 
+// Dark-mode
 html[data-theme='dark'] .navbar {
-	--bgc: rgba(0,0,0, 0.9);
+	--navbar-bgc: var(--dark-theme-navbar-bgc);
 }
 
-@media screen and (min-width: 997px) {
+//////////////////////////////////////////////////////////
+// Enable semi-hidden navbar only on bigger devices
+//////////////////////////////////////////////////////////
+@media screen and (min-width: 997px)
+{
 
-html {
-	div[class*="colorModeToggle"] {
-		button:hover {
-			background-color: rgba(126,126,126,0.6);
-		}
-	}
-
+html
+{
 	// Is at the home page?
-	&:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plugin-docs"]) {
+	&:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plugin-docs"])
+	{
 
-		// Is at top?
-		&[data-scroll="0"] {
-			.navbar:not([class*="navbar-sidebar--show"]) {
-				div[class*="colorModeToggle"] {
-					button:hover {
-						background-color: rgba(0,0,0,0.6);
-					}
-					path {
-						fill: white !important;
-					}
-				}
-	
-				.navbar__link {
-					color: white;
-		
-					&:hover {
-						color: #12dbff;
-					}
-				}
-		
-				// Fade out animation
-				&[class*="scrolled"] {
-					animation: fadeOutBackground 0.2s forwards;
-	
-					>.navbar__inner {
-						>div.navbar__items:not(.navbar__items--right) {
-							animation: fadeOut 0.2s forwards;
-						}
-					}
-				}
-			}
-		}
-
-		// Not at the top?
-		&:not([data-scroll="0"]) {
-			.navbar[class*="scrolled"] {
-				animation: fadeInBackground 0.2s forwards;
-
-				.navbar__items:not(.navbar__items--right) {					
-					animation: fadeIn 0.2s forwards;
-				}
-			}
-		}
-		
-		.navbar:not([class*="navbar-sidebar--show"]) {
+		// Default settings regardless of the scroll position
+		// it will be adjusted later by animations
+		.navbar:not([class*=#{$sidebarNavigationClass}])
+		{
 			background: none;
 			border: none;
 			box-shadow: none;
-			// transition: 0;
-			// opacity: 0;
 
-			>.navbar__inner {
-				>div.navbar__items:not(.navbar__items--right) {
+			>.navbar__inner
+			{
+				>.navbar__items:not(.navbar__items--right) {
 					opacity: 0;
 				}
-
-				>div.navbar__items--right {
+				>.navbar__items--right {
 					margin-left: auto;
 				}
+			}
+		}
+
+		// Is at top?
+		&[data-scroll="0"]
+		{
+			// Not within sidebar navigation (mobile)
+			.navbar:not([class*=#{$sidebarNavigationClass}])
+			{
+				// At this point each navbar element should work like in the dark mode
+				// because the background is dark blue. In this mode navbar background
+				// isn't visible so we have to manually adjust the colors.
+
+				// Theme Switch Button
+				div[class*=#{$themeSwitchButtonClass}]
+				{
+					button:hover { background-color: var(--darktheme-navbar-button-bgc); }
+					path { fill: white; } // SVG icon color
+				}
+	
+				// Each link within the navbar
+				.navbar__link {
+					color: var(--darktheme-link-color);
+					&:hover { color: var(--darktheme-hovered-link-color); }
+				}
+		
+				// Fade out animation
+				&.scrolled {
+					animation: navbarBackgroundFadeOut 0.2s forwards;
+					.navbar__items:not(.navbar__items--right) { animation: navbarContentFadeOut 0.2s forwards; }
+				}
+			}
+		}
+		// ELSE: Not at the top?
+		&:not([data-scroll="0"])
+		{
+			// ONLY if already scrolled
+			.navbar.scrolled {
+				// Fade in animations
+				animation: navbarBackgroundFadeIn 0.2s forwards;
+				.navbar__items:not(.navbar__items--right) { animation: navbarContentFadeIn 0.2s forwards; }
 			}
 		}
 	}
 }
 
 }	
+
+
+//////////////////////////////////////////////////////////
+/// Animations
+//////////////////////////////////////////////////////////
+@keyframes navbarContentFadeOut
+{
+	from {
+		user-select: unset;
+		opacity: 1;
+		z-index: unset;
+	}
+	to {
+		user-select: none;
+		opacity: 0;
+		z-index: -999;
+	}
+}
+@keyframes navbarContentFadeIn
+{
+	from {
+		user-select: none;
+		opacity: 0;
+		z-index: -999;
+	}
+	to {
+		user-select: unset;
+		opacity: 1;
+		z-index: unset;
+	}
+}
+
+@keyframes navbarBackgroundFadeOut
+{
+	from {
+		background: var(--navbar-bgc);
+	}
+	to {
+		background: none;
+	}
+}
+@keyframes navbarBackgroundFadeIn
+{
+	from {
+		background: none;
+	}
+	to {
+		background: var(--navbar-bgc);
+	}
+}
