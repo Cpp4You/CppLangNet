@@ -1,0 +1,28 @@
+```cpp showLineNumbers
+#include <string>
+
+struct Vehicle
+{
+	std::string brand;
+	std::string model;
+	int productionYear;
+};
+
+// highlight-next-line
+struct Car : Vehicle
+{
+	bool isCabrio;
+};
+
+// highlight-next-line
+struct Airplane : Vehicle
+{
+	int enginesNumber;
+	std::string airlinesName;
+};
+
+int main()
+{
+	// empty for now
+}
+```

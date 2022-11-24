@@ -7,5 +7,175 @@ description:		"Lesson: inheritance basics in C++"
 # Inheritance
 
 import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+import FullCode_DerivedStructs from "./_codes/inheritance/full-code-step-derived-structs.mdx"
+import FullCode_DerivedStructsUsage from "./_codes/inheritance/full-code-step-derived-structs-usage.mdx"
+import FullCode_DerivedStructsMethods from "./_codes/inheritance/full-code-step-derived-structs-methods.mdx"
 
 <NotFinished/>
+
+In this lesson you will learn how to use inheritance in order to share properties and characteristic from other classes by building class hierarchy and prevent redundant code. 
+
+## Motivation 
+
+When creating data structures that mimic real world elements, we often encounter situation when two such structures share common properties. For an example if we make game with vehicles containing planes ✈ and cars 🚗, we would create two structures like this:
+
+```cpp
+struct Car
+{
+    // highlight-next-line
+    std::string brand;
+    // highlight-next-line
+    std::string model;
+    // highlight-next-line
+    int productionYear;
+
+    bool isCabrio;
+};
+
+struct Airplane
+{
+    // highlight-next-line
+    std::string brand;
+    // highlight-next-line
+    std::string model;
+    // highlight-next-line
+    int productionYear;
+
+    int enginesNumber;
+    std::string airlinesName;
+};
+```
+
+Note the highlighted lines. After a brief analysis we can spot, that both structures share these common properties:
+
+- brand
+- model
+- production year
+
+Later in this lesson we will use inheritance to 
+
+## Base structure
+
+Now when we pointed out common properties we can create structure that will consist only of these fields:
+
+```cpp
+struct Vehicle
+{
+    std::string brand;
+    std::string model;
+    int productionYear;
+};
+```
+
+Note the name - Vehicle. It's a structure describing general form of the vehicle. Creating an instance of such structure doesn't have much sense: 
+
+```cpp
+Vehicle vehicle;
+```
+
+:::caution `Vehicle` instance
+The above code is not prohibited. It won't cause compilation error. In the future we will learn how to prevent others from creating an instance of such object by using *private constructors*.
+:::
+
+Instead of this, we will use `Vehicle` to make `Car` and `Airplane` structures so they **inherit** its properties.
+
+## Derived structures
+
+In order to create **derived structres** using inheritance, we have to put the base structure name after the colon:
+
+```cpp
+struct Car : Vehicle
+{
+    bool isCabrio;
+};
+
+struct Airplane : Vehicle
+{
+    int enginesNumber;
+    std::string airlinesName;
+}
+```
+
+<details>
+    <summary>See full code</summary>
+    <div>
+        <CustomCodeBlock maxlines={25} resizable>
+            <FullCode_DerivedStructs />
+        </CustomCodeBlock>
+    </div>
+</details>
+
+:::danger The order of definitions
+We have to place the `Vehicle` definition before the derived structures definitions.
+:::
+
+### Usage
+
+<!-- English version of inheritance image needed -->
+
+The above scheme shows, that properties inherited from `Vehicle` are in both `Car` and `Airplane` structures.
+
+Because of this, when we create a car inside our code, we can use `brand`, `model` and `productionYear` fields as if they were directly in `Car` structure:
+
+```cpp
+Car ford;
+ford.brand = "Ford";
+ford.model = "Fiesta";
+ford.productionYear = 2010;
+ford.isCabrio = false;
+```
+
+The same applies to the plane:
+
+```cpp
+Airplane boeing;
+boeing.brand = "Boeing";
+boeing.model = "737";
+boeing.productionYear = 2010;
+boeing.enginesNumber = 2;
+boeing.arilinesName = "Air Canada";
+```
+
+<details>
+    <summary>See full code</summary>
+    <div>
+        <CustomCodeBlock maxlines={25} resizable>
+            <FullCode_DerivedStructsUsage />
+        </CustomCodeBlock>
+    </div>
+</details>
+
+### Inheriting methods
+
+Just like member variables, methods are also inherited. Let's add `completeName()` method to the `Vehicle` class which will return the name consisiting of `brand` and `model`:
+
+```cpp
+struct Vehicle 
+{
+    // ... 
+
+    std::string completeName() 
+    {
+        return brand + " " + model;
+    }
+};
+```
+
+Now we can use this method on the `Car` instance:
+
+```cpp
+Car ford;
+ford.brand = "Ford";
+ford.model = "Fiesta";
+
+std::cout << ford.completeName(); // "Ford Fiesta"
+```
+
+<details>
+    <summary>See full code</summary>
+    <div>
+        <CustomCodeBlock maxlines={25} resizable>
+            <FullCode_DerivedStructsMethods />
+        </CustomCodeBlock>
+    </div>
+</details>
