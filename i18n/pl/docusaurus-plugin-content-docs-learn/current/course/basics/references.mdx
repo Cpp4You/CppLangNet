@@ -12,3 +12,158 @@ import NotFinished from '@site/i18n/pl/presets/NotFinished.mdx';
 <NotFinished/>
 
 # Referencje
+
+W tej lekcji pokażę Ci, w jaki sposób możesz pośrednio odwoływać się do zmiennych poprzez referencje.
+
+## Motywacja 
+
+Wyobraź sobie, że chcesz napisać funkcję, która podwaja przekazany jej argument.
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+
+void doubleNumber(int num) 
+{
+    num = num * 2;
+}
+
+int main()
+{
+    int x = 5;
+    doubleNumber(x); 
+    std::cout << x;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Wynik"
+5
+```
+
+</div>
+</Columns>
+
+Niestety to nie zadziała, ponieważ do parametru `num` została zapisana jedynie wartość `x`.
+
+Tutaj do gry wchodzą referencje.
+
+## Używanie referencji
+
+Możesz utworzyć referencję dodając `&` do typu zmiennej, do której chcesz referować.
+
+```cpp
+int var = 5;
+int& ref = x; // ref jest referencją, odwołującą się do var
+```
+
+Teraz, jeśli zmodyfikujesz `ref`, `var` także ulegnie zmianie, ponieważ `ref` **jest** `var`.
+
+## Przekazywanie argumentów przez referencje
+
+Sprawdźmy, w jaki sposób możemy wykorzystać referencję, aby rozwiązać nasz problem.
+
+Musimy sprawić, aby funkcja przyjmowała jako argument `referencję do zmiennej typu int` zamiast `int`.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+
+void doubleNumber(int &num) 
+{
+    num = num * 2;
+}
+
+int main()
+{
+    int x = 5;
+    doubleNumber(x);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+10
+```
+
+</div>
+</Columns>
+
+Teraz kiedy funkcja `doubleNumber` przyjmuje referencję, `num` stanie się zmienną przekazaną do funkcji. Oznacza to, że jeśli zmodyfikujemy `num` (który stał się `x`), `x` także ulegnie zmianie.
+
+:::note Uwaga
+Zwróć uwagę, że znak `&` przy tworzeniu referencji został umieszczony raz przy nazwie typu (`int&`), a raz przy nazwie zmiennej (`&num`). Oba te zapisy są poprawne i oznaczają to samo.
+:::
+
+## Modyfikacja elementów w pętli **ranged-based for**
+
+Na podobny problem możesz się natknąć podczas korzystania z **range-based for**. Ponieważ referencje **stają się** zmiennymi do których się odwołują, to możemy ich użyć aby uzyskać dostęp do elementów w tablicy.
+
+Oto prosta tablica:
+
+```cpp
+std::vector<int> arr = {2, 4, 6};
+```
+
+Załóżmy, że chcemy dodać 5 do każdego elementu. Możemy to zrobić odwołując się do każdego elementu osobno, ale przy dużych tablicach staje się to kłopotliwe.
+
+Więc pętle przybędą nam z pomocą!
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+for (int x : arr)
+{
+    x = x + 5;
+}
+std::cout << arr[0];
+```
+
+</div>
+<div>
+
+```plaintext title="Wynik"
+2
+```
+
+</div>
+</Columns>
+
+Niestety, ale powyższy kod nie zadziała, ponieważ do `x` trafia jedynie kopia elementu, a nie on sam.
+
+W tym miejscu możemy skorzystać z referencji, aby do zmiennej `x` przekopiować element, a nie jedynie jego wartość.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+for (int& x : arr) 
+{
+    x = x + 5;
+}
+std::cout << arr[0];
+```
+
+</div>
+<div>
+
+```plaintext title="Wynik"
+7
+```
+
+</div>
+</Columns>
+
+Teraz każdy element tablicy został powiększony o 5.
+
+:::note Odpowiednio używaj referencji
+Korzystaj z referencji jeśli chcesz zmodyfikować zmienną. Nie używaj referencji jeśli potrzebujesz tylko wartości.
+:::
