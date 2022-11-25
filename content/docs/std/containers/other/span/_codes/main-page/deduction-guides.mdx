@@ -1,0 +1,36 @@
+### Deduction guides
+```cpp
+// (1)
+template <class It, class EndOrSize>
+span(It, EndOrSize) -> span<std::remove_reference_t<std::iter_reference_t<It>>>;
+```
+> *`(1)`* allows the element type to be deduced from the iterator-sentinel pair. 
+
+```cpp
+// (2)
+template<class T, std::size_t N>
+span(T (&)[N]) -> span<T, N>;
+
+// (3)
+template<class T, std::size_t N>
+span(std::array<T, N>&) -> span<T, N>;
+
+// (4)
+template<class T, std::size_t N>
+span(const std::array<T, N>&) -> span<const T, N>;
+```
+> *`(2 - 4)`* allows the static extent to be deduced from built-in arrays and [`std::array`](content/docs/std/containers/arrays/array)
+
+```cpp
+// (5)
+template<class R>
+span(R&&) -> span<std::remove_reference_t<std::ranges::range_reference_t<R>>>;
+```
+> *`(5)`* allow the element type to be deduced from ranges.
+
+
+### Overload resolution
+In order for any of the deduction guides to participate in overload resolution, 
+the folllowing requirements must be met:
+ - for *`(1)`*, `It` satisfies [`contiguous_iterator`](#)
+ - for *`(5)`*, `R` satisfies [`contiguous_range`](#)
