@@ -5,58 +5,253 @@ tags:				[condition, if, else, else-if, compound, bool, boolean]
 hide_title:			true
 ---
 
+import Columns			from '@site-comps/Columns';
+
 # Conditions » Additional information
 
 ## The `bool` type
 
-The data type `bool` is used to store Boolean values - `true` and `false`.
+If you recall from the [Variables lesson](/learn/course/basics/variables/#variable-type),
+one of basic types listed was `bool`. This type represents a boolean, which is a
+single true/false value.
 
-Example:
+The [Boolean Expressions](/learn/course/basics/conditions/intro/#boolean-expressions)
+we learned about early in this Conditions lesson create a boolean value when evaluated.
+So, we can make variables that are the results of such boolean expressions, and then
+further use these `bool` variables in the conditions of if statements.
 
-```cpp
-#include <iostream>
+C++ provides two built-in `bool` constants - `true` and `false`. You can use these wherever
+a `bool` or boolean expression is expected. For example:
 
-int main()
-{
-	std::cout << "Please enter your year of birth: ";
-	std::cin >> yearOfBirth;
+```cpp title="🔹 Boolean literals"
+bool var1 = true;
+bool var2 = false;
+```
 
-	int age = 2021 - yearOfBirth;
+There are more interesting things we can do with `bool` variables, too.
+Any boolean expression is valid to assign here. Combining this with
+if statements can make for shorter and more readable code in some cases.
 
-	// highlight-next-line
-	bool isAdult = age >= 18;
+```cpp title="🔹 Using boolean variables to determine the weather"
+std::string name;
 
-	// highlight-next-line
-	if (isAdult)
-		std::cout << "You can get a driver's license.";
-	else
-		std::cout << "You're not allowed to get a driver's license yet.";
+std::cout << "Enter your first name: ";
+std::cin >> name;
+
+// User is lucky if their name has more than 5 characters
+// highlight-next-line
+bool isLucky = name.size() > 5; 
+
+// Try changing these values yourself and see what happens!
+// highlight-start
+bool isTuesday = true;
+bool isCloudy = false;
+// highlight-end
+
+std::string weather = "sunny";
+
+if (not isTuesday and isCloudy) {
+	weather = "raining";
+} else if (isTuesday) {
+	if (isCloudy) {
+		weather = "overcast";
+	} else if (not isLucky) {
+		weather = "downpouring";
+	}
 }
+
+std::cout << "It is currently " << weather << " in your location!";
 ```
 
-The result of the expression `age >= 18` (either `true` or `false`) is assigned
-to a variable `isAdult`. Then, if `isAdult` is true, we'll see the following text
-in the console:
+The [logical operators](/learn/course/basics/conditions/intro/#compound-boolean-expressions) previously introduced
+can also be used to create new boolean variables.
 
-```
-You can get a driver's license.
-```
-
-otherwise:
-
-```
-You're not allowed to get a driver's license yet.
+```cpp title="🔹 Using logical operators on bools"
+bool isGroundMuddy = weather == "raining" or weather == "downpouring";
+bool isRainbowMade = isGroundMuddy and not isCloudy;
+bool isBoringDay   = not isRainbowMade;
 ```
 
-By using the negation operator on a variable of type `bool`, we can easily toggle its state:
+## Input/Output with `bool`
 
-```cpp
-bool isButtonPressed = true; // 👍
+If you did any self-driven exploration with this new `bool` type, you may have noticed a peculiar thing...
+Printing out a `bool` does not display a `true` or `false` in the terminal. Instead, it prints out a `1` or a `0`.
+This is simply a default behavior in C++ that is related to the [next section](#intbool-conversions).
 
-isButtonPressed = !isButtonPressed; // changes from true 👍 to false 👎
-isButtonPressed = !isButtonPressed; // now it changes from false 👎 to true 👍
+You can easily change this behavior by changing one of `std::cout`'s settings.
+Simply "print" out the `std::boolalhpa` built-in constant, and it will make all future boolean operations on `std::cout`
+print out `true`/`false` instead of `1`/`0`.
 
-isButtonPressed = !!isButtonPressed; // double negation -> no effect
+:::tip Header include
+Make sure you `#include <iomanip>` to use `std::boolalpha`.
+:::
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Printing true/false"
+std::cout << true << " " << false << "\n";
+// highlight-next-line
+std::cout << std::boolalpha;
+std::cout << true << " " << false << "\n";
 ```
+</div>
+<div>
+
+```plaintext title="Output"
+1 0
+true false
+```
+</div>
+</Columns>
+
+Conversely, `std::cin` by default will only accept a `0` or a `1` when inputting into a `bool` variable.
+This behavior can also be changed by "inputting" into the `std::boolalpha` flag.
+In the example below, the user will first input `0`, which represents `false`.
+Then, they will input `true` once the `std::boolalpha` setting was applied.
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Inputting true/false"
+bool var;
+
+std::cout << "Integral form: ";
+std::cin >> var;
+
+// highlight-next-line
+std::cin >> std::boolalpha;
+
+std::cout << "Alphanumeric form: ";
+std::cin >> var;
+```
+</div>
+<div>
+
+```plaintext title="Input/Output"
+Integral form: 1
+Alphanumeric form: true
+```
+</div>
+</Columns>
+
+As an exercise, try modifying the [weather example](#the-bool-type) from above to accept user input, using
+the `std::boolalpha` modifier you just learned.
+
+:::note Fun Fact
+The name "boolalpha" comes from a portmanteau of boolean and alphanumeric.
+:::
 
 ## `int`↔`bool` conversions
+
+C++ has another rather annoying behavior where booleans and integers can implicitly convert between each other.
+A boolean value of `false` is equivalent to an integer value of `0`, and 'true' is equivalent to '1'.
+Conversely, an integral value of `0` is equivalent to a boolean value of `false`,
+and any non-zero integer is equivalent to `true`.
+
+```cpp title="🔹 A sampling of int↔bool conversions"
+int x = true; // x is 1
+int y = false; // x is 0
+
+bool a = 1; // a is true
+bool b = 25; // b is true
+bool c = -194; // c is true
+bool d = 0; // d is false
+```
+
+While this behavior may seem neat, it can unexpectedly crop up in many places where they are not wanted.
+For this reason, if you want to intentionally trigger an `int`↔`bool` conversion, then you should *cast*
+the value.
+
+```cpp title="🔹 Performing a cast"
+int x = static_cast<int>(true); // Modern-style cast
+int x = (int) false; 			// C-style cast
+
+bool a = static_cast<bool>(1);
+bool b = (bool) 0;
+```
+
+There are two primary ways to perform a cast like this in C++ - a "static cast" and a "c-style cast".
+You will learn the differences between these in the Intermediate course. For now just know that,
+in the case of `int`↔`bool` conversions, both of the options are equivalent.
+However, the `static_cast` method is generally preferred for Modern C++.
+
+### Unintended Conversions
+
+These conversions can cause issues where you least expect them to. One example is in the
+[compound boolean expressions](/learn/course/basics/conditions/intro/#compound-boolean-expressions)
+you learned about earlier. 
+Normally, if you want to combine multiple boolean expressions together, you use the logical operators like so:
+
+```cpp
+if (x > 10 && x < 25) { ... }
+```
+
+You may be tempted to rewrite the condition as <code>10 &lt; x &lt; 25</code>. 
+**This will result in incorrect behavior**, as this expression will always evaluate to `true`.
+This is because there is secretly an implicit `bool`🡢`int` conversion occurring.
+This expression gets interpreted as <code>(10 &lt; x) &lt; 25</code>.
+Let's see how this causes this condition to always evaluate to `true` by using 
+the [operator precedence table](/learn/course/basics/conditions/intro/#order-of-operations):
+
+<Columns columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Incorrect operator chaining with x = 15"
+10 < x < 25    // Initial expression
+10 < 15 < 25   // Substitute x
+(10 < 15) < 25 // Operator precedence
+(true) < 25    // Evaluate subexpression
+1 < 25		   // bool🡢int conversion
+true		   // Evaluate subexpression
+```
+</div>
+<div>
+
+```cpp title="🔹 Incorrect operator chaining with x = 7"
+10 < x < 25   // Initial expression
+10 < 7 < 25   // Substitute x
+(10 < 7) < 25 // Operator precedence
+(false) < 25  // Evaluate subexpression
+0 < 25	      // bool🡢int conversion
+true	      // Evaluate subexpression
+```
+</div>
+</Columns>
+
+This same issue can occur in other similar scenarios, as well.
+For example, when checking if a single variable is one of many possibilities,
+the correct way would be `x == 5 || x == 10 || x == 15`.
+The tempting option of `x == 5 || 10 || 15` **will not work** for a similar reason to the above.
+It will always be true. Let's see why:
+
+<Columns columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Incorrect operator chaining with x = 5"
+5 == 5 || 10 || 15     // Initial expression
+5 == 5 || 10 || 15     // Substitute x
+((5 == 5) || 10) || 15 // Operator precedence
+((true) || 10) || 15   // Evaluate subexpression
+(true || true) || 15   // int🡢bool conversion
+true || 15             // Evaluate subexpression
+true || true           // int🡢bool conversion
+true                   // Evaluate subexpression
+```
+</div>
+<div>
+
+```cpp title="🔹 Incorrect operator chaining with x = 7"
+7 == 5 || 10 || 15     // Initial expression
+7 == 5 || 10 || 15     // Substitute x
+((7 == 5) || 10) || 15 // Operator precedence
+((false) || 10) || 15  // Evaluate subexpression
+(false || true) || 15  // int🡢bool conversion
+true || 15             // Evaluate subexpression
+true || true           // int🡢bool conversion
+true                   // Evaluate subexpression
+```
+</div>
+</Columns>
+
+
