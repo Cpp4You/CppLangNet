@@ -1,0 +1,41 @@
+---
+sidebar_position:	1
+title:				std::span constructors
+sidebar_label:		Constructors
+description:		std::span constructors C++ documentation
+hide_title:			true
+tags:				[constructor, span, method, text]
+
+cppreference_origin_rel: w/cpp/container/span/span
+arrow_jumping_preset: overloads
+---
+
+# std::span constructors
+
+import CodeBlock					from '@theme/CodeBlock';
+import SwitchView					from '@site-comps/SwitchView';
+import Columns						from '@site-comps/Columns';
+import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
+
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!----------------- Codes ---------------------->
+`std::span` class can be constructed in many different ways.
+Use the button in the top-right corner to navigate with arrows for convenience.
+
+:::note
+`std::span` is a **class template**, with following type parameters,
+that are used within constructors:
+:::
+
+<SymbolTable noTraits>
+	<Symbol name="T">
+		Type of the elements.
+	</Symbol>
+	<Symbol name="Extent">
+		Number of elements in the container or <a href="#"><code>std::dynamic_extent</code></a> if dynamic.
+	</Symbol>
+</SymbolTable>
+
+<ImproveSection />
+
