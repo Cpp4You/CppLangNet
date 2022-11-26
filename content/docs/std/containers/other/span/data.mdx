@@ -1,0 +1,87 @@
+---
+title:					span<...>::data()
+sidebar_label:			data( )
+description:			span<...>::data() method C++ documentation
+hide_title:				true
+tags:					[access, pointer, data, raw]
+
+cppreference_origin_rel: w/cpp/container/span/data
+---
+
+import Columns		from "@site-comps/Columns";
+import SwitchView	from "@site-comps/SwitchView";
+import { Since }	from "@site-comps/Versions";
+import Tooltip		from "@site-comps/Tooltip";
+
+<!----------------- Codes ---------------------->
+
+<!-- Terms -->
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!-- operator_assign() -->
+import Method_SinceCpp20	from './_codes/data/since-cpp20.mdx';
+
+# std::span data() method
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+}} />
+
+Returns a pointer to the beginning of the sequence.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+A pointer to the beginning of sequence.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+For a span `s`, the expression `s.data()` is equivalent to `*s.begin()` and `s[0]`.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <span>
+#include <iostream>
+ 
+int main()
+{
+    constexpr char str[] = "ABCDEF\n";
+ 
+    const std::span sp{str};
+ 
+    for (auto n{sp.size()}; n != 2; --n) {
+        std::cout << sp.last(n).data();
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+ABCDEF
+BCDEF
+CDEF
+DEF
+EF
+F
+```
+
+</div>
+</Columns>
