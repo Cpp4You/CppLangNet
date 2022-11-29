@@ -1,0 +1,85 @@
+---
+title:					span<...>::rbegin() method
+sidebar_label:			rbegin()
+description:			span<...>::rbegin() method C++ documentation
+hide_title:				true
+tags:					[access, span, iterator, reverse, rbegin, begin]
+
+cppreference_origin_rel: w/cpp/container/span/rbegin
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- rbegin() -->
+import Method_SinceCpp20	from './_codes/rbegin/since-cpp20.mdx';
+
+# std::span rbegin() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+}}/>
+
+Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the first element of the reversed view.  
+It corresponds to the last element of the non reversed view.
+
+If the span is empty, the returned iterator will be equal to [`rend()`](rend).
+
+:::note
+This method doesn't actually reverse the view, it returns an iterator that points to the last element of the view,
+and which `+`, `-`, `--`, `++` operators have slightly changed implementations.
+
+For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Reverse iterator to the first element.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <span>
+ 
+int main()
+{
+    constexpr std::span<const char> code{ "@droNE_T0P_w$s@s#_SECRET_a,p^42!" };
+ 
+    auto hacker = [](const unsigned O) { return O-0141<120; };
+ 
+    std::copy_if(code.rbegin(), code.rend(),
+        std::ostream_iterator<const char>(std::cout), hacker);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+password
+```
+
+</div>
+</Columns>
