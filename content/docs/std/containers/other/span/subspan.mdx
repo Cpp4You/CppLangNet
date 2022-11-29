@@ -1,0 +1,124 @@
+---
+title:					span<...>::subspan() method
+sidebar_label:			subspan( )
+description:			span<...>::subspan() method C++ documentation
+hide_title:				true
+tags:					[span, subspan]
+
+cppreference_origin_rel: w/cpp/container/span/subspan
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+<!----------------- Codes ---------------------->
+
+<!-- subspan() -->
+import Method_SinceCpp20	from './_codes/subspan/since-cpp20.mdx';
+
+import Term_IllFormed from "@site/i18n/en/presets/terms/ill-formed.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+# std::span subspan() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+}}/>
+
+Obtains a span that is a view over the `Count` elements of `this` span starting at offset `Offset`. 
+
+If `Count` is [`std::dynamic_extent`](#), the number of elements in the subspan is `size() - offset` (i.e., it ends at the end of `*this`).
+
+The extent `E` of the span returned by **(1)** is determined as follows:
+ - If `Count` is not std::dynamic_extent -  `Count`;
+ - Otherwise, if `Extent` is not [`std::dynamic_extent`](#) -  `Extent - Offset`;
+ - Otherwise -  [`std::dynamic_extent`](#).
+
+:::important
+**(1)** is <Tooltip title={Term_IllFormed}>ill-formed</Tooltip> if:
+ - `Offset > Extent`, or
+ - `Count` is not `std::dynamic_extent` and `Count > Extent - Offset`.
+:::
+
+:::danger Undefined Behaviour
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if either `Offset` or `Count` is out of range. 
+
+This happens if:
+ - `Offset` is greater than [`size()`](size), or
+ - `Count` is not `std::dynamic_extent` and `Count` is greater than `size() - Offset`
+:::
+
+### Parameters
+
+ - **(2)**
+	- `Count` - the number of the elements to make a span of
+	- `Offset` - offset to start from
+
+### Return value
+
+A span `s` that is a view over the subspan `Count` elements of `*this`, with the following properties:
+ - If `Count` is [`std::dynamic_extent`](#):
+	- `s.size() == this->size() - Offset`
+	- `s.data() == this->data() + Offset`
+ - Otherwise
+	- `s.data() == this->data() + Offset`
+	- `s.size() == Count`
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cstdio>
+#include <numeric>
+#include <ranges>
+#include <span>
+ 
+void display(std::span<const char> abc)
+{
+    const auto columns{ 20U };
+    const auto rows{ abc.size() - columns + 1 };
+ 
+    for (auto offset{ 0U }; offset < rows; ++offset) {
+        std::ranges::for_each(
+            abc.subspan(offset, columns), 
+            std::putchar
+        );
+        std::putchar('\n');
+    }
+}
+ 
+int main()
+{
+    char abc[26];
+    std::iota(std::begin(abc), std::end(abc), 'A');
+    display(abc);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+ABCDEFGHIJKLMNOPQRST
+BCDEFGHIJKLMNOPQRSTU
+CDEFGHIJKLMNOPQRSTUV
+DEFGHIJKLMNOPQRSTUVW
+EFGHIJKLMNOPQRSTUVWX
+FGHIJKLMNOPQRSTUVWXY
+GHIJKLMNOPQRSTUVWXYZ
+```
+
+</div>
+</Columns>

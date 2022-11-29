@@ -1,0 +1,105 @@
+---
+title:					span<...>::first() method
+sidebar_label:			first( )
+description:			span<...>::first() method C++ documentation
+hide_title:				true
+tags:					[span, first]
+
+cppreference_origin_rel: w/cpp/container/span/first
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+
+<!----------------- Codes ---------------------->
+
+<!-- first() -->
+import Method_SinceCpp20	from './_codes/first/since-cpp20.mdx';
+
+import Term_IllFormed from "@site/i18n/en/presets/terms/ill-formed.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+# std::span first() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+}}/>
+
+Obtains a span that is a view over the first `Count` elements of this span.
+
+:::important
+The program is <Tooltip title={Term_IllFormed}>ill-formed</Tooltip> if `Count > Extent`.
+:::
+
+:::danger Undefined Behaviour
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if `Count > size()`.
+:::
+
+### Parameters
+
+ - **(2)** - `Count` - the number of the elements to make a span of
+
+### Return value
+
+A span `s` that is a view over the first `Count` elements of `*this`, with the following properties:
+ - `s.data() == this->data()`
+ - `s.size() == Count`
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <span>
+#include <string_view>
+ 
+void print(std::string_view const title, 
+           /* std::ranges::forward_range */ auto const& container) {
+    std::cout << title << "[" << std::size(container) << "]{ ";
+    for (auto const& elem : container)
+        std::cout << elem << ", ";
+    std::cout << "};\n";
+}
+ 
+void run_game(std::span<const int> span)
+{
+    print("span: ", span);
+ 
+    std::span<const int, 5> span_first = span.first<5>();
+    print("span.first<5>(): ", span_first);
+ 
+    std::span<const int, std::dynamic_extent> span_first_dynamic = span.first(4);
+    print("span.first(4):   ", span_first_dynamic);
+}
+ 
+int main()
+{
+    int a[8]{ 1, 2, 3, 4, 5, 6, 7, 8, };
+    print("int  a", a);
+    run_game(a);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+int  a[8]{ 1, 2, 3, 4, 5, 6, 7, 8, };
+span: [8]{ 1, 2, 3, 4, 5, 6, 7, 8, };
+span.first<5>(): [5]{ 1, 2, 3, 4, 5, };
+span.first(4):   [4]{ 1, 2, 3, 4, };
+```
+
+</div>
+</Columns>

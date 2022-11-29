@@ -1,0 +1,8 @@
+```cpp
+// (1) Const version only
+template< std::size_t Count >
+constexpr std::span<element_type, Count> last() const;
+
+// (2) Const version only
+constexpr std::span<element_type, std::dynamic_extent> last( size_type Count ) const;
+```
