@@ -58,11 +58,11 @@ This happens if:
 ### Return value
 
 A span `s` that is a view over the subspan `Count` elements of `*this`, with the following properties:
+ - `s.data() == this->data() + Offset`  
+ and
  - If `Count` is [`std::dynamic_extent`](#):
 	- `s.size() == this->size() - Offset`
-	- `s.data() == this->data() + Offset`
  - Otherwise
-	- `s.data() == this->data() + Offset`
 	- `s.size() == Count`
 
 ### Complexity
