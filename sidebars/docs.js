@@ -666,6 +666,36 @@ module.exports = {
 									'm:sort',
 								]),
 							]
+						},
+						{
+							type: 'category',
+							label: 'Other',
+							link: { type: 'doc', id: 'std/containers/other/index' },
+							items: [
+								docsClassCat('span', 'std/containers/other/span', '', [
+									'constructors',
+									'destructors',
+									'op:operator_assign',
+									cat('Element access'),
+									'm:front',
+									'm:back',
+									'op:operator_subscript',
+									'm:data',
+									cat('Iterators'),
+									'm:begin',
+									'm:end',
+									'm:rbegin',
+									'm:rend',
+									cat('Observers'),
+									'm:size',
+									'm:size_bytes',
+									'm:empty',
+									cat('Subviews'),
+									'm:first',
+									'm:last',
+									'm:subspan',
+								]),
+							]
 						}
 					]
 				},
