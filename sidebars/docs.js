@@ -674,7 +674,6 @@ module.exports = {
 							items: [
 								docsClassCat('span', 'std/containers/other/span', '', [
 									'constructors',
-									'destructors',
 									'op:operator_assign',
 									cat('Element access'),
 									'm:front',
