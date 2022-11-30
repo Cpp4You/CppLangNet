@@ -5,4 +5,280 @@ tags:				[condition, if, else, else-if, compound, bool, boolean, tips, style]
 hide_title:			true
 ---
 
+import Columns			from '@site-comps/Columns';
+
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
+
+
 # Conditions » Tips and style
+
+This article is simply an unordered collection of tips and tricks to help you improve
+how you write your conditional code. If you have been following this course in order,
+many of the concepts used here have not been covered yet. Do not worry if you don't
+understand some of the stuff in this article, they will come in later lessons.
+
+## Always include the curly brackets
+
+Most C++ constructs you may come across actually have **optional curly brackets**.
+If you omit the curly brackets, then it is assumed the next line of code is in the 
+body of the if statement, and anything else after that is outside of the if statement.
+
+This can sometimes make for shorter, slightly easier to read code. For example:
+
+```cpp title="🔹 Omitting the curly brackets"
+if (A and B)
+    std::cout << "They're both true!\n";
+
+std::cout << "Goodbye!";
+```
+
+However, this is a very common beginner trap as this can quickly lead to the wrong behavior.
+Especially upon editing the code, it is common to accidentally forget to add the braces 
+when expanding the if statement body. 
+Remember, C++ does not care about whitespace or indentation,
+so if you try to do:
+
+```cpp title="⚠️ Misleading indentation"
+if (A and B)
+    std::cout << "They're both true!\n";
+    // warning-next-line
+    std::cout << "That's cool that they are both true.\n";
+
+std::cout << "Goodbye!";
+```
+
+The highlighted line will **always be run**, as it is not a part of the if statement.
+It is equivalent to putting the curly braces only after the line that immediately follows
+the if statement. Due to the frequency that beginners get bitten by this mistake,
+it is recommended to always put braces on your if statements.
+Mistakes like this have even caused caused [major security vulnerabilities in 
+real-world codebases](https://nakedsecurity.sophos.com/2014/02/24/anatomy-of-a-goto-fail-apples-ssl-bug-explained-plus-an-unofficial-patch/).
+
+## Keep indentation consistent
+
+One of the most common gripes with advanced programmers helping beginners is that
+their code is super messy! This makes it difficult to read and even harder if you're
+trying to help them figure out errors. One of the best ways to make your code cleaner
+and easier to understand is by keeping your indentation consistent. Thankfully, this is very easy.
+
+Every time you enter a *scope*, you should indent your code one more level with the tab key.
+Every time you exit a scope, you should unindent one level. A scope is basically one "block"
+of C++. Inside a function is a single scope, inside an if statement is a single scope, inside
+a for loop is a single scope, etc. Below are examples of what good and bad indentation looks like.
+
+<Tabs>
+<TabItem value="good" label="✔️ Good Indentation" default>
+
+```cpp
+// The parts of the functions are always unindented
+// While immediately inside the function, it is indented at one level
+bool checkValue(int x) {
+    // The parts of the if statement are indented one level 
+    // because it is immediately inside the function
+    if (x < 50) {
+        // Inside the if statement, we indent another level
+        return true;
+    } else {
+        return false;
+    } // The braces line up with what started the scope
+}
+
+int main() {
+    // Everything in the root scope of the function is indented one level
+    int value;
+    std::cin >> value;
+
+    // The outer parts of this while loop are indented one level
+    while (true) {
+        // Inside the while loop, we indent another level
+        if (checkValue(value)) {
+            // Inside another scope, so we indent a third level
+            std::cout << "You have entered a good value.\n";
+            break;
+        }
+
+        // We drop one indent level after exiting the if statement scope
+        std::cout << "You have entered a bad value.\n";
+        std::cout << "Try again.\n";
+    } // This brace lines up with the while loop that started this scope
+
+    // We return to a single level of indentation after exiting the while loop scope
+    std::cout << "Goodbye!";
+} // This brace lines up with the beginning of the function
+```
+</TabItem>
+<TabItem value="bad" label="❌ Bad Indentation" default>
+
+```cpp
+
+
+bool checkValue(int x) {
+
+// This if statement should be indentented one
+if (x < 50) {
+return true; // This line is missing two indentations
+        } else { 
+                return false; // The indentation here is obviously not consistent
+}} // These braces should be on their own lines and properly indented
+
+
+    // The function is indented too far over
+    int main() {
+
+    int value; 
+        std::cin >> value; // The indentation here is not consistent for the same scope
+
+
+    while (true) {
+    // This if statement is missing an indentation level
+    if (checkValue(value)) {
+        std::cout << "You have entered a good value.\n"; break; // Don't put two things on one line
+        } // This brace does not line up with what created it
+
+
+
+// These lines are not indented
+std::cout << "You have entered a bad value.\n";
+std::cout << "Try again.\n";
+} // This brace does not line up with the while loop that created it
+
+            // This line is not consistent with the rest of the indentation in this scope
+            std::cout << "Goodbye!";
+}
+```
+</TabItem>
+</Tabs>
+
+You can see how all of the code in the first example is neatly aligned. We follow consistent rules of 
+when to indent based off how deep of a scope we are in. Each level of nesting
+a scope warrants an extra level of indentation. Additionally, all of our braces
+are lined up with the parent that "started" the scope, which makes it easy to find
+what construct a brace belongs to.
+
+On the other hand, the code in the second example is significantly more confusing and frustrating to read.
+It's very difficult to find what code belongs to what scope, where scopes end, and what should be executed when.
+Additionally, it's just generally very messy to read and is a pain to try to look through.
+
+It may seem like extra work to keep indentation clean and consistent,
+especially if you are making changes to existing code.
+But, follow these guidelines and I promise that you will thank yourself later.
+It is far too common for beginners to be misled by poor indentation,
+and fixing it at the source is the best way to prevent this.
+
+If you find dealing with indentation to be difficult, consider using hotkeys to your advantage.
+In most code editors, you can indent multiple lines at once by selecting what you want to indent and pressing the `Tab` key.
+Conversely, you can unindent multiple lines at once with `Shift+Tab`.
+
+## Avoid complicated boolean expressions
+
+If you're trying to build a condition that requires the validation of multiple boolean expressions,
+it can be very easy to make confusing code by using too many `and`'s, `or`'s, and `not`'s.
+The best way to prevent this is to make a `bool` returning function that computes this
+complicated expression for you. That way, the code becomes more readable and more maintainable.
+You may also find the methods from the next section to be helpful.
+
+## Avoid deep nesting of conditions
+
+It is very easy to make complicated logic with if statements, especially if you 
+excessively nest them inside of each other. For example, try to figure out 
+what the following snippet actually does:
+
+```cpp title="⚠️ Confusing if statements"
+if (A or B) {
+    if (not B and C) {
+        if (A or D) {
+            if (A and not B) {
+                std::cout << "Hello!";
+            } else {
+                std::cout << "Will this line ever be run?";
+            }
+        } else if (not D) {
+            std::cout << "What about this one?";
+        }
+    } else {
+        std::cout << "It's starting to get pretty weird now...";
+    }
+} else if (B) {
+    std::cout << "I don't think this one will ever run.";
+} else if (not A and not b) {
+    std::cout << "Surely, this one will be called eventually.";
+} else {
+    std::cout << "Goodbye!";
+}
+```
+
+It may take you several minutes to figure out under what cases each of
+these print statements activates, especially if you're working in
+large and potentially very complicated code bases.
+
+There are two good ways to improve this. First, you can break out
+the inner nested conditions into their own [functions](/learn/course/basics/functions/).
+That way, the complexity gets hidden away behind a layer of *abstraction*, and you are
+forced to create a descriptive name for each function you create.
+
+The second method applies if you have a clear "happy path" and "sad path".
+You can reorganize the if statements such that the happy path is the least indented, and
+the sad path escapes early. Study this example to see what this may look like:
+
+<Tabs>
+<TabItem value="good" label="✔️ Good if statements" default>
+
+```cpp
+using std::string;
+
+string loginAsAdmin(string user, string pass) {
+    if (not doesUserExist(user)) {
+        return "User does not exist";
+    }
+
+    if (not isPasswordCorrect(user, pass)) {
+        return "Password is incorrect";
+    }
+    
+    if (not tryLogin(user, pass)) {
+        return "Failed to login";
+    }
+
+    if (not isAdmin(user)) {
+        return "User is not admin";
+    }
+
+    return "Success";
+}
+```
+</TabItem>
+<TabItem value="bad" label="⚠️ Confusing if statements" default>
+
+```cpp
+using std::string;
+
+string loginAsAdmin(string user, string pass) {
+    if (doesUserExist(user)) {
+        if (isPasswordCorrect(user, pass)) {
+            if (tryLogin(user, pass)) {
+                if (isAdmin(user)) {
+                    return "Success";
+                } else {
+                    return "User is not admin";
+                }
+            } else {
+                return "Failed to login";
+            }
+        } else {
+            return "Password is incorrect";
+        }
+    } else {
+        return "User does not exist";
+    }
+}
+```
+</TabItem>
+</Tabs>
+
+You can see how the confusing example has a tell-tale triangular shape.
+This is a very common indicator that you are nesting your logic too deep,
+and you should apply one of the two clean-up methods to fix it. Here,
+we inverted the conditions to check the sad path first. The happy path
+continues at the bottom once we have passed all of the checks.
+
