@@ -6,3 +6,114 @@ hide_title:			true
 ---
 
 # Conditions » Examples
+
+## Driver's license oracle
+
+This example was developed throughout the entire [Conditions lesson](learn/course/basics/conditions/intro/).
+
+```cpp
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 5500\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	int numCrashes;
+	std::cout << "Please enter the number of crashes you have had: \n";
+	std::cin >> numCrashes;
+
+	char licenseClass = 'X'; // X is chosen as a default value to signal if we miss one of our cases
+	std::string illegalReason;
+
+	if (numCrashes < 2) {
+		// Year 2022 at the moment of writing this lesson
+		int age = 2022 - yearOfBirth;
+
+		if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+			licenseClass = 'C';
+		} else if (age >= 22 and age <= 30) {
+			licenseClass = 'B';
+		} else if (age >= 31 and age <= 50) {
+			licenseClass = 'A';
+		} else {
+			illegalReason = "you are not between 18 and 64 years old";
+		}
+	} else {
+		illegalReason = "you have " + std::to_string(numCrashes) + " accidents";
+	}
+
+	if (licenseClass != 'X') {
+		std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	} else {
+		std::cout << "You cannot legally get a driver's license because " << illegalReason << "\n";
+	}
+}
+```
+
+## Computing properties of numbers
+
+```cpp
+#include <iostream>
+
+int main() {
+    int value1;
+    bool isValue1Even;
+
+    std::cout << "Input a number: ";
+    std::cin >> value1;
+
+    // Compute the parity (even vs odd) of the number
+    if (value1 % 2 == 0) {
+        isValue1Even = true;
+        
+        std::cout << "Your number is even!\n";
+        if (value1 == 0) {
+            // Many people are confused by the parity of zero
+            std::cout << "But does zero count as an even number?\n";
+        }
+    } else {
+        isValue1Even = false;
+        std::cout << "Your number is odd!\n";
+    }
+
+    // Compute the sign of the number
+    if (value1 > 0) {
+        std::cout << "Your number is positive!\n";
+    } else if (value1 < 0) {
+        std::cout << "Your number is negative!\n";
+    } else {
+        std::cout << "Zero is neither positive nor negative.\n";
+    }
+
+    // Ask the user for a second number to compare
+    int value2;
+
+    std::cout << "\nNow, input a number again: ";
+    std::cin >> value2;
+
+    // Compute the relative magnitude of the second number compared to the first
+    if (value1 != value2) {
+        std::cout << "You entered a different number... ";
+
+        if (value1 > value2) {
+            std::cout << "And it was smaller than the previous one!\n";
+        } else {
+            std::cout << "And it was bigger than the previous one!\n";
+        }
+    } else {
+        std::cout << "You entered the same number!\n";
+    }
+
+    // Now check for the "special property"
+    // Your numbers are special if they are both even and their difference is divisible by seven
+    int diff = value1 - value2;
+    bool isValue2Even = value2 % 2 == 0;
+
+    if (isValue1Even && isValue2Even && (diff % 7 == 0)) {
+        std::cout << "Your numbers are special!";
+    }
+}
+```
