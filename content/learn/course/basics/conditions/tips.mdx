@@ -55,6 +55,115 @@ it is recommended to always put braces on your if statements.
 Mistakes like this have even caused caused [major security vulnerabilities in 
 real-world codebases](https://nakedsecurity.sophos.com/2014/02/24/anatomy-of-a-goto-fail-apples-ssl-bug-explained-plus-an-unofficial-patch/).
 
+## Keep bracket style consistent
+
+More on the topic of curly brackets... spending any amount of time in online programming communities
+will probably expose you to the long-fought battle between "inline" vs "new-line" braces.
+This is the debate that centers on the very cosmetic decision of whether you should put opening
+curly brackets `{` on the same line as if statements, functions, loops, etc., or if it should be
+on a new line. The two styles and pros/cons are illustrated below:
+
+
+<Tabs>
+<TabItem value="inline" label="🔷 Inline braces" default>
+
+```cpp
+int main() {
+
+    int x = 10;
+
+    if (x == 10) {
+        std::cout << "X is 10!";
+    } else {
+        std::cout << "X is not 10!";
+    }
+
+
+
+
+    for (int i = 0; i < 5; i++) {
+        std::cout << "i: " << i << "\n";
+    }
+}
+
+```
+
+<Columns columns={["1fr", "1fr"]}>
+<div>
+
+#### Pros
+- Code is more compact
+- Organization via empty lines is easier
+
+</div>
+<div>
+
+#### Cons
+- Opening and closing braces do not line up
+- Too dense for some people
+- Can become messy under some formatting styles
+
+</div>
+</Columns>
+
+Note that this example was spaced out with extra empty lines to make it line up with the next example.
+These extra lines are not relevant to the comparison of brace styles.
+</TabItem>
+<TabItem value="newline" label="🔶 New-line braces" default>
+
+```cpp
+int main()
+{
+    int x = 10;
+
+    if (x == 10)
+    {
+        std::cout << "X is 10!";
+    }
+    else
+    {
+        std::cout << "X is not 10!";
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        std::cout << "i: " << i << "\n";
+    }
+}
+```
+
+<Columns columns={["1fr", "1fr"]}>
+<div>
+
+#### Pros
+- Opening and closing braces line up
+- Easier to read for some people
+- More consistent formatting under some styles
+
+</div>
+<div>
+
+#### Cons
+- Spaces out code significantly
+- Wastes vertical space
+
+</div>
+</Columns>
+</TabItem>
+</Tabs>
+
+
+
+Ultimately, it is up to you what style you stick with.
+There is roughly an even split between the popularity of the two choices.
+The main takeaway is that you should only use one style per project.
+**Do not mix styles within the same code.**
+
+However, don't get too attached to one style. Once you find a professional
+programming job, you will be expected to keep with the style that already
+exists at that company. 
+Consistent code is more important than your own personal preferences!
+
 ## Keep indentation consistent
 
 One of the most common gripes with advanced programmers helping beginners is that
