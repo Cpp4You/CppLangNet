@@ -29,10 +29,15 @@ import OverviewDetailedReguler from "./span/_codes/main-page/overview/overview-d
 <!-- Deduction Guides -->
 import DeductionGuides from "./span/_codes/main-page/deduction-guides.mdx"
 
+<!-- Extent constant -->
 import ConstantExtent from "./span/_codes/main-page/constants/extent.mdx"
 
+<!-- Helper templates -->
 import HelperTemplate_BorrowedRange from "./span/_codes/main-page/helper-templates/borrowed-range.mdx";
 import HelperTemplate_EnableView from "./span/_codes/main-page/helper-templates/enable-view.mdx";
+
+<!-- Template parameter table -->
+import TemplateParameterTable from "./span/_codes/shared/template-parameters-table.mdx";
 
 <NotFinished />
 
@@ -107,14 +112,7 @@ A span can either have a:
 
 ## Template parameters
 
-<SymbolTable noTraits>
-	<Symbol name="T">
-		Type of the elements.
-	</Symbol>
-	<Symbol name="Extent">
-		Number of elements in the container or <a href="#"><code>std::dynamic_extent</code></a> if dynamic.
-	</Symbol>
-</SymbolTable>
+<TemplateParameterTable />
 
 ## Type names
 
