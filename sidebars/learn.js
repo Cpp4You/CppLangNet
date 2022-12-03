@@ -61,7 +61,7 @@ module.exports = {
 							items: [
 								"course/basics/conditions/intro",
 								"course/basics/conditions/compound",
-								doc("👀 Additional information", "course/basics/conditions/additional"),
+								"course/basics/conditions/booleans",
 								doc("✅ Tips and style", "course/basics/conditions/tips"),
 								doc("💡 Examples", "course/basics/conditions/examples"),
 								doc("🐞 Common problems", "course/basics/conditions/common-problems"),
