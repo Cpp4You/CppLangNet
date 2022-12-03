@@ -1,18 +1,19 @@
 ---
-title:				"Conditions » Additional Information"
-description:		"Lesson: additional information on conditions in C++"
+sidebar_label:		"3. Booleans"
+title:				"Booleans"
+description:		"Lesson: booleans in C++"
 tags:				[condition, if, else, else-if, compound, bool, boolean]
 hide_title:			true
 ---
 
 import Columns			from '@site-comps/Columns';
 
-# Conditions » Additional information
+# Booleans
 
 ## The `bool` type
 
 If you recall from the [Variables lesson](/learn/course/basics/variables/#variable-type),
-one of basic types listed was `bool`. This type represents a boolean, which is a
+one of basic types listed was `bool`. This type represents a **boolean**, which is a
 single true/false value.
 
 The [Boolean Expressions](/learn/course/basics/conditions/intro/#boolean-expressions)
@@ -229,7 +230,7 @@ It will always be true. Let's see why:
 <div>
 
 ```cpp title="🔹 Incorrect operator chaining with x = 5"
-5 == 5 || 10 || 15     // Initial expression
+x == 5 || 10 || 15     // Initial expression
 5 == 5 || 10 || 15     // Substitute x
 ((5 == 5) || 10) || 15 // Operator precedence
 ((true) || 10) || 15   // Evaluate subexpression
@@ -242,7 +243,7 @@ true                   // Evaluate subexpression
 <div>
 
 ```cpp title="🔹 Incorrect operator chaining with x = 7"
-7 == 5 || 10 || 15     // Initial expression
+x == 5 || 10 || 15     // Initial expression
 7 == 5 || 10 || 15     // Substitute x
 ((7 == 5) || 10) || 15 // Operator precedence
 ((false) || 10) || 15  // Evaluate subexpression
