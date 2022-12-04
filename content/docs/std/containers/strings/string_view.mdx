@@ -34,10 +34,13 @@ import FurtherExampleConvertStringToInt from "./string/_codes/main-page/examples
 import FurtherExampleConvertStringToFloat from "./string/_codes/main-page/examples/further/convert-string-to-float.mdx"
 import FurtherExampleConvertNumbersToString from "./string/_codes/main-page/examples/further/convert-string-to-float.mdx"
 
+<!-- Terms -->
 import Term_IllFormed from "@site/i18n/en/presets/terms/ill-formed.mdx";
 
-import TemplateParameterDesc_Traits from "./string_view/_codes/main-page/template-parameters/traits.mdx";
+<!-- Template parameter table -->
+import TemplateParameterTable from "./string_view/_codes/shared/template-parameter-table.mdx"
 
+<!-- Helper templates -->
 import HelperTemplate_BorrowedRange from "./string_view/_codes/main-page/helper-templates/borrowed-range.mdx";
 import HelperTemplate_EnableView from "./string_view/_codes/main-page/helper-templates/enable-view.mdx";
 
@@ -134,10 +137,7 @@ A typical implementation holds only two members: a pointer to constant `CharT` a
 
 ## Template parameters
 
-<SymbolTable noTraits>
-	<Symbol name="CharT"		desc="A character type." />
-	<Symbol name="Traits"		desc={<TemplateParameterDesc_Traits />} />
-</SymbolTable>
+<TemplateParameterTable />
 
 ## Type names
 
