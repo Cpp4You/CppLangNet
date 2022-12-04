@@ -1,0 +1,13 @@
+```cpp
+// (1)
+template< std::size_t N >
+constexpr span( std::type_identity_t<element_type> (&arr)[N] ) noexcept;
+
+// (2)
+template< class U, std::size_t N >
+constexpr span( std::array<U, N>& arr ) noexcept;
+
+// (3)
+template< class U, std::size_t N >
+constexpr span( const std::array<U, N>& arr ) noexcept;
+```
