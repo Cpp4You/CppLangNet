@@ -1,0 +1,89 @@
+---
+sidebar_position:	1
+title:				std::initializer_list constructors
+sidebar_label:		Constructors
+description:		std::initializer_list constructors C++ documentation
+hide_title:			true
+tags:				[constructor, initializer_list, method]
+
+cppreference_origin_rel: w/cpp/string/initializer_list/initializer_list
+arrow_jumping_preset: overloads
+---
+
+# std::initializer_list constructors
+
+import CodeBlock					from '@theme/CodeBlock';
+import SwitchView					from '@site-comps/SwitchView';
+import Columns						from '@site-comps/Columns';
+import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
+
+<!----------------- Codes ---------------------->
+
+
+<!-- Ctor Default -->
+import Ctor_Default_SinceCpp14_Simplified		from "./_codes/constructors/default/since-cpp14-simplified.mdx";
+import Ctor_Default_SinceCpp14_Detailed			from "./_codes/constructors/default/since-cpp14-detailed.mdx";
+
+import Ctor_Default_UntilCpp14_Simplified		from "./_codes/constructors/default/until-cpp14-simplified.mdx";
+import Ctor_Default_UntilCpp14_Detailed			from "./_codes/constructors/default/until-cpp14-detailed.mdx";
+
+<!----------------- End of codes ---------------------->
+
+<!-------------------------------------------------------------------------------------->
+
+## Default constructor
+
+<SwitchView content={{
+	'since-cpp14': {
+		simplified:	<Ctor_Default_SinceCpp14_Simplified/>,
+		detailed:	<Ctor_Default_SinceCpp14_Detailed/>,
+	},
+	'until-cpp14': {
+		simplified:	<Ctor_Default_UntilCpp14_Simplified/>,
+		detailed:	<Ctor_Default_UntilCpp14_Detailed/>,
+	}
+}}/>
+
+Constructs an empty initializer list.
+
+:::note
+Despite a lack of constructors, it is possible to create non-empty initializer lists. Instances of [`std::initializer_list`](../initializer_list) are implicitly constructed when:
+	- a braced-init-list is used in list-initialization, including function-call list initialization and assignment expressions (not to be confused with constructor initializer lists)
+	- a braced-init-list is bound to auto, including in a ranged for loop
+:::
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <initializer_list>
+#include <iostream>
+#include <vector>
+
+int main() {
+  std::initializer_list<int> ilist; // default constructed
+
+  // implicitly construced initializer list
+  for(int i : { 1, 2, 3 }) std::cout << i << ' ';
+
+  // list initialization, implicitly constructed initializer list
+  std::vector<int> v = { 4, 5, 6, 7, 8 };
+  for(int i : v) std::cout << i << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+1 2 3 4 5 6 7 8
+```
+
+</div>
+</Columns>
