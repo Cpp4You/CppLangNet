@@ -25,6 +25,9 @@ import OverviewDetailedReguler		from "./stack/_codes/main-page/overview/overview
 <!-- Template parameters table -->
 import TemplateParameterTable from "./stack/_codes/shared/template-parameters-table.mdx";
 
+<!-- Member objects -->
+import MemberObjects from "./stack/_codes/shared/member-objects.mdx";
+
 <!-- Deduction Guides -->
 import DeductionGuides				from "./stack/_codes/main-page/deduction-guides.mdx";
 
@@ -131,11 +134,7 @@ The class template acts as a wrapper to the underlying container - only a specif
 
 ## Member objects
 
-<SymbolTable>
-	<Symbol prot name={<><code>Container</code> c</>}>
-		The underlying container. By default <a href="/docs/containers/stacks/deque"><code>std::deque&lt;T&gt;</code></a>.
-	</Symbol>
-</SymbolTable>
+<MemberObjects />
 
 ## Non-member functions
 
