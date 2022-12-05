@@ -22,11 +22,11 @@ import TabItem					from "@theme/TabItem";
 import OverviewSimplifiedRegular	from "./stack/_codes/main-page/overview/overview-simplified-regular.mdx";
 import OverviewDetailedReguler		from "./stack/_codes/main-page/overview/overview-detailed-regular.mdx";
 
+<!-- Template parameters table -->
+import TemplateParameterTable from "./stack/_codes/shared/template-parameters-table.mdx";
+
 <!-- Deduction Guides -->
 import DeductionGuides				from "./stack/_codes/main-page/deduction-guides.mdx";
-
-import TemplateParamContainerExplanation from "./stack/_codes/main-page/template-parameters/container.mdx";
-import TemplateParamTExplanation from "./stack/_codes/main-page/template-parameters/t.mdx";
 
 <NotFinished />
 
@@ -67,14 +67,7 @@ The class template acts as a wrapper to the underlying container - only a specif
 
 ## Template parameters
 
-<SymbolTable noTraits>
-	<Symbol name="T">
-		<TemplateParamTExplanation />
-	</Symbol>
-	<Symbol name="Container">
-		<TemplateParamContainerExplanation />
-	</Symbol>
-</SymbolTable>
+<TemplateParameterTable />
 
 ## Type names
 
