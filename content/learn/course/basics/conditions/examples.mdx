@@ -53,6 +53,61 @@ int main() {
 }
 ```
 
+## Interactive boolean logic calculator
+
+```cpp
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+int main() {
+    // Ask for the two boolean inputs
+    std::cout << "Welcome to the Boolean Logic Calculator!\n"
+              << "Please enter two values of either true or false exactly:\n";
+    
+    bool inputA;
+    bool inputB;
+
+    // Use std::boolalpha to accept input as either "true" or "false"
+    std::cin >> std::boolalpha >> inputA >> inputB;
+
+    // Ask for the operation
+    std::cout << "\n\nNow enter a logical operation.\n"
+              << "Valid options are AND, NAND, OR, NOR, XOR, XNOR (exactly):\n";
+
+    std::string op;
+    std::cin >> op;
+
+    // Now compute the result based on op
+    bool result;
+
+    if (op == "AND") {
+        result = inputA and inputB;
+    } else if (op == "NAND") {
+        result = not (inputA and inputB);
+    } else if (op == "OR") {
+        result = inputA or inputB;
+    } else if (op == "NOR") {
+        result = not (inputA or inputB);
+    } else if (op == "XOR") {
+        result = inputA != inputB; // XOR is equivalent to "not equal" for booleans
+    } else if (op == "XNOR") {
+        result = inputA == inputB; // XNOR is equivalent to "equals" for booleans
+    } else {
+        std::cout << "Error! Invalid choice. Quitting.";
+        
+        // Using a return statement here to gracefully end the main function,
+        // which in turn quits the program.
+        // The 1 signifies a failure to the operating system.
+        // You will learn more about returns in the Functions chapter.
+        return 1;
+    }
+
+    std::cout << std::boolalpha; // Set output to show as true/false for booleans
+    std::cout << "\n\nThe answer of " << inputA << " " << op << " " << inputB << " is " << result;
+}
+```
+
 ## Computing properties of numbers
 
 ```cpp
