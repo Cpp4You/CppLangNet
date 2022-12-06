@@ -1,0 +1,60 @@
+---
+title:					initializer_list<...>::size() method
+sidebar_label:			size( )
+description:			initializer_list<...>::size() method C++ documentation
+hide_title:				true
+tags:					[initializer_list, size, elements]
+
+cppreference_origin_rel: w/cpp/container/initializer_list/size
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- size() -->
+import Method_SinceCpp11	from './_codes/size/since-cpp11.mdx';
+import Method_SinceCpp14	from './_codes/size/since-cpp14.mdx';
+
+# std::initializer_list size() method
+
+<SwitchView content={{
+	'since-cpp11': <Method_SinceCpp11 />,
+	'since-cpp14': <Method_SinceCpp14 />,
+}}/>
+
+Returns the number of elements in the container, i.e. `std::distance(begin(), end())`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+The number of elements in the initializer list.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <initializer_list>
+int main() {
+	static_assert(std::initializer_list{1,2,3,4}.size() == 4); 
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+```
+
+</div>
+</Columns>

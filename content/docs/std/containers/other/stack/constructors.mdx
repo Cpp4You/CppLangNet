@@ -1,0 +1,842 @@
+---
+sidebar_position:	2
+title:				std::stack constructors
+sidebar_label:		Constructors
+hide_title:			true
+description:		std::stack<...> constructors C++ documentation
+tags:				[constructor, initialize, stack, create]
+
+cppreference_origin_rel: w/cpp/container/stack/stack
+arrow_jumping_preset: overloads
+---
+
+# std::stack constructors
+
+import SwitchView					from '@site-comps/SwitchView';
+import Columns						from '@site-comps/Columns';
+import Tooltip						from '@site-comps/Tooltip';
+import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
+import { Until }					from "@site-comps/Versions";
+
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!-- Template parameter table -->
+import TemplateParametersTable from "./_codes/shared/template-parameters/template-parameters-table.mdx"
+
+<!-- Member objects -->
+import MemberObjects from "./_codes/shared/member-objects.mdx"
+
+<!-- Ctor Default -->
+import Ctor_Default_SinceCpp11 	from "./_codes/constructors/default/since-cpp11.mdx";
+
+<!-- Ctor copy -->
+import Ctor_Copy_SinceCpp98 from "./_codes/constructors/copy/since-cpp98.mdx";
+
+<!-- Ctor move -->
+import Ctor_Move_SinceCpp11 from "./_codes/constructors/move/since-cpp11.mdx";
+
+<!-- Ctor copy from container -->
+import Ctor_Copy_FromContainer_SinceCpp11 from "./_codes/constructors/copy-from-container/since-cpp11.mdx";
+import Ctor_Copy_FromContainer_UntilCpp11 from "./_codes/constructors/copy-from-container/until-cpp11.mdx";
+
+<!-- Ctor move from container -->
+import Ctor_Move_FromContainer_SinceCpp11 from "./_codes/constructors/move-from-container/since-cpp11.mdx";
+
+<!-- Ctor range based (iterators) -->
+import Ctor_RangeBased_Iterators_SinceCpp23		from "./_codes/constructors/range-based-iterators/since-cpp23.mdx";
+
+<!-- Ctor underlying via allocator -->
+import Ctor_UnderlyingViaAllocator_SinceCpp11	from "./_codes/constructors/underlying-via-allocator/since-cpp11.mdx";
+
+<!-- Ctor copy container with allocator -->
+import Ctor_Copy_Container_With_Allocator_SinceCpp11 from "./_codes/constructors/copy-cont-with-allocator/since-cpp11.mdx";
+
+<!-- Ctor move container with allocator -->
+import Ctor_Move_Container_With_Allocator_SinceCpp11 from "./_codes/constructors/move-cont-with-allocator/since-cpp11.mdx";
+
+<!-- Ctor copy Stack with allocator -->
+import Ctor_Copy_Stack_With_Allocator_SinceCpp11 from "./_codes/constructors/copy-stack-with-allocator/since-cpp11.mdx";
+
+<!-- Ctor move Stack with allocator -->
+import Ctor_Move_Stack_With_Allocator_SinceCpp11 from "./_codes/constructors/move-stack-with-allocator/since-cpp11.mdx";
+
+<!-- Ctor range based with allocator (iterators) -->
+import Ctor_RangeBased_Iterators_With_Allocator_SinceCpp23		from "./_codes/constructors/range-based-iterators-with-allocator/since-cpp23.mdx";
+
+`std::stack` class can be constructed in many different ways.
+Use the button in the top-right corner to navigate with arrows for convenience.
+
+:::note
+`std::stack` is a **class template**, with following type parameters and member objects
+that are used within constructors:
+
+#### Type parameters
+
+<TemplateParametersTable />
+
+#### Member objects
+
+<MemberObjects />
+:::
+
+<!-------------------------------------------------------------------------------------->
+
+## Default constructor
+
+<SwitchView content={{
+	'since-cpp11': <Ctor_Default_SinceCpp11 />
+}}/>
+
+Default constructor. Value initializes the underlying container.
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <stack>
+
+int main() {
+  // Default initialized stack
+  std::stack<int> s;
+  std::cout << s.size() << ' ';
+
+  // Default initialized stack
+  std::stack<int, std::vector<int>> s2;
+  std::cout << s.size() << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+0 0
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Copy constructor
+
+<SwitchView content={{
+	'cpp98': <Ctor_Copy_SinceCpp98 />
+}} />
+
+Copy constructor. The adaptor is copy-constructed with the contents of `other.c`.
+
+#### Complexity
+
+Linear in the size of `other.c` - **O(other.c.size())**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <deque>
+#include <stack>
+
+void present_stack(std::stack<int>& stack) {
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+
+  std::cout << '\n';
+}
+
+int main() {
+  std::deque<int> data = { 1, 2, 3, 4, 5 };
+  std::stack<int> source(data);
+  std::stack<int> sink(source);
+
+  std::cout << "Original data size: " << data.size() << '\n';
+
+  std::cout << "Source size: " << source.size() << '\n';
+  present_stack(source);
+  std::cout << "Sink size size: " << sink.size() << '\n';
+  present_stack(sink);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Original data size: 5
+Source size: 5
+5 4 3 2 1 
+Sink size size: 5
+5 4 3 2 1 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Move constructor
+
+<SwitchView content={{
+	'cpp11': <Ctor_Move_SinceCpp11 />
+}}/>
+
+Move constructor. The adaptor is constructed with `std::move(other.c)`.
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <deque>
+#include <stack>
+
+void present_stack(std::stack<int>& stack) {
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+
+  std::cout << '\n';
+}
+
+int main() {
+  std::deque<int> data = { 1, 2, 3, 4, 5 };
+  std::stack<int> source(data);
+  std::stack<int> sink(std::move(source));
+
+  std::cout << "Original data size: " << data.size() << '\n';
+
+  std::cout << "Source size: " << source.size() << '\n';
+  present_stack(source);
+  std::cout << "Sink size size: " << sink.size() << '\n';
+  present_stack(sink);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Original data size: 5
+Source size: 0
+
+Sink size size: 5
+5 4 3 2 1 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Copy container constructor
+
+<SwitchView content={{
+	'cpp11': <Ctor_Copy_FromContainer_SinceCpp11 />
+}}/>
+
+Copy-constructs the underlying container `c` with the contents of `cont`. <Until v='cpp11'>This is also the default constructor.</Until>
+
+#### Complexity
+
+Linear in the size of `cont` - **O(cont.size())**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <deque>
+#include <stack>
+
+void present_stack(std::stack<int>& stack) {
+  std::cout << stack.size() << ' ';
+
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+}
+
+int main() {
+  std::deque<int> data = { 1, 2, 3, 4, 5 };
+
+  std::stack<int> s(data);
+
+  std::cout << "Original data size: " << data.size() << '\n';
+  present_stack(s);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Original data size: 5
+5 5 4 3 2 1
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Move container constructor
+
+<SwitchView content={{
+	'cpp11': <Ctor_Move_FromContainer_SinceCpp11 />
+}} />
+
+Move-constructs the underlying container `c` with `std::move(cont)`.
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <deque>
+#include <stack>
+
+void present_stack(std::stack<int>& stack) {
+  std::cout << stack.size() << ' ';
+
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+}
+
+int main() {
+  std::deque<int> data = { 1, 2, 3, 4, 5 };
+
+  std::stack<int> s(std::move(data));
+
+  std::cout << "Original data size: " << data.size() << '\n';
+  present_stack(s);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Original data size: 0
+5 5 4 3 2 1
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Range based constructor (iterators)
+
+<SwitchView content={{
+	'cpp23': <Ctor_RangeBased_Iterators_SinceCpp23 />
+}}/>
+
+Constructs the underlying container `c` with the contents of the range **[ first, last )**.
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if:
+	- `InputIt` satisfies [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator)
+
+</div>
+</details>
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+:::caution
+This code can only be possibly compiled by a compiler that can support experimental C++23 mode.
+:::
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <stack>
+
+void present_stack(std::stack<int>& stack) {
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+
+  std::cout << '\n';
+}
+
+int main() {
+	std::vector<int> data = {1, 2, 3, 4, 5};
+	std::stack<int> s(data.begin(), data.end());
+
+	present_stack(s);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+5 4 3 2 1
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Default construct underlying container with allocator constructor
+
+<SwitchView content={{
+	'cpp11': <Ctor_UnderlyingViaAllocator_SinceCpp11 />
+}}/>
+
+Constructs the underlying container using `alloc` as allocator, as if by `c(alloc)`.
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if:
+	- `std::uses_allocator<Container, Alloc>::value` is `true` (that is, if the underlying container is an allocator-aware container (true for all standard library containers that can be used with stack))
+
+</div>
+</details>
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory_resource>
+#include <iostream>
+#include <stack>
+
+using MagicalStack = std::stack<char, std::pmr::deque<char>>;
+
+void present_stack(MagicalStack stack) {
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+
+  std::cout << '\n';
+}
+
+int main() {
+	char message_buffer[128];
+	std::pmr::monotonic_buffer_resource pool(
+		std::data(message_buffer),
+		std::size(message_buffer)
+	);
+
+	MagicalStack s(&pool);
+	s.push('!');
+	s.push('i');
+	s.push('H');
+
+	present_stack(s);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+H i ! 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Copy container with allocator constructor
+
+<SwitchView content={{
+	'cpp11': <Ctor_Copy_Container_With_Allocator_SinceCpp11 />
+}}/>
+
+Constructs the underlying container with the contents of `cont` and using `alloc` as allocator, as if by `c(cont, alloc)`.
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if:
+	- `std::uses_allocator<Container, Alloc>::value` is `true` (that is, if the underlying container is an allocator-aware container (true for all standard library containers that can be used with stack))
+
+</div>
+</details>
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory_resource>
+#include <iostream>
+#include <stack>
+
+using MagicalDeque = std::pmr::deque<char>;
+using MagicalStack = std::stack<char, MagicalDeque>;
+
+void present_stack(MagicalStack stack) {
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+
+  std::cout << '\n';
+}
+
+int main() {
+	char message_buffer[128];
+	std::pmr::monotonic_buffer_resource pool(
+		std::data(message_buffer),
+		std::size(message_buffer)
+	);
+
+	MagicalDeque d = {'!', 'i', 'H'};
+	MagicalStack s(d, &pool);
+
+	present_stack(s);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+H i ! 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Move container with allocator constructor
+
+<SwitchView content={{
+	'cpp11': <Ctor_Move_Container_With_Allocator_SinceCpp11 />
+}}/>
+
+Constructs the underlying container with the contents of `cont` using move semantics while utilizing `alloc` as allocator, as if by `c(std::move(cont), alloc)`.
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if:
+	- `std::uses_allocator<Container, Alloc>::value` is `true` (that is, if the underlying container is an allocator-aware container (true for all standard library containers that can be used with stack))
+
+</div>
+</details>
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory_resource>
+#include <iostream>
+#include <stack>
+
+using MagicalDeque = std::pmr::deque<char>;
+using MagicalStack = std::stack<char, MagicalDeque>;
+
+void present_stack(MagicalStack stack) {
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+
+  std::cout << '\n';
+}
+
+int main() {
+	char message_buffer[128];
+	std::pmr::monotonic_buffer_resource pool(
+		std::data(message_buffer),
+		std::size(message_buffer)
+	);
+
+	MagicalDeque d = {'!', 'i', 'H'};
+	MagicalStack s(std::move(d), &pool);
+
+	present_stack(s);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+H i ! 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Copy stack with allocator constructor
+
+<SwitchView content={{
+	'cpp11': <Ctor_Copy_Stack_With_Allocator_SinceCpp11 />
+}} />
+
+Constructs the adaptor with the contents of `other.c` and using `alloc` as allocator, as if by `c(other.c, alloc)`.
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if:
+	- `std::uses_allocator<Container, Alloc>::value` is `true` (that is, if the underlying container is an allocator-aware container (true for all standard library containers that can be used with stack))
+
+</div>
+</details>
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory_resource>
+#include <iostream>
+#include <stack>
+
+using MagicalDeque = std::pmr::deque<char>;
+using MagicalStack = std::stack<char, MagicalDeque>;
+
+void present_stack(MagicalStack stack) {
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+
+  std::cout << '\n';
+}
+
+int main() {
+	char message_buffer[128];
+
+	std::pmr::monotonic_buffer_resource pool(
+		std::data(message_buffer),
+		std::size(message_buffer)
+	);
+
+	// uses a new delete source that uses the global new and delete
+	MagicalStack s(MagicalDeque{ '!', 'i', 'H' }, std::pmr::new_delete_resource());
+
+	// now the other stack uses the set monotonic buffer resource
+	MagicalStack s2(s, &pool);
+
+	present_stack(s);
+	present_stack(s2);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+H i ! 
+H i ! 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Move stack with allocator constructor
+
+<SwitchView content={{
+	'cpp11': <Ctor_Move_Stack_With_Allocator_SinceCpp11 />
+}}/>
+
+Constructs the adaptor with the contents of `other` using move semantics while utilizing `alloc` as allocator, as if by `c(std::move(other.c), alloc)`.
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if:
+	- `std::uses_allocator<Container, Alloc>::value` is `true` (that is, if the underlying container is an allocator-aware container (true for all standard library containers that can be used with stack))
+
+</div>
+</details>
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory_resource>
+#include <iostream>
+#include <stack>
+
+using MagicalDeque = std::pmr::deque<char>;
+using MagicalStack = std::stack<char, MagicalDeque>;
+
+void present_stack(MagicalStack stack) {
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+
+  std::cout << '\n';
+}
+
+int main() {
+	char message_buffer[128];
+
+	std::pmr::monotonic_buffer_resource pool(
+		std::data(message_buffer),
+		std::size(message_buffer)
+	);
+
+	// uses a new delete source that uses the global new and delete
+	MagicalStack s(MagicalDeque{ '!', 'i', 'H' }, std::pmr::new_delete_resource());
+
+	// now the other stack uses the set monotonic buffer resource
+	MagicalStack s2(std::move(s), &pool);
+
+	present_stack(s);
+	present_stack(s2);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+
+H i ! 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Range based constructor with allocator (iterators)
+
+<SwitchView content={{
+	'cpp23': <Ctor_RangeBased_Iterators_With_Allocator_SinceCpp23 />
+}}/>
+
+Constructs the underlying container with the contents of the range **[ first, last )** using `alloc` as allocator, as if by `c(first, last, alloc)`.
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if:
+	- `InputIt` satisfies [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator)
+
+</div>
+</details>
+
+#### Example
+
+:::caution
+This code can only be possibly compiled by a compiler that can support experimental C++23 mode.
+:::
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory_resource>
+#include <iostream>
+#include <string>
+#include <stack>
+
+using MagicalDeque = std::pmr::deque<char>;
+using MagicalStack = std::stack<char, MagicalDeque>;
+
+void present_stack(MagicalStack stack) {
+  while(stack.size()) {
+    std::cout << stack.top() << ' ';
+    stack.pop();
+  }
+
+  std::cout << '\n';
+}
+
+int main() {
+	char message_buffer[128];
+
+	std::pmr::monotonic_buffer_resource pool(
+		std::data(message_buffer),
+		std::size(message_buffer)
+	);
+
+	std::string s = "!iH";
+	MagicalStack s2(s.begin(), s.end(), &pool);
+
+	std::cout << s << '\n';
+	present_stack(s2);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+!iH
+H i ! 
+```
+
+</div>
+</Columns>

@@ -1,0 +1,100 @@
+---
+title:					stack<...>::top()
+sidebar_label:			top( )
+description:			stack<...>::top() C++ documentation
+hide_title:				true
+tags:					[access, top, first]
+---
+
+import Tooltip					from "@site-comps/Tooltip";
+import SwitchView				from "@site-comps/SwitchView";
+import Columns					from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+
+<!-- Terms -->
+
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+
+import Method_SinceCpp98 	from './_codes/top/since-cpp98.mdx';
+
+# std::stack top() method
+
+<SwitchView content={{
+	'since-cpp98': <Method_SinceCpp98 />
+}} />
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the top element in the stack.  
+This element will be the first element to be removed on a call to [`pop()`](/docs/std/containers/stacks/queue/pop).  
+
+:::note
+Effectively calls `c.back()`.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Reference to the last element.
+
+### Exceptions
+
+**(none)**
+
+### Complexity
+
+Constant - **(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <stack>
+#include <iostream>
+
+void reportStackSize(const std::stack<int>& s)
+{
+    std::cout << s.size() << " elements on stack\n";
+}
+
+void reportStackTop(const std::stack<int>& s)
+{
+    // Leaves element on stack
+    std::cout << "Top element: " << s.top() << '\n';
+}
+
+int main()
+{
+    std::stack<int> s;
+    s.push(2);
+    s.push(6);
+    s.push(51);
+
+    reportStackSize(s);
+    reportStackTop(s);
+
+    reportStackSize(s);
+    s.pop();
+
+    reportStackSize(s);
+    reportStackTop(s);
+}
+```
+
+</div>
+<div>
+
+```cpp title='Output'
+3 elements on stack
+Top element: 51
+3 elements on stack
+2 elements on stack
+Top element: 6
+````
+
+</div>
+</Columns>

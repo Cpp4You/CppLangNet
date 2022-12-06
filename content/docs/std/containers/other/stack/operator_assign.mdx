@@ -1,0 +1,67 @@
+---
+title:					stack<...>::operator=
+sidebar_label:			operator=
+description:			stack<...>::operator= C++ documentation
+hide_title:				true
+tags:					[assign, replace, copy, set, move]
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<!----------------- Codes ---------------------->
+
+<!-- operator= -->
+
+import Method_UntilCpp11 	from './_codes/operator_assign/until-cpp11.mdx';
+import Method_SinceCpp11 	from './_codes/operator_assign/since-cpp11.mdx';
+
+# std::stack operator=
+
+<SwitchView content={{
+		'since-cpp11': <Method_SinceCpp11 />,
+		'until-cpp11': <Method_UntilCpp11 />
+	}}/>
+
+Replaces the contents of the container adaptor with those of `other`.
+
+ - **(1)**  
+	**Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.  
+
+	Effectively calls
+	```cpp
+	c = other.c
+	```
+ - **(2)**  
+	**Move** assignment operator. Replaces the contents with those of other using move semantics.  
+
+	Effectively calls
+	```cpp
+	c = std::move(other.c)
+	````
+
+:::note
+Both operators are implicitly declared, which means that `Container` has to be copyable/movable for them to be generated.
+:::
+
+### Parameters
+
+ - `other` - another container adaptor to use as data source
+
+### Return value
+
+A reference to the container, `*this`.
+
+### Exceptions
+
+Equivalent to that of `operator=` of the underlying container.
+
+### Complexity
+
+Equivalent to that of `operator=` of the underlying container.
+
+### Example
+
+<ImproveSection />

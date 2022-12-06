@@ -1,0 +1,418 @@
+---
+sidebar_position:	1
+title:				std::string_view constructors
+sidebar_label:		Constructors
+description:		std::string_view constructors C++ documentation
+hide_title:			true
+tags:				[constructor, string_view, method, text]
+
+cppreference_origin_rel: w/cpp/string_view/basic_string/basic_string
+arrow_jumping_preset: overloads
+---
+
+# std::string_view constructors
+
+import CodeBlock					from '@theme/CodeBlock';
+import SwitchView					from '@site-comps/SwitchView';
+import Columns						from '@site-comps/Columns';
+import Tooltip						from '@site-comps/Tooltip';
+import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
+
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!-- Template parameter table -->
+import TemplateParameterTable from "./_codes/shared/template-parameter-table.mdx"
+
+<!-- Ctor Default -->
+import Ctor_Default_SinceCpp17_Simplified 	from "./_codes/constructors/default/since-cpp17-simplified.mdx";
+import Ctor_Default_SinceCpp17_Detailed 	from "./_codes/constructors/default/since-cpp17-detailed.mdx";
+
+<!-- Ctor copy defaulted -->
+import Ctor_Copy_Defaulted_SinceCpp20 from "./_codes/constructors/defaulted-copy/since-cpp17.mdx";
+
+<!-- Ctor char pointer (bound) -->
+import Ctor_CharPointer_Bound_SinceCpp17		from "./_codes/constructors/char-pointer-bound/since-cpp17.mdx";
+
+<!-- Ctor char pointer (unbound) -->
+import Ctor_CharPointer_Unbound_SinceCpp17	from "./_codes/constructors/char-pointer-unbound/since-cpp17.mdx";
+
+<!-- Ctor range based (iterators) -->
+import Ctor_RangeBased_Iterators_SinceCpp20 from "./_codes/constructors/range-based-iterators/since-cpp20.mdx";
+
+<!-- Ctor range based (range) -->
+import Ctor_RangeBased_Range_SinceCpp23 from "./_codes/constructors/range-based-range/since-cpp23.mdx";
+
+<!-- Ctor nullptr deleted -->
+import Ctor_Nullptr_Deleted_SinceCpp23 from "./_codes/constructors/deleted-nullptr/since-cpp23.mdx";
+
+
+`std::basic_string_view` class can be constructed in many different ways.
+Use the button in the top-right corner to navigate with arrows for convenience.
+
+:::note
+`std::basic_string_view` is a **class template**, with following type parameters,
+that are used within constructors:
+
+<TemplateParameterTable />
+:::
+
+## Default constructor
+
+<SwitchView content={{
+	'cpp20': {
+		simplified: <Ctor_Default_SinceCpp17_Simplified/>,
+		detailed: <Ctor_Default_SinceCpp17_Detailed/>
+	}
+}}/>
+
+Default constructor. Constructs an empty string view with:
+	- `data() == nullptr`
+	- `size() == 0`
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string_view>
+#include <iostream>
+#include <iomanip>
+
+int main() {
+  // Default constructed string view
+  std::string_view sv;
+
+  std::cout << sv.size() << ' ' << std::quoted(sv);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+0 ""
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Defaulted copy constructor
+
+<SwitchView content={{
+	'cpp20': <Ctor_Copy_Defaulted_SinceCpp20 />
+}}/>
+
+Copy constructor. Constructs a view of the same content as `other`, which has:
+	- `data() == other.data()`
+	- `size() == other.size()`
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string_view>
+#include <iostream>
+#include <iomanip>
+
+int main() {
+  std::string_view sv = "Hello";
+  std::string_view sv2 = sv;
+
+  std::cout << sv.size() << ' ' << std::quoted(sv) << '\n';
+  std::cout << sv2.size() << ' ' << std::quoted(sv2);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+5 "Hello"
+5 "Hello"
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Char pointer constructor (bound)
+
+<SwitchView content={{
+	'cpp20': <Ctor_CharPointer_Bound_SinceCpp17 />
+}} />
+
+Constructs a view of the first count characters of the character array starting with the element pointed by `s`. The created view has:
+	 - `data() == s`
+	 - `size() == count`
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if:
+	- **[ s, s + count )** is not a valid range (even though the constructor may not access any of the elements of this range)
+:::
+
+:::note
+`s` can contain null characters.
+:::
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string_view>
+#include <iostream>
+#include <iomanip>
+
+int main() {
+  std::string_view sv("Hello World!", 5);
+
+  std::cout << sv.size() << ' ' << std::quoted(sv) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+5 "Hello"
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Char pointer constructor (unbound)
+
+<SwitchView content={{
+	'cpp20': <Ctor_CharPointer_Unbound_SinceCpp17 />
+}} />
+
+	 - `data() == s`
+	 - `size() == Traits::length(s)`
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if:
+	- **[ s, s + Traits::length(s) )** is not a valid range (even though the constructor may not access any of the elements of this range)
+:::
+
+:::note
+The length of the view is determined as if by `Traits::length(s)`.
+:::
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string_view>
+#include <iostream>
+#include <iomanip>
+
+int main() {
+  const char* string = "Hello\0 World!";
+  std::string_view sv(string);
+
+  std::cout << sv.size() << ' ' << std::quoted(sv) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+5 "Hello"
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Copy range constructor (iterators)
+
+<SwitchView content={{
+	'cpp20': <Ctor_RangeBased_Iterators_SinceCpp20 />
+}}/>
+
+Constructs a string view over the range **[ first, last )**.
+The resulting view has:
+	- `data() == std::to_address(first)`
+	- `size() == last - first`
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if:
+	- **[ first, last ) is not a valid range
+	- `It` does not model [`contiguous_iterator`](#)  
+	or
+	- `End` does not model [`sized_sentinel_for`](#)
+:::
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+These overloads participate in overload resolution only if:
+	- `It` satisfies [`contiguous_iterator`](#)
+	- `End` satisfies [`sized_sentinel_for`](#) for `It`
+	- `std::iter_value_t<It>` and `CharT` are the same type  
+	and
+	- `End` is not convertible to `std::size_t`
+
+</div>
+</details>
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string_view>
+#include <iostream>
+
+int main() {
+  std::string s = "Hello World!";
+  std::string_view sv(s.begin(), s.begin()+5);
+  std::string_view sv2(s.begin() + 6, s.end());
+
+  std::cout << sv << ' ' << sv2;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Hello World!
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Copy range constructor (range)
+
+<SwitchView content={{
+	'cpp23': <Ctor_RangeBased_Range_SinceCpp23 />
+}}/>
+
+Constructs a string view over the range `r`.
+The resulting view has:
+	- `data() == ranges::data(r)`
+	- `size() == ranges::size(r)`
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+These overloads participate in overload resolution only if:
+	- `std::remove_cvref_t<R>` is not the same type as `std::basic_string_view`
+	- `R` models [`contiguous_range`](#) and [`sized_range`](#)
+	- `ranges::range_value_t<R>` and `CharT` are the same type
+	- `R` is not convertible to `const CharT*`
+	- let `d` be an lvalue of type `std::remove_cvref_t<R>`, `d.operator ::std::basic_string_view<CharT, Traits>()` is not a valid expression  
+	and
+	- if qualified-id `std::remove_reference_t<R>::traits_type` is valid and denotes a type, it is same as `Traits`
+
+</div>
+</details>
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string_view>
+#include <iostream>
+
+int main() {
+  std::string s = "Hello";
+  std::string_view sv(s);
+
+  std::cout << sv;
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+Hello
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Deleted [`std::nullptr_t`](#) constructor
+
+<SwitchView content={{
+	'cpp23': <Ctor_Nullptr_Deleted_SinceCpp23 />
+}}/>
+
+A deleted constructor that prohibits constructing a string view from a `nullptr`.
+
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <string_view>
+
+int main() {
+  // error-next-line
+  // std::string_view sv(nullptr); // Won't compile!
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+```
+
+</div>
+</Columns>

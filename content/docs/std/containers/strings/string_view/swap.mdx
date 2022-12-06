@@ -1,0 +1,72 @@
+---
+title:					string_view<...>::swap() method
+sidebar_label:			swap( )
+description:			string_view<...>::swap() method C++ documentation
+hide_title:				true
+tags:					[string_view, swap, exchange]
+
+cppreference_origin_rel: w/cpp/container/string_view/swap
+---
+
+import Columns		from "@site-comps/Columns";
+import SwitchView	from "@site-comps/SwitchView";
+import { Since }	from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+<!-- swap() -->
+import Method_SinceCpp17				from './_codes/swap/since-cpp17.mdx';
+
+# std::string_view swap() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />
+}} />
+
+Exchanges the view with that of `v`.
+
+### Parameters
+
+ - `v` - the view to exchange the contents with
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <string_view>
+#include <iostream>
+ 
+int main() {
+    auto s1{ std::string_view{"⏺⏺⏺⏺⏺"} };
+    auto s2{ std::string_view{"⏹⏹⏹⏹⏹"} };
+ 
+    std::cout << "Before : " << s1 << ' ' << s2 << "\n";
+    s1.swap(s2);
+    std::cout << "After  : " << s1 << ' ' << s2 << "\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Before : ⏺⏺⏺⏺⏺ ⏹⏹⏹⏹⏹
+After  : ⏹⏹⏹⏹⏹ ⏺⏺⏺⏺⏺
+```
+
+</div>
+</Columns>

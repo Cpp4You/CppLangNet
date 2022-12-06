@@ -1,0 +1,13 @@
+```cpp title='Convert a string to int'
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string numberInString = "8314";
+
+	// Note: stoi can throw exception if failed!
+	int number = std::stoi(numberInString);
+	std::cout << "Number: " << number;
+}
+```

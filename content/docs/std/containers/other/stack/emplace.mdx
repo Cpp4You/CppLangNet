@@ -1,0 +1,92 @@
+---
+title:					stack<...>::emplace() method
+sidebar_label:			emplace( )
+description:			stack<...>::emplace() method C++ documentation
+hide_title:				true
+tags:					[emplace, add, new, append]
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Method_SinceCpp11 	from './_codes/emplace/since-cpp11.mdx';
+import Method_SinceCpp17 	from './_codes/emplace/since-cpp17.mdx';
+
+# std::stack emplace() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />,
+	'since-cpp11': <Method_SinceCpp11 />
+}}/>
+
+Pushes a new element to the end of the stack. The element is constructed in-place, i.e. no copy or move operations are performed. The constructor of the element is called with exactly the same arguments as supplied to the function.
+
+:::note
+Effectively calls
+```cpp
+c.emplace_back(std::forward<Args>(args)...)
+```
+:::
+
+### Parameters
+
+ - `args` - arguments to forward to the constructor of the element
+
+### Return value
+
+<SwitchView content={{
+	'since-cpp17': <b>(none)</b>,
+	'until-cpp17': <>
+		The value or reference, if any, returned by the above call to the underlying container's <code>emplace_back</code>.
+	</>,
+}}/>
+
+### Exceptions
+
+Equivalent to that of `emplace_back` of the underlying container.
+
+### Complexity
+
+Equivalent to that of `emplace_back` of the underlying container.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <stack>
+ 
+struct S
+{
+    int id;
+ 
+    S(int i, double d, std::string s) : id{i}
+    {
+        std::cout << "S::S(" << i << ", " << d << ", \"" << s << "\");\n";
+    }
+};
+ 
+int main()
+{
+    std::stack<S> adaptor;
+ 
+    const S& s = adaptor.emplace(42, 3.14, "C++"); // for return value C++17 required
+ 
+    std::cout << "id = " << s.id << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+S::S(42, 3.14, "C++")
+id = 42
+```
+
+</div>
+</Columns>

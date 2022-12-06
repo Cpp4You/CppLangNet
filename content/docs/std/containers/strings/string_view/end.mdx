@@ -1,0 +1,169 @@
+---
+title:					string_view<...>::end() method
+sidebar_label:			end( )
+description:			string_view<...>::end() method C++ documentation
+hide_title:				true
+tags:					[access, string_view, iterator, end, back]
+
+cppreference_origin_rel: w/cpp/container/string_view/end
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- end() -->
+import Method_SinceCpp17 	from './_codes/end/since-cpp17.mdx';
+
+# std::string_view end() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />,
+}}/>
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the element past the end of the view.  
+
+If the array is empty, the returned iterator will be equal to [`begin()`](begin).
+
+:::danger Undefined Behavior
+Attempting to dereference a past the end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Iterator to the character following the last character.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Notes
+
+For a container `c`, the expression `*std::prev(c.end())` is equivalent to `c.back()`.
+
+### Difference between end and cend
+
+Unlike for other containers, like [`std::string`](../string.mdx) or [`std::vector`](../../arrays/vector.mdx), [`end`](#) and [`cend`](#) both return the same iterator.
+
+<Tabs>
+<TabItem value="non-const-container" label="Non const container" default>
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <string_view>
+
+int main()
+{
+    std::string_view str = "Hello";
+    auto it = str.cend(); // Type: std::string_view::const_iterator
+    // error-next-line
+    *std::prev(it) = 'J'; // ❌ Error!
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="cend" default>
+
+```cpp
+#include <string_view>
+
+int main()
+{
+    std::string_view str = "Hello";
+    auto it = str.cend(); // Type: std::string_view::const_iterator
+    // error-next-line
+    *std::prev(it) = 'J'; // ❌ Error!
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+<TabItem value="const-container" label="Const container">
+
+<Tabs>
+<TabItem value="end" label="end" default>
+
+```cpp
+#include <string_view>
+
+int main()
+{
+    const std::string_view str = "Hello";
+    auto it = str.end(); // Type: std::string_view::const_iterator
+    // error-next-line
+    *std::prev(it) = 'J'; // ❌ Error! 
+}
+```
+
+</TabItem>
+<TabItem value="cend" label="cend" default>
+
+```cpp
+#include <string_view>
+
+int main()
+{
+    const std::string_view str = "Hello";
+    auto it = str.cend(); // Type: std::string_view::const_iterator
+    // error-next-line
+    *std::prev(it) = 'J'; // ❌ Error! 
+}
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+</Tabs>
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <iterator>
+#include <string_view>
+ 
+int main()
+{
+    std::string_view str_view("abcd");
+ 
+    auto end = str_view.end();
+    auto cend = str_view.cend();
+ 
+    std::cout << *std::prev(end) << '\n';
+    std::cout << *std::prev(cend) << '\n';
+ 
+    std::cout << std::boolalpha << (end == cend) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+d
+d
+true
+```
+
+</div>
+</Columns>

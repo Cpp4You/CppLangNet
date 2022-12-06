@@ -1,0 +1,71 @@
+---
+title:					initializer_list<...>::begin() method
+sidebar_label:			begin( )
+description:			initializer_list<...>::begin() method C++ documentation
+hide_title:				true
+tags:					[access, initializer_list, pointer, begin, front]
+
+cppreference_origin_rel: w/cpp/container/initializer_list/begin
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+
+<!-- Terms -->
+import Term_ContAlias_Pointer from "@site/i18n/en/presets/terms/cont-alias-pointer.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- begin() -->
+import Method_UntilCpp14 	from './_codes/begin/since-cpp14.mdx';
+import Method_SinceCpp14 	from './_codes/begin/since-cpp14.mdx';
+
+# std::initializer_list begin() method
+
+<SwitchView content={{
+	'since-cpp14': <Method_SinceCpp14 />,
+	'until-cpp14': <Method_UntilCpp14 />
+}}/>
+
+Returns a <Tooltip title={Term_ContAlias_Pointer}>pointer</Tooltip> to the first element in the initializer list.
+
+If the initializer list is empty, the returned pointer will be equal to [`end()`](end).
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Pointer to the first character.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <initializer_list>
+
+int main()
+{
+    static constexpr auto il = {42, 24};
+    static_assert(*il.begin() == 0x2A);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+```
+
+</div>
+</Columns>

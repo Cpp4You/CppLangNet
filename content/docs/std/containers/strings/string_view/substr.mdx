@@ -1,0 +1,89 @@
+---
+title:					string_view<...>::substr() method
+sidebar_label:			substr( )
+description:			string_view<...>::substr() method C++ documentation
+hide_title:				true
+tags:					[string_view, substr, subrange, sub, range]
+
+cppreference_origin_rel: w/cpp/container/string_view/substr
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- substr() -->
+import Method_SinceCpp17 	from './_codes/substr/since-cpp17.mdx';
+
+# std::string_view substr() method
+
+<SwitchView content={{
+	'since-cpp17': <Method_SinceCpp17 />,
+}}/>
+
+Returns a view of the substring **[ pos, pos + rcount )**, where `rcount` is `std::min(count, size() - pos)`.
+
+### Parameters
+
+ - `pos` - position of the first character
+ - `count` - requested length
+
+### Return value
+
+View of the substring **[ pos, pos + rcount )**.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+Throws [`std::out_of_range`](#) if `pos > size()`.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <cstddef>
+#include <iostream>
+#include <stdexcept>
+#include <string_view>
+ 
+int main()
+{
+    typedef std::size_t count_t, pos_t;
+ 
+    constexpr std::string_view data{"ABCDEF"};
+ 
+    std::cout << data.substr() << '\n'; // ABCDEF
+    std::cout << data.substr(pos_t(1)) << '\n'; // BCDEF
+    std::cout << data.substr(pos_t(2), count_t(3)) << '\n'; // CDE
+ 
+    std::cout << data.substr(pos_t(4), count_t(42)) << '\n'; // EF
+        // count -> 2 == size() - pos == 6 - 4
+ 
+    try {
+        data.substr(pos_t(666), count_t(1)); // throws: pos > size()
+    }
+    catch(std::out_of_range const& ex) {
+        std::cout << ex.what() << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+ABCDEF
+BCDEF
+CDE
+EF
+basic_string_view::substr: __pos (which is 666) > __size (which is 6)
+```
+
+</div>
+</Columns>

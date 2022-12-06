@@ -1,0 +1,104 @@
+---
+title:					string_view<...>::starts_with() method
+sidebar_label:			starts_with( )
+description:			string_view<...>::starts_with() method C++ documentation
+hide_title:				true
+tags:					[string_view, starts_with, prefix, start]
+
+cppreference_origin_rel: w/cpp/container/string_view/starts_with
+---
+
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- starts_with() -->
+import Method_SinceCpp20 	from './_codes/starts_with/since-cpp20.mdx';
+
+# std::string_view starts_with() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+}}/>
+
+Checks if the string view begins with the given prefix.
+
+The prefix may be one of the following:
+ - **(1)** A string view view `sv` (which may be a result of implicit conversion from another [`std::basic_string_view`](../string_view)).
+
+ - **(2)** A single character `c`.
+
+ - **(3)** A null-terminated character string view `s`.
+
+All three overloads effectively do
+```cpp
+std::basic_string_view<CharT, Traits>(data(), size()).starts_with(x)
+```
+where `x` is the parameter.
+
+### Parameters
+
+ - `s` - a string view view which may be a result of implicit conversion from another [`std::basic_string_view`](../string_view)
+ - `c` - a single character
+ - `s` - a null-terminated character string view
+
+### Return value
+
+`true` if the string_view begins with the provided prefix, `false` otherwise.
+
+### Complexity
+
+<!-- 1, 3 linear, 2 constant -->
+
+ - **(1)** Linear in the size of `sv` - **O(sv.size())**.
+ - **(2)** Constant - **O(1)**.
+ - **(3)** Linear in the size of `s` - **O(std::strlen(s))**.
+
+### Notes
+
+Feature testing macro: [`__cpp_lib_starts_ends_with`](#).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string_view>
+ 
+template <typename PrefixType>
+void test_prefix_print(const std::string_view& str, PrefixType prefix)
+{
+    std::cout << '\'' << str << "' starts with '" << prefix << "': " <<
+        str.starts_with(prefix) << '\n';
+}
+ 
+int main()
+{
+    std::boolalpha(std::cout);    
+    auto helloWorld = std::string_view("hello world");
+ 
+    test_prefix_print(helloWorld, std::string_view("hello"));
+ 
+    test_prefix_print(helloWorld, std::string_view("goodbye"));
+ 
+    test_prefix_print(helloWorld, 'h');
+ 
+    test_prefix_print(helloWorld, 'x');
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+'hello world' starts with 'hello': true
+'hello world' starts with 'goodbye': false
+'hello world' starts with 'h': true
+'hello world' starts with 'x': false
+```
+
+</div>
+</Columns>
