@@ -1,0 +1,83 @@
+---
+title:					span<...>::empty() method
+sidebar_label:			empty( )
+description:			span<...>::empty() method C++ documentation
+hide_title:				true
+tags:					[span, empty]
+
+cppreference_origin_rel: w/cpp/container/span/empty
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- empty() -->
+import Method_SinceCpp20	from './_codes/empty/since-cpp20.mdx';
+
+# std::span empty() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+}}/>
+
+Checks if the container has no elements, i.e. whether `begin() == end()`.
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+`true` if the container is empty, `false` otherwise.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Why `[[nodiscard]]`?
+
+The `[[nodiscard]]` attribute is an attribute that invokes compiler warnings whenever
+a function has been called and it's result has been discarded.
+
+The reason behind the attribute being applied only to the `empty` method is that
+it's likely that the programmer might confuse the adjective `empty` (which would mean - **is this container empty?**)
+for the verb `empty` (which would mean - **please empty this container for me.**).
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <span>
+#include <iostream>
+#include <iomanip>
+ 
+int main()
+{
+    std::span<const char> span{ "ABCDEF" };
+ 
+    while (!span.empty()) {
+        std::cout << std::quoted(span.data()) << '\n';
+        span = span.last(span.size() - 1);
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+"ABCDEF"
+"BCDEF"
+"CDEF"
+"DEF"
+"EF"
+"F"
+""
+```
+
+</div>
+</Columns>

@@ -1,0 +1,103 @@
+---
+title:					span<...>::rend() method
+sidebar_label:			rend( )
+description:			span<...>::rend() method C++ documentation
+hide_title:				true
+tags:					[access, span, rend, reverse, iterator, access, end]
+
+cppreference_origin_rel: w/cpp/container/span/rend
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- rend() -->
+import Method_SinceCpp20 	from './_codes/rend/since-cpp20.mdx';
+
+# std::span rend() method
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+}} />
+
+Returns a <Tooltip title={Term_ContAlias_ReverseIterator}>reverse iterator</Tooltip> to the last element of the reversed view.  
+It corresponds to the element **preceding** the first element of the non reversed view.
+
+If the span is empty, the returned iterator will be equal to [`rbegin()`](rbegin).
+
+:::note
+This method doesn't actually reverse the view, it just returns an iterator that points to the element before the first element of the view,
+and which `+`, `-`, `--`, `++` operators have slightly changed implementations.
+
+For example `it++` decrements the internal pointer and `it--` increments it (so that traversing the container in a reverse order actually works).
+:::
+
+:::danger Undefined Behavior
+Attempting to dereference a past the end iterator is <Tooltip title={Term_UndefinedBehaviour}>undefined behaviour</Tooltip>.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Reverse iterator to the first element.
+
+### Complexity
+
+Constant - **O(1)**..
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <span>
+#include <string_view>
+ 
+void ascending(const std::span<const std::string_view> data,
+               const std::string_view term)
+{
+    std::for_each(data.begin(), data.end(),
+        [](const std::string_view x) { std::cout << x << " "; });
+    std::cout << term;
+}
+ 
+void descending(const std::span<const std::string_view> data,
+               const std::string_view term)
+{
+    std::for_each(data.rbegin(), data.rend(),
+        [](const std::string_view x) { std::cout << x << " "; });
+    std::cout << term;
+}
+ 
+int main()
+{
+    constexpr std::string_view bars[]{ "▁","▂","▃","▄","▅","▆","▇","█" };
+    ascending(bars, " ");
+    descending(bars, "\n");
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+▁ ▂ ▃ ▄ ▅ ▆ ▇ █  █ ▇ ▆ ▅ ▄ ▃ ▂ ▁
+```
+
+</div>
+</Columns>

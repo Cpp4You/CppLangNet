@@ -1,0 +1,92 @@
+---
+title:					span<...>::end() method
+sidebar_label:			end( )
+description:			span<...>::end() method C++ documentation
+hide_title:				true
+tags:					[access, span, iterator, end, front]
+
+cppreference_origin_rel: w/cpp/container/span/end
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+import TabItem				from "@theme/TabItem";
+
+<!-- Terms -->
+import Term_ContAlias_Iterator from "@site/i18n/en/presets/terms/cont-alias-iterator.mdx";
+
+<!----------------- Codes ---------------------->
+
+<!-- end() -->
+import Method_SinceCpp20 	from './_codes/end/since-cpp20.mdx';
+
+# std::span end() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+}}/>
+
+
+Returns an <Tooltip title={Term_ContAlias_Iterator}>iterator</Tooltip> to the element following the last element of the view.
+
+If the view is empty, the returned iterator will be equal to [`begin()`](begin).
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+Iterator to the first element.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <span>
+#include <iostream>
+ 
+void print(std::span<const int> sp)
+{
+    for(auto it = sp.begin(); it != sp.end(); ++it) {
+        std::cout << *it << ' ';
+    }
+    std::cout << '\n';
+}
+ 
+void transmogrify(std::span<int> sp)
+{
+    if (!sp.empty()) {
+        std::cout << *sp.begin() << '\n';
+        *sp.begin() = 2;
+    }
+}
+ 
+int main()
+{
+    int array[] { 1, 3, 4, 5 };
+    print(array);
+    transmogrify(array);
+    print(array);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1 3 4 5 
+1
+2 3 4 5
+```
+
+</div>
+</Columns>

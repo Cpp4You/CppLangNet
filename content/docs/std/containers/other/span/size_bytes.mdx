@@ -1,0 +1,70 @@
+---
+title:					span<...>::size_bytes() method
+sidebar_label:			size_bytes( )
+description:			span<...>::size_bytes() method C++ documentation
+hide_title:				true
+tags:					[size_bytes, elements, quantity, amount]
+
+cppreference_origin_rel: w/cpp/container/span/size_bytes
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+<!-- size_bytes() -->
+import Method_SinceCpp20	from './_codes/size_bytes/since-cpp20.mdx';
+
+# std::span size_bytes() method
+
+<SwitchView content={{
+	'since-cpp20': <Method_SinceCpp20 />,
+}} />
+
+Returns the size of the sequence in bytes, i.e., size() * sizeof(element_type).
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+The size of the sequence in bytes.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <span>
+#include <cstdint>
+ 
+int main()
+{
+    static constexpr std::int32_t a[] { 1, 2, 3, 4, 5 };
+    constexpr std::span s{a};
+ 
+    static_assert( sizeof(int32_t) == 4  );
+    static_assert( std::size(a)    == 5  );
+    static_assert( sizeof(a)       == 20 );
+    static_assert( s.size()        == 5  );
+    static_assert( s.size_bytes()  == 20 );
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+No output expected
+```
+
+</div>
+</Columns>
+

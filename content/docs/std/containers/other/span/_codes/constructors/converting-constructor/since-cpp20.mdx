@@ -1,0 +1,5 @@
+```cpp
+template< class U, std::size_t N >
+explicit(extent != std::dynamic_extent && N == std::dynamic_extent)
+constexpr span( const std::span<U, N>& source ) noexcept;
+```

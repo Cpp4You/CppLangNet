@@ -1,0 +1,606 @@
+---
+sidebar_position:	1
+title:				std::span constructors
+sidebar_label:		Constructors
+description:		std::span constructors C++ documentation
+hide_title:			true
+tags:				[constructor, span, method]
+
+cppreference_origin_rel: w/cpp/container/span/span
+arrow_jumping_preset: overloads
+---
+
+# std::span constructors
+
+import CodeBlock					from '@theme/CodeBlock';
+import SwitchView					from '@site-comps/SwitchView';
+import Columns						from '@site-comps/Columns';
+import Tooltip						from '@site-comps/Tooltip';
+import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
+import {Since,Until,Deprecated}		from "@site-comps/Versions";
+
+<!----------------- Terms ---------------------->
+import Term_CTAD					from '@site/i18n/en/presets/terms/ctad.mdx';
+import Term_UndefinedBehaviour from '@site/i18n/en/presets/terms/undefined-behaviour.mdx';
+
+<!----------------- Codes ---------------------->
+
+<!-- Span's template parameters table -->
+import TemplateParameterTable from "./_codes/shared/template-parameters-table.mdx";
+
+<!-- Ctor Default -->
+import Ctor_Default_SinceCpp20_Simplified 			from "./_codes/constructors/default/since-cpp20-simplified.mdx";
+import Ctor_Default_SinceCpp20_Detailed 				from "./_codes/constructors/default/since-cpp20-detailed.mdx";
+
+<!-- Ctor iterator + size -->
+import Ctor_It_And_Size_SinceCpp20				from "./_codes/constructors/iterator-and-size/since-cpp20.mdx";
+
+<!-- Ctor iterator range -->
+import Ctor_RangeBased_Iterators_Size_SinceCpp20 from "./_codes/constructors/range-based-iterators/since-cpp20.mdx";
+
+<!-- Ctor array constructors -->
+import Ctor_C_And_Std_Array_SinceCpp20 from "./_codes/constructors/c-and-std-array/since-cpp20.mdx";
+
+<!-- Ctor range -->
+import Ctor_RangeBased_Range_SinceCpp20 from "./_codes/constructors/range-based-range/since-cpp20.mdx";
+
+<!-- Ctor converting -->
+import Ctor_Converting_SinceCpp20 from "./_codes/constructors/converting-constructor/since-cpp20.mdx";
+
+<!-- Ctor copy defauled -->
+import Ctor_Copy_Defaulted_SinceCpp20 from "./_codes/constructors/defaulted-copy-constructor/since-cpp20.mdx";
+
+<!----------------- End of codes ---------------------->
+
+`std::span` class can be constructed in many different ways.
+Use the button in the top-right corner to navigate with arrows for convenience.
+
+:::note
+`std::span` is a **class template**, with following type parameters,
+that are used within constructors:
+
+<TemplateParameterTable />
+:::
+
+<!-------------------------------------------------------------------------------------->
+
+## Default constructor
+
+<SwitchView content={{
+	'cpp20': {
+		simplified: <Ctor_Default_SinceCpp20_Simplified/>,
+		detailed: <Ctor_Default_SinceCpp20_Detailed/>
+	}
+}}/>
+
+Default constructor. Constructs an empty span with
+	- `data() == nullptr`
+	- `size() == 0`
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if
+```cpp
+extent == 0
+```
+or
+```cpp
+extent == std::dynamic_extent
+```
+
+</div>
+</details>
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <span>
+
+int main() {
+	// Default constructed span<int>:
+  std::span<int> s;
+
+	std::cout << "s.size(): " << s.size();
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+s.size(): 0
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Iterator + size constructor
+
+<SwitchView content={{
+	'cpp20': <Ctor_It_And_Size_SinceCpp20 />
+}}/>
+
+Constructs a span that is a view over the range **[ first, first + count )**.  
+The resulting span has:
+	- `data() == std::to_address(first)`
+	- `size() == count`
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if:
+	- **[ first, first + count )** is not a valid range
+	- `It` does not model [`contiguous_iterator`](#)  
+	or
+	- `extent != std::dynamic_extent` and `count != extent`
+:::
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if
+	- `It` satisfies [`contiguous_iterator`](#)  
+	and
+	- the conversion from `std::iter_reference_t<It>` to `element_type` is **at most** a [**qualification conversion**](#)
+
+</div>
+</details>
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <span>
+
+int main() {
+  std::vector<int> v{1, 2, 3, 4, 5};
+  std::span<int> s(v.cbegin(), 3);
+
+  std::cout << "s.size(): " << s.size() << '\n';
+  std::cout << "elems: ";
+  for(int num : s) std::cout << num << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+s.size(): 3
+elems: 1 2 3
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Range based constructor (iterators)
+
+<SwitchView content={{
+	'cpp20': <Ctor_RangeBased_Iterators_Size_SinceCpp20 />
+}} />
+
+onstructs a span that is a view over the range **[ first, last )**.  
+The resulting span has:
+	- `data() == std::to_address(first)`
+	- `size() == last - first`
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if:
+	- **[ first, first )** is not a valid range
+	- `It` does not model [`contiguous_iterator`](#)
+	- `End` does not model [`sized_sentinel_for`](#) `It`  
+	or
+	- `extent != std::dynamic_extent` and `last - first != extent`
+:::
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+This overload participates in overload resolution only if
+	- `It` satisfies [`contiguous_iterator`](#)
+	- `End` satisfies [`sized_sentinel_for`](#)
+	- the conversion from `std::iter_reference_t<It>` to `element_type` is **at most** a [**qualification conversion**](#)  
+	and
+	- `std::is_convertible_v<End, std::size_t>` is `false`
+
+</div>
+</details>
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <span>
+
+int main() {
+  std::vector<int> v{1, 2, 3, 4, 5};
+  std::span<int> s(v.begin() + 1, v.end() - 1);
+
+  std::cout << "s.size(): " << s.size() << '\n';
+  std::cout << "elems: ";
+  for(int num : s) {
+    std::cout << num << ' ';
+  }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+s.size(): 3
+elems: 2 3 4
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## C array and [`std::array`](../../arrays/array) constructors
+
+<SwitchView content={{
+	'cpp20': <Ctor_C_And_Std_Array_SinceCpp20 />
+}} />
+
+Constructs a span that is a view over the array `arr`.  
+The resulting span has:
+	- `size() == N`
+	- `data() == std::data(arr)`
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+These overloads participate in overload resolution only if:
+	- `extent == std::dynamic_extent` or `N == extent`  
+ 	and
+	- the conversion from `std::remove_pointer_t<decltype(data(arr))>` to `element_type` is **at most** a [**qualification conversion**](#)
+
+</div>
+</details>
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <array>
+#include <span>
+
+template <typename Type, std::size_t Extent>
+void present_span(std::span<Type, Extent> s) {
+  std::cout << "s.size(): " << s.size() << '\n';
+  std::cout << "elems: ";
+  for(int num : s) {
+    std::cout << num << ' ';
+  }
+  std::cout << "\n\n";
+}
+
+int main() {
+  int arr[] = {1, 2, 3, 4, 5};
+  present_span(std::span(arr)); // (1)
+
+  std::array<int, 5> arr2 = {6, 7, 8, 9, 10};
+  present_span(std::span(arr2)); // (2)
+
+  const std::array<int, 5> arr3 = {12, 13, 14, 15, 16};
+  present_span(std::span(arr3)); // (3)
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+s.size(): 5
+elems: 1 2 3 4 5 
+
+s.size(): 5
+elems: 6 7 8 9 10 
+
+s.size(): 5
+elems: 12 13 14 15 16 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Arbitrary range constructor
+
+<SwitchView content={{
+	'cpp20': <Ctor_RangeBased_Range_SinceCpp20 />
+}}/>
+
+Constructs a span that is a view over the range `range`.
+The resulting span has:
+	- `size() == std::ranges::size(range)`
+	- `data() == std::ranges::data(range)`
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if:
+	- `R` does not model [`contiguous_range`](#) and [`sized_range`](#)  
+	or
+	- `R` does not model [`borrowed_range`](#), while:
+		- `element_type` is non-const  
+		or
+		- `extent != std::dynamic_extent` and `std::ranges::size(range) != extent`
+:::
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+These overloads participate in overload resolution only if:
+	- `R` satisfies [`contiguous_range`](#) and [`sized_range`](#)
+	- either `R` satisfies [`borrowed_range`](#) or `std::is_const_v<element_type>` is `true`
+	- `std::remove_cvref_t<R>` is not a specialization of [`std::span`](../span)
+	- `std::remove_cvref_t<R>` is not a specialization of [`std::array`](../../arrays/array)
+	- `std::is_array_v<std::remove_cvref_t<R>>` is `false`
+	and
+	- the conversion from `std::ranges::range_reference_t<R>` to `element_type` is **at most** a [**qualification conversion**](#)
+
+</div>
+</details>
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <span>
+
+template <typename Type, std::size_t Extent>
+void present_span(std::span<Type, Extent> s) {
+  std::cout << "s.size(): " << s.size() << '\n';
+  std::cout << "elems: ";
+  for(int num : s) {
+    std::cout << num << ' ';
+  }
+  std::cout << "\n\n";
+}
+
+int main() {
+  std::vector<int> v = {1, 2, 3, 4};
+  present_span(std::span(v)); // vector is a valid range
+
+  struct custom_range {
+    int* begin() { return arr.data(); }
+    int* end() { return arr.data() + arr.size(); }
+
+    std::vector<int> arr{1, 2, 3};
+  };
+
+  custom_range cr;
+  present_span(std::span(cr)); // cr is a valid range
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+s.size(): 4
+elems: 1 2 3 4 
+
+s.size(): 3
+elems: 1 2 3 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Converting constructor
+
+<SwitchView content={{
+	'cpp20': <Ctor_Converting_SinceCpp20 />
+}}/>
+
+Converting constructor from another span source.
+The resulting span has:
+	- `size() == source.size()`
+	- `data() == source.data()`
+
+:::danger Undefined Behavior
+The <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip> if:
+	- `extent != dynamic_extent`  
+	and
+	- `source.size() != extent`
+:::
+
+<details>
+<summary>Overload resolution</summary>
+<div>
+
+These overloads participate in overload resolution only if:
+	- at least one of:
+		- `extent == std::dynamic_extent`
+		- `N == std::dynamic_extent`
+		- `N == extent`
+	is `true`  
+	and
+	- the conversion from `U` to `element_type` is **at most** a [**qualification conversion**](#)
+
+</div>
+</details>
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <span>
+
+template <typename Type, std::size_t Extent>
+void present_span(std::span<Type, Extent> s) {
+  std::cout << "s.size(): " << s.size() << '\n';
+  std::cout << "elems: ";
+  for(int num : s) {
+    std::cout << num << ' ';
+  }
+  std::cout << "\n\n";
+}
+
+int main() {
+  std::vector<int> source = { 1, 2, 3, 4, 5 };
+  std::array<const int, 4> source2 = { 10, 11, 12, 13 };
+
+  std::span<int> s1 = source;
+  std::span<const int> s2 = source2;
+  present_span(s1);
+  present_span(s2);
+
+  s2 = s1; // converting ctor
+
+  present_span(s1);
+  present_span(s2);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+s.size(): 5
+elems: 1 2 3 4 5 
+
+s.size(): 4
+elems: 10 11 12 13 
+
+s.size(): 5
+elems: 1 2 3 4 5 
+
+s.size(): 5
+elems: 1 2 3 4 5 
+```
+
+</div>
+</Columns>
+
+<!-------------------------------------------------------------------------------------->
+
+## Defaulted copy constructor
+
+<SwitchView content={{
+	'cpp20': <Ctor_Copy_Defaulted_SinceCpp20 />
+}}/>
+
+Defaulted copy constructor copies the size and data pointer
+The resulting span has:
+	- `size() == other.size()`
+	- `data() == other.data()`
+
+#### Complexity
+
+Constant - **O(1)**.
+
+#### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <span>
+
+template <typename Type, std::size_t Extent>
+void present_span(std::span<Type, Extent> s) {
+  std::cout << "s.size(): " << s.size() << '\n';
+  std::cout << "elems: ";
+  for(int num : s) {
+    std::cout << num << ' ';
+  }
+  std::cout << "\n\n";
+}
+
+int main() {
+  std::vector<int> source = { 1, 2, 3, 4, 5 };
+  std::vector<int> source2 = { 5, 4, 3, 2, 1 };
+
+  std::span<int> s1 = source;
+  std::span<int> s2 = source2;
+  present_span(s1);
+  present_span(s2);
+
+  s2 = s1; // copy ctor
+
+  present_span(s1);
+  present_span(s2);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+s.size(): 5
+elems: 1 2 3 4 5 
+
+s.size(): 5
+elems: 5 4 3 2 1 
+
+s.size(): 5
+elems: 1 2 3 4 5 
+
+s.size(): 5
+elems: 1 2 3 4 5 
+```
+
+</div>
+</Columns>

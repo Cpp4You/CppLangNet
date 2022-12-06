@@ -1,0 +1,89 @@
+---
+title:					span<...>::front()
+sidebar_label:			front( )
+description:			span<...>::front() method C++ documentation
+hide_title:				true
+tags:					[access, first, front, begin]
+
+cppreference_origin_rel: w/cpp/container/span/front
+---
+
+import Columns		from "@site-comps/Columns";
+import SwitchView	from "@site-comps/SwitchView";
+import { Since }	from "@site-comps/Versions";
+import Tooltip		from "@site-comps/Tooltip";
+
+<!----------------- Codes ---------------------->
+
+<!-- Terms -->
+import Term_ContAlias_Reference	from "@site/i18n/en/presets/terms/cont-alias-reference.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!-- operator_assign() -->
+import Method_SinceCpp20	from './_codes/front/since-cpp20.mdx';
+
+# std::span front() method
+
+<SwitchView content={{
+    'since-cpp20': <Method_SinceCpp20 />,
+}} />
+
+Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the first element in the container.
+
+:::danger Undefined Behavior
+Calling [`front()`](#) on an empty span is <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
+:::
+
+### Parameters
+
+**(none)**
+
+### Return value
+
+A reference to the first element.
+
+### Complexity
+
+Constant - **O(1)**.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+For a span `s`, the expression `s.front()` is equivalent to `*s.begin()` and `s[0]`.
+
+### Example
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <span>
+#include <iostream>
+ 
+void print(std::span<const int> const data)
+{
+    for (auto offset{0U}; offset != data.size(); ++offset) {
+        std::cout << data.subspan(offset).front() << ' ';
+    }
+    std::cout << '\n';
+}
+ 
+int main()
+{
+    constexpr int data[] { 0, 1, 2, 3, 4, 5, 6 };
+    print({data, 4});
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+0 1 2 3
+```
+
+</div>
+</Columns>

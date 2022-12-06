@@ -1,0 +1,11 @@
+```cpp
+// (1) Const version only
+template< std::size_t Offset,
+          std::size_t Count = std::dynamic_extent >
+constexpr std::span<element_type, E /* see below */> subspan() const;
+
+// (2) Const version only
+constexpr std::span<element_type, std::dynamic_extent>
+    subspan( size_type Offset,
+             size_type Count = std::dynamic_extent ) const;
+```
