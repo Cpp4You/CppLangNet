@@ -68,9 +68,9 @@ The [logical operators](/learn/course/basics/conditions/intro/#compound-boolean-
 can also be used to create new boolean variables.
 
 ```cpp title="🔹 Using logical operators on bools"
-bool isGroundMuddy = weather == "raining" or weather == "downpouring";
-bool isRainbowMade = isGroundMuddy and not isCloudy;
-bool isBoringDay   = not isRainbowMade;
+bool isPrecipitating = weather == "raining" or weather == "downpouring";
+bool isRainbowMade   = isPrecipitating and not isCloudy;
+bool isBoringDay     = not isRainbowMade;
 ```
 
 ## Input/Output with `bool`
@@ -146,13 +146,13 @@ The name "boolalpha" comes from a portmanteau of boolean and alphanumeric.
 ## `int`↔`bool` conversions
 
 C++ has another rather annoying behavior where booleans and integers can implicitly convert between each other.
-A boolean value of `false` is equivalent to an integer value of `0`, and 'true' is equivalent to '1'.
+A boolean value of `false` is equivalent to an integer value of `0`, and `true` is equivalent to `1`.
 Conversely, an integral value of `0` is equivalent to a boolean value of `false`,
 and any non-zero integer is equivalent to `true`.
 
 ```cpp title="🔹 A sampling of int↔bool conversions"
 int x = true; // x is 1
-int y = false; // x is 0
+int y = false; // y is 0
 
 bool a = 1; // a is true
 bool b = 25; // b is true
@@ -166,7 +166,7 @@ the value.
 
 ```cpp title="🔹 Performing a cast"
 int x = static_cast<int>(true); // Modern-style cast
-int x = (int) false; 			// C-style cast
+int y = (int) false; 			// C-style cast
 
 bool a = static_cast<bool>(1);
 bool b = (bool) 0;
@@ -256,3 +256,16 @@ true                   // Evaluate subexpression
 </Columns>
 
 
+## Conclusion
+
+In summary, we learned about:
+- How to break down conditional cases in our code into [if statements](/learn/course/basics/conditions/intro/#conditional-statements)
+- How to form a logical expression out of [boolean operations](/learn/course/basics/conditions/intro/#boolean-expressions)
+- How to [combine multiple conditions](/learn/course/basics/conditions/compound/#compound-conditional-statements) into a mutually exclusive group
+- How to [nest if statements](/learn/course/basics/conditions/compound/#nesting-conditional-statements) inside of each other
+- How to reduce reptition by applying the [DRY Principle](/learn/course/basics/conditions/compound/#using-variables-to-reduce-repetition)
+- How to use [boolean variables](#the-bool-type) to improve our code
+
+This was a long journey, but the skills you have picked up here in this lesson are very fundamental
+to the road ahead. Read over the concepts presented in this lesson multiple times, as the basics
+of logic and conditions are a very important skill to have.
