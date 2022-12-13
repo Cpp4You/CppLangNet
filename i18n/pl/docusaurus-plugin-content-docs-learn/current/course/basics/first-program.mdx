@@ -9,6 +9,7 @@ hide_title:			true
 import Columns		from '@site-comps/Columns';
 import GoogleSlides	from '@site-comps/GoogleSlides';
 import Image		from '@site-comps/Image';
+import Tooltip		from '@site-comps/Tooltip';
 import NotFinished	from '@site/i18n/pl/presets/NotFinished.mdx';
 
 import Tabs			from '@theme/Tabs';
@@ -62,6 +63,10 @@ int main()
 }
 ```
 
+Pierwszą lini  rozpoczyna **definicja funkcji**. Składa się ona z typu zwracanego `int`, nazwy `main` oraz jej parametrów wewnątrz `()` (w naszym przypadku żadnych).
+O ile większość z tych określeń nie jest teraz ważna, to jedyne na co powinieneś zwrócić uwagę to nazwa `main`. Zawsze będzie ona wyglądać tak,
+`int main()`. Twój program musi zawsze zawierać funkcję `main` w tym określonym formacie.
+
 Komputer wykonuje program linijka po linijce.
 Gdy uruchamia aplikację, po kolei realizuje instrukcje z **bloku kodu** `main`-a.
 
@@ -76,6 +81,9 @@ Gdy uruchamia aplikację, po kolei realizuje instrukcje z **bloku kodu** `main`-
 Funkcja główna `main` ma swój blok kodu i wszystko co znajdzie się pomiędzy tymi nawiasami zostanie
 wykonane <u>po kolei, od góry do dołu</u>.
 
+:::important
+Kod w środku funkcji `main` jest **zawsze pierwszym kodem, który się wykona**.
+:::
 
 ### Nagłówek `iostream`
 
@@ -90,7 +98,7 @@ W praktyce oznacza to, że będziemy mogli wypisać coś w konsoli oraz pozwoli�
 `iostream` jest **plikiem nagłówkowym** (ang.: *header file*). W przyszłości będziemy korzystać z wielu innych nagłówków.
 
 Instrukcje `#include <naglowek>` prawie zawsze dajemy na samym początku pliku z kodem.
-O samym `#include` powiemy sobie w przyszłości więcej - na teraz wystarczy.
+O samym `#include` powiemy sobie w przyszłości więcej.
 
 ### Konsola
 
@@ -98,8 +106,7 @@ Konsola lub inaczej "terminal" to najbardziej podstawowe narzędzie pozwalające
 między programem a jego użytkownikiem. Będziesz mieć okazję zapoznać się z tym narzedziem naprawdę dobrze, ponieważ będziesz używać
 go bardzo często w swojej przygodzie z programowaniem.
 
-Poniżej znajdują się przykłady tego jak wygląda program "Witaj świecie" w konsoli. Nie każdy terminal jest taki sam, ale każdy wygląda bardzo
-podobnie - po prostu wyświetla tekst w jednym konkretnym kolorze.
+Poniżej znajdują się przykłady uruchomienia <Tooltip title="Jest to przykładowy kod, który wylicza pole trapezu. Później w kursie poruszymy podobny temat.">tego samego kodu</Tooltip> w kilku różnych środowiskach. Mimo, że nie każdy terminal jest taki sam, to wyglądają one podobnie - wyświetlają tekst z małą ilością lub zupełnym brakiem kolorów.
 
 #### 🖼 Przykłady wyglądu konsol
 
@@ -120,29 +127,26 @@ podobnie - po prostu wyświetla tekst w jednym konkretnym kolorze.
 </TabItem>
 </Tabs>
 
-Wiele edytorów kodu takich jak Visual Studio, VS Code, CLion czy Vim posiadają zintegrowane okno konsoli bezpośrednio w programie.
+<!-- FIXME: Record a video of different environments (replit, vscode, VS 2022), like in the english version -->
 
-:::info TODO
-Dodać link do poradnika jak wykonywać podstawowe operacje w konsoli.
-:::
+Wiele edytorów kodu takich jak Visual Studio, VS Code, CLion czy Vim posiadają zintegrowane okno konsoli bezpośrednio w programie.
 
 ### Wypisywanie do konsoli
 
-Użyliśmy wewnątrz bloku `main-a` takiej instrukcji:
+Żeby wyświetlić tekst w konsoli, użyliśmy następującej instrukcji w bloku funkcji `main`:
 
 ```cpp
 std::cout << "Witaj, świecie!";
 ```
 
-`cout` służy do wyświetlania tekstu do konsoli, który podajemy **w cudzysłowie**.
-O przedrostku `std::` wspomnę za chwilę.
+`cout` służy do wyświetlania tekstu do konsoli.
 
 :::tip Dla ciekawskich 😉
 `cout` jest tzw. strumieniem wyjścia znaków (ang.: <i><b>c</b>haracter <b>out</b>put</i>),
 jednak na ten moment nie musisz tego pamiętać.
 :::
 
-Jeśli teraz skopiuję tą linijkę kilka razy:
+Mogę teraz zduplikować tę linijkę kilka razy:
 
 ```cpp
 std::cout << "Witaj, świecie!1";
@@ -150,7 +154,7 @@ std::cout << "Witaj, świecie!2";
 std::cout << "Witaj, świecie!3";
 ```
 
-to dostanę następujący efekt:
+aby dostać następujący efekt:
 
 ```
 Witaj, świecie!1Witaj, świecie!2Witaj, świecie!3
@@ -192,7 +196,7 @@ std::cout << "Witaj, świecie!\n";
 ```
 
 :::caution Backslash
-Zwróć uwagę, że używany jest **backslash** (`\n`), a nie slash (`/n`).
+Zwróć uwagę, że użyliśmy **backslash**a (`\n`), a nie **forward slash**a (`/n`).
 :::
 
 Działanie programu po dodaniu znaków nowej linii:
@@ -205,8 +209,9 @@ Działanie programu po dodaniu znaków nowej linii:
 	/>
 
 :::important Znak nowej linii
-Zapis `\n` umieszczony w kodzie, wewnątrz tekstu jest tak naprawdę **pojedynczym znakiem** dla programu.
-Więcej o tym w przyszłości.
+Sekwencja znaków `\n` reprezentuje pojedynczy znak. __W kodzie__ musimy zapisać dwa znaki, ale dla programu jest to pojedynczy znak specjalny.
+Dzieje się tak dlatego, że nie możemy po prostu wstawić "entera" bezpospośrednio wewnątrz tekstu w kodzie.
+Znaku **backslash** (`\`) używamy, aby zasygnalizować, że znak, który po nim następuje <Tooltip title={<>Nazywa się to <b>escape sequence</b>, więcej o nich później</>}>ma specjalne znaczenie</Tooltip>.
 :::
 
 <!-- --------------------------------- Poprzedni tekst, który nie jest używany póki co
@@ -242,7 +247,9 @@ Od miejsca wprowadzenia `using std::cout;` do końca bloku kodu można pominąć
 :::caution using namespace std
 W wielu innych kursach i źródłach można spotkać się z polecaniem korzystania z `using namespace std;`
 **na samej górze** pliku z kodem. O ile jest to legalne w C++, to doświadczeni programiści
-zdecydowanie odradzają tej praktyki. Więcej o tym powiemy w dalszej części kursu.
+zdecydowanie **odradzają tej praktyki**. Więcej o tym powiemy w dalszej części kursu.
+
+Na ten moment preferuj styl pokazany wyżej.
 :::
 
 ## Wykonywanie obliczeń
@@ -320,7 +327,13 @@ W wykonywaniu działań obowiązuje kolejność znana nam z matematyki:
 3. Później dodawanie i odejmowanie, w kolejności od lewej do prawej
 :::
 
-## Potencjalne błędy
+## Podsumowanie
+
+Poznałeś strukturę kodu pierwszego programu.
+
+:::tip
+Żeby przejść do ćwiczeń odwiedź [tę stronę](exercises).
+:::
 
 Na koniec warto zwrócić uwagę co może spowodować **błąd kompilacji**,
 lub czego nie powinniśmy robić, żeby kod był zgodny z dobrymi praktykami.
