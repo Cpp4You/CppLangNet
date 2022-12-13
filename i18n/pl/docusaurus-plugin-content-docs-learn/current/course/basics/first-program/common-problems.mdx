@@ -1,0 +1,248 @@
+---
+toc_max_heading_level: 2
+---
+
+import Columns		from '@site-comps/Columns';
+import GoogleSlides	from '@site-comps/GoogleSlides';
+import Image		from '@site-comps/Image';
+import Tooltip		from '@site-comps/Tooltip';
+import NotFinished	from '@site/i18n/en/presets/NotFinished.mdx';
+
+import Tabs			from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
+
+# Pierwszy Program » Potencjalne Problemy
+
+Na koniec warto zwrócić uwagę co może spowodować **błąd kompilacji**,
+lub czego nie powinniśmy robić, żeby kod był zgodny z dobrymi praktykami.
+
+## Pomijanie `std::`
+
+Pominięcie `std::` bez wcześniejszego użycia instrukcji `using` spowoduje błąd.
+
+### 🔴 Treść błędu:
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: ‘cout’ was not declared in this scope; did you mean ‘std::cout’?
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Illustration of the error - omitting std"
+		src="/img/tutorials/course/basic/first-program/error-omit-std-en.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2065: 'cout': undeclared identifier
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Illustration of the error - omitting std"
+		src="/img/tutorials/course/basic/first-program/error-omit-std-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+### 👌 Rozwiązanie problemu
+
+Dodanie instrukcji `using std::cout;` na górze funkcji `main`:
+
+```cpp
+#include <iostream>
+int main() {
+	using std::cout;
+	cout << "Witaj, Świecie!";
+}
+```
+
+## Nie dołączenie odpowiedniego nagłówka
+
+Bardzo łatwo (nawet dla ekspertów) zapomnieć o `#include`.
+
+### 🔴 Treść błędu:
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: ‘cout’ is not a member of ‘std’
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Illustration of the error - missing include"
+		src="/img/tutorials/course/basic/first-program/error-missing-include-en.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2039: 'cout': is not a member of 'std'
+predefined C++ types (compiler internal)(341): note: see declaration of 'std'
+error C2065: 'cout': undeclared identifier
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Illustration of the error - missing include"
+		src="/img/tutorials/course/basic/first-program/error-missing-include-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+## Brak średników `;`
+
+Początkujący często zapominają o średnikach (`;`) na końcach
+instrukcji.  
+Prześledź dokładnie przykłady kodu, podawane
+w tej lekcji zwracając uwagę, gdzie powinny one się znaleźć.
+
+#### 🔴 Treść błędu:
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: expected `;` before (...)
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - brak średnika"
+		src="/img/tutorials/course/basic/first-program/error-no-semicolon-pl.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2143: syntax error: missing ';' before 'std::cout'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - missing semicolon"
+		src="/img/tutorials/course/basic/first-program/error-no-semicolon-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::info Niedokładna treść błędów
+Kompilatory próbując wykryć gdzie brakuje średnika często muszą zgadywać. Z tego powodu, jeśli jesteś pewny,
+że w podanej przez kompilator linii nie brakuje średnika, sprawdź również kilka linijek, które otaczają tą podaną.
+
+Dodatkowo, brakujące średniki mogą powodować inne niezwiązane błędy niżej w Twoim kodzie.
+Zazwyczaj najbardziej pomocna jest treść pierwszego błędu wystosowanego przez kompilator.
+:::
+
+## Niezakończony tekst
+
+Tekst zawsze zawieramy pomiędzy znakami podwójnego cudzysłowia `"TUTAJ WSTAWIAMY TEKST!"`.  
+Jeśli zapomnimy  go zakończyć drugim znakiem, C++ będzie myślał, że reszta naszego programu to tekst
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: missing terminating " character
+```
+
+#### 🖼 Ilustracja błędu
+
+<Image center
+		alt="Ilustracja błędu - missing quote"
+		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en.png"
+	/>
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C2001: newline in constant
+error C2143: syntax error: missing ';' before '}'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - missing quote"
+		src="/img/tutorials/course/basic/first-program/error-no-terminating-quote-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+## Wyświetlanie znaku `"`
+
+Może Cię kusić, aby umieścić cudzysłów wewnątrz komunikatu, gdy wypisujesz go na konsolę.
+Pamiętaj jednak, że C++ traktuje wszystko, co znajduje się wewnątrz `"..."`, jako tekst.
+
+Z tego powodu, jeśli napiszesz:
+```cpp
+"Cześć! Nazywam się "Diego", witaj w kolonii!"
+```
+
+C++ zinterpretuje to jako
+```cpp
+"TEKST" KOD C++ "TEKST"
+```
+
+Możesz temu zapobiec dodając backslash (`\`) przed cudzysłowem, by użyć tzw. *escape-sequence*.
+
+```cpp
+"Cześć! Nazywam się \"Diego\", witaj w kolonii!"
+```
+
+#### 🔴 Treść błędu
+
+<Tabs groupId="compiler">
+<TabItem value="gcc" label="GCC" default>
+
+```plaintext
+error: unable to find string literal operator ‘operator""Diego’ with ‘const char [20]’, ‘long unsigned int’ arguments
+```
+
+#### 🖼 Ilustracja błędu:
+
+TODO
+
+</TabItem>
+<TabItem value="msvc" label="MSVC">
+
+```plaintext
+error C3688: invalid literal suffix 'Diego'; literal operator or literal operator template 'operator ""Diego' not found
+error C2143: syntax error: missing ';' before 'string'
+```
+
+#### 🖼 Ilustracja błędu:
+
+<Image center
+		alt="Ilustracja błędu - nieprawidłowy cudzysłów"
+		src="/img/tutorials/course/basic/first-program/error-unescaped-quote-en-msvc.png"
+	/>
+
+</TabItem>
+</Tabs>
+
+:::info Niepomocne błędy
+Powyższe komunikaty o błędach nie są zbyt pomocne! Realną wskazówką powinien być fakt, że program traktuje to, co ma być tekstem, jako kod (widać to w edytorze kodu).
+:::
