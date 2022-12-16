@@ -13,6 +13,7 @@ import NotFinished		from '@site/i18n/pl/presets/NotFinished.mdx';
 <!-- Components -->
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
+import SymbolTable, { Symbol } from '@site-comps/SymbolTable';
 
 import Columns			from '@site-comps/Columns';
 import CustomCodeBlock	from '@site-comps/CustomCodeBlock';
@@ -23,13 +24,13 @@ import GoogleSlides		from '@site-comps/GoogleSlides';
 # Operacje na zmiennych
 
 W tej lekcji nauczysz się wykonywać różne operacje z użyciem zmiennych. Będziemy:
-- zapisywać do nich wartości,
-- modyfikować je z użyciem wyrażeń matematycznych,
-- wyświetlać ich zawartość w konsoli.
+- Zapisywać do nich wartości,
+- Modyfikować je z użyciem wyrażeń matematycznych,
+- Wyświetlać ich zawartość w konsoli.
 
 Dowiesz się też jak pozwolić użytkownikowi na prostą interakcję z programem.
 
-## Interakcja z użytkownikiem
+### Interakcja z użytkownikiem
 
 Nasze programy będą nieco ciekawsze, gdy pozwolimy użytkownikowi wpisać coś do konsoli.
 Zrobimy to za pomocą instrukcji `cin` (ang: _**c**haracter **in**put_):
@@ -51,10 +52,7 @@ int main()
 
 `cin` pozwala nam zapisać zawartość tzw. **standardowego wejścia** (stdin)
 do zmiennej, którą podajemy po znakach `>>`.
-
-O standardowym wejściu powiemy kiedy indziej, na razie zapamiętaj, że
-`cin` umożliwia użytkownikowi programu wpisać coś od konsoli,
-po czym zapisuje ową wartość do zmiennej.
+Umożliwia to zapisanie wartości, którą użytkownik wpisze w konsoli do zmiennej.
 
 Zwróć uwagę, że:
 - `cout` używa operatora `<<`
@@ -70,20 +68,31 @@ Możesz zapamiętać kierunek znaczków w tym operatorze w prosty sposób
 - `cin` - tekst idzie **do zmiennej** - `>>` skierowane w stronę zmiennej
 :::
 
-## Działania matematyczne
+### Działania matematyczne
 
 Zmienne, które zawierają liczby można dowolnie modyfikować
 za pomocą typowych znaków (operatorów) matematycznych:
 
-- `a + b` - dodaje do siebie dwie liczby
-- `a - b` - odejmuje od siebie dwie liczby
-- `a * b` - mnoży przez siebie dwie liczby
-- `a / b` - dzieli liczbę `a` przez `b`
-- `a % b` - daje resztę z dzielenia liczby `a` przez `b`
+<center>
+	<SymbolTable noTraits>
+		<tr>
+			<th>Operacja</th>
+			<th>Znaczenie</th>
+		</tr>
+		<Symbol name="a + b" desc="Dodaje a i b" />
+		<Symbol name="a - b" desc="Odejmuje b od a" />
+		<Symbol name="a * b" desc="Mnoży a i b" />
+		<Symbol name="a / b" desc="Dzieli a przez b" />
+		<Symbol name="a % b" desc="Reszta z dzielenia a przez b" />
+	</SymbolTable>
+</center>
 
 :::note Uwaga
 To nie są wszystkie operatory matematyczne, o reszcie powiemy
 kiedy indziej.
+:::
+:::caution
+Symbol `^` nie oznacza potęgowania!
 :::
 
 Wykorzystajmy te operatory w praktyce:
@@ -153,20 +162,34 @@ a + b
 
 to samo **wyrażenie** `a + b` ma pewną wartość, a **zawartość zmiennych zostaje nietknięta**.
 
-Jeśli chcemy np. zwiększyć zmienną o `10`, to musimy **przypisać** do niej
-**wartość** tego wyrażenia:
+### Zmiana wartości zmiennych
+
+Często będziemy chcieli zmienić wartość zmiennej, nadając jej nową.
+Możesz po prostu użyć operatora przypisania `=` ponownie na zmiennej, aby nadać jej nową wartość.
+
+W poniższym przykładzie, zmienna `age` jest początkowo tworzona z wartością `20`.
+Następnie, *przypisujemy* do niej nową wartość `37`.
+
+```cpp
+int age = 20;
+//highlight-next-line
+age = 37;
+```
+
+Jeśli np. chcemy zwiększyć zmienną o `10`, to musimy przypisać wynik
+wyrażenia dodawania w taki sposób:
 
 ```cpp
 age = age + 10;
 ```
 
-... lub w skrócie:
+Z uwagi na to, że wykorzystywanie operatora na tej samej zmiennej jest częstą operacją, C++ udostępnia skrócony zapis:
 
 ```cpp
 age += 10;
 ```
 
-Zobacz jak to działa na przykładzie (wpisuję 20 do konsoli jeszcze raz):
+Zobacz jak to działa na przykładzie:
 
 <Columns columns={['2fr', '1fr']}>
 <div>
@@ -180,9 +203,11 @@ int main()
 {
 	std::cout << "Podaj swój wiek: ";
 
+	// highlight-start
 	int age;
 	std::cin >> age;
-	
+	// highlight-end
+
 	std::cout << "Teraz masz: " << age << " lat\n";
 	// highlight-start
 	age += 30;
@@ -205,20 +230,32 @@ Za 30 lat, będziesz mieć: 50 lat
 </div>
 </Columns>
 
-### Przebieg programu
+Przeanalizujmy w koljne kroki, jakie wykonał ten program. Rozważmy zmienną `age`:
 
-Zmienna `age`:
+- Linia `7` definiuje zmienną o nazwie `age` typu `int` bez wartości początkowej.
+- Kiedy linia `8` jest wykonywana, program czeka w tym miejscu aż użytkownik wpisze coś i naciśnie **`Enter`**.
+	- Po otrzymaniu danych wejściowych, `std::cin` umieszcza odczytaną wartość w `age`. Ponieważ wpisaliśmy `20`, `age` ma teraz wartość `20`.
+- Kiedy linia `10` jest wykonywana, `std::cout` wypisuje wartość `age`, która nadal wynosi 20.
+- Linia `11` zmienia wartość zmiennej na wynik `20 + 30`, czyli `50`. `age` ma teraz wartość `50`.
+- W końcu, linia `12` jest wykonywana, wyświetlając wartość `50`.
 
-- podczas wykonania linii `11` ma wartość `20`.
-- w linii `12` zmienia wartość na `20 + 30` czyli `50`
-- w linii `13` jest wyświetlana już z wartością `50`
+Oprócz operatora `+=` przedstawionego powyżej, dostępnych jest wiele innych operatorów
+które modyfikują zawartość zmiennych; oto najczęściej spotykane z nich:
 
-### Modyfikowanie zmiennych
+<center>
+	<SymbolTable noTraits>
+		<tr>
+			<th>Shorthand Operator</th>
+			<th>Equivalent To</th>
+		</tr>
+		<Symbol name="a += b" desc="a = a + b" />
+		<Symbol name="a -= b" desc="a = a - b" />
+		<Symbol name="a *= b" desc="a = a * b" />
+		<Symbol name="a /= b" desc="a = a / b" />
+	</SymbolTable>
+</center>
 
-Poza wyżej przedstawionym operatorem `+=`, jest jeszcze wiele innych
-dostępnych operatorów, które modyfikują zawartość zmiennych.
-
-Najprościej będzie je pokazać na przykładzie:
+Prezentacja pokazująca działanie tych operatorów w akcji:
 
 <Tabs>
 <TabItem value="presentation" label="🖼 Prezentacja" default>
