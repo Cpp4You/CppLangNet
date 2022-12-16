@@ -86,7 +86,7 @@ int main()
 Powyższy program skompiluje się i zadziała poprawnie.
 
 :::important Zmienna
-**Zmienna** to pojemnik na dane **określonego typu**.
+**Zmienna** to pojemnik na dane **określonego typu**. Wartość zmiennej może się zmienić, ale jej typ nie.
 :::
 
 ## Tworzenie zmiennych
@@ -106,7 +106,7 @@ Oto schemat tego zapisu:
 				alt="Schemat tworzenia zmiennej (z inicjalizacją)"
 			/>
 	</TabItem>
-	<TabItem value="creation" label="⚪ Bez wartości">
+	<TabItem value="creation" label="⚪ Bez początkowej wartości">
 		<Image center maxheight={250}
 				src="/img/tutorials/course/basic/variables/creation-pl.png"
 				alt="Schemat tworzenia zmiennej (bez inicjalizacji)"
@@ -143,7 +143,7 @@ Typ | Opis
 **`char`** | pojedynczy znak
 **`bool`** | wartość logiczna, czyli prawda (**`true`**) albo fałsz (**`false`**)
 
-:::danger Uwaga
+:::caution
 Wyżej wymienione typy zmiennych zawsze piszemy **małą literą**. Ma to znaczenie.
 :::
 
@@ -236,10 +236,22 @@ bool z = false;
 Nazwa może być dowolna, z pewnymi istotnymi ograniczeniami:
 
 - ❌ nie może posiadać spacji (zabronione: ❌ `abc def`)
+- ❌ nie może zawierać większości specjalnych symboli
 - ✔ może składać się z:
 	- ✔ znaków `a`-`z` oraz `A`-`Z`
 	- ✔ cyfr, ale nie na początku (zabronione: ❌ `932abc`)
 	- ✔ podkreślnika `_`
+
+<details>
+<summary>Dodatkowe uwagi na temat podkreślnika </summary>
+<div>
+
+Podkreślniki są dozwolne w nazwach, jednak są dwa schematy nazewnictwa, które są zarezerwowane przez C++:
+ - Podkreślnik na początku i duża litera zaraz po (zabronione: ❌ `_Speed`)
+ - Podwójny podkreślnik gdziekolwiek: (zabronione: ❌ `__xyz`, ❌ `user__name`)
+
+</div>
+</details>
 
 Możesz utworzyć tyle zmiennych ile tylko chcesz, jednak muszą one różnić się nazwami,
 bo są ich unikalnymi identyfikatorami (z pewnymi wyjątkami, ale o tym kiedy indziej).
@@ -283,6 +295,16 @@ int x = 30;
 
 Uwaga, słowo to: "inicjalizacja" ✔, nie "inicjacja" ❌
 
+:::caution Brak inicjalizacji
+Niezainicjowana zmienna, wewnątrz funkcji (np. wewnątrz `main`) będzie miała początkowo
+nieprzewidywalną wartość, nie zostanie wyzerowana do 0.
+
+Pozostawienie zmiennej bez wartości początkowej może spowodować problemy w dalszej części kodu.
+Czasami jednak możemy celowo ją pominąć, ale o tym więcej później.
+
+**Nigdy nie można czytać ze zmiennej, gdy jest ona w stanie niezainicjowanym!**
+:::
+
 ### Średnik na końcu
 
 Tylko dla przypomnienia 😀
@@ -298,26 +320,70 @@ znajduje się w następnej lekcji o zmiennych.
 
 ### Wczytywanie danych od użytkownika
 
+Aby wczytać dane od użytkownika, możemy stworzyć niezainicjializowaną zmienną, a nastęnie powiedzieć C++owi, aby wsadził do niej informacje wpisane przez użytkownika.
+
 ```cpp
 #include <iostream>
 
 int main()
 {
-	int age; // aktualny wiek
+	// highlight-next-line
+	int age; // aktualny wiek (zmienna niezainicjalizowana!)
 	std::cout << "Podaj ile masz lat: ";
 	std::cin >> age;
 	std::cout << "Za 10 lat będziesz mieć: " << age + 10 << " lat.\n";
 }
 ```
 
+### Rozbijanie skomplikowanych równań
+
+Możemy używać zmiennych do reprezentowania wartości pośrednich w złożonych równaniach. Pomaga to uczynić kod bardziej czytelnym i utrzymywalnym.
+
+```cpp title="🔹 main.cpp"
+#include <iostream>
+
+int main()
+{
+	float currentPos = 10;        // in meters
+	float targetPos = 20;         // in meters 
+	float currentSpeed = 2.5f;    // in meters/second
+	float timeRemaining = 0.5f;   // in seconds
+
+	// Calculate where we will end up once time runs out
+	// highlight-next-line
+	// Obliczamy końcową pozycję po zakończeniu czasu
+	float endingPos = currentPos + currentSpeed * timeRemaining;
+
+	// Calculate how far away we landed from the target
+	// highlight-next-line
+	// Obliczamy jak daleko od celu się znaleźliśmy
+	float error = targetPos - endingPos;
+
+	// Calculate the required speed needed to land directly on the target
+	// highlight-next-line
+	// Obliczamy prędkość potrzebną do wylądowania idealnie w celu
+	float requiredSpeed = (targetPos - currentPos) / timeRemaining;
+
+	// Calculate the amount of extra speed we needed to land directly on the target
+	// highlight-next-line
+	// Obliczamy ile dodatkowej prędkości potrzebowaliśmy, aby wylądować bezpośrednio na celu
+	float extraSpeedNeeded = requiredSpeed - currentSpeed;
+
+	std::cout << "We landed " << error << " meters away from the target.\n";
+	std::cout << "We needed to go " << extraSpeedNeeded << "m/s faster to land on the target.";
+}
+```
+
+```plaintext title="Result (console)"
+We landed 8.75 meters away from the target.
+We needed to go 17.5m/s faster to land on the target.
+```
 ## Powtórzenie
 
-<ImproveSection />
-
-Podsumowując:
-
-- wiemy jak [stworzyć zmienną](#tworzenie-zmiennych)
-- rozumiemy różnicę między [typami zmiennych](#typ-zmiennej)
+Podsumowując, nauczyliśmy się:
+- Jak [stworzyć zmienną](#creating-variables)
+- Różnic pomiędzy [typami zmiennych](#typ-zmiennej)
+- Dlaczego zmienne są [przydatne](#opportunities)
 
 ## Dodatkowe wiadomości
 
@@ -335,24 +401,41 @@ Zostawienie zmiennej bez wartości początkowej **może powodować problemy**
 w dalszej części kodu. Czasami jednak intencjonalnie możemy to pomijać,
 ale o tym kiedy indziej.
 
+Chociaż może się wydawać, że posiadanie możliwości zrobienia takiego błędu w języku jest dziwne,
+należy pamiętać, że czasem wykorzystuje się to celowo.
+[Otrzymywanie danych wejściowych od użytkownika](#receiving-input-from-the-user) jest jednym z przypadków kiedy warto zostawić zmienną w niezainicjowanym stanie.
+
 ### Konwersja typu
 
 Zmienna posiada określony typ, którego nie można dowolnie zmieniać.
 Wartości, które w niej spróbujemy zapisać muszą być zgodne z jej typem.
-Przykładowo, do zmiennej typu `float` (liczba rzeczywista) możemy zapisać
-liczbę całkowitą (`int`):
+Wiele typów zostanie jednak przekonwertowanych automatycznie.
+Możemy na przykład przypisać wartość całkowitą (`int`) do zmiennej typu `float` (liczba rzeczywista).
+Wywołuje to konwersję z `int` na `float`:
 
 ```cpp title="🔹 Przykład"
 float y = 30; // OK
 ```
 
-Zmienna typu `int` nie może przechowywać części ułamkowej, więc gdy spróbujemy do niej taką wartość
-zapisać, zostanie ona **skonwertowana**, lecz nie wystąpi żadne zaokrąglenie tylko po prostu ucięcie
+Przejście w drugą stronę jest nieco bardziej problematyczne. Zmienna typu `int` nie może przechowywać części ułamkowej, więc gdy spróbujemy do niej taką wartość
+zapisać, zostanie ona **skonwertowana**, lecz nie wystąpi żadne zaokrąglenie, tylko po prostu ucięcie
 części ułamkowej.
 
+C++ nie robi tego przez zaokrąglanie - zamiast tego, obcina po prostu część ułamkową liczby. Na przykład, `3.1415` obcina się do `3`.
+
 ```cpp title="⚠ Niejawna konwersja"
-int y = 30.5f; // OK, konwersja do 30
+int y = 30.5f; // OK, konwersja do 30, ale tracimy część ułamkową
 ```
 
 Kompilator analizując kod *może* wystosować ostrzeżenie, że następuje **niejawna** konwersja. Niejawna dlatego,
 że takiego zapisu moglibyśmy użyć nieświadomie i uzyskać nie tą wartość co chcemy.
+
+:::caution
+Staraj się dopasowywać typy, kiedy tylko możesz!
+
+
+Niejawne konwersje, takie jak `float` do `int`, powodują utratę informacji!
+W najlepszym przypadku może to powodować złe wyniki, w najgorszym nawet katastrofy.
+
+Rakieta [Ariane 5 V88](https://pl.frwiki.wiki/wiki/Vol_501_d%27Ariane_5) katastrofalnie eksplodowała 37 sekund po starcie z powodu błędnej konwersji z `float` na `int`, powodując utratę precyzji, która zatrzymała komputer nawigacyjny.
+:::
