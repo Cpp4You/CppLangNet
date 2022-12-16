@@ -3,9 +3,11 @@ sidebar_position: 	2
 sidebar_label:		"2. Komentarze"
 title:				Komentarze
 description: 		"Lekcja: komentarze w języku C++"
-tags:				[komentarz]
+tags:				[komentarz, komentarze]
 hide_title:			true
 ---
+
+import Image		from '@site-comps/Image';
 
 # Komentarze
 
@@ -13,11 +15,13 @@ Komentarze służą do dodawania opisów i wyjaśnień do kodu.
 
 ## Motywacja
 
-Komentarze często pozwalają pokazać intencje programisty, gdy kod jest skomplikowany.
-Są też bardzo przydatne w takiej sytuacji jak teraz, gdy czytasz ten kurs
-a ja mogę za ich pomocą pisać wyjaśnienia różnych rzeczy 😄
+Komentarze pomagają przekazać intencje skomplikowanych fragmentów kodu.
+Są one nie tylko pomocne w pomaganiu innym w zrozumieniu kodu, który napisałeś,
+ale są również świetne dla twojego przyszłego ja, gdy spojrzysz wstecz na swój stary kod
+i pomyślisz "co ja chciałem tutaj zrobić?".
+Zobaczysz, że używamy ich w różnych kawałkach kodu na stronie, aby lepiej wyjaśnić co się w nich dzieje! 😄
 
-:::caution Uwaga
+:::info
 Komentarze **nie wpływają** w żaden sposób na działanie programu.
 Są one całkowicie pomijane przy kompilacji.
 :::
@@ -55,15 +59,74 @@ int main()
 
 ## Dobre praktyki
 
-Komentarzy należy używać, gdy stwierdzimy, że nasz kod w niewystarczający sposób
-prezentuje swoje działanie. Zrozumiesz o co chodzi wraz z nauką nowych rzeczy
-z języka C++.
+### Komentarze po angielsku
 
-:::tip Język komentarzy
-Najlepiej używaj języka angielskiego do pisania komentarzy.
-Na początku nie ma to większego znaczenia, ale zdecydowanie
-warto wyrobić w sobie nawyk pisania po angielsku, bo
-w przyszłości z Twojego kodu może skorzysta również ktoś inny 😃
+Angielski jest obecnie jednym z najbardziej uniwersalnych i rozumianych języków na świecie. Przyjmuje się, że kod powinno pisać się po angielsku,
+aby był on zrozumiały dla wszystkich.
+
+
+Ta sama zasada dotyczy komentarzy - jeśli piszemy kod po angielsku, aby był on zrozumiały dla wszystkich, komentarze również powinniśmy pisać w tym języku.
+
+:::note
+Bardzo możliwe, że zobaczysz w tym kursie komentarze po polsku.
+Będą one tam tylko dlatego, że staramy się, aby polska część kursu była jak najbardziej zrozumiała dla polskich czytelników.
+
+W tej lekcji niektóre komentarze mają swoje polskie tłumaczenia poniżej, są one podświetlone.
+
+
+Pamiętaj, że w kodzie tak czy siak należy stosować język angielski.
 :::
 
-**Komentuj swój kod, ale nie przesadź.**
+### Znaczące komentarze
+
+Patrząc na kod po raz pierwszy, programiści często muszą usiąść na kilka minut i przeanalizować każdy krok
+który wykonuje. Czasami mogą to być oczywiste kroki, takie jak obliczanie Twierdzenia Pitagorasa - to tylko kilka mnożeń - ładnie, krótko i łatwo.
+
+Ale, wyobraź sobie duży skomplikowany algorytm, np. sekwencję zapłonu silnika rakietowego. Możesz zobaczyć blok komentarza, taki jak:
+```cpp title="🚀 IgnitionSequence.cpp"
+/*
+	1. Engage hydraulic engine return
+	2. Activate 4 igniters
+	3. Open LOX valve
+	4. Wait until combustion chamber threshold is reached
+	5. Open main fuel valve
+*/
+```
+Why don't we activate the igniters until after the main fuel valve is opened?
+
+Ty, jako przyszły programista, możesz spojrzeć na to i zrozumieć, co oznaczają wszystkie te terminy. Ale dlaczego są one w tej konkretnej kolejności?
+Dlaczego otworzenie zaworu LOX (*"1. Open LOX valve"*) następuję jako trzecie? Dlaczego nie aktywujemy zapłonników (*"2. Activate 4 igniters"*)
+po otwarciu głównego zaworu paliwowego (*"5. Open main fuel valve"*)?
+
+W komentarzach jak te, które wygladają powyżej pytanie te pozostają bez odpowiedzi.
+Samo opisanie czym jest dana rzecz nie wystarcza do jej wyjaśnienia.
+
+```cpp
+// Prints UUDDLRLRBA
+// highlight-next-line
+// Wypisuje UUDDLRLRBA
+std::cout << "UUDDLRLRBA";
+```
+
+Mimo, że ten komentarz właściwie opisuje  co robi następna linia kodu, nie pomaga on nam zrozumieć **dlaczego**
+wypisujemy, zdawałoby się, losową sekwencję znaków. Spójrzmy jednak na ten komentarz:
+
+```cpp
+// Prints the Konami Code, which causes the player to get 30 extra lives in the NES game Contra
+// highlight-next-line
+// Wypisuje Kod Konami, który daje graczowi 30 dodatkowych żyć w grze NES o nazwie Contra
+std::cout << "UUDDLRLRBA";
+```
+
+TERAZ dopiero widzimy, dlaczego ta linia kodu jest ważna! Po zmianie komentarza na bardziej znaczący wiemy,
+że ta linia kodu była konieczna do dania graczowi 30 dodatkowych żyć w Contrze!
+Gdybyśmy nie znali wcześniej Kodu Konami, moglibyśmy pomyśleć, że kod ten jest bezużyteczny i usunąć go.
+
+Po dodaniu sensownego komentarza widzimy, że ten fragment jest znaczący i nie powinien być usunięty.
+
+<Image center
+		alt="Cat with sticker that says 'Cat' on its forehead"
+		src="/img/tutorials/course/basic/comments/cat-pl.webp"
+		maxwidth="375px"
+		desc={<> Przykład kiepskiego komentarza na temat kota. Lepszym komentarz powiedziałby nam pewnie jego imię i właściciela. <i>(cat - kot)</i> </>}
+	/>
