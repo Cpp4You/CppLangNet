@@ -17,11 +17,11 @@ import TabItem			from '@theme/TabItem';
 import Columns			from "@site-comps/Columns";
 import Image			from "@site-comps/Image";
 
-<NotFinished/>
-
 # Napisy
 
-W tej lekcji nauczysz się korzystać ze zmiennych, które przechowują tekst.
+W tej lekcji dowiesz się, jak używać zmiennych przechowujących tekst.
+Jako ludzie, tekst jest podstawowym medium, poprzez które wchodzimy w interakcję z programami komputerowymi.
+Poznanie podstawowych zasad przechowywania tekstu i manipulacji nim jest kluczowe dla tworzenia funkcjonalnych aplikacji, z których ludzie mogą i chcą korzystać.
 
 ## Motywacja
 
@@ -38,6 +38,7 @@ int main()
 	// highlight-next-line
 	std::string name;
 	std::cout << "Podaj swoje imie: ";
+	// highlight-next-line
 	std::cin >> name;
 	std::cout << "Witaj, " << name << "!\n";
 	std::cout << "Twoje imie ma " << name.size() << " znakow.\n";
@@ -51,9 +52,9 @@ które przechowują liczby. Wspomnieliśmy też o typie `char` (od ang.: *charac
 **pojedynczy znak**.
 
 W programowaniu, na tekst mówi się *łańcuch znaków* (ang.: *string*).
-W C++ istnieje typ, który pozwala nam przechowywać takie łańcuchy i jest to [`std::string`](/docs/std/containers/strings/string).
+W C++ istnieje typ, który pozwala nam przechowywać i manipulować takimi łańcuchami i jest to [`std::string`](/docs/std/containers/strings/string).
 
-:::caution Plik nagłówkowy
+:::important Plik nagłówkowy
 Aby móc poprawnie korzystać z `std::string` **musimy** dodać do kodu nagłówek `string`,
 w ten sam sposób co wcześniej `iostream`:
 
@@ -62,7 +63,8 @@ w ten sam sposób co wcześniej `iostream`:
 ```
 :::
 
-Typu `std::string` używamy tak jak każdego innego, czyli:
+Typu `std::string` używamy tak jak każdego innego.
+Tutaj deklarujemy dwie zmienne - jedną o typie `int` oraz jedną o typie `std::string`.
 
 ```cpp title="🔹 Używanie typu string"
 int number;
@@ -74,12 +76,13 @@ std::string text;
 Przypisanie początkowej wartości wygląda tak samo jak w przypadku zmiennych o innych typach,
 przy czym należy pamiętać, że **tekst podajemy między cudzysłowami**, nie pojedynczymi apostrofami:
 
-```cpp
+```cpp title="🔹 Inicjalizacja i wypisanie zmiennej typu string"
 std::string welcome = "Hello, World!";
 std::cout << welcome;
 ```
 
-Jeśli nie podamy żadnej wartości, to zmienna będzie łańcuchem o długości 0, tj. będzie pustym tekstem.
+Jeśli nie podamy żadnej wartości, nasz łańcuch znaków będzie *pusty*.
+Jego długość będzie wynosić 0, a po wypisaniu na konsolę nie zobaczymy nic,
 
 ## Operacje na napisach
 
@@ -100,110 +103,132 @@ int main()
 }
 ```
 
-Zauważ, że `std::cin` pobiera tekst do napotkania pierwszego białego znaku, czyli np. spacji.
-Przez to, jeśli podamy swoje imie i nazwisko to do zmiennej `name` trafi jedynie imię.
-Aby pobrać całą linię tekstu piszemy:
+Zauważ, że `std::cin` pobiera tekst do napotkania pierwszego białego znaku, czyli np. spacji, znaku nowej linii czy tabulatora.
+Przez to, jeśli podamy swoje imię i nazwisko to do zmiennej `name` trafi jedynie imię.
+Aby pobrać całą linię możemy użyć `std::getline`:
 
 ```cpp title="🔹 Wczytywanie całej linii tekstu"
-std::string name;
-std::getline(std::cin, name);
+std::string fullName;
+std::getline(std::cin, fullName);
 ```
+
+`std::getline` jest *funkcją*, która przyjmuje dwa argumenty - *strumień wejściowy* do odczytania linii oraz zmienną `std::string` do której ta linia zostanie zapisana.
+Ten przykład pokazuje jak można użyć tej funkcji do odczytania linii z `std::cin`.
+Tak więc funkcję tę "wywołujemy" umieszczając nazwę funkcji `std::getline`, następnie nawiasy `(...)`,
+a wewnątrz nawiasów argumenty, które chcemy podać, oddzielone przecinkiem: `std::cin, fullName`.
 
 ### Łączenie
 
-Aby dopisać na koniec stringa pewien tekst, możemy użyć operatora `+=`:
+Operatory `+` i `+=` mogą być użyte do *konkatenacji* dwóch napisów oraz *dołączenia* jednego napisu do drugiego.
+Rozważmy następujący skrócony przykład z wejściem `Dwayne Johnson`:
 
-```cpp
-std::string name = "Jan";
-name += " Kowalski";
+<Columns columns={['2fr', '1fr']}>
+<div>
 
-std::cout << name;
-```
+```cpp title="🔹 Konkatenacja i dołączanie"
+std::string firstName;
+std::string lastName;
 
-Jeśli trochę pokombinujemy z kolejnością operacji, to za pomocą operatora `=` oraz `+` możemy
-dodać fragment tekstu na początek:
+std::cin >> firstName;
+std::cin >> lastName;
 
-```cpp
-std::string name = "Jan";
+// Konkatenacja
 // highlight-next-line
-name = "Kowalski " + name;
+std::string coolName = firstName + " \"The Rock\" " + lastName;
+std::cout << "Your cool name is:\n" << coolName << "\n\n";
 
-std::cout << name;
+// Dołączanie
+// highlight-next-line
+coolName += " Mk II";
+std::cout << "Your new name is:\n" << coolName;
 ```
+</div>
+<div>
+
+```plaintext title="Result"
+Your cool name is:
+Dwayne "The Rock" Johnson
+
+Your new name is:
+Dwayne "The Rock" Johnson Mk II
+```
+</div>
+</Columns>
+
+Zauważ, że `coolName` jest wynikiem *konkatenacji* trzech łańcuchów - `firstName`, `"The Rock"` i `lastName`.
+Dalej w kodzie można zobaczyć, jak modyfikujemy `coolName` poprzez *dołącznie* do niego `" Mk II"`.
 
 ### Sprawdzanie długości
 
-Aby sprawdzić ile znaków znajduje się w łańcuchu używamy tzw. *metody* `size`.
-O funkcjach i metodach powiemy więcej dalej w kursie, na ten moment zapamiętaj, że
-używa się tego w ten sposób:
+Aby sprawdzić ile znaków znajduje się w łancuchu używamy tak zwanej *metody* `size`.
+O funkcjach i metodach będziemy mówić więcej w dalszej części kursu, gdyż są one bardzo ważnym pojęciem.
 
-```cpp title="🔹 Program wczytujący imie"
+Zobaczmy jak wykorzystać metodę `size` w praktyce. Rozważmy następujący przykład z wejściem `Johnny`:
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Program liczący długość imienia"
 #include <iostream>
-// highlight-next-line
 #include <string>
 
 int main()
 {
-	// highlight-next-line
 	std::string name;
-	std::cout << "Podaj swoje imie: ";
+	std::cout << "Enter your name: ";
 	std::cin >> name;
-	std::cout << "Witaj, " << name << "!\n";
-	std::cout << "Twoje imie ma " << name.size() << " znakow.\n";
+
+	std::cout << "\nWelcome, " << name << "!\n";
+	// highlight-next-line
+	std::cout << "Your name has " << name.size() << " characters.\n";
 }
 ```
+</div>
+<div>
 
-czyli podajemy zmienną (`name`), następnie po kropce piszemy `size` i dajemy **puste** nawiasy okrągłe:
+```plaintext title="Result"
+Welcome, Johnny!
+Your name has 6 characters.
+```
+</div>
+</Columns>
+
+Metodę `size` wywołujemy na zmiennej `name` w następujący sposób: `name.size()`.
+Symbol `.` wskazuje, że mamy dostęp do czegoś na naszej zmiennej `name`.
+`size` jest nazwą metody, do której uzyskujemy dostęp.
+
+Użycie nawiasów `()` * wywołuje* metodę `size`.
+Ta zwraca nam całkowitą liczbę znaków w napisie.
+
+Te pojęcia nie są teraz kluczowe do zapamiętania, ale zobaczysz je później w lekcjach Funkcje i Metody; po prostu zapamiętaj jak ich używać.
+
+Dla przypomnienia, określamy zmienną (`name`), następnie piszemy `size` po kropce, a potem **puste** nawiasy okrągłe:
 
 ```cpp title="🔹 Wywołanie metody size"
 name.size()
 ```
 
-Co ciekawe, `std::string` ma również drugą metodę, o nazwie `length`, która działa dokładnie w ten sam sposób:
-```cpp title="🔹 Wywołanie metody length"
-name.length()
-```
+### Konwersja pomięzdy liczbami i tekstem
 
-
-### Pobieranie fragmentu
-
-Analogicznie do metody `size` możemy pobrać fragment napisu za pomocą metody `substr` (od ang.: *substring*):
-
-```cpp title="🔹 Wywołanie metody substr"
-std::string name = "Jan Kowalski";
-std::cout << name.substr(0, 3);
-```
-
-Zauważ, że w nawiasach okrągłych podajemy zakres znaków, które chcemy uzyskać:
-
-```cpp
-substr( [pozycja startowa], [ilość znaków] )
-```
-
-czyli w przypadku powyżej kopiujemy trzy znaki zaczynając od pozycji `0`.
-
-:::caution Indeksowanie
-W napisach liczymy znaki od `0`, a nie od `1`. Pierwszy znak znajduje się na pozycji `0`.
-:::
-
-### Konwersja liczb na tekst
-
-Ze względu na to, w jaki sposób program przechowuje liczby i tekst, te wartości
-nie są domyślnie konwertowalne między sobą. Żeby to zrozumieć, musimy potrafić rozróżnić
-te dwie rzeczy:
+Liczby i łańcuchy nie mogą być swobodnie konwertowane na siebie bez specjalnych funkcji, która robią to za nas.
+Dzieje się tak dlatego, że typy liczbowe i typy łańcuchów w C++ są zdecydowanie **różne** i nie są ogólnie kompatybilne.
+Choć może to być denerwujące, jest to w rzeczywistości bardzo ważne dla tworzenia kodu wolnego od błędów.
 
 ```cpp
 53
 "53"
 ```
 
-Pierwsza wartość jest liczbą 53, a druga to napis składający się ze znaków `'5'` oraz `'3'`.
-Jeśli chcemy przekonwertować liczbę `53` na formę tekstową, **nie możemy** zrobić tego w ten sposób:
+Pierwszą wartością jest liczba `53`. Reprezentuje ona wartość, na której możemy wykonywać operacje matematyczne.
+Druga wartość to tekst składający się ze znaków `'5'` i `'3'`.
+Nie możemy wykonywać operacji matematycznych na łańcuchach; raczej, operacje na łańcuchach, które możemy wykonać to konkatenacje.
+
+Następujące kawałki kodu to nieudolne i niepoprawne (kończące się błędem kompilacji) próby konwersji między łańcuchami a liczbami:
 
 <Tabs>
 <TabItem value="bad1" label="❌ Niepoprawne" default>
 
-```cpp
+```cpp title="❌ Przypisywanie zmiennej liczbowej do łańcucha"
 int number = 53;
 // error-next-line
 std::string numberInStr	= number; // Błąd
@@ -212,17 +237,31 @@ std::string numberInStr	= number; // Błąd
 </TabItem>
 <TabItem value="bad2" label="❌ Niepoprawne">
 
-```cpp
+```cpp title="❌ Przypisywanie literału liczbowego do łańcucha"
 // error-next-line
 std::string numberInStr	= 53; // Błąd
 ```
 
 </TabItem>
+<TabItem value="bad3" label="❌ Niepoprawne">
+
+```cpp title="❌ Przypisywanie łańcucha do liczby"
+std::string str	= "53";
+// error-next-line
+int number = str; // Error
+```
+</TabItem>
+<TabItem value="bad4" label="❌ Niepoprawne">
+
+```cpp title="❌ Przypisywanie literału łańcucha do liczby"
+// error-next-line
+int number = "53"; // Error
+```
+
+</TabItem>
 </Tabs>
 
-
-Zamiast tego musimy użyć tzw. funkcji `std::to_string` (o funkcjach powiemy dalej w kursie).
-Robi się to w ten sposób:
+Aby przekonwertować z typu liczbowego (np. `int` czy `float`) na typ łańcuchowy, musimy użyć funkcji `std::to_string`.
 
 ```cpp title="✔ Konwersja liczby na napis"
 int number = 53;
@@ -230,14 +269,13 @@ std::string numberInStr	= std::to_string(number);
 ```
 
 W ten sam sposób, jeśli mamy wewnątrz łańcucha znaków zapisaną liczbę, możemy ją
-przekonwertować na inta za pomocą `std::stoi` (od ang.: _**s**tring **to** **i**nt_) oraz
+przekonwertować na `int`a za pomocą `std::stoi` (od ang.: _**s**tring **to** **i**nt_) oraz
 typu `float` za pomocą `std::stof` (od ang.: _**s**tring **to** **f**loat_):
 
 <Tabs>
 <TabItem value="stoi" label="🔵 std::stoi" default>
 
-Konwersja `std::string` na `int`:
-```cpp
+```cpp title="Konwersja std::string na int"
 std::string numberInStr = "53";
 int number = std::stoi(numberInStr);
 ```
@@ -245,8 +283,7 @@ int number = std::stoi(numberInStr);
 </TabItem>
 <TabItem value="stof" label="🟣 std::stof">
 
-Konwersja `std::string` na `float`:
-```cpp
+```cpp title="Konwersja std::string na float"
 std::string numberInStr = "53.5"; // w tekście nie podajemy `f` na końcu
 float number = std::stof(numberInStr);
 ```
@@ -257,606 +294,16 @@ float number = std::stof(numberInStr);
 
 <!-- TODO change the text string examples to drawio images -->
 
-## Przykłady
+## Podsumowanie
 
-### Podstawowa manipulacja
+W tej lekcji dowiedzieliśmy się o typie `std::string`, który służy do przechowywania i manipulowania sekwencjami znaków.
 
-#### Tworzenie i wyświetlanie
+:::tip
+Zobacz następujące podlekcje, aby zapoznać się lepiej z **łańcuchami znaków**:
 
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
+- [💡 Przykłady](./examples)
+- [🐞 Potencjalne problemy](./common-problems)
+- [📚 Ćwiczenia](./exercises)
 
-```cpp title="Tworzenie i wyświetlanie"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::string myName = "Super Coder";
-	std::cout << "Nazywam się " << myName << "!\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-Nazywam się Super Coder!
-```
-
-</div>
-</Columns>
-
-#### Dodawanie napisów
-
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
-
-```cpp title="Dodawanie napisów"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::string myName = "Super";
-	std::string mySurname = "Coder";
-
-	// Możemy dodawać do siebie napisy:
-	std::string myWholeName = myName + " " + mySurname;
-
-	std::cout << "Nazywam się " << myWholeName << "!\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-Nazywam się Super Coder!
-```
-
-</div>
-</Columns>
-
-#### Podnapisy
-
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
-
-```cpp title="Podnapisy"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::string myWholeName = "Super Coder";
-
-	std::string myName = myWholeName.substr(0, 5);
-	// 0 1 2 3 4 5 6 7 8 9 10
-	// S u p e r   C o d e r
-	// ^^^^^^^^^
-	// Zaczynamy od indeksu 0, bierzemy 5 znaków.
-
-	std::cout << "Nazywam się " << myName << "!\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-Nazywam się Super!
-```
-
-</div>
-</Columns>
-
-### Wczytywanie
-
-#### Wczytywanie cin'em
-
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
-
-```cpp title="Wczytywanie cin'em"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::string name;
-	std::cin >> name;
-
-	std::cout << "Witaj " << name << "!\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-> Super Coder
-Witaj Super!
-```
-
-</div>
-</Columns>
-
-:::caution `std::cin` vs `std::getline`
-`std::cin` domyślnie wczytuje tylko i wyłącznie do napotkania spacji, z tego powodu jeśli wprowadzimy napis w którym są spacje, zostanie on ucięty.
-Aby móc wczytać napis ze spacjami, należy użyć [`std::getline`](#wczytywanie-getlinem).
 :::
 
-#### Wczytywanie getlin'em
-
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
-
-```cpp title="Wczytywanie getlin'em"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::string name;
-	std::getline(std::cin, name);
-
-	std::cout << "Witaj " << name << "!\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-> Super Coder
-Witaj Super Coder!
-```
-
-</div>
-</Columns>
-
-#### Separator w getlinie
-
-W funkcji `std::getline` jako trzeci argument możemy podać również separator, do którego `std::getline` ma czytać.
-Domyślnie jest to znak nowej linii, więc `std::getline` wczytuje całą linię, jednak możemy tam dać dowolny znak.
-
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
-
-```cpp title="Separator w getlinie"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::string name;
-	std::getline(std::cin, name, '?');
-
-	std::cout << "Witaj " << name << "!\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-> Super Co?der
-Witaj Super Co!
-```
-
-</div>
-</Columns>
-
-
-### Konwersje
-
-#### Int i float na string
-
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
-
-```cpp title="Int i float na string"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	int dayOfTheWeek = 3;
-	float temperature = 17.4f;
-
-	std::string message = "Mamy dzisiaj " 
-		+ std::to_string(dayOfTheWeek) 
-		+ ". dzień tygodnia, dzisiejsza temperatura to " 
-		+ std::to_string(temperature) 
-		+ " stopni Celsjusza!";
-
-	std::cout << message << "\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-Mamy dzisiaj 3. dzień tygodnia, dzisiejsza temperatura to 17.400000 stopni Celsjusza!
-```
-
-</div>
-</Columns>
-
-
-:::important `17.400000`
-Rzuciło Ci się pewnie w oczy, że nasza zmienna `temperature` o wartości `17.4` jest reprezentowana w napisie jako `17.400000`.
-Tak powinno być, a sposób manipulowanie precyzją liczb zmiennoprzecinkowych omówimy kiedy indziej.
-:::
-
-#### String na int
-
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
-
-```cpp title="String na int"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::string cpp20Release = "2020";
-	int howMuchPassed = std::stoi(cpp20Release) - 2017;
-	std::cout << "Standard C++20 wyszedł w roku " << cpp20Release << ", " << howMuchPassed <<" lata po standardzie C++17.\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-Standard C++20 wyszedł w roku 2020, 3 lata po standardzie C++17.
-```
-
-</div>
-</Columns>
-
-### Szukanie
-
-#### Szukanie napisu
-
-```
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22
-N a z y w a m   s i  e     S  u  p  e  r     C  o  d  e  r
-                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-```
-`introduction.find("Super Coder")` zwróci nam pozycję `"Super Coder"`, czyli indeks **12**.
-Przekazujemy to do metody `substr` wraz z argumentem `11`, który oznacza dlugość napisu.
-W naszym przypadku `"Super Coder"` ma 11 liter.
-
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
-
-```cpp title="Szukanie napisu"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::string introduction = "Nazywam sie Super Coder";
-	std::string name = introduction.substr(introduction.find("Super Coder"), 11);
-
-	std::cout << name << "\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-Super Coder
-```
-
-</div>
-</Columns>
-
-#### Dzielenie napisu
-
-Dzielenie napisu (*ang. string splitting*) polega na podzieleniu całego napisu na mniejsze części,
-na podstawie separatora (*ang. delimiter/separator*). Używane jest często, np. żeby wydobyć nazwę z adresu email,
-wartość z rekordu `NAZWA=WARTOŚĆ`, czy konkretnych elementów z daty w formacie `YYYY-MM-DD`.
-
-<Columns spacing={40} columns={['1fr', '1fr']}>
-<div>
-
-```cpp title="Dzielenie napisu"
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::string time = "16:04";
-	int position = time.find(':'); // Możemy wyszukiwać pojedyncze znaki lub całe napisy
-
-	int hour = std::stoi(time.substr(0, 2));
-	// tutaj wiemy, że godzina zaczyna się od indeksu 0 i ma dwa znaki
-	int minutes = std::stoi(time.substr(position + 1, 2)); 
-	// Wykorzystujemy pozycję znalezionego dwukropka i wiedzę,
-	// że minuty rownież są zapisane na dwóch znakach.
-	// Przeprowadzamy tutaj konwersje na int,
-	// ponieważ dokonujemy później operacje matematyczne w cout.
-
-	std::cout << "Do godziny " << hour + 1 << " pozostalo "  << 60 - minutes << " minut.\n";
-}
-```
-
-</div>
-
-<div>
-
-```plaintext title="Wynik (konsola)"
-Do godziny 17 pozostalo 56 minut.
-```
-
-</div>
-</Columns>
-
-:::tip `position + 1`
-Przy przypisywaniu wartości do zmiennej `minutes` robimy `std::stoi(time.substr(position + 1, 2))`.
-```
-0 1 2 3 4 
-1 6 : 0 4
-	^ ^
-```
-`position` to `2`, więc wywołanie `time.substr(position, 2)` zwróciłoby `:0`.
-Musimy więc tutaj doać `1` do position, żeby poprawnie dostać liczbę minut.
-:::
-
-
-## Potencjalne błędy
-
-### Używanie `''` zamiast `""`
-
-W C++ie sekwencje napisów zapisujemy w podwójnym cudzysłowiu (`""`), nie pojedynczym (`''`) - `"Hej"`.
-
-W pojedynczym zapisujemy tylko i wyłącznie pojedyncze znaki - `'H'`.
-
-```cpp title="Niepoprawny kod"
-#include <string>
-int main() 
-{
-	std::string s = 'Hej!';
-	// Bardzo możliwe, że osobno dostaniemy komunikat o 'Hej!'
-	// i osobno o samej próbie przypisania (patrz sekcję Treść błędu poniżej):
-}
-```
-
-#### 🔴 Treść błędu
-
-<Tabs groupId="compiler">
-<TabItem value="clang" label="CLANG" default>
-
-```plaintext
-warning: multi-character constant
-error: no viable conversion from 'int' to 'std::string' (aka ...)
-```
-
-#### 🖼 Ilustracja błędu:
-
-<Image center
-		alt="Ilustracja błędu - niepoprawny cudzysłów"
-		src="/img/tutorials/course/basic/variables/error-wrong-quote-pl-clang.png"
-	/>
-
-</TabItem>
-<TabItem value="gcc" label="GCC">
-
-```plaintext
-warning: multi-character constant
-```
-```plaintext
-error: conversion from `int` to non-scalar type `std::string` {aka ...} requested
-```
-
-#### 🖼 Ilustracja błędu:
-
-<Image center
-		alt="Ilustracja błędu - niepoprawny cudzysłów"
-		src="/img/tutorials/course/basic/variables/error-wrong-quote-pl-gcc.png"
-	/>
-
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-error C2440: 'initializing': cannot convert from 'int' to 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
-```
-
-#### 🖼 Ilustracja błędu:
-
-<Image center
-		alt="Ilustracja błędu - niepoprawny cudzysłów"
-		src="/img/tutorials/course/basic/variables/error-wrong-quote-pl-msvc.png"
-	/>
-
-</TabItem>
-</Tabs>
-
-### Próba zawarcia `"` w napisie
-
-Każdy język ma swoją składnię, czyli zestaw słów kluczowych, operatorów i zasad mówiących jak język ma wyglądać, to samo tyczy się C++a.
-W C++ie napisy zapisujemy pomiędzy znakami `""`. Jeśli spróbujemy wypisać lub zapisać w `std::string` w normalny sposób znak `"`:
-
-```cpp title='Niepoprawny kod'
-std::string sentence = "Waran z Komodo inaczej nazywany "smokiem z Komodo" jest największą żyjącą jaszczurką.";
-```
-
-To program analizujący składnię C++ zintepretuje to jako:
-```
-"Waran z Komodo inaczej nazywany "smokiem z Komodo" jest największą żyjącą jaszczurką."
-               NAPIS                KOD C++                NAPIS
-```
-
-Więc aby wyświetlić poprawnie znak `"` należy użyć tzw. *escape sequence* (czyli specjalnego połączenia znaku `\` z jakimś innym, które są inaczej interpretowane wewnątrz napisów).
-
-Jeden *escape sequence* już poznaliśmy - to znak `\n`, który powoduje wyświetlenie nowej linii.
-
-Więc aby zapisać znak `"` należy zrobić `\"`:
-```cpp title='Poprawny kod'
-std::string sentence = "Waran z Komodo inaczej nazywany \"smokiem z Komodo\" jest największą żyjącą jaszczurką.";
-```
-
-#### 🔴 Treść błędu
-
-<Tabs groupId="compiler">
-<TabItem value="clang" label="CLANG" default>
-
-```plaintext
-error: invalid suffix on literal; C++11 requires a space between literal and identifier
-error: expected ';' at end of declaration
-```
-
-#### 🖼 Ilustracja błędu:
-
-<Image center
-		alt="Ilustracja błędu - próba wyświetlenia cudzysłowia"
-		src="/img/tutorials/course/basic/variables/error-trying-to-display-quote-pl-clang.png"
-	/>
-
-</TabItem>
-<TabItem value="gcc" label="GCC">
-
-```plaintext
-error: unable to find string literal operator ‘operator""smokiem’ with ‘const char [33]’, ‘long unsigned int’ arguments
-```
-
-#### 🖼 Ilustracja błędu:
-
-<Image center
-		alt="Ilustracja błędu - próba wyświetlenia cudzysłowia"
-		src="/img/tutorials/course/basic/variables/error-trying-to-display-quote-pl-gcc.png"
-	/>
-
-</TabItem>
-<TabItem value="msvc" label="MSVC">
-
-```plaintext
-error C3688: invalid literal suffix 'smokiem'; literal operator or literal operator template 'operator ""smokiem' not found
-error C2146: syntax error: missing ';' before identifier 'z'
-error C2065: 'z': undeclared identifier
-```
-
-#### 🖼 Ilustracja błędu:
-
-<Image center
-		alt="Ilustracja błędu - próba wyświetlenia cudzysłowia"
-		src="/img/tutorials/course/basic/variables/error-trying-to-display-quote-pl-msvc.png"
-	/>
-
-</TabItem>
-</Tabs>
-
-### Użycie `std::getline` po `std::cin`
-
-Często zdarza się, że pobieramy od użytkownika wiele danych i używamy `std::cin` oraz `std::getline` naprzemiennie.
-
-Jest to problematyczne, ponieważ jeśli spróbujemy użyć `std::getline` zaraz po `std::cin`, wywołanie `std::getline` nie zadziała.
-Rozważmy przykładowy program:
-
-```cpp
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::cout << "Wprowadź swój wiek: ";
-	int age;
-	std::cin >> age;
-
-	std::cout << "Wprowadź swoje imię: ";
-	std::string name;
-	std::getline(std::cin, name);
-
-	std::cout << name << " masz " << age << " lat.\n";
-}
-```
-
-Ten kod jest jak najbardziej poprawny i się skompiluje, jednak kiedy go wykonamy, zostaniemy zaskoczeni:
-```plaintext
-Wprowadź swój wiek: 15
-Wprowadź swoje imię:  masz 15lat.
-```
-
-Wyżej wywołany został program, użytkownik został poproszony o wiek, więc go wprowadził.
-Po wprowadzeniu wieku, zostało wyświetlone `Wprowadź swoje imię: masz 15 lat.`
-
-Jak temu zaradzić? 
-
-<Tabs groupId="answer">
-<TabItem value="short-answer" label="Krótka odpowiedź" default>
-
-Wrzucić 
-```cpp
-std::cin.ignore(1);
-```
-Zaraz po `std::cin >> age`:
-
-</TabItem>
-<TabItem value="long-answer" label="Długa odpowiedź" default>
-
-Dzieje się tak dlatego, że `std::cin` i `std::getline` operują na dzielonym **strumieniu danych**.
-Można o nim po prostu myśleć jako o napisie wprowadzanym przez użytkownika, na którym są później wykonywane operacje, np.:
-
-```cpp
-int age;
-std::cin >> age;
-```
-Tutaj, po wprowadzeniu przez użytkownika `15`, w tym *magicznym strumieniu danych* znajdą się 3 znaki - `15\n`.
-`std::cin` przeczyta `15` i zostawi tam `\n`. (Pamiętajmy, że `\n`, to escape sequence. `\n` jest przez C++ interepretowane jako jeden znak.)
-
-Następnie, przy wywołaniu `std::getline`, getline przeczyta wszystkie znaki, aż do napotkania znaku nowej linii.
-Z uwagi na to, że jedyne co znajduje się na ten moment w strumieniu to znak nowej linii,
-`std::getline` nie pozwoli nawet użytkownikowi wprowadzić danych, po prostu przeczyta ten znak nowej linii, usunie go ze strumienia i program będzie działać dalej.
-
-Po takim ciągu zdarzeń, nasz `std::string name` będzie pusty, wywoła się `std::cout` na samym dole i zostanie wyświetlone `masz 15 lat.`
-
-Wywołanie `std::cin.ignore(1);` naprawi problem.
-`std::cin.ignore` to funkcja, która usuwa ze strumienia określoną ilość znaków.
-Po wywołaniu tej funkcji znak nowej linii zostanie usunięty, a wywołanie `std::getline` zadziała tak, jak się spodziewamy.
-
-</TabItem>
-</Tabs>
-
-```cpp
-#include <iostream>
-#include <string>
-
-int main() 
-{
-	std::cout << "Wprowadź swój wiek: ";
-	int age;
-	std::cin >> age;
-	// highlight-next-line
-	std::cin.ignore(1);
-
-	std::cout << "Wprowadź swoje imię: ";
-	std::string name;
-	std::getline(std::cin, name);
-
-	std::cout << name << " masz " << age << " lat.\n";
-}
-```
-
-Teraz nasz program działa poprawnie :)
-
-```plaintext
-Wprowadź swój wiek: 15
-Wprowadź swoje imię: Super Coder
-Super Coder masz 15 lat.
-```

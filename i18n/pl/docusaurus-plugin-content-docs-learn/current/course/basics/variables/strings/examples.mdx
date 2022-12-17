@@ -1,0 +1,111 @@
+---
+toc_max_heading_level: 2
+hide_title: true
+title: "Zmienne » Napisy » Przykłady"
+---
+
+import Image from "@site-comps/Image";
+
+# Zmienne » Napisy » Przykłady
+
+## Dane Osobiste
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	// Deklaracja czterech zmiennej do których wczytamy dane od użytkownika
+	std::string firstName;
+	std::string lastName;
+	std::string favoriteColor;
+	int age;
+
+	// Pytamy użytkownika o dane i wczytujemy je do zmiennych
+	std::cout << "What is your first name? ";
+	std::cin >> firstName;
+
+	std::cout << "What is your last name? ";
+	std::cin >> lastName;
+
+	std::cout << "What is your age? ";
+	std::cin >> age;
+
+	std::cout << "What is your favorite color? ";
+	std::cin >> favoriteColor;
+
+	// Wypisujemy informacje od użytkownika oraz różnicę jego wieku od długości imienia
+	std::cout << "\n\nWelcome, " << firstName << " " << lastName << "!\n";
+	std::cout << "You are " << age << " years old, and your favorite color is " << favoriteColor << "\n";
+	std::cout << "There are " << firstName.size() << " characters in your first name... ";
+	std::cout << (age - firstName.size()) << " less than your age!\n";
+}
+```
+
+## Nazwa Drużyny
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	std::string animal;
+	std::string adjective;
+	int teamSize;
+
+	std::cout << "I'm going to help you make a team name!\n";
+
+	std::cout << "Enter an animal: ";
+	std::cin >> animal;
+
+	// Adjective to przymiotnik (np. groźny, duży, szybki)
+	std::cout << "Enter an adjective: ";
+	std::cin >> adjective;
+
+	std::cout << "Enter the size of the team: ";
+	std::cin >> teamSize;
+
+	// Tworzymy nazwę drużyny poprzez dodanie do siebie trzech odpowiedzi które dostaliśmy do tej pory
+	std::string teamName = adjective + animal + std::to_string(teamSize);
+	std::cout << "Your current team name is \"" << teamName << "\"!\n";
+
+	// Plural noun to rzeczownik w liczbie mnogiej (np. auta, przeciwnicy, koty, wygrani)
+	std::string pluralNoun;
+	std::cout << "Enter a plural noun: ";
+	std::cin >> pluralNoun;
+
+	// Finalizujemy nazwę drużyny poprzez dodanie rzecownika w liczbie mnogiej
+	teamName += " sans " + pluralNoun;
+	std::cout << "Your final team name is \"" << teamName << "\"!";
+}
+```
+
+## Liczby i napisy
+
+```cpp
+#include <iostream>
+#include <string>
+
+int main()
+{
+	int a;
+	int b;
+
+	std::cout << "Input two numbers: ";
+	std::cin >> a >> b;
+
+	int sum = a + b;
+	// Konwertujemy liczbę na napis, aby móc je ze sobą połączyć
+	std::string concatStr = std::to_string(a) + std::to_string(b);
+
+	std::cout << "Their sum is " << sum << " and their concatenation is " << concatStr << "\n";
+
+	// Konwertujemy napis na liczbę, aby móc wykonywać operacje matematyczne
+	int concatVal = std::stoi(concatStr);
+	int diff = concatVal - sum;
+
+	std::cout << "Their difference is " << diff;
+}
+```
