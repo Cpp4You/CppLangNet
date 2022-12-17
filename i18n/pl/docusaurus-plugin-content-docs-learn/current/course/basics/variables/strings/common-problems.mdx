@@ -1,0 +1,204 @@
+---
+toc_max_heading_level: 2
+hide_title: true
+title: "Zmienne » Napisy » Potencjalne błędy"
+---
+
+import Columns		from '@site-comps/Columns';
+import GoogleSlides	from '@site-comps/GoogleSlides';
+import Image		from '@site-comps/Image';
+import Tooltip		from '@site-comps/Tooltip';
+import NotFinished	from '@site/i18n/en/presets/NotFinished.mdx';
+
+import Tabs			from '@theme/Tabs';
+import TabItem		from '@theme/TabItem';
+
+<!-- Error messages -->
+
+import ErrorMessage_ForgottenIncludeGCC		from "./_error-messages/forgotten-include-gcc.mdx";
+import ErrorMessage_ForgottenIncludeMSVC	from "./_error-messages/forgotten-include-msvc.mdx";
+
+import ErrorMessage_WrongIntToStringGCC		from "./_error-messages/wrong-int-to-string-gcc.mdx";
+import ErrorMessage_WrongIntToStringMSVC	from "./_error-messages/wrong-int-to-string-msvc.mdx";
+
+import ErrorMessage_StringIsNotIntGCC		from "./_error-messages/string-is-not-int-gcc.mdx";
+import ErrorMessage_StringIsNotIntMSVC		from "./_error-messages/string-is-not-int-msvc.mdx";
+
+import ErrorMessage_AddingLiteralsGCC		from "./_error-messages/adding-literals-gcc.mdx";
+import ErrorMessage_AddingLiteralsMSVC		from "./_error-messages/adding-literals-msvc.mdx";
+
+# Zmienne » Napisy » Potencjalne błędy
+
+## Potencjalne błędy
+
+## Nie dołączenie odpowiedniego nagłówka
+
+```cpp showLineNumbers title="❌ Niepoprawny kod"
+int main()
+{
+	// error-next-line
+    std::string s = "Hello";
+}
+```
+
+### 🔴 Treść błędu:
+
+<Tabs groupId="compiler">
+	<TabItem value="gcc" label="GCC" default>
+		<ErrorMessage_ForgottenIncludeGCC />
+	</TabItem>
+<TabItem value="msvc" label="MSVC">
+		<ErrorMessage_ForgottenIncludeMSVC />
+</TabItem>
+</Tabs>
+
+### 👌 Rozwiązanie problemu
+
+Dodaj linijkę `#include <string>` na górze swojego pliku.
+
+## Traktowanie liczb jako napisów
+
+```cpp showLineNumbers title="❌ Niepoprawny kod"
+#include <string>
+
+int main()
+{
+	// error-next-line
+    std::string s = 123;
+}
+```
+
+### 🔴 Treść błędu:
+
+<Tabs groupId="compiler">
+	<TabItem value="gcc" label="GCC" default>
+		<ErrorMessage_WrongIntToStringGCC />
+	</TabItem>
+	<TabItem value="msvc" label="MSVC">
+		<ErrorMessage_WrongIntToStringMSVC />
+	</TabItem>
+</Tabs>
+
+### 👌 Rozwiązanie problemu
+
+<!-- Needed to put a full link here, no idea how to make it relative -->
+
+Użyj funkcji `std::to_string`, aby przekonwertować liczbę na napis.
+Zobacz [Konwersja pomiędzy liczbami i tekstem](https://cpp-lang.net/pl/learn/course/basics/variables/strings/#konwersja-pomiedzy-liczbami-i-tekstem)
+i [Liczby i napisy](../examples#liczby-i-napisy) po więcej informacji.
+
+## Traktowanie napisów jako liczb
+
+```cpp showLineNumbers title="❌ Niepoprawny kod"
+#include <string>
+
+int main()
+{
+    std::string s = "123";
+	// error-next-line
+	s *= 15;
+}
+```
+
+### 🔴 Treść błędu:
+
+<Tabs groupId="compiler">
+	<TabItem value="gcc" label="GCC" default>
+		<ErrorMessage_StringIsNotIntGCC />
+	</TabItem>
+	<TabItem value="msvc" label="MSVC">
+		<ErrorMessage_StringIsNotIntMSVC />
+	</TabItem>
+</Tabs>
+
+### 👌 Rozwiązanie problemu
+
+Użyj funkcji `std::stoi` lub `std::stof`, aby przekonwertować łańcuch znaków na liczbę.
+Zobacz [Konwersja pomiędzy liczbami i tekstem](https://cpp-lang.net/pl/learn/course/basics/variables/strings/#konwersja-pomiedzy-liczbami-i-tekstem)
+i [Liczby i napisy](../examples#liczby-i-napisy) po więcej informacji.
+
+## Łączenie dwóch literałów stringowych
+
+```cpp showLineNumbers title="❌ Niepoprawny kod"
+#include <string>
+
+int main()
+{
+	//error-next-line
+    std::string s = "Hello " + "World";
+}
+```
+
+### 🔴 Treść błędu:
+
+<Tabs groupId="compiler">
+	<TabItem value="gcc" label="GCC" default>
+		<ErrorMessage_AddingLiteralsGCC />
+	</TabItem>
+	<TabItem value="msvc" label="MSVC">
+		<ErrorMessage_AddingLiteralsMSVC />
+	</TabItem>
+</Tabs>
+
+### 👌 Rozwiązanie problemu
+
+Zawsze kiedy widzisz w kodzie C++ `"TEKST"`, mówimy na to *literał stringowy* (ang.: *string literal*). 
+Jest to śmieszny termin na wartość wpisaną na sztywno (ang.: *hardcoded*). Ważne jest jednak to, że **literał stringowy** to nie to samo co `std::string`! Mają inne typy i trochę inne właściwości. Typ literału stringowego to `const char[N]`, gdzie `N` to długość tego tekstu + 1. Błąd z kompilatora GCC wyżej pokazuje to najlepiej.
+
+`const char[N]` to *tablicą*. Tablice omówimy w późniejszym rozdziale, ale ważne jest to, że
+nie można do siebie dodać dwóch tablic, ponieważ nie są one liczbami. `std::string` w specjalny sposób zapewnia nam taką możliwość (co również omówimy dalej w kursie).
+
+Najprostszym sposobem na naprawienie tego błędu jest połączenie tych literałów własnoręcznie: `"Hello World"`.
+
+## Ominięcie wywołania std::getline
+
+```cpp title="⚠️ Buggy Code"
+#include <string>
+
+int main()
+{
+	int age;
+	int fullName;
+
+	std::cout << "Enter your age: ";
+	std::cin >> age;
+
+	std::cout << "Enter your full name: ";
+	// warning-next-line
+	std::getline(std::cin, fullName); // Ta linia wydaje się nie wykonywać
+
+	std::cout << "\nYour name is " << fullName << " and your age is " << age;
+}
+```
+
+### Niespodziewane Zachowanie
+
+Szybko zauważysz, że używająć `std::getline`, zaraz po użyciu `std::cin >> ... ` w jakiejkolwiek formie, wywołanie `std::getline` wydaje się być ominięte.
+W przykładzie wyżej, program zapyta użytkownika o wiek, użytkownik wprowadziłby, powiedzmy `23`, a następnie program zapytałby o imię, lecz użytkownik nie miałby szansy nic wpisać.
+Zamiast tego, program od razu wypisałby `Your name is  and your age is 23`.
+
+### 👌 Rozwiązanie problemu
+
+Zrozumienie dlaczego tak się dzieje jest troszkę skomplikowane. Na początek przypomnijmy, że `std::cin` wyciąga dane z *stdin* aż do napotkania białych znaków (spacja, nowa linia lub tabulator). Kiedy użytkownik naciśnie `Enter`, aby wprowadzić wiek do programu, *znak nowej linii* `\n` zostaje wprowadzony do *stdin*. `std::cin` sczytuje dane, które użytkownik wpisał i zatrzymuje się na nowej linii **nie ignorując jej**.
+
+`std::getline` określa koniec tekstu na podstawie znaków nowej lini w tekście.
+Więc kiedy aby funkcja ta próbuje pobrać od nas kolejne dane z `*stdin` aż do napotkania `\n`,
+od razu widzi ona ten znak, który został tam zostawiony przez poprzednie wywołanie `std::cin >> age;`.
+Interpretuje więc ona to jako koniec danych i ustawia `fullName` jako pusty napis `""`.
+
+Rozwiązaniem tego problemu jest użyciem kolejnej *metody* - `ignore`.
+Ta metoda mówi `std::cin`, aby ominął on pozostawiony z poprzedniej operacji znak nowej linii.
+
+
+Za każdym razem, kiedy chcesz użyć `std::getline` po użyciu `std::cin`, powinieneś wywołać `std::cin.ignore()` pomiędzy tymi operacjami, jak w tym przykładzie:
+```cpp title="🔹 Jak użyć metody ignore"
+int age;
+std::string fullName;
+
+std::cin >> age;
+
+//highlight-next-line
+std::cin.ignore();
+
+std::getline(std::cin, fullName);
+```

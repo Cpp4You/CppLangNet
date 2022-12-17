@@ -1,0 +1,43 @@
+import Image from "@site-comps/Image";
+
+# Zmienne » Napisy » Ćwiczenia
+
+**Lord Mux** powrócił z kolejnym zadaniem. Chciałby, żebyśmy pokazali mu jak dobrzy jesteśmy w nazywaniu rakiet!
+Zostałeś wybrany na napisanie programu w C++, który generuje nazwę rakiety w podanym formacie:
+
+`Cyber-[NUMER MISJI] [KRYPTONIM] wer. [WERSJA]`
+
+Jednak z uwagi na kiepski czas koncentracji Muxianów, możesz im zadać **tylko dwa pytania**.
+
+Pierwsze pytanie dotyczy **KRYPTONIMU**, który może być jakimkolwiek, pojedynczym słowem.
+
+Drugie pytanie dotyczy **MODYFIKATORA**, który powinien być pojedynczą liczbą całkowitą.
+
+Wygeneruj pozostałe dwa parametry według następujących zasad:
+
+**NUMER MISJI** - Liczba znaków w **KRYPTONIM**ie dodana do napisu **MODYFIKATOR**
+Dla przykładu, jeśli **KRYPTONIM** to `Wrona` i **MODYFIKATOR** to 20, **NUMER MISJI** będzie wynosił `520`.
+
+**WERSJA** - Wartość liczbowa **NUMERU MISJI** pomnożona razy 16 (Z uwagi na to, że Muxianie mają 16 palców na których mogą liczyć)
+
+**Dodatkowe wymagania** Finalna nazwa rakiety powinna być przechowana w pojedynczej zmiennej typu `std::string`,
+zanim zostanie wypisana na konsolę.
+
+### Przykładowe Uruchomienie
+```plaintext
+Witaj w RakietoNazwoGeneratorze 9000!
+
+Wpisz KRYPTONIM: Wrona
+Wpisz MODYFIKATOR: 20
+
+Nazwa dla twojej rakiety to:
+Cyber-520 Wrona wer. 8320
+```
+
+## Wskazówki
+
+Jeśli nie potrafisz wygenerować **KRYPTONIMU** lub **MODYFIKATORA**, zobacz przykład [Dane osobiste](../examples/#dane-osobiste).
+
+Jeśli nie potrafisz wygenerować **NUMERU MISJI**, zobacz przykład [Nazwa drużyny](../examples/#nazwa-druzyny).
+
+Jeśli nie potrafisz wygenerować **WERSJi**, zobacz przykład [Liczby i napisy](../examples/#liczby-i-napisy).
