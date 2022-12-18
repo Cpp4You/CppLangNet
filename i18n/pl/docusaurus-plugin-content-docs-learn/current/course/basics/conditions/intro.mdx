@@ -1,0 +1,501 @@
+---
+sidebar_position:	4
+sidebar_label:		"1. Wprowadzenie"
+title:				"Wprowadzenie do warunków"
+description:		"Lekcja: podstawy warunków w C++"
+tags:				[condition, if, else, else-if, compound, boolean, bool]
+hide_title:			true
+---
+
+<!-- Components -->
+import Tabs			from "@theme/Tabs";
+import TabItem		from "@theme/TabItem";
+
+<!-- Presets -->
+import NotFinished	from "@site/i18n/en/presets/NotFinished.mdx";
+
+# Wprowadzenie do Warunków
+
+Dotychczas tworzyliśmy programy, które za każdym razem działały tak samo.
+Nasze kreacje nie potrafiły podejmować decyzji. Nadszedł czas, aby to zmienić.
+W tej lekcji nauczymy się jak sprawić, by programy szły innymi ścieżkami, zależnie od tego,
+co wpisze użytkownik.
+
+Stworzymy aplikację, która sprawdzi, czy użytkownik może legalnie uzyskać prawo jazdy. 😎
+
+## Przygotowanie kodu
+
+Najpierw zapytajmy użytkownika o jego rok urodzenia.
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 2000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// W momencie pisania tej lekcji mamy 2022 rok
+	int age = 2022 - yearOfBirth;
+
+	// highlight-start
+	// Przypadek A:
+	std::cout << "You can legally get a driver's license\n";
+	// highlight-end
+
+	// highlight-start
+	// Przypadek B:
+	std::cout << "You cannot legally get a driver's license\n";
+	// highlight-end
+}
+```
+
+Zaznaczyłem tutaj dwa kawałki kodu - jeden, który powinien się wykonywać, jeśli użytkownik może legalnie dostać
+prawo jazdy, oraz drug, kiedy nie może. Chcem, aby tylko jeden przypadek się wykonał, nie oba. Jak możemy to zrealizować?
+Najpierw powinniśmy zastanowić się jakie mamy "przypadki" i pod jakim warunkiem powinny się wykonać.
+
+- Przypadek A — Legalny — Powinien się wykonywać tylko, jeśli `age` jest większy lub równy `18`
+- Przypadek B — Nielegalny — Powinien się wykonywać tylko, jeśli `age` jest mniejszy od `18`
+
+Teraz zobaczmy jak możemy przełożyć te przypadki na kod.
+
+## Instrukcja warunkowa
+
+Najprostszą formą warunku w C++ jest instrukcja `if`, której podstawowa forma wygląda następująco:
+
+```cpp title="🔹 Anatomia instrukcji if"
+if (/* warunek logiczny */)
+{
+	// Kod w środku wykonuje się tylko wtedy, gdy warunek jest prawdziwy
+}
+
+// Kod poza wykonywany jest niezależnie od tego, czy warunek jest prawdziwy czy fałszywy
+```
+
+After an `if` keyword, we put a boolean condition inside of parentheses.
+Then, the braces that surround #2 create what's known as a **block of code**. <u>Everything inside this code block will be
+executed if and only if the condition is true</u>. Variables that are created in a code block live and die with that 
+code block — they are destroyed when the block ends (with the closing brace `}` ) and are completely inaccessible
+from outside it.
+
+Let's apply this to our Driver's License example by combining the if statement with the cases we previously determined:
+
+Aby użyć instrukcji `if`, potrzebujemy dwóch rzeczy:
+1. Warunek, który po obliczeniu daje wartość logiczną typu `bool` - `true`/`false`
+2. Kod, który wykona się, jeśli warunek będzie prawdziwy (wartość `true`)
+
+Po słowie kluczowym `if`, umieszczamy warunek logiczny wewnątrz nawiasów.
+Następnie, nawiasy, które otaczają #2 tworzą tak zwany **blok kodu**. *Wszystko wewnątrz tego bloku kodu zostanie
+wykonane wtedy i tylko wtedy, gdy warunek jest prawdziwy*. Zmienne, które są tworzone w bloku kodu, żyją i umierają razem z tym blokiem - są niszczone, gdy blok się kończy (blok kończy się na nawiasie zamykającym `}`) i są niedostępne
+spoza niego.
+
+Zastosujmy to do naszego przykładu z prawem jazdy, łącząc instrukcję if z przypadkami, które wcześniej ustaliliśmy:
+
+```cpp title="🔹 Pierwsza próba użycia instrukcji if"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 2000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// W momencie pisania tej lekcji mamy 2022 rok
+	int age = 2022 - yearOfBirth;
+
+	// highlight-start
+	// Przypadek A:
+	if (/* zmienna age jest większa lub równa 18 */)
+	{
+		std::cout << "You can legally get a driver's license\n";
+	}
+	// highlight-end
+
+	// highlight-start
+	// Przypadek B B:
+	if (/* zmienna age jest mniejsza od 18 */)
+	{
+		std::cout << "You cannot legally get a driver's license\n";
+	}
+	// highlight-end
+}
+```
+
+Notice here how we have two `if` statements, one for each case.
+The first one handles our Case A, where they can legally obtain a driver's license.
+The second one handles our Case B, where they cannot legally obtain a driver's license.
+
+Upon closer inspection, one fact should quickly become obvious — these cases are **mutually exclusive**.
+This means that it is not possible for both cases to be true; only one or the other can execute.
+C++ provides the `else` keyword to delineate mutually exclusive conditions. While the above code
+will work as expected, we can improve it like so:
+
+Zauważ, że mamy tu dwie instrukcje `if`, po jednym dla każdego przypadku.
+Pierwsza z nich obsługuje przypadek A, w którym użytkownik może legalnie uzyskać prawo jazdy.
+Druga obsługuje nasz przypadek B, w którym nie może tego zrobić.
+
+Po bliższej analizie, jedna rzecz powinnna szybko stać się oczywista - te przypadki są **wzajemnie wykluczające się**.
+Oznacza to, że nie jest możliwe, aby oba przypadki były prawdziwe na raz; tylko jeden lub drugi może się wykonać.
+W C++ mamy słowo kluczowe `else`, które służy do definiowania wzajemnie wykluczających się warunków.
+Podczas gdy powyższy kod będzie działał zgodnie z oczekiwaniami, możemy go ulepszyć w następujący sposób:
+
+```cpp title="🔹 Anatomia instrukcji if-else"
+if (/* warunek logiczny */)
+{
+	// Kod w środku wykonuje się tylko wtedy, gdy warunek jest prawdziwy
+}
+else
+{
+	// Kod w środku wykonuje się tylko wtedy, gdy warunek jest fałszywy
+}
+
+// Kod poza wykonywany jest niezależnie od tego, czy warunek jest prawdziwy czy fałszywy
+```
+
+Blok `else` jest opcjonalny i powinieneś go używać tylko wtedy, kiedy chcesz obsłużyć
+wzajemnie wykluczący się warunki.
+
+Teraz możemy wrócić do naszego przykładu i zobaczyć, że tylko jeden warunek jest konieczny,
+ponieważ jeśli jeden jest prawdziwy, to drugi musi być fałszywy.
+
+```cpp title="🔹 Pierwsza próba użycia instrukcji if-else"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 2000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// W momencie pisania tej lekcji mamy 2022 rok
+	int age = 2022 - yearOfBirth;
+
+	// highlight-start
+	if (/* zmienna age jest większa lub równa 18 */)
+	{
+		std::cout << "You can legally get a driver's license\n";
+	}
+	else
+	{
+		std::cout << "You cannot legally get a driver's license\n";
+	}
+	// highlight-end
+}
+```
+
+:::danger Brak średnika `;`
+
+Nigdy nie dawaj średnika (';') po nawiasach instrukcji `if.`
+Nie spowoduje to błędu kompilacji, ale **sprawi to**, że Twój kod
+będzie działać niepoprawnie.
+Blok z kodem, który powinienm się wykonywać tylko zależnie od warunku będzie się wykonywać zawsze!.
+
+<Tabs>
+<TabItem value="right" label="✔ Poprawnie" default>
+
+```cpp
+if (age >= 18) 
+// ...
+else
+// ...
+```
+
+</TabItem>
+<TabItem value="wrong" label="❌ Niepoprawnie">
+
+```cpp
+if (age >= 18);
+// ...
+else;
+// ...
+```
+
+</TabItem>
+</Tabs>
+
+:::
+
+Podsumowując, nauczyliśmy się jak rozdzielić warunkowo wykonywane przypadki w naszym kodzie na
+dedykowane instrukcje if. Dzięki temu możemy wybrać, jaki kod zostanie uruchomiony w zależności od różnych
+wartości w naszym programie. Teraz, gdy mamy już podstawową strukturę naszej instrukcji if-else,
+możemy zobaczyć jak zakończyć nasz program poprzez stworzenie warunku logicznego.
+
+## Wyrażenia logiczne
+
+Inside the parenthesis of an `if` statement is the **boolean expression**, i.e. an expression
+that evaluates to either `true` or `false`. C++ provides several new operators that allow
+us to form such an expression.
+
+Wewnątrz nawiasu instrukcji `if` znajduje się wyrażenie **logiczne**, czyli wyrażenie
+które ocenia się na `true` lub `false`.
+C++ posiada kilka operatorów, które pozwalają nam stworzyć takie wyrażenia.
+
+### Operatory logiczne
+
+
+Below is a table that shows some of the **boolean operators** available in C++. A boolean operator
+is one that returns a boolean `true`/`false` based on its input(s). 
+They are like the other mathematical operators you've seen in previous lessons, but instead
+of evaluating to a number like `int`, they evaluate to a `bool` (`true`/`false`).
+
+| Operator | Odpowiednik matematyczny| Opis |
+| -------- | -------------- | ----------- |
+| `a == b` | a **=** b | Czy `a` równa się `b`? |
+| `a != b` | a ≠ b | Czy `a` nie równa się `b`? |
+| `a > b` | a **&gt;** b | Czy `a` jest większe od `b`? |
+| `a >= b` | a ≥ b | Czy `a` jest większe lub równe `b`?  |
+| `a < b` | a **&lt;** b | Czy `a` jest mniejsze od `b?` |
+| `a <= b` | a ≤ b | Czy `a` jest mniejsze lub równe `b?`  |
+
+#### Operatory równości
+
+Pierwsze dwa wiersze naszej tabelkie `==` i `!=` to **operatory równości**.
+Te dwa operatory pozwalają nam sprawdzić, czy dwie wartości są takie same.
+Operatory równości działają na większości typów C++, w tym na liczbach, napisach, boolach (typ `bool`) i innych.
+
+:::danger
+Pojedynczy znak `=` różni się od podwójnego `=`. Pojedynczy `=` jest **operatorem przypisania**, np. gdy tworzysz zmienną lub zmieniasz jej wartośc.
+Podwójny `=` jest **operatorem równości**, używanym gdy chcesz sprawdzić czy dwie zmienne mają tę samą wartość.
+
+W instrukcjach `if`, jeśli chcemy sprawdzić czy dwie zmienne są takie same zawsze należy użyć `==`:
+- ✔ `if (a == b)`
+- ❌ `if (a = b)`
+:::
+
+#### Operatory relacyjne
+
+Operatory relacyjne działają na niektórych typach C++, takich jak liczby i ciągi znaków; jednakże,
+wiele innych typów, których jeszcze nie omówiliśmy, nie może być porównywanych w ten sposób.
+
+Wiemy teraz wystarczająco dużo, aby pierwsza wersja naszego programu zaczęła działać. Dla przypomnienia,
+musimy stworzyć warunek, który sprawdzi, czy wiek użytkownika jest większy niż
+lub równy 18. Korzystając z powyższej tabeli, najbliższym dopasowaniem jest `age >= 18`.
+Zapiszmy więc ten warunek:
+
+```cpp title="🔹 Sprawdzacz Prawo Jazdy 2000"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 2000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// W momencie pisania tej lekcji mamy 2022 rok
+	int age = 2022 - yearOfBirth;
+
+	// highlight-next-line
+	if (age >= 18)
+	{
+		std::cout << "You can legally get a driver's license\n";
+	}
+	else
+	{
+		std::cout << "You cannot legally get a driver's license\n";
+	}
+}
+```
+
+Jako wyzwanie bonusowe, spróbuj utworzyć trzy inne warunki, równoważne do `age >= 18`, używając każdego pozostałego operatora relacyjnego.
+
+### Złożone wyrażenia logiczne
+
+Możesz przekształcać i łączyć wyrażenia logiczne za pomocą tak zwanych **operatorów logicznych**.
+Są one podzbiorem operatorów logicznych wprowadzonych powyżej, ale są przeznaczone do przyjmowania
+wartości logicznych jako dane wejściowe
+
+C++ supports two equivalent forms of these operators, a textual version
+and a symbolic version. While the symbolic representation is more common in the wild, you may find
+the textual representation to be easier to understand and remember. You can use whichever you like
+best, but try to be consistent!
+
+C++ obsługuje dwie równoważne formy tych operatorów, wersję tekstową
+oraz wersję symboliczną. Chociaż symboliczna reprezentacja jest bardziej powszechna,
+reprezentacja tekstowa może być dla Ciebie łatwiejsza do zrozumienia i zapamiętania.
+Możesz używać dowolnej reprezentacji, ale staraj się być konsekwentny!
+
+| Operator | Alternatywna reprezentacja | Opis |
+| -------- | -------------- | ----------- |
+| `a and b` | `a && b` | Czy `a` i `b` są oba prawdziwe? |
+| `a or b` | <code>a &#x7C;&#x7C;  b</code>  | Czy którykolwiek z `a` lub `b` jest prawdziwe?  |
+| `not c` | `!c` | Czy `c` jest fałszywe? |
+
+#### Logiczny operator I (and)
+
+Logiczny operator I `and`/`&&` bierze dwie wartośći logiczne i zwraca prawdę wtedy i tylko wtedy, jeśli
+oba są prawdziwe. Najlepiej używać go, kiedy chcesz sprawdzić,
+czy kilka warunków na jest na raz prawdziwych lub fałszywych (używając operatora negacji, `not`/`!`).
+
+Dla przykładu, `false && true` to `false`, ale `true and true` to `true`.
+
+#### Logiczny operator LUB (or)
+
+Podobnie jak I, logiczny operator LUB `or`/`||`` przyjmuje dwa wejścia logiczne i zwraca `true` jeśli
+jedno lub oba jego wejścia są `true`. Najlepiej używać go, gdy chcemy sprawdzić, czy któryś z wielu
+warunków jest prawdziwy, lub gdy jedna zmienna jest jedną z wielu możliwości
+
+Dla przykładu, `false or false` to `false`, ale `false || true` to `true`
+
+#### Logiczny operator NEGACJI (not)
+
+Zwróć szczególną uwagę na ostatni wiersz tabeli wyżej; `not`/`!` jest znany jako **logiczny operator negacji**
+Ten operator zmienia wartość pojedynczego wejścia na przeciwną, więc w wyrażenii `!c`, `c` jest wartością logiczną
+( `true`/ `false` ), a `!` zamieni `true` na `false`, a `false` na `true`.
+Jest to równoważne z pytaniem "czy `c` jest `false`". Ten operator przydaje się, gdy chcesz
+sprawdzić, czy jakiś warunek nie został spełniony.
+
+Dla przykładu, `!(a == b)` to to samo co `a != b`.
+Oraz, `not (a <= b)` to to samo co `a > b`.
+
+
+Zwróc uwagę, że używamy nawiasów, aby najpierw wykonywać wyrażenie logiczne wewnątrz,
+a dopiero potem je zanegować.
+
+#### Ulepszanie naszego programu
+
+The state has passed new regulations and now we must upgrade our Oracle program to comply.
+The new law stipulates a maximum age for driver's licenses — <u>those 65 years and older are
+no longer allowed to operate a motor vehicle</u>.
+
+We need to expand on our boolean condition to abide by this new requirement. Currently,
+`age >= 18` sets the *lower bound* for the range of acceptable values.
+We are missing something that sets the *upper bound*, which should be 65. 
+A boolean expression that checks if the age is less than 65 could look like `age < 65`.
+Note that we use `<` instead of `<=` because 65 year olds are banned from driving.
+
+Now we have `age >= 18` and `age < 65`, which must be combined in some way.
+We need to somehow specify that BOTH must be true — the person must be 
+18 or older AND younger than 65 to get a driver's license. 
+
+Looking back at the table in [Compound boolean expressions](#compound-boolean-expressions), 
+we can see that the `and`/`&&` operator fits this situation best.
+We can write this compound condition like `age >= 18 and age < 65`. Note
+that the left/right order here does not matter, meaning that
+`age < 65 and age >= 18` is an equivalent condition.
+
+Zostały uchwalone nowe przepisy i teraz musimy modernizować nasz program, aby je obsłużyć.
+Nowe prawo określa maksymalny wiek dla kogoś, kto chce mieć prawo jazdy - _osoby w wieku 65 lat i starsze nie mogą już prowadzić pojazdów mechanicznych_.
+
+Musimy rozszerzyć nasz warunek, aby spełnić ten nowy wymóg.
+Obecnie, `age >= 18` określa *dolną granicę* dla zakresu dopuszczalnych wartości.
+Brakuje nam czegoś, co ustawi *górną granicę*, którą powinno być `65`.
+
+
+Wyrażenie logiczne, które sprawdza czy wiek jest mniejszy niż `65` może wyglądać tak: `age < 65`.
+Zauważ, że używamy `<` zamiast `<=`, ponieważ 65-latkowie mają zakaz prowadzenia pojazdów.
+
+Teraz mamy `age >= 18` i `age < 65`, które muszą być w jakiś sposób połączone.
+Musimy jakoś określić, że OBA muszą być prawdziwe - osoba musi być
+18 lub starsza ORAZ młodsza niż 65, aby otrzymać prawo jazdy.
+
+Patrząc na tabelę w [Złożone wyrażenia logiczne](#zlozone-wyrazenia-logiczne),
+widzimy, że operator `and`/`&&` najlepiej pasuje do tej sytuacji.
+Możemy zapisać ten warunek jako `age >= 18 and age < 65`.
+Zauważ że kolejność lewo/prawo nie ma tutaj znaczenia, co oznacza, że
+`age < 65 and age >= 18` jest warunkiem równoważnym.
+
+
+```cpp title="🔹 Sprawdzacz Prawo Jazdy 3000"
+#include <iostream>
+
+int main()
+{
+	std::cout << "Welcome to the Driver's License Oracle 3000\n";
+	std::cout << "Please enter your year of birth: ";
+
+	int yearOfBirth;
+	std::cin >> yearOfBirth;
+
+	// W momencie pisania tej lekcji mamy 2022 rok
+	int age = 2022 - yearOfBirth;
+
+	// highlight-next-line
+	if (age >= 18 and age < 65)
+	{
+		std::cout << "You can legally get a driver's license\n";
+	}
+	else
+	{
+		std::cout << "You cannot legally get a driver's license\n";
+	}
+}
+```
+
+:::danger Łączenie operatorów równości lub operatorów relacyjnych
+Może Cię kusić, aby warunek użyty powyżej zapisać jako `18 <= age < 65`.
+To **nie zadziała**. Skompiluje się, aczkolwiek będzie dawać niepoprawny wynik - zawsze `true`.
+
+Taki sam problem możemy zaobserwować w przypadku operatorów równości.
+Dla przykładu, `age1 == age2 == 18` lub `age1 != age2 != 35`, oba będą zachowywać się podobnie,
+zawsze zwracajać `true` lub `false`.
+
+Nigdy nie próbuj łączyć w taki sposób operatorów równości lub operatorów relacyjnych, zamiast tego
+zawsze używaj operatorów `and`/`&&` lub `or`/`||`, aby łączyć całe warunki.
+
+
+Wyjaśnienie dlaczego działa to w taki sposób znajdziej tu [Typ `bool` » konwersja z `int` na `bool`](/learn/course/basics/conditions/booleans/#konwersja-z-int-na-bool).
+:::
+
+### Kolejność operacji
+
+Podobnie jak operatory matematyczne, operatory logiczne również mają swój priorytet,
+którego ściśle przestrzegają.
+Podobnie jak w przypadku "PEMDAS", nawiasy są zawsze liczone peirwsze,
+a pozostałe operatory wg priorytetów wymienionych niżej.
+**Najwyższy priorytet jest na górze.**
+
+:::note PEMDAS
+PEMDAS z angielskiego to skrótowiec od _**P**arentheses, **E**xponents, **M**ultiplication and **D**ivision, **A**ddition and **S**ubtraction_, co tłumaczy się na **N**awiasy, **P**otęgi, **M**nożenie i **D**zielenie, **D**odawanie i **O**dejmowanie.
+
+
+Służy on do zapamiętania poprawnej kolejności podstawowych operacji matematycznych.
+:::
+
+| Operator | Nazwa | Łączność |
+| -------- | -------------- | ----------- |
+| `!` `not` | Logiczna NEGACJA | Prawo-do-lewo 🡠 |
+| `*` `/` `%` | Mnożenie/Dzielenie  | Lewo-do-prawo 🡢 |
+| `+` `-` | Dodawanie/Odejmowanie | Lewo-do-prawo 🡢 |
+| `<` `<=` `>` `>=` | Operatory relacyjne | Lewo-do-prawo 🡢 |
+| `==` `!=` | Operatory równości | Lewo-do-prawo 🡢 |
+| `&&` `and` | Logiczne I | Lewo-do-prawo 🡢 |
+| <code>&#x7C;&#x7C;</code> `or` | Logiczne LUB | Lewo-do-prawo 🡢 |
+
+Użyjmy tej tabelki do przeanalizowania następujących przykładów:
+
+```cpp title="🔹 Priorytet Operacji"
+a > 10 and a < 100 or a == 150
+// równoważne z
+(a > 10 and a < 100) or a == 150
+
+a * 4 == b + 5
+// równoważne z
+(a * 4) == (b + 5)
+
+not a or b < 3701
+// równoważne z
+(not a) or (b < 3701)
+
+not a != false
+// równoważne z
+(not a) != false
+```
+:::tip Używaj nawiasów do forsowania kolejności operacji
+Dobrą praktyką jest nie polegać zbytnio na regułach pierwszeństwa operatorów.
+Programistom może być trudno pamiętać wszystkie priorytety operatoró,
+więc pisanie dużej ilości kodu zależnego od tych reguł może sprawić, że będzie on
+mnij czytelne i trudniejszy do zrozumienia.
+Jeśli chcesz, aby jakieś podwyrażenie było obliczane jako pierwsze, zastanów się,
+czy użycie nawiasów nie będzie dobrym pomysłem.
+
+Więc, zamiast pisać `a and b and c or a and not b`, zastanów się czy lepiej nie będzie napisać `(a and b and c) or (a and not b)`.
+:::
