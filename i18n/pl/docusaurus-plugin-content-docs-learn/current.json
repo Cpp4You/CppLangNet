@@ -35,6 +35,10 @@
     "message": "💻 Przykłady",
     "description": "The label for category 💻 Examples in sidebar defaultSidebar"
   },
+  "sidebar.defaultSidebar.category.4. Conditions": {
+    "message": "4. Warunki",
+    "description": "The label for category 4. Conditions in sidebar defaultSidebar"
+  },
   "sidebar.defaultSidebar.category.5. Arrays": {
     "message": "5. Tablice",
     "description": "The label for category 5. Arrays in sidebar defaultSidebar"
