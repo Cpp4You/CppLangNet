@@ -1,0 +1,277 @@
+---
+sidebar_label:		"3. Typ boolowski"
+title:				"Typ boolowski"
+description:		"Lekcja: Typ boolowski w C++"
+tags:				[condition, if, else, else-if, compound, bool, boolean]
+hide_title:			true
+---
+
+import Columns			from '@site-comps/Columns';
+
+# Typ boolowski
+
+## Typ `bool`
+
+Jeśli pamiętasz z [lekcji o zmiennych](/learn/course/basics/variables/#typ-zmiennej),
+jednym z podstawowych typów jest `bool`. Typ ten reprezentuje **wartość logiczną**
+(wartość boolowską), która ma tylko jedną wartość `true` lub `false`.
+
+[Wyrażenia boolowskie](/learn/course/basics/conditions/intro/#wyrażenia-logiczne),
+o których dowiedzieliśmy się na początku tej lekcji o warunkach, ewaluują się do wartości logicznej (boolowskiej).
+Możemy więc stworzyć zmienne, które są wynikami takich wyrażeń logicznych, a następnie
+dalej używać tych zmiennych `bool` w warunkach instrukcji if.
+
+W C++ istnieją dwie wbudowane wartości logiczne - `true` i `false`. Można ich użyć wszędzie tam,
+gdzie oczekiwany jest typ `bool` lub wyrażenie boolowskie. Dla przykładu:
+
+```cpp title="🔹 Literały boolowskie"
+bool var1 = true;
+bool var2 = false;
+```
+
+Są też ciekawsze rzeczy, które możemy zrobić ze zmiennymi `bool`.
+Każde wyrażenie boolean można przypisać do zmiennej. Połączenie tego z
+instrukcjami if może w niektórych przypadkach skrócić kod i uczynić go bardziej czytelnym.
+
+```cpp title="🔹 Używanie zmiennych boolowskich do określania pogody"
+std::string name;
+
+std::cout << "Enter your first name: ";
+std::cin >> name;
+
+// Użytkownik jest szczęśliwy, jeśli jego imię ma więcej niż 5 znaków
+// highlight-next-line
+bool isLucky = name.size() > 5;
+
+// Spróbuj pozmieniać te wartości i zobacz co się stanie!
+// highlight-start
+bool isTuesday = true;
+bool isCloudy = false;
+// highlight-end
+
+std::string weather = "sunny";
+
+if (not isTuesday and isCloudy) {
+	weather = "raining";
+} else if (isTuesday) {
+	if (isCloudy) {
+		weather = "overcast";
+	} else if (not isLucky) {
+		weather = "downpouring";
+	}
+}
+
+std::cout << "It is currently " << weather << " in your location!";
+```
+
+Wcześniej wprowadzone [operatory logiczne](/learn/course/basics/conditions/intro/#złożone-wyrażenia-logiczne)
+mogą zostać użyte do stworzenia nowych zmiennych boolowskich:
+
+```cpp title="🔹 Używanie operatorów logicznych na boolach"
+bool isPrecipitating = weather == "raining" or weather == "downpouring";
+bool isRainbowMade   = isPrecipitating and not isCloudy;
+bool isBoringDay     = not isRainbowMade;
+```
+
+## Wczytywanie/Wypisywanie typów boolowskich
+
+Jeśli próbowałeś sam eksperymentować z typem `bool`, mogłeś zauważyć, że wypisanie zmiennej lub wyrażenia
+tego typu nie wyświetla `true` czy `false`, a `1` lub `0`.
+Jest to domyślne zachowanie w C++, które jest związane z [następną sekcją](#konwersja-z-int-na-bool).
+
+Możesz zmienić to zachowanie w prosty sposób zmieniając jedno z domyślnych ustawień `std::cout`.
+Po prostu "wypisz" flagę `std::boolalpha` za pomocą `std::cout`. Spowoduje to, że każde przyszłe wyrażenie logiczne lub
+zmienna typu `bool` zostanie wypisana w postaci `true`/`false`, zamiast `1`/`0`.
+
+:::tip Dołączenie odpowiedniego nagłówka
+Upewniej się, że dołączyłeś nagłówek `<iomanip>` (`#include <iomanip>`), aby móc użyć `std::boolalpha`.
+:::
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Wypisywanie true/false"
+std::cout << true << " " << false << "\n";
+// highlight-next-line
+std::cout << std::boolalpha;
+std::cout << true << " " << false << "\n";
+```
+</div>
+<div>
+
+```plaintext title="Wynik"
+1 0
+true false
+```
+</div>
+</Columns>
+
+Tak samo `std::cin` domyślnie akceptuje tylko `0` lub `1` przy wprowadzaniu do zmiennej `bool`.
+To zachowanie może być również zmienione przez "wprowadzenie" do flagi `std::boolalpha`.
+W poniższym przykładzie, użytkownik najpierw wprowadzi `0`, co reprezentuje `false`.
+Następnie, wprowadzi `true` po zastosowaniu ustawienia `std::boolalpha`.
+
+<Columns columns={['2fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Wprowadzanie true/false"
+bool var;
+
+std::cout << "Integral form: ";
+std::cin >> var;
+
+// highlight-next-line
+std::cin >> std::boolalpha;
+
+std::cout << "Alphanumeric form: ";
+std::cin >> var;
+```
+</div>
+<div>
+
+```plaintext title="Input/Output"
+Integral form: 1
+Alphanumeric form: true
+```
+</div>
+</Columns>
+
+Jako ćwiczenie, spróbuj zmodyfikować nasz [program pogodowy](#typ-bool), tak, aby przyjmował `true`/`false`,
+zamiast `1`/`0`.
+
+:::note Ciekawostka
+Nazwa "boolalpha" pochodzi ze złączenia słów boolean i alphanumeric (ang.: *alfanumeryczny*)
+:::
+
+## Konwersja pomiędzy `int` a `bool`
+
+C++ posiada kolejne, dość denerwujące, zachowanie, które powoduje, że liczby i typy boolowskie mogą
+się niejawnie konwertować pomiędzy sobą.
+Wartość boolowska `false` odpowiada liczbie o wartośći `0`, a `true` wartości `1`.
+Tak samo liczba o wartości `0` odpowiada wartości boolowskiej `false`, a każda inna od `0`
+odpowiada wartości `true`.
+
+```cpp title="🔹 Przykład konwersji pomiędzy liczbami a boolami"
+int x = true; // x to 1
+int y = false; // y to 0
+
+bool a = 1; // a to true
+bool b = 25; // b to true
+bool c = -194; // c to true
+bool d = 0; // d to false
+```
+
+Mimo, że to zachowanie może się wydawać przydatne, czasem może się zdarzyć, że konwersja wydarzy się wtedy,
+kiedy nie jest chciana.
+Z tego powodu, jeśli chcesz intencjonalnie spowodować konwersję pomiędzy `int` (lub każdym innym typem całkowitoliczbowym),
+a `bool` użyć *casta*.
+
+```cpp title="🔹 Castowanie pomiędzy int a bool"
+int x = static_cast<int>(true); // Nowoczesny styl castowania
+int y = (int) false; 			// Castowanie w stylu C
+
+bool a = static_cast<bool>(1);
+bool b = (bool) 0;
+```
+
+Są dwa sposoby na jakie możemy przeprowadzić takie castowanie w C++ - castowanie *nazwane*,
+a konkretnie *static_cast* (nowoczesny sposób), lub castowanie w stylu C.
+
+Różnice między nimi poznasz w kursie dla średniozaawansowanych. Na razie wiedz tylko, że,
+w przypadku konwersji pomiędzy `int`, a `bool`, obie opcje są równoważne.
+Jednak w nowoczesnym C++ generalnie preferowane jest używanie `static_cast`.
+
+### Niechciane konwersje
+
+Niechciane konwersje mogą powodować problemy tak, gdzie najmniej się ich spodziewasz.
+Jednym z przykładów jest problem,
+który omówiliśmy w [złożone warunki logiczne](/learn/course/basics/conditions/intro/#złożone-warunki-logiczne).
+Normalnie, jeśli chcemy połączyć dwa wyrażenia logiczne, używamy do tego operatorów logicznych:
+
+```cpp
+if (x > 10 && x < 25) { ... }
+```
+
+Może Cię kusić, aby przepisać ten warunek jako `10 < x < 25`.
+**To spowoduje, że program będzie się zachowywać niepoprawnie**, ponieważ to wyrażenie będzie zawsze prawdziwe.
+Dzieje się tak, ponieważ zachodzi tutaj ukryta konwersja z `bool` na `int`.
+To wyrażenie jest interpretowane w taki sposób: `(10 < x) < 25`.
+
+
+Zobaczmy więc w jaki sposób to wyrażenie zawsze ewaluuje się do `true` odnosząc się do
+naszej [tabeli priorytetów operatorów](/learn/course/basics/conditions/intro/#kolejność-operacji):
+
+<Columns columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Niepoprawne łączenie warunków z x = 15"
+10 < x < 25    // Początkowe wyrażenie
+10 < 15 < 25   // Podstawiamy x
+(10 < 15) < 25 // Kolejność operatorów
+(true) < 25    // Ewaluujemy podwyrażenie
+1 < 25		   // Konwersja z bool na int
+true		   // Ewaluujemy wyrażenie
+```
+</div>
+<div>
+
+```cpp title="🔹 Niepoprawne łączenie warunków z x = 7"
+10 < x < 25   // Początkowe wyrażenie
+10 < 7 < 25   // Podstawiamy x
+(10 < 7) < 25 // Kolejność operatorów
+(false) < 25  // Ewaluujemy podwyrażenie
+0 < 25	      // Konwersja z bool na int
+true	      // Ewaluujemy wyrażenie
+```
+</div>
+</Columns>
+
+Ten sam problem może wystąpić również w innych, podobnych scenariuszach.
+Na przykład, podczas sprawdzania, czy pojedyncza zmienna jest jedną z wielu możliwości,
+poprawnym sposobem byłoby `x == 5 || x == 10 || x == 15`.
+Kusząca opcja `x == 5 || 10 || 15` **nie zadziała** z podobnego powodu jak wyżej -
+zawsze będzie to prawda. Zobaczmy dlaczego:
+
+<Columns columns={['1fr', '1fr']}>
+<div>
+
+```cpp title="🔹 Niepoprawne łączenie warunków z x = 5"
+x == 5 || 10 || 15     // Początkowe wyrażenie
+5 == 5 || 10 || 15     // Podstawiamy x
+((5 == 5) || 10) || 15 // Kolejność operatorów
+((true) || 10) || 15   // Ewaluujemy podwyrażenie
+(true || true) || 15   // Konwersja z int na bool
+true || 15             // Ewaluujemy podwyrażenie
+true || true           // Konwersja z int na bool
+true                   // Ewaluujemy wyrażenie
+```
+</div>
+<div>
+
+```cpp title="🔹 Niepoprawne łączenie warunków z x = 7"
+x == 5 || 10 || 15     // Początkowe wyrażenie
+7 == 5 || 10 || 15     // Podstawiamy x
+((7 == 5) || 10) || 15 // Kolejność operatorów
+((false) || 10) || 15  // Ewaluujemy podwyrażenie
+(false || true) || 15  // Konwersja z int na bool
+true || 15             // Ewaluujemy podwyrażenie
+true || true           // Konwersja z int na bool
+true                   // Ewaluujemy wyrażenie
+```
+</div>
+</Columns>
+
+
+## Konkluzja
+
+Podsumowaując, nauczyliśmy się:
+- Rozdzielać warunkowe ścieżki w programie za pomocą [instrukcji warunkowej if](/learn/course/basics/conditions/intro/#instrukcja-warunkowa)
+- Tworzyć [wyrażenia logiczne](/learn/course/basics/conditions/intro/#wyrażenia-logiczne)
+- [Łączenia kilka warunków](/learn/course/basics/conditions/compound/#złożona-instrukcja-warunkowa) we wzajemnie wykluczające się grupy
+- [Zagnieżdżać ify](/learn/course/basics/conditions/compound/#zagnieżdżanie-instrukcji-warunkowych) wewnątrz siebie
+- Redukować powtarzanie się kodu poprzez stosowanie [zasady DRY](/learn/course/basics/conditions/compound/#używanie-zmiennych-aby-ograniczyć-powtarzanie-kodu)
+- Używać [zmiennych boolowskich](#typ-bool), aby ulepszyć nasz kod
+
+To była długa podróż, ale umiejętności, które zebrałeś w tej lekcji są bardzo ważne
+dla przyszłej drogi. Przeczytaj kilka razy koncepcje przedstawione w tej lekcji, ponieważ podstawy
+wyrażeń logicznych i instrukcji warunkowych są bardzo ważną umiejętnością.
