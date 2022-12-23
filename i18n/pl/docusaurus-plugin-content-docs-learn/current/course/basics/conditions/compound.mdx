@@ -1,0 +1,396 @@
+---
+sidebar_position:	4
+sidebar_label:		"2. Compound conditions"
+title:				"Compound Conditions"
+description:		"Lesson: compound conditions in C++"
+tags:				[condition, if, else, else-if, compound, bool, boolean]
+hide_title:			true
+---
+
+<!-- Components -->
+import Tabs			from "@theme/Tabs";
+import TabItem		from "@theme/TabItem";
+
+<!-- Presets -->
+import NotFinished	from "@site/i18n/en/presets/NotFinished.mdx";
+
+
+# Żłożone warunki
+
+Do tej pory wiedzieliśmy, jak reprezentować serię potencjalnych przypadków w naszym kodzie C++ za pomocą bloku `if`.
+Dowiedzieliśmy się również, jak możemy napisać dwa wzajemnie wykluczające się przypadki, wykorzystując konstrukcję `if/else`.
+Następnie zobaczyliśmy, jak łączyć ze sobą wyrażenia boolean za pomocą operatorów logicznych.
+
+Dalej, bardzo często programiści mają do czynienia z trzema lub więcej wzajemnie wykluczającymi się przypadkami.
+Możemy skutecznie radzić sobie z taką sytuacją dzięki nowej koncepcji: instrukcji `if/else`.
+
+## Złożona instrukcja warunkowa
+
+```cpp title="🔹 Anatomia instrukcji if/else if/else"
+if (/* warunek logiczny */)
+{
+	// Kod w środku wykonuje się tylko wtedy, gdy warunek jest prawdziwy
+}
+else if (/* boolean condition */)
+{
+	// Kod w środku wykonuje się tylko wtedy, kiedy poprzedni warunkek był fałszywy
+	// i obecny warunek jest fałszywy
+}
+else
+{
+	// Kod w środku wykonuje się tylko wtedy, kiedy wszystkie poprzednie warunki były
+	// fałszywe
+}
+```
+
+Instrukcja `if/else if/else` może reprezentować wiele wykluczających się warunków.
+Warunki są wykonywane od góry do dołu i jeśli którykolwiek z nich ewaluuje się do prawdy,
+kod w środku zostanie wykonany, a egzekucja programu będzie kontynuowana poza całą instrukcją.
+Jeśli żaden z warunków nie będzie prawdziwy, wejdziemy do bloku `else`.
+Dlatego więc, wszystkie przypadki są **wzajemnie wykluczające się**.
+
+Blok `else` jest opcjonalny, a bloków `else if` może być dowolna ilość.
+Możesz nawet zauważyć, że `if/else` omówiony wcześniej to przypadek, kiedy
+nie mamy żadnych bloków `else if`.
+
+Możemy więc teraz zauważyć jak `if`, `if/else` oraz `if/else if/else` to jeden wielki
+system, który nazywamy **instrukcją warunkową**.
+
+
+Instrukcja warunkowa zawsze zaczyna się blokiem `if`, po którym opcjonalnie jest
+dowolna ilość bloków `else if`, po którym opcjonalnie może być jeden blok `else`.
+
+
+Powinieneś dodawać osobne przypadki do dodatkowych bloków `else if/else`, tylko,
+jeśli są one wzajemnie wykluczające się. Jeśli masz kilka warunków, które są od
+siebie niezależne, powinieneś zapisać je w osobnych instrukcjach `if`.
+
+Użyjmy tego czego nauczyliśmy się do tej pory, aby ulepszyć nasz poprzedni program.
+
+### Ulepszenie sprawdzaczki
+
+Został wprowadzony nowy system wydawania prawa jazdy. Kierowcy dostaną inna klasę
+prawa jazdy zależnie od ich wieku, według następujących zasad:
+
+- Kierowcy w wieku od `18` od `21` dostaną prawo jazdy klasy C
+- Kierowcy w wieku od `22` od `30` dostaną prawo jazdy klasy B
+- Kierowcy w wieku od `31` od `50` dostaną prawo jazdy klasy A
+- Kierowcy w wieku od `51` od `64` dostaną prawo jazdy klasy C
+- Kierowcy poza tymi zakresami nie mogą dostać prawa jazdy
+
+```cpp title="🔹 Sprawdzacz Prawo Jazdy 4000"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 4000\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	// W momencie pisania tej lekcji mamy 2022 rok
+	int age = 2022 - yearOfBirth;
+
+	// highlight-start
+	if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+		std::cout << "You can legally get a Class C driver's license\n";
+	} else if (age >= 22 and age <= 30) {
+		std::cout << "You can legally get a Class B driver's license\n";
+	} else if (age >= 31 and age <= 50) {
+		std::cout << "You can legally get a Class A driver's license\n";
+	} else {
+		std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
+	}
+	// highlight-end
+}
+```
+
+Analiza nowego kodu powinna być, mam nadzieję, w miarę prosta. Dla pierwszego przypadku, dla klasy C,
+musimy obsłużyć dwa warunki: użytkownik ma być pomiędzy 18 a 21 **LUB** 51 a 64 lat.
+Używamy więc [złożonego warunku](#zlozone-warunki) by zaprezentować tę logikę poprze połączenie dwóch operatorów
+`and` oraz jednego `or`. W ten sposób sprawdzamy oba zakresy w jednym czasie.
+
+Móglibyśmy też obsłużyć przypadek dla klasy C bez użycia operatora `or`, dodając kolejne wyrażenie z `and`
+w dodatkowym `else if`. Jednak z uwagi na to, że oba bloki wykonywałyby ten sam, lepiej połączyć je w jedno wyrażenie,
+aby ograniczyć powtarzanie pisania tego samego kodu.
+
+Ta generalna praktyka, która mówi o tym, aby nie powtarzać pisania tego samego kodu nazywa się **DRY**
+(**D**on't **R**epeat **Y**ourself - ang.: *Nie Potwarzaj Się*), jest to bardzo przydatna zasada, której
+warto przestrzegać, nie tylko przy pisaniu kodu.
+
+Wracając do poprzedniego tematu, pozostałe przypadki są obsłużone za pomocą `else if`.
+Każdy przypadek jest obsłużony dwoma wyrażeniami logicznymi połączonymi operatorem logicznym `and`, definiujemy w ten sposób
+*dolną* i *górną* granicę dla każdego przypadku.
+Na koniec używamy bloku `else`, żeby złapać każdy pozostały przypadek.
+
+### Używanie zmiennych, aby ograniczyć powtarzanie kodu
+
+Może się wydawać dziwne, że po całej tej gadce o nie powtarzaniu się, mamy prawie tę samą linię kodu powtórzoną trzy razy.
+Zauważ, że `std::cout << "..."` jest niemal identyczny dla wszystkich prawo jazdy klasy A, B i C - tylko jedna litera jest inna.
+w każdym z tych przypadków. Możemy to wykorzystać na naszą korzyść tworząc *zmienną*, która przechowuje pojedynczy znak.
+Następnie zmieniamy nasze instrukcje if, aby przypisać tej zmiennej odpowiednią klasę prawa jazdy. Na koniec wypisujemy
+ostateczną wiadomość połączoną z utworzoną przez nas zmienną.
+
+```cpp title="⚠️ Sprawdzacz Prawo Jazdy 4500"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 4500\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+
+	// W momencie pisania tej lekcji mamy 2022 rok
+	int age = 2022 - yearOfBirth;
+
+	// highlight-next-line
+	char licenseClass = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
+
+	if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+		licenseClass = 'C';
+	} else if (age >= 22 and age <= 30) {
+		licenseClass = 'B';
+	} else if (age >= 31 and age <= 50) {
+		licenseClass = 'A';
+	} else {
+		std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
+	}
+
+	// warning-next-line
+	std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+}
+```
+
+Kod powyżej robi dokładnie to co opisaliśmy. Stworzyliśmy zmienną typu `char`, która przechowuje klasę prawa jazdy,
+a wewnątrz ścieżek if-a przypisaliśmy do niej odpowiednią klasę.
+Jednak kod ten nie zadziała tak jak chcemy!
+Spójrzmy z powrotem na [anatomię instrukcji if](/learn/course/basics/conditions/intro/#instrukcja-warunkowa),
+pod instrukcją zapisany jest komentarz
+"Kod poza wykonywany jest niezależnie od tego, czy warunek jest prawdziwy czy fałszywy".
+
+Więc kod ten zadziała poprawnie, jeśli użytkownik będzie mógł legalnie dostać prawo jazdy.
+Wprowadzając np. `2000` program wypisze `You can legally get a Class C driver's license`, tak, jak chcieliśmy.
+Jednak, wprowadzając np. `2015`, dostaniemy:
+
+```
+You cannot legally get a driver's license because you are not between 18 and 64 years old
+You can legally get a Class X driver's license
+```
+
+... co jest błędne! Program wypisuje oba pr zypadki *ponieważ* przneieśliśmy poprawne wyjście poza instrukcję if.
+To co musimy zrobić, to stworzyć kolejną instrukcję if, która sprawdzi czy daliśmy użytkownikowi ważne prawo jazdy czy nie.
+Możemy to łatwo zrobić, dzięki temu, że ustawiliśmy `'X'` jako domyślną wartość `licenseClass`. Oznacza to, że każdy kto
+nie otrzymał prawa jazdy, nadal będzie miał `'X'` jako wartość `licenseClass`, a my możemy to sprawdzić za pomocą warunku.
+
+```cpp title="🔹 Sprawdzacz Prawo Jazdy 4500"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 4500\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	// W momencie pisania tej lekcji mamy 2022 rok
+	int age = 2022 - yearOfBirth;
+
+	char licenseClass = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
+
+	if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+		licenseClass = 'C';
+	} else if (age >= 22 and age <= 30) {
+		licenseClass = 'B';
+	} else if (age >= 31 and age <= 50) {
+		licenseClass = 'A';
+	// highlight-next-line
+	} // Usunęliśmy blok else, aby obsłużyć ten przypadek dalej w ifie
+
+	// highlight-start
+	if (licenseClass != 'X') {
+		std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	} else {
+		std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
+	}
+	// highlight-end
+}
+```
+
+Stworzyliśmy tutaj nową instrukcję if, która sprawdza czy `licenseClass != 'X'`.
+Sprawdzamy w niej, czy wydaliśmy użytkownik prawo jazdy, czy nie;
+w zależności od wyniku wypisujemy odpowiednią wiadomość.
+W ten sposób na nowo sprawiliśmy, że te dwa warunki się wzajemnei wykluczają
+
+Zauważ, że używająć zmiennych i aplikująć zasadę DRY,
+zmniejszyliśmy ilość powtórzeń w naszym kodzie.
+Sprawiło to, że kod ten jest bardziej czytelne, prostszy w utrzymaniu i prostszy w debugowaniu.
+
+### Zagnieżdżanie instrukcji warunkowych
+
+Wnętrze bloków `if/else if/else` nie jest w żaden sposób specjalne. Można do niego wpisać jakikolwiek poprawny kod,
+tak samo jak do bloku `main`. Oznacza to, że możemy "zagnieżdżać" w sobie instrukcje warunkowe, poprzez wpisanie
+jednej w drugą.
+
+```cpp title="🔹 Przykład zagnieżdżonej instrukcji if"
+if (/* Warunek 1 */) {
+	// Kod tutaj wykona się, jeśli Warunek 1 jest prawdziwy
+
+	// Z uwagi na to, że ta instrukcja if znajduje się w innej instrukcji if
+	// zostaje wykonana tylko, jeśli wejdziemy do ciała zewnętrznego ifa,
+	// czyli tylko, jeśli Warunek 1 jest prawdziwy
+	// highlight-start
+	if (/* Warunek 2 */) {
+		// Kod tutaj wykona się tylko, jeśli Warunek 2 jest prawdziwy
+	} else if (/* Warunek 3 */) {
+		// Kod tutaj zostaje wykonany tylko jeśli Warunek 2 jest fałszywy, a Warunek 3 prawdziwy
+	}
+	// highlight-end
+
+	// Kod tutaj wykona się niezależnie od wyniku Warunku 1 i Warunku 2,
+	// jednak pamiętaj, że dalej jesteśmy wewnątrz ifa z Warunek 1
+} else {
+	// Kod tutaj wykona się tylko, jeśli Warunek 1 prawdziwy
+}
+
+// Kod tutaj zostanie wykonany niezaleznie od żadnego ifa wyżej
+```
+
+Możemy tutaj zobaczyć przykład zagnieżdżonej instrukcji if.
+Mamy tutaj jedną instrukcję if/else z instrukcją if/else if wewnątrz.
+
+Kiedy program ten się wykona, pierwszym krokiem jest sprawdzenie wyniku Warunku 1.
+Jeśli wynik jest prawdziwy, wejdziemy do ciała tego ifa i wykonamy kod w środku.
+W przeciwnym wypadku, kiedy Warunek 1 jest fałszywy, wskoczymy do bloku else i wykonamy kod z niego.
+Kiedy cały ten proces się zakończy, wyjdziemy całkowicie z instrukcji if i będziemy kontynuować
+wykonanie dalej.
+
+Zauważmy tutaj, że w przypadku, gdy Warunek 1 jest prawdziwy, część jego ciała zawiera *kolejną instrukcję if*.
+Oznacza to więc, że ponownie podejmie logiczną decyzję. Tak więc, jeśli Warunek 1 jest prawdziwy, wykonanie
+programu będzie kontynuowane w bloku tego ifa, aż dojdziemy do zagnieżdżonej instrukcji if.
+Następnie program sprawdzi Warunek 2. Dla prawdy, wykona kod wewnątrz zagnieżdżonego ifa,
+dla nieprawdy sprawdzamy Warunek 3 - i ponownie, jeśli będzie on prawdziwy, wykonamy kod wewnątrz.
+
+Take note of how similar these processes are overall. Nothing really changed when analyzing the behavior
+of the outer if statement versus the inner if statement. If statements are extremely *modular* in this way —
+their behavior is the same in any context... at the beginning of `main`, at the end of `main`, inside
+another if statement, inside two if statements, inside an else body, etc.
+
+Zwróć uwagę na to, jak podobne są te procesy. Nic tak naprawdę nie zmieniło się podczas analizy zachowania
+zewnętrznej instrukcji if w porównaniu z wewnętrzną instrukcją if. Instrukcje if są niezwykle *modularne* -
+w ten sposób ich zachowanie jest takie samo w każdym kontekście... na początku `main`, na końcu `main`, wewnątrz
+innej instrukcji if, wewnątrz dwóch instrukcji if, wewnątrz ciała else, itd.
+
+Wykorzystajmy tę wiedzę, aby jeszcze bardziej ulepszyć nasz program:
+
+Rada Nadzorcza Bezpieczeństwa Transportu wydała nowy wymóg:
+osoby z dwoma lub więcej wypadkami nie kwalifikują się na prawo jazdy żadnej klasy bez względu na wiek.
+
+```cpp title="🔹 Sprawdzacz Prawo Jazdy 5000"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 5000\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	int numCrashes;
+	std::cout << "Please enter the number of crashes you have had: \n";
+	std::cin >> numCrashes;
+
+	// highlight-next-line
+	if (numCrashes < 2) {
+		// W momencie pisania tej lekcji mamy 2022 rok
+		int age = 2022 - yearOfBirth;
+
+		char licenseClass = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
+
+		if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+			licenseClass = 'C';
+		} else if (age >= 22 and age <= 30) {
+			licenseClass = 'B';
+		} else if (age >= 31 and age <= 50) {
+			licenseClass = 'A';
+		}
+
+		if (licenseClass != 'X') {
+			std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+		} else {
+			std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
+		}
+	// highlight-start
+	} else {
+		std::cout << "You cannot legally get a driver's license because you have " << numCrashes << " accidents\n";
+	}
+	// highlight-end
+}
+```
+
+Widać tutaj jak przenieśliśmy duży kawałek poprzedniego kodu do ciała instrukcji if z warunkiem `numsCrashes`.
+Oznacza to, że wykonamy ten kod tylko wtedy i tylko wtedy, gdy użytkownik brał udział w mniej mniej niż dwóch wypadkach.
+W przeciwnym razie, jeśli użytkownik brał udział w dwóch lub więcej wypadkach, system wypisuje powiadomienie,
+że nie użytkownik może otrzymać prawa jazdy.
+
+Teraz zauważ ponownie, że powtarzamy ten sam komunikat dwa razy w naszym kodzie. Oznacza to, że istnieje kolejna okazja
+aby zastosować zasadę DRY i uprościć nasz kod na potrzeby przyszłej konserwacji. Przyjrzyjmy się temu:
+
+#### Ponownie zastosowanie zasady DRY
+
+```cpp title="🔹 Sprawdzacz Prawo Jazdy 5500"
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 5500\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	int numCrashes;
+	std::cout << "Please enter the number of crashes you have had: \n";
+	std::cin >> numCrashes;
+
+	char licenseClass = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
+	// highlight-next-line
+	std::string illegalReason;
+
+	if (numCrashes < 2) {
+		// W momencie pisania tej lekcji mamy 2022 rok
+		int age = 2022 - yearOfBirth;
+
+		if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+			licenseClass = 'C';
+		} else if (age >= 22 and age <= 30) {
+			licenseClass = 'B';
+		} else if (age >= 31 and age <= 50) {
+			licenseClass = 'A';
+		} else {
+			// highlight-next-line
+			illegalReason = "you are not between 18 and 64 years old";
+		}
+	} else {
+		// highlight-next-line
+		illegalReason = "you have " + std::to_string(numCrashes) + " accidents";
+	}
+
+	if (licenseClass != 'X') {
+		std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	} else {
+		// highlight-next-line
+		std::cout << "You cannot legally get a driver's license because " << illegalReason << "\n";
+	}
+}
+```
+
+Możemy zauważyć, że kod został ulepszony na kilka sposobów. Po pierwsze, nie powtarzamy się
+już, co oznacza, że przyszłe utrzymanie jest znacznie łatwiejsze w przypadku, gdy Rada Nadzorcza zdecyduje się
+dodać więcej regulacji.
+
+Po drugie, rozseparowaliśmy kod odpowiedzialny za logikę oraz za wyświetlanie.
+Jeśli przeplatasz wyświetlanie z logiką programu (obliczenia, etc.),
+może to sprawić, że kod stanie się bardzo szybko zagmatwany.
+W naszym programie cała logika do określania `licenseClass` oraz `illegalReason` znajduje się w jednym ifie,
+a kdo odpowiedzialny za wyświetlanie wyniku do użytkownika w innym.
