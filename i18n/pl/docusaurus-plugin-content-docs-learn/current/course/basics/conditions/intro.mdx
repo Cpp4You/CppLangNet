@@ -75,14 +75,6 @@ if (/* warunek logiczny */)
 // Kod poza wykonywany jest niezależnie od tego, czy warunek jest prawdziwy czy fałszywy
 ```
 
-After an `if` keyword, we put a boolean condition inside of parentheses.
-Then, the braces that surround #2 create what's known as a **block of code**. <u>Everything inside this code block will be
-executed if and only if the condition is true</u>. Variables that are created in a code block live and die with that 
-code block — they are destroyed when the block ends (with the closing brace `}` ) and are completely inaccessible
-from outside it.
-
-Let's apply this to our Driver's License example by combining the if statement with the cases we previously determined:
-
 Aby użyć instrukcji `if`, potrzebujemy dwóch rzeczy:
 1. Warunek, który po obliczeniu daje wartość logiczną typu `bool` - `true`/`false`
 2. Kod, który wykona się, jeśli warunek będzie prawdziwy (wartość `true`)
@@ -125,15 +117,6 @@ int main()
 	// highlight-end
 }
 ```
-
-Notice here how we have two `if` statements, one for each case.
-The first one handles our Case A, where they can legally obtain a driver's license.
-The second one handles our Case B, where they cannot legally obtain a driver's license.
-
-Upon closer inspection, one fact should quickly become obvious — these cases are **mutually exclusive**.
-This means that it is not possible for both cases to be true; only one or the other can execute.
-C++ provides the `else` keyword to delineate mutually exclusive conditions. While the above code
-will work as expected, we can improve it like so:
 
 Zauważ, że mamy tu dwie instrukcje `if`, po jednym dla każdego przypadku.
 Pierwsza z nich obsługuje przypadek A, w którym użytkownik może legalnie uzyskać prawo jazdy.
@@ -229,16 +212,11 @@ możemy zobaczyć jak zakończyć nasz program poprzez stworzenie warunku logicz
 
 ## Wyrażenia logiczne
 
-Inside the parenthesis of an `if` statement is the **boolean expression**, i.e. an expression
-that evaluates to either `true` or `false`. C++ provides several new operators that allow
-us to form such an expression.
-
 Wewnątrz nawiasu instrukcji `if` znajduje się wyrażenie **logiczne**, czyli wyrażenie
 które ocenia się na `true` lub `false`.
 C++ posiada kilka operatorów, które pozwalają nam stworzyć takie wyrażenia.
 
 ### Operatory logiczne
-
 
 Below is a table that shows some of the **boolean operators** available in C++. A boolean operator
 is one that returns a boolean `true`/`false` based on its input(s). 
@@ -313,11 +291,6 @@ Możesz przekształcać i łączyć wyrażenia logiczne za pomocą tak zwanych *
 Są one podzbiorem operatorów logicznych wprowadzonych powyżej, ale są przeznaczone do przyjmowania
 wartości logicznych jako dane wejściowe
 
-C++ supports two equivalent forms of these operators, a textual version
-and a symbolic version. While the symbolic representation is more common in the wild, you may find
-the textual representation to be easier to understand and remember. You can use whichever you like
-best, but try to be consistent!
-
 C++ obsługuje dwie równoważne formy tych operatorów, wersję tekstową
 oraz wersję symboliczną. Chociaż symboliczna reprezentacja jest bardziej powszechna,
 reprezentacja tekstowa może być dla Ciebie łatwiejsza do zrozumienia i zapamiętania.
@@ -361,26 +334,6 @@ Zwróc uwagę, że używamy nawiasów, aby najpierw wykonywać wyrażenie logicz
 a dopiero potem je zanegować.
 
 #### Ulepszanie naszego programu
-
-The state has passed new regulations and now we must upgrade our Oracle program to comply.
-The new law stipulates a maximum age for driver's licenses — <u>those 65 years and older are
-no longer allowed to operate a motor vehicle</u>.
-
-We need to expand on our boolean condition to abide by this new requirement. Currently,
-`age >= 18` sets the *lower bound* for the range of acceptable values.
-We are missing something that sets the *upper bound*, which should be 65. 
-A boolean expression that checks if the age is less than 65 could look like `age < 65`.
-Note that we use `<` instead of `<=` because 65 year olds are banned from driving.
-
-Now we have `age >= 18` and `age < 65`, which must be combined in some way.
-We need to somehow specify that BOTH must be true — the person must be 
-18 or older AND younger than 65 to get a driver's license. 
-
-Looking back at the table in [Compound boolean expressions](#compound-boolean-expressions), 
-we can see that the `and`/`&&` operator fits this situation best.
-We can write this compound condition like `age >= 18 and age < 65`. Note
-that the left/right order here does not matter, meaning that
-`age < 65 and age >= 18` is an equivalent condition.
 
 Zostały uchwalone nowe przepisy i teraz musimy modernizować nasz program, aby je obsłużyć.
 Nowe prawo określa maksymalny wiek dla kogoś, kto chce mieć prawo jazdy - _osoby w wieku 65 lat i starsze nie mogą już prowadzić pojazdów mechanicznych_.
