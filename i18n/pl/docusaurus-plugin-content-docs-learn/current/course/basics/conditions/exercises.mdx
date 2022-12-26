@@ -1,0 +1,50 @@
+---
+title:				"Warunki » Ćwiczenia"
+description:		"Lekcja: ćwiczenia do warunków w C++"
+tags:				[condition, if, else, else-if, compound, bool, boolean, exercise]
+hide_title:			true
+---
+
+# Warunki » Ćwiczenia
+
+Załóżmy, że chcemy sprzedawać bilety na basen w różnych cenach, zależnie od wieku.
+Tutaj mamy kryteria:
+
+- dzieci poniżej 6 r.ż.: free
+- ludzie pomiędzy 6 a 17 r.ż.: 4zł
+- dorośli do 59 r.ż. włącznie: 8zł
+- dorośli powyżej 60 roku życia: 6zł
+
+Użyjemy instrukcji `else if`, aby sprawdzić te warunki:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+	std::cout << "BASEN - BILETY\n";
+	std::cout << "Prosze wprowadzic rok urodzenia: ";
+
+	int age;
+	std::cin >> age;
+
+	if (age < 6)
+		std::cout << "Mozesz wejsc za darmo.\n";
+	// highlight-next-line
+	else if (age <= 17)
+		std::cout << "Cena biletu: 4zl.\n";
+	// highlight-next-line
+	else if (age <= 59)
+		std::cout << "Cena biletu: 8zl.\n";
+	else
+		std::cout << "Cena biletu 6zl.\n";
+}
+```
+
+Spełnienie warunku w którymkolwiek z `if` (włączając `else if`) przerywa dalsze sprawdzanie
+kolejnych instrukcji `else if`.
+
+:::important
+Ani `else if`, ani `else` nie jest nawet brane pod uwagę, gdy jeden z poprzednich `if` lub `else if`
+w łańcuchu został spełniony.
+:::
