@@ -1,0 +1,174 @@
+---
+title:				"Warunki » Przykłady"
+description:		"Lekcja: przykłady warunków w C++"
+tags:				[condition, if, else, else-if, compound, bool, boolean, examples]
+hide_title:			true
+---
+
+# Warunki » Przykłady
+
+## Sprawdzacz Prawo Jazdy
+
+Ten przykład był tworzony przez całą [lekcję o warunkach](/learn/course/basics/conditions/intro).
+
+```cpp
+#include <iostream>
+
+int main() {
+	std::cout << "Welcome to the Driver's License Oracle 5500\n";
+
+	int yearOfBirth;
+	std::cout << "Please enter your year of birth: ";
+	std::cin >> yearOfBirth;
+
+	int numCrashes;
+	std::cout << "Please enter the number of crashes you have had: \n";
+	std::cin >> numCrashes;
+
+	char licenseClass = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
+	std::string illegalReason;
+
+	if (numCrashes < 2) {
+		// W momencie pisania tej lekcji mamy 2022 rok
+		int age = 2022 - yearOfBirth;
+
+		if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
+			licenseClass = 'C';
+		} else if (age >= 22 and age <= 30) {
+			licenseClass = 'B';
+		} else if (age >= 31 and age <= 50) {
+			licenseClass = 'A';
+		} else {
+			illegalReason = "you are not between 18 and 64 years old";
+		}
+	} else {
+		illegalReason = "you have " + std::to_string(numCrashes) + " accidents";
+	}
+
+	if (licenseClass != 'X') {
+		std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	} else {
+		std::cout << "You cannot legally get a driver's license because " << illegalReason << "\n";
+	}
+}
+```
+
+## Interaktywny kalkulator logiki boolowskiej
+
+```cpp
+#include <iostream>
+#include <iomanip>
+#include <string>
+
+int main() {
+    // Pytamy o dwa wejścia logiczne
+    std::cout << "Welcome to the Boolean Logic Calculator!\n"
+              << "Please enter two values of either true or false exactly:\n";
+
+    bool inputA;
+    bool inputB;
+
+    // Używamy std::boolalpha aby móc pobrać wejście w postaci "true" i "false"
+    std::cin >> std::boolalpha >> inputA >> inputB;
+
+    // Pytamy o operację
+    std::cout << "\n\nNow enter a logical operation.\n"
+              << "Valid options are AND, NAND, OR, NOR, XOR, XNOR (exactly):\n";
+
+    std::string op;
+    std::cin >> op;
+
+    // Liczymy wynik
+    bool result;
+
+    if (op == "AND") {
+        result = inputA and inputB;
+    } else if (op == "NAND") {
+        result = not (inputA and inputB);
+    } else if (op == "OR") {
+        result = inputA or inputB;
+    } else if (op == "NOR") {
+        result = not (inputA or inputB);
+    } else if (op == "XOR") {
+        result = inputA != inputB; // XOR to odpowiednik "nie równa się" dla booli
+    } else if (op == "XNOR") {
+        result = inputA == inputB; // XNOR to odpowiednik "równa się" dla booli
+    } else {
+        std::cout << "Error! Invalid choice. Quitting.";
+
+		// Używamy tutaj instrukcji return, aby opuścić funkcję main,
+		// co kończy program
+		// 1 oznacza, że program zakończył się z błędem.
+		// Więcej o funkcjach poznasz w lekcji Funkcje
+        return 1;
+    }
+
+    std::cout << std::boolalpha; // Ustawiamy cout tak, żeby wypisywał true/false dla booli
+    std::cout << "\n\nThe answer of " << inputA << " " << op << " " << inputB << " is " << result;
+}
+```
+
+## Liczenie właściwości liczb
+
+```cpp
+#include <iostream>
+
+int main() {
+    int value1;
+    bool isValue1Even;
+
+    std::cout << "Input a number: ";
+    std::cin >> value1;
+
+    // Liczymy parzystość liczby
+    if (value1 % 2 == 0) {
+        isValue1Even = true;
+
+        std::cout << "Your number is even!\n";
+        if (value1 == 0) {
+            // Wiele ludzi nie wie czy 0 jest liczbą parzystą
+            std::cout << "But does zero count as an even number?\n";
+        }
+    } else {
+        isValue1Even = false;
+        std::cout << "Your number is odd!\n";
+    }
+
+    // Liczym znak liczby
+    if (value1 > 0) {
+        std::cout << "Your number is positive!\n";
+    } else if (value1 < 0) {
+        std::cout << "Your number is negative!\n";
+    } else {
+        std::cout << "Zero is neither positive nor negative.\n";
+    }
+
+    // Pytamy użytkownika o drugą liczbę dla porównania
+    int value2;
+
+    std::cout << "\nNow, input a number again: ";
+    std::cin >> value2;
+
+    // Liczymy czy liczba była mniejsza, większa czy równa
+    if (value1 != value2) {
+        std::cout << "You entered a different number... ";
+
+        if (value1 > value2) {
+            std::cout << "And it was smaller than the previous one!\n";
+        } else {
+            std::cout << "And it was bigger than the previous one!\n";
+        }
+    } else {
+        std::cout << "You entered the same number!\n";
+    }
+
+    // Teraz sprawdzamy "magiczną właściwość"
+    // Liczbą są magiczne, jeśli obie są parzyste i ich różniac jest podzielna przez 7
+    int diff = value1 - value2;
+    bool isValue2Even = value2 % 2 == 0;
+
+    if (isValue1Even && isValue2Even && (diff % 7 == 0)) {
+        std::cout << "Your numbers are special!";
+    }
+}
+```
