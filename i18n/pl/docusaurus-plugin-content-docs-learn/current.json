@@ -99,6 +99,10 @@
     "message": "📚 Ćwiczenia",
     "description": "The label for the doc item 📚 Exercises in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/exercises"
   },
+ "sidebar.defaultSidebar.doc.✅ Tips and style": {
+   "message": "✅ Wskazówki i styl",
+   "description": "The label for ✅ Tips and style in sidebar defaultSidebar"
+ },
   "sidebar.defaultSidebar.doc.💡 Examples": {
     "message": "💡 Przykłady",
     "description": "The label for the doc item 💡 Examples in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/examples"
