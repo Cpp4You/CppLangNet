@@ -1,0 +1,405 @@
+---
+title:				"Warunki » Wskazówki i styl"
+description:		"Lekcja: wskazówki i styl dotyczące warunków w C++"
+tags:				[condition, if, else, else-if, compound, bool, boolean, tips, style]
+hide_title:			true
+---
+
+import Columns			from '@site-comps/Columns';
+
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
+
+
+# Warunki » Wskazówki i styl
+
+Ten artykuł jest zbiorem porad i wskazówek, które pomogą Ci poprawić
+sposób w jak piszesz swój kod warunkowy. Jeśli śledziłeś nasz kurs w kolejności,
+wiele z używanych tu koncepcji nie zostało jeszcze omówionych. Nie przejmuj się, jeśli
+nie rozumiesz niektórych rzeczy w tym artykule, pojawią się one w późniejszych lekcjach.
+
+## Zawsze dodawaj nawiasy klamrowe
+
+Wiele konstrukcji C++, na które możesz się natknąć, ma **opcjonalne nawiasy klamrowe**.
+Jeśli pominiesz nawiasy klamrowe, to zakłada się, że następna linia kodu znajduje się w
+ciele instrukcji if, a wszystko inne po niej jest poza instrukcją if.
+
+Czasem pozwala to pisać prostszy i troszkę czytelniejszy kod. Dla przykładu:
+
+```cpp title="🔹 Omijanie nawiasów klamrowych"
+if (A and B)
+    std::cout << "They're both true!\n";
+
+std::cout << "Goodbye!";
+```
+
+Jest to jednak bardzo częsta pułapka dla początkujących, ponieważ pisanie kodu w taki sposób
+może szybko doprowadzić do niewłaściwego zachowania.
+Szczególnie podczas edycji kodu, często zdarza się, że przypadkowo zapomnimy dodać nawiasów klamrowych
+podczas rozszerzania kodu w ciele instrukcji if
+Pamiętaj, że C++a nie interesują znaki białe i wcięcia,
+więc jeśli spróbujesz zrobić:
+
+```cpp title="⚠️ Wprowadzające w błąd wcięcia"
+if (A and B)
+    std::cout << "They're both true!\n";
+    // warning-next-line
+    std::cout << "That's cool that they are both true.\n";
+
+std::cout << "Goodbye!";
+```
+
+Podświetlona linia będzie **zawsze wykonywana**, ponieważ nie jest częścią instrukcji if.
+Jest to równoważne umieszczeniu nawiasów klamrowych tylko za linią, która bezpośrednio następuje po
+instrukcją if. Ze względu na częstotliwość, z jaką początkujący programiści zostają ugryzieni przez ten błąd,
+zaleca się, aby zawsze umieszczać nawiasy klamrowe na instrukcjach if.
+Błędy takie jak ten spowodowały nawet [poważne luki bezpieczeństwa w
+dużych progamach](https://nakedsecurity.sophos.com/2014/02/24/anatomy-of-a-goto-fail-apples-ssl-bug-explained-plus-an-unofficial-patch/).
+
+## Zachowaj spójność stylu nawiasów
+
+Spędzanie jakąkolwiek ilość czasu w społecznościach programistów
+prawdopodobnie wystawi Cię na długotrwałą walkę pomiędzy nawiasami klamrowymi "inline" (ang.: *w jednej linii*),
+również określanymi jako nawiasami w stylu **K&R**, a "new-line" (ang.: *w nowej linii*),
+również określanymi jako nawiasami w stylu **Allman**.
+
+Jest to debata, która skupia się na bardzo kosmetycznej decyzji, czy powinieneś umieścić otwierające
+nawiasy klamrowe `{` w tej samej linii co instrukcje if, funkcje, pętle, itp. lub czy powinny być
+w nowej linii. Oba style i ich plusy/minusy są zilustrowane poniżej:
+
+<Tabs>
+<TabItem value="inline" label="🔷 Nawiasy w tej samej linii (K&R)" default>
+
+```cpp
+int main() {
+
+    int x = 10;
+
+    if (x == 10) {
+        std::cout << "X is 10!";
+    } else {
+        std::cout << "X is not 10!";
+    }
+
+
+
+
+    for (int i = 0; i < 5; i++) {
+        std::cout << "i: " << i << "\n";
+    }
+}
+
+```
+
+<Columns columns={["1fr", "1fr"]}>
+<div>
+
+#### Plusy
+- Kod jest bardziej kompaktowy
+- Organizacja poprzez dodawanie pustych linii jest prostsza
+
+</div>
+<div>
+
+#### Minusy
+- Nawiasy otwierający i zamykający nie są w tej samej kolumnie
+- Dla niektórych ludzi styl ten jest zbyt "głośny", "spakowany"
+- Może szybko stać się mniej czytelny przez niektóre style formatowania
+
+</div>
+</Columns>
+
+Zauważ, że w tym przykładzie umieszczono dodatkowe puste linie, aby był on zgodny z następnym przykładem.
+Te dodatkowe linie nie są istotne dla porównania stylów nawiasów.
+
+</TabItem>
+<TabItem value="newline" label="🔶 Nawiasy w nowych liniach (Allman)" default>
+
+```cpp
+int main()
+{
+    int x = 10;
+
+    if (x == 10)
+    {
+        std::cout << "X is 10!";
+    }
+    else
+    {
+        std::cout << "X is not 10!";
+    }
+
+    for (int i = 0; i < 5; i++)
+    {
+        std::cout << "i: " << i << "\n";
+    }
+}
+```
+
+<Columns columns={["1fr", "1fr"]}>
+<div>
+
+#### Plusy
+- Nawiasy otwierający i zamykający są w tej samej kolumnie
+- Czytelniejsze dla niektórych
+- Bardziej konsekwentne formatowanie przez niektóre style
+
+</div>
+<div>
+
+#### Minusy
+- Znacząco oddala od siebie kod
+- Marnuje przestrzeń pionową
+
+</div>
+</Columns>
+</TabItem>
+</Tabs>
+
+Ostatecznie to od Ciebie zależy, jakiego stylu będziesz się trzymać.
+Popularność obu stylów jest mniej więcej równa.
+Powinieneś tylko pamiętać, żeby trzymać się jednego stylu na projekt.
+**Nie należy mieszać stylów w obrębie tego samego kodu.**
+
+Nie przywiązuj się jednak zbytnio do jednego stylu. Gdy znajdziesz profesjonalną
+pracę związaną z programowaniem, oczekuje się, że będziesz trzymał się stylu, który już
+istnieje w danej firmie.
+Spójny kod jest ważniejszy niż Twoje osobiste preferencje!
+
+## Zachowaj spójność wcięć
+
+Jedną z najczęstszych bolączek zaawansowanych programistów pomagających początkującym jest to, że
+ich kod jest super niechlujny! To sprawia, że trudno go czytać, a jeszcze trudniej, jeśli
+próbuje się im w znalezieniu błędów. Jednym z najlepszych sposobów, aby uczynić swój kod czystszym
+i łatwiejszy do zrozumienia jest utrzymanie spójnych wcięć. Na szczęście jest to bardzo proste.
+
+Za każdym razem, gdy wchodzisz w *scope* (ang.: *zakres*),
+powinieneś dodać wcięcie w kodzie o jeden poziom więcej za pomocą klawisza tabulacji.
+Za każdym razem, gdy opuszczasz zakres, powinieneś usunąć wcięcie o jeden poziom.
+Zakres jest w zasadzie jednym "blokiem" języka C++.
+Wewnątrz funkcji jest pojedynczy zakres, wewnątrz instrukcji if jest pojedynczy zakres,
+wewnątrz pętli for jest pojedynczy zakres pętli for jest pojedynczym zakresem, itd.
+Poniżej znajdują się przykłady jak wyglądają dobre i złe wcięcia.
+
+:::note Indentacje
+Zapewne bardzo często będziesz spotykać się ze słowem "indentacje", zamiast wcięcia.
+Oba słowa znaczą to samo; "indentacja" to spolszczenie angielskiego słowa *indentation*.
+:::
+
+<Tabs>
+<TabItem value="good" label="✔️ Dobre wcięcia" default>
+
+```cpp
+// Częsci funkcji są zawsze bez wcięć,
+// jednak to co znajduje się w środku ma wcięcia
+bool checkValue(int x) {
+    // Częsci instrukcji if są wcięte,
+    // ponieważ są wewnątrz funkcji
+    if (x < 50) {
+        // Wewnątrz instrukcji if; dodatkowe wcięcie
+        return true;
+    } else {
+        return false;
+    } // Nawiasy są w tej samej kolumnie co start instrukcji if
+}
+
+int main() {
+    // Wszystko wewnątrz funkcji jest wcięte o jeden "poziom"
+    int value;
+    std::cin >> value;
+
+    // Części pętli while są wcięte o jeden pozom
+    while (true) {
+        // Wewnątrz pętli while; dodatkowe wcięcie
+        if (checkValue(value)) {
+            // Wewnątrz dodatkowego zakresu; dodatkowe wcięcie
+            std::cout << "You have entered a good value.\n";
+            break;
+        }
+
+        // Opuszczamy jeden poziom wcięcia po wyjściu z instrukcji if 
+        std::cout << "You have entered a bad value.\n";
+        std::cout << "Try again.\n";
+    } // Nawias są w tej samej kolumnie co start pętli while
+
+    // Wracamy do jednego poziomu wcięcia, bo wyszliśmy już pętli while
+    std::cout << "Goodbye!";
+} // Nawias jest w tej samej kolumnie co start funkcji main
+```
+</TabItem>
+<TabItem value="bad" label="❌ Nieprawidłowe wcięcia" default>
+
+```cpp
+
+
+bool checkValue(int x) {
+
+// Ta instrukcja if powinna zostąć wcięta o jedne poziom
+if (x < 50) {
+return true; // Tej linii brakuje dwóch poziomów wcięcia
+        } else {
+                return false; // Wcięcie tutaj jest widocznie niespójne z resztą
+}} // The nawiasy powinny być w osobnych liniach i mieć odpowiednie wcięcia
+
+
+    // Ta funkcja ma za duży poziom wcięcia
+    int main() {
+
+    int value; 
+        std::cin >> value; // Wcięcie tutaj jest niespójne z poziomem wcięć w tym zakresie
+
+
+    while (true) {
+    // Tej instrukcji if brakuje poziomu wcięcia
+    if (checkValue(value)) {
+        std::cout << "You have entered a good value.\n"; break; // Nie powinniśmy dawać dwóch instrukcji w tej samej linii
+        } // Ten nawias nie jest w tej samej kolumnie co instrukcja if do której należy
+
+
+
+// Tym liniom brakuje wcięć
+std::cout << "You have entered a bad value.\n";
+std::cout << "Try again.\n";
+} // Ten nawias nie znajduje się w tej samej kolumnie co pętla while do której należy
+
+            // Wcięcie tej linii jest niespójne z resztą wcięć tego zakresu
+            std::cout << "Goodbye!";
+}
+```
+</TabItem>
+</Tabs>
+
+Możemy zobaczyć, że cały kod w pierwszym przykładzie jest starannie wyrównany.
+Podąża za spójnymi zasadami kiedy dodać wcięcia w zależności od tego, w jak głębokim zakresie się znajdujemy.
+Każdy poziom zagnieżdżenia zakresu gwarantuje dodatkowy poziom wcięcia.
+Dodatkowo, wszystkie nasze nawiasy klamrowe są ustawione w linii z rodzicem,
+który "rozpoczął" zakres, co sprawia, że łatwo jest znaleźć
+do jakiej konstrukcji należy dany nawias.
+
+Z drugiej strony, kod w drugim przykładzie jest znacznie bardziej zagmatwany i frustrujący do czytania.
+Bardzo trudno jest znaleźć, który kod należy do jakiego zakresu, gdzie kończy się jaki zakres i co powinno być wykonane kiedy.
+Dodatkowo, jest to po prostu ogólnie bardzo niechlujnie napisy kod, bolący do czytani.
+
+Utrzymanie czystych i spójnych poziomów wcięcia może wydawać się dodatkową pracą,
+zwłaszcza jeśli wprowadza się zmiany do istniejącego kodu.
+Ale zastosuj się do tych wskazówek, a obiecuję, że podziękujesz sobie później.
+Bardzo często zdarza się, że początkujący mylą się przez to, że mają słabe wcięcia w kodzie,
+naprawa tego w samym kodzie jest najlepszym sposobem.
+
+Jeśli uważasz, że radzenie sobie z wcięciem jest trudne, rozważ użycie skrótów klawiszowych.
+W większości edytorów kodu, możesz dodać wcięcia w wielu liniach jednocześnie, zaznaczając to co chcesz wciskać i naciskając klawisz `Tab`.
+I odwrotnie, możesz usunąć wcięcie z wielu linii na raz za pomocą `Shift+Tab`.
+
+Dodatkowo większość edytor automatycznie dodaje wcięcia podczas pisania kodu.
+
+## Unikaj skomplikowancych wyrażeń logicznych
+
+Jeśli próbujesz stworzyć warunek, który wymaga sprawdzenia poprawności wielu wyrażeń logicznych,
+może być bardzo łatwo stworzyć mylący kod poprzez użycie zbyt wielu `and`, `or` i `not`.
+Najlepszym sposobem, aby temu zapobiec jest stworzenie funkcji zwracającej `bool`, która obliczy to
+skomplikowane wyrażenie dla ciebie. W ten sposób kod staje się bardziej czytelny i łatwiejszy do utrzymania.
+Pomocne mogą okazać się również metody z następnej sekcji.
+
+## Unikaj zbyt dużego zagnieżdżania instrukcji
+
+Bardzo łatwo jest stworzyć skomplikowaną logikę za pomocą instrukcji if, zwłaszcza jeśli
+nadmiernie zagnieżdżasz je wewnątrz siebie. Dla przykładu, spróbuj dowiedzieć się
+co właściwie robi poniższy fragment:
+
+```cpp title="⚠️ Zagmatwane instrukcje if"
+if (A or B) {
+    if (not B and C) {
+        if (A or D) {
+            if (A and not B) {
+                std::cout << "Hello!";
+            } else {
+                std::cout << "Will this line ever be run?";
+            }
+        } else if (not D) {
+            std::cout << "What about this one?";
+        }
+    } else {
+        std::cout << "It's starting to get pretty weird now...";
+    }
+} else if (B) {
+    std::cout << "I don't think this one will ever run.";
+} else if (not A and not b) {
+    std::cout << "Surely, this one will be called eventually.";
+} else {
+    std::cout << "Goodbye!";
+}
+```
+
+Kilka minut może Ci zająć zorientowanie się, w jakich przypadkach każde z tych coutów
+wykona się, szczególnie jeśli pracujesz w dużych i potencjalnie bardzo skomplikowanych bazach kodu.
+
+Są dwa dobre sposoby, aby to poprawić. Po pierwsze, możesz wydzielić
+wewnętrzne warunki zagnieżdżone do osobnych [funkcji](/learn/course/basics/functions/).
+W ten sposób złożoność zostaje ukryta za warstwą *abstrakcji*, a ty jesteś
+zmuszony do stworzenia opisowej nazwy dla każdej tworzonej funkcji.
+
+Druga metoda ma zastosowanie, jeśli masz wyraźną "szczęśliwą ścieżkę" i "smutną ścieżkę".
+Możesz przeorganizować instrukcje if tak,
+aby szczęśliwa ścieżka była najmniej wcięta i nie podlegała żadnej instrukcji if, a
+smutna ścieżka wychodziłą z funkcji wcześniej. Zobacz przykład, aby zobaczyć, jak to może wyglądać:
+
+<Tabs>
+<TabItem value="good" label="✔️ Dobrze zorganizowane instrukcje if" default>
+
+```cpp
+using std::string;
+
+string loginAsAdmin(string user, string pass) {
+    if (not doesUserExist(user)) {
+        return "User does not exist";
+    }
+
+    if (not isPasswordCorrect(user, pass)) {
+        return "Password is incorrect";
+    }
+
+    if (not tryLogin(user, pass)) {
+        return "Failed to login";
+    }
+
+    if (not isAdmin(user)) {
+        return "User is not admin";
+    }
+
+    return "Success";
+}
+```
+</TabItem>
+<TabItem value="bad" label="⚠️ Zagmatwane instrukcje if" default>
+
+```cpp
+using std::string;
+
+string loginAsAdmin(string user, string pass) {
+    if (doesUserExist(user)) {
+        if (isPasswordCorrect(user, pass)) {
+            if (tryLogin(user, pass)) {
+                if (isAdmin(user)) {
+                    return "Success";
+                } else {
+                    return "User is not admin";
+                }
+            } else {
+                return "Failed to login";
+            }
+        } else {
+            return "Password is incorrect";
+        }
+    } else {
+        return "User does not exist";
+    }
+}
+```
+</TabItem>
+</Tabs>
+
+Możesz zobaczyć, jak mylący przykład ma charakterystyczny trójkątny kształt.
+Jest to bardzo powszechny wskaźnik, że zagnieżdżasz swoją logikę zbyt głęboko
+i powinieneś zastosować jedną z dwóch podanych wyżej metod, aby to naprawić.
+Tutaj odwróciliśmy warunki, aby najpierw sprawdzić "smutną ścieżkę". Szczęśliwa ścieżka
+jest kontynuowana na dole, gdy sprawdzimy wszystkie warunki.
