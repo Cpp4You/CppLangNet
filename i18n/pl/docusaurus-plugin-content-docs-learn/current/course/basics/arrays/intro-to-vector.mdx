@@ -65,7 +65,6 @@ Posłużą nam do tego **tablice**.
 	/>
 <br/>
 
-
 Tablica to kontener, który może przechowywać wewnątrz *ileś* elementów
 jakiegoś określonego typu. Popatrz na wyżej umieszczoną ilustrację.
 Wewnątrz tablicy, znajdują się nazwy marek pojazdów. Zauważ, że
@@ -104,10 +103,12 @@ Zamiast robić trzy osobne, możemy stworzyć jedną
 ```cpp
 #include <iostream>
 #include <string>
+// highlight-next-line
 #include <vector> // niezbędne do korzystania z std::vector
 
 int main()
 {
+	// highlight-next-line
 	std::vector< std::string > playerNames(3);
 	// ...
 }
