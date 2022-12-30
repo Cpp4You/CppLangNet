@@ -55,7 +55,7 @@ This is where references come into play.
 You can create a reference by adding a `&` to the type of the variable you want to refer to.
 ```cpp
 int var = 5;
-int& ref = x; // ref is a int reference that refers to var
+int& ref = var; // ref is a int reference that refers to var
 ```
 Now, if you modify `ref`, `var` will also be modified because `ref` **is** `var`.
 ```cpp
