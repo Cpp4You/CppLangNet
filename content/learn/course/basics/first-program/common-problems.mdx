@@ -79,7 +79,7 @@ It's very easy to forget an `#include`, even for experts.
 error: ‘cout’ is not a member of ‘std’
 ```
 
-### 🖼 Illustration of the error:
+#### 🖼 Illustration of the error:
 
 <Image center
 		alt="Illustration of the error - missing include"
@@ -95,7 +95,7 @@ predefined C++ types (compiler internal)(341): note: see declaration of 'std'
 error C2065: 'cout': undeclared identifier
 ```
 
-### 🖼 Illustration of the error:
+#### 🖼 Illustration of the error:
 
 <Image center
 		alt="Illustration of the error - missing include"
@@ -155,7 +155,8 @@ Usually the first error message given by the compiler is the most helpful one.
 ## Unterminated text
 
 Text is always between the quote characters `"TEXT IS HERE!"`. 
-Forgetting to add the second quotation mark leads to C++ thinking the rest of your program is text.
+Forgetting to add the second quotation mark leads to compiler thinking the rest of your program is text
+causing numerous errors.
 
 ### 🔴 Error message
 
@@ -207,12 +208,6 @@ C++ will interpret this as:
 "TEXT" C++ CODE "TEXT"
 ```
 
-You can prevent this by using the `\` backslash character to *escape* the quote.
-
-```cpp
-"Hi! My name is \"Slim Shady\". Nice to meet you!"
-```
-
 ### 🔴 Error message
 
 <Tabs groupId="compiler">
@@ -249,3 +244,36 @@ error C2143: syntax error: missing ';' before 'string'
 :::info Unhelpful errors
 These error messages aren't that helpful! Your hint should be the fact that it is treating what you intend to be text as code.
 :::
+
+
+### 👌 Solution
+
+You can prevent this by using the `\` backslash character to *escape* the quote.
+
+```cpp
+"Hi! My name is \"Slim Shady\". Nice to meet you!"
+```
+
+:::note Escape sequence
+The `\"` is an example of an *escape sequence*. It tells the compiler to treat the next character as text.
+:::
+
+We can also use the backslash to escape other characters, such as the backslash itself.
+As a result, we'll need to use two backslashes to get one in the output.
+
+<Columns columns={["2fr", "1fr"]}>
+<div>
+
+```cpp title="Code"
+std::cout << "C:\\Users\\SlimShady\\Desktop";
+```
+
+</div>
+<div>
+
+```plaintext title="Console"
+C:\Users\SlimShady\Desktop
+```
+
+</div>
+</Columns>

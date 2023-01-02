@@ -94,6 +94,9 @@ At the very beginning of the code there is a line:
 
 This allows us to use the standard input and output tools provided by C++. The name `iostream` is short for *input/output stream*.
 In practice, this means that we the programmer can write a message in the **console**; then, our program can intercept the response from the user.
+
+`iostream` is a **header file**. We will use more of them in the near future.
+In most cases we put `#include <header_file>` at the beginning of the file.
 We'll tell more about `#include` itself in the future. Enough for the moment.
 
 ### The console
@@ -124,14 +127,24 @@ As you can see, many code editors like Visual Studio, VS Code, Replit.com, CLion
 
 ### Printing text to the console
 
-
 To display text to the console we used the following statement inside the `main` block:
 
 ```cpp
 std::cout << "Hello, World!";
 ```
 
-The name `cout` stands for a **c**haracter **out**put. 
+The name `cout` stands for a **c**haracter **out**put. It is used to send text to the console.
+We will mention the `std::` prefix in a minute.
+
+<details>
+<summary>For those who are curious 😉</summary>
+<div>
+
+Strictly speaking, `cout` is a so-called character output stream, but you don't need to remember that for the moment.
+
+</div>
+</details>
+
 
 I can now duplicate the line above like this:
 
@@ -193,10 +206,8 @@ Program execution after adding newline characters:
 	/>
 
 :::important Newline Character
-The `\n` sequence represents a **single character**. We have to write two characters <u>in the code</u> but for the program, it is a single special character.
-This is because we cannot simply insert an Enter or Return directly inside the text in the code.
-Backslash (`\`) is used to sign that the character that follows it <Tooltip title={<>It is called an <b>escape sequence</b>, more on that later</>}>has a special meaning</Tooltip>.
-
+The `\n` sequence represents a **single character** for the program.
+More on that later.
 :::
 
 ### Prefix of the standard namespace
@@ -218,7 +229,7 @@ int main()
 Now, all statements within this code block below the `using` line can omit the `std::` prefix for `cout`.
 
 :::caution using namespace std
-In many other online tutorials and sources, it is extremely common to find others recommending `using namespace std;` at the <u>top of your file</u>.
+In many other online tutorials and sources, it is extremely common to find others recommending `using namespace std;` at the top of your file.
 While this is legal C++, it is **strongly discouraged** by nearly all experienced C++ programmers. We will cover these reasons later.
 
 For the time being, prefer the style displayed above.
@@ -258,9 +269,7 @@ Pay attention to the result of the above program.
 Everything in quotation marks is treated as text, not instructions.
 :::
 
-Therefore, instead of displaying the result of the calculation,
-we got what we entered in the quotation marks.
-
+Therefore, instead of displaying the result of the calculation, we got what we entered in the quotation marks.
 To say that we want to perform some calculation, we need to remove the quotes:
 
 <Columns spacing={40} columns={['7fr', '5fr']}>
