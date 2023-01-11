@@ -44,6 +44,11 @@ const standardLibraryTypes = [
 	"wstring",
 	"u16string",
 	"u32string",
+	"basic_string_view",
+	"string_view",
+	"wstring_view",
+	"u16string_view",
+	"u32string_view",
 
 	// Other
 	"tuple",
@@ -122,3 +127,100 @@ Prism.languages.insertBefore("cpp", "keyword", {
 		{ pattern: /\b(std)/g },
 	]
 });
+
+(function(){
+	console.log(Prism.hooks);
+	if (typeof self === "undefined" || !self.document || !document.querySelector) {
+		return;
+	}
+	Prism.hooks.add("after-tokenize", function(env) {
+		if (env.language !== "cpp")
+			return;
+		console.log(env);
+		const pushTypesPrefix = "// prism-push-types:";
+		const popTypes = "// prism-pop-types";
+
+		const customTypeNames = new Array<string[]>();
+
+		
+		const walkTokens = (tokens: Prism.Token[]) => {
+			let lastLineWasSemanticComment = false;
+			for (let idx = 0; idx < tokens.length; ++idx)
+			{
+				const token = tokens[idx];
+
+				const skipNewLine = lastLineWasSemanticComment;
+				lastLineWasSemanticComment = false;
+
+				if (typeof token === "string" && customTypeNames.length !== 0)
+				{
+					// search for words that match custom types, but not if they are part of a larger word
+					const regex = new RegExp(`\\b(${customTypeNames.join("|")})\\b`, "g");
+					console.log(`Matching ${regex} against ${token}...`);
+					// search all occurrences
+					let match;
+					let iterations = 0;
+					const matches: { start: number, end: number }[] = [];
+					while ((match = regex.exec(token)) !== null) {
+						console.log(
+							`Found ${match[0]} start=${match.index} end=${regex.lastIndex}: ${token.substring(match.index, regex.lastIndex)}`,
+						);
+						matches.push({ start: match.index, end: regex.lastIndex });
+						if (iterations++ > 100)
+						{
+							console.log("Infinite loop detected");
+							break;
+						}
+					}
+
+					// rebuild tokens with custom types
+					const newTokens: Prism.Token[] = [];
+					let lastEnd = 0;
+					for (const match of matches)
+					{
+						if (match.start > lastEnd)
+						{
+							newTokens.push(token.substring(lastEnd, match.start));
+						}
+						newTokens.push(new Prism.Token("class-name", token.substring(match.start, match.end)));
+						lastEnd = match.end;
+					}
+					if (lastEnd < token.length)
+					{
+						newTokens.push(token.substring(lastEnd));
+					}
+					
+					if (skipNewLine && newTokens.length > 0 && newTokens[0] === "\n")
+					{
+						newTokens.shift();
+					}
+
+					tokens.splice(idx, 1, ...newTokens);
+					console.log("New tokens: ", newTokens);
+					continue;
+				}
+
+				if (Array.isArray(token.content))
+				{
+					walkTokens(token.content);
+					continue;
+				}
+
+				if (token.type === "comment" && token.content.startsWith(pushTypesPrefix))
+				{
+					// read types separated by a comma
+					const types = token.content.substring(pushTypesPrefix.length).split(",");
+					customTypeNames.push(...types);
+					console.log("Got types: ", types);
+					tokens.splice(idx, 1);
+					lastLineWasSemanticComment = true;
+					--idx;
+					continue;
+				}
+			}
+		};
+
+		walkTokens(env.tokens);
+		
+	});
+})();
