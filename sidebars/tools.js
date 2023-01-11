@@ -56,6 +56,7 @@ module.exports = {
 						'standalone/compilers/setup-gcc-windows',
 						'standalone/compilers/setup-gcc-linux',
 						'standalone/compilers/setup-gcc-macos',
+						'standalone/compilers/setup-clang-windows',
 						'standalone/compilers/setup-clang-linux',
 						'standalone/compilers/setup-clang-macos',
 					]
