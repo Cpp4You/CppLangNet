@@ -1,19 +1,27 @@
 import Prism from "prism-react-renderer/prism";
 
-// Prism.hooks.add("after-tokenize", function(env) {
 
-// 	env.tokens.forEach((tok, id, arr) => {
-// 		if (typeof tok !== "string") {
-// 			console.log(tok);
-// 			return;
-// 		}
+const keywords = [
+	"alignas", "alignof", "and", "asm", "auto",
+	"bool", "break",
+	"case", "catch", "char", "char16_t", "char32_t", "char8_t", "class", "co_await", "co_return", "co_yield", "compl", "concept", "const", "const_cast", "consteval", "constexpr", "constinit", "continue",
+	"decltype", "default", "delete", "do", "double", "dynamic_cast",
+	"else", "enum", "explicit", "export", "extern",
+	"false", "final", "float", "for", "friend",
+	"goto", "if", "import", "inline", "int", 
+	"long",
+	"module", "mutable",
+	"namespace", "new", "noexcept", "not", "nullptr",
+	"operator", "or", "override",
+	"private", "protected", "public",
+	"register", "reinterpret_cast", "requires", "return",
+	"short", "signed", "sizeof", "static", "static_assert", "static_cast", "struct", "switch",
+	"template", "this", "thread_local", "throw", "true", "try", "typedef", "typeid", "typename",
+	"union", "unsigned", "using",
+	"virtual", "void", "volatile",
+	"wchar_t", "while",
+];
 
-// 		if (tok === "cout")
-// 		{
-// 			env.tokens[id] = new Prism.Token("keyword", "cout", undefined, tok);
-// 		}
-// 	});
-// });
 
 const standardLibraryTypes = [
 	// Integers
@@ -107,6 +115,8 @@ const standardLibrarySubNamespaces = [
 	"string_view_literals"
 ];
 
+
+Prism.languages.cpp["keyword"] = new RegExp(`\\b(?:${keywords.join("|")})\\b`);
 
 Prism.languages.cpp["class-name"] = [
 	...Prism.languages.cpp["class-name"],

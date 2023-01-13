@@ -1,0 +1,148 @@
+# Writing a lesson
+
+When writing a [course lesson](/learn/course/), it is important to be clear and detailed, but also to start simple
+and gradually build on complexity.
+
+:::important
+We must assume that the reader has no previous experience with the topic.
+:::
+
+Learning C++ is a complex process. Note that when starting out, it is easy to pick up a topic
+that may be out of reach for the current state of the learner's knowledge. This is why the order and structure
+of the lessons are crucial in providing a smooth and incremental learning experience. It helps to avoid confusion
+and frustration by introducing new concepts in a logical and organized manner. Properly structured learning process
+will result in a solid understanding of the language and its capabilities, which is the goal of our project.
+
+## Document structure
+
+Each lesson should start with a brief description of what will be covered.
+
+### Motivation
+
+After the introduction we immediately proceed with the motivation. It's crucial to show the reader the importance of what they are about to learn.
+One effective way to do this is by providing examples of code that fail or have problems when the concept being taught in the lesson is not applied.
+This helps the learner understand how it can be used to solve common issues in C++ programming. 
+By seeing the tangible benefits and real-world problems that the concept can help solve, the reader is
+more likely to be engaged and motivated to learn.
+
+### Building up
+
+After the motivation, we should start building up the concept. When teaching a new concept, it's essential to start with
+the simplest example possible and then gradually increase complexity. This approach is important in any topic you could learn.
+We will use lambdas as an example. A good starting point would be to demonstrate a simple lambda that adds two numbers,
+defined locally as an alternative to a regular function:
+
+```cpp
+auto add = [](int a, int b) {
+	return a + b;
+};
+
+std::cout << add(2, 3) << '\n';
+```
+
+This allows the learner to understand the basic syntax and usage of lambdas before moving on to more complex examples.
+As we progress, we can cover more specific examples, such as adding an explicit return type and capturing one or two variables:
+
+```cpp title="Example: using an explicit return type"
+//explicit return type
+auto add = [](int a, int b) -> int {
+	return a + b;
+};
+```
+
+```cpp title="Example: capturing variables"
+int x = 10;
+auto addToX = [x](int a) {
+	return x + a;
+};
+
+// ...
+int y = 5;
+auto sumWithXAndY = [x, y](int a, int b) {
+	return a + b + x + y;
+};
+
+std::cout << sumWithXAndY(2, 3) << '\n';
+```
+
+By starting with a simple example and gradually building upon it, learners are able to fully grasp the concept and understand
+how it can be applied in more advanced scenarios.
+
+### Exploring a broader context
+
+As learners begin to understand and master a new concept, it is important to introduce them to a broader range of usage.
+This includes identifying areas where the concept should and shouldn't be applied as well as relating it to other, already known topics.
+For example, when learning about lambdas in C++, it may be good to demonstrate how they can be used in the `std::transform` algorithm
+for efficient data manipulation.
+
+```cpp title="Example: using lambdas in std::transform"
+// transforming numbers to their squares
+std::vector<int> data{1, 2, 3, 4, 5};
+std::transform(data.begin(), data.end(), data.begin(), [](int x) { return x*x; });
+```
+
+It's important to keep in mind that some topics may be very complex and it's reasonable to leave the more advanced usage for
+another document that readers can refer to later in the course. This allows them to focus on mastering the basics before
+diving into more complex usage.
+
+```cpp title="Example: using lambdas in a more advanced context"
+struct Student {
+	std::string name;
+	double grade;
+	//other fields
+};
+std::vector<Student> students = ...;
+std::ranges::sort(students,
+	[](const Student& a, const Student& b) {
+		return a.grade > b.grade;
+	}
+);
+```
+
+### Common problems
+
+It's essential to make reader aware of the most common problems that can occur. This includes understanding what can go wrong when
+not paying enough attention. Beginners in particular tend to forget about simple things, and then they spend a lot of time trying to fix it.
+This is why it is crucial to sensitize learners to the most common problems early on, so they can avoid them and focus on mastering the concept.
+
+For example, when working with lambdas, one common mistake is a missing semicolon, which can lead to compilation errors:
+
+```cpp title="Example: missing semicolon"
+auto add = [](int a, int b) {
+// error-next-line
+	return a + b
+}
+```
+
+Another common problem is forgetting to capture a variable:
+
+```cpp title="Example: forgetting to capture a variable"
+int x = 10;
+auto addToX = [](int a) {
+// error-next-line
+	return x + a;
+};
+```
+
+We could also mention forgetting the square brackets:
+
+```cpp title="Example: forgetting the square brackets"
+int x = 10;
+// error-next-line
+auto add = (int a, int b) {
+	return a + b;
+};
+```
+
+### Exercises
+
+One effective way to help learners master a new concept is by providing them with meaningful and challenging exercises.
+These exercises should be designed to push learners to think critically and apply what they've learned in new and varied ways.
+
+We're already working on a [Quiz component](https://github.com/Cpp4You/react-quizaurus) to help with this, but for now we have
+to stick with a casual list of exercises.
+
+### Summary
+
+In this section, we will review key takeaways and main concepts covered in the course.
+It will help learners to reinforce their understanding and provide an overview of the course content.
