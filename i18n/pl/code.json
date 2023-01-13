@@ -373,5 +373,8 @@
   },
   "removed in C++23": {
     "message": "removed in C++23"
+  },
+  "See full code": {
+    "message": "Zobacz pełen kod"
   }
 }
