@@ -150,5 +150,21 @@
   "sidebar.defaultSidebar.category.forward-list": {
     "message": "forward-list",
     "description": "The label for category forward-list in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.initializer_list": {
+    "message": "initializer_list",
+    "description": "The label for category initializer_list in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.string_view": {
+    "message": "string_view",
+    "description": "The label for category string_view in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.span": {
+    "message": "span",
+    "description": "The label for category span in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.stack": {
+    "message": "stack",
+    "description": "The label for category stack in sidebar defaultSidebar"
   }
 }

@@ -6,5 +6,9 @@
   "sidebar.defaultSidebar.category.✍ Writing guide": {
     "message": "✍ Jak pisać",
     "description": "The label for category ✍ Writing guide in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.📝 Guidelines": {
+    "message": "📝 Wytyczne",
+    "description": "The label for category 📝 Guidelines in sidebar defaultSidebar"
   }
 }
