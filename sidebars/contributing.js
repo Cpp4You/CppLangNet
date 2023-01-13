@@ -11,21 +11,29 @@
 
 module.exports = {
 	defaultSidebar: [
-		'index',
-		'initial-setup',
-		'folder-structure',
-		'new-documents',
+		"index",
+		"initial-setup",
+		"folder-structure",
+		"new-documents",
+		"editing-sidebar",
 		{
-			type: 'category',
-			label: '✍ Writing guide',
+			type: "category",
+			label: "✍ Writing guide",
 			collapsed: false,
 			items: [
-				'writing-guide/improving',
-				'writing-guide/general-rules',
-				'writing-guide/using-components',
-				'writing-guide/translating',
+				"writing-guide/improving",
+				"writing-guide/general-rules",
+				"writing-guide/using-components",
+				"writing-guide/translating",
 			]
 		},
-		'default-documents',
+		{
+			type: "category",
+			label: "📝 Guidelines",
+			collapsed: false,
+			items: [
+				"guidelines/lesson",
+			]
+		},
 	],
 };
