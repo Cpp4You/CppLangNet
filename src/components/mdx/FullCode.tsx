@@ -1,6 +1,6 @@
-import React from "react";
-
-import Details from "@theme/Details";
+import React		from "react";
+import Translate	from "@docusaurus/Translate";
+import Details		from "@theme/Details";
 
 interface FullCodeProps {
 	content: React.ReactNode;
@@ -9,7 +9,7 @@ interface FullCodeProps {
 export default function FullCode({ content }: FullCodeProps) {
 
 	return (
-		<Details summary={<summary>See full code</summary>}>
+		<Details summary={<summary><Translate>See full code</Translate></summary>}>
 			<div>
 				{content}
 			</div>
