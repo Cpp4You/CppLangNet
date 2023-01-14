@@ -1,5 +1,5 @@
 const path				= require("path");
-const lightCodeTheme	= require("prism-react-renderer/themes/github");
+const lightCodeTheme	= require("./src/prism/theme-vscode-light");
 const darkCodeTheme		= require("./src/prism/theme-vscode-dark");
 
 const remarkDisableTokenizers = require("remark-disable-tokenizers");

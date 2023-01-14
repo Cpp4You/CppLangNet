@@ -151,15 +151,30 @@ interface PrismEnv {
 	tokens: Prism.Token[];
 }
 
-/**
- * Enable the 
- */
-function enableDynamicFeatures() {
-	if (typeof self === "undefined" || !self.document) {
-		return;
-	}
+function applyTokenFixes(env: PrismEnv)
+{
+	const walkTokens = (tokens: Prism.Token[]) => {
+		for (const token of tokens)
+		{
+			if (typeof token !== "object")
+				continue;
 
-	Prism.hooks.add("after-tokenize", handleSpecialComments);
+			if (token.type === "directive" && token.alias === "keyword")
+			{
+				delete token.alias;
+			}
+			else if (token.type === "namespace" && token.content === "namespace")
+			{
+				token.type = "keyword";
+			}
+
+			if (Array.isArray(token.content)) {
+				walkTokens(token.content);
+			}
+		}
+	};
+
+	walkTokens(env.tokens);
 }
 
 function handleSpecialComments(env: PrismEnv) {
@@ -267,4 +282,14 @@ function handleSpecialComments(env: PrismEnv) {
 	walkTokens(env.tokens);
 }
 
-enableDynamicFeatures();
+function enableFeatures() {
+	if (typeof self === "undefined" || !self.document) {
+		return;
+	}
+
+	Prism.hooks.add("after-tokenize", handleSpecialComments);
+	Prism.hooks.add("after-tokenize", applyTokenFixes);
+}
+
+
+enableFeatures();
