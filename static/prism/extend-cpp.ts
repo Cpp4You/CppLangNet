@@ -1,3 +1,10 @@
+/// This file extends the PrismJS C++ syntax:
+/// - predefines standard library types (they work only if prefixed with std::)
+/// - predefines standard library sub-namespaces (std::ranges, std::chrono, etc.)
+/// - redefines the keyword pattern to include missing keywords (`true`, `false` were missing somehow)
+/// - adds support for manual tweaking of the syntax highlighting:
+///    - `// prism-push-types` and `// prism-pop-types` can be used to add/remove types from the syntax highlighting
+
 import Prism from "prism-react-renderer/prism";
 
 
@@ -138,99 +145,126 @@ Prism.languages.insertBefore("cpp", "keyword", {
 	]
 });
 
-(function(){
-	console.log(Prism.hooks);
-	if (typeof self === "undefined" || !self.document || !document.querySelector) {
+interface PrismEnv {
+	code: string;
+	language: string;
+	tokens: Prism.Token[];
+}
+
+/**
+ * Enable the 
+ */
+function enableDynamicFeatures() {
+	if (typeof self === "undefined" || !self.document) {
 		return;
 	}
-	Prism.hooks.add("after-tokenize", function(env) {
-		if (env.language !== "cpp")
-			return;
-		console.log(env);
-		const pushTypesPrefix = "// prism-push-types:";
-		const popTypes = "// prism-pop-types";
 
-		const customTypeNames = new Array<string[]>();
+	Prism.hooks.add("after-tokenize", handleSpecialComments);
+}
 
-		
-		const walkTokens = (tokens: Prism.Token[]) => {
-			let lastLineWasSemanticComment = false;
-			for (let idx = 0; idx < tokens.length; ++idx)
-			{
-				const token = tokens[idx];
+function handleSpecialComments(env: PrismEnv) {
+	if (env.language !== "cpp")
+		return;
+	
+	const pushTypesPrefix	= "// prism-push-types:";
+	const popTypes			= "// prism-pop-types";
 
-				const skipNewLine = lastLineWasSemanticComment;
-				lastLineWasSemanticComment = false;
+	const customTypeNames = new Array<string[]>();
+	
+	const walkTokens = (tokens: Prism.Token[]) => {
+		let lastLineWasSemanticComment = false;
 
-				if (typeof token === "string" && customTypeNames.length !== 0)
-				{
-					// search for words that match custom types, but not if they are part of a larger word
-					const regex = new RegExp(`\\b(${customTypeNames.join("|")})\\b`, "g");
-					console.log(`Matching ${regex} against ${token}...`);
-					// search all occurrences
-					let match;
-					let iterations = 0;
-					const matches: { start: number, end: number }[] = [];
-					while ((match = regex.exec(token)) !== null) {
-						console.log(
-							`Found ${match[0]} start=${match.index} end=${regex.lastIndex}: ${token.substring(match.index, regex.lastIndex)}`,
-						);
-						matches.push({ start: match.index, end: regex.lastIndex });
-						if (iterations++ > 100)
-						{
-							console.log("Infinite loop detected");
-							break;
-						}
-					}
-
-					// rebuild tokens with custom types
-					const newTokens: Prism.Token[] = [];
-					let lastEnd = 0;
-					for (const match of matches)
-					{
-						if (match.start > lastEnd)
-						{
-							newTokens.push(token.substring(lastEnd, match.start));
-						}
-						newTokens.push(new Prism.Token("class-name", token.substring(match.start, match.end)));
-						lastEnd = match.end;
-					}
-					if (lastEnd < token.length)
-					{
-						newTokens.push(token.substring(lastEnd));
-					}
-					
-					if (skipNewLine && newTokens.length > 0 && newTokens[0] === "\n")
-					{
-						newTokens.shift();
-					}
-
-					tokens.splice(idx, 1, ...newTokens);
-					console.log("New tokens: ", newTokens);
-					continue;
-				}
-
-				if (Array.isArray(token.content))
-				{
-					walkTokens(token.content);
-					continue;
-				}
-
-				if (token.type === "comment" && token.content.startsWith(pushTypesPrefix))
-				{
-					// read types separated by a comma
-					const types = token.content.substring(pushTypesPrefix.length).split(",");
-					customTypeNames.push(...types);
-					console.log("Got types: ", types);
-					tokens.splice(idx, 1);
-					lastLineWasSemanticComment = true;
-					--idx;
-					continue;
-				}
-			}
+		const tryParsePushComment = (token: Prism.Token) => {
+			if (!token.content.startsWith(pushTypesPrefix))
+				return false;
+			// read types separated by a comma
+			const types = token.content.substring(pushTypesPrefix.length).split(",");
+			customTypeNames.push(...types);
+			return true;
 		};
 
-		walkTokens(env.tokens);
-		
-	});
-})();
+		const tryParsePopComment = (token: Prism.Token) => {
+			if (!token.content.startsWith(popTypes))
+				return false;
+			
+			customTypeNames.pop();
+			return true;
+		};
+
+
+		for (let idx = 0; idx < tokens.length; ++idx)
+		{
+			const token = tokens[idx];
+
+			const skipNewLine = lastLineWasSemanticComment;
+			lastLineWasSemanticComment = false;
+
+			if (typeof token === "string" && customTypeNames.length !== 0)
+			{
+				// search for words that match custom types, but not if they are part of a larger word
+				const regex = new RegExp(`\\b(${customTypeNames.join("|")})\\b`, "g");
+				// search all occurrences
+				let match;
+				const matches: { start: number, end: number }[] = [];
+				while ((match = regex.exec(token)) !== null) {
+					matches.push({ start: match.index, end: regex.lastIndex });
+				}
+
+				// rebuild tokens with custom types
+				const newTokens: Prism.Token[] = [];
+				let lastEnd = 0;
+				for (const match of matches)
+				{
+					if (match.start > lastEnd)
+					{
+						newTokens.push(token.substring(lastEnd, match.start));
+					}
+					newTokens.push(new Prism.Token("class-name", token.substring(match.start, match.end)));
+					lastEnd = match.end;
+				}
+				if (lastEnd < token.length)
+				{
+					newTokens.push(token.substring(lastEnd));
+				}
+				
+				if (skipNewLine) {
+					if (newTokens.length > 0 && typeof newTokens[0] === "string") {
+						const splitted = newTokens[0].split("\n");
+						splitted.shift();
+						newTokens.shift();
+						if (splitted.length > 0) newTokens.unshift(splitted.join("\n"));
+					}
+				}
+				tokens.splice(idx, 1, ...newTokens);
+				continue;
+			}
+
+			if (Array.isArray(token.content))
+			{
+				walkTokens(token.content);
+				continue;
+			}
+
+			// At this point only try to parse special comments
+			if (token.type !== "comment")
+			{
+				continue;
+			}
+
+			// Try parse a special comment
+			if (tryParsePushComment(token) || tryParsePopComment(token))
+			{
+				// Ignore that line
+				tokens.splice(idx, 1);
+
+				lastLineWasSemanticComment = true;
+				--idx;
+				continue;
+			}
+		}	
+	};
+
+	walkTokens(env.tokens);
+}
+
+enableDynamicFeatures();
