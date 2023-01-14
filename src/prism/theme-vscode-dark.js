@@ -88,21 +88,21 @@ const theme = {
 			}
 		},
 		{
-			types: ["class-name"],
+			types: ["class-name", "namespace"],
 			style: {
 				color: "rgb(78, 201, 176)"
+			}
+		},
+		{
+			types: ["directive", "directive-hash"],
+			style: {
+				color: "#C586C0"
 			}
 		},
 		{
 			types: ["char"],
 			style: {
 				color: "rgb(209, 105, 105)"
-			}
-		},
-		{
-			types: ["namespace"],
-			style: {
-				color: "rgb(78, 201, 176)"
 			}
 		},
 
