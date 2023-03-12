@@ -93,18 +93,42 @@
   },
   "sidebar.defaultSidebar.doc.🐞 Common problems": {
     "message": "🐞 Częste problemy",
-    "description": "The label for the doc item 🐞 Common problems in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/common-problems"
+    "description": "The label for the doc item 🐞 Common problems in sidebar defaultSidebar, linking to the doc course/basics/first-program/common-problems"
   },
   "sidebar.defaultSidebar.doc.📚 Exercises": {
     "message": "📚 Ćwiczenia",
-    "description": "The label for the doc item 📚 Exercises in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/exercises"
+    "description": "The label for the doc item 📚 Exercises in sidebar defaultSidebar, linking to the doc course/basics/functions/exercises"
   },
- "sidebar.defaultSidebar.doc.✅ Tips and style": {
-   "message": "✅ Wskazówki i styl",
-   "description": "The label for ✅ Tips and style in sidebar defaultSidebar"
- },
+  "sidebar.defaultSidebar.doc.✅ Tips and style": {
+    "message": "✅ Wskazówki i styl",
+    "description": "The label for the doc item ✅ Tips and style in sidebar defaultSidebar, linking to the doc course/basics/conditions/tips"
+  },
   "sidebar.defaultSidebar.doc.💡 Examples": {
     "message": "💡 Przykłady",
-    "description": "The label for the doc item 💡 Examples in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/examples"
+    "description": "The label for the doc item 💡 Examples in sidebar defaultSidebar, linking to the doc course/basics/conditions/examples"
+  },
+  "sidebar.defaultSidebar.category.7. Functions": {
+    "message": "7. Funkcje",
+    "description": "The label for category 7. Functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.9. Methods": {
+    "message": "9. Metody",
+    "description": "The label for category 9. Methods in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.doc.💢 Common problems": {
+    "message": "💢 Częste problemy",
+    "description": "The label for the doc item 💢 Common problems in sidebar defaultSidebar, linking to the doc course/basics/functions/common-problems"
+  },
+  "sidebar.defaultSidebar.doc.1. Introduction": {
+    "message": "1. Wprowadzenie",
+    "description": "The label for the doc item 1. Introduction in sidebar defaultSidebar, linking to the doc course/basics/methods/methods"
+  },
+  "sidebar.defaultSidebar.doc.💡 More examples": {
+    "message": "💡 Więcej przykładów",
+    "description": "The label for the doc item 💡 More examples in sidebar defaultSidebar, linking to the doc course/basics/functions/examples"
+  },
+  "sidebar.defaultSidebar.doc.2. Special methods": {
+    "message": "2. Metody specjalne",
+    "description": "The label for the doc item 2. Special methods in sidebar defaultSidebar, linking to the doc course/basics/methods/special-methods"
   }
 }
