@@ -353,6 +353,11 @@ After:
 
 <br/>
 
+As you can see the first element was removed and the rest of the elements **shifted by one** index.
+This is because the array is a **contiguous** block of memory and `vector` ensures that there is no
+empty space left after an element is removed.
+
+
 :::danger
 Before erasing an item from an array, make sure it exists (that is, it's in scope `[0, N)`).
 
