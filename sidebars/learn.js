@@ -132,7 +132,7 @@ module.exports = {
 						},
 						doc("8. Structures", "course/basics/structures"),
 						doc("9. Inheritance 🚧", "course/basics/inheritance"),
-						doc("10. References (I)", "course/basics/references"),
+						doc("10. References (I) 🚧", "course/basics/references"),
 						{
 							type: "category",
 							label: "11. Methods",

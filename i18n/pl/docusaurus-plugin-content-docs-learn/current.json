@@ -171,10 +171,6 @@
     "message": "8. Struktury",
     "description": "The label for the doc item 8. Structures in sidebar defaultSidebar, linking to the doc course/basics/structures"
   },
-  "sidebar.defaultSidebar.doc.10. References (I)": {
-    "message": "10. Referencje (I)",
-    "description": "The label for the doc item 10. References (I) in sidebar defaultSidebar, linking to the doc course/basics/references"
-  },
   "sidebar.defaultSidebar.doc.9. Inheritance 🚧": {
     "message": "9. Dziedziczenie 🚧",
     "description": "The label for the doc item 9. Inheritance 🚧 in sidebar defaultSidebar, linking to the doc course/basics/inheritance"
@@ -190,5 +186,9 @@
   "sidebar.defaultSidebar.doc.13. Namespaces 🚧": {
     "message": "13. Przestrzenie nazw 🚧",
     "description": "The label for the doc item 13. Namespaces 🚧 in sidebar defaultSidebar, linking to the doc course/basics/namespaces"
+  },
+  "sidebar.defaultSidebar.doc.10. References (I) 🚧": {
+    "message": "10. Referencje (I) 🚧",
+    "description": "The label for the doc item 10. References (I) 🚧 in sidebar defaultSidebar, linking to the doc course/basics/references"
   }
 }
