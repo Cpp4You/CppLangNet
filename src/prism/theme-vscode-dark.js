@@ -5,6 +5,12 @@ const theme = {
 	},
 	styles: [
 		{
+			types: ["console-token"],
+			style: {
+				color: "#DADADA",
+			}
+		},
+		{
 			types: ["prolog"],
 			style: {
 				color: "rgb(0, 0, 128)"
@@ -123,6 +129,15 @@ const theme = {
 			types: ["debug"],
 			style: { color: "#8f3fea" }
 		},
+
+		// Custom
+		{
+			types: ["invisible-line"],
+			style: {
+				backgroundColor: "red",
+				display: "none"
+			}
+		}
 	]
 };
 
