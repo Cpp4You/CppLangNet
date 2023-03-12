@@ -131,7 +131,7 @@ module.exports = {
 							]
 						},
 						doc("8. Structures", "course/basics/structures"),
-						doc("9. Inheritance", "course/basics/inheritance"),
+						doc("9. Inheritance 🚧", "course/basics/inheritance"),
 						doc("10. References (I)", "course/basics/references"),
 						{
 							type: "category",
@@ -143,9 +143,9 @@ module.exports = {
 								doc("2. Special methods 🚧", "course/basics/methods/special-methods"),
 							]
 						},
-						doc("11. Polymorphism", "course/basics/polymorphism"),
-						doc("12. Aliases", "course/basics/aliases"),
-						doc("13. Namespaces", "course/basics/namespaces"),
+						doc("11. Polymorphism 🚧", "course/basics/polymorphism"),
+						doc("12. Aliases 🚧", "course/basics/aliases"),
+						doc("13. Namespaces 🚧", "course/basics/namespaces"),
 						{
 							type: "category",
 							label: "📰 Articles",

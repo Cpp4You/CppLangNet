@@ -64,9 +64,10 @@ function filterSidebarItems(items)
 		},
 	],
 
+	// Note: we're not accepting more locales for now (limited workforce)
 	i18n: {
 		defaultLocale: "en",
-		locales: [ "en", "pl", "de" ]
+		locales: [ "en", "pl" ]
 	},
 
 	plugins: [
