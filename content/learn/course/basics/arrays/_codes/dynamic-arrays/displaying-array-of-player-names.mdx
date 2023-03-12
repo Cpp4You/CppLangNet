@@ -1,0 +1,28 @@
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+	using std::vector, std::string, std::cout;
+
+	vector< string > playerNames(3);
+
+	// Setting names of the players
+	playerNames[0] = "HappyBanana";
+	playerNames[1] = "AngryCrab";
+	playerNames[2] = "SadWolf";
+
+	// Adding a new player:
+	playerNames.push_back("WickedWitch");
+
+	// Print each player's name
+	// highlight-start
+	for (string name : playerNames)
+	{
+		cout << name << '\n';
+	}
+	// highlight-end
+}
+```

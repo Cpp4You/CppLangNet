@@ -88,8 +88,11 @@ int main()
 The above program will compile and run correctly.
 
 :::important Variable definition
-A **variable** is a container for data of a certain type. A variable's value can change, but its type cannot.
+A variable is a named "container" that holds a specific type of information that can be used in a program.
+Its value can change, but the type cannot.
 :::
+
+Variable is like a labeled box that you can put things in and take things out of as needed.
 
 ## Creating variables
 
@@ -98,8 +101,6 @@ In the above program, we created the variable like this:
 ```cpp
 int x = 212;
 ```
-
-Here is a diagram of this notation:
 
 <Tabs>
 	<TabItem value="creation-init" label="🔢 With initial value" default>
@@ -116,16 +117,15 @@ Here is a diagram of this notation:
 	</TabItem>
 </Tabs>
 
-This <u>extremely important</u> notation consists of the following elements:
-
-Element | Description
----|---
-**`int`** | variable type
-`x` | variable name
-`= 212` | **initialization** (assignment of the initial value)
-`;` | a semicolon that ends the statement
+This is an important notation that you'll see very often throughout your programming career.
+In the following sections, we'll explain what different parts of this notation mean.
 
 ### Variable type
+
+<Image center maxheight={120} borderRadius={25}
+		src="/img/tutorials/course/basic/variables/creation-type-en.png"
+		alt="Overview of a variable definition - type"
+	/>
 
 The type of a variable tells you what the variable can store. As mentioned before,
 a variable is a container that holds certain things of a **certain type**.
@@ -148,8 +148,6 @@ The above-mentioned types of variables are always written with **lowercase lette
 :::
 
 #### Examples of creating variables:
-
-<hr/>
 
 <Tabs>
 	<TabItem value="int" label={<code>int</code>} default>
@@ -179,15 +177,12 @@ float y = 30;
 float z = 1.234f;
 ```
 
-:::caution Fractional part
-When we assign a value with a fractional part to a variable of type `float`,
-we must end the number with the `f` character:
+When we assign a value with a fractional part to a variable of type `float`, we have to put the `f` character at the very end:
 
 - ✔ `12.45f`
 - ❌ `12.45`
 
 This has its justification, but more on that later.
-:::
 
 	</TabItem>
 	<TabItem value="char" label={<code>char</code>}>
@@ -229,9 +224,12 @@ bool z = false;
 	</TabItem>
 </Tabs>
 
-<hr/>
-
 ### Variable name
+
+<Image center maxheight={120} borderRadius={25}
+		src="/img/tutorials/course/basic/variables/creation-name-en.png"
+		alt="Overview of a variable definition - name"
+	/>
 
 The name can be anything you want, with some important restrictions:
 

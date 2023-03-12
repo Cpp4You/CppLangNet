@@ -1,0 +1,42 @@
+```cpp
+// prism-push-types:Car
+#include <iostream>
+
+struct Car
+{
+	// car information
+	std::string	brand;
+	std::string	model;
+	int			yearOfProduction;
+
+	// movement
+	float		topSpeed = 200;		// (km/h)
+	float		acceleration = 50;	// (km/h per second)
+	float		speed = 0;			// current one (km/h)
+};
+
+void accelerate(Car& car)
+{
+	car.speed += car.acceleration;
+}
+
+int main()
+{
+
+	Car car;
+	car.brand = "Ford";
+	car.model = "Mustang";
+	car.yearOfProduction = 1969;
+	car.topSpeed = 250;
+	car.acceleration = 60;
+	// initial values...
+
+	// calling for the first time
+	accelerate(car);
+	std::cout << "Current speed: " << car.speed << " km/h\n";
+	
+	// calling for the second time
+	accelerate(car);
+	std::cout << "Current speed: " << car.speed << " km/h\n";
+}
+```

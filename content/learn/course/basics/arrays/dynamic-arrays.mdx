@@ -1,0 +1,431 @@
+---
+sidebar_label:		"2. Dynamic arrays"
+title:				Dynamic arrays
+description:		"Lesson: using dynamic arrays in C++"
+hide_title:			true
+---
+
+<!-- Components -->
+import Image			from "@site-comps/Image";
+import Tooltip			from "@site-comps/Tooltip";
+import Columns			from "@site-comps/Columns";
+import FullCode			from "@site-comps/FullCode";
+
+<!-- Presets -->
+import NotFinished		from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!-- Codes -->
+import FullCode_Motivation							from "./_codes/motivation.mdx";
+import FullCode_ErasingElement						from "./_codes/dynamic-arrays/erasing-element.mdx";
+import FullCode_InsertingElement					from "./_codes/dynamic-arrays/inserting-element.mdx";
+import FullCode_ReadingSize							from "./_codes/dynamic-arrays/reading-size.mdx";
+import FullCode_DisplayingArrayOfPlayerNames		from "./_codes/dynamic-arrays/displaying-array-of-player-names.mdx";
+import FullCode_DisplayingArrayOfPlayerNamesAuto	from "./_codes/dynamic-arrays/displaying-array-of-player-names-auto.mdx";
+
+# Dynamic arrays
+
+In this lesson we'll learn how to use dynamic arrays in C++ using the `std::vector` type.
+
+Let's go back and consider the code we've shown in the [Motivation](../introduction/#motivation) section of the previous lesson.
+There is a great candidate to be turned into an array. The following variables are of the same type (`std::string`)
+and differ only in number at the end of their name.
+
+```cpp
+std::string playerName1;
+std::string playerName2;
+std::string playerName3;
+```
+
+<FullCode content={<FullCode_Motivation/>} />
+
+Instead of making three separate variables, we can create one array that contains three elements.
+
+## Creating a vector
+
+To use `std::vector` we first have to include its header file:
+
+```cpp
+#include <vector>
+```
+
+As we already know from the [Introduction](../introduction), to create a `vector` we have to know the type of the elements
+that will be stored inside it. Keep in mind that all of the elements in a vector are of the same type.
+
+```cpp
+#include <iostream>
+#include <string> // do not forget about string
+#include <vector>
+
+int main()
+{
+	// highlight-next-line
+	std::vector< std::string > playerNames(3);
+	// ...
+}
+```
+
+The above example shows how to create a vector that stores `std::string`s.
+
+:::tip Convenience
+Before we continue, let's put an appropriate [`using` statement](/learn/course/basics/first-program/#prefix-of-the-standard-namespace)
+at the beginning of the `main` function block to skip the `std::` prefix:
+
+```cpp
+int main() {
+	// highlight-next-line
+	using std::vector, std::string;
+
+	vector< string > playerNames(3);
+}
+```
+
+**Remember**: later we'll use more elements from the standard library, like `std::cout` and `std::cin`. Don't forget to add these
+to the `using` statement.
+:::
+
+**vector** is a *template*, which means that it can be used with different types,
+which we specify in angle brackets, right after `vector`, e.g:
+
+```cpp title="🔹 Using vector with different types"
+vector< int > arrayOfInts;
+vector< float > arrayOfFloats;
+vector< char > arrayOfChars;
+vector< string > arrayOfStrings;
+vector< /*other type*/ > arrayOfXYZ;
+```
+
+The following code defines a variable `playerNames`  of a vector type that stores text elements (`std::string`s):
+
+```cpp title="Defining a variable of vector type"
+vector< string > playerNames(3);
+```
+
+A parenthesis with 3 in the middle will make the vector store 3 variables, or more precisely, 3 elements
+of type `string` right from the beginning.
+
+```cpp title="Storing 3 elements in the vector"
+playerNames(3)
+```
+
+Note that this is a vector-specific thing and not a general rule. If you want to create a vector that is initially empty,
+just don't write the parentheses at all:
+
+```cpp title="Creating an empty vector"
+vector< string > playerNames;
+```
+
+:::danger Empty parentheses problem
+A mistake that is often made by beginners is to write empty parentheses when creating a vector (or actually any other type):
+
+```cpp title="This is not defining a variable"
+vector< string > playerNames();
+```
+
+Later in the course you'll learn about **functions**, and the syntax that declares them:
+
+```cpp title="This is actually a function declaration"
+// prism-push-types:AnyType
+AnyType functionName();
+```
+
+This is why the empty parentheses turns this into a function declaration, which is not what we want.
+
+:::
+
+
+## Accessing elements
+
+Let's give players the following names:
+
+| Player index  | Name |
+| ------------- | ---- |
+| 0             | HappyBanana |
+| 1 		    | AngryCrab   |
+| 2 		    | SadWolf     |
+
+Here is how we can set them in the code:
+
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+	using std::vector, std::string, std::cout;
+
+	vector< string > playerNames(3);
+
+	// Setting names of the players
+	playerNames[0] = "HappyBanana";
+	playerNames[1] = "AngryCrab";
+	playerNames[2] = "SadWolf";
+
+	// Printing the name of the first player:
+	cout << "Name of the first player: " << playerNames[0];
+}
+```
+
+To access an element of an array, we put its index in square brackets right after the array name:
+
+```cpp
+arrayName[ index ]
+```
+
+A non-empty array with number of elements equal to `N` always has indices from `0` to,
+`N-1` inclusive. A three-element array `playerNames` has indices from `0` to, `2` inclusive.
+An attempt to rename the player with index `3` will result in a runtime error:
+
+```cpp title="🔴 Run-time error"
+// error-next-line
+playerNames[3] = "NewPlayer"; // Error
+```
+
+The reason is that the element with index `3` does not exist (size is `3` but the last item has index `2`).
+This code will compile correctly (we might get a warning), but running this program will result in an error.
+
+## Adding elements at the end
+
+To add another item to the array, we need to use `push_back` like this:
+
+```cpp title="🔹 Adding an item to the array"
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+	using std::vector, std::string, std::cout;
+
+	vector< string > playerNames(3);
+
+	// Setting names of the players
+	playerNames[0] = "HappyBanana";
+	playerNames[1] = "AngryCrab";
+	playerNames[2] = "SadWolf";
+
+	// Adding a new player:
+	// highlight-next-line
+	playerNames.push_back("WickedWitch");
+
+	// Printing the name of player with index 3
+	cout << "Name of the player with index 3: " << playerNames[3];
+}
+```
+
+From the moment `.push_back(...)` instruction was executed, the `playerNames` array already has four elements.
+We say that we *called* the `push_back(...)` *method*. We'll talk more about calls and methods in the future.
+For now, just remember that:
+
+1. we put a dot after the name of the array
+2. we write the name of the *method*, which is in this case `push_back`
+3. then in parentheses we enter what we want to add (e.g. a value or a variable)
+
+Note that after we added the new element, the array has four elements, with indices `0`, `1`, `2` and `3`:
+
+<Columns columns={["auto", "1fr"]}>
+<div>
+
+Before:
+
+| Index  | Name |
+| ------ | ---- |
+| 0      | HappyBanana |
+| 1      | AngryCrab   |
+| 2      | SadWolf     |
+
+</div>
+<div>
+
+After:
+
+| Index  | Name |
+| ------ | ---- |
+| 0      | HappyBanana     |
+| 1      | AngryCrab       |
+| 2      | SadWolf         |
+| **3**  | **WickedWitch** |
+
+</div>
+</Columns>
+
+## Inserting elements at a specific position
+
+At this point you will have to trust me a little. I won't go into details because it's too complicated for now.
+To insert **before** index `n` to a vector (in this case `playerNames`) we use the following notation:
+
+```cpp title="Inserting an item to the array"
+playerNames.insert(playerNames.begin() + n, elementToInsert);
+```
+
+Simply put, `insert` adds an element just before a
+specified <Tooltip title={<>An <i>iterator</i> to be precise, but that's for later</>}><b>position</b></Tooltip>
+which isn't the same thing as an index. To obtain it, we need to use `begin()` and **add** the index to it.
+
+Knowing this, we will now insert a new player just before the `AngryCrab` (index `1`):
+
+```cpp title="Inserting an item to the array"
+playerNames.insert(playerNames.begin() + 1, "BadPenguin");
+```
+
+<FullCode content={<FullCode_InsertingElement />} />
+
+This is how the array changes after the insertion:
+
+<Columns columns={["auto", "1fr"]}>
+<div>
+
+Before:
+
+| Index  | Name |
+| ------ | ---- |
+| 0      | HappyBanana |
+| 1      | AngryCrab   |
+| 2      | SadWolf     |
+| 3      | WickedWitch |
+
+</div>
+<div>
+
+After:
+
+| Index  | Name |
+| ------ | ---- |
+| 0      | HappyBanana     |
+| **1**  | **BadPenguin**  |
+| 2      | AngryCrab       |
+| 3      | SadWolf         |
+| 4      | WickedWitch     |
+
+</div>
+</Columns>
+
+## Removing elements
+
+This is a similar case to inserting elements. We need to specify a **position** again.
+So to remove the `n`-th element from a vector (e.g. from `playerNames`) we will use the following notation:
+
+```cpp title="Erasing n-th element from playerNames"
+playerNames.erase( playerNames.begin() + n );
+```
+
+We'll now remove the first player from the array:
+
+```cpp title="Erasing the first element from playerNames"
+playerNames.erase( playerNames.begin() + 0 );
+```
+
+<FullCode content={<FullCode_ErasingElement />} />
+
+Note that in this case `+ 0` actually does nothing, but I put it there to make it clear: `playerNames.begin()`
+is the same as `playerNames.begin() + 0`.
+
+The contents of the array before and after the removal:
+
+<Columns columns={["auto", "1fr"]}>
+<div>
+
+Before:
+
+| Index  | Name |
+| ------ | ---- |
+| **0**  | **HappyBanana** &lt;-- gets deleted |
+| 1      | BadPenguin  |
+| 1      | AngryCrab   |
+| 2      | SadWolf     |
+| 3      | WickedWitch |
+
+</div>
+<div>
+
+After:
+
+| Index  | Name |
+| ------ | ---- |
+| 0      | BadPenguin      |
+| 1      | AngryCrab       |
+| 2      | SadWolf         |
+| 3      | WickedWitch     |
+
+</div>
+</Columns>
+
+<br/>
+
+:::danger
+Before erasing an item from an array, make sure it exists (that is, it's in scope `[0, N)`).
+
+```cpp title="🔹 Deleting n-th element from an array (safe)"
+int index;
+cin >> index; // don't forget to add using std::cin;
+
+if (index >= 0 && index < playerNames.size())
+{
+	playerNames.erase( playerNames.begin() + index );
+}
+else
+	cout << "Index " << index << " does not exist!";
+```
+
+:::
+
+## Reading the size
+
+Because `vector` can change size whenever you want it to, you may sometimes need to read the number of elements
+it currently contains. The current size can be read using the `size()` method:
+
+```cpp
+// Setting names of the players
+playerNames[0] = "HappyBanana";
+playerNames[1] = "AngryCrab";
+playerNames[2] = "SadWolf";
+
+// highlight-next-line
+cout << "The array contains " << playerNames.size() << " elements\n";
+
+// Adding a new player:
+playerNames.push_back("WickedWitch");
+cout << "Added new player.\n";
+// highlight-next-line
+cout << "The array contains " << playerNames.size() << " elements\n";
+```
+
+<FullCode content={<FullCode_ReadingSize/>}/>
+
+Just like we previously did with the method `push_back`, we write the name after the dot.
+Then we put the parentheses, and in the case of `.size` we leave them empty.
+
+## Displaying elements
+
+If we want to display **all** the elements of an array, we'll have to use a *loop*.
+We will tell more about loops in the future. They allow you to execute the same
+piece of code multiple times.
+
+```cpp title="🔹 Displaying items"
+for (string name : playerNames)
+{
+	cout << "Player name: " << name << '\n';
+}
+```
+
+<FullCode content={<FullCode_DisplayingArrayOfPlayerNames/>}/>
+
+To understand this, let me show you how to "read" it:
+
+> **For** <small>(`for`)</small> **each player name** <small>(`name`)</small>
+> **which is of a type** `std::string` **in an array** `playerNames` **execute**
+> **the following block of code**...
+
+There is only one statement inside this block of code:
+
+```cpp
+cout << "Player name: " << name << '\n';
+```
+The loop will write the nicknames of the players one by one
+into the variable `name`, and execute the display instruction (`cout`) for each of them.
+
+## Summary
+
+We learned how to do basic operations on `std::vector` type. Make sure to check out the sublessons because there is still
+a lot to practice. You can find them in the sidebar if you expand the "Dynamic arrays" item.

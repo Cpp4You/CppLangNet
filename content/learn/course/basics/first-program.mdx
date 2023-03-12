@@ -1,6 +1,5 @@
 ---
-sidebar_position:	1
-sidebar_label:		"1. First program"
+sidebar_label:		"1. Learn"
 description:		"Lesson: First program in C++ language"
 hide_title:			true
 ---
@@ -40,7 +39,7 @@ int main()
 
 <div>
 
-```plaintext title="Result (console)"
+```console title="Result (console)"
 Hello, World!
 ```
 
@@ -127,7 +126,7 @@ As you can see, many code editors like Visual Studio, VS Code, Replit.com, CLion
 
 ### Printing text to the console
 
-To display text to the console we used the following statement inside the `main` block:
+To display text in the console we used the following statement inside the `main` block:
 
 ```cpp
 std::cout << "Hello, World!";
@@ -140,13 +139,14 @@ We will mention the `std::` prefix in a minute.
 <summary>For those who are curious 😉</summary>
 <div>
 
-Strictly speaking, `cout` is a so-called character output stream, but you don't need to remember that for the moment.
+Strictly speaking, `cout` is a so-called character output stream that writes the content to a *standard output*,
+but you don't need to remember that for the moment.
 
 </div>
 </details>
 
 
-I can now duplicate the line above like this:
+I can now duplicate the line above a couple of times:
 
 ```cpp
 std::cout << "Hello, World!1";
@@ -167,7 +167,7 @@ The semicolon is treated as the end of the statement. For this reason, such code
 std::cout << "Hello, World!1"; std::cout << "Hello, World!2"; std::cout << "Hello, World!3";
 ```
 
- Don't write code like this!
+Do not write code like this!
 :::
 
 Presentation of the above-created program:
@@ -196,7 +196,7 @@ std::cout << "Hello, World!\n";
 Note that we used the **backslash** (`\n`), and not the forward slash (`/n`).
 :::
 
-Program execution after adding newline characters:
+This is how the program is being executed when we add newline characters:
 
 <GoogleSlides
 		src="https://docs.google.com/presentation/d/e/2PACX-1vRtT6R8wewyaM8WZRUP-KIREO_1HEdReq-BhpmUYKsVWRm5VbRRn7jZbhZyMIZMVzarQ1xkGrjS2eoM/embed"
@@ -216,7 +216,7 @@ More on that later.
 
 Beginners often find typing `std::` to be unwieldy. It can be omitted if we give the appropriate line of code beforehand:
 
-```cpp
+```cpp title="The 'using' statement" showLineNumbers
 #include <iostream>
 int main()
 {
@@ -226,13 +226,18 @@ int main()
 }
 ```
 
-Now, all statements within this code block below the `using` line can omit the `std::` prefix for `cout`.
+After the line that contains `using std::cout;`, the `std::` prefix is no longer required
+for the `cout` object. It lasts until the end of the current code block (the `main` function in this case).
 
 :::caution using namespace std
-In many other online tutorials and sources, it is extremely common to find others recommending `using namespace std;` at the top of your file.
-While this is legal C++, it is **strongly discouraged** by nearly all experienced C++ programmers. We will cover these reasons later.
+In many other online tutorials and sources, it is extremely common to find usage of
 
-For the time being, prefer the style displayed above.
+```cpp
+using namespace std;
+```
+
+at the top of your file. While this is legal code in C++, it is **strongly discouraged** by nearly all experienced C++ programmers.
+We will cover reasons for this later. For the time being, prefer the `using std::cout;` approach we mentioned before.
 :::
 
 ## Performing calculations
@@ -295,7 +300,8 @@ int main()
 
 After starting the program, we will get the correct result of the calculation in the code.
 
-:::important Mathematical operators
+### Mathematical operators
+
 - `+` adds two numbers together
 - `-` subtracts two numbers from each other
 - `*` multiplies two numbers by itself
@@ -307,7 +313,6 @@ C++ adheres to the "PEMDAS" order you may have learned in school.
 1. First Parentheses
 2. Then Multiplication/Division from left to right
 3. Finally Addition/Subtraction from left to right
-:::
 
 ## Summary
 

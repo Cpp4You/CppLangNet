@@ -1,11 +1,11 @@
 ---
-sidebar_position:	10
-sidebar_label:		"10. Inheritance 🚧"
+sidebar_label:		"9. Inheritance"
 description:		"Lesson: inheritance basics in C++"
 ---
 
 # Inheritance
 
+import CustomCodeBlock from "@site-comps/CustomCodeBlock";
 import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
 import FullCode_DerivedStructs from "./_codes/inheritance/full-code-step-derived-structs.mdx"
 import FullCode_DerivedStructsUsage from "./_codes/inheritance/full-code-step-derived-structs-usage.mdx"
@@ -13,33 +13,33 @@ import FullCode_DerivedStructsMethods from "./_codes/inheritance/full-code-step-
 
 <NotFinished/>
 
-In this lesson you will learn how to use inheritance in order to share properties and characteristic from other classes by building class hierarchy and prevent redundant code. 
+In this lesson you will learn how to use inheritance in order to share properties and characteristic from other classes
+by building class hierarchy and prevent redundant code. 
 
 ## Motivation 
 
-When creating data structures that mimic real world elements, we often encounter situation when two such structures share common properties. For an example if we make game with vehicles containing planes ✈ and cars 🚗, we would create two structures like this:
+When creating data structures that mimic real world elements, we often encounter situation when two such structures share common properties.
+For an example if we make game with vehicles containing planes ✈ and cars 🚗, we would create two structures like this:
 
 ```cpp
 struct Car
 {
-    // highlight-next-line
+    // highlight-start
     std::string brand;
-    // highlight-next-line
     std::string model;
-    // highlight-next-line
     int productionYear;
+    // highlight-end
 
     bool isCabrio;
 };
 
 struct Airplane
 {
-    // highlight-next-line
+    // highlight-start
     std::string brand;
-    // highlight-next-line
     std::string model;
-    // highlight-next-line
     int productionYear;
+	// highlight-end
 
     int enginesNumber;
     std::string airlinesName;
@@ -52,7 +52,7 @@ Note the highlighted lines. After a brief analysis we can spot, that both struct
 - model
 - production year
 
-Later in this lesson we will use inheritance to 
+Later in this lesson we will use inheritance to connect these structures two structures with a common base structure.
 
 ## Base structure
 
@@ -67,14 +67,16 @@ struct Vehicle
 };
 ```
 
-Note the name - Vehicle. It's a structure describing general form of the vehicle. Creating an instance of such structure doesn't have much sense: 
+Note the name - `Vehicle`. It's a structure describing general form of a vehicle. Creating an instance of such structure doesn't have much sense: 
 
 ```cpp
+// prism-push-types:Vehicle
 Vehicle vehicle;
 ```
 
-:::caution `Vehicle` instance
-The above code is not prohibited. It won't cause compilation error. In the future we will learn how to prevent others from creating an instance of such object by using *private constructors*.
+:::caution Instance of a base structure
+The above code won't result in a compilation error. In the future we will learn how to prevent others from creating
+an instance of such object by using *private constructors*.
 :::
 
 Instead of this, we will use `Vehicle` to make `Car` and `Airplane` structures so they **inherit** its properties.
@@ -118,6 +120,7 @@ The above scheme shows, that properties inherited from `Vehicle` are in both `Ca
 Because of this, when we create a car inside our code, we can use `brand`, `model` and `productionYear` fields as if they were directly in `Car` structure:
 
 ```cpp
+// prism-push-types:Car
 Car ford;
 ford.brand = "Ford";
 ford.model = "Fiesta";
@@ -127,13 +130,14 @@ ford.isCabrio = false;
 
 The same applies to the plane:
 
-```cpp
+```cpp showLineNumbers
+// prism-push-types:Airplane
 Airplane boeing;
 boeing.brand = "Boeing";
 boeing.model = "737";
 boeing.productionYear = 2010;
 boeing.enginesNumber = 2;
-boeing.arilinesName = "Air Canada";
+boeing.airlinesName = "Air Canada";
 ```
 
 <details>
@@ -164,6 +168,7 @@ struct Vehicle
 Now we can use this method on the `Car` instance:
 
 ```cpp
+// prism-push-types:Car
 Car ford;
 ford.brand = "Ford";
 ford.model = "Fiesta";

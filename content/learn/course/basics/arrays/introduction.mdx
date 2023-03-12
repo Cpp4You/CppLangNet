@@ -1,0 +1,121 @@
+---
+sidebar_position:	1
+sidebar_label:		"1. Introduction"
+title:				Introduction
+description:		"Lesson: introduction to arrays in C++"
+hide_title:			true
+pagination_next:	"course/basics/arrays/dynamic-arrays"
+---
+
+<!-- Components -->
+import Image			from "@site-comps/Image";
+import Tooltip			from "@site-comps/Tooltip";
+
+<!-- Presets -->
+import NotFinished		from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!-- Codes -->
+import Code_Motivation	from "./_codes/motivation.mdx";
+
+# Introduction
+
+As we gradually do calculations on more and more data, regular variables start to be insufficient.
+We will use arrays as a comfortable way to store bigger number of variables of the same type.
+This lesson will teach you how to create and manipulate arrays in C++.
+
+We will first cover the easiest way, that is
+using the [`std::vector`](/docs/std/containers/arrays/vector/) type.
+
+## Motivation
+
+Let's assume that we want to store the nicknames of players who are on the server.
+Each name is essentially a text, so we will store it inside a variable
+of type [`std::string`](/docs/std/containers/strings/string/).
+
+<!-- IDK why it doesn't work without wrapping with the <></> empty tags. -->
+
+<><Code_Motivation/></>
+
+This code is only capable of handling exactly three players. In a situation where we have 5 players wanting to play,
+we will have to use "copy -> paste" a couple additional times. Repeating this is a bad idea.
+Instead, we will introduce an array.
+
+## What is an array?
+
+<Image center border
+		maxheight="300px"
+		src="/img/tutorials/course/basic/arrays/car-brand-names-en.png"
+		alt="An array containing car brand names"
+	/>
+<br/>
+
+An array is a container that can store *some* number of elements of a certain type.
+Look at the picture above. Inside the array we put names of vehicle brands.
+Note that each element has its own unique **index**.
+
+:::important Array indices
+Elements of an array are indexed from zero upwards.
+The first element has an index `0`, the second is at `1`, third at `2` and so on.
+:::
+
+Indices are necessary to distinguish array elements.
+Using them, we can specify which element we want to access.
+
+## Arrays in C++
+
+There are a few ways to create an array in C++:
+
+Safe ✅:
+- a dynamic array using [`std::vector<T>`](/docs/std/containers/arrays/vector/)
+- a fixed-size array using [`std::array<T, Num>`](/docs/std/containers/arrays/array/)
+
+Unsafe ❌:
+- a dynamic C-style array (e.g `int* array = new int[5]`)
+- a fixed-size C-style array (e.g `int array[5]`)
+
+We will focus on the first option, because it is safe and easy to use.
+Then we will talk about the last two, which are not recommended to use, and instead we'll provide alternative solutions.
+
+You'll find a full lesson about `std::array` later in the course, because its main advantage is a tiny performance improvement
+over `vector` which is not important for the moment.
+
+<details>
+<summary>Were you told to use C-style arrays?</summary>
+<div>
+
+C-style arrays are unfortunately still often taught in schools and universities. There are a few reasons for that, which
+we won't discuss here. C++ is a language that is constantly evolving, and the C-style arrays were replaced
+by the safer alternatives mentioned above.
+
+With that said, I should mention that a C-style array is not a bad thing in general. A programmer that is fully aware of
+problems that can occur when using them, and is able to avoid them, can use them safely. However, this is not the case
+for beginners. There are **a lot** of problems you can encounter when using them, and it is very easy to make a mistake.
+Keep in mind that `std::vector` and `std::array` cover 100% of use cases of C-style arrays, meaning that
+there is no situation where not using C-style array would stand in your way.
+
+</div>
+</details>
+
+### Dynamic vs fixed-size arrays
+
+A **dynamic array** can grow and shrink as needed. In C++ we use [`std::vector`](/docs/std/containers/arrays/vector/) for this purpose.
+
+A **fixed-size array** on the other hand has a constant number of elements, which has to be known at compile time.
+This means that we cannot read the number of elements needed from a user and then create the array of exactly that size.
+We have to specify it directly in the code. The [`std::array`](/docs/std/containers/arrays/array/) is used for this purpose.
+
+Because of the limitation of the fixed-size array we mentioned above, we'll now focus on the dynamic array because it is easier to use.
+
+### Common operations
+
+There are a lot of things you can do with an array. We'll now go through the most common operations that will cover most of your needs:
+
+1. creating an array
+2. accessing elements
+3. adding elements
+4. reading the number of elements
+5. removing elements
+6. displaying its contents
+
+Later in the course you'll learn how to run built-in algorithms such as sorting, searching, transforming and so on.
