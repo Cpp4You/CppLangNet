@@ -14,14 +14,10 @@ int main()
 	};
 
 	// Adding a new player:
+	// highlight-next-line
 	playerNames.push_back("WickedWitch");
 
-	// Print each player's name
-	// highlight-start
-	for (string name : playerNames)
-	{
-		cout << name << '\n';
-	}
-	// highlight-end
+	// Printing the name of player with index 3
+	cout << "Name of the player with index 3: " << playerNames[3];
 }
 ```

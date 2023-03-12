@@ -17,7 +17,9 @@ import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
 
 <!-- Codes -->
 import FullCode_Motivation							from "./_codes/motivation.mdx";
+import FullCode_InitializingVector					from "./_codes/dynamic-arrays/initializing-vector.mdx";
 import FullCode_ErasingElement						from "./_codes/dynamic-arrays/erasing-element.mdx";
+import FullCode_AddingElementToArray				from "./_codes/dynamic-arrays/adding-element.mdx";
 import FullCode_InsertingElement					from "./_codes/dynamic-arrays/inserting-element.mdx";
 import FullCode_ReadingSize							from "./_codes/dynamic-arrays/reading-size.mdx";
 import FullCode_DisplayingArrayOfPlayerNames		from "./_codes/dynamic-arrays/displaying-array-of-player-names.mdx";
@@ -60,7 +62,7 @@ that will be stored inside it. Keep in mind that all of the elements in a vector
 int main()
 {
 	// highlight-next-line
-	std::vector< std::string > playerNames(3);
+	std::vector<std::string> playerNames(3);
 	// ...
 }
 ```
@@ -76,7 +78,7 @@ int main() {
 	// highlight-next-line
 	using std::vector, std::string;
 
-	vector< string > playerNames(3);
+	vector<string> playerNames(3);
 }
 ```
 
@@ -98,7 +100,7 @@ vector< /*other type*/ > arrayOfXYZ;
 The following code defines a variable `playerNames`  of a vector type that stores text elements (`std::string`s):
 
 ```cpp title="Defining a variable of vector type"
-vector< string > playerNames(3);
+vector<string> playerNames(3);
 ```
 
 A parenthesis with 3 in the middle will make the vector store 3 variables, or more precisely, 3 elements
@@ -112,7 +114,7 @@ Note that this is a vector-specific thing and not a general rule. If you want to
 just don't write the parentheses at all:
 
 ```cpp title="Creating an empty vector"
-vector< string > playerNames;
+vector<string> playerNames;
 ```
 
 :::danger Empty parentheses problem
@@ -157,7 +159,7 @@ int main()
 {
 	using std::vector, std::string, std::cout;
 
-	vector< string > playerNames(3);
+	vector<string> playerNames(3);
 
 	// Setting names of the players
 	playerNames[0] = "HappyBanana";
@@ -191,38 +193,78 @@ playerNames[3] = "NewPlayer"; // Error
 The reason is that the element with index `3` does not exist (size is `3` but the last item has index `2`).
 This code will compile correctly (we might get a warning), but running this program will result in an error.
 
+This is how we can ask a user to enter the name of a certain player:
+
+```cpp
+cout << "Enter the name of the second player: ";
+// highlight-next-line
+cin >> playerNames[1];
+```
+
+Now let's output the number of characters in the provided name:
+
+```cpp
+cout << "The name of the second player has " << playerNames[1].size() << " characters.\n";
+```
+
+```console title="Possible output"
+Enter the name of the second player: FuriousFlamingo
+The name of the second player has 15 characters.
+```
+
+## Providing initial values
+
+There is also a way to provide initial values for the elements of the `vector` right from the beginning:
+
+```cpp
+vector<string> playerNames = {
+	"HappyBanana",
+	"AngryCrab",
+	"SadWolf",
+};
+```
+
+<FullCode content={<FullCode_InitializingVector/>} />
+
+<details>
+<summary>Alternative syntax</summary>
+<div>
+
+In the case of initializing a `vector` you can also omit the `=` sign:
+
+```cpp title="Alternative syntax"
+// highlight-next-line
+vector<string> playerNames { // note the lack of '='
+	"HappyBanana",
+	"AngryCrab",
+	"SadWolf",
+};
+```
+
+The result is the same.
+
+</div>
+</details>
+
+We will use this method of initialization in the current lesson from now on.
+
 ## Adding elements at the end
 
-To add another item to the array, we need to use `push_back` like this:
+To add another item at the end of an array (in this case `playerNames`), we need to use `push_back` like this:
 
-```cpp title="🔹 Adding an item to the array"
-#include <iostream>
-#include <string>
-#include <vector>
+```cpp
+// highlight-next-line
+playerNames.push_back("WickedWitch");
 
-int main()
-{
-	using std::vector, std::string, std::cout;
-
-	vector< string > playerNames(3);
-
-	// Setting names of the players
-	playerNames[0] = "HappyBanana";
-	playerNames[1] = "AngryCrab";
-	playerNames[2] = "SadWolf";
-
-	// Adding a new player:
-	// highlight-next-line
-	playerNames.push_back("WickedWitch");
-
-	// Printing the name of player with index 3
-	cout << "Name of the player with index 3: " << playerNames[3];
-}
+// Printing the name of player with index 3
+cout << "Name of the player with index 3: " << playerNames[3];
 ```
 
 ```console title="Output"
 Name of the player with index 3: WickedWitch
 ```
+
+<FullCode content={<FullCode_AddingElementToArray/>} />
 
 From the moment `.push_back(...)` instruction was executed, the `playerNames` array already has four elements.
 We say that we *called* the `push_back(...)` *method*. We'll talk more about calls and methods in the future.
@@ -260,12 +302,25 @@ After:
 </div>
 </Columns>
 
+<br/>
+
+To let the user add a new player, we can ask them to enter their name, and then add it to the array:
+
+```cpp
+std::cout << "Enter the name of the new player: ";
+std::string newPlayerName;
+// highlight-start
+std::cin >> newPlayerName;
+playerNames.push_back(newPlayerName);
+// highlight-end
+```
+
 ## Inserting elements at a specific position
 
 At this point you will have to trust me a little. I won't go into details because it's too complicated for now.
 To insert **before** index `n` to a vector (in this case `playerNames`) we use the following notation:
 
-```cpp title="Inserting an item to the array"
+```cpp
 playerNames.insert(playerNames.begin() + n, elementToInsert);
 ```
 
@@ -275,7 +330,7 @@ which isn't the same thing as an index. To obtain it, we need to use `begin()` a
 
 Knowing this, we will now insert a new player just before the `AngryCrab` (index `1`):
 
-```cpp title="Inserting an item to the array"
+```cpp
 playerNames.insert(playerNames.begin() + 1, "BadPenguin");
 ```
 
@@ -320,9 +375,9 @@ So to remove the `n`-th element from a vector (e.g. from `playerNames`) we will 
 playerNames.erase( playerNames.begin() + n );
 ```
 
-We'll now remove the first player from the array:
+We'll now erase the first player from the array:
 
-```cpp title="Erasing the first element from playerNames"
+```cpp
 playerNames.erase( playerNames.begin() + 0 );
 ```
 
@@ -391,10 +446,11 @@ Because `vector` can change size whenever you want it to, you may sometimes need
 it currently contains. The current size can be read using the `size()` method:
 
 ```cpp
-// Setting names of the players
-playerNames[0] = "HappyBanana";
-playerNames[1] = "AngryCrab";
-playerNames[2] = "SadWolf";
+vector<string> playerNames = {
+	"HappyBanana",
+	"AngryCrab",
+	"SadWolf",
+};
 
 // highlight-next-line
 cout << "The array contains " << playerNames.size() << " elements\n";

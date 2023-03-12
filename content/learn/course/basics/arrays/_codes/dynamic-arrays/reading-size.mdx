@@ -7,12 +7,11 @@ int main()
 {
 	using std::vector, std::string, std::cout;
 
-	vector< string > playerNames(3);
-
-	// Setting names of the players
-	playerNames[0] = "HappyBanana";
-	playerNames[1] = "AngryCrab";
-	playerNames[2] = "SadWolf";
+	vector<string> playerNames = {
+		"HappyBanana",
+		"AngryCrab",
+		"SadWolf",
+	};
 
 	// highlight-next-line
 	cout << "The array contains " << playerNames.size() << " elements\n";

@@ -6,3 +6,44 @@ hide_title:			true
 ---
 
 # Dynamic arrays » More examples
+
+Now that we know how to create and use dynamic arrays, let's see some more examples.
+
+:::note Loops
+To take full advantage of what we can do with arrays, you'll need to learn about **loops**. We're going to learn about them
+right after arrays. Until then in the following example we'll use only the most basic `for` loop that we've shown you already.
+:::
+
+## Example 1:
+
+```cpp title="Manipulating list of student grades"
+#include <iostream>
+#include <vector>
+#include <string>
+
+int main()
+{
+	std::vector<std::string> studentNames(3);
+	std::vector<int> studentGrades(3);
+
+	// Ask user to enter student names and grades
+	std::cout << "Enter the first student's name: ";
+	std::cin >> studentNames[0];
+	std::cout << "Enter the first student's grade: ";
+	std::cin >> studentGrades[0];
+
+	std::cout << "Enter the second student's name: ";
+	std::cin >> studentNames[1];
+	std::cout << "Enter the second student's grade: ";
+	std::cin >> studentGrades[1];
+
+	std::cout << "Enter the third student's name: ";
+	std::cin >> studentNames[2];
+	std::cout << "Enter the third student's grade: ";
+	std::cin >> studentGrades[2];
+
+	// Print out the list of students and their grades
+	std::cout << "Student list:" << std::endl;
+
+}
+```

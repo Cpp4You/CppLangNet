@@ -26,7 +26,7 @@ We will first cover the easiest way, using the [`std::vector`](/docs/std/contain
 
 ## Motivation
 
-Let's assume that we want to store the nicknames of players who are on a server.
+Let's assume that we want to store the nicknames of players who are on a game server.
 Each name is essentially a text, so we will store it inside a variable
 of type [`std::string`](/docs/std/containers/strings/string/).
 
@@ -80,11 +80,9 @@ Unsafe ❌:
 </div>
 </details>
 
-We will focus on the first option, because it is safe and easy to use.
-Then we will talk about the last two, which are not recommended to use, and instead we'll provide alternative solutions.
-
-You'll find a full lesson about `std::array` later in the course, because its main advantage is a tiny performance improvement
-over `vector` which is not important for the moment.
+We will focus on the first option, because it is safe and easy to use. We'll also briefly mention the second option, but
+you'll find a more detailed explanation later in the course. Then we will talk briefly about the C-style arrays,
+which are not recommended to use.
 
 <details>
 <summary>Were you told to use C-style arrays?</summary>
@@ -95,7 +93,7 @@ we won't discuss here. C++ is a language that is constantly evolving, and the C-
 by the safer alternatives mentioned above.
 
 With that said, I should mention that a C-style array is not a bad thing in general. A programmer that is fully aware of
-problems that can occur when using them, and is able to avoid them, can use them safely. However, this is not the case
+issues that can occur when using them, and is able to avoid them, can use them safely. However, this is not the case
 for beginners. There are **a lot** of problems you can encounter when using them, and it is very easy to make a mistake.
 Keep in mind that `std::vector` and `std::array` cover 100% of use cases of C-style arrays, meaning that
 there is no situation where not using C-style array would stand in your way.
@@ -105,18 +103,19 @@ there is no situation where not using C-style array would stand in your way.
 
 ### Fixed-size vs dynamic arrays
 
-A **fixed-size array** on the other hand has a constant number of elements, which has to be known at compile time.
+A **fixed-size array** has a constant number of elements, which has to be known at compile time.
 This means that we cannot read the number of elements needed from a user and then create the array of exactly that size.
 We have to specify it directly in the code. The [`std::array`](/docs/std/containers/arrays/array/) is used for this purpose.
 
-A **dynamic array** can grow and shrink as needed. In C++ we use [`std::vector`](/docs/std/containers/arrays/vector/) for this purpose.
+A **dynamic array** on the other hand can grow and shrink as needed. In C++ we use [`std::vector`](/docs/std/containers/arrays/vector/)
+for this purpose.
 
-Because of the limitation of the fixed-size array we mentioned above, we'll now focus on the dynamic array because it is easier to use.
+The limitations of fixed-size arrays we mentioned above make it harder to use than dynamic arrays.
+In the following lessons we'll focus on the `vector` because of that.
 
 ### Common operations
 
-There are a lot of things you can do with an array. In the following lessons we'll go through the most common operations
-that will cover most of your needs:
+There are a lot of things you can do with an array. We'll go through the most common operations that will cover most of your needs:
 
 1. creating an array
 2. accessing elements
