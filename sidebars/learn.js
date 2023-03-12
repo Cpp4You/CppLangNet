@@ -89,7 +89,7 @@ module.exports = {
 							link: { type: "doc", id: "course/basics/arrays/introduction" },
 							items: [
 								lessonsSeparator,
-								"course/basics/arrays/introduction",
+								doc("1. Introduction", "course/basics/arrays/introduction"),
 								{
 									type: "category",
 									label: "2. Dynamic arrays",
@@ -112,8 +112,8 @@ module.exports = {
 										doc("📚 Exercises 🚧", "course/basics/arrays/fixed-size-arrays/exercises"),
 									]
 								},
-								"course/basics/arrays/algorithms",
-								"course/basics/arrays/c-style-arrays",
+								doc("4. Algorithms", "course/basics/arrays/algorithms"),
+								doc("5. C-style arrays", "course/basics/arrays/c-style-arrays"),
 								additionalSeparator,
 								doc("📚 Exercises 🚧", "course/basics/arrays/exercises"),
 							]
@@ -130,9 +130,9 @@ module.exports = {
 								doc("📚 Exercises 🚧", "course/basics/functions/exercises"),
 							]
 						},
-						"course/basics/structures",
-						"course/basics/inheritance",
-						"course/basics/references",
+						doc("8. Structures", "course/basics/structures"),
+						doc("9. Inheritance", "course/basics/inheritance"),
+						doc("10. References (I)", "course/basics/references"),
 						{
 							type: "category",
 							label: "11. Methods",
@@ -143,9 +143,9 @@ module.exports = {
 								doc("2. Special methods 🚧", "course/basics/methods/special-methods"),
 							]
 						},
-						"course/basics/polymorphism",
-						"course/basics/aliases",
-						"course/basics/namespaces",
+						doc("11. Polymorphism", "course/basics/polymorphism"),
+						doc("12. Aliases", "course/basics/aliases"),
+						doc("13. Namespaces", "course/basics/namespaces"),
 						{
 							type: "category",
 							label: "📰 Articles",
