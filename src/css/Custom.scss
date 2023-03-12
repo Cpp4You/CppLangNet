@@ -18,6 +18,8 @@
 	--ifm-color-primary-lighter:	#003796;
 	--ifm-color-primary-lightest:	#003ea9;
 
+	--ifm-table-cell-padding: 0.25rem 0.75rem;
+
 	--ifm-code-font-size: 95%;
 	font-variant-ligatures: none;
 	--font-inter: "Inter", "Segoe UI", "Open Sans", "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
@@ -36,6 +38,19 @@ html[data-theme='dark']
 	--ifm-color-primary-light:		#2ddfff;
 	--ifm-color-primary-lighter:	#3be1ff;
 	--ifm-color-primary-lightest:	#64e7ff;
+}
+
+table {
+	display: table;
+	margin: 0 auto;
+	min-width: 50%;
+	table-layout: unset;
+}
+
+table {
+    border-collapse:separate;
+    border-radius:6px;
+	border: 2px solid rgba(gray, 0.4);
 }
 
 @import './Code.scss';

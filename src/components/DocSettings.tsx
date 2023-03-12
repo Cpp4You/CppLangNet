@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
 import {
 	Menu,
@@ -7,14 +7,14 @@ import {
 	Tooltip,
 	IconButton,
 	Slider,
-} from '@mui/material';
+} from "@mui/material";
 
-import { getCookie } from '../helper/Cookies';
+import { getCookie } from "../helper/Cookies";
 
-import SettingsIcon from '@mui/icons-material/Tune';
-import ViewOverloadsIcon from '@mui/icons-material/ViewStream';
+import SettingsIcon from "@mui/icons-material/Tune";
+import ViewOverloadsIcon from "@mui/icons-material/ViewStream";
 
-import styles from './DocSettings.module.scss';
+import styles from "./DocSettings.module.scss";
 
 interface DocSettingsProps {
 	onTextSizeChanged?: (size: number) => void
@@ -31,21 +31,21 @@ export const DocSettings = ({ onTextSizeChanged, arrowJumping }: DocSettingsProp
 		setAnchorEl(null);
 	};
 
-	const [textSize, setTextSize] = React.useState(3);
+	const [textSize, setTextSize] = React.useState(5);
 	React.useEffect(() => {
-		setTextSize(Number.parseInt(getCookie('sizeMode') || '3'));
+		setTextSize(Number.parseInt(getCookie("sizeMode") || "5"));
 	}, []);
 
 	return (
 		<div className={styles.menuButtonsContainer}>
-			{typeof arrowJumping === 'string' && <OverloadViewMode query={arrowJumping}/>}
+			{typeof arrowJumping === "string" && <OverloadViewMode query={arrowJumping}/>}
 			<Tooltip title="Page view settings" placement='bottom' arrow>
 				<IconButton
 					id="btn-open-doc-settings"
 					color="inherit"
-					aria-controls={open ? 'basic-menu' : undefined}
+					aria-controls={open ? "basic-menu" : undefined}
 					aria-haspopup="true"
-					aria-expanded={open ? 'true' : undefined}
+					aria-expanded={open ? "true" : undefined}
 					onClick={handleClick}
 					className={styles.menuButton}
 				>
@@ -60,8 +60,8 @@ export const DocSettings = ({ onTextSizeChanged, arrowJumping }: DocSettingsProp
 					horizontal: "right",
 				}}
 				transformOrigin={{
-					vertical: 'top',
-					horizontal: 'right',
+					vertical: "top",
+					horizontal: "right",
 				}}
 				open={open}
 				onWheel={handleClose}
@@ -111,7 +111,7 @@ function useDidUpdateEffect(fn, inputs) {
 		}
 		didMountRef.current = true;
 	}, inputs);
-  }
+}
 
 function scrollDistanceTo(elem: Element): number {
 	return elem.getBoundingClientRect().top;
@@ -177,14 +177,14 @@ export function OverloadViewMode({query}: DocSettingsProps) {
 	const bindKeyPressEvent = () => {
 		if (window !== undefined)
 		{	
-			window.addEventListener('keyup', handleKeyUp);
-			window.addEventListener('keydown', handleKeyDown);
+			window.addEventListener("keyup", handleKeyUp);
+			window.addEventListener("keydown", handleKeyDown);
 		}
 	};
 
 	const unbindKeyEvents = () => {
-		window.removeEventListener('keyup', handleKeyUp);
-		window.removeEventListener('keydown', handleKeyDown);
+		window.removeEventListener("keyup", handleKeyUp);
+		window.removeEventListener("keydown", handleKeyDown);
 	};
 
 	useDidUpdateEffect(() => {
@@ -203,15 +203,15 @@ export function OverloadViewMode({query}: DocSettingsProps) {
 	const handleClick = () => setEnabled(!enabled);
 
 	const toggleShortcut = React.useCallback((e: KeyboardEvent) => {
-		if (e.key === 'N' && e.shiftKey) {
+		if (e.key === "N" && e.shiftKey) {
 			setEnabled(!enabled);
 		}
 	}, [enabled]);
-	const disableShortcut = () => (window && window.removeEventListener('keyup', toggleShortcut));
+	const disableShortcut = () => (window && window.removeEventListener("keyup", toggleShortcut));
 
 	React.useEffect(() => {
 		if (window !== undefined)
-			window.addEventListener('keyup', toggleShortcut);
+			window.addEventListener("keyup", toggleShortcut);
 		return disableShortcut;
 	}, [enabled]);
 
@@ -236,17 +236,17 @@ export function OverloadViewMode({query}: DocSettingsProps) {
 				</IconButton>
 			</Tooltip>
 			<Snackbar
-					anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+					anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
 					autoHideDuration={3000}
 					open={enabledInfoShown}
-					onClose={(_, reason) => reason === 'timeout' && setEnabledInfoShown(false)}
+					onClose={(_, reason) => reason === "timeout" && setEnabledInfoShown(false)}
 					message={<>Press ⬆ and ⬇ buttons to navigate. <b>Escape</b> to turn off.</>}
 				/>
 			<Snackbar
-					anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+					anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
 					autoHideDuration={2000}
 					open={disabledInfoShown}
-					onClose={(_, reason) => reason === 'timeout' && setDisabledInfoShown(false)}
+					onClose={(_, reason) => reason === "timeout" && setDisabledInfoShown(false)}
 					message={<>Special arrow navigation disabled <small>(Shift+N to enable)</small>.</>}
 				/>
 		</React.Fragment>

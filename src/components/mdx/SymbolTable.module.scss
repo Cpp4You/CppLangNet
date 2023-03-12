@@ -1,10 +1,17 @@
 .symbolTable {
 	margin-bottom: 20px;
-
+	width: 100%;
 	border: none;
+	display: block;
+	table-layout: fixed;
 	>tr {
 		
 	}
+
+	td:last-child {
+		width: 100%;
+	}
+
 	.symbolName {
 		font-family: "Jetbrains Mono", Consolas, monospace;
 		padding: 3px 15px;
