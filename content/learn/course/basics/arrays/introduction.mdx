@@ -19,16 +19,14 @@ import Code_Motivation	from "./_codes/motivation.mdx";
 
 # Introduction
 
-As we gradually do calculations on more and more data, regular variables start to be insufficient.
-We will use arrays as a comfortable way to store bigger number of variables of the same type.
-This lesson will teach you how to create and manipulate arrays in C++.
+When writing programs, you will often come across situations where you need to work with multiple variables that are of the same type.
+That is where arrays come in. In this lesson, we will explore the use of arrays and how they can simplify your code.
 
-We will first cover the easiest way, that is
-using the [`std::vector`](/docs/std/containers/arrays/vector/) type.
+We will first cover the easiest way, using the [`std::vector`](/docs/std/containers/arrays/vector/) type.
 
 ## Motivation
 
-Let's assume that we want to store the nicknames of players who are on the server.
+Let's assume that we want to store the nicknames of players who are on a server.
 Each name is essentially a text, so we will store it inside a variable
 of type [`std::string`](/docs/std/containers/strings/string/).
 
@@ -37,7 +35,7 @@ of type [`std::string`](/docs/std/containers/strings/string/).
 <><Code_Motivation/></>
 
 This code is only capable of handling exactly three players. In a situation where we have 5 players wanting to play,
-we will have to use "copy -> paste" a couple additional times. Repeating this is a bad idea.
+we will have to write the same lines of code a couple of times more. Doing this will quickly become tiring and is generally a bad idea.
 Instead, we will introduce an array.
 
 ## What is an array?
@@ -49,7 +47,7 @@ Instead, we will introduce an array.
 	/>
 <br/>
 
-An array is a container that can store *some* number of elements of a certain type.
+An array is a container that can store some number of elements of a certain type.
 Look at the picture above. Inside the array we put names of vehicle brands.
 Note that each element has its own unique **index**.
 
@@ -72,6 +70,15 @@ Safe ✅:
 Unsafe ❌:
 - a dynamic C-style array (e.g `int* array = new int[5]`)
 - a fixed-size C-style array (e.g `int array[5]`)
+
+<details>
+<summary>Unsafe and non-standard ❌</summary>
+<div>
+
+- a variable-length C-style array (e.g `int array[UserInput]`)
+
+</div>
+</details>
 
 We will focus on the first option, because it is safe and easy to use.
 Then we will talk about the last two, which are not recommended to use, and instead we'll provide alternative solutions.
@@ -96,19 +103,20 @@ there is no situation where not using C-style array would stand in your way.
 </div>
 </details>
 
-### Dynamic vs fixed-size arrays
-
-A **dynamic array** can grow and shrink as needed. In C++ we use [`std::vector`](/docs/std/containers/arrays/vector/) for this purpose.
+### Fixed-size vs dynamic arrays
 
 A **fixed-size array** on the other hand has a constant number of elements, which has to be known at compile time.
 This means that we cannot read the number of elements needed from a user and then create the array of exactly that size.
 We have to specify it directly in the code. The [`std::array`](/docs/std/containers/arrays/array/) is used for this purpose.
 
+A **dynamic array** can grow and shrink as needed. In C++ we use [`std::vector`](/docs/std/containers/arrays/vector/) for this purpose.
+
 Because of the limitation of the fixed-size array we mentioned above, we'll now focus on the dynamic array because it is easier to use.
 
 ### Common operations
 
-There are a lot of things you can do with an array. We'll now go through the most common operations that will cover most of your needs:
+There are a lot of things you can do with an array. In the following lessons we'll go through the most common operations
+that will cover most of your needs:
 
 1. creating an array
 2. accessing elements
