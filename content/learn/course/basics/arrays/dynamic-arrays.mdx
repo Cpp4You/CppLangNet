@@ -144,6 +144,8 @@ Let's give players the following names:
 | 1 		    | AngryCrab   |
 | 2 		    | SadWolf     |
 
+<br/>
+
 Here is how we can set them in the code:
 
 ```cpp
@@ -165,6 +167,10 @@ int main()
 	// Printing the name of the first player:
 	cout << "Name of the first player: " << playerNames[0];
 }
+```
+
+```console title="Output"
+Name of the first player: HappyBanana
 ```
 
 To access an element of an array, we put its index in square brackets right after the array name:
@@ -212,6 +218,10 @@ int main()
 	// Printing the name of player with index 3
 	cout << "Name of the player with index 3: " << playerNames[3];
 }
+```
+
+```console title="Output"
+Name of the player with index 3: WickedWitch
 ```
 
 From the moment `.push_back(...)` instruction was executed, the `playerNames` array already has four elements.
@@ -396,6 +406,12 @@ cout << "Added new player.\n";
 cout << "The array contains " << playerNames.size() << " elements\n";
 ```
 
+```console title="Output"
+The array contains 3 elements
+Added new player.
+The array contains 4 elements
+```
+
 <FullCode content={<FullCode_ReadingSize/>}/>
 
 Just like we previously did with the method `push_back`, we write the name after the dot.
@@ -414,6 +430,13 @@ for (string name : playerNames)
 }
 ```
 
+```console title="Output"
+Player name: HappyBanana
+Player name: AngryCrab
+Player name: SadWolf
+Player name: WickedWitch
+```
+
 <FullCode content={<FullCode_DisplayingArrayOfPlayerNames/>}/>
 
 To understand this, let me show you how to "read" it:
@@ -427,6 +450,7 @@ There is only one statement inside this block of code:
 ```cpp
 cout << "Player name: " << name << '\n';
 ```
+
 The loop will write the nicknames of the players one by one
 into the variable `name`, and execute the display instruction (`cout`) for each of them.
 
