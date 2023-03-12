@@ -21,3 +21,4 @@ yarn-error.log*
 
 # Custom
 .vscode/
+.drawio.bkp
