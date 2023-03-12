@@ -8,10 +8,14 @@
 
  Create as many sidebars as you want.
  */
+const { cat } = require("./common");
 
 const doc = (sidebarLabel, docId) => {
 	return { type: "doc", label: sidebarLabel, id: docId };
 };
+
+const lessonsSeparator = cat("Lessons:");
+const additionalSeparator = cat("Additional:");
 
 module.exports = {
 	defaultSidebar: [
@@ -32,7 +36,8 @@ module.exports = {
 							label: "1. First program",
 							link: { type: "doc", id: "course/basics/first-program" },
 							items: [
-								doc("🐞 Common problems", "course/basics/first-program/common-problems"),
+								additionalSeparator,
+								doc("💢 Common problems", "course/basics/first-program/common-problems"),
 								doc("📚 Exercises", "course/basics/first-program/exercises"),
 							]
 						},
@@ -40,7 +45,9 @@ module.exports = {
 						{
 							type: "category",
 							label: "3. Variables",
+							link: { type: "doc", id: "course/basics/variables/intro" },
 							items: [
+								lessonsSeparator,
 								"course/basics/variables/intro",
 								"course/basics/variables/operations",
 								{
@@ -48,44 +55,97 @@ module.exports = {
 									label: "3. Strings",
 									link: { type: "doc", id: "course/basics/variables/strings" },
 									items: [
+										additionalSeparator,
 										doc("💡 Examples", "course/basics/variables/strings/examples"),
-										doc("🐞 Common problems", "course/basics/variables/strings/common-problems"),
+										doc("💢 Common problems", "course/basics/variables/strings/common-problems"),
 										doc("📚 Exercises", "course/basics/variables/strings/exercises"),
 									]
-								}
+								},
+								additionalSeparator,
+								doc("💡 Examples 🚧", "course/basics/variables/examples"),
+								doc("💢 Common problems 🚧", "course/basics/variables/common-problems"),
+								doc("📚 Exercises 🚧", "course/basics/variables/exercises"),
 							]
 						},
 						{
 							type: "category",
 							label: "4. Conditions",
+							link: { type: "doc", id: "course/basics/conditions/intro" },
 							items: [
-								"course/basics/conditions/intro",
-								"course/basics/conditions/compound",
-								"course/basics/conditions/booleans",
+								lessonsSeparator,
+								doc("1. Introduction", "course/basics/conditions/intro"),
+								doc("2. Compound conditions", "course/basics/conditions/compound"),
+								doc("3. Booleans", "course/basics/conditions/booleans"),
+								additionalSeparator,
 								doc("✅ Tips and style", "course/basics/conditions/tips"),
 								doc("💡 Examples", "course/basics/conditions/examples"),
-								doc("🐞 Common problems", "course/basics/conditions/common-problems"),
+								doc("💢 Common problems 🚧", "course/basics/conditions/common-problems"),
 								doc("📚 Exercises", "course/basics/conditions/exercises")
 							]
 						},
 						{
 							type: "category",
 							label: "5. Arrays",
+							link: { type: "doc", id: "course/basics/arrays/introduction" },
 							items: [
-								"course/basics/arrays/intro-to-vector",
-								"course/basics/arrays/algorithms",
-								"course/basics/arrays/exercises",
+								lessonsSeparator,
+								doc("1. Introduction", "course/basics/arrays/introduction"),
+								{
+									type: "category",
+									label: "2. Dynamic arrays",
+									link: { type: "doc", id: "course/basics/arrays/dynamic-arrays" },
+									items: [
+										additionalSeparator,
+										doc("💡 Examples 🚧", "course/basics/arrays/dynamic-arrays/examples"),
+										doc("💢 Common problems 🚧", "course/basics/arrays/dynamic-arrays/common-problems"),
+										doc("📚 Exercises 🚧", "course/basics/arrays/dynamic-arrays/exercises"),
+									]
+								},
+								{
+									type: "category",
+									label: "3. Fixed-size arrays",
+									link: { type: "doc", id: "course/basics/arrays/fixed-size-arrays" },
+									items: [
+										additionalSeparator,
+										doc("💡 Examples 🚧", "course/basics/arrays/fixed-size-arrays/examples"),
+										doc("💢 Common problems 🚧", "course/basics/arrays/fixed-size-arrays/common-problems"),
+										doc("📚 Exercises 🚧", "course/basics/arrays/fixed-size-arrays/exercises"),
+									]
+								},
+								doc("4. Algorithms", "course/basics/arrays/algorithms"),
+								doc("5. C-style arrays", "course/basics/arrays/c-style-arrays"),
+								additionalSeparator,
+								doc("📚 Exercises 🚧", "course/basics/arrays/exercises"),
 							]
 						},
 						"course/basics/loops",
-						"course/basics/functions",
-						"course/basics/structures",
-						"course/basics/methods",
-						"course/basics/inheritance",
-						"course/basics/references",
-						"course/basics/polymorphism",
-						"course/basics/aliases",
-						"course/basics/namespaces",
+						{
+							type: "category",
+							label: "7. Functions",
+							link: { type: "doc", id: "course/basics/functions/functions" },
+							items: [
+								additionalSeparator,
+								doc("💡 Examples 🚧", "course/basics/functions/examples"),
+								doc("💢 Common problems 🚧", "course/basics/functions/common-problems"),
+								doc("📚 Exercises 🚧", "course/basics/functions/exercises"),
+							]
+						},
+						doc("8. Structures", "course/basics/structures"),
+						doc("9. Inheritance 🚧", "course/basics/inheritance"),
+						doc("10. References (I) 🚧", "course/basics/references"),
+						{
+							type: "category",
+							label: "11. Methods",
+							link: { type: "doc", id: "course/basics/methods/methods" },
+							items: [
+								lessonsSeparator,
+								doc("1. Introduction 🚧", "course/basics/methods/methods"),
+								doc("2. Special methods 🚧", "course/basics/methods/special-methods"),
+							]
+						},
+						doc("11. Polymorphism 🚧", "course/basics/polymorphism"),
+						doc("12. Aliases 🚧", "course/basics/aliases"),
+						doc("13. Namespaces 🚧", "course/basics/namespaces"),
 						{
 							type: "category",
 							label: "📰 Articles",
@@ -143,7 +203,7 @@ module.exports = {
 						},
 						{
 							type: "category",
-							label: "10. Memory (I)",
+							label: "11. Memory (I)",
 							items: [
 								"course/intermediate/memory/stack-and-heap",
 								"course/intermediate/memory/arrays",

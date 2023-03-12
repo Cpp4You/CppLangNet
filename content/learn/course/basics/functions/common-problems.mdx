@@ -1,0 +1,82 @@
+---
+title: Common problems - Functions
+---
+
+# Functions » Common problems
+
+
+We will discuss some common mistakes that beginners often make when using functions.
+
+### Incorrect number or type of arguments
+
+In the following C++ code, the function sum expects two integer arguments, but the call to the function passes in a string and an integer:
+
+```cpp
+int sum(int a, int b){
+	return a + b;
+}
+int main(){
+	std::string num = "5";
+	std::cout << sum(num, 3);
+}
+```
+
+The compiler will give an error:
+
+```bash
+error: no matching function for call to ‘sum(std::string&, int)’
+```
+
+To fix this mistake, pass in two integers to the function call like this:
+
+```cpp
+int main(){
+	std::cout << sum(5, 3);
+}
+```
+
+### Not returning a value
+
+Consider the following example: the `concatenate` function expects to return a string, but the function does not return anything:
+
+```cpp
+std::string concatenate(std::string a, std::string b)
+{
+	a += b;
+// error-next-line
+} // no return statement at the end
+```
+
+The compiler will give an error:
+
+```bash
+error: control reaches end of non-void function [-Werror=return-type]
+```
+
+To fix this mistake, include a `return` statement in the function to return the concatenated string:
+
+```cpp
+std::string concatenate(std::string a, std::string b) {
+	a += b;
+	return a;
+}
+```
+
+:::tip
+Note that the `main` function is an exception to this rule. It does not need to return a value.
+If the `main` function does not return a value, the compiler will assume that the function returns `0`.
+:::
+
+### Missing a declaration
+
+In the following code, the function `multiply` is called before it is declared:
+
+```cpp
+int main(){
+	// error-next-line
+	std::cout << multiply(3, 4); // error: use of undeclared identifier ‘multiply’
+}
+int multiply(int a, int b){
+	return a * b;
+}
+```

@@ -11,10 +11,6 @@
     "message": "Dokumentacja",
     "description": "Navbar item with label Docs"
   },
-  "item.label.Features": {
-    "message": "Możliwości",
-    "description": "Navbar item with label Features"
-  },
   "item.label.Tools": {
     "message": "Narzędzia",
     "description": "Navbar item with label Tools"
@@ -26,10 +22,6 @@
   "item.label.💗 Contributing": {
     "message": "💗 Pomóż w rozwoju",
     "description": "Navbar item with label 💗 Contributing"
-  },
-  "item.label.🗣 Social": {
-    "message": "🗣 Social",
-    "description": "Navbar item with label 🗣 Social"
   },
   "item.label.Community": {
     "message": "Społeczność",

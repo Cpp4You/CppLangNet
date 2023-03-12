@@ -43,10 +43,6 @@
     "message": "5. Tablice",
     "description": "The label for category 5. Arrays in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.category.10. Memory (I)": {
-    "message": "10. Pamięć (I)",
-    "description": "The label for category 10. Memory (I) in sidebar defaultSidebar"
-  },
   "sidebar.defaultSidebar.category.Compiler flags 🚩": {
     "message": "Flagi kompilatora 🚩",
     "description": "The label for category Compiler flags 🚩 in sidebar defaultSidebar"
@@ -91,20 +87,108 @@
     "message": "3. Napisy",
     "description": "The label for category 3. Strings in sidebar defaultSidebar"
   },
-  "sidebar.defaultSidebar.doc.🐞 Common problems": {
-    "message": "🐞 Częste problemy",
-    "description": "The label for the doc item 🐞 Common problems in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/common-problems"
-  },
   "sidebar.defaultSidebar.doc.📚 Exercises": {
     "message": "📚 Ćwiczenia",
-    "description": "The label for the doc item 📚 Exercises in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/exercises"
+    "description": "The label for the doc item 📚 Exercises in sidebar defaultSidebar, linking to the doc course/basics/conditions/exercises"
   },
- "sidebar.defaultSidebar.doc.✅ Tips and style": {
-   "message": "✅ Wskazówki i styl",
-   "description": "The label for ✅ Tips and style in sidebar defaultSidebar"
- },
+  "sidebar.defaultSidebar.doc.✅ Tips and style": {
+    "message": "✅ Wskazówki i styl",
+    "description": "The label for the doc item ✅ Tips and style in sidebar defaultSidebar, linking to the doc course/basics/conditions/tips"
+  },
   "sidebar.defaultSidebar.doc.💡 Examples": {
     "message": "💡 Przykłady",
-    "description": "The label for the doc item 💡 Examples in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/examples"
+    "description": "The label for the doc item 💡 Examples in sidebar defaultSidebar, linking to the doc course/basics/conditions/examples"
+  },
+  "sidebar.defaultSidebar.category.7. Functions": {
+    "message": "7. Funkcje",
+    "description": "The label for category 7. Functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.doc.💢 Common problems": {
+    "message": "💢 Częste problemy",
+    "description": "The label for the doc item 💢 Common problems in sidebar defaultSidebar, linking to the doc course/basics/variables/strings/common-problems"
+  },
+  "sidebar.defaultSidebar.doc.1. Introduction": {
+    "message": "1. Wprowadzenie",
+    "description": "The label for the doc item 1. Introduction in sidebar defaultSidebar, linking to the doc course/basics/arrays/introduction"
+  },
+  "sidebar.defaultSidebar.doc.2. Special methods": {
+    "message": "2. Metody specjalne",
+    "description": "The label for the doc item 2. Special methods in sidebar defaultSidebar, linking to the doc course/basics/methods/special-methods"
+  },
+  "sidebar.defaultSidebar.category.2. Dynamic arrays": {
+    "message": "2. Tablice dynamiczne",
+    "description": "The label for category 2. Dynamic arrays in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.3. Fixed-size arrays": {
+    "message": "3. Tablice stałego rozmiaru",
+    "description": "The label for category 3. Fixed-size arrays in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.11. Methods": {
+    "message": "11. Metody",
+    "description": "The label for category 11. Methods in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.11. Memory (I)": {
+    "message": "11. Pamięć (I)",
+    "description": "The label for category 11. Memory (I) in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.doc.💡 Examples 🚧": {
+    "message": "💡 Przykłady 🚧",
+    "description": "The label for the doc item 💡 Examples 🚧 in sidebar defaultSidebar, linking to the doc course/basics/functions/examples"
+  },
+  "sidebar.defaultSidebar.doc.💢 Common problems 🚧": {
+    "message": "💢 Częste problemy 🚧",
+    "description": "The label for the doc item 💢 Common problems 🚧 in sidebar defaultSidebar, linking to the doc course/basics/functions/common-problems"
+  },
+  "sidebar.defaultSidebar.doc.📚 Exercises 🚧": {
+    "message": "📚 Ćwiczenia 🚧",
+    "description": "The label for the doc item 📚 Exercises 🚧 in sidebar defaultSidebar, linking to the doc course/basics/functions/exercises"
+  },
+  "sidebar.defaultSidebar.doc.2. Compound conditions": {
+    "message": "2. Warunki złożone",
+    "description": "The label for the doc item 2. Compound conditions in sidebar defaultSidebar, linking to the doc course/basics/conditions/compound"
+  },
+  "sidebar.defaultSidebar.doc.3. Booleans": {
+    "message": "3. Booleans",
+    "description": "The label for the doc item 3. Booleans in sidebar defaultSidebar, linking to the doc course/basics/conditions/booleans"
+  },
+  "sidebar.defaultSidebar.doc.1. Introduction 🚧": {
+    "message": "1. Wstęp 🚧",
+    "description": "The label for the doc item 1. Introduction 🚧 in sidebar defaultSidebar, linking to the doc course/basics/methods/methods"
+  },
+  "sidebar.defaultSidebar.doc.2. Special methods 🚧": {
+    "message": "2. Metody specjalne 🚧",
+    "description": "The label for the doc item 2. Special methods 🚧 in sidebar defaultSidebar, linking to the doc course/basics/methods/special-methods"
+  },
+  "sidebar.defaultSidebar.doc.4. Algorithms": {
+    "message": "4. Algorytmy",
+    "description": "The label for the doc item 4. Algorithms in sidebar defaultSidebar, linking to the doc course/basics/arrays/algorithms"
+  },
+  "sidebar.defaultSidebar.doc.5. C-style arrays": {
+    "message": "5. Tablice w stylu C",
+    "description": "The label for the doc item 5. C-style arrays in sidebar defaultSidebar, linking to the doc course/basics/arrays/c-style-arrays"
+  },
+  "sidebar.defaultSidebar.doc.8. Structures": {
+    "message": "8. Struktury",
+    "description": "The label for the doc item 8. Structures in sidebar defaultSidebar, linking to the doc course/basics/structures"
+  },
+  "sidebar.defaultSidebar.doc.9. Inheritance 🚧": {
+    "message": "9. Dziedziczenie 🚧",
+    "description": "The label for the doc item 9. Inheritance 🚧 in sidebar defaultSidebar, linking to the doc course/basics/inheritance"
+  },
+  "sidebar.defaultSidebar.doc.11. Polymorphism 🚧": {
+    "message": "11. Polimorfizm 🚧",
+    "description": "The label for the doc item 11. Polymorphism 🚧 in sidebar defaultSidebar, linking to the doc course/basics/polymorphism"
+  },
+  "sidebar.defaultSidebar.doc.12. Aliases 🚧": {
+    "message": "12. Aliasy 🚧",
+    "description": "The label for the doc item 12. Aliases 🚧 in sidebar defaultSidebar, linking to the doc course/basics/aliases"
+  },
+  "sidebar.defaultSidebar.doc.13. Namespaces 🚧": {
+    "message": "13. Przestrzenie nazw 🚧",
+    "description": "The label for the doc item 13. Namespaces 🚧 in sidebar defaultSidebar, linking to the doc course/basics/namespaces"
+  },
+  "sidebar.defaultSidebar.doc.10. References (I) 🚧": {
+    "message": "10. Referencje (I) 🚧",
+    "description": "The label for the doc item 10. References (I) 🚧 in sidebar defaultSidebar, linking to the doc course/basics/references"
   }
 }

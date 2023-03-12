@@ -35,10 +35,6 @@
     "message": "Discord",
     "description": "The label of footer link with label=Discord linking to https://discord.gg/3MeXQ8TvBw"
   },
-  "link.item.label.Twitter": {
-    "message": "Twitter",
-    "description": "The label of footer link with label=Twitter linking to https://twitter.com/docusaurus"
-  },
   "link.item.label.Blog": {
     "message": "Blog",
     "description": "The label of footer link with label=Blog linking to /blog"

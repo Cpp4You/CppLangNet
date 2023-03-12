@@ -64,9 +64,10 @@ function filterSidebarItems(items)
 		},
 	],
 
+	// Note: we're not accepting more locales for now (limited workforce)
 	i18n: {
 		defaultLocale: "en",
-		locales: [ "en", "pl", "de" ]
+		locales: [ "en", "pl" ]
 	},
 
 	plugins: [
@@ -303,7 +304,7 @@ function filterSidebarItems(items)
 				theme: 		lightCodeTheme,
 				darkTheme:	darkCodeTheme,
 				scripts: ["extend-cpp"],
-				additionalLanguages: ["log"],
+				additionalLanguages: ["log", "console"],
 				magicComments: [
 					{
 						className: "code-block-highlighted-line",

@@ -1,0 +1,98 @@
+---
+title: Examples - Functions
+---
+
+# Functions » Examples
+
+## Calculate area of a circle
+
+```cpp
+double areaOfCircle(double radius) {
+	return 3.14159 * radius * radius;
+}
+```
+
+💡 Idea: Use the `M_PI` constant from the `<cmath>` header instead of `3.14159`.
+
+## Convert Fahrenheit to Celsius
+
+```cpp
+double fahrenheitToCelsius(double fahrenheit) {
+	return (fahrenheit - 32) * 5 / 9;
+}
+```
+
+💡 Idea: create a calculator that can convert between Fahrenheit, Celsius, and Kelvin.
+
+## Calculate factorial of a number
+
+```cpp
+int factorial(int n) {
+	int result = 1;
+	for (int i = 1; i <= n; ++i) {
+		result *= i;
+	}
+	return result;
+}
+```
+
+💡 Idea: create a calculator for the [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient).
+
+## Calculate the average of an array of numbers
+
+```cpp
+double average(std::vector<int> arr) {
+	double sum = 0;
+	for (int i = 0; i < arr.size(); ++i) {
+		sum += arr[i];
+	}
+	return sum / arr.size();
+}
+```
+
+## Calculate the greatest common divisor of two numbers
+
+```cpp
+int gcd(int a, int b) {
+	if (b == 0) return a;
+	return gcd(b, a % b);
+}
+```
+
+## Calculate the power of a number
+
+```cpp
+double power(double base, int exponent) {
+	double result = 1;
+	for (int i = 0; i < exponent; ++i) {
+		result *= base;
+	}
+	return result;
+}
+```
+
+## Reverse a string
+
+```cpp
+std::string reverseString(std::string str) {
+	int n = str.length();
+	for (int i = 0; i < n / 2; ++i) {
+		char temp = str[i];
+		str[i] = str[n - i - 1];
+		str[n - i - 1] = temp;
+	}
+	return str;
+}
+```
+
+## Check if a string is a palindrome
+
+```cpp
+bool isPalindrome(std::string str) {
+	int n = str.length();
+	for (int i = 0; i < n / 2; ++i) {
+		if (str[i] != str[n - i - 1]) return false;
+	}
+	return true;
+}
+```

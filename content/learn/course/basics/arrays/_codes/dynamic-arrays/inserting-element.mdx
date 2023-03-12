@@ -1,0 +1,26 @@
+```cpp
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+    using std::vector, std::string, std::cout;
+
+    vector< string > playerNames(3);
+
+    // Setting names of the players
+    playerNames[0] = "HappyBanana";
+    playerNames[1] = "AngryCrab";
+    playerNames[2] = "SadWolf";
+
+    // Adding a new player:
+    playerNames.push_back("WickedWitch");
+
+	// highlight-next-line
+	playerNames.insert(playerNames.begin() + 1, "BadPenguin");
+
+    // Printing the name of player with index 1
+    cout << "Name of the player with index 1: " << playerNames[1];
+}
+```

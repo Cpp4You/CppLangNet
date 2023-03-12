@@ -1,0 +1,18 @@
+```cpp title="Display all player names"
+#include <iostream>
+#include <string>
+#include <array>
+
+int main()
+{
+	std::array< std::string, 10 > playerNames = {
+		"HappyBanana", "AngryCrab", "SadWolf"
+	};
+
+	// Printing all player names
+	for (std::string name : playerNames)
+	{
+		std::cout << name << '\n';
+	}	
+}
+```

@@ -1,0 +1,187 @@
+---
+title:				"Special methods"
+description:		"Lesson: special methods basics in C++"
+tags:				[method, constructor, destructor, structure, struct, class, object-oriented, oop]
+hide_title:			true
+---
+
+<!-- Components -->
+import Columns			from '@site-comps/Columns';
+import FullCode			from '@site-comps/FullCode';
+import Tooltip			from '@site-comps/Tooltip';
+import Tabs				from '@theme/Tabs';
+import TabItem			from '@theme/TabItem';
+
+<!--  Presets -->
+import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+
+<!-- Codes -->
+import FullCode_MethodsAsFreeFunctions	from './_codes/methods-as-free-functions.mdx';
+
+# Special methods
+
+There are two kinds of methods with a special meaning in C++: **constructors** and **destructors**.
+
+## Constructors
+
+:::important Definition
+A constructor is a special method that is called when an object is created - it begins the lifetime of an object.
+:::
+
+One of the main reasons for using constructors is to set up the data members of an object based on external parameters.
+For example, when creating a `Player` object, a constructor can be used to enforce that the health value passed to the constructor
+is between `0` and the `maxHealth` value. The constructor can be defined as follows:
+
+```cpp
+struct Player
+{
+    int maxHealth;
+    int health;
+
+    Player(int maxHp, int hp)
+	{
+		maxHealth = maxHp;
+		health = std::max(std::min(hp, maxHealth), 0);
+    }
+};
+```
+
+This constructor uses the `max` and `min` functions to ensure that `health` is between `0` and `maxHealth`.
+This way, even if user try to pass `hp` more than `maxHealth` it will automatically be clamped to `maxHealth`.
+
+:::important Defining a constructor
+Constructors are defined by creating a function with the same name as the class, and without a return type (not even `void`).
+:::
+
+It is possible to define multiple constructors for a class or struct in C++, each with their own unique signature and behavior.
+These constructors can take different forms such as:
+
+- default constructors
+- copy constructors
+- move constructors
+
+and more, which will be covered later in the course. Object construction in C++ is a vast topic and there are many advanced features and techniques.
+In this lesson, we will only cover the basics of constructors and how they can be used to control the initialization of objects.
+
+Depending on the context and how an object is constructed, a specific constructor will be called. This allows for greater
+flexibility and control over the initialization of objects.
+
+For now, let's start with the simplest form of a constructor.
+
+### Default constructor
+
+A default constructor in C++ is a constructor that can be called without any arguments. It is <Tooltip title={<>
+	There are exceptions to this rule.
+	There are situations where compiler cannot automatically generate it, but we will explain them later.
+</>}>automatically provided\*</Tooltip> by the compiler when no other constructors are defined, but it can also be explicitly defined.
+
+For example, the following `Person` struct has a default constructor:
+
+```cpp title="Defining a default constructor"
+struct Person {
+    std::string name;
+    int age;
+
+	// Default settings
+    Person() {
+		name = "John Doe";
+		age = 18;
+	}
+};
+```
+
+It can also be only declared within the struct body and then defined outside of it, like regular methods. For example:
+
+```cpp title="Defining a constructor outside of the struct"
+struct Person {
+    std::string name;
+    int age;
+
+    Person(); // declaration only
+};
+
+// definition
+Person::Person() {
+    name = "John Doe";
+    age = 18;
+}
+```
+
+Note that the data members in the previous example of `Person`` struct could have been easily initialized **without** manually
+writing a constructor. In earlier lessons, we have seen that we can use an assignment operator in the place of a data member declaration,
+as a shorthand notation:
+
+```cpp title="Shorthand notation for data member initialization"
+struct Person {
+	std::string name = "John Doe";
+	int age = 18;
+};
+```
+
+This is because in this case the compiler automatically generates a proper constructor for us, but in this lesson we wanted to demonstrate
+that we can write it manually and possibly add an additional logic to it, just like in the example at the very beginning.
+The ability to write a custom default constructor (or constructors in general) gives us more control over how objects are constructed and initialized,
+and can help ensure that objects are created in a valid state.
+
+:::tip
+As a general rule of thumb, you should **only** write a constructor if you need to add some additional logic to it,
+or if you want to enforce some constraints on the data members of an object. See [examples](#examples) to get a better idea of when to use them.
+:::
+
+### Parameterized constructor
+
+A parametrized constructor is one that accepts one or more arguments. This allows for greater flexibility in the initialization of objects.
+We used it in the example at the [beginning of this lesson](#constructors) to enforce that the `health` value passed to the constructor
+is between `0` and the `maxHealth` value.
+
+To instantiate an object using a parametrized constructor, we need to pass the required arguments to the constructor, like this:
+
+```cpp
+// prism-push-types:Player
+Player player(100, 50); // maxHealth = 100, health = 50
+```
+
+#### A deleted default constructor
+
+If we only provide a single, parametrized constructor, the **compiler will delete** the default one.
+This is the case for our previous code. Trying to create a `Player` object without passing any arguments will result in a compiler error:
+
+```cpp title="Trying to use a deleted default constructor"
+// error-next-line
+// prism-push-types:Player
+Player player; // error: no matching function for call to 'Player::Player()'
+```
+
+To restore the default constructor, we can use the `default` keyword like this:
+
+```cpp
+struct Player {
+	// <data members>
+
+	Player(int maxHp, int hp) {
+		// ...
+	}
+
+	Player() = default; // enforce compiler to create a default constructor
+};
+```
+
+#### Copy constructor
+
+:::danger Invalid copy constructor
+Declaring a constructor with a single parameter of the same type as the structure is not allowed:
+
+```cpp
+// error-next-line
+// prism-push-types:Person
+Person(Person other) { // error
+	// ...
+}
+```
+:::
+
+### Member initializer list
+
+
+## Destructors

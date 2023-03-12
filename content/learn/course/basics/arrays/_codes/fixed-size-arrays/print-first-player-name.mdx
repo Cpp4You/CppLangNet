@@ -1,0 +1,18 @@
+```cpp
+#include <iostream>
+#include <array>
+#include <string>
+
+int main() {
+	using std::array, std::to_array, std::string;
+
+	auto playerNames = to_array<string>({
+		"HappyBanana",
+		"AngryCrab"
+	});
+
+	// Print the name of the first player
+	// highlight-next-line
+	std::cout << playerNames[0] << '\n';
+}
+```

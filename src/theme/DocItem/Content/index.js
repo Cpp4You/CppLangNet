@@ -15,9 +15,9 @@ export default function ContentWrapper(props) {
 	// const isBrowser		= useIsBrowser();
 	// const customMetadata = metadata.frontMatter;
 
-	const [textSize, setTextSize] = React.useState(3);
+	const [textSize, setTextSize] = React.useState(5);
 	React.useEffect(() => {
-		setTextSize(Number.parseInt(getCookie("sizeMode")));
+		setTextSize(Number.parseInt(getCookie("sizeMode") || "5"));
 	}, []);
 
 	const handleTextSizeChanged = React.useCallback(

@@ -9,7 +9,8 @@ type ImageProps = {
 	fullwidth?: boolean;
 	border?: boolean;
 	style?: React.CSSProperties;
-
+	
+	borderRadius: number;
 	minwidth?: number;
 	width?: number;
 	maxwidth?: number;
@@ -38,18 +39,19 @@ export default function Image(props: ImageProps)
 	const fullWidth = props.fullwidth || props.center;
 
 	const style: React.CSSProperties = {
-		border:		(props.border		? "1px solid gray"	: undefined),
-		display:	(fullWidth			? "block"			: "inline-block"),
+		border:			(props.border		? "1px solid gray"		: undefined),
+		display:		(fullWidth			? "block"				: "inline-block"),
 	};
 
 	const imgStyle = props.style || {};
-	imgStyle.minWidth	= props.minwidth	|| undefined;
-	imgStyle.width		= props.width		|| undefined;
-	imgStyle.maxWidth	= props.maxwidth	|| undefined;
-	imgStyle.minHeight	= props.minheight	|| undefined;
-	imgStyle.height		= props.height 		|| undefined;
-	imgStyle.maxHeight	= props.maxheight	|| undefined;
-	imgStyle.display	= "block";
+	imgStyle.borderRadius	= props.borderRadius	|| undefined;
+	imgStyle.minWidth		= props.minwidth		|| undefined;
+	imgStyle.width			= props.width			|| undefined;
+	imgStyle.maxWidth		= props.maxwidth		|| undefined;
+	imgStyle.minHeight		= props.minheight		|| undefined;
+	imgStyle.height			= props.height 			|| undefined;
+	imgStyle.maxHeight		= props.maxheight		|| undefined;
+	imgStyle.display		= "block";
 	// Temp Fix: blurry images on Chrome
 	imgStyle.imageRendering = "-webkit-optimize-contrast";
 
@@ -63,6 +65,7 @@ export default function Image(props: ImageProps)
 
 
 	delete processedProps.border;
+	delete processedProps.borderRadius;
 	delete processedProps.center;
 	delete processedProps.fullwidth;
 	delete processedProps.style;

@@ -1,0 +1,213 @@
+---
+sidebar_label:		"3. Fixed-size arrays"
+title:				Fixed-size arrays
+description:		"Lesson: using fixed-size arrays in C++"
+hide_title:			true
+---
+
+<!-- Components -->
+import Tabs				from "@theme/Tabs";
+import TabItem			from "@theme/TabItem";
+
+import Image			from "@site-comps/Image";
+import Tooltip			from "@site-comps/Tooltip";
+import Columns			from "@site-comps/Columns";
+import FullCode			from "@site-comps/FullCode";
+
+<!-- Presets -->
+import NotFinished		from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
+
+<!-- Codes -->
+import FullCode_PrintFirstPlayerName	from "./_codes/fixed-size-arrays/print-first-player-name.mdx";
+import FullCode_PrintPlayerNames		from "./_codes/fixed-size-arrays/print-player-names.mdx";
+
+# Fixed-size arrays
+
+In this lesson we'll briefly explain what is `std::array`. Later in the course you'll learn more about it.
+
+## Motivation
+
+We already have [vectors](/docs/std/containers/arrays/vector/), which represent a dynamic array, and we can use them to store any
+number of elements. You may ask:
+
+> Why do we even need arrays of fixed size?
+
+The short answer is: **performance**.
+
+:::important `array` vs `vector` vs C-style arrays
+`std::array` is a more performant alternative to `std::vector`, but with a few limitations. It is also a much safer alternative to C-style arrays.
+:::
+
+We, the creators of this course are fully aware that for beginners a tiny performance improvement over `vector` is not worth the extra effort.
+This container will be covered more in-depth later, when you'll be more familiar with C++.
+
+## Using `std::array`
+
+The first thing we have to do is to include the `<array>` header file:
+
+```cpp
+#include <array>
+```
+
+## Creating an array
+
+There are [quite a few ways](/docs/std/containers/arrays/array/#example-usage) to create an instance of `std::array`.
+Remember: we're talking about an array of **fixed-size** that we have to know in advance. We can't change the size of the array after it's created.
+A common practice is to estimate the largest number of elements we'll use and then create an array of that size.
+
+```cpp title="Allow up to 10 players in our game"
+std::array<std::string, 10> playerNames;
+```
+
+In the previous lesson we used similar notation to create `vector` instance. This time we have to provide both:
+
+- the type of the elements (`Type`)
+- the size of the array (`N`)
+
+and we do that by separating them with a comma:
+
+```cpp
+// prism-push-types:Type
+std::array<Type, N>
+```
+
+It's quite usual to initialize an array with some predefined values. We can do that by using the curly braces syntax:
+
+```cpp title="Allow up to 10 players, provide three initial names"
+std::array<std::string, 10> playerNames = {
+	"HappyBanana", "AngryCrab", "SadWolf",
+};
+```
+
+<details>
+<summary>Alternative syntax</summary>
+<div>
+
+You can omit the `=` between the `playerNames` and the curly braces then wrap the list of elements
+in an additional `{}` to achieve the same result:
+
+```cpp
+std::array<std::string, 10> playerNames {{
+	"HappyBanana", "AngryCrab", "SadWolf",
+}};
+```
+
+</div>
+</details>
+
+:::important Elements we left unset in `{ }`
+If you don't provide initial values for all elements, the remaining ones will be initialized with a default or zero value.
+In simple terms, depending on the type inside an array: numeric values will be set to `0`, booleans to `false`, and strings will be empty.
+:::
+
+This is the content of the array after the previous code snippet:
+
+| Index | Value |
+| ----- | ----- |
+| 0 | "HappyBanana" |
+| 1 | "AngryCrab" |
+| 2 | "SadWolf" |
+| 3 | empty |
+| ... | ... |
+| 9 | empty |
+
+## Accessing elements
+
+We can access elements of an array [the same way](../dynamic-arrays/#accessing-elements) we do with vectors:
+
+```cpp title="Display the first player's name"
+#include <iostream>
+#include <string>
+#include <array>
+
+int main()
+{
+    std::array< std::string, 10 > playerNames = {
+		"HappyBanana", "AngryCrab", "SadWolf"
+	};
+
+    // Setting names of the players
+    playerNames[0] = "SadBanana";
+    playerNames[2] = "HappyWolf";
+
+    // Printing the name of the first player:
+    std::cout << "Name of the first player: " << playerNames[0];
+}
+```
+
+We changed the first and the third element of the array. The output of the program is:
+
+```console
+Name of the first player: SadBanana
+```
+
+This is the content of the array after the previous code snippet:
+
+| Index | Value |
+| ----- | ----- |
+| 0 | "SadBanana" |
+| 1 | "AngryCrab" |
+| 2 | "HappyWolf" |
+| 3 | empty |
+| ... | ... |
+| 9 | empty |
+
+## Reading the size of an array
+
+We can use the `size()` method to get the size of an array:
+
+```cpp
+std::array<std::string, 10> playerNames = {
+	"HappyBanana", "AngryCrab", "SadWolf",
+};
+
+std::cout << "Number of players: " << playerNames.size();
+```
+
+The output of the program is:
+
+```console
+Number of players: 10
+```
+
+:::note Size of `std::array`
+As you can see from the example above, all of array "slots" are used regardless of the number of elements we set manually.
+The rest are initialized with default values, which in this case are empty strings.
+:::
+
+## Displaying elements
+
+Just like we did with vectors, we can use a `for` loop to display all elements of an array:
+
+```cpp title="Display all player names"
+for (std::string name : playerNames)
+{
+	std::cout << "Player: " << name << '\n';
+}
+```
+
+<FullCode content={<FullCode_PrintPlayerNames/>} />
+
+The output of the program is:
+
+```console
+Player: HappyBanana
+Player: AngryCrab
+Player: SadWolf
+Player:
+Player:
+Player:
+Player:
+Player:
+Player:
+Player:
+```
+
+## Summary
+
+To sum up, we've learned that there is a fixed-size array in C++ called `std::array`. In many cases we can use it similar to
+a `vector`, however it has some limitations and it's not as flexible. Our recommendation for you is to stick with `std::vector`
+for now.
+
+We'll leave it here for now, but we'll come back to it later in the course.

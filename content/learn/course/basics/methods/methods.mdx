@@ -1,7 +1,5 @@
 ---
-sidebar_position:	9
 title:				"Methods"
-sidebar_label:		"9. Methods"
 description:		"Lesson: methods basics in C++"
 tags:				[method, constructor, destructor, structure, struct, class, object-oriented, oop]
 hide_title:			true
@@ -9,6 +7,7 @@ hide_title:			true
 
 <!-- Components -->
 import Columns			from '@site-comps/Columns';
+import FullCode			from '@site-comps/FullCode';
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
 
@@ -16,11 +15,12 @@ import TabItem			from '@theme/TabItem';
 import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
 import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
 
-<NotFinished/>
+<!-- Codes -->
+import FullCode_MethodsAsFreeFunctions	from './_codes/methods-as-free-functions.mdx';
 
 # Methods
 
-This lesson will show you how to place functions inside a structure, i.e. create so-called **methods**.
+This lesson will show you how to make use of functions inside a structure creating so-called **methods**.
 
 ## Motivation
 
@@ -37,13 +37,13 @@ we will want to have vehicles that are defined by their
 
 This way of describing objects, separating features and behaviors, is very common.
 In the lesson on [structures](../structures) we learned how to contain different information
-about objects within a single type that we created ourselves. In doing so, we described
+about objects within a single type that we created ourselves. By doing so, we described
 its **traits**. Now we're going to move on to methods that will allow us to "teach" the object to
-perform a specific task - define its **behaviour**. 
+perform a specific task - that is, to define its **behaviour**. 
 
 ## Introduction
 
-For the purposes of this lesson, let's create a structure that contains the features of a car:
+For the purposes of this lesson, let's create a structure that contains the following features of a car:
 
 ```cpp
 struct Car
@@ -63,6 +63,7 @@ struct Car
 Inside the `main` function, let's create an object of this structure:
 
 ```cpp
+// prism-push-types:Car
 int main()
 {
 	Car car;
@@ -83,11 +84,12 @@ which will increase the `speed` by the acceleration value of the `acceleration`:
 ```cpp
 struct Car
 {
-	// car information
-	std::string	brand;	
+	// ...
+	float acceleration = 50;
+	float speed = 0;
 	// ...
 
-	// method that increases the speed
+	// increases the speed
 	// highlight-next-line
 	void accelerate()
 	{
@@ -97,15 +99,17 @@ struct Car
 ```
 
 :::important Definition
-**Methods** are called functions that belong to structures (or classes, which you will learn about later in the course).
+**Methods** are functions that are members of a structure (or a class - more on that later in the course).
+They operate on other structure members and/or provide some functionality for instances of it.
 :::
 
-A method created this way can be called on an object, like this:
+Now we can call `accelerate` on an object, like this:
 
 <Columns columns={['2fr', '1fr']}>
 <div>
 
 ```cpp title="🔹 Calling the accelerate()"
+// prism-push-types:Car
 // ...
 
 int main()
@@ -135,8 +139,8 @@ Current speed: 100 km/h
 </div>
 </Columns>
 
-We give the name of the object that is to do the given thing, then after the dot
-we give the method name and parameters - just like when calling a normal function.
+We use the dot operator (`car.accelerate`) to access the method we want to call and then inside the parentheses`()`
+we pass any required arguments as necessary.
 
 <Columns columns={['1fr', '1fr']}>
 <div>
@@ -154,6 +158,41 @@ functionName(arguments);
 
 </div>
 </Columns>
+
+### Differences between functions and methods
+
+Most methods could be rewritten as regular **free functions** (outside of any structure).
+The `accelerate` method we created above could be rewritten as a function:
+
+```cpp
+// prism-push-types:Car
+void accelerate(Car& car)
+{
+	car.speed += car.acceleration;
+}
+```
+
+and called like this:
+
+```cpp
+// prism-push-types:Car
+Car car;
+// initial values...
+
+// calling for the first time
+// highlight-next-line
+accelerate(car);
+std::cout << "Current speed: " << car.speed << " km/h\n";
+// calling for the second time
+// highlight-next-line
+accelerate(car);
+std::cout << "Current speed: " << car.speed << " km/h\n";
+```
+
+<FullCode content={<FullCode_MethodsAsFreeFunctions/>}/>
+
+As you can see, the main difference is that we need to pass the object as an argument
+when calling a function, but we do not need to do this for a method.
 
 ### Definition order
 
@@ -283,6 +322,7 @@ Note that in this case, we precede the method name with the structure name `Car`
 and a double colon `::`, the so-called *scope resolution operator*.
 
 ```cpp title="🔹 Definition outside the structure body scheme"
+// prism-push-types:type
 type StructureName::methodName(parameters)
 {
 	// ...

@@ -1,0 +1,44 @@
+---
+title: Exercises - Functions
+---
+
+# Functions >> Exercises
+
+## Counting occurrences
+
+**Task:** Write a function that takes a string and a character, and returns the number of times the character appears in the string.
+
+## Number of vowels
+
+**Task:** Write a function that takes a string and returns the number of vowels in that string.
+
+## Anagram detection
+
+**Task:** Write a function that takes two strings and returns `true` if the strings are [anagrams](https://en.wikipedia.org/wiki/Anagram)
+of each other, and `false` otherwise.
+
+<details>
+	<summary>Hint</summary>
+	<div>
+		<p>Count the number of occurrences of each character in each string, and compare the two counts.</p>
+	</div>
+</details>
+
+## Convert int to string
+
+**Task:** Write a function that takes an integer and returns a string representation of that integer. Do not use standard library functions
+like `std::to_string` or its equivalents.
+
+<details>
+<summary>Hint</summary>
+<div>
+<p>Use <code>string.insert(0, 1, 'x')</code> to insert a character at the beginning of a string, e.g:</p>
+
+```cpp title="Inserting a character at the beginning of a string"
+std::string s = "abc";
+s.insert(0, 1, 'x');
+// s is now "xabc"
+```
+
+</div>
+</details>

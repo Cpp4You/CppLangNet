@@ -1,11 +1,132 @@
 ---
-sidebar_position:	12
-sidebar_label:		"12. Polymorphism 🚧"
+title:				"Polymorphism"
 description:		"Lesson: polymorphism basics in C++"
 ---
 
 # Polymorphism
 
-import NotFinished from '@site/i18n/en/presets/NotFinished.mdx';
+In this lesson we'll learn how to execute different logic depending on the type of an object, that is, we'll learn about polymorphism.
 
-<NotFinished/>
+## Motivation
+
+When creating hierarchies of structures, one of the main problems that arise is that different types of objects handle the same task differently.
+For example, when it comes to vehicles, the way a car accelerates is different from that of an airplane.
+This can make it difficult to write code that can handle different types of vehicles in a uniform way.
+
+```cpp title="🤔 Different logic for different types of vehicles"
+struct Vehicle
+{
+	double speed;
+	void accelerate() {
+		std::cout << "Burning fuel\n"; // nothing too specific
+	}
+};
+
+struct Car
+	: Vehicle
+{
+	void accelerate() {
+		std::cout << "Engaging the engine\n";
+		std::cout << "Pressing the gas pedal\n";
+	}
+};
+
+struct Airplane
+	: Vehicle
+{
+	void accelerate() {
+		std::cout << "Engaging multiple engines\n";
+		std::cout << "Increasing the throttle\n";
+	}
+};
+```
+
+We'll use a game as an example. Let's assume the player can use different kinds of vehicles. It's important to handle the player's input
+in a consistent way, regardless of the type of vehicle player is currently using. For example, when the player presses the `W` key,
+it should accelerate. However, since we want each type of vehicle to run different logic to accelerate,
+different implementations of the method are provided (see the code above).
+
+### Naive implementation
+
+<script src="https://asciinema.org/a/14.js" id="asciicast-14" async></script>
+
+One could write a function that handles the player's input and calls the `accelerate()` method of the vehicle:
+
+```cpp
+// prism-push-types:Vehicle
+void handleAccelerateButton(Vehicle const& vehicle) {
+	std::cout << "Handling the accelerate button...\n";
+	vehicle.accelerate();
+}
+```
+
+This however, will call the `accelerate()` method of the `Vehicle` base class, which does not have the specific behavior
+for the actual type of vehicle. This means that the player's vehicle will not accelerate as expected:
+
+```cpp title="💢 Unexpected behavior"
+// prism-push-types:Car,Airplane
+Car car;
+Airplane airplane;
+
+handleAccelerateButton(car);
+handleAccelerateButton(airplane);
+```
+
+## Virtual functions
+
+The solution to this problem is to mark the `accelerate()` as virtual **in the base class**.
+
+```cpp
+struct Vehicle
+{
+	double speed;
+	// highlight-next-line
+	virtual void accelerate() {
+		std::cout << "Burning fuel\n"; // nothing too specific
+	}
+};
+```
+
+With the previous code, we experienced what is called a **static dispatch** that resulted in a **method shadowing**.
+This happens when a derived class introduces its own function with the same name as in the base class
+and the base class' function is **not** marked as `virtual`.
+
+In the earlier example, the type of the object on which we called the `accelerate()` as seen by the compiler was `Vehicle`:
+
+```cpp
+void handleAccelerateButton(Vehicle const& vehicle)
+```
+
+To call the proper implementation, the program has to first determine the exact type of the object, which requires a **dynamic dispatch**.
+This is done by marking the `accelerate()` method as `virtual` in the base structure.
+
+### Static dispatch
+
+During a **static dispatch** (default one), the compiler determines which function to call at compile time, based on the type of an object
+provided at the call site.
+
+```cpp title="💡 Static dispatch"
+// prism-push-types:Airplane
+Airplane airplane;
+airplane.accelerate();
+```
+
+### Dynamic dispatch
+
+A **dynamic dispatch** causes the compiler to determine which function to call at run time, based on the actual type of the object.
+This comes at a small performance cost, but don't worry about it too much for now.
+
+Assuming the `accelerate()` method is marked as `virtual` in the base class, the following code results in a dynamic dispatch:
+
+```cpp title="💡 Dynamic dispatch"
+// prism-push-types:Airplane,Vehicle
+Airplane airplane;
+
+// access the accelerate() method through a reference to the base class
+Vehicle& vehicle = airplane;
+vehicle.accelerate();
+```
+
+### Using virtual functions
+
+### Limitations
