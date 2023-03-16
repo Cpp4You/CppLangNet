@@ -7,21 +7,15 @@ int main()
 {
 	using std::vector, std::string, std::cout;
 
+	// highlight-start
 	vector<string> playerNames = {
 		"HappyBanana",
 		"AngryCrab",
 		"SadWolf",
 	};
-
-	// Adding a new player:
-	playerNames.push_back("WickedWitch");
-
-	// Print each player's name
-	// highlight-start
-	for (string name : playerNames)
-	{
-		cout << name << '\n';
-	}
 	// highlight-end
+
+	// Printing the name of the first player:
+	cout << "Name of the first player: " << playerNames[0];
 }
 ```

@@ -17,7 +17,9 @@ import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
 
 <!-- Codes -->
 import FullCode_Motivation							from "./_codes/motivation.mdx";
+import FullCode_InitializingVector					from "./_codes/dynamic-arrays/initializing-vector.mdx";
 import FullCode_ErasingElement						from "./_codes/dynamic-arrays/erasing-element.mdx";
+import FullCode_AddingElementToArray				from "./_codes/dynamic-arrays/adding-element.mdx";
 import FullCode_InsertingElement					from "./_codes/dynamic-arrays/inserting-element.mdx";
 import FullCode_ReadingSize							from "./_codes/dynamic-arrays/reading-size.mdx";
 import FullCode_DisplayingArrayOfPlayerNames		from "./_codes/dynamic-arrays/displaying-array-of-player-names.mdx";
@@ -25,7 +27,24 @@ import FullCode_DisplayingArrayOfPlayerNamesAuto	from "./_codes/dynamic-arrays/d
 
 # Dynamic arrays
 
-In this lesson we'll learn how to use dynamic arrays in C++ using the `std::vector` type.
+In this lesson we'll learn how to use dynamic arrays in C++ using the [`std::vector`](/docs/std/containers/arrays/vector/) type.
+
+## About vector
+
+You might be wondering why the type that represents a dynamic array data structure in C++ uses the name "vector."
+It can be confusing for those who associate the term with the mathematical concept of vectors.
+Interestingly, this name was chosen by the original author of the STL (Standard Template Library), Alexander Stepanov. However, in retrospect,
+[Stepanov admitted](https://stackoverflow.com/a/758548/4386320) that using "vector" as the name of the data structure was a mistake.
+
+`vector` is one of [*containers*](/docs/std/containers/) that are available in the standard library. You'll learn about other containers
+gradually as you progress through the course. In this lesson I will often use the term *array* and *vector* interchangeably.
+
+:::tip Documentation
+Once you finish this lesson you may look at the [documentation](/docs/std/containers/arrays/vector/) to find out more about the `vector`.
+Be aware that the documentation is not a tutorial, but rather a reference and it may be a bit overwhelming at first.
+:::
+
+## Creating a vector
 
 Let's go back and consider the code we've shown in the [Motivation](../introduction/#motivation) section of the previous lesson.
 There is a great candidate to be turned into an array. The following variables are of the same type (`std::string`)
@@ -39,9 +58,7 @@ std::string playerName3;
 
 <FullCode content={<FullCode_Motivation/>} />
 
-Instead of making three separate variables, we can create one array that contains three elements.
-
-## Creating a vector
+Instead of creating three separate variables, we can create one array that contains three elements.
 
 To use `std::vector` we first have to include its header file:
 
@@ -60,7 +77,7 @@ that will be stored inside it. Keep in mind that all of the elements in a vector
 int main()
 {
 	// highlight-next-line
-	std::vector< std::string > playerNames(3);
+	std::vector<std::string> playerNames(3);
 	// ...
 }
 ```
@@ -76,7 +93,7 @@ int main() {
 	// highlight-next-line
 	using std::vector, std::string;
 
-	vector< string > playerNames(3);
+	vector<string> playerNames(3);
 }
 ```
 
@@ -98,10 +115,10 @@ vector< /*other type*/ > arrayOfXYZ;
 The following code defines a variable `playerNames`  of a vector type that stores text elements (`std::string`s):
 
 ```cpp title="Defining a variable of vector type"
-vector< string > playerNames(3);
+vector<string> playerNames(3);
 ```
 
-A parenthesis with 3 in the middle will make the vector store 3 variables, or more precisely, 3 elements
+Parentheses with 3 in the middle will make the vector store 3 variables, or more precisely, 3 elements
 of type `string` right from the beginning.
 
 ```cpp title="Storing 3 elements in the vector"
@@ -112,7 +129,7 @@ Note that this is a vector-specific thing and not a general rule. If you want to
 just don't write the parentheses at all:
 
 ```cpp title="Creating an empty vector"
-vector< string > playerNames;
+vector<string> playerNames;
 ```
 
 :::danger Empty parentheses problem
@@ -136,13 +153,21 @@ This is why the empty parentheses turns this into a function declaration, which 
 
 ## Accessing elements
 
-Let's give players the following names:
+There are two ways of accessing an element of a vector, that we're interested in:
+
+- using the [`[]` operator](/docs/std/containers/arrays/vector/operator_subscript/)
+- calling the [`at()` method](/docs/std/containers/arrays/vector/at/)
+
+Both ways are very similar, with the only difference being that the `[]` operator does not check if the index is out of bounds.
+We'll show you what this means in a moment. Now let's see how we can use them - we'll assign the following names to the players:
 
 | Player index  | Name |
 | ------------- | ---- |
 | 0             | HappyBanana |
 | 1 		    | AngryCrab   |
 | 2 		    | SadWolf     |
+
+<br/>
 
 Here is how we can set them in the code:
 
@@ -155,7 +180,7 @@ int main()
 {
 	using std::vector, std::string, std::cout;
 
-	vector< string > playerNames(3);
+	vector<string> playerNames(3);
 
 	// Setting names of the players
 	playerNames[0] = "HappyBanana";
@@ -167,55 +192,123 @@ int main()
 }
 ```
 
+```console title="Output"
+Name of the first player: HappyBanana
+```
+
 To access an element of an array, we put its index in square brackets right after the array name:
 
 ```cpp
 arrayName[ index ]
 ```
 
-A non-empty array with number of elements equal to `N` always has indices from `0` to,
-`N-1` inclusive. A three-element array `playerNames` has indices from `0` to, `2` inclusive.
-An attempt to rename the player with index `3` will result in a runtime error:
+A non-empty array with a number of elements equal to `N` always has indices ranging from `0` to `N-1` inclusive.
+A three-element array `playerNames` has indices from `0` to `2` inclusive.
 
-```cpp title="🔴 Run-time error"
+### Out of bounds access
+
+A **very common** mistake is to try to access an element with an index that is out of bounds.
+An attempt to rename the player with index `3` will result in an unstable behavior of the program, most likely
+causing it to crash.
+
+```cpp
 // error-next-line
-playerNames[3] = "NewPlayer"; // Error
+playerNames[3] = "NewPlayer"; // !
 ```
 
-The reason is that the element with index `3` does not exist (size is `3` but the last item has index `2`).
-This code will compile correctly (we might get a warning), but running this program will result in an error.
+The reason is that the element with index `3` does not exist (size is `3` but the last item is at index `2`).
+This code will compile correctly (we might get a warning), but when the program is executed, it will try to access
+a memory location that is not allocated for the program. This is called a **buffer overflow** and it is a very serious problem.
+
+An alternative, safer way of accessing an element is to use the `at()` method:
+
+```cpp
+playerNames.at( 3 ) = "NewPlayer";
+```
+
+The difference is that the `at()` method checks if the index is out of bounds and throws an exception if it is.
+Be aware that it won't make your program valid by itself. The key benefit is that it will show you a useful
+error message and won't allow the program to perform a potentially dangerous operation.
+
+We'll learn more about the syntax we used to call the `at()` method in a moment.
+
+### Example
+
+This is how we can ask a user to enter the name of a certain player:
+
+```cpp
+cout << "Enter the name of the second player: ";
+// highlight-next-line
+cin >> playerNames[1];
+```
+
+Now let's output the number of characters in the provided name:
+
+```cpp
+cout << "The name of the second player has " << playerNames[1].size() << " characters.\n";
+```
+
+```console title="Possible output"
+Enter the name of the second player: FuriousFlamingo
+The name of the second player has 15 characters.
+```
+
+## Providing initial values
+
+There is also a way to provide initial values for the elements of the `vector` right from the beginning:
+
+```cpp
+vector<string> playerNames = {
+	"HappyBanana",
+	"AngryCrab",
+	"SadWolf",
+};
+```
+
+<FullCode content={<FullCode_InitializingVector/>} />
+
+<details>
+<summary>Alternative syntax</summary>
+<div>
+
+In the case of initializing a `vector` you can also omit the `=` sign:
+
+```cpp title="Alternative syntax"
+// highlight-next-line
+vector<string> playerNames { // note the lack of '='
+	"HappyBanana",
+	"AngryCrab",
+	"SadWolf",
+};
+```
+
+The result is the same.
+
+</div>
+</details>
+
+We will use this method of initialization in the current lesson from now on.
 
 ## Adding elements at the end
 
-To add another item to the array, we need to use `push_back` like this:
+To add an item to the end of an array (in this case `playerNames`), we need to use `push_back` like this:
 
-```cpp title="🔹 Adding an item to the array"
-#include <iostream>
-#include <string>
-#include <vector>
+```cpp
+// highlight-next-line
+playerNames.push_back("WickedWitch");
 
-int main()
-{
-	using std::vector, std::string, std::cout;
-
-	vector< string > playerNames(3);
-
-	// Setting names of the players
-	playerNames[0] = "HappyBanana";
-	playerNames[1] = "AngryCrab";
-	playerNames[2] = "SadWolf";
-
-	// Adding a new player:
-	// highlight-next-line
-	playerNames.push_back("WickedWitch");
-
-	// Printing the name of player with index 3
-	cout << "Name of the player with index 3: " << playerNames[3];
-}
+// Printing the name of player with index 3
+cout << "Name of the player with index 3: " << playerNames[3];
 ```
 
+```console title="Output"
+Name of the player with index 3: WickedWitch
+```
+
+<FullCode content={<FullCode_AddingElementToArray/>} />
+
 From the moment `.push_back(...)` instruction was executed, the `playerNames` array already has four elements.
-We say that we *called* the `push_back(...)` *method*. We'll talk more about calls and methods in the future.
+We say that we are *calling* the `push_back(...)` *method*. We'll talk more about calls and methods in the future.
 For now, just remember that:
 
 1. we put a dot after the name of the array
@@ -250,12 +343,25 @@ After:
 </div>
 </Columns>
 
+<br/>
+
+To let the user add a new player, we can ask them to enter their name, and then add it to the array:
+
+```cpp
+std::cout << "Enter the name of the new player: ";
+std::string newPlayerName;
+// highlight-start
+std::cin >> newPlayerName;
+playerNames.push_back(newPlayerName);
+// highlight-end
+```
+
 ## Inserting elements at a specific position
 
 At this point you will have to trust me a little. I won't go into details because it's too complicated for now.
 To insert **before** index `n` to a vector (in this case `playerNames`) we use the following notation:
 
-```cpp title="Inserting an item to the array"
+```cpp
 playerNames.insert(playerNames.begin() + n, elementToInsert);
 ```
 
@@ -265,7 +371,7 @@ which isn't the same thing as an index. To obtain it, we need to use `begin()` a
 
 Knowing this, we will now insert a new player just before the `AngryCrab` (index `1`):
 
-```cpp title="Inserting an item to the array"
+```cpp
 playerNames.insert(playerNames.begin() + 1, "BadPenguin");
 ```
 
@@ -310,9 +416,9 @@ So to remove the `n`-th element from a vector (e.g. from `playerNames`) we will 
 playerNames.erase( playerNames.begin() + n );
 ```
 
-We'll now remove the first player from the array:
+We'll now erase the first player from the array:
 
-```cpp title="Erasing the first element from playerNames"
+```cpp
 playerNames.erase( playerNames.begin() + 0 );
 ```
 
@@ -353,6 +459,11 @@ After:
 
 <br/>
 
+As you can see the first element was removed and the rest of the elements **shifted by one** index.
+This is because the array is a **contiguous** block of memory and `vector` ensures that there is no
+empty space left after an element is removed.
+
+
 :::danger
 Before erasing an item from an array, make sure it exists (that is, it's in scope `[0, N)`).
 
@@ -370,16 +481,27 @@ else
 
 :::
 
+## Clearing the contents
+
+To clear the contents of a vector, we can use the [`clear()`](/docs/std/containers/arrays/vector/clear/) method:
+
+```cpp
+playerNames.clear();
+```
+
+After the call, the array will be empty.
+
 ## Reading the size
 
 Because `vector` can change size whenever you want it to, you may sometimes need to read the number of elements
 it currently contains. The current size can be read using the `size()` method:
 
 ```cpp
-// Setting names of the players
-playerNames[0] = "HappyBanana";
-playerNames[1] = "AngryCrab";
-playerNames[2] = "SadWolf";
+vector<string> playerNames = {
+	"HappyBanana",
+	"AngryCrab",
+	"SadWolf",
+};
 
 // highlight-next-line
 cout << "The array contains " << playerNames.size() << " elements\n";
@@ -391,10 +513,29 @@ cout << "Added new player.\n";
 cout << "The array contains " << playerNames.size() << " elements\n";
 ```
 
+```console title="Output"
+The array contains 3 elements
+Added new player.
+The array contains 4 elements
+```
+
 <FullCode content={<FullCode_ReadingSize/>}/>
 
 Just like we previously did with the method `push_back`, we write the name after the dot.
 Then we put the parentheses, and in the case of `.size` we leave them empty.
+
+## Checking if vector is empty
+
+To check if a vector is empty, we can use the `empty()` method like this:
+
+```cpp
+if (playerNames.empty())
+	cout << "The array is empty!\n";
+else
+	cout << "The array is not empty!\n";
+}
+```
+
 
 ## Displaying elements
 
@@ -407,6 +548,13 @@ for (string name : playerNames)
 {
 	cout << "Player name: " << name << '\n';
 }
+```
+
+```console title="Output"
+Player name: HappyBanana
+Player name: AngryCrab
+Player name: SadWolf
+Player name: WickedWitch
 ```
 
 <FullCode content={<FullCode_DisplayingArrayOfPlayerNames/>}/>
@@ -422,6 +570,7 @@ There is only one statement inside this block of code:
 ```cpp
 cout << "Player name: " << name << '\n';
 ```
+
 The loop will write the nicknames of the players one by one
 into the variable `name`, and execute the display instruction (`cout`) for each of them.
 
