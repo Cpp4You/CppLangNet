@@ -70,7 +70,7 @@ html
 		}
 
 		// Is at top?
-		&[data-scroll="0"]
+		&[data-scrolled-to-top="true"]
 		{
 			// Not within sidebar navigation (mobile)
 			.navbar:not([class*=#{$sidebarNavigationClass}])
@@ -100,7 +100,7 @@ html
 			}
 		}
 		// ELSE: Not at the top?
-		&:not([data-scroll="0"])
+		&:not([data-scrolled-to-top="true"])
 		{
 			// ONLY if already scrolled
 			.navbar.scrolled {

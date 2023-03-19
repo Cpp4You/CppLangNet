@@ -16,7 +16,7 @@
 		background: $srcLight no-repeat;
 	}
 	
-	html[data-scroll="0"]:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plugin-docs"]) {	
+	html[data-scrolled-to-top="true"]:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plugin-docs"]) {	
 		.header-#{$name}-link::before {
 			background: $srcDark no-repeat;
 		}
