@@ -42,6 +42,7 @@ module.exports = {
 							link: { type: 'doc', id: 'std/math/mathematical_functions/index' },
 							items: [
 								docsClassCat('Abs', 'std/math/mathematical_functions/abs', '', ['f:labs',]),
+								docsClassCat('Div', 'std/math/mathematical_functions/div', '', []),
 							],
 						},
 						'std/math/mathematical_special_functions',

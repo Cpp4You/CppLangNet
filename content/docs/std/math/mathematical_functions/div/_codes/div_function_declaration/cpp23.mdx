@@ -1,0 +1,24 @@
+
+Defined in `<cstdlib>`:
+
+```cpp
+// 1)
+constexpr std::div_t     div( int x, int y );
+// 2)
+constexpr std::ldiv_t    div( long x, long y );
+// 3)
+constexpr std::lldiv_t   div( long long x, long long y );
+// 4)
+constexpr std::ldiv_t   ldiv( long x, long y );
+// 5)
+constexpr std::lldiv_t lldiv( long long x, long long y );
+```
+
+Defined in `<cinttypes>`:
+
+```cpp
+// 6)
+std::imaxdiv_t div( std::intmax_t x, std::intmax_t y );
+// 7)
+std::imaxdiv_t imaxdiv( std::intmax_t x, std::intmax_t y );
+```
