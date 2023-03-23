@@ -1,0 +1,46 @@
+Defined in `<cstdlib>`:
+
+```cpp
+// 1)
+int abs (int n);
+// 2)
+long int abs (long int n);
+// 3)
+constexpr long long int abs (long long int n);
+// 4)
+constexpr long labs( long n );
+// 5)
+constexpr long long llabs( long long n );
+// 6)
+constexpr /* floating-point-type */
+            abs( /* floating-point-type */ n );
+```
+
+Defined in `<cmath>`:
+
+```cpp
+// 7)
+constexpr /* floating-point-type */
+            fabs ( /* floating-point-type */ n );
+// 8)
+constexpr float fabsf( float n );
+// 9)
+constexpr long double fabsl( long double n );
+```
+
+Defined in `<cinttypes>`:
+
+```cpp
+// 10)
+std::intmax_t abs( std::intmax_t n );
+// 11) 
+std::intmax_t imaxabs( std::intmax_t n );
+```
+
+`Additional Overloads`
+
+```cpp
+// 16)
+template< class Integer >
+constexpr double fabs ( Integer n );
+```

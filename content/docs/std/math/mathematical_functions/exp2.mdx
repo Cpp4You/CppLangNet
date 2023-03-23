@@ -1,0 +1,132 @@
+---
+title:                  Exp2
+description:            Standard exp 2function
+tags:                   [math, exp, exp2]
+#slug:                  /std/math/mathematical_functions/exp2/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import Exp2_Function_Declaration_Cpp11         from "./exp2/_codes/exp2_function_declaration/cpp11.mdx";
+import Exp2_Function_Declaration_Cpp23         from "./exp2/_codes/exp2_function_declaration/cpp23.mdx";
+
+# Exp
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes `2` raised to the given power `num`. The library provides overloads of `std::exp2` for all cv-unqualified floating-point types as the type of the parameter `num`
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Exp2_Function_Declaration_Cpp23 />,
+    "cpp11" : <Exp2_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+If no errors occur, the base-2 exponential of `num` is returned.
+
+If a range error due to overflow occurs, `+HUGE_VAL`, `+HUGE_VALF`, or `+HUGE_VALL` is returned.
+
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+If the argument is `±0`, `1` is returned
+If the argument is `-∞`, `+0` is returned
+If the argument is `+∞`, `+∞` is returned
+If the argument is NaN, NaN is returned
+
+### Notes
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, 
+`std::exp2(num)` has the same effect as 
+```cpp
+std::exp2(static_cast<double>(num))
+```
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::cout 
+        << "exp2(4) = " 
+        << std::exp2(4) << '\n'
+        << "exp2(0.5) = " 
+        << std::exp2(0.5) << '\n'
+        << "exp2(-4) = " 
+        << std::exp2(-4) << '\n';
+ 
+    // special values
+    std::cout 
+        << "exp2(-0) = " 
+        << std::exp2(-0.0) << '\n'
+        << "exp2(-Inf) = " 
+        << std::exp2(-INFINITY) << '\n';
+ 
+    // error handling
+    errno = 0;
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "exp2(1024) = " 
+        << std::exp2(1024) << '\n';
+ 
+    if (errno == ERANGE)
+        std::cout 
+            << "errno == ERANGE: " 
+            << std::strerror(errno) << '\n';
+    if (std::fetestexcept(FE_OVERFLOW))
+        std::cout 
+            << "FE_OVERFLOW raised\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+exp2(4) = 16
+exp2(0.5) = 1.41421
+exp2(-4) = 0.0625
+exp2(-0) = 1
+exp2(-Inf) = 0
+exp2(1024) = inf
+errno == ERANGE: Numerical result out of range
+FE_OVERFLOW raised
+```
+
+</div>
+</Columns>

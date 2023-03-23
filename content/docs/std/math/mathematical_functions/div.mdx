@@ -32,43 +32,10 @@ Computes both the quotient and the remainder of the division of the numerator x 
 
 ### Return Value
 If both the remainder and the quotient can be represented as objects of the corresponding type (int, long, long long, std::intmax_t, respectively), 
-returns both as an object of type `std::div_t`, `std::ldiv_t`, `std::lldiv_t`, `std::imaxdiv_t` defined as follows:
+returns both as an object of type [`std::div_t`](/docs/std/math/mathematical_functions/div_t), 
+[`std::ldiv_t`](/docs/std/math/mathematical_functions/ldiv_t), [`std::lldiv_t`](/docs/std/math/mathematical_functions/lldiv_t), 
+[`std::imaxdiv_t`](/docs/std/math/mathematical_functions/imaxdiv_t).
 
-#### std::div_t
-```cpp
-struct div_t { int quot; int rem; };
-```
-or
-```cpp
-struct div_t { int rem; int quot; };
-```
-
-#### std::ldiv_t
-```cpp
-struct ldiv_t { long quot; long rem; };
-```
-or
-```cpp
-struct ldiv_t { long rem; long quot; };
-```
-
-#### std::lldiv_t
-```cpp
-struct lldiv_t { long long quot; long long rem; };
-```
-or
-```cpp
-struct lldiv_t { long long rem; long long quot; };
-```
-
-#### std::imaxdiv_t
-```cpp
-struct imaxdiv_t { std::intmax_t quot; std::intmax_t rem; };
-```
-or
-```cpp
-struct imaxdiv_t { std::intmax_t rem; std::intmax_t quot; };
-```
 
 ### Examples
 

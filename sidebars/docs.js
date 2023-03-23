@@ -41,8 +41,28 @@ module.exports = {
 							label: 'Mathematical Functions',
 							link: { type: 'doc', id: 'std/math/mathematical_functions/index' },
 							items: [
-								docsClassCat('Abs', 'std/math/mathematical_functions/abs', '', ['f:labs',]),
-								docsClassCat('Div', 'std/math/mathematical_functions/div', '', []),
+								docsClassCat('abs', 'std/math/mathematical_functions/abs', '', []),
+								docsClassCat('div', 'std/math/mathematical_functions/div', '', []),
+								docsClassCat('fmod', 'std/math/mathematical_functions/fmod', '', [],),
+
+								docsClassCat('remainder', 'std/math/mathematical_functions/remainder', '', [],),
+								docsClassCat('remquo', 'std/math/mathematical_functions/remquo', '', [],),
+								docsClassCat('fma', 'std/math/mathematical_functions/fma', '', [],),
+								docsClassCat('fmax', 'std/math/mathematical_functions/fmax', '', [],),
+								docsClassCat('fmin', 'std/math/mathematical_functions/fmin', '', [],),
+								docsClassCat('fdim', 'std/math/mathematical_functions/fdim', '', [],),
+								docsClassCat('nan', 'std/math/mathematical_functions/nan', '', [],),
+
+								docsClassCat('exp', 'std/math/mathematical_functions/exp', '', [],),
+								docsClassCat('exp2', 'std/math/mathematical_functions/exp2', '', [],),
+								// docsClassCat('expml', 'std/math/mathematical_functions/expml', '', [],)
+								// docsClassCat('log', 'std/math/mathematical_functions/log', '', [],),
+								// docsClassCat('log10', 'std/math/mathematical_functions/log10', '', [],),
+								// docsClassCat('log2', 'std/math/mathematical_functions/log2', '', [],),
+								// docsClassCat('loglp', 'std/math/mathematical_functions/loglp', '', [],),
+
+								// docsClassCat('pow', 'std/math/mathematical_functions/pow', '', [],),
+								// docsClassCat('sqrt', 'std/math/mathematical_functions/sqrt', '', [],),
 							],
 						},
 						'std/math/mathematical_special_functions',
