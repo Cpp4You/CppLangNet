@@ -27,20 +27,26 @@ import FullCode_DisplayingArrayOfPlayerNamesAuto	from "./_codes/dynamic-arrays/d
 
 # Dynamic arrays
 
-In this lesson we'll learn how to use dynamic arrays in C++ using the [`std::vector`](/docs/std/containers/arrays/vector/) type.
+In this lesson we'll learn how to use dynamic arrays in C++ using [`std::vector`](/docs/std/containers/arrays/vector/).
 
-## About vector
+<details>
+<summary><h2>About vector</h2></summary>
+<div>
 
 You might be wondering why the type that represents a dynamic array data structure in C++ uses the name "vector."
 It can be confusing for those who associate the term with the mathematical concept of vectors.
 Interestingly, this name was chosen by the original author of the STL (Standard Template Library), Alexander Stepanov. However, in retrospect,
 [Stepanov admitted](https://stackoverflow.com/a/758548/4386320) that using "vector" as the name of the data structure was a mistake.
 
-`vector` is one of [*containers*](/docs/std/containers/) that are available in the standard library. You'll learn about other containers
+`vector` is one of the many [*containers*](/docs/std/containers/) in the standard library. You'll learn about other containers
 gradually as you progress through the course. In this lesson I will often use the term *array* and *vector* interchangeably.
 
+
+</div>
+</details>
+
 :::tip Documentation
-Once you finish this lesson you may look at the [documentation](/docs/std/containers/arrays/vector/) to find out more about the `vector`.
+Once you finish this lesson you can look at the [documentation](/docs/std/containers/arrays/vector/) if you want to learn more about `vector`s.
 Be aware that the documentation is not a tutorial, but rather a reference and it may be a bit overwhelming at first.
 :::
 
@@ -67,7 +73,7 @@ To use `std::vector` we first have to include its header file:
 ```
 
 As we already know from the [Introduction](../introduction), to create a `vector` we have to know the type of the elements
-that will be stored inside it. Keep in mind that all of the elements in a vector are of the same type.
+that will be stored inside it. All elements in a vector are of the same type.
 
 ```cpp
 #include <iostream>
@@ -97,12 +103,13 @@ int main() {
 }
 ```
 
-**Remember**: later we'll use more elements from the standard library, like `std::cout` and `std::cin`. Don't forget to add these
-to the `using` statement.
+Later we'll use more elements from the standard library, like `std::cout` and `std::cin`.
+You can add these to the `using` statement too.
 :::
 
-**vector** is a *template*, which means that it can be used with different types,
-which we specify in angle brackets, right after `vector`, e.g:
+”
+**vector** is a *template*, which means that it can be used with different types.
+We tell it which type to use by putting it in angle brackets right after `vector`. Like this:
 
 ```cpp title="🔹 Using vector with different types"
 vector< int > arrayOfInts;
@@ -112,13 +119,13 @@ vector< string > arrayOfStrings;
 vector< /*other type*/ > arrayOfXYZ;
 ```
 
-The following code defines a variable `playerNames`  of a vector type that stores text elements (`std::string`s):
+This code defines the vector `playerNames` that stores text elements (`std::strings`):
 
 ```cpp title="Defining a variable of vector type"
 vector<string> playerNames(3);
 ```
 
-Parentheses with 3 in the middle will make the vector store 3 variables, or more precisely, 3 elements
+Writing (3) after playerNames makes it so that when it is created it will have room for three elements
 of type `string` right from the beginning.
 
 ```cpp title="Storing 3 elements in the vector"
@@ -202,23 +209,22 @@ To access an element of an array, we put its index in square brackets right afte
 arrayName[ index ]
 ```
 
-A non-empty array with a number of elements equal to `N` always has indices ranging from `0` to `N-1` inclusive.
-A three-element array `playerNames` has indices from `0` to `2` inclusive.
+A non-empty array with a number of elements equal to `N` always has indexes  ranging from `0` to `N-1` inclusive.
+The three-element array `playerNames` has indexes `0`, `1` and `2`.
 
 ### Out of bounds access
 
 A **very common** mistake is to try to access an element with an index that is out of bounds.
-An attempt to rename the player with index `3` will result in an unstable behavior of the program, most likely
-causing it to crash.
+If we had tried to rename the player at index `3` the program would most likely crash and burn.
 
 ```cpp
 // error-next-line
 playerNames[3] = "NewPlayer"; // !
 ```
 
-The reason is that the element with index `3` does not exist (size is `3` but the last item is at index `2`).
-This code will compile correctly (we might get a warning), but when the program is executed, it will try to access
-a memory location that is not allocated for the program. This is called a **buffer overflow** and it is a very serious problem.
+This code will compile correctly (we might get a warning) but when the program is executed it will try to access
+a memory that is not allocated for the program.
+This is called a **buffer overflow** and it is a very serious problem.
 
 An alternative, safer way of accessing an element is to use the `at()` method:
 
