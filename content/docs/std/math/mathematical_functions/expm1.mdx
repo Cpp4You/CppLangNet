@@ -1,0 +1,128 @@
+---
+title:                  Expm1
+description:            Standard function
+tags:                   [math, exp, expm1]
+#slug:                  /std/math/mathematical_functions/expm1/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import  Expm1_Function_Declaration_Cpp11         from "./expm1/_codes/expm1_function_declaration/cpp11.mdx";
+import  Expm1_Function_Declaration_Cpp23         from "./expm1/_codes/expm1_function_declaration/cpp23.mdx";
+
+# Expm1
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the `e` (Euler's number, 2.7182818...) raised to the given power `num`, minus 1.0. This function is more accurate than the expression 
+`std::exp(num) - 1.0` if `num` is close to zero. The library provides overloads of `std::expm1` for all cv-unqualified floating-point types as the type of the parameter `num`.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Expm1_Function_Declaration_Cpp23 />,
+    "cpp11" : <Expm1_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+If no errors occur e<sup>num</sup> -1 is returned.
+
+If a range error due to overflow occurs, `+HUGE_VAL`, `+HUGE_VALF`, or `+HUGE_VALL` is returned.
+
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+If the argument is `±0`, it is returned, unmodified <br/>
+If the argument is `-∞`, -1 is returned<br/>
+If the argument is `+∞`, `+∞` is returned<br/>
+If the argument is NaN, NaN is returned<br/>
+
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::cout 
+        << "expm1(1) = " 
+        << std::expm1(1) << '\n'
+        << "Interest earned in 2 days on $100, compounded daily at 1%\n"
+        << "    on a 30/360 calendar = "
+        << 100 * std::expm1(2 * std::log1p(0.01 / 360)) << '\n'
+        << "exp(1e-16)-1 = " 
+        << std::exp(1e-16) - 1
+        << ", but expm1(1e-16) = " 
+        << std::expm1(1e-16) << '\n';
+ 
+    // special values
+    std::cout 
+        << "expm1(-0) = " 
+        << std::expm1(-0.0) << '\n'
+        << "expm1(-Inf) = " 
+        << std::expm1(-INFINITY) << '\n';
+ 
+    // error handling
+    errno = 0;
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "expm1(710) = " 
+        << std::expm1(710) << '\n';
+ 
+    if (errno == ERANGE)
+        std::cout 
+            << "errno == ERANGE: " 
+            << std::strerror(errno) << '\n';
+    if (std::fetestexcept(FE_OVERFLOW))
+        std::cout 
+            << "FE_OVERFLOW raised\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+expm1(1) = 1.71828
+Interest earned in 2 days on $100, compounded daily at 1%
+    on a 30/360 calendar = 0.00555563
+exp(1e-16)-1 = 0, but expm1(1e-16) = 1e-16
+expm1(-0) = -0
+expm1(-Inf) = -1
+expm1(710) = inf
+errno == ERANGE: Result too large
+FE_OVERFLOW raised
+```
+
+</div>
+</Columns>

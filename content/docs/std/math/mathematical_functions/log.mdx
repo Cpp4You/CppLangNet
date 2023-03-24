@@ -1,0 +1,121 @@
+---
+title:                  Log
+description:            Standard log function
+tags:                   [math, log]
+#slug:                  /std/math/mathematical_functions/log/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import  Log_Function_Declaration_Cpp11         from "./log/_codes/log_function_declaration/cpp11.mdx";
+import  Log_Function_Declaration_Cpp23         from "./log/_codes/log_function_declaration/cpp23.mdx";
+
+# Log
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the natural (base `e`) logarithm of `num`. The library provides overloads of `std::log` for all cv-unqualified floating-point types as the type of the parameter `num`.
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Log_Function_Declaration_Cpp23 />,
+    "cpp11" : <Log_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+ `num` - floating-point or integer value
+
+### Return value
+
+If no errors occur, the natural (base `e`) logarithm of `num` (ln(num) or log<sub>e</sub>(num)) is returned.
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported)
+
+If a pole error occurs, `-HUGE_VAL`, `-HUGE_VALF`, or `-HUGE_VALL` is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+Domain error occurs if `num` is less than zero.
+
+Pole error may occur if `num` is zero.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559),
+
+If the argument is `±0`, `-∞` is returned and `FE_DIVBYZERO` is raised.
+If the argument is `1`, `+0` is returned
+If the argument is negative, NaN is returned and `FE_INVALID` is raised.
+If the argument is `+∞`, `+∞` is returned
+If the argument is NaN, NaN is returned
+
+### Notes
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, `std::log(num)` has the same effect as 
+```cpp
+std::log(static_cast<double>(num))
+```
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cstring>
+#include <cmath>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::cout << "log(1) = " << std::log(1) << '\n'
+              << "base-5 logarithm of 125 = " << std::log(125)/std::log(5) << '\n';
+ 
+    // special values
+    std::cout << "log(1) = " << std::log(1) << '\n'
+              << "log(+Inf) = " << std::log(INFINITY) << '\n';
+ 
+    // error handling
+    errno = 0;
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout << "log(0) = " << std::log(0) << '\n';
+ 
+    if (errno == ERANGE)
+        std::cout << "    errno == ERANGE: " << std::strerror(errno) << '\n';
+    if (std::fetestexcept(FE_DIVBYZERO))
+        std::cout << "    FE_DIVBYZERO raised\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+log(1) = 0
+base-5 logarithm of 125 = 3
+log(1) = 0
+log(+Inf) = inf
+log(0) = -inf
+    errno == ERANGE: Numerical result out of range
+    FE_DIVBYZERO raised
+```
+
+</div>
+</Columns>

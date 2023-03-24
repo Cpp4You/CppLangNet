@@ -1,0 +1,120 @@
+---
+title:                  Cbrt
+description:            Standard cbrt function
+tags:                   [math, cbrt]
+#slug:                  /std/math/mathematical_functions/cbrt/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import  Cbrt_Function_Declaration_Cpp11         from "./cbrt/_codes/cbrt_function_declaration/cpp11.mdx";
+import  Cbrt_Function_Declaration_Cpp23         from "./cbrt/_codes/cbrt_function_declaration/cpp23.mdx";
+
+# Cbrt
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the cube root of `num`. The library provides overloads of `std::cbrt` for all cv-unqualified floating-point types as the type of the parameter `num`.
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Cbrt_Function_Declaration_Cpp23 />,
+    "cpp11" : <Cbrt_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+If no errors occur, the cube root of num (<sup>3</sup>√num), is returned.
+
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559),
+
+if the argument is `±0` or `±∞`, it is returned, unchanged
+if the argument is NaN, NaN is returned
+
+### Notes
+
+`std::cbrt(num)` is not equivalent to `std::pow(num, 1.0 / 3)` because the rational number `⅓`
+ is typically not equal to `1.0 / 3` and [std::pow](/docs/std/math/mathematical_functions/pow/) cannot raise a negative base to a fractional exponent. Moreover,
+  `std::cbrt(num)` usually gives more accurate results than `std::pow(num, 1.0 / 3)` [(see example)](#examples). <br/>
+The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, `std::cbrt(num)` has the same effect as 
+```cpp
+std::cbrt(static_cast<double>(num))
+```
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <limits>
+#include <iomanip>
+#include <iostream>
+ 
+int main()
+{
+    std::cout
+        << "Normal use:\n"
+        << "cbrt(729)       = " 
+        << std::cbrt(729) << '\n'
+        << "cbrt(-0.125)    = " 
+        << std::cbrt(-0.125) << '\n'
+        << "Special values:\n"
+        << "cbrt(-0)        = " 
+        << std::cbrt(-0.0) << '\n'
+        << "cbrt(+inf)      = " 
+        << std::cbrt(INFINITY) << '\n'
+        << "Accuracy and comparison with `pow`:\n"
+        << std::setprecision(std::numeric_limits<double>::max_digits10)
+        << "cbrt(343)       = " 
+        << std::cbrt(343) << '\n'
+        << "pow(343,1.0/3)  = " 
+        << std::pow(343, 1.0 / 3) << '\n'
+        << "cbrt(-343)      = " 
+        << std::cbrt(-343) << '\n'
+        << "pow(-343,1.0/3) = " 
+        << std::pow(-343, 1.0 / 3) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+Normal use:
+cbrt(729)       = 9
+cbrt(-0.125)    = -0.5
+Special values:
+cbrt(-0)        = -0
+cbrt(+inf)      = inf
+Accuracy and comparison with `pow`:
+cbrt(343)       = 7
+pow(343,1.0/3)  = 6.9999999999999991
+cbrt(-343)      = -7
+pow(-343,1.0/3) = -nan
+```
+
+</div>
+</Columns>

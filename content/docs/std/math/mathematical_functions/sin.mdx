@@ -1,0 +1,133 @@
+---
+title:                  Sin
+description:            Standard sin function
+tags:                   [math, sin]
+#slug:                  /std/math/mathematical_functions/sin/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import  Sin_Function_Declaration_Cpp11         from "./sin/_codes/sin_function_declaration/cpp11.mdx";
+import  Sin_Function_Declaration_Cpp23         from "./sin/_codes/sin_function_declaration/cpp23.mdx";
+
+# Sin
+
+Defined in header `<cmath>`.
+
+### Description
+Computes the sine of `num` (measured in radians). The library provides overloads of `std::sin` for all cv-unqualified floating-point 
+types as the type of the parameter `num`. (since C++23)
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+(since C++11)
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Sin_Function_Declaration_Cpp23 />,
+    "cpp11" : <Sin_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value representing angle in radians
+
+### Return value
+If no errors occur, the sine of `num` (sin(num)) in the range [-1, +1], is returned.
+
+
+The result may have little or no significance if the magnitude of `num` is large.(until C++11)
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported).
+
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+### Error handling
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+if the argument is `±0`, it is returned unmodified
+if the argument is `±∞`, NaN is returned and `FE_INVALID` is raised
+if the argument is NaN, NaN is returned
+
+### Notes
+The case where the argument is infinite is not specified to be a domain error in C (to which C++ defers), but it is defined as a domain error in 
+[POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/sin.html)
+
+POSIX also specifies that in case of underflow, `num` is returned unmodified, and if that is not supported, an implementation-defined 
+value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. They only need to be sufficient to ensure that for their argument `num` of integer type, 
+`std::sin(num)` has the same effect as 
+```cpp
+std::sin(static_cast<double>(num))
+```
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cmath>
+#include <iostream>
+ 
+#pragma STDC FENV_ACCESS ON
+const double pi = std::acos(-1);
+ 
+int main()
+{
+    // typical usage
+    std::cout 
+        << "sin(pi/6) = " 
+        << std::sin(pi / 6) << '\n'
+        << "sin(pi/2) = " 
+        << std::sin(pi / 2) << '\n'
+        << "sin(-3*pi/4) = " 
+        << std::sin(-3 * pi / 4) << '\n';
+ 
+    // special values
+    std::cout 
+        << "sin(+0) = " 
+        << std::sin(0.0) << '\n'
+        << "sin(-0) = " 
+        << std::sin(-0.0) << '\n';
+ 
+    // error handling 
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "sin(INFINITY) = " 
+        << std::sin(INFINITY) << '\n';
+    if (std::fetestexcept(FE_INVALID))
+        std::cout 
+            << "FE_INVALID raised\n";
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+sin(pi/6) = 0.5
+sin(pi/2) = 1
+sin(-3*pi/4) = -0.707107
+sin(+0) = 0
+sin(-0) = -0
+sin(INFINITY) = -nan
+FE_INVALID raised
+```
+
+</div>
+</Columns>

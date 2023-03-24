@@ -1,0 +1,30 @@
+```cpp
+// 1)
+float hypot ( float x, float y );
+// 2)
+double hypot ( double x, double y );
+// 3)
+long double hypot ( long double x, long double y );
+// 4)
+float hypotf( float x, float y );
+// 5)
+long double hypotl( long double x, long double y );
+// 6)
+float hypot ( float x, float y, float z );
+// 7)
+double hypot ( double x, double y, double z );
+// 8)
+long double hypot ( long double x, long double y, long double z );
+```
+
+`Additional Overloads`
+
+```cpp
+// 9)
+template< class Arithmetic1, Arithmetic2 >
+/* common-floating-point-type */ hypot( Arithmetic1 x, Arithmetic2 y );
+// 10)
+template< class Arithmetic1, Arithmetic2, Arithmetic3 >
+/* common-floating-point-type */
+    hypot( Arithmetic1 x, Arithmetic2 y, Arithmetic3 z );
+```

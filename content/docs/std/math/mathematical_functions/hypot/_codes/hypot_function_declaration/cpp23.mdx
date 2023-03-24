@@ -1,0 +1,25 @@
+```cpp
+// 1)
+/* floating-point-type */ hypot( /* floating-point-type */ x,
+                                 /* floating-point-type */ y );
+// 2)
+float hypotf( float x, float y );
+// 3)
+long double hypotl( long double x, long double y );
+// 4)
+/* floating-point-type */ hypot( /* floating-point-type */ x,
+                                 /* floating-point-type */ y,
+                                 /* floating-point-type */ z );
+```
+
+`Additional Overloads`
+
+```cpp
+// 5)
+template< class Arithmetic1, Arithmetic2 >
+/* common-floating-point-type */ hypot( Arithmetic1 x, Arithmetic2 y );
+// 6)
+template< class Arithmetic1, Arithmetic2, Arithmetic3 >
+/* common-floating-point-type */
+    hypot( Arithmetic1 x, Arithmetic2 y, Arithmetic3 z );
+```

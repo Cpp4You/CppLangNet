@@ -1,0 +1,169 @@
+---
+title:                  Log1p
+description:            Standard function
+tags:                   [math, log, log1p]
+#slug:                  /std/math/mathematical_functions/log1p/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import  Log1p_Function_Declaration_Cpp11         from "./log1p/_codes/log1p_function_declaration/cpp11.mdx";
+import  Log1p_Function_Declaration_Cpp23         from "./log1p/_codes/log1p_function_declaration/cpp23.mdx";
+
+# Log1p
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the natural (base `e`) logarithm of `1 + num`. This function is more precise than the expression `std::log(1 + num)` if `num` is close to zero.
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Log1p_Function_Declaration_Cpp23 />,
+    "cpp11" : <Log1p_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+If no errors occur `ln(1+num)` is returned.
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported).
+
+If a pole error occurs, `-HUGE_VAL`, `-HUGE_VALF`, or `-HUGE_VALL` is returned.
+
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+Domain error occurs if `num` is less than zero.
+
+Pole error may occur if `num` is zero.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+If the argument is `±0`, `-∞` is returned and `FE_DIVBYZERO `is raised<br/>
+If the argument is `1`, `+0` is returned<br/>
+If the argument is negative, NaN is returned and `FE_INVALID` is raised<br/>
+If the argument is `+∞`, `+∞` is returned<br/>
+If the argument is NaN, NaN is returned<br/>
+
+### Notes
+
+The functions [std::expm1](/docs/std/math/mathematical_functions/expm1/) and `std::log1p` are useful for financial calculations, for example, when calculating small daily interest rates: `(1+x)n-1` 
+an be expressed as `std::expm1(n * std::log1p(x))`. These functions also simplify writing accurate inverse hyperbolic functions.
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. They only need to be sufficient to ensure that for their first argument `num1` 
+and second argument `num2`:
+
+If `num1` or `num2` has type `long double`, then `std::log1p(num1, num2)` has the same effect as 
+```cpp
+std::log1p(static_cast<long double>(num1),
+           static_cast<long double>(num2))
+```
+Otherwise, if `num1` and/or `num2` has type `double` or an integer type, then `std::log1p(num1, num2)` has the same effect as 
+```cpp
+std::log1p(static_cast<double>(num1),
+           static_cast<double>(num2))
+```
+Otherwise, if `num1` or `num2` has type `float`, then `std::log1p(num1, num2)` has the same effect as 
+```cpp
+std::log1p(static_cast<float>(num1),
+           static_cast<float>(num2))
+//(until C++23)
+```
+If `num1` and `num2` have arithmetic types, then `std::log1p(num1, num2)` has the same effect as 
+```cpp
+std::log1p(static_cast</* common-floating-point-type */>(num1),
+           static_cast</* common-floating-point-type */>(num2))
+```
+where `/* common-floating-point-type */` is the floating-point type with the greatest floating-point conversion rank and greatest 
+floating-point conversion subrank between the types of `num1` and `num2`, arguments of integer type are considered to have the same floating-point conversion rank as `double`.
+
+If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::cout 
+        << "log1p(0) = " 
+        << log1p(0) << '\n'
+        << "Interest earned in 2 days on $100, compounded daily at 1%\n"
+        << "    on a 30/360 calendar = "
+        << 100 * expm1(2 * log1p(0.01 / 360)) << '\n'
+        << "log(1+1e-16) = " 
+        << std::log(1 + 1e-16)
+        << ", but log1p(1e-16) = " 
+        << std::log1p(1e-16) << '\n';
+ 
+    // special values
+    std::cout 
+        << "log1p(-0) = " 
+        << std::log1p(-0.0) << '\n'
+        << "log1p(+Inf) = " 
+        << std::log1p(INFINITY) << '\n';
+ 
+    // error handling
+    errno = 0;
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "log1p(-1) = " 
+        << std::log1p(-1) << '\n';
+ 
+    if (errno == ERANGE)
+        std::cout 
+            << "errno == ERANGE: " 
+            << std::strerror(errno) << '\n';
+    if (std::fetestexcept(FE_DIVBYZERO))
+        std::cout 
+            << "FE_DIVBYZERO raised\n";
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+log1p(0) = 0
+Interest earned in 2 days on $100, compounded daily at 1%
+    on a 30/360 calendar = 0.00555563
+log(1+1e-16) = 0, but log1p(1e-16) = 1e-16
+log1p(-0) = -0
+log1p(+Inf) = inf
+log1p(-1) = -inf
+errno == ERANGE: Result too large
+FE_DIVBYZERO raised
+```
+
+</div>
+</Columns>

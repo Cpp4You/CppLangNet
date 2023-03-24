@@ -1,0 +1,137 @@
+---
+title:                  Log10
+description:            Standard log function
+tags:                   [math, log, log10]
+#slug:                  /std/math/mathematical_functions/log10/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import Log10_Function_Declaration_Cpp11         from "./log10/_codes/log10_function_declaration/cpp11.mdx";
+import Log10_Function_Declaration_Cpp23         from "./log10/_codes/log10_function_declaration/cpp23.mdx";
+
+# Log10
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the common (base-10) logarithm of `num`. The library provides overloads of `std::log10` for all cv-unqualified floating-point types as the type of the parameter `num`.
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Log10_Function_Declaration_Cpp23 />,
+    "cpp11" : <Log10_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+  
+`num` - floating-point or integer value
+
+### Return value
+
+If no errors occur, the common (base-10) logarithm of `num` (log<sub>10</sub>(num) or lg(num)) is returned.
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported).
+
+If a pole error occurs, `-HUGE_VAL`, `-HUGE_VALF`, or `-HUGE_VALL` is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+Domain error occurs if `num` is less than zero.
+
+Pole error may occur if `num` is zero.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+If the argument is `±0`, `-∞` is returned and `FE_DIVBYZERO` is raised.<br/>
+If the argument is `1`, `+0` is returned<br/>
+If the argument is negative, NaN is returned and `FE_INVALID` is raised.<br/>
+If the argument is `+∞`, `+∞` is returned<br/>
+If the argument is NaN, NaN is returned<br/>
+
+### Notes
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, `std::log10(num)` has the same effect as 
+```cpp
+std::log10(static_cast<double>(num))
+```
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::cout 
+        << "log10(1000) = " 
+        << std::log10(1000) << '\n'
+        << "log10(0.001) = " 
+        << std::log10(0.001) << '\n'
+        << "base-5 logarithm of 125 = "
+        << std::log10(125) / std::log10(5) << '\n';
+ 
+    // special values
+    std::cout 
+        << "log10(1) = " 
+        << std::log10(1) << '\n'
+        << "log10(+Inf) = " 
+        << std::log10(INFINITY) << '\n';
+ 
+    // error handling
+    errno = 0;
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "log10(0) = " 
+        << std::log10(0) << '\n';
+ 
+    if (errno == ERANGE)
+        std::cout 
+            << "errno == ERANGE: " 
+            << std::strerror(errno) << '\n';
+    if (std::fetestexcept(FE_DIVBYZERO))
+        std::cout 
+            << "FE_DIVBYZERO raised\n";
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+log10(1000) = 3
+log10(0.001) = -3
+base-5 logarithm of 125 = 3
+log10(1) = 0
+log10(+Inf) = inf
+log10(0) = -inf
+errno == ERANGE: Numerical result out of range
+FE_DIVBYZERO raised
+```
+
+</div>
+</Columns>
