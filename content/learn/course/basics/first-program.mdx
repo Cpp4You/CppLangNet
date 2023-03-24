@@ -53,7 +53,7 @@ It displays the "Hello, World" text in the console.
 
 ### The main function
 
-Let's start with the heart of our application, *the main function*
+All C++ programs have a core function usually called *main*. There are a few variants, we will be using the simpler one that looks like this:
 
 ```cpp title="Part of main.cpp"
 int main()
@@ -67,16 +67,20 @@ The first line starts the **function definition**. It consists of a return type 
 While most of these terms aren't important now, all that you should pay attention to is the name `main`. It will always look like this,
 `int main()`. Your program must always contain the `main` function specified in this format.
 
-The computer runs the program line by line. When it starts the application, it executes the instructions in the `main` code block sequentially.
+The computer runs the program line by line. When the program is run the first line inside `main` is executed, then the second one and so on.
 
+It’s important for the program to know where `main` starts and ends. We use code blocks for this.
 A **code block** in C++, is a set of instructions contained inside curly braces:
 
 ```cpp
+Outside
 {
-
+	Inside
 }
+Outside
 ```
 
+Everything between the curly braces counts as inside the code block and everything else is outside of it.
 The `main` function has a block of code, and everything between its curly braces will be executed <u>top to bottom</u>.
 
 :::important Remember
@@ -92,11 +96,13 @@ At the very beginning of the code there is a line:
 ```
 
 This allows us to use the standard input and output tools provided by C++. The name `iostream` is short for *input/output stream*.
-In practice, this means that we the programmer can write a message in the **console**; then, our program can intercept the response from the user.
+In practice this will let the us output text that the user can see and take input text to change what the program does.
 
-`iostream` is a **header file**. We will use more of them in the near future.
+`iostream` is a **header file**, we will talk more about them and `#include` in near future.
 In most cases we put `#include <header_file>` at the beginning of the file.
 We'll tell more about `#include` itself in the future. Enough for the moment.
+
+`iostream` is a **header file** we will talk more about them and #include in the next chapter
 
 ### The console
 
@@ -120,7 +126,7 @@ in multiple environments. While not every terminal is the same, they will look v
 </iframe>
 </center>
 
-As you can see, many code editors like Visual Studio, VS Code, Replit.com, CLion, Vim, etc., have a console window integrated directly into the interface.
+As you can see many code editors like Visual Studio, VS Code, Replit.com, CLion, Vim, etc., have a console built-in into them.
 
 <!--- TODO: We will provide a tutorial for how to use a terminal and perform common operations. --->
 
@@ -139,14 +145,14 @@ We will mention the `std::` prefix in a minute.
 <summary>For those who are curious 😉</summary>
 <div>
 
-Strictly speaking, `cout` is a so-called character output stream that writes the content to a *standard output*,
+Strictly speaking, `cout` is a so-called character output stream that writes the content to a *standard output*, which in this case is your console,
 but you don't need to remember that for the moment.
 
 </div>
 </details>
 
 
-I can now duplicate the line above a couple of times:
+If we copy this line a couple of times
 
 ```cpp
 std::cout << "Hello, World!1";
@@ -154,7 +160,7 @@ std::cout << "Hello, World!2";
 std::cout << "Hello, World!3";
 ```
 
-to get the following effect:
+our output changes to this:
 
 ```
 Hello, World!1Hello, World!2Hello, World!3
@@ -226,8 +232,8 @@ int main()
 }
 ```
 
-After the line that contains `using std::cout;`, the `std::` prefix is no longer required
-for the `cout` object. It lasts until the end of the current code block (the `main` function in this case).
+After the line that contains `using std::cout;`, the `std::` prefix is no longer needed to use `cout`.
+It lasts until the end of the current code block (the `main` function in this case).
 
 :::caution using namespace std
 In many other online tutorials and sources, it is extremely common to find usage of
@@ -243,9 +249,7 @@ We will cover reasons for this later. For the time being, prefer the `using std:
 ## Performing calculations
 
 Programming is used to automate certain activities.
-For example, we can have a computer do a mathematical calculation for us.
-
-Use the following code:
+For example, we can have a computer do math for us:
 
 <Columns spacing={40} columns={['7fr', '5fr']}>
 <div>
@@ -268,7 +272,7 @@ int main()
 </div>
 </Columns>
 
-Pay attention to the result of the above program.
+Pay attention to the result of the above program!
 
 :::info Text vs Instructions
 Everything in quotation marks is treated as text, not instructions.
