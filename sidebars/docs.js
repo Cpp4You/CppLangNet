@@ -9,6 +9,7 @@
  Create as many sidebars as you want.
  */
 
+const { Category } = require("@material-ui/icons");
 const {
 	parseFlags,
 	docsClass,
@@ -35,63 +36,99 @@ module.exports = {
 				{
 					type: 'category',
 					label: 'Math',
-					items: [
-						{
+					items: [{
 							type: 'category',
 							label: 'Mathematical Functions',
 							link: { type: 'doc', id: 'std/math/mathematical_functions/index' },
 							items: [
-								docsClassCat('abs', 'std/math/mathematical_functions/abs', '', []),
-								docsClassCat('div', 'std/math/mathematical_functions/div', '', []),
-								docsClassCat('fmod', 'std/math/mathematical_functions/fmod', '', [],),
+								{
+									type: 'category',
+									label: 'Basic Operations',
+									items: [
+										docsClassCat('abs', 'std/math/mathematical_functions/abs', '', []),
+										docsClassCat('div', 'std/math/mathematical_functions/div', '', []),
+										docsClassCat('fmod', 'std/math/mathematical_functions/fmod', '', [],),
+		
+										docsClassCat('remainder', 'std/math/mathematical_functions/remainder', '', [],),
+										docsClassCat('remquo', 'std/math/mathematical_functions/remquo', '', [],),
+										docsClassCat('fma', 'std/math/mathematical_functions/fma', '', [],),
+										docsClassCat('fmax', 'std/math/mathematical_functions/fmax', '', [],),
+										docsClassCat('fmin', 'std/math/mathematical_functions/fmin', '', [],),
+										docsClassCat('fdim', 'std/math/mathematical_functions/fdim', '', [],),
+										docsClassCat('nan', 'std/math/mathematical_functions/nan', '', [],),
 
-								docsClassCat('remainder', 'std/math/mathematical_functions/remainder', '', [],),
-								docsClassCat('remquo', 'std/math/mathematical_functions/remquo', '', [],),
-								docsClassCat('fma', 'std/math/mathematical_functions/fma', '', [],),
-								docsClassCat('fmax', 'std/math/mathematical_functions/fmax', '', [],),
-								docsClassCat('fmin', 'std/math/mathematical_functions/fmin', '', [],),
-								docsClassCat('fdim', 'std/math/mathematical_functions/fdim', '', [],),
-								docsClassCat('nan', 'std/math/mathematical_functions/nan', '', [],),
+								]},
 
-								docsClassCat('exp', 'std/math/mathematical_functions/exp', '', [],),
-								docsClassCat('exp2', 'std/math/mathematical_functions/exp2', '', [],),
-								docsClassCat('expm1', 'std/math/mathematical_functions/expm1', '', [],),
-								docsClassCat('log', 'std/math/mathematical_functions/log', '', [],),
-								docsClassCat('log10', 'std/math/mathematical_functions/log10', '', [],),
-								docsClassCat('log2', 'std/math/mathematical_functions/log2', '', [],),
-								docsClassCat('log1p', 'std/math/mathematical_functions/log1p', '', [],),
+								{
+									type: 'category',
+									label: 'Exponential Functions',
+									items: [
+										docsClassCat('exp', 'std/math/mathematical_functions/exp', '', [],),
+										docsClassCat('exp2', 'std/math/mathematical_functions/exp2', '', [],),
+										docsClassCat('expm1', 'std/math/mathematical_functions/expm1', '', [],),
+										docsClassCat('log', 'std/math/mathematical_functions/log', '', [],),
+										docsClassCat('log10', 'std/math/mathematical_functions/log10', '', [],),
+										docsClassCat('log2', 'std/math/mathematical_functions/log2', '', [],),
+										docsClassCat('log1p', 'std/math/mathematical_functions/log1p', '', [],),
+								]},
 
-								docsClassCat('pow', 'std/math/mathematical_functions/pow', '', [],),
-								docsClassCat('sqrt', 'std/math/mathematical_functions/sqrt', '', [],),
-								docsClassCat('cbrt', 'std/math/mathematical_functions/cbrt', '', [],),
-								docsClassCat('hypot', 'std/math/mathematical_functions/hypot', '', [],),
+								{
+									type: 'category',
+									label: 'Power Functions',
+									items: [
+										docsClassCat('pow', 'std/math/mathematical_functions/pow', '', [],),
+										docsClassCat('sqrt', 'std/math/mathematical_functions/sqrt', '', [],),
+										docsClassCat('cbrt', 'std/math/mathematical_functions/cbrt', '', [],),
+										docsClassCat('hypot', 'std/math/mathematical_functions/hypot', '', [],),
+								]},
 
-								docsClassCat('sin', 'std/math/mathematical_functions/sin', '', [],),
-								docsClassCat('cos', 'std/math/mathematical_functions/cos', '', [],),
-								docsClassCat('tan', 'std/math/mathematical_functions/tan', '', [],),
-								// docsClassCat('asin', 'std/math/mathematical_functions/asin', '', [],),
-								// docsClassCat('acos', 'std/math/mathematical_functions/acos', '', [],),
-								// docsClassCat('atan', 'std/math/mathematical_functions/atan', '', [],),
-								// docsClassCat('atan2', 'std/math/mathematical_functions/atan2', '', [],),
+								{
+									type: 'category',
+									label: 'Trigonometric Functions',
+									items: [
+										docsClassCat('sin', 'std/math/mathematical_functions/sin', '', [],),
+										docsClassCat('cos', 'std/math/mathematical_functions/cos', '', [],),
+										docsClassCat('tan', 'std/math/mathematical_functions/tan', '', [],),
+										docsClassCat('asin', 'std/math/mathematical_functions/asin', '', [],),
+										docsClassCat('acos', 'std/math/mathematical_functions/acos', '', [],),
+										docsClassCat('atan', 'std/math/mathematical_functions/atan', '', [],),
+										docsClassCat('atan2', 'std/math/mathematical_functions/atan2', '', [],),
+								]},
 
-								// docsClassCat('sinh', 'std/math/mathematical_functions/sinh', '', [],),
-								// docsClassCat('cosh', 'std/math/mathematical_functions/cosh', '', [],),
-								// docsClassCat('tanh', 'std/math/mathematical_functions/tanh', '', [],),
-								// docsClassCat('asinh', 'std/math/mathematical_functions/asinh', '', [],),
-								// docsClassCat('acosh', 'std/math/mathematical_functions/acosh', '', [],),
-								// docsClassCat('atanh', 'std/math/mathematical_functions/atanh', '', [],),
+								{
+									type: 'category',
+									label: 'Hyperbolic Functions',
+									items: [
+										docsClassCat('sinh', 'std/math/mathematical_functions/sinh', '', [],),   // KaTeX needed to doccumment the return values
+										docsClassCat('cosh', 'std/math/mathematical_functions/cosh', '', [],),   // KaTeX needed to doccumment the return values
+										docsClassCat('tanh', 'std/math/mathematical_functions/tanh', '', [],),   // KaTeX needed to doccumment the return values
+										docsClassCat('asinh', 'std/math/mathematical_functions/asinh', '', [],),
+										docsClassCat('acosh', 'std/math/mathematical_functions/acosh', '', [],),
+										docsClassCat('atanh', 'std/math/mathematical_functions/atanh', '', [],), 
+								]},
 
-								// docsClassCat('erf', 'std/math/mathematical_functions/erf', '', [],),
-								// docsClassCat('erfc', 'std/math/mathematical_functions/erfc', '', [],),
-								// docsClassCat('tgamma', 'std/math/mathematical_functions/tgamma', '', [],),
-								// docsClassCat('lgamma', 'std/math/mathematical_functions/lgamma', '', [],),
+								{
+									type: 'category',
+									label: 'Error and Gamma Functions',
+									items: [
+										docsClassCat('erf', 'std/math/mathematical_functions/erf', '', [],),   // KaTeX needed to doccumment the return values
+										docsClassCat('erfc', 'std/math/mathematical_functions/erfc', '', [],),   // KaTeX needed to doccumment the return values
+										docsClassCat('tgamma', 'std/math/mathematical_functions/tgamma', '', [],),   // KaTeX needed to doccumment the return values
+										docsClassCat('lgamma', 'std/math/mathematical_functions/lgamma', '', [],),   // KaTeX needed to doccumment the return values
+								]},
 
-								// docsClassCat('ciel', 'std/math/mathematical_functions/ciel', '', [],),
-								// docsClassCat('floor', 'std/math/mathematical_functions/floor', '', [],),
-								// docsClassCat('trunc', 'std/math/mathematical_functions/trunc', '', [],),
-								// docsClassCat('round', 'std/math/mathematical_functions/round', '', [],),
-								// docsClassCat('nearbyint', 'std/math/mathematical_functions/nearbyint', '', [],),
-								// docsClassCat('rint', 'std/math/mathematical_functions/rint', '', [],),
+								{
+									type: 'category',
+									label : 'Nearest integer floating point operations',
+									items: [
+										docsClassCat('ciel', 'std/math/mathematical_functions/ciel', '', [],),
+										// docsClassCat('floor', 'std/math/mathematical_functions/floor', '', [],),
+										// docsClassCat('trunc', 'std/math/mathematical_functions/trunc', '', [],),
+										// docsClassCat('round', 'std/math/mathematical_functions/round', '', [],),
+										// docsClassCat('nearbyint', 'std/math/mathematical_functions/nearbyint', '', [],),
+										// docsClassCat('rint', 'std/math/mathematical_functions/rint', '', [],),
+								]},
+								
 
 								// docsClassCat('frexp', 'std/math/mathematical_functions/frexp', '', [],),
 								// docsClassCat('ldexp', 'std/math/mathematical_functions/ldexp', '', [],),
@@ -101,7 +138,7 @@ module.exports = {
 								// docsClassCat('logb', 'std/math/mathematical_functions/logb', '', [],),
 								// docsClassCat('nextafter', 'std/math/mathematical_functions/nextafter', '', [],),
 								// docsClassCat('copysign', 'std/math/mathematical_functions/copysign', '', [],),
-
+								
 							],
 						},
 						'std/math/mathematical_special_functions',

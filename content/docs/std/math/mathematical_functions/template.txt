@@ -1,5 +1,5 @@
 ---
-title:                    
+title:                  
 description:            Standard function
 tags:                   [math, ]
 #slug:                  /std/math/mathematical_functions/  /

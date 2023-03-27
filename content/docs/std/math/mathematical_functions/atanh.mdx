@@ -1,0 +1,137 @@
+---
+title:                  Atanh
+description:            Standard function
+tags:                   [math,atanh]
+#slug:                  /std/math/mathematical_functions/atanh/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import  Atanh_Function_Declaration_Cpp11         from "./atanh/_codes/atanh_function_declaration/cpp11.mdx";
+import  Atanh_Function_Declaration_Cpp23         from "./atanh/_codes/atanh_function_declaration/cpp23.mdx";
+
+# Atanh
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the inverse hyperbolic tangent of `num`. The library provides overloads of `std::atanh` for 
+all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Atanh_Function_Declaration_Cpp23 />,
+    "cpp11" : <Atanh_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+If no errors occur, the inverse hyperbolic tangent of num (tanh<sup>-1</sup>(num), or artanh(num)), is returned.
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported).
+
+If a pole error occurs, `±HUGE_VAL`, `±HUGE_VALF`, or `±HUGE_VALL` is returned (with the correct sign).
+
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the argument is not on the interval `[-1, +1]`, a range error occurs.
+
+If the argument is `±1`, a pole error occurs.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+if the argument is `±0`, it is returned unmodified <br/>
+if the argument is `±1`, `±∞` is returned and FE_DIVBYZERO is raised<br/>
+if `|num|>1`, NaN is returned and FE_INVALID is raised<br/>
+if the argument is NaN, NaN is returned<br/>
+### Notes
+
+Although the C standard (to which C++ refers for this function) 
+names this function *"arc hyperbolic tangent"*, the inverse functions of the hyperbolic functions are the area functions. 
+Their argument is the area of a hyperbolic sector, not an arc. The correct name is *"inverse hyperbolic tangent"* (used by POSIX) or *"area hyperbolic tangent"*.
+
+[POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atanh.html)
+specifies that in case of underflow, `num` is returned unmodified, and if that is not supported, 
+an implementation-defined value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
+
+The additional overloads are not required to be provided exactly as `Additional overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, `std::atanh(num)` has the same effect as 
+```cpp
+std::atanh(static_cast<double>(num))
+```
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cfloat>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::cout 
+        << "atanh(0) = " 
+        << std::atanh(0) << '\n'
+        << "atanh(-0) = " 
+        << std::atanh(-0.0) << '\n'
+        << "atanh(0.9) = " 
+        << std::atanh(0.9) << '\n';
+ 
+    // error handling
+    errno = 0;
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "atanh(-1) = " 
+        << std::atanh(-1) << '\n';
+ 
+    if (errno == ERANGE)
+        std::cout 
+            << "errno == ERANGE: " 
+            << std::strerror(errno) << '\n';
+    if (std::fetestexcept(FE_DIVBYZERO))
+        std::cout 
+            << "FE_DIVBYZERO raised\n";
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+atanh(0) = 0
+atanh(-0) = -0
+atanh(0.9) = 1.47222
+atanh(-1) = -inf
+errno == ERANGE: Numerical result out of range
+FE_DIVBYZERO raised
+```
+
+</div>
+</Columns>

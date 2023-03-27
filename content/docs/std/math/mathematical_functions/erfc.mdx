@@ -1,0 +1,122 @@
+---
+title:                  Erfc
+description:            Standard error function
+tags:                   [math, erfc]
+#slug:                  /std/math/mathematical_functions/erfc/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import  Erfc_Function_Declaration_Cpp11         from "./erfc/_codes/erfc_function_declaration/cpp11.mdx";
+import  Erfc_Function_Declaration_Cpp23         from "./erfc/_codes/erfc_function_declaration/cpp23.mdx";
+
+# Erfc
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the complementary error function of `num`, that is `1.0 - std::erf(num)`, but without loss of precision for large `num`.
+The library provides overloads of `std::erfc` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Erfc_Function_Declaration_Cpp23 />,
+    "cpp11" : <Erfc_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+If no errors occur, value of the complementary error function of num, that is `math here`, is returned.
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+If the argument is `+∞`, `+0` is returned
+If the argument is `-∞`, `2` is returned
+If the argument is NaN, NaN is returned
+
+### Notes
+For the IEEE-compatible type double, underflow is guaranteed if `num > 26.55`.
+
+The additional overloads are not required to be provided exactly as `Additional overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, `std::erfc(num)` has the same effect as 
+```cpp
+std::erfc(static_cast<double>(num))
+```
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+ 
+double normalCDF(double x) // Phi(-∞, x) aka N(x)
+{
+    return std::erfc(-x / std::sqrt(2)) / 2;
+}
+ 
+int main()
+{
+    std::cout 
+        << "normal cumulative distribution function:\n"
+        << std::fixed 
+        << std::setprecision(2);
+    for (double n = 0; n < 1; n += 0.1)
+        std::cout 
+            << "normalCDF(" << n << ") = " 
+            << 100 * normalCDF(n) << "%\n";
+ 
+    std::cout 
+        << "special values:\n"
+        << "erfc(-Inf) = " 
+        << std::erfc(-INFINITY) << '\n'
+        << "erfc(Inf) = " 
+        << std::erfc(INFINITY) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+normal cumulative distribution function:
+normalCDF(0.00) = 50.00%
+normalCDF(0.10) = 53.98%
+normalCDF(0.20) = 57.93%
+normalCDF(0.30) = 61.79%
+normalCDF(0.40) = 65.54%
+normalCDF(0.50) = 69.15%
+normalCDF(0.60) = 72.57%
+normalCDF(0.70) = 75.80%
+normalCDF(0.80) = 78.81%
+normalCDF(0.90) = 81.59%
+normalCDF(1.00) = 84.13%
+special values:
+erfc(-Inf) = 2.00
+erfc(Inf) = 0.00
+```
+
+</div>
+</Columns>

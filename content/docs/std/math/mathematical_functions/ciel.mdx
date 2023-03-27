@@ -1,0 +1,129 @@
+---
+title:                  Ceil
+description:            Standard function
+tags:                   [math, ceil]
+#slug:                  /std/math/mathematical_functions/ceil/
+hide_title:             true
+---
+
+import Image        from "@site-comps/Image";
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+<!----------------- Codes ---------------------->
+import  Ceil_Function_Declaration_Cpp11         from "./ceil/_codes/ceil_function_declaration/cpp11.mdx";
+import  Ceil_Function_Declaration_Cpp23         from "./ceil/_codes/ceil_function_declaration/cpp23.mdx";
+
+# Ceil
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the smallest integer value not less than `num`. 
+The library provides overloads of `std::ceil` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+Additional overloads are provided for all integer types, which are treated as `double`
+(since C++11).
+
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Ceil_Function_Declaration_Cpp23 />,
+    "cpp11" : <Ceil_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating point or integer value
+
+### Return value
+
+If no errors occur, the smallest integer value not less than `num`, that is *⌈num⌉*, is returned.
+
+<Image maxheight={300}
+        src="/img/doc/math/ciel/math-ceil.svg"
+    />
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+The current rounding mode has no effect.<br/>
+If num is `±∞`, it is returned unmodified<br/>
+If num is `±0`, it is returned, unmodified<br/>
+If num is NaN, NaN is returned<br/>
+
+### Notes
+FE_INEXACT may be (but is not required to be) raised when rounding a non-integer finite value.
+
+The largest representable floating-point values are exact integers in all standard floating-point formats, 
+so this function never overflows on its own; however the result may overflow any integer type (including `std::intmax_t`), 
+when stored in an integer variable. It is for this reason that the return type is floating-point not integral.
+
+This function (for `double` argument) behaves as if (except for the freedom to not raise FE_INEXACT) implemented by the following code:
+```cpp
+#include <cfenv>
+#include <cmath>
+ 
+#pragma STDC FENV_ACCESS ON
+ 
+double ceil(double x)
+{
+    int save_round = std::fegetround();
+    std::fesetround(FE_UPWARD);
+    double result = std::rint(x); // or std::nearbyint
+    std::fesetround(save_round);
+    return result;
+}
+```
+The additional overloads are not required to be provided exactly as `Additional overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, `std::ceil(num)` has the same effect as 
+```cpp
+std::ceil(static_cast<double>(num))
+```
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <iostream>
+ 
+int main()
+{
+    std::cout 
+        << std::fixed
+        << "ceil(+2.4) = " 
+        << std::ceil(+2.4) << '\n'
+        << "ceil(-2.4) = " 
+        << std::ceil(-2.4) << '\n'
+        << "ceil(-0.0) = " 
+        << std::ceil(-0.0) << '\n'
+        << "ceil(-Inf) = " 
+        << std::ceil(-INFINITY) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+ceil(+2.4) = 3.000000
+ceil(-2.4) = -2.000000
+ceil(-0.0) = -0.000000
+ceil(-Inf) = -inf
+```
+
+</div>
+</Columns>
