@@ -1,0 +1,225 @@
+---
+title:                  Rint
+description:            Standard function
+tags:                   [math,rint]
+#slug:                  /std/math/mathematical_functions/rint/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Rint_Function_Declaration_Cpp11         from "./rint/_codes/rint_function_declaration/cpp11.mdx";
+import  Rint_Function_Declaration_Cpp23         from "./rint/_codes/rint_function_declaration/cpp23.mdx";
+
+# Rint
+
+Defined in header `<cmath>`.
+
+### Description
+
+Rounds the floating-point argument `num` to an integer value (in floating-point format), using the current rounding mode. 
+The library provides overloads of `std::rint` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+
+`Rounding to long` and `Rounding to long long` Rounds the floating-point argument num to an integer value, using the current rounding mode. 
+The library provides overloads of `std::lrint` and `std::llrint` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23)
+
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Rint_Function_Declaration_Cpp23 />,
+    "cpp11" : <Rint_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+If no errors occur, the nearest integer value to `num`, according to the current rounding mode, is returned
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the result of `std::lrint` or `std::llrint` is outside the range representable by the return type, a domain error or a range error may occur.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+For the `std::rint` function:<br/>
+
+
+If `num` is `±∞`, it is returned, unmodified<br/>
+If `num` is `±0`, it is returned, unmodified<br/>
+If `num` is NaN, NaN is returned<br/>
+
+For `std::lrint` and `std::llrint` functions:<br/>
+
+
+If `num` is `±∞`, FE_INVALID is raised and an implementation-defined value is returned<br/>
+If the result of the rounding is outside the range of the return type, FE_INVALID is raised and an implementation-defined value is returned<br/>
+If `num` is NaN, FE_INVALID is raised and an implementation-defined value is returned<br/>
+
+### Notes
+
+[POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lrint.html) 
+specifies that all cases where `std::lrint` or `std::llrint` raise FE_INEXACT are domain errors.
+
+As specified in math_errhandling, FE_INEXACT may be (but isn't required to be on non-IEEE floating-point platforms) raised by `std::rint` when rounding a non-integer finite value.
+
+The only difference between `std::rint` and `std::nearbyint` is that `std::nearbyint` **never** raises FE_INEXACT.
+
+The largest representable floating-point values are exact integers in all standard floating-point formats, so std::rint never overflows on its own; however the result may overflow any integer type (including std::intmax_t), when stored in an integer variable.
+
+If the current rounding mode is:
+
+FE_DOWNWARD, then `std::rint` is equivalent to `std::floor`.
+FE_UPWARD, then `std::rint` is equivalent to `std::ceil`.
+FE_TOWARDZERO, then `std::rint` is equivalent to `std::trunc`
+FE_TONEAREST, then `std::rint` differs from `std::round` in that halfway cases are rounded to even rather than away from zero.
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. They only need to be sufficient to ensure that for their argument `num` of integer type:
+
+`std::rint(num)` has the same effect as `std::rint(static_cast<double>(num))`.<br/>
+`std::lrint(num)` has the same effect as `std::lrint(static_cast<double>(num))`.<br/>
+`std::llrint(num)` has the same effect as `std::llrint(static_cast<double>(num))`.<br/>
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cfenv>
+#include <climits>
+#include <cmath>
+#include <iostream>
+ 
+#pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::fesetround(FE_TONEAREST);
+    std::cout 
+        << "rounding to nearest (halfway cases to even):\n\n"
+
+        << "rint(+2.3) = " 
+        << std::rint(2.3) << '\n'
+        << "  rint(+2.5) = " 
+        << std::rint(2.5) << '\n'
+        << "  rint(+3.5) = " 
+        << std::rint(3.5) << '\n'
+        << "rint(-2.3) = " 
+        << std::rint(-2.3) << '\n'
+        << "  rint(-2.5) = " 
+        << std::rint(-2.5) << '\n'
+        << "  rint(-3.5) = " 
+        << std::rint(-3.5) << '\n\n';
+ 
+    std::fesetround(FE_DOWNWARD);
+    std::cout 
+        << "rounding down:\n\n" 
+
+        << "rint(+2.3) = " 
+        << std::rint(2.3) << '\n'
+        << "  rint(+2.5) = " 
+        << std::rint(2.5) << '\n'
+        << "  rint(+3.5) = " 
+        << std::rint(3.5) << '\n'
+        << "rint(-2.3) = " 
+        << std::rint(-2.3) << '\n'
+        << "  rint(-2.5) = " 
+        << std::rint(-2.5) << '\n'
+        << "  rint(-3.5) = " 
+        << std::rint(-3.5) << '\n\n'
+
+        << "rounding down with lrint:\n\n" 
+
+        << "lrint(+2.3) = " 
+        << std::lrint(2.3) << '\n'
+        << "  lrint(+2.5) = " 
+        << std::lrint(2.5) << '\n'
+        << "  lrint(+3.5) = " 
+        << std::lrint(3.5) << '\n'
+        << "lrint(-2.3) = " 
+        << std::lrint(-2.3) << '\n'
+        << "  lrint(-2.5) = " 
+        << std::lrint(-2.5) << '\n'
+        << "  lrint(-3.5) = " 
+        << std::lrint(-3.5) << '\n';
+ 
+    std::cout 
+        << "lrint(-0.0) = " 
+        << std::lrint(-0.0)  << '\n'
+        << "lrint(-Inf) = " 
+        << std::lrint(-INFINITY) << '\n';
+ 
+    // error handling
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "std::rint(0.1) = " 
+        << std::rint(.1) << '\n';
+    if (std::fetestexcept(FE_INEXACT))
+        std::cout 
+            << "FE_INEXACT was raised\n";
+ 
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "std::lrint(LONG_MIN-2048.0) = "
+        << std::lrint(LONG_MIN - 2048.0) << '\n';
+    if (std::fetestexcept(FE_INVALID))
+        std::cout 
+            << "FE_INVALID was raised\n";
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+rounding to nearest (halfway cases to even): 
+
+rint(+2.3) = 2  
+rint(+2.5) = 2  
+rint(+3.5) = 4
+rint(-2.3) = -2  
+rint(-2.5) = -2  
+rint(-3.5) = -4
+
+rounding down:
+
+rint(+2.3) = 2  
+rint(+2.5) = 2  
+rint(+3.5) = 3
+rint(-2.3) = -3  
+rint(-2.5) = -3  
+rint(-3.5) = -4
+
+rounding down with lrint:
+
+lrint(+2.3) = 2  
+lrint(+2.5) = 2  
+lrint(+3.5) = 3
+lrint(-2.3) = -3  
+lrint(-2.5) = -3  
+lrint(-3.5) = -4
+lrint(-0.0) = 0
+lrint(-Inf) = -9223372036854775808
+std::rint(0.1) = 0
+FE_INEXACT was raised
+std::lrint(LONG_MIN-2048.0) = -9223372036854775808
+FE_INVALID was raised
+```
+
+</div>
+</Columns>

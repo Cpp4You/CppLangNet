@@ -1,0 +1,17 @@
+```cpp
+// 1)
+constexpr /* floating-point-type */
+            ldexp ( /* floating-point-type */ num, int exp )
+// 2)
+constexpr float ldexpf( float num, int exp );
+// 3)
+constexpr long double ldexpl( long double num, int exp );
+```
+
+`Additional Overloads`
+
+```cpp
+// 4)
+template< class Integer >
+constexpr double ldexp ( Integer num, int exp );
+```

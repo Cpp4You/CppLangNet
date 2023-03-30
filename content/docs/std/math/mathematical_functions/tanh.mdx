@@ -9,11 +9,10 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Tanh_Function_Declaration_Cpp11         from "./tanh/_codes/tanh_function_declaration/cpp11.mdx";
 import  Tanh_Function_Declaration_Cpp23         from "./tanh/_codes/tanh_function_declaration/cpp23.mdx";
 
-# 
+# Tanh
 
 Defined in header `<cmath>`.
 
@@ -35,6 +34,7 @@ Computes the hyperbolic tangent of `num`. The library provides overloads of `std
 
 ### Parameters
  
+`num` - floating-point or integer value
 
 ### Return value
 
@@ -43,8 +43,22 @@ If no errors occur, the hyperbolic sine of `num` (tanh(num), or (e<sup>num</sup>
 
 ### Error handling
 
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+if the argument is `±0`, `±0` is returned
+If the argument is `±∞`, `±1` is returned
+if the argument is NaN, NaN is returned
 
 ### Notes
+[POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/tanh.html) 
+specifies that in case of underflow, num is returned unmodified, and if that is not supported, 
+and implementation-defined value no greater than DBL_MIN, FLT_MIN, and LDBL_MIN is returned.
+
+The additional overloads are not required to be provided exactly as `Additional overloads`. 
+They only need to be sufficient to ensure that for their argument num of integer type, 
+`std::tanh(num)` has the same effect as `std::tanh(static_cast<double>(num))`.
 
 
 ### Examples
@@ -55,7 +69,35 @@ If no errors occur, the hyperbolic sine of `num` (tanh(num), or (e<sup>num</sup>
 <div>
 
 ```cpp
-
+#include <cmath>
+#include <iostream>
+#include <random>
+ 
+double get_random_between(double min, double max)
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    return std::uniform_real_distribution<>(min, max)(gen);
+}
+ 
+int main()
+{
+    const double x = get_random_between(-1.0, 1.0);
+ 
+    std::cout 
+        << std::showpos
+        << "tanh(+1) = " 
+        << std::tanh(+1) << '\n'
+        << "tanh(-1) = " 
+        << std::tanh(-1) << '\n'
+        << "tanh(x)*sinh(2*x)-cos(2*x) = "
+        << std::tanh(x) * std::sinh(2 * x) - std::cosh(2 * x) << '\n'
+    // special values:
+        << "tanh(+0) = " 
+        << std::tanh(+0.0) << '\n'
+        << "tanh(-0) = " 
+        << std::tanh(-0.0) << '\n';
+}
 
 ```
 
@@ -64,7 +106,11 @@ If no errors occur, the hyperbolic sine of `num` (tanh(num), or (e<sup>num</sup>
 <div>
 
 ```plaintext title="Possible Result"
-
+tanh(+1) = +0.761594
+tanh(-1) = -0.761594
+tanh(x)*sinh(2*x)-cos(2*x) = -1
+tanh(+0) = +0
+tanh(-0) = -0
 ```
 
 </div>

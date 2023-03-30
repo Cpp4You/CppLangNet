@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Lgamma_Function_Declaration_Cpp11         from "./lgamma/_codes/lgamma_function_declaration/cpp11.mdx";
 import  Lgamma_Function_Declaration_Cpp23         from "./lgamma/_codes/lgamma_function_declaration/cpp23.mdx";
 
@@ -69,10 +68,9 @@ There is a non-standard function named `gamma` in various implementations, but i
 For example, glibc and 4.2BSD version of gamma executes lgamma, but 4.4BSD version of gamma executes tgamma.
 
 The additional overloads are not required to be provided exactly as `Additional Overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, `std::lgamma(num)` has the same effect as 
-```cpp
-std::lgamma(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument `num` of integer type, 
+`std::lgamma(num)` has the same effect as `std::lgamma(static_cast<double>(num))`.
+
 ### Examples
 
 

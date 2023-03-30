@@ -1,0 +1,20 @@
+```cpp
+// 1)
+float modf ( float num, float* iptr );
+// 2)
+double modf ( double num, double* iptr );
+// 3)
+long double modf ( long double num, long double* iptr );
+// 4)
+float modff( float num, float* iptr );
+// 5)
+long double modfl( long double num, long double* iptr );
+```
+
+`Additional Overloads`
+
+```cpp
+// 6)
+template< class Integer >
+double modf ( Integer num, double* iptr );
+```

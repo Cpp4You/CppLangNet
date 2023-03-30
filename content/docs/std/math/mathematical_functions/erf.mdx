@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Erf_Function_Declaration_Cpp11         from "./erf/_codes/erf_function_declaration/cpp11.mdx";
 import  Erf_Function_Declaration_Cpp23         from "./erf/_codes/erf_function_declaration/cpp23.mdx";
 
@@ -54,10 +53,8 @@ Underflow is guaranteed if `|num| < DBL_MIN * (std::sqrt(π)/2)`
 
 `math here`       is the probability that a measurement whose errors are subject to a normal distribution with standard deviation σ is less than x away from the mean value.
 The additional overloads are not required to be provided exactly as `Additional Overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, `std::erf(num)` has the same effect as 
-```cpp
-std::erf(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument `num` of integer type, 
+`std::erf(num)` has the same effect as `std::erf(static_cast<double>(num))`.
 ### Examples
 
 

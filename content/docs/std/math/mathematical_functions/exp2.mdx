@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import Exp2_Function_Declaration_Cpp11         from "./exp2/_codes/exp2_function_declaration/cpp11.mdx";
 import Exp2_Function_Declaration_Cpp23         from "./exp2/_codes/exp2_function_declaration/cpp23.mdx";
 
@@ -57,10 +56,8 @@ If the argument is NaN, NaN is returned
 
 The additional overloads are not required to be provided exactly as `Additional Overloads`. 
 They only need to be sufficient to ensure that for their argument `num` of integer type, 
-`std::exp2(num)` has the same effect as 
-```cpp
-std::exp2(static_cast<double>(num))
-```
+`std::exp2(num)` has the same effect as `std::exp2(static_cast<double>(num))`.
+
 
 ### Examples
 

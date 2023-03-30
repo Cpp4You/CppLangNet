@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Log_Function_Declaration_Cpp11         from "./log/_codes/log_function_declaration/cpp11.mdx";
 import  Log_Function_Declaration_Cpp23         from "./log/_codes/log_function_declaration/cpp23.mdx";
 
@@ -60,10 +59,9 @@ If the argument is NaN, NaN is returned
 ### Notes
 
 The additional overloads are not required to be provided exactly as `Additional Overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, `std::log(num)` has the same effect as 
-```cpp
-std::log(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument `num` of integer type,  <br/>
+`std::log(num)` has the same effect as `std::log(static_cast<double>(num))`
+
 
 ### Examples
 

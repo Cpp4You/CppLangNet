@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Acosh_Function_Declaration_Cpp11         from "./acosh/_codes/acosh_function_declaration/cpp11.mdx";
 import  Acosh_Function_Declaration_Cpp23         from "./acosh/_codes/acosh_function_declaration/cpp23.mdx";
 
@@ -63,10 +62,7 @@ Their argument is the area of a hyperbolic sector, not an arc. The correct name 
 
 The additional overloads are not required to be provided exactly as `Additional overloads`.
 They only need to be sufficient to ensure that for their argument `num` of integer type,
-`std::acosh(num)` has the same effect as 
-```cpp
-std::acosh(static_cast<double>(num)).
-```
+`std::acosh(num)` has the same effect as `std::acosh(static_cast<double>(num))`.
 ### Examples
 
 

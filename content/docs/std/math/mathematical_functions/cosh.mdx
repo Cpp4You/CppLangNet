@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Cosh_Function_Declaration_Cpp11         from "./cosh/_codes/cosh_function_declaration/cpp11.mdx";
 import  Cosh_Function_Declaration_Cpp23         from "./cosh/_codes/cosh_function_declaration/cpp23.mdx";
 
@@ -56,10 +55,9 @@ if the argument is NaN, NaN is returned
 For the IEEE-compatible type double, if `|num| > 710.5`, then `std::cosh(num)` overflows.
 
 The additional overloads are not required to be provided exactly as `Additional Overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, `std::cosh(num)` has the same effect as 
-```cpp
-std::cosh(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::cosh(num)` has the same effect as `std::cosh(static_cast<double>(num))`.
+
 
 ### Examples
 

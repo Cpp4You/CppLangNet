@@ -1,0 +1,30 @@
+```cpp
+// 1)
+constexpr /* floating-point-type */
+            nextafter ( /* floating-point-type */ from,
+                        /* floating-point-type */ to );
+// 2)
+constexpr float nextafterf( float from, float to );
+// 3)
+constexpr long double nextafterl( long double from, long double to );
+// 4)
+constexpr /* floating-point-type */
+            nexttoward ( /* floating-point-type */ from,
+                         long double to );
+// 5)
+constexpr float nexttowardf( float from, long double to );
+// 6)
+constexpr long double nexttowardl( long double from, long double to );
+```
+
+`Additional Overloads`
+
+```cpp
+// 7)
+template< class Arithmetic1, class Arithmetic2 >
+constexpr /* common-floating-point-type */
+    nextafter( Arithmetic1 from, Arithmetic2 to );
+// 8)
+template< class Integer >
+constexpr double nexttoward( Integer from, long double to );
+```

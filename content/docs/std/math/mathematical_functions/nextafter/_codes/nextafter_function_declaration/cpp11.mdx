@@ -1,0 +1,34 @@
+```cpp
+// 1)
+float nextafter ( float from, float to );
+// 2)
+double nextafter ( double from, double to );
+// 3)
+long double nextafter ( long double from, long double to );
+// 4)
+float nextafterf( float from, float to );
+// 5)
+long double nextafterl( long double from, long double to );
+// 6)
+float nexttoward ( float from, long double to );
+// 7)
+double nexttoward ( double from, long double to );
+// 8)
+long double nexttoward ( long double from, long double to );
+// 9)
+float nexttowardf( float from, long double to );
+// 10)
+long double nexttowardl( long double from, long double to );
+```
+
+`Additional Overloads`
+
+```cpp
+// 11)
+template< class Arithmetic1, class Arithmetic2 >
+/* common-floating-point-type */
+    nextafter( Arithmetic1 from, Arithmetic2 to );
+// 12)
+template< class Integer >
+double nexttoward( Integer from, long double to );
+```

@@ -1,0 +1,134 @@
+---
+title:                  Frexp
+description:            Standard function
+tags:                   [math,frexp]
+#slug:                  /std/math/mathematical_functions/frexp/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Frexp_Function_Declaration_Cpp11         from "./frexp/_codes/frexp_function_declaration/cpp11.mdx";
+import  Frexp_Function_Declaration_Cpp23         from "./frexp/_codes/frexp_function_declaration/cpp23.mdx";
+
+# Frexp
+
+Defined in header `<cmath>`.
+
+### Description
+
+Decomposes given floating point value `num` into a normalized fraction and an integral power of two. 
+The library provides overloads of `std::frexp` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+
+`Additional overloads` are provided for all integer types, which are treated as `double`
+(since C++11).
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Frexp_Function_Declaration_Cpp23 />,
+    "cpp11" : <Frexp_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+`exp` - pointer to integer value to store the exponent to
+
+### Return value
+
+If `num` is zero, returns zero and stores zero in `*exp`.
+
+Otherwise (if `num` is not zero), if no errors occur, returns the value `x` in the range `(-1, -0.5], [0.5, 1)` and stores an integer value in `*exp` 
+such that x×2<sup>(*exp)</sup> == num.
+
+If the value to be stored in` *exp` is outside the range of `int`, the behavior is unspecified.
+
+### Error handling
+
+This function is not subject to any errors specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+If `num` is `±0`, it is returned, unmodified, and 0 is stored in `*exp`. <br/>
+If `num` is `±∞`, it is returned, and an unspecified value is stored in `*exp`. <br/>
+If `num` is NaN, NaN is returned, and an unspecified value is stored in `*exp`. <br/>
+No floating-point exceptions are raised. <br/>
+If FLT_RADIX is 2 (or a power of 2), the returned value is exact, the current rounding mode is ignored. <br/>
+
+### Notes
+
+On a binary system (where FLT_RADIX is 2), `std::frexp` may be implemented as
+```cpp
+{
+    *exp = (value == 0) ? 0 : (int)(1 + std::logb(value));
+    return std::scalbn(value, -(*exp));
+}
+```
+The function `std::frexp`, together with its dual, `std::ldexp`, can be used to manipulate the representation of a floating-point 
+number without direct bit manipulations.
+
+The additional overloads are not required to be provided exactly as `Additional overloads`. <br/>
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::frexp(num, exp)` has the same effect as `std::frexp(static_cast<double>(num), exp)`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <iostream>
+#include <limits>
+ 
+int main()
+{
+    double f = 123.45;
+    std::cout 
+        << "Given the number " << f << " or " 
+        << std::hexfloat << f << std::defaultfloat 
+        << " in hex,\n";
+ 
+    double f3;
+    double f2 = std::modf(f, &f3);
+    std::cout 
+        << "modf() makes " 
+        << f3 << " + " << f2 
+        < '\n';
+ 
+    int i;
+    f2 = std::frexp(f, &i);
+    std::cout 
+        << "frexp() makes " 
+        << f2 << " * 2^" << i 
+        << '\n';
+ 
+    i = std::ilogb(f);
+    std::cout 
+        << "logb()/ilogb() make " 
+        << f / std::scalbn(1.0, i)
+        << " * " << std::numeric_limits<double>::radix
+        << "^" << std::ilogb(f) 
+        << '\n';
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+Given the number 123.45 or 0x1.edccccccccccdp+6 in hex,
+modf() makes 123 + 0.45
+frexp() makes 0.964453 * 2^7
+logb()/ilogb() make 1.92891 * 2^6
+```
+
+</div>
+</Columns>

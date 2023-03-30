@@ -10,7 +10,6 @@ import Image        from "@site-comps/Image"
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Atan2_Function_Declaration_Cpp11         from "./atan2/_codes/atan2_function_declaration/cpp11.mdx";
 import  Atan2_Function_Declaration_Cpp23         from "./atan2/_codes/atan2_function_declaration/cpp23.mdx";
 
@@ -88,27 +87,22 @@ greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
 The additional overloads are not required to be provided exactly as `Additional overloads`. 
 They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 
-If `num1` or `num2` has type `long double`, then `std::atan2(num1, num2)` has the same effect as 
-```cpp
-std::atan2(static_cast<long double>(num1),
-           static_cast<long double>(num2))
-```
-Otherwise, if `num1` and/or `num2` has type `double` or an integer type, then `std::atan2(num1, num2)` has the same effect as 
-```cpp
-std::atan2(static_cast<double>(num1),
-           static_cast<double>(num2))
-```
-Otherwise, if `num1` or `num2` has type `float`, then `std::atan2(num1, num2)` has the same effect as 
-```cpp
-std::atan2(static_cast<float>(num1),
-           static_cast<float>(num2))
-//(until C++23)
-```
-If `num1` and `num2` have arithmetic types, then `std::atan2(num1, num2)` has the same effect as 
-```cpp
-std::atan2(static_cast</* common-floating-point-type */>(num1),
-           static_cast</* common-floating-point-type */>(num2)) 
-```        
+If `num1` or `num2` has type `long double`, then  <br/>
+`std::atan2(num1, num2)` has the same effect as  <br/>
+`std::atan2(static_cast<long double>(num1), static_cast<long double>(num2))`.
+
+Otherwise, if `num1` and/or `num2` has type `double` or an integer type, then  <br/>
+`std::atan2(num1, num2)` has the same effect as  <br/>
+`std::atan2(static_cast<double>(num1), static_cast<double>(num2))`.
+
+Otherwise, if `num1` or `num2` has type `float`, then  <br/>
+`std::atan2(num1, num2)` has the same effect as  <br/>
+`std::atan2(static_cast<float>(num1), static_cast<float>(num2))`. (until C++23)
+
+If `num1` and `num2` have arithmetic types, then  <br/>
+`std::atan2(num1, num2)` has the same effect as  <br/>
+`std::atan2(static_cast</* common-floating-point-type */>(num1), static_cast</* common-floating-point-type */>(num2))`.
+     
 where `/* common-floating-point-type */` is the floating-point type with the greatest floating-point conversion rank and 
 greatest floating-point conversion subrank between the types of `num1` and `num2`, 
 arguments of integer type are considered to have the same floating-point conversion rank as `double`.

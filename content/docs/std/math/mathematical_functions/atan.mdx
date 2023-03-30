@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Atan_Function_Declaration_Cpp11         from "./atan/_codes/atan_function_declaration/cpp11.mdx";
 import  Atan_Function_Declaration_Cpp23         from "./atan/_codes/atan_function_declaration/cpp23.mdx";
 
@@ -59,10 +58,9 @@ specifies that in case of underflow, `num` is returned unmodified,
 and if that is not supported, an implementation-defined value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
 
 The additional overloads are not required to be provided exactly as `Additional overloads`. 
-They only need to be sufficient to ensure that for their argument num of integer type, `std::atan(num)` has the same effect as 
-```cpp
-std::atan(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument num of integer type, 
+`std::atan(num)` has the same effect as `std::atan(static_cast<double>(num))`.
+
 ### Examples
 
 

@@ -10,7 +10,6 @@ import Image        from "@site-comps/Image";
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Ceil_Function_Declaration_Cpp11         from "./ceil/_codes/ceil_function_declaration/cpp11.mdx";
 import  Ceil_Function_Declaration_Cpp23         from "./ceil/_codes/ceil_function_declaration/cpp23.mdx";
 
@@ -82,10 +81,8 @@ double ceil(double x)
 }
 ```
 The additional overloads are not required to be provided exactly as `Additional overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, `std::ceil(num)` has the same effect as 
-```cpp
-std::ceil(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::ceil(num)` has the same effect as `std::ceil(static_cast<double>(num))`.
 
 ### Examples
 

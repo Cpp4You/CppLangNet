@@ -1,0 +1,29 @@
+```cpp
+// 1)
+int ilogb ( float num );
+// 2)
+int ilogb ( double num );
+// 3)
+int ilogb ( long double num );
+// 4)
+int ilogbf( float num );
+// 5)
+int ilogbl( long double num );
+```
+
+`Definitions`
+
+```cpp
+// 6)
+#define FP_ILOGB0   /* implementation-defined */
+// 7)
+#define FP_ILOGBNAN /* implementation-defined */
+```
+
+`Additional Overloads`
+
+```cpp
+// 8)
+template< class Integer >
+int ilogb ( Integer num );
+```

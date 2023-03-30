@@ -60,10 +60,8 @@ specifies that in case of underflow, `num` is returned unmodified, and if that i
 and implementation-defined value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
 
 The additional overloads are not required to be provided exactly as `Additional Overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, `std::sinh(num)` has the same effect as 
-```cpp
-std::sinh(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::sinh(num)` has the same effect as  `std::sinh(static_cast<double>(num))`.
 
 ### Examples
 

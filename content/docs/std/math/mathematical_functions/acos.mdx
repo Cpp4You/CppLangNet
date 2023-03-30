@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Acos_Function_Declaration_Cpp11         from "./acos/_codes/acos_function_declaration/cpp11.mdx";
 import  Acos_Function_Declaration_Cpp23         from "./acos/_codes/acos_function_declaration/cpp23.mdx";
 
@@ -60,10 +59,9 @@ if the argument is NaN, NaN is returned.
 ### Notes
 
 The additional overloads are not required to be provided exactly as `Additional overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, `std::acos(num)` has the same effect as 
-```cpp
-std::acos(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument `num` of integer type, 
+`std::acos(num)` has the same effect as `std::acos(static_cast<double>(num))`.
+
 
 ### Examples
 

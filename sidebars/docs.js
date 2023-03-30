@@ -122,22 +122,28 @@ module.exports = {
 									label : 'Nearest integer floating point operations',
 									items: [
 										docsClassCat('ciel', 'std/math/mathematical_functions/ciel', '', [],),
-										// docsClassCat('floor', 'std/math/mathematical_functions/floor', '', [],),
-										// docsClassCat('trunc', 'std/math/mathematical_functions/trunc', '', [],),
-										// docsClassCat('round', 'std/math/mathematical_functions/round', '', [],),
-										// docsClassCat('nearbyint', 'std/math/mathematical_functions/nearbyint', '', [],),
-										// docsClassCat('rint', 'std/math/mathematical_functions/rint', '', [],),
+										docsClassCat('floor', 'std/math/mathematical_functions/floor', '', [],),
+										docsClassCat('trunc', 'std/math/mathematical_functions/trunc', '', [],),
+										docsClassCat('round', 'std/math/mathematical_functions/round', '', [],),
+										docsClassCat('nearbyint', 'std/math/mathematical_functions/nearbyint', '', [],),
+										docsClassCat('rint', 'std/math/mathematical_functions/rint', '', [],),
 								]},
 								
 
-								// docsClassCat('frexp', 'std/math/mathematical_functions/frexp', '', [],),
-								// docsClassCat('ldexp', 'std/math/mathematical_functions/ldexp', '', [],),
-								// docsClassCat('modf', 'std/math/mathematical_functions/modf', '', [],),
-								// docsClassCat('scalbn', 'std/math/mathematical_functions/scalbn', '', [],),
-								// docsClassCat('ilogb', 'std/math/mathematical_functions/ilogb', '', [],),
-								// docsClassCat('logb', 'std/math/mathematical_functions/logb', '', [],),
-								// docsClassCat('nextafter', 'std/math/mathematical_functions/nextafter', '', [],),
-								// docsClassCat('copysign', 'std/math/mathematical_functions/copysign', '', [],),
+								{
+									type: 'category',
+									label : 'Floating point manipulation functions',
+									items: [
+										docsClassCat('ldexp', 'std/math/mathematical_functions/ldexp', '', [],),
+										docsClassCat('scalbn', 'std/math/mathematical_functions/scalbn', '', [],),
+										docsClassCat('ilogb', 'std/math/mathematical_functions/ilogb', '', [],),
+										docsClassCat('logb', 'std/math/mathematical_functions/logb', '', [],),
+										docsClassCat('frexp', 'std/math/mathematical_functions/frexp', '', [],),
+										docsClassCat('modf', 'std/math/mathematical_functions/modf', '', [],),
+										docsClassCat('nextafter', 'std/math/mathematical_functions/nextafter', '', [],),
+										// docsClassCat('copysign', 'std/math/mathematical_functions/copysign', '', [],),
+								]},
+								
 								
 							],
 						},

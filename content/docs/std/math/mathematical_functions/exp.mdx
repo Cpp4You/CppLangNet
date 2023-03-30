@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import Exp_Function_Declaration_Cpp11         from "./exp/_codes/exp_function_declaration/cpp11.mdx";
 import Exp_Function_Declaration_Cpp23         from "./exp/_codes/exp_function_declaration/cpp23.mdx";
 
@@ -59,10 +58,9 @@ If the argument is NaN, NaN is returned
 For IEEE-compatible type `double`, overflow is guaranteed if `709.8 < num`, and underflow is guaranteed if `num < -708.4`.
 
 The additional overloads are not required to be provided exactly as `Additional Overloads`. 
-They only need to be sufficient to ensure that for their argument num of integer type, `std::exp(num)` has the same effect as 
-```cpp
-std::exp(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument num of integer type, <br/>
+`std::exp(num)` has the same effect as `std::exp(static_cast<double>(num))`.
+
 
 
 ### Examples

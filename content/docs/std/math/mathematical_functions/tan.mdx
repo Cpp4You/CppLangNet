@@ -9,7 +9,6 @@ hide_title:             true
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import  Tan_Function_Declaration_Cpp11         from "./tan/_codes/tan_function_declaration/cpp11.mdx";
 import  Tan_Function_Declaration_Cpp23         from "./tan/_codes/tan_function_declaration/cpp23.mdx";
 
@@ -64,10 +63,8 @@ The function has mathematical poles at `π(1/2 + n)`; however no common floating
  thus there is no value of the argument for which a pole error occurs.
 
 The additional overloads are not required to be provided exactly as `Additional overloads`.
- They only need to be sufficient to ensure that for their argument `num` of integer type, `std::tan(num)` has the same effect as
-```cpp
-std::tan(static_cast<double>(num))
-```
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::tan(num)` has the same effect as `std::tan(static_cast<double>(num))`.
 
 ### Examples
 

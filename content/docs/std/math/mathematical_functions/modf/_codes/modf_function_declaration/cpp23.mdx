@@ -1,0 +1,18 @@
+```cpp
+// 1)
+constexpr /* floating-point-type */
+            modf ( /* floating-point-type */ num,
+                   /* floating-point-type */* iptr );
+// 2)
+constexpr float modff( float num, float* iptr );
+// 3)
+constexpr long double modfl( long double num, long double* iptr );
+```
+
+`Additional Overloads`
+
+```cpp
+// 4)
+template< class Integer >
+double modf ( Integer num, double* iptr );
+```
