@@ -55,7 +55,7 @@ module.exports = {
 										docsClassCat('fmax', 'std/math/mathematical_functions/fmax', '', [],),
 										docsClassCat('fmin', 'std/math/mathematical_functions/fmin', '', [],),
 										docsClassCat('fdim', 'std/math/mathematical_functions/fdim', '', [],),
-										docsClassCat('nan', 'std/math/mathematical_functions/nan', '', [],),
+										docsClassCat('nan', 'std/math/mathematical_functions/nanf', '', [],),
 
 								]},
 
@@ -141,8 +141,53 @@ module.exports = {
 										docsClassCat('frexp', 'std/math/mathematical_functions/frexp', '', [],),
 										docsClassCat('modf', 'std/math/mathematical_functions/modf', '', [],),
 										docsClassCat('nextafter', 'std/math/mathematical_functions/nextafter', '', [],),
-										// docsClassCat('copysign', 'std/math/mathematical_functions/copysign', '', [],),
+										docsClassCat('copysign', 'std/math/mathematical_functions/copysign', '', [],),
 								]},
+
+								{
+									type: 'category',
+									label: 'Classification and comparison',
+									items: [
+										docsClassCat('fpclassify', 'std/math/mathematical_functions/fpclassify', '', [],),
+										docsClassCat('isfinite', 'std/math/mathematical_functions/isfinite', '', [],),
+										docsClassCat('isinf', 'std/math/mathematical_functions/isinf', '', [],),
+										docsClassCat('isnan', 'std/math/mathematical_functions/isnan', '', [],),
+										docsClassCat('isnormal', 'std/math/mathematical_functions/isnormal', '', [],),
+										docsClassCat('signbit', 'std/math/mathematical_functions/signbit', '', [],),
+										docsClassCat('isgreater', 'std/math/mathematical_functions/isgreater', '', [],),
+										docsClassCat('isgreaterequal', 'std/math/mathematical_functions/isgreaterequal', '', [],),
+										docsClassCat('isless', 'std/math/mathematical_functions/isless', '', [],),
+										docsClassCat('islessequal', 'std/math/mathematical_functions/islessequal', '', [],),
+										docsClassCat('islessgreater', 'std/math/mathematical_functions/islessgreater', '', [],),
+										docsClassCat('isunordered', 'std/math/mathematical_functions/isunordered', '', [],),
+								]},
+
+								{
+									type: 'category',
+									label: 'Types',
+									items: [
+										docsClassCat('div_t', 'std/math/mathematical_functions/div_t', '', [],),
+										docsClassCat('ldiv_t', 'std/math/mathematical_functions/ldiv_t', '', [],), 
+										docsClassCat('lldiv_t', 'std/math/mathematical_functions/lldiv_t', '', [],),
+										docsClassCat('imaxdiv_t', 'std/math/mathematical_functions/imaxdiv_t', '', [],),
+										docsClassCat('float_t', 'std/math/mathematical_functions/float_t', '', [],),
+										docsClassCat('double_t', 'std/math/mathematical_functions/float_t', '', [],),
+
+								]},
+
+
+								{
+									type: 'category',
+									label: 'Macro Constants',
+									items: [
+										docsClassCat('HUGE_VALF', 'std/math/mathematical_functions/huge_valf', '', [],),
+										docsClassCat('INFINITY', 'std/math/mathematical_functions/infinity', '', [],), 
+										docsClassCat('NAN', 'std/math/mathematical_functions/nan', '', [],),
+										docsClassCat('MATH_ERRNO', 'std/math/mathematical_functions/errno', '', [],),
+
+								]},
+
+								docsClassCat('FP_ Categories', 'std/math/mathematical_functions/fp_category', '', [],),
 								
 								
 							],

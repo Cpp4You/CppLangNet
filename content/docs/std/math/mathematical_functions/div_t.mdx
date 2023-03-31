@@ -1,7 +1,7 @@
 ---
 title:              std::div_t
 description:        Structure type, return of the std::div function
-tags:               [math, div]
+tags:               [math, div, types]
 # slug:               /std/math/mathematical_functions/div_t/
 hide_title:         true
 ---
@@ -21,3 +21,38 @@ or
 ```cpp
 struct div_t { int rem; int quot; };
 ```
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    printf("%d\n", FLT_EVAL_METHOD);
+    printf("%zu  %zu\n", sizeof(float),sizeof(float_t));
+    printf("%zu  %zu\n", sizeof(double),sizeof(double_t));
+    return 0;
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+0
+4  4
+8  8
+```
+
+</div>
+</Columns>

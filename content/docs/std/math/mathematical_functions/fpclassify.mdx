@@ -1,0 +1,110 @@
+---
+title:                  Fpclassify
+description:            Standard function
+tags:                   [math,fpclassify]
+#slug:                  /std/math/mathematical_functions/fpclassify/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Fpclassify_Function_Declaration_Cpp11         from "./fpclassify/_codes/fpclassify_function_declaration/cpp11.mdx";
+import  Fpclassify_Function_Declaration_Cpp23         from "./fpclassify/_codes/fpclassify_function_declaration/cpp23.mdx";
+
+# Fpclassify
+
+Defined in header `<cmath>`.
+
+### Description
+
+Categorizes floating point value `num` into the following categories: <br/>
+`zero`, `subnormal`, `normal`, `infinite`, `NAN`, or `implementation-defined category`. <br/>
+The library provides overloads of `std::fpclassify` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23). <br/>
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Fpclassify_Function_Declaration_Cpp23 />,
+    "cpp11" : <Fpclassify_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+One of `FP_INFINITE`, `FP_NAN`, `FP_NORMAL`, `FP_SUBNORMAL`, `FP_ZERO` or `implementation-defined type`, specifying the category of `num`.
+
+### Notes
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. <br/>
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::fpclassify(num)` has the same effect as `std::fpclassify(static_cast<double>(num))`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cfloat>
+#include <cmath>
+#include <iostream>
+ 
+auto show_classification(double x)
+{
+    switch (std::fpclassify(x))
+    {
+        case FP_INFINITE:
+            return "Inf";
+        case FP_NAN:
+            return "NaN";
+        case FP_NORMAL:
+            return "normal";
+        case FP_SUBNORMAL:
+            return "subnormal";
+        case FP_ZERO:
+            return "zero";
+        default:
+            return "unknown";
+    }
+}
+ 
+int main()
+{
+    std::cout 
+        << "1.0/0.0 is " 
+        << show_classification(1 / 0.0) << '\n'
+        << "0.0/0.0 is " 
+        << show_classification(0.0 / 0.0) << '\n'
+        << "DBL_MIN/2 is " 
+        << show_classification(DBL_MIN / 2) << '\n'
+        << "-0.0 is " 
+        << show_classification(-0.0) << '\n'
+        << "1.0 is " 
+        << show_classification(1.0) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+1.0/0.0 is Inf
+0.0/0.0 is NaN
+DBL_MIN/2 is subnormal
+-0.0 is zero
+1.0 is normal
+```
+
+</div>
+</Columns>

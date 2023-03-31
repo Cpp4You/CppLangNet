@@ -1,0 +1,22 @@
+---
+title:                  INFINITY
+description:            Evaluates to positive infinity or the value guaranteed to overflow a float
+tags:                   [math,macro constants, infinity]
+#slug:                  /std/math/mathematical_functions/infinity/
+hide_title:             true
+---
+
+# INFINITY
+
+### Description
+
+If the implementation supports floating-point infinities, the macro `INFINITY` expands to constant expression of type float which evaluates to positive or unsigned infinity.
+
+If the implementation does not support floating-point infinities, the macro `INFINITY` expands to a positive value that is guaranteed to overflow a 
+`float` at compile time, and the use of this macro generates a compiler warning.
+
+
+### Declarations
+```cpp
+#define INFINITY /*implementation defined*/
+```

@@ -1,0 +1,101 @@
+---
+title:                  FP_NORMAL, FP_SUBNORMAL, FP_ZERO, FP_INFINITE, FP_NAN
+description:            Indicates a floating-point category
+tags:                   [math,FP_NORMAL, FP_SUBNORMAL, FP_ZERO, FP_INFINITE, FP_NAN]
+#slug:                  /std/math/mathematical_functions/errno/
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+
+# FP_NORMAL, FP_SUBNORMAL, FP_ZERO, FP_INFINITE, FP_NAN
+
+### Description
+
+The `FP_NORMAL`, `FP_SUBNORMAL`, `FP_ZERO`, `FP_INFINITE`, `FP_NAN` macros each represent a distinct category of floating-point numbers. 
+They all expand to an integer constant expression.
+
+| Constant     | Explanation                                                                                          |
+|--------------|------------------------------------------------------------------------------------------------------|
+| FP_NORMAL    | indicates that the value is normal, i.e. not an infinity, subnormal, not-a-number or zero            |
+| FP_SUBNORMAL | indicates that the value is subnormal                                                                |
+| FP_ZERO      | indicates that the value is positive or negative zero                                                |
+| FP_INFINITE  | indicates that the value is not representable by the underlying type (positive or negative infinity) |
+| FP_NAN       | indicates that the value is not-a-number (NaN)                                                       |
+
+### Declarations
+
+```cpp
+#define FP_NORMAL    /* implementation defined */
+
+#define FP_SUBNORMAL /* implementation defined */
+
+#define FP_ZERO      /* implementation defined */
+
+#define FP_INFINITE  /* implementation defined */
+
+#define FP_NAN       /* implementation defined */
+```
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cfloat>
+#include <cmath>
+#include <iostream>
+ 
+auto show_classification(double x)
+{
+    switch (std::fpclassify(x))
+    {
+        case FP_INFINITE:
+            return "Inf";
+        case FP_NAN:
+            return "NaN";
+        case FP_NORMAL:
+            return "normal";
+        case FP_SUBNORMAL:
+            return "subnormal";
+        case FP_ZERO:
+            return "zero";
+        default:
+            return "unknown";
+    }
+}
+ 
+int main()
+{
+    std::cout 
+        << "1.0/0.0 is " 
+        << show_classification(1 / 0.0) << '\n'
+        << "0.0/0.0 is " 
+        << show_classification(0.0 / 0.0) << '\n'
+        << "DBL_MIN/2 is " 
+        << show_classification(DBL_MIN / 2) << '\n'
+        << "-0.0 is " 
+        << show_classification(-0.0) << '\n'
+        << "1.0 is " 
+        << show_classification(1.0) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+1.0/0.0 is Inf
+0.0/0.0 is NaN
+DBL_MIN/2 is subnormal
+-0.0 is zero
+1.0 is normal
+```
+
+</div>
+</Columns>

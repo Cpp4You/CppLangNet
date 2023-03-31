@@ -1,0 +1,70 @@
+---
+title:              std::float_t; std::double_t
+description:        Most efficient floating-point types at least as wide as float and double respectively
+tags:               [math, types]
+# slug:               /std/math/mathematical_functions/float_t/
+hide_title:         true
+---
+
+
+# std::float_t; std::double_t
+
+### Description
+
+The types `float_t` and `double_t` are floating types at least as wide as `float` and `double`, 
+respectively, and such that `double_t` is at least as wide as `float_t`. 
+
+The value of `FLT_EVAL_METHOD` determines the types of `float_t` and `double_t`.
+
+`FLT_EVAL_METHOD`	Explanation: <br/>
+`0`	`float_t` and `double_t` are equivalent to `float` and `double`, respectively<br/>
+`1`	both `float_t` and `double_t` are equivalent to `double`<br/>
+`2`	both `float_t` and `double_t` are equivalent to `long double`<br/>
+other	both `float_t` and `double_t` are implementation defined<br/>
+
+
+
+### Declarations 
+`Since C99`
+```cpp
+typedef /*implementation defined*/ float_t
+
+typedef /*implementation defined*/ double_t
+```
+
+
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <float.h>
+#include <math.h>
+#include <stdio.h>
+ 
+int main(void)
+{
+    printf("%d\n", FLT_EVAL_METHOD);
+    printf("%zu  %zu\n", sizeof(float),sizeof(float_t));
+    printf("%zu  %zu\n", sizeof(double),sizeof(double_t));
+    return 0;
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+0
+4  4
+8  8
+```
+
+</div>
+</Columns>

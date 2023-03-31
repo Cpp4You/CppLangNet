@@ -1,0 +1,89 @@
+---
+title:                  Isnormal
+description:            Standard function
+tags:                   [math,isnormal]
+#slug:                  /std/math/mathematical_functions/isnormal/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Isnormal_Function_Declaration_Cpp11         from "./isnormal/_codes/isnormal_function_declaration/cpp11.mdx";
+import  Isnormal_Function_Declaration_Cpp23         from "./isnormal/_codes/isnormal_function_declaration/cpp23.mdx";
+
+# Isnormal
+
+Defined in header `<cmath>`.
+
+### Description
+
+Determines if the given floating point number `num` is `normal`, i.e. is neither `zero`, `subnormal`, `infinite`, nor `NaN`. 
+The library provides overloads for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23). <br/>
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Isnormal_Function_Declaration_Cpp23 />,
+    "cpp11" : <Isnormal_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+`true` if `num` is `normal`, `false` otherwise.
+
+### Notes
+The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+They only need to be sufficient to ensure that for their argument num of integer type, <br/>
+`std::isnormal(num)` has the same effect as `std::isnormal(static_cast<double>(num))`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cfloat>
+#include <cmath>
+#include <iostream>
+ 
+int main()
+{
+    std::cout 
+        << std::boolalpha
+        << "isnormal(NaN) = " 
+        << std::isnormal(NAN) << '\n'
+        << "isnormal(Inf) = " 
+        << std::isnormal(INFINITY) << '\n'
+        << "isnormal(0.0) = " 
+        << std::isnormal(0.0) << '\n'
+        << "isnormal(DBL_MIN/2.0) = " 
+        << std::isnormal(DBL_MIN / 2.0) << '\n'
+        << "isnormal(1.0) = " 
+        << std::isnormal(1.0) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+isnormal(NaN) = false
+isnormal(Inf) = false
+isnormal(0.0) = false
+isnormal(DBL_MIN/2.0) = false
+isnormal(1.0) = true
+```
+
+</div>
+</Columns>

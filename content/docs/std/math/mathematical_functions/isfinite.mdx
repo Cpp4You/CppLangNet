@@ -1,0 +1,97 @@
+---
+title:                  Isfinite
+description:            Standard function
+tags:                   [math,isfinite]
+#slug:                  /std/math/mathematical_functions/isfinite/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Isfinite_Function_Declaration_Cpp11         from "./isfinite/_codes/isfinite_function_declaration/cpp11.mdx";
+import  Isfinite_Function_Declaration_Cpp23         from "./isfinite/_codes/isfinite_function_declaration/cpp23.mdx";
+
+# Isfinite
+
+Defined in header `<cmath>`.
+
+### Description
+
+Determines if the given floating point number `num` has finite value i.e. 
+it is `normal`, `subnormal` or `zero`, but not `infinite` or `NaN`. <br/>
+The library provides overloads for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Isfinite_Function_Declaration_Cpp23 />,
+    "cpp11" : <Isfinite_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+`true` if `num` has finite value, `false` otherwise.
+
+### Notes
+The additional overloads are not required to be provided exactly as `Additional overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type,<br/>
+`std::isfinite(num)` has the same effect as `std::isfinite(static_cast<double>(num))`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cfloat>
+#include <cmath>
+#include <iostream>
+ 
+int main()
+{
+    std::cout 
+        << std::boolalpha
+        << "isfinite(NaN) = " 
+        << std::isfinite(NAN) << '\n'
+        << "isfinite(Inf) = " 
+        << std::isfinite(INFINITY) << '\n'
+        << "isfinite(-Inf) = " 
+        << std::isfinite(-INFINITY) << '\n'
+        << "isfinite(HUGE_VAL) = " 
+        << std::isfinite(HUGE_VAL) << '\n'
+        << "isfinite(0.0) = " 
+        << std::isfinite(0.0) << '\n'
+        << "isfinite(exp(800)) = " 
+        << std::isfinite(std::exp(800)) << '\n'
+        << "isfinite(DBL_MIN/2.0) = " 
+        << std::isfinite(DBL_MIN / 2.0) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+isfinite(NaN) = false
+isfinite(Inf) = false
+isfinite(-Inf) = false
+isfinite(HUGE_VAL) = false
+isfinite(0.0) = true
+isfinite(exp(800)) = false
+isfinite(DBL_MIN/2.0) = true
+```
+
+</div>
+</Columns>
