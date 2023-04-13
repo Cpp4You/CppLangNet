@@ -1,0 +1,81 @@
+---
+title:                  std::unique_ptr<T,Deleter>::release
+description:            std::unique_ptr release()
+tags:                   [memory,unique_ptr]
+#slug:                  /std/memory/unique_ptr/release
+hide_title:             true
+---
+
+import Columns						            from "@site-comps/Columns";
+
+# std::unique_ptr&lt;T,Deleter&gt;::release
+
+```cpp
+pointer release() noexcept; //(since C++11)
+
+constexpr pointer release() noexcept; //(since C++23)
+```
+
+Releases the ownership of the managed object, if any.
+
+`get()` returns `nullptr` after the call.
+
+The caller is responsible for deleting the object.
+
+### Parameters
+(none)
+
+### Return value
+Pointer to the managed object or `nullptr` if there was no managed object, i.e. the value which would be returned by `get()` before the call.
+
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory>
+#include <iostream>
+#include <cassert>
+ 
+struct Foo {
+    Foo() { std::cout << "Foo\n"; }
+    ~Foo() { std::cout << "~Foo\n"; }
+};
+ 
+int main()
+{
+    std::cout 
+        << "Creating new Foo...\n";
+    std::unique_ptr<Foo> up(new Foo());
+ 
+    std::cout 
+        << "About to release Foo...\n";
+    Foo* fp = up.release();
+ 
+    assert (up.get() == nullptr);
+    assert (up == nullptr);
+ 
+    std::cout 
+        << "Foo is no longer owned by unique_ptr...\n";
+ 
+    delete fp;
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+Creating new Foo...
+Foo
+About to release Foo...
+Foo is no longer owned by unique_ptr...
+~Foo
+```
+
+</div>
+</Columns>

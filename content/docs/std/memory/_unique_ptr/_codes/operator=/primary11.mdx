@@ -1,0 +1,9 @@
+``` cpp
+// 1)
+unique_ptr& operator=( unique_ptr&& r ) noexcept;
+// 2)
+template< class U, class E >
+unique_ptr& operator=( unique_ptr<U,E>&& r ) noexcept;
+// 3)
+unique_ptr& operator=( std::nullptr_t ) noexcept;
+```

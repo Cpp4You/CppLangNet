@@ -1,0 +1,58 @@
+---
+title:                  std::unique_ptr<T,Deleter>::operator bool
+description:            std::unique_ptr operator bool()
+tags:                   [memory,unique_ptr]
+#slug:                  /std/memory/unique_ptr/operator_bool
+hide_title:             true
+---
+
+# std::unique_ptr&lt;T,Deleter>&gt;::operator bool
+
+```cpp
+explicit operator bool() const noexcept;  //(Since C++11)
+
+constexpr explicit operator bool() const noexcept;    //(Since C++23)
+```
+
+Checks whether `*this` owns an object, i.e. whether `get() != nullptr`.
+
+### Parameters
+(none)
+
+### Return value
+`true` if `*this` owns an object, `false` otherwise.
+
+
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <memory>
+ 
+int main()
+{
+    std::unique_ptr<int> ptr(new int(42));
+ 
+    if (ptr) std::cout << "before reset, ptr is: " << *ptr << '\n';
+    ptr.reset();
+    ptr ? (std::cout << "after reset, ptr is: " << *ptr)
+        : (std::cout << "after reset ptr is empty") 
+                << '\n';
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+before reset, ptr is: 42
+after reset ptr is empty
+```
+
+</div>
+</Columns>

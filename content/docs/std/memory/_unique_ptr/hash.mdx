@@ -1,0 +1,103 @@
+---
+title:                  std::hash<std::unique_ptr>
+description:            ---
+tags:                   [memory,unique_ptr]
+#slug:                  /std/memory/unique_ptr/
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+
+# std::hash&lt;std::unique_ptr>
+
+### Declaration
+`C++11`
+```cpp
+template<class T, class Deleter> struct hash<unique_ptr<T, Deleter>>;
+```
+
+The template specialization of `std::hash` for `std::unique_ptr<T, Deleter>` allows users to obtain hashes of objects of type `std::unique_ptr<T, Deleter>`.
+
+The specialization `std::hash<std::unique_ptr<T,D>>` is enabled (see `std::hash`) if `std::hash<typename std::unique_ptr<T,D>::pointer>` is `enabled`, and is `disabled` otherwise.
+
+When `enabled`, for a given `std::unique_ptr<T, D>` `p`, this specialization ensures that 
+`std::hash<std::unique_ptr<T, D>>()(p) == std::hash<typename std::unique_ptr<T, D>::pointer>()(p.get())`.
+
+The member functions of this specialization are not guaranteed to be `noexcept` because the pointer may be a fancy pointer and its hash might throw.
+
+
+
+
+
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <memory>
+#include <functional>
+ 
+struct Foo {
+    Foo(int nr) { std::cout << "Foo(" << nr << ")\n"; }
+    ~Foo() { std::cout << "~Foo()\n"; }
+    bool operator==(const Foo &other) { return nr == other.nr; };
+    int nr;
+};
+ 
+int main()
+{
+    std::cout << std::boolalpha;
+    Foo* foo = new Foo(5);
+    std::unique_ptr<Foo> up(foo);
+ 
+    std::cout 
+        << "     hash(up): " 
+        << std::hash<std::unique_ptr<Foo>>()(up) 
+        << '\n';
+    std::cout 
+        << "    hash(foo): " 
+        << std::hash<Foo*>()(foo) 
+        << '\n';
+    std::cout 
+        << "    *up==*foo: " 
+        << (*up == *foo) 
+        << '\n';
+ 
+    std::unique_ptr<Foo> other = std::make_unique<Foo>(5);
+    std::cout 
+        << "     hash(up): " 
+        << std::hash<std::unique_ptr<Foo>>()(up) 
+        << '\n';
+    std::cout 
+        << "  hash(other): " 
+        << std::hash<std::unique_ptr<Foo>>()(other) 
+        << '\n';
+    std::cout 
+        << "  *up==*other: " 
+        <<(*up == *other) 
+        << '\n';
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+Foo(5)
+     hash(up): 7167008
+    hash(foo): 7167008
+    *up==*foo: true
+Foo(5)
+     hash(up): 7167008
+  hash(other): 7171152
+  *up==*other: true
+~Foo()
+~Foo()
+```
+
+</div>
+</Columns>

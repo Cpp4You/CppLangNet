@@ -1,0 +1,56 @@
+```cpp
+// 1)
+template< class T1, class D1, class T2, class D2 >
+bool operator==( const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y );
+// 2)
+template< class T1, class D1, class T2, class D2 >
+bool operator!=( const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y );
+// 3)
+template< class T1, class D1, class T2, class D2 >
+bool operator<( const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y );
+// 4)
+template< class T1, class D1, class T2, class D2 >
+bool operator<=( const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y )
+// 5)
+template< class T1, class D1, class T2, class D2 >
+bool operator>( const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y );
+// 6)
+template< class T1, class D1, class T2, class D2 >
+bool operator>=( const unique_ptr<T1, D1>& x, const unique_ptr<T2, D2>& y );
+// 8)
+template< class T, class D >
+bool operator==( const unique_ptr<T, D>& x, std::nullptr_t) noexcept;
+// 9)
+template< class T, class D >
+bool operator==(std::nullptr_t, const unique_ptr<T, D>& x) noexcept;
+// 10)
+template< class T, class D >
+bool operator!=( const unique_ptr<T, D>& x, std::nullptr_t) noexcept;
+// 11)
+template< class T, class D >
+bool operator!=(std::nullptr_t, const unique_ptr<T, D>& x) noexcept;
+// 12)
+template< class T, class D >
+bool operator<( const unique_ptr<T, D>& x, std::nullptr_t );
+// 13)
+template< class T, class D >
+bool operator<(std::nullptr_t, const unique_ptr<T, D>& y );
+// 14)
+template< class T, class D >
+bool operator<=( const unique_ptr<T, D>& x, std::nullptr_t );
+// 15)
+template< class T, class D >
+bool operator<=(std::nullptr_t, const unique_ptr<T, D>& y );
+// 16)
+template< class T, class D >
+bool operator>( const unique_ptr<T, D>& x, std::nullptr_t );
+// 17)
+template< class T, class D >
+bool operator>(std::nullptr_t, const unique_ptr<T, D>& y );
+// 18)
+template< class T, class D >
+bool operator>=( const unique_ptr<T, D>& x, std::nullptr_t );
+// 19)
+template< class T, class D >
+bool operator>=(std::nullptr_t, const unique_ptr<T, D>& y );
+```

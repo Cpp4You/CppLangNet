@@ -1,0 +1,70 @@
+---
+title:                  std::unique_ptr<T,Deleter>::~unique_ptr
+description:            std::unique_ptr deleter
+tags:                   [memory,unique_ptr]
+#slug:                  /std/memory/unique_ptr/~unique_ptr
+hide_title:             true
+---
+
+import Tabs						                from "@theme/Tabs";
+import TabItem					                from "@theme/TabItem";
+import SymbolTable, { Symbol }		            from "@site-comps/SymbolTable";
+import Columns						            from "@site-comps/Columns";
+
+# std::unique_ptr&lt;T,Deleter&gt;::~unique_ptr
+
+
+```cpp
+~unique_ptr(); //(since C++11)
+
+constexpr ~unique_ptr(); //(since C++23)
+```
+
+If `get() == nullptr` there are no effects. Otherwise, the owned object is destroyed via `get_deleter()(get())`.
+
+Requires that `get_deleter()(get())` does not throw exceptions.
+
+### Notes
+
+Although std`::unique_ptr<T>` with the default deleter may be constructed with incomplete type `T`, 
+the type `T` must be complete at the point of code where the destructor is called.
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <memory>
+ 
+int main () 
+{
+    auto deleter = [](int* ptr){
+        std::cout 
+            << "[deleter called]\n";
+        delete ptr;
+    };
+ 
+    std::unique_ptr<int,decltype(deleter)> uniq(new int, deleter);
+    std::cout 
+        << (uniq ? "not empty\n" : "empty\n");
+    uniq.reset();
+    std::cout 
+        << (uniq ? "not empty\n" : "empty\n");
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+not empty
+[deleter called]
+empty
+```
+
+</div>
+</Columns>

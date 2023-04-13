@@ -1,0 +1,430 @@
+---
+title:                  std::unique_ptr
+description:            Smart Pointer
+tags:                   [memory,unique_ptr]
+#slug:                  /std/memory/unique_ptr/
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+# std::unique_ptr
+
+Defined in header `<memory>`.
+
+### Declarations
+```cpp
+template<
+    class T,
+    class Deleter = std::default_delete<T>
+> class unique_ptr;
+
+template <
+    class T,
+    class Deleter
+> class unique_ptr<T[], Deleter>;
+```
+
+### Description
+
+		
+`std::unique_ptr` is a smart pointer that owns and manages another object through a pointer and disposes of that object when the `unique_ptr` goes out of scope.
+
+The object is disposed of, using the associated deleter when either of the following happens:
+
+
+* the managing `unique_ptr` object is destroyed <br/>
+
+* the managing `unique_ptr` object is assigned another pointer via operator `=` or `reset()` <br/>
+
+
+The object is disposed of, using a potentially user-supplied deleter by calling `get_deleter()(ptr)`. The default deleter uses the `delete` operator, 
+which destroys the object and deallocates the memory.
+
+A `unique_ptr` may alternatively own no object, in which case it is called *empty*.
+
+
+There are two versions of `std::unique_ptr`:
+
+* Manages a single object (e.g. allocated with `new`);
+* Manages a dynamically-allocated array of objects (e.g. allocated with `new[]`).
+
+
+The class satisfies the requirements of MoveConstructible and MoveAssignable, but of neither CopyConstructible nor CopyAssignable. 
+
+#### Type requirements
+Deleter must be FunctionObject or lvalue reference to a FunctionObject or lvalue reference to function, callable with an argument of type `unique_ptr<T, Deleter>::pointer`.
+
+### Notes
+Only non-const `unique_ptr` can transfer the ownership of the managed object to another `unique_ptr`. 
+If an object's lifetime is managed by a `const std::unique_ptr`, it is limited to the scope in which the pointer was created.
+
+`std::unique_ptr` is commonly used to manage the lifetime of objects, including:
+
+* Providing exception safety to classes and functions that handle objects with dynamic lifetime, by guaranteeing deletion on both normal exit and exit through exception;
+* Passing ownership of uniquely-owned objects with dynamic lifetime into functions;
+* Acquiring ownership of uniquely-owned objects with dynamic lifetime from functions;
+* As the element type in move-aware containers, such as `std::vector`, which hold pointers to dynamically-allocated objects (e.g. if polymorphic behavior is desired).
+
+`std::unique_ptr` may be constructed for an incomplete type `T`, such as to facilitate the use as a handle in the pImpl idiom. 
+If the default deleter is used, `T` must be complete at the point in code where the deleter is invoked, which happens in the destructor, move assignment operator, 
+and reset member function of `std::unique_ptr`. (Conversely, `std::shared_ptr` can't be constructed from a raw pointer to incomplete type, 
+but can be destroyed where `T` is incomplete). Note that if `T` is a class template specialization, use of `unique_ptr` as an operand, 
+e.g. `!p` requires `T`'s parameters to be complete due to ADL.
+
+
+If `T` is a derived class of some base `B`, then `std::unique_ptr<T>` is implicitly convertible to `std::unique_ptr<B>`. 
+The default deleter of the resulting `std::unique_ptr<B>` will use operator delete for `B`, 
+leading to undefined behavior unless the destructor of `B` is virtual. Note that `std::shared_ptr` behaves differently: 
+`std::shared_ptr<B>` will use the operator delete for the type `T` and the owned object will be deleted correctly even if the destructor of `B` is not virtual.
+
+Unlike `std::shared_ptr`, `std::unique_ptr` may manage an object through any custom handle type that satisfies NullablePointer. 
+This allows, for example, managing objects located in shared memory, by supplying a Deleter that defines typedef 
+[`boost::offset_ptr pointer`](https://www.boost.org/doc/libs/1_81_0/doc/html/boost/interprocess/offset_ptr.html); or another fancy pointer.
+
+
+|     Feature-test macro     |  Value  |   Std   |          Comment          |
+|:--------------------------:|:-------:|:-------:|:-------------------------:|
+| __cpp_lib_constexpr_memory | 202202L | (C++23) | constexpr std::unique_ptr |
+
+
+### Member types
+
+<SymbolTable noTraits>
+	<Symbol name="pointer"			        desc="std::remove_reference<Deleter>::type::pointer if that type exists, otherwise T*. Must satisfy NullablePointer"/>
+	<Symbol name="element_type" 			desc="T, the type of the object managed by this unique_ptr"/>
+    <Symbol name="deleter_type" 			desc="Deleter, the function object or lvalue reference to function or to function object, to be called from the destructor"/>
+</SymbolTable>
+
+
+### Member functions
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/unique_ptr" name="(constructors)"              
+    desc={<>
+                constructs a new unique_ptr<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/~unique_ptr" name="(destructor)"
+    desc={<>
+                destructs the managed object if such is present<br/>
+                <small>(function template)</small>
+                </>}  
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/operator=" name="operator="
+    desc={<>
+                assigns the unique_ptr<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+</SymbolTable>
+
+#### `Modifiers`
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/release" name ="release"
+    desc={<>
+                returns a pointer to the managed object and releases the ownership<br/>
+                <small>(function template)</small>
+                </>} 
+                /> 
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/reset" name ="reset"
+    desc={<>
+                replaces the managed object<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/swap" name ="swap"
+    desc={<>
+                swaps the managed objects<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+</SymbolTable>
+
+#### `Observers`
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/get" name ="get"
+    desc={<>
+                returns a pointer to the managed object<br/>
+                <small>(function template)</small>
+                </>}
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/get_deleter" name ="get_deleter"
+    desc={<>
+                returns the deleter that is used for destruction of the managed object<br/>
+                <small>(function template)</small>
+                </>}
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/operator_bool" name ="operator bool"
+    desc={<>
+                checks if there is an associated managed object<br/>
+                <small>(function template)</small>
+                </>}
+                />
+</SymbolTable>
+
+
+#### `Single-object version, unique_ptr<T>`
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/operator-" 
+                name={<>
+                operator*<br/>
+				operator-><br/>
+			    </>}               
+                desc={<>
+                dereferences pointer to the managed object<br/>
+                <small>(function template)</small>
+                </>}
+                />
+</SymbolTable>
+
+
+#### `Array version, unique_ptr<T[]>`
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/operator_at" 
+                name ="operator[]"                
+                desc={<>
+                provides indexed access to the managed array<br/>
+                <small>(function template)</small>
+                </>}
+                />
+</SymbolTable>
+
+
+### Non-member functions
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/make_unique" name={<>
+                make_unique <small>(C++14)</small><br/>
+				make_unique_for_overwrite <small>(C++20)</small><br/>
+			    </>}                
+            desc={<>
+                creates a unique pointer that manages a new object<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/operator_cmp" name={<>
+                operator== <br/>
+                operator!= <small>(removed in C++20)</small> <br/>
+                operator&lt; <br/>
+                operator&lt;= <br/>
+                operator&gt; <br/>
+                operator&gt;= <br/>
+                operator&lt;=&gt; <small>(C++20)</small>
+                </>}
+            desc={<>
+                compares to another unique_ptr or with nullptr<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/operator_ltlt" name={<>
+                operator&lt;&lt;<small>(std::unique_ptr)(C++20)</small>
+			    </>}                
+            desc={<>
+                outputs the value of the managed pointer to an output stream<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/swap2" name={<>
+                std::swap<small>(std::unique_ptr)(C++11)</small>
+			    </>}                
+            desc={<>
+                specializes the std::swap algorithm<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+</SymbolTable>
+
+### Helper Classes
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/memory/_unique_ptr/hash" name={<>
+                std::hash<small>(std::unique_ptr)(C++11)</small>
+			    </>}                
+            desc={<>
+                hash support for std::unique_ptr<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+</SymbolTable>
+
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cassert>
+#include <cstdio>
+#include <fstream>
+#include <iostream>
+#include <memory>
+#include <stdexcept>
+ 
+// helper class for runtime polymorphism demo below
+struct B
+{
+    virtual ~B() = default;
+ 
+    virtual void bar() { 
+        std::cout 
+            << "B::bar\n"; 
+            }
+};
+ 
+struct D : B
+{
+    D() { std::cout << "D::D\n"; }
+    ~D() { std::cout << "D::~D\n"; }
+ 
+    void bar() override {
+        std::cout 
+            << "D::bar\n"; }
+};
+ 
+// a function consuming a unique_ptr can take it by value or by rvalue reference
+std::unique_ptr<D> pass_through(std::unique_ptr<D> p)
+{
+    p->bar();
+    return p;
+}
+ 
+// helper function for the custom deleter demo below
+void close_file(std::FILE* fp)
+{
+    std::fclose(fp);
+}
+ 
+// unique_ptr-based linked list demo
+struct List
+{
+    struct Node
+    {
+        int data;
+        std::unique_ptr<Node> next;
+    };
+ 
+    std::unique_ptr<Node> head;
+ 
+    ~List()
+    {
+        // destroy list nodes sequentially in a loop, the default destructor
+        // would have invoked its `next`'s destructor recursively, which would
+        // cause stack overflow for sufficiently large lists.
+        while (head)
+            head = std::move(head->next);
+    }
+ 
+    void push(int data)
+    {
+        head = std::unique_ptr<Node>(new Node{data, std::move(head)});
+    }
+};
+ 
+int main()
+{
+    std::cout << "1) Unique ownership semantics demo\n";
+    {
+        // Create a (uniquely owned) resource
+        std::unique_ptr<D> p = std::make_unique<D>();
+ 
+        // Transfer ownership to `pass_through`,
+        // which in turn transfers ownership back through the return value
+        std::unique_ptr<D> q = pass_through(std::move(p));
+ 
+        // p is now in a moved-from 'empty' state, equal to nullptr
+        assert(!p);
+    }
+ 
+    std::cout << "\n" "2) Runtime polymorphism demo\n";
+    {
+        // Create a derived resource and point to it via base type
+        std::unique_ptr<B> p = std::make_unique<D>();
+ 
+        // Dynamic dispatch works as expected
+        p->bar();
+    }
+ 
+    std::cout << "\n" "3) Custom deleter demo\n";
+    std::ofstream("demo.txt") << 'x'; // prepare the file to read
+    {
+        using unique_file_t = std::unique_ptr<std::FILE, decltype(&close_file)>;
+        unique_file_t fp(std::fopen("demo.txt", "r"), &close_file);
+        if (fp)
+            std::cout << char(std::fgetc(fp.get())) << '\n';
+    } // `close_file()` called here (if `fp` is not null)
+ 
+    std::cout << "\n" "4) Custom lambda-expression deleter and exception safety demo\n";
+    try
+    {
+        std::unique_ptr<D, void(*)(D*)> p(new D, [](D* ptr)
+        {
+            std::cout << "destroying from a custom deleter...\n";
+            delete ptr;
+        });
+ 
+        throw std::runtime_error(""); // `p` would leak here if it were a plain pointer
+    }
+    catch (const std::exception&) { std::cout << "Caught exception\n"; }
+ 
+    std::cout << "\n" "5) Array form of unique_ptr demo\n";
+    {
+        std::unique_ptr<D[]> p(new D[3]);
+    } // `D::~D()` is called 3 times
+ 
+    std::cout << "\n" "6) Linked list demo\n";
+    {
+        List wall;
+        for (int beer = 0; beer != 1'000'000; ++beer)
+            wall.push(beer);
+ 
+        std::cout << "1'000'000 bottles of beer on the wall...\n";
+    } // destroys all the beers
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+1) Unique ownership semantics demo
+D::D
+D::bar
+D::~D
+ 
+2) Runtime polymorphism demo
+D::D
+D::bar
+D::~D
+ 
+3) Custom deleter demo
+x
+ 
+4) Custom lambda-expression deleter and exception safety demo
+D::D
+destroying from a custom deleter...
+D::~D
+Caught exception
+ 
+5) Array form of unique_ptr demo
+D::D
+D::D
+D::D
+D::~D
+D::~D
+D::~D
+ 
+6) Linked list demo
+1'000'000 bottles of beer on the wall...
+```
+
+</div>
+</Columns>
