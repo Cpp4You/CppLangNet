@@ -1,36 +1,39 @@
 ---
-title:                  std::shared_ptr<T>::swap
-description:            --
+title:                  std::swap(std::shared_ptr)
 tags:                   [memory,shared_ptr]
-#slug:                  /std/memory/shared_ptr/
 hide_title:             true
 ---
-
 import Columns      from "@site-comps/Columns";
-import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 
-# std::shared_ptr&lt;T>::swap
+# std::swap(std::shared_ptr)
+
+Defined in header `<memory>`.
 
 ### Declarations
 
 `C++11`
 ```cpp
-void swap( shared_ptr& r ) noexcept;
+template< class T >
+void swap( std::shared_ptr<T>& lhs, std::shared_ptr<T>& rhs ) noexcept;
 ```
 
-Exchanges the stored pointer values and the ownerships of `*this` and `r`. Reference counts, if any, are not adjusted.
+Specializes the `std::swap` algorithm for `std::shared_ptr`. Swaps the contents of `lhs` and `rhs`. Calls `lhs.swap(rhs)`.
 
 ### Parameters
 
-`r` - smart pointer to exchange the contents with
+`lhs`, `rhs` - smart pointers whose contents to swap
 
 ### Return value
 
 (none)
 
+### Complexity
+
+Constant
+
 ### Example
 
-<Columns spacing = "20px" columns ={['6fr' ,'4fr']}>
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
 
 ```cpp
@@ -50,18 +53,20 @@ int main()
     std::shared_ptr<Foo> p1 = std::make_shared<Foo>(100);
     std::shared_ptr<Foo> p2 = std::make_shared<Foo>(200);
     auto print = [&]() {
-        std::cout << " p1=" << (p1 ? p1->print() : "nullptr");
-        std::cout << " p2=" << (p2 ? p2->print() : "nullptr") << '\n';  
+        std::cout << " p1=" 
+            << (p1 ? p1->print() : "nullptr");
+        std::cout << " p2=" 
+            << (p2 ? p2->print() : "nullptr") << '\n';  
     };
     print();
  
-    p1.swap(p2);
+    std::swap(p1, p2);
     print();
  
     p1.reset();
     print();
  
-    p1.swap(p2);
+    std::swap(p1, p2);
     print();   
 }
 ```
@@ -70,7 +75,7 @@ int main()
 
 <div>
 
-``` plaintext title="Result"
+```plaintext title="Result"
 Foo...
 Foo...
  p1=100 p2=200

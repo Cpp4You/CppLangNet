@@ -1,0 +1,85 @@
+---
+title:                  std::shared_ptr<T>::~shared_ptr
+tags:                   [memory,shared_ptr]
+hide_title:             true
+---
+import Columns      from "@site-comps/Columns";
+
+# std::shared_ptr&lt;T>::~shared_ptr
+
+```cpp
+~shared_ptr();
+```
+
+If `*this` owns an object and it is the last `shared_ptr` owning it, the object is destroyed through the owned deleter.
+
+After the destruction, the smart pointers that shared ownership with `*this`, if any, will report a `use_count()` that is one less than its previous value.
+
+### Notes
+
+Unlike `std::unique_ptr`, the deleter of `std::shared_ptr` is invoked even if the managed pointer is `null`.
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory>
+#include <iostream>
+ 
+struct S {
+    S() { std::cout << "S::S()\n"; }
+    ~S() { std::cout << "S::~S()\n"; }
+    struct Deleter {
+        void operator()(S* s) const {
+            std::cout << "S::Deleter()\n";
+            delete s;
+        }
+    };
+};
+ 
+int main()
+{
+    auto sp = std::shared_ptr<S>{ new S, S::Deleter{} };
+ 
+    auto use_count = [&sp](char c) {
+        std::cout 
+            << c << ") use_count(): " 
+            << sp.use_count() << '\n';
+    };
+ 
+    use_count('A');
+    {
+        auto sp2 = sp;
+        use_count('B');
+        {
+            auto sp3 = sp;
+            use_count('C');
+        }
+        use_count('D');
+    }
+    use_count('E');
+ 
+//  sp.reset();
+//  use_count('F'); // would print "F) use_count(): 0"
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+S::S()
+A) use_count(): 1
+B) use_count(): 2
+C) use_count(): 3
+D) use_count(): 2
+E) use_count(): 1
+S::Deleter()
+S::~S()
+```
+
+</div>
+</Columns>

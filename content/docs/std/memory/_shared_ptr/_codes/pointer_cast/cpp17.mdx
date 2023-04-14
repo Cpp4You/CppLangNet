@@ -1,0 +1,14 @@
+```cpp
+// 1)
+template< class T, class U >
+std::shared_ptr<T> static_pointer_cast( const std::shared_ptr<U>& r ) noexcept;
+// 3)
+template< class T, class U >
+std::shared_ptr<T> dynamic_pointer_cast( const std::shared_ptr<U>& r ) noexcept;
+// 5)
+template< class T, class U >
+std::shared_ptr<T> const_pointer_cast( const std::shared_ptr<U>& r ) noexcept;
+// 7)
+template< class T, class U >
+std::shared_ptr<T> reinterpret_pointer_cast( const std::shared_ptr<U>& r ) noexcept;
+```

@@ -1,0 +1,120 @@
+---
+title:                  operator==, !=, <, <=, >, >=, <=> (std::shared_ptr)
+tags:                   [memory,shared_ptr]
+hide_title:             true
+---
+import Columns                                  from "@site-comps/Columns";
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import Tabs						                from "@theme/Tabs";
+import TabItem					                from "@theme/TabItem";
+
+import CMPCPP20                                 from ".//_codes/operator_cmp/cpp20.mdx"
+import CMPCPP11                                 from ".//_codes/operator_cmp/cpp11.mdx"
+
+# operator==, !=, &lt;, &lt;=, >, >=, &lt;=> (std::shared_ptr)
+
+Defined in header `<memory>`.
+
+<Tabs>
+<TabItem value="cpp20" label="C++20" default>
+    <CMPCPP20/>
+</TabItem>
+<TabItem value="cpp11" label="C++11">
+    <CMPCPP11/>
+</TabItem>
+</Tabs>
+
+
+Compares two `shared_ptr<T>` objects or compares `shared_ptr<T>` with a `null` pointer.
+
+Note that the comparison operators for `shared_ptr` simply compare pointer values; the actual objects pointed to are not compared. 
+Having `operator<` defined for `shared_ptr` allows `shared_ptr`s to be used as keys in associative containers, like `std::map` and `std::set`.
+
+The `<`, `<=`, `>`, `>=`, and `!=` operators are synthesized from `operator<=>` and `operator==` respectively (since C++20).
+
+### Parameters
+
+`lhs` - the left-hand `shared_ptr` to compare
+`rhs` - the right-hand `shared_ptr` to compare
+
+### Return value
+1) `lhs.get() == rhs.get()` <br/>
+2) `!(lhs == rhs)` <br/>
+3) `std::less<V>()(lhs.get(), rhs.get())`, where `V` is the composite pointer type of `std::shared_ptr<T>::element_type*` and `std::shared_ptr<U>::element_type*` <br/>
+4) `rhs < lhs` <br/>
+5) `!(rhs < lhs)` <br/>
+6) `!(lhs < rhs)` <br/>
+7) `std::compare_three_way{}(x.get(), y.get())` <br/>
+8) `!lhs` <br/>
+9) `!rhs` <br/>
+10) `(bool)lhs` <br/>
+11) `(bool)rhs` <br/>
+12) `std::less<std::shared_ptr<T>::element_type*>()(lhs.get(), nullptr)` <br/>
+13) `std::less<std::shared_ptr<T>::element_type*>()(nullptr, rhs.get())` <br/>
+14) `nullptr < lhs` <br/>
+15) `rhs < nullptr` <br/>
+16) `!(nullptr < lhs)` <br/>
+17) `!(rhs < nullptr)` <br/>
+18) `!(lhs < nullptr)` <br/>
+19) `!(nullptr < rhs)` <br/>
+20) `std::compare_three_way{}(x.get(), static_cast<std::shared_ptr<T>::element_type*>(nullptr))` <br/>
+
+### Notes
+In all cases, it is the stored pointer (the one returned by `get()`) that is compared, rather than the managed pointer 
+(the one passed to the deleter when `use_count` goes to zero). The two pointers may differ in a `shared_ptr` created using the aliasing constructor.
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <memory>
+ 
+int main()
+{
+    std::shared_ptr<int> p1(new int(42));
+    std::shared_ptr<int> p2(new int(42));
+ 
+    std::cout << std::boolalpha
+        << "(p1 == p1)       : " 
+        << (p1 == p1) << '\n'
+        << "(p1 <=> p1) == 0 : " 
+        << ((p1 <=> p1) == 0) << '\n' // Since C++20
+ 
+    // p1 and p2 point to different memory locations, so p1 != p2
+        << "(p1 == p2)       : " 
+        << (p1 == p2) << '\n'
+        << "(p1 < p2)        : " 
+        << (p1 < p2) << '\n'
+        << "(p1 <=> p2) < 0  : " 
+        << ((p1 <=> p2) < 0) << '\n'   // Since C++20
+        << "(p1 <=> p2) == 0 : " 
+        << ((p1 <=> p2) == 0) << '\n'; // Since C++20
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+(p1 == p1)       : true
+(p1 <=> p1) == 0 : true
+(p1 == p2)       : false
+(p1 < p2)        : true
+(p1 <=> p2) < 0  : true
+(p1 <=> p2) == 0 : false
+```
+
+</div>
+</Columns>
+
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|DR	|Applied to|	Behavior as published|	Correct behavior|
+|:---:|:---:|:---:|:---:|
+|LWG 3427	|C++20|	`operator<=>(shared_ptr, nullptr_t)` was ill-formed|	definition fixed|
