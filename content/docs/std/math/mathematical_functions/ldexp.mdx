@@ -1,0 +1,147 @@
+---
+title:                  Ldexp
+description:            Standard function
+tags:                   [math,ldexp]
+#slug:                  /std/math/mathematical_functions/ldexp/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Ldexp_Function_Declaration_Cpp11         from "./ldexp/_codes/ldexp_function_declaration/cpp11.mdx";
+import  Ldexp_Function_Declaration_Cpp23         from "./ldexp/_codes/ldexp_function_declaration/cpp23.mdx";
+
+# Ldexp
+
+Defined in header `<cmath>`.
+
+### Description
+Multiplies a floating point value `num` by the number `2` raised to the `exp` power. The library provides overloads of `std::ldexp` 
+for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+
+`Additional overloads` are provided for all integer types, which are treated as `double`
+(since C++11).
+
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Ldexp_Function_Declaration_Cpp23 />,
+    "cpp11" : <Ldexp_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+`exp` - integer value
+
+### Return value
+
+If no errors occur, `num` multiplied by 2 to the power of `exp` (num×2<sup>exp</sup>) is returned.
+
+If a range error due to overflow occurs, `±HUGE_VAL`, `±HUGE_VALF`, or `±HUGE_VALL` is returned.
+
+If a range error due to underflow occurs, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+Unless a range error occurs, FE_INEXACT is never raised (the result is exact)<br/>
+Unless a range error occurs, the current rounding mode is ignored<br/>
+If `num` is `±0`, it is returned, unmodified<br/>
+If `num` is `±∞`, it is returned, unmodified<br/>
+If `exp` is 0, then `num` is returned, unmodified<br/>
+If `num` is NaN, NaN is returned<br/>
+
+### Notes
+
+On binary systems (where FLT_RADIX is 2), `std::ldexp` is equivalent to `std::scalbn`.
+
+The function `std::ldexp` ("load exponent"), together with its dual, `std::frexp`, 
+can be used to manipulate the representation of a floating-point number without direct bit manipulations.
+
+On many implementations, `std::ldexp` is less efficient than multiplication or division by a power of two using arithmetic operators.
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, 
+
+`std::ldexp(num, exp)` has the same effect as `std::ldexp(static_cast<double>(num), exp)`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::cout 
+        << "ldexp(7, -4) = " 
+        << std::ldexp(7, -4) << '\n'
+        << "ldexp(1, -1074) = " 
+        << std::ldexp(1, -1074)
+        << " (minimum positive subnormal double)\n"
+        << "ldexp(nextafter(1,0), 1024) = "
+        << std::ldexp(std::nextafter(1,0), 1024)
+        << " (largest finite double)\n";
+ 
+    // special values
+    std::cout 
+        << "ldexp(-0, 10) = " 
+        << std::ldexp(-0.0, 10) << '\n'
+        << "ldexp(-Inf, -1) = " 
+        << std::ldexp(-INFINITY, -1) << '\n';
+ 
+    // error handling
+    errno = 0;
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "ldexp(1, 1024) = " 
+        << std::ldexp(1, 1024) << '\n';
+ 
+    if (errno == ERANGE)
+        std::cout 
+            << "errno == ERANGE: " 
+            << std::strerror(errno) << '\n';
+    if (std::fetestexcept(FE_OVERFLOW))
+        std::cout 
+            << "FE_OVERFLOW raised\n";
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+ldexp(7, -4) = 0.4375
+ldexp(1, -1074) = 4.94066e-324 (minimum positive subnormal double)
+ldexp(nextafter(1,0), 1024) = 1.79769e+308 (largest finite double)
+ldexp(-0, 10) = -0
+ldexp(-Inf, -1) = -inf
+ldexp(1, 1024) = inf
+errno == ERANGE: Numerical result out of range
+FE_OVERFLOW raised
+```
+
+</div>
+</Columns>

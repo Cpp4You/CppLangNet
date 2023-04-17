@@ -1,0 +1,19 @@
+```cpp
+// 1)
+constexpr /* floating-point-type */
+            remquo ( /* floating-point-type */ x,
+                     /* floating-point-type */ y, int* quo );
+// 2)
+constexpr float remquof( float x, float y, int* quo );
+// 3)
+constexpr long double remquol( long double x, long double y, int* quo );
+```
+
+`Additional Overloads`
+
+```cpp
+// 4)
+template< class Arithmetic1, class Arithmetic2 >
+/* common-floating-point-type */
+    constexpr remquo( Arithmetic1 x, Arithmetic2 y, int* quo );
+```

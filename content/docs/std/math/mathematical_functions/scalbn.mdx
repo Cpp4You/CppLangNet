@@ -1,0 +1,148 @@
+---
+title:                  Scalbn
+description:            Standard function
+tags:                   [math,scalbn]
+#slug:                  /std/math/mathematical_functions/scalbn/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Scalbn_Function_Declaration_Cpp11         from "./scalbn/_codes/scalbn_function_declaration/cpp11.mdx";
+import  Scalbn_Function_Declaration_Cpp23         from "./scalbn/_codes/scalbn_function_declaration/cpp23.mdx";
+
+# Scalbn
+
+Defined in header `<cmath>`.
+
+### Description
+
+Multiplies a floating point value `num` by `FLT_RADIX` raised to power `exp`. The library provides overloads of `std::scalbn` and `std::scalbln` 
+for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Scalbn_Function_Declaration_Cpp23 />,
+    "cpp11" : <Scalbn_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+`exp` - integer value
+
+### Return value
+
+If no errors occur, `num` multiplied by `FLT_RADIX` to the power of `exp` (num×FLT_RADIX<sup>exp</sup>) is returned.
+
+If a range error due to overflow occurs, `±HUGE_VAL`, `±HUGE_VALF`, or `±HUGE_VALL` is returned.
+
+If a range error due to underflow occurs, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+Unless a range error occurs, FE_INEXACT is never raised (the result is exact)
+Unless a range error occurs, the current rounding mode is ignored
+If `num` is `±0`, it is returned, unmodified
+If `num` is `±∞`, it is returned, unmodified
+If `exp` is `0`, then `num` is returned, unmodified
+If `num` is NaN, NaN is returned
+
+### Notes
+
+On binary systems (where FLT_RADIX is 2), `std::scalbn` is equivalent to `std::ldexp`.
+
+Although `std::scalbn` and `std::scalbln` are specified to perform the operation efficiently, 
+on many implementations they are less efficient than multiplication or division by a power of two using arithmetic operators.
+
+The function name stands for "new scalb", where *scalb* was an older non-standard function whose second argument had floating-point type.
+
+The `std::scalbln` function is provided because the factor required to scale from the smallest positive floating-point value to the 
+largest finite one may be greater than 32767, the standard-guaranteed `INT_MAX`. In particular, for the 80-bit long double, the factor is 32828.
+
+The GNU implementation does not set errno regardless of math_errhandling.
+
+The additional overloads are not required to be provided exactly as `Additional overloads`. They only need to be sufficient to ensure that for their argument `num` of integer type:
+
+`std::scalbn(num, exp)` has the same effect as `std::scalbn(static_cast<double>(num), exp)` <br/>
+`std::scalbln(num, exp)` has the same effect as `std::scalbln(static_cast<double>(num), exp)` <br/>
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::cout 
+        << "scalbn(7, -4) = " 
+        << std::scalbn(7, -4) << '\n'
+        << "scalbn(1, -1074) = " 
+        << std::scalbn(1, -1074)
+        << " (minimum positive subnormal double)\n"
+        << "scalbn(nextafter(1,0), 1024) = "
+        << std::scalbn(std::nextafter(1,0), 1024)
+        << " (largest finite double)\n";
+ 
+    // special values
+    std::cout 
+        << "scalbn(-0, 10) = " 
+        << std::scalbn(-0.0, 10) << '\n'
+        << "scalbn(-Inf, -1) = " 
+        << std::scalbn(-INFINITY, -1) << '\n';
+ 
+    // error handling
+    errno = 0;
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "scalbn(1, 1024) = " 
+        << std::scalbn(1, 1024) << '\n';
+ 
+    if (errno == ERANGE)
+        std::cout 
+            << "errno == ERANGE: " 
+            << std::strerror(errno) << '\n';
+    if (std::fetestexcept(FE_OVERFLOW))
+        std::cout 
+            << "FE_OVERFLOW raised\n";
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+scalbn(7, -4) = 0.4375
+scalbn(1, -1074) = 4.94066e-324 (minimum positive subnormal double)
+scalbn(nextafter(1,0), 1024) = 1.79769e+308 (largest finite double)
+scalbn(-0, 10) = -0
+scalbn(-Inf, -1) = -inf
+scalbn(1, 1024) = inf
+errno == ERANGE: Numerical result out of range
+FE_OVERFLOW raised
+```
+
+</div>
+</Columns>

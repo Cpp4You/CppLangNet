@@ -1,0 +1,123 @@
+---
+title:              Remainder
+description:        Structure type, return of the std::div function
+tags:               [math, remainder]
+# slug:               /std/math/mathematical_functions/remainder/
+hide_title:         true
+---
+
+import SwitchView   from "@site-comps/SwitchView";
+import Columns	  	from "@site-comps/Columns";
+
+import Remainder_Function_Declaration_Cpp11         from "./remainder/_codes/remainder_function_declaration/cpp11.mdx";
+import Remainder_Function_Declaration_Cpp23         from "./remainder/_codes/remainder_function_declaration/cpp23.mdx";
+
+# Remainder
+
+Defined in header `<cmath>`.
+
+### Description
+
+The IEEE floating-point remainder of the division operation `x / y` calculated by this function is exactly the value `x - quo * y`, where the value `quo` is the integral value nearest the exact value `x / y`. When `|quo-x/y| = ½`, the value quo is chosen to be even.
+
+In contrast to [std::fmod](/docs/std/math/mathematical_functions/fmod/), the returned value is not guaranteed to have the same sign as `x`.
+
+If the returned value is zero, it will have the same sign as `x`.
+
+### Declarations 
+
+<SwitchView content={{
+    "cpp23": <Remainder_Function_Declaration_Cpp23  />,
+    "cpp11": <Remainder_Function_Declaration_Cpp11  />,
+}}/>
+
+
+### Parameters
+
+`x`, `y` - floating-point or integer values
+
+### Return value
+
+If successful, returns the IEEE floating-point remainder of the division `x / y` as defined above.
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported)
+
+If a range error occurs due to underflow, the correct result is returned.
+
+If `y` is zero, but the domain error does not occur, zero is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+Domain error may occur if `y` is zero.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559),
+
+The current rounding mode has no effect.
+FE_INEXACT is never raised, the result is always exact.<br/>
+If `x` is ±∞ and `y` is not NaN, NaN is returned and FE_INVALID is raised<br/>
+If `y` is ±0 and `x` is not NaN, NaN is returned and FE_INVALID is raised<br/>
+If either argument is NaN, NaN is returned
+
+### Examples
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cfenv>
+#include <cmath>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+ 
+int main()
+{
+    std::cout 
+        << "remainder(+5.1, +3.0) = " 
+        << std::remainder(5.1, 3) << '\n'
+        << "remainder(-5.1, +3.0) = " 
+        << std::remainder(-5.1, 3) << '\n'
+        << "remainder(+5.1, -3.0) = " 
+        << std::remainder(5.1, -3) << '\n'
+        << "remainder(-5.1, -3.0) = " 
+        << std::remainder(-5.1, -3) << '\n';
+ 
+    // special values
+    std::cout 
+        << "remainder(-0.0, 1.0) = " 
+        << std::remainder(-0.0, 1) << '\n'
+        << "remainder(5.1, Inf) = " 
+        << std::remainder(5.1, INFINITY) << '\n';
+ 
+    // error handling
+    std::feclearexcept(FE_ALL_EXCEPT);
+    std::cout 
+        << "remainder(+5.1, 0) = " 
+        << std::remainder(5.1, 0) << '\n';
+    if (fetestexcept(FE_INVALID))
+        std::cout 
+            << "FE_INVALID raised\n";
+}
+```
+
+</div>
+
+
+<div>
+
+```plaintext title="Possible Result"
+remainder(+5.1, +3.0) = -0.9
+remainder(-5.1, +3.0) = 0.9
+remainder(+5.1, -3.0) = -0.9
+remainder(-5.1, -3.0) = 0.9
+remainder(-0.0, 1.0) = -0
+remainder(5.1, Inf) = 5.1
+remainder(+5.1, 0) = -nan
+FE_INVALID raised
+```
+
+
+</div>
+</Columns>

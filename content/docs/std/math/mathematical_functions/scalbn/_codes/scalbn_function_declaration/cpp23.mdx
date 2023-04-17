@@ -1,0 +1,33 @@
+`int exponent`
+```cpp
+// 1)
+constexpr /* floating-point-type */
+            scalbn ( /* floating-point-type */ num, int exp );
+// 2)
+constexpr float scalbnf( float num, int exp );
+// 3)
+constexpr long double scalbnl( long double num, int exp );
+```
+
+`long exponent`
+
+```cpp
+// 4)
+constexpr /* floating-point-type */
+            scalbln ( /* floating-point-type */ num, long exp );
+// 5)
+constexpr float scalblnf( float num, long exp );
+// 6)
+constexpr long double scalblnl( long double num, long exp );
+
+```
+
+`Additional Overloads`
+```cpp
+// 7)
+template< class Integer >
+constexpr double scalbn( Integer num, int exp );
+// 8)
+template< class Integer >
+constexpr double scalbln( Integer num, long exp );
+```

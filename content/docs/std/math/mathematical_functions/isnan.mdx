@@ -1,0 +1,101 @@
+---
+title:                  Isnan
+description:            Standard function
+tags:                   [math,isnan]
+#slug:                  /std/math/mathematical_functions/isnan/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Isnan_Function_Declaration_Cpp11         from "./isnan/_codes/isnan_function_declaration/cpp11.mdx";
+import  Isnan_Function_Declaration_Cpp23         from "./isnan/_codes/isnan_function_declaration/cpp23.mdx";
+
+# Isnan
+
+Defined in header `<cmath>`.
+
+### Description
+
+Determines if the given floating point number `num` is a not-a-number (`NaN`) value. <br/>
+The library provides overloads for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).<br/>
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Isnan_Function_Declaration_Cpp23 />,
+    "cpp11" : <Isnan_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+`true` if `num` is a `NaN`, `false` otherwise.
+
+### Notes
+
+There are many different `NaN` values with different sign bits and payloads, see `std::nan` and `std::numeric_limits::quiet_NaN`.
+
+`NaN` values never compare equal to themselves or to other `NaN` values. 
+Copying a `NaN` is not required, by IEEE-754, to preserve its bit representation (sign and payload), though most implementation do.
+
+Another way to test if a floating-point value is `NaN` is to compare it with itself: `bool is_nan(double x) { return x != x; }`.
+
+The additional overloads are not required to be provided exactly as `Additional overloads`. 
+They only need to be sufficient to ensure that for their argument num of integer type,<br/>
+ `std::isnan(num)` has the same effect as `std::isnan(static_cast<double>(num))`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cfloat>
+#include <cmath>
+#include <iostream>
+ 
+int main()
+{
+    std::cout 
+        << std::boolalpha
+        << "isnan(NaN) = " 
+        << std::isnan(NAN) << '\n'
+        << "isnan(Inf) = " 
+        << std::isnan(INFINITY) << '\n'
+        << "isnan(0.0) = " 
+        << std::isnan(0.0) << '\n'
+        << "isnan(DBL_MIN/2.0) = " 
+        << std::isnan(DBL_MIN / 2.0) << '\n'
+        << "isnan(0.0 / 0.0)   = " 
+        << std::isnan(0.0 / 0.0) << '\n'
+        << "isnan(Inf - Inf)   = " 
+        << std::isnan(INFINITY - INFINITY) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+isnan(NaN) = true
+isnan(Inf) = false
+isnan(0.0) = false
+isnan(DBL_MIN/2.0) = false
+isnan(0.0 / 0.0)   = true
+isnan(Inf - Inf)   = true
+```
+
+</div>
+</Columns>

@@ -1,0 +1,131 @@
+---
+title:                  Cos
+description:            Standard cos function
+tags:                   [math, cos]
+#slug:                  /std/math/mathematical_functions/cos/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Cos_Function_Declaration_Cpp11         from "./cos/_codes/cos_function_declaration/cpp11.mdx";
+import  Cos_Function_Declaration_Cpp23         from "./cos/_codes/cos_function_declaration/cpp23.mdx";
+
+# Cos
+
+Defined in header `<cmath>`.
+
+### Description
+Computes the cosine of `num` (measured in radians). The library provides overloads of `std::sin` for all cv-unqualified floating-point 
+types as the type of the parameter `num`. (since C++23)
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+(since C++11)
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Cos_Function_Declaration_Cpp23 />,
+    "cpp11" : <Cos_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value representing angle in radians
+
+### Return value
+If no errors occur, the cosine of `num` (cos(num)) in the range [-1, +1], is returned.
+
+
+The result may have little or no significance if the magnitude of `num` is large.(until C++11)
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported).
+
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+if the argument is `±0`, the result is `1.0`
+if the argument is `±∞`, NaN is returned and `FE_INVALID` is raised
+if the argument is NaN, NaN is returned
+
+### Notes
+
+The case where the argument is infinite is not specified to be a domain error in C, but it is defined as a domain error in 
+[POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/cos.html).
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+They only need to be sufficient to ensure that for their argument num of integer type, <br/>
+`std::cos(num)` has the same effect as `std::cos(static_cast<double>(num))`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cmath>
+#include <iostream>
+#include <numbers>
+ 
+// #pragma STDC FENV_ACCESS ON
+const double pi = std::numbers::pi; // or std::acos(-1) before C++20
+ 
+int main()
+{
+    // typical usage
+    std::cout 
+        << "cos(pi/3) = " 
+        << std::cos(pi / 3) << '\n'
+        << "cos(pi/2) = " 
+        << std::cos(pi / 2) << '\n'
+        << "cos(-3*pi/4) = " 
+        << std::cos(-3 * pi / 4) << '\n';
+ 
+    // special values
+    std::cout 
+        << "cos(+0) = " 
+        << std::cos(0.0) << '\n'
+        << "cos(-0) = " 
+        << std::cos(-0.0) << '\n';
+ 
+    // error handling
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "cos(INFINITY) = " 
+        << std::cos(INFINITY) << '\n';
+    if (std::fetestexcept(FE_INVALID))
+        std::cout 
+            << "FE_INVALID raised\n";
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+cos(pi/3) = 0.5
+cos(pi/2) = 6.12323e-17
+cos(-3*pi/4) = -0.707107
+cos(+0) = 1
+cos(-0) = 1
+cos(INFINITY) = -nan
+FE_INVALID raised
+```
+
+</div>
+</Columns>

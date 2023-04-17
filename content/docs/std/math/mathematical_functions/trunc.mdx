@@ -1,0 +1,117 @@
+---
+title:                  Trunc
+description:            Standard function
+tags:                   [math,trunc]
+#slug:                  /std/math/mathematical_functions/trunc/
+hide_title:             true
+---
+
+import Image        from "@site-comps/Image";
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Trunc_Function_Declaration_Cpp11         from "./trunc/_codes/trunc_function_declaration/cpp11.mdx";
+import  Trunc_Function_Declaration_Cpp23         from "./trunc/_codes/trunc_function_declaration/cpp23.mdx";
+
+# Trunc
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the nearest integer not greater in magnitude than `num`. The library provides overloads of `std::trunc` 
+for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Trunc_Function_Declaration_Cpp23 />,
+    "cpp11" : <Trunc_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+If no errors occur, the nearest integer value not greater in magnitude than `num` (in other words, `num` rounded towards zero) is returned.
+
+<Image maxheight={300}
+        src="/img/doc/math/trunc/math-trunc.svg"
+    />
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+The current rounding mode has no effect. <br/>
+If `num` is `±∞`, it is returned, unmodified<br/>
+If `num` is `±0`, it is returned, unmodified<br/>
+If `num` is NaN, NaN is returned<br/>
+
+### Notes
+
+FE_INEXACT may be (but isn't required to be) raised when truncating a non-integer finite value.
+
+The largest representable floating-point values are exact integers in all standard floating-point formats, 
+so this function never overflows on its own; however the result may overflow any integer type (including std::intmax_t), when stored in an integer variable.
+
+The implicit conversion from floating-point to integral types also rounds towards zero, 
+but is limited to the values that can be represented by the target type.
+
+The additional overloads are not required to be provided exactly as `additional overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::trunc(num)` has the same effect as `std::trunc(static_cast<double>(num))`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <initializer_list>
+#include <iostream>
+ 
+int main()
+{
+    const auto data = std::initializer_list<double>
+    {
+        +2.7, -2.9, +0.7, -0.9, +0.0, 0.0, -INFINITY, +INFINITY, -NAN, +NAN
+    };
+ 
+    std::cout << std::showpos;
+    for (double const x : data)
+        std::cout << "trunc(" << x << ") == " 
+        << std::trunc(x) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+trunc(+2.7) == +2
+trunc(-2.9) == -2
+trunc(+0.7) == +0
+trunc(-0.9) == -0
+trunc(+0) == +0
+trunc(+0) == +0
+trunc(-inf) == -inf
+trunc(+inf) == +inf
+trunc(-nan) == -nan
+trunc(+nan) == +nan
+```
+
+</div>
+</Columns>

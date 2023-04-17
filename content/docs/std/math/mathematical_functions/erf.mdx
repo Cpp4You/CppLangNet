@@ -1,0 +1,120 @@
+---
+title:                  Erf
+description:            Standard error function
+tags:                   [math,erf]
+#slug:                  /std/math/mathematical_functions/erf/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Erf_Function_Declaration_Cpp11         from "./erf/_codes/erf_function_declaration/cpp11.mdx";
+import  Erf_Function_Declaration_Cpp23         from "./erf/_codes/erf_function_declaration/cpp23.mdx";
+
+# Erf 
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the error function of `num`. The library provides overloads of `std::erf` for all cv-unqualified floating-point types as the type of the parameter `num`. (since C++23)
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Erf_Function_Declaration_Cpp23 />,
+    "cpp11" : <Erf_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+
+`num` - floating-point or integer value
+### Return value
+
+If no errors occur, value of the error function of `num`, that is ,   `math here`        , is returned.
+If a range error occurs due to underflow, the correct result (after rounding), that is    `math here`       is returned.
+
+### Error handling
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+If the argument is `±0`, `±0` is returned
+If the argument is `±∞`, `±1` is returned
+If the argument is NaN, NaN is returned
+
+### Notes
+
+Underflow is guaranteed if `|num| < DBL_MIN * (std::sqrt(π)/2)`
+
+`math here`       is the probability that a measurement whose errors are subject to a normal distribution with standard deviation σ is less than x away from the mean value.
+The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, 
+`std::erf(num)` has the same effect as `std::erf(static_cast<double>(num))`.
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <iomanip>
+#include <iostream>
+ 
+double phi(double x1, double x2)
+{
+    return (std::erf(x2 / std::sqrt(2)) - std::erf(x1 / std::sqrt(2))) / 2;
+}
+ 
+int main()
+{
+    std::cout 
+        << "Normal variate probabilities:\n"
+        << std::fixed 
+        << std::setprecision(2);
+    for (int n = -4; n < 4; ++n)
+        std::cout 
+            << "[" << std::setw(2) 
+            << n
+            << ":" << std::setw(2) 
+            << n + 1 << "]: "
+            << std::setw(5) 
+            << 100 * phi(n, n + 1) << "%\n";
+ 
+    std::cout 
+        << "Special values:\n"
+        << "erf(-0) = " 
+        << std::erf(-0.0) << '\n'
+        << "erf(Inf) = " 
+        << std::erf(INFINITY) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+Normal variate probabilities:
+[-4:-3]:  0.13%
+[-3:-2]:  2.14%
+[-2:-1]: 13.59%
+[-1: 0]: 34.13%
+[ 0: 1]: 34.13%
+[ 1: 2]: 13.59%
+[ 2: 3]:  2.14%
+[ 3: 4]:  0.13%
+Special values:
+erf(-0) = -0.00
+erf(Inf) = 1.00
+```
+
+</div>
+</Columns>

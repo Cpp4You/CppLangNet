@@ -1,0 +1,45 @@
+```cpp
+// 1)
+constexpr /* floating-point-type */
+            round ( /* floating-point-type */ num );
+// 2)
+constexpr float roundf( float num );
+// 3)
+constexpr long double roundl( long double num );
+```
+
+`Rounding to long` 
+
+```cpp
+// 4)
+constexpr long lround( /* floating-point-type */ num );
+// 5)
+constexpr long lroundf( float num );
+// 6)
+constexpr long lroundl( long double num );
+```
+
+`Rounding to long long` 
+
+```cpp
+// 7)
+constexpr long long llround( /* floating-point-type */ num );
+// 8)
+constexpr long long llroundf( float num );
+// 9)
+constexpr long long llroundl( long double num );
+```
+
+`Additional Overloads`
+
+```cpp
+// 10)
+template< class Integer >
+constexpr double round( Integer num );
+// 11)
+template< class Integer >
+constexpr long lround( Integer num );
+// 12)
+template< class Integer >
+constexpr long long llround( Integer num );
+```

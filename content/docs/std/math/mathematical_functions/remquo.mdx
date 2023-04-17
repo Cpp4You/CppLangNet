@@ -1,0 +1,170 @@
+---
+title:                  Remquo
+description:            Standard remquo function
+tags:                   [math, remquo]
+#slug:                  /std/math/mathematical_functions/remquo/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import Remquo_Function_Declaration_Cpp11         from "./remquo/_codes/remquo_function_declaration/cpp11.mdx";
+import Remquo_Function_Declaration_Cpp23         from "./remquo/_codes/remquo_function_declaration/cpp23.mdx";
+
+
+# Remquo
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the floating-point remainder of the division operation `x / y` as the [std::remainder](/docs/std/math/mathematical_functions/remainder/) function does. 
+Additionally, the sign and at least the three of the last bits of `x / y` will be stored in `quo`, 
+sufficient to determine the octant of the result within a period.
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Remquo_Function_Declaration_Cpp23 />,
+    "cpp11" : <Remquo_Function_Declaration_Cpp11 />,
+}}/>
+
+### Parameters
+
+`x`,`y`	-	floating-point or integer values
+`quo`	-	pointer to int to store the sign and some bits of `x / y`
+
+
+### Return Value
+
+If successful, returns the floating-point remainder of the division `x / y` as defined in [std::remainder](/docs/std/math/mathematical_functions/remainder/), and stores, in `*quo`, 
+the sign and at least three of the least significant bits of `x / y` (formally, stores a value whose sign is the sign of `x / y` and whose magnitude is congruent modulo 2n 
+to the magnitude of the integral quotient of `x / y`, where `n` is an implementation-defined integer greater than or equal to 3).
+
+If `y` is zero, the value stored in `*quo` is unspecified.
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported).
+
+If a range error occurs due to underflow, the correct result is returned if subnormals are supported.
+
+If `y` is zero, but the domain error does not occur, zero is returned.
+
+
+### Error handling
+
+Domain error may occur if `y` is zero.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+The current rounding mode has no effect<br/>
+FE_INEXACT is never raised <br/>
+If `x` is ±∞ and `y` is not NaN, NaN is returned and FE_INVALID is raised<br/>
+If `y` is ±0 and `x` is not NaN, NaN is returned and FE_INVALID is raised<br/>
+If either `x` or `y` is NaN, NaN is returned<br/>
+
+
+
+
+
+
+### Examples
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cfenv>
+#include <cmath>
+#include <iostream>
+ 
+#ifndef __GNUC__
+#pragma STDC FENV_ACCESS ON
+#endif
+ 
+const double pi = std::acos(-1);
+// or std::numbers::pi since C++20
+ 
+double cos_pi_x_naive(double x)
+{
+    return std::cos(pi * x);
+}
+ 
+// the period is 2, values are (0;0.5) positive,
+// (0.5;1.5) negative, (1.5,2) positive
+double cos_pi_x_smart(double x)
+{
+    int quadrant;
+    double rem = std::remquo(x, 1, &quadrant);
+    quadrant = static_cast<unsigned>(quadrant) % 2; 
+    // The period is 2.
+    return quadrant == 0 ?  std::cos(pi * rem)
+                         : -std::cos(pi * rem);
+}
+ 
+int main()
+{
+    std::cout << std::showpos
+        << "naive:\n"
+        << "  cos(pi * 0.25) = " 
+        << cos_pi_x_naive(0.25) << '\n'
+        << "  cos(pi * 1.25) = " 
+        << cos_pi_x_naive(1.25) << '\n'
+        << "  cos(pi * 2.25) = " 
+        << cos_pi_x_naive(2.25) << '\n'
+        << "smart:\n"
+        << "  cos(pi * 0.25) = " 
+        << cos_pi_x_smart(0.25) << '\n'
+        << "  cos(pi * 1.25) = " 
+        << cos_pi_x_smart(1.25) << '\n'
+        << "  cos(pi * 2.25) = " 
+        << cos_pi_x_smart(2.25) << '\n'
+        << "naive:\n"
+        << "  cos(pi * 1000000000000.25) = "
+        << cos_pi_x_naive(1000000000000.25) << '\n'
+        << "  cos(pi * 1000000000001.25) = "
+        << cos_pi_x_naive(1000000000001.25) << '\n'
+        << "smart:\n"
+        << "  cos(pi * 1000000000000.25) = "
+        << cos_pi_x_smart(1000000000000.25) << '\n'
+        << "  cos(pi * 1000000000001.25) = "
+        << cos_pi_x_smart(1000000000001.25) << '\n';
+ 
+    // error handling
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    int quo;
+    std::cout << "remquo(+Inf, 1) = " 
+    << std::remquo(INFINITY, 1, &quo) << '\n';
+    if (fetestexcept(FE_INVALID))
+        std::cout << "  FE_INVALID raised\n";
+}
+```
+
+</div>
+
+
+<div>
+
+```plaintext title="Possible Result"
+naive:
+  cos(pi * 0.25) = +0.707107
+  cos(pi * 1.25) = -0.707107
+  cos(pi * 2.25) = +0.707107
+smart:
+  cos(pi * 0.25) = +0.707107
+  cos(pi * 1.25) = -0.707107
+  cos(pi * 2.25) = +0.707107
+naive:
+  cos(pi * 1000000000000.25) = +0.707123
+  cos(pi * 1000000000001.25) = -0.707117
+smart:
+  cos(pi * 1000000000000.25) = +0.707107
+  cos(pi * 1000000000001.25) = -0.707107
+remquo(+Inf, 1) = -nan
+  FE_INVALID raised
+```
+
+
+</div>
+</Columns>

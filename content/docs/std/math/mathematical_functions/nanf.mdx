@@ -1,0 +1,84 @@
+---
+title:                  NaN
+description:            nan
+tags:                   [math, nan]
+#slug:                  /std/math/mathematical_functions/nan/
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+
+# Nan
+
+Defined in header `<cmath>`.
+
+### Description
+
+Converts the character string `arg` into the corresponding quiet NaN value, as if by calling `std::strtof`, `std::strtod`, or `std::strtold`, respectively.
+
+### Declarations
+
+```cpp
+// 1)
+float nanf( const char* arg );
+// 2)
+double nan ( const char* arg );
+// 3)
+long double nanl( const char* arg );
+```
+
+### Parameters
+
+`arg` - narrow character string identifying the contents of a NaN
+
+
+### Return value
+
+The quiet NaN value that corresponds to the identifying string arg or zero if the implementation does not support quiet NaNs.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559), it also supports quiet NaNs.
+
+### Error handling
+This function is not subject to any of the error conditions specified in math_errhandling.
+
+### Examples
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <cstdint>
+#include <cstring>
+#include <iostream>
+ 
+int main()
+{
+    double f1 = std::nan("1");
+    std::uint64_t f1n; 
+    std::memcpy(&f1n, &f1, sizeof f1);
+    std::cout 
+        << "nan(\"1\") = " 
+        << f1 << " (" 
+        << std::hex << f1n << ")\n";
+ 
+    double f2 = std::nan("2");
+    std::uint64_t f2n; 
+    std::memcpy(&f2n, &f2, sizeof f2);
+    std::cout 
+        << "nan(\"2\") = " 
+        << f2 << " (" 
+        << std::hex << f2n << ")\n";
+}
+```
+</div>
+<div>
+
+```plaintext title="Possible Result"
+nan("1") = nan (7ff0000000000001)
+nan("2") = nan (7ff0000000000002)
+```
+
+
+</div>
+</Columns>

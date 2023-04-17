@@ -1,0 +1,113 @@
+---
+title:                  Floor
+description:            Standard nearest integer function
+tags:                   [math,floor]
+#slug:                  /std/math/mathematical_functions/floor/
+hide_title:             true
+---
+
+import Image        from "@site-comps/Image";
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+
+import  Floor_Function_Declaration_Cpp11         from "./floor/_codes/floor_function_declaration/cpp11.mdx";
+import  Floor_Function_Declaration_Cpp23         from "./floor/_codes/floor_function_declaration/cpp23.mdx";
+
+# Floor
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the largest integer value not greater than `num`. The library provides overloads of `std::floor` for all 
+cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+`Additional overloads` are provided for all integer types, which are treated as `double`
+(since C++11).
+
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Floor_Function_Declaration_Cpp23 />,
+    "cpp11" : <Floor_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+If no errors occur, the largest integer value not greater than `num`, that is *⌊num⌋*, is returned.
+
+<Image maxheight={300}
+        src="/img/doc/math/floor/math-floor.svg"
+    />
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+The current rounding mode has no effect. <br/>
+If num is `±∞`, it is returned, unmodified<br/>
+If num is `±0`, it is returned, unmodified<br/>
+If num is NaN, NaN is returned<br/>
+
+### Notes
+
+FE_INEXACT may be (but isn't required to be) raised when rounding a non-integer finite value.
+
+The largest representable floating-point values are exact integers in all standard floating-point formats, 
+so this function never overflows on its own; 
+however the result may overflow any integer type (including `std::intmax_t`), when stored in an integer variable.
+
+The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::floor(num)` has the same effect as `std::floor(static_cast<double>(num))`
+
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <iostream>
+ 
+int main()
+{
+    std::cout 
+        << std::fixed
+        << "floor(+2.7) = " 
+        << std::floor(+2.7) << '\n'
+        << "floor(-2.7) = " 
+        << std::floor(-2.7) << '\n'
+        << "floor(-0.0) = " 
+        << std::floor(-0.0) << '\n'
+        << "floor(-Inf) = " 
+        << std::floor(-INFINITY) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+floor(+2.7) = 2.000000
+floor(-2.7) = -3.000000
+floor(-0.0) = -0.000000
+floor(-Inf) = -inf
+```
+
+</div>
+</Columns>

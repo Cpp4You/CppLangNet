@@ -1,0 +1,111 @@
+---
+title:                  Atan
+description:            Standard trigonometric function
+tags:                   [math,atan]
+#slug:                  /std/math/mathematical_functions/atan/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Atan_Function_Declaration_Cpp11         from "./atan/_codes/atan_function_declaration/cpp11.mdx";
+import  Atan_Function_Declaration_Cpp23         from "./atan/_codes/atan_function_declaration/cpp23.mdx";
+
+# Atan
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the principal value of the arc tangent of `num`. 
+The library provides overloads of `std::atan` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+`Additional overloads` are provided for all integer types, which are treated as `double`
+(since C++11).
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Atan_Function_Declaration_Cpp23 />,
+    "cpp11" : <Atan_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+If no errors occur, the arc tangent of `num` (arctan(num)) in the range `[-π/2, π/2]` radians, is returned.
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+If the argument is `±0`, it is returned unmodified
+If the argument is `+∞`, `+π/2` is returned
+If the argument is `-∞`, `-π/2` is returned
+if the argument is NaN, NaN is returned
+
+### Notes
+[POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atan.html) 
+specifies that in case of underflow, `num` is returned unmodified, 
+and if that is not supported, an implementation-defined value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
+
+The additional overloads are not required to be provided exactly as `Additional overloads`. 
+They only need to be sufficient to ensure that for their argument num of integer type, 
+`std::atan(num)` has the same effect as `std::atan(static_cast<double>(num))`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <iostream>
+ 
+int main()
+{
+    std::cout 
+        << "atan(1) = " 
+        << atan(1) << '\n'
+        << "4*atan(1) = " 
+        << 4 * atan(1) << '\n';
+ 
+    // special values
+    std::cout 
+        << "atan(Inf) = " 
+        << atan(INFINITY) << '\n'
+        << "2*atan(Inf) = " 
+        << 2 * atan(INFINITY) << '\n'
+        << "atan(-0.0) = " 
+        << atan(-0.0) << '\n'
+        << "atan(+0.0) = " 
+        << atan(0) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+atan(1) = 0.785398
+4*atan(1) = 3.14159
+atan(Inf) = 1.5708
+2*atan(Inf) = 3.14159
+atan(-0.0) = -0
+atan(+0.0) = 0
+```
+
+</div>
+</Columns>

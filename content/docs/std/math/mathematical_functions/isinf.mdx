@@ -1,0 +1,104 @@
+---
+title:                  Isinf
+description:            Standard function
+tags:                   [math,isinf]
+#slug:                  /std/math/mathematical_functions/isinf/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Isinf_Function_Declaration_Cpp11         from "./isinf/_codes/isinf_function_declaration/cpp11.mdx";
+import  Isinf_Function_Declaration_Cpp23         from "./isinf/_codes/isinf_function_declaration/cpp23.mdx";
+
+# Isinf
+
+Defined in header `<cmath>`.
+
+### Description
+
+Determines if the given floating-point number `num` is a positive or negative infinity. <br/>
+The library provides overloads for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+`Additional overloads` are provided for all integer types, which are treated as `double`.
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Isinf_Function_Declaration_Cpp23 />,
+    "cpp11" : <Isinf_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num` - floating-point or integer value
+
+### Return value
+
+`true` if `num` is infinite, `false` otherwise.
+
+### Error handling
+
+
+### Notes
+
+The additional overloads are not required to be provided exactly as `Additional overloads`. 
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::isinf(num)` has the same effect as `std::isinf(static_cast<double>(num))`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cfloat>
+#include <cmath>
+#include <iostream>
+#include <limits>
+ 
+int main()
+{
+    const double max = std::numeric_limits<double>::max();
+    const double inf = std::numeric_limits<double>::infinity();
+ 
+    std::cout 
+        << std::boolalpha
+        << "isinf(NaN) = " 
+        << std::isinf(NAN) << '\n'
+        << "isinf(Inf) = " 
+        << std::isinf(INFINITY) << '\n'
+        << "isinf(max) = " 
+        << std::isinf(max) << '\n'
+        << "isinf(inf) = " 
+        << std::isinf(inf) << '\n'
+        << "isinf(0.0) = " 
+        << std::isinf(0.0) << '\n'
+        << "isinf(exp(800)) = " 
+        << std::isinf(std::exp(800)) << '\n'
+        << "isinf(DBL_MIN/2.0) = " 
+        << std::isinf(DBL_MIN / 2.0) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+isinf(NaN) = false
+isinf(Inf) = true
+isinf(max) = false
+isinf(inf) = true
+isinf(0.0) = false
+isinf(exp(800)) = true
+isinf(DBL_MIN/2.0) = false
+```
+
+</div>
+</Columns>

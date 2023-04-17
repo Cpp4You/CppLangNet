@@ -1,7 +1,5 @@
 ---
-sidebar_position:   3
 title:              Abs
-sidebar_label:      std::abs
 description:        Standard abs functions
 tags:               [math, abs]
 # slug:               /std/math/mathematical_functions/abs/
@@ -9,15 +7,15 @@ hide_title:         true
 ---
  
 import SwitchView   from "@site-comps/SwitchView";
-import Columns		from "@site-comps/Columns";
+import Columns	  	from "@site-comps/Columns";
 
-<!----------------- Codes ---------------------->
 import Abs_Function_Declaration_Cpp98_Simple            from "./abs/_codes/abs_function_declaration/cpp98.mdx";
 import Abs_Function_Declaration_Cpp11_Simple            from "./abs/_codes/abs_function_declaration/cpp11.mdx";
+import Abs_Function_Declaration_Cpp23_Simple            from "./abs/_codes/abs_function_declaration/cpp23.mdx";
 
 # Abs
 
-Defined in headers `<cstdlib>`, `<cmath>`.
+Defined in headers `<cstdlib>`, `<cinttypes>`, `<cmath>`.
 
 ### Description
 
@@ -25,8 +23,9 @@ Computes the absolute value of an integer number. The behavior is undefined if t
 
 ### Declarations 
 <SwitchView content={{
-    "cpp98" : <Abs_Function_Declaration_Cpp98_Simple />,
+    "cpp23" : <Abs_Function_Declaration_Cpp23_Simple />,
     "cpp11": <Abs_Function_Declaration_Cpp11_Simple />,
+    "cpp98" : <Abs_Function_Declaration_Cpp98_Simple />,
 }}/>
 
 ### Parameters

@@ -1,0 +1,176 @@
+---
+title:                  Atan2
+description:            Standard trigonometric function
+tags:                   [math,atan2]
+#slug:                  /std/math/mathematical_functions/atan2/
+hide_title:             true
+---
+
+import Image        from "@site-comps/Image"
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Atan2_Function_Declaration_Cpp11         from "./atan2/_codes/atan2_function_declaration/cpp11.mdx";
+import  Atan2_Function_Declaration_Cpp23         from "./atan2/_codes/atan2_function_declaration/cpp23.mdx";
+
+# Atan2
+
+Defined in header `<cmath>`.
+
+### Description
+Computes the arc tangent of `y / x` using the signs of arguments to determine the correct quadrant.  
+The library provides overloads of `std::atan2` for all cv-unqualified floating-point types as the type of the parameters `y` and `x` (since C++23).
+`Additional overloads` are provided for all other combinations of arithmetic types (since C++11).
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Atan2_Function_Declaration_Cpp23 />,
+    "cpp11" : <Atan2_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`y`, `x` - floating-point or integer values
+
+### Return value
+
+If no errors occur, the arc tangent of `y / x` (arctan(x/y)) in the range `[-π, +π]` radians, is returned.
+
+
+<Image maxheight={300}
+		src="/img/doc/math/atan2/math-atan2.png"
+	/>
+
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported).
+
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+Domain error may occur if `x` and `y` are both zero.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559),
+
+If `x` and `y` are both zero, domain error does not occur <br/>
+If `x` and `y` are both zero, range error does not occur either<br/>
+If `y` is zero, pole error does not occur<br/>
+If `y` is `±0` and `x` is negative or `-0`, `±π` is returned<br/>
+If `y` is `±0` and `x` is positive or `+0`,` ±0` is returned<br/>
+If `y` is `±∞` and `x` is finite, `±π/2` is returned<br/>
+If `y` is `±∞` and `x` is `-∞`, `±3π/4` is returned<br/>
+If `y` is `±∞` and `x` is `+∞`, `±π/4` is returned<br/>
+If `x` is `±0` and `y` is negative, `-π/2` is returned<br/>
+If `x` is `±0` and `y` is positive, `+π/2` is returned<br/>
+If `x` is `-∞` and `y` is finite and positive, `+π` is returned<br/>
+If `x` is `-∞` and `y` is finite and negative, `-π` is returned<br/>
+If `x` is `+∞` and `y` is finite and positive, `+0` is returned<br/>
+If `x` is `+∞` and `y` is finite and negative, `-0` is returned<br/>
+If either `x` is NaN or `y` is NaN, NaN is returned<br/>
+
+### Notes
+
+`std::atan2(y, x)` is equivalent to 
+```cpp
+std::arg(std::complex<std::common_type_t<decltype(x), decltype(y)>>(x, y))
+```
+
+[POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atan2.html)
+specifies that in case of underflow, `y / x` is the value returned, and if that is not supported, an implementation-defined value no 
+greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
+
+The additional overloads are not required to be provided exactly as `Additional overloads`. 
+They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
+
+If `num1` or `num2` has type `long double`, then  <br/>
+`std::atan2(num1, num2)` has the same effect as  <br/>
+`std::atan2(static_cast<long double>(num1), static_cast<long double>(num2))`.
+
+Otherwise, if `num1` and/or `num2` has type `double` or an integer type, then  <br/>
+`std::atan2(num1, num2)` has the same effect as  <br/>
+`std::atan2(static_cast<double>(num1), static_cast<double>(num2))`.
+
+Otherwise, if `num1` or `num2` has type `float`, then  <br/>
+`std::atan2(num1, num2)` has the same effect as  <br/>
+`std::atan2(static_cast<float>(num1), static_cast<float>(num2))`. (until C++23)
+
+If `num1` and `num2` have arithmetic types, then  <br/>
+`std::atan2(num1, num2)` has the same effect as  <br/>
+`std::atan2(static_cast</* common-floating-point-type */>(num1), static_cast</* common-floating-point-type */>(num2))`.
+     
+where `/* common-floating-point-type */` is the floating-point type with the greatest floating-point conversion rank and 
+greatest floating-point conversion subrank between the types of `num1` and `num2`, 
+arguments of integer type are considered to have the same floating-point conversion rank as `double`.
+
+If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cmath>
+#include <iostream>
+ 
+void print_coordinates(int x, int y)
+{
+    std::cout 
+        << std::showpos
+        << "(x:" << x << ", y:" 
+        << y << ") cartesian is "
+        << "(r:" << std::hypot(x, y)
+        << ", phi:" << std::atan2(y, x) 
+        << ") polar\n";
+}
+ 
+int main()
+{
+    // normal usage: the signs of the two arguments determine the quadrant
+    print_coordinates(+1, +1); 
+    // atan2( 1,  1) =  +pi/4, Quad I
+    print_coordinates(-1, +1); 
+    // atan2( 1, -1) = +3pi/4, Quad II
+    print_coordinates(-1, -1); 
+    // atan2(-1, -1) = -3pi/4, Quad III
+    print_coordinates(+1, -1); 
+    // atan2(-1,  1) =  -pi/4, Quad IV
+ 
+    // special values
+    std::cout 
+        << std::noshowpos
+        << "atan2(0, 0) = " 
+        << atan2(0, 0) << '\n'
+        << "atan2(0,-0) = " 
+        << atan2(0, -0.0) << '\n'
+        << "atan2(7, 0) = " 
+        << atan2(7, 0) << '\n'
+        << "atan2(7,-0) = " 
+        << atan2(7, -0.0) << '\n';
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+(x:+1, y:+1) cartesian is (r:1.41421, phi:0.785398) polar
+(x:-1, y:+1) cartesian is (r:1.41421, phi:2.35619) polar
+(x:-1, y:-1) cartesian is (r:1.41421, phi:-2.35619) polar
+(x:+1, y:-1) cartesian is (r:1.41421, phi:-0.785398) polar
+atan2(0, 0) = 0
+atan2(0,-0) = 3.14159
+atan2(7, 0) = 1.5708
+atan2(7,-0) = 1.5708
+```
+
+</div>
+</Columns>

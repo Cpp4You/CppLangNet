@@ -1,0 +1,17 @@
+```cpp
+// 1)
+constexpr /* floating-point-type */
+            frexp ( /* floating-point-type */ num, int* exp );
+// 2)
+constexpr float frexpf( float num, int* exp );
+// 3)
+constexpr long double frexpl( long double num, int* exp );
+```
+
+`Additional Overloads`
+
+```cpp
+// 4)
+template< class Integer >
+constexpr double frexp ( Integer num, int* exp );
+```

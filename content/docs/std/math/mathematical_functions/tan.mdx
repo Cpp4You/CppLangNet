@@ -1,0 +1,137 @@
+---
+title:                  Tan
+description:            Standard function
+tags:                   [math,tan ]
+#slug:                  /std/math/mathematical_functions/tan/
+hide_title:             true
+---
+
+import SwitchView   from '@site-comps/SwitchView';
+import Columns      from "@site-comps/Columns";
+
+import  Tan_Function_Declaration_Cpp11         from "./tan/_codes/tan_function_declaration/cpp11.mdx";
+import  Tan_Function_Declaration_Cpp23         from "./tan/_codes/tan_function_declaration/cpp23.mdx";
+
+# Tan
+
+Defined in header `<cmath>`.
+
+### Description
+
+Computes the tangent of `num` (measured in radians). The library provides overloads of `std::tan` for all cv-unqualified floating-point types as the type of the parameter num. (since C++23)
+`Additional overloads` are provided for all integer types, which are treated as `double`.(since C++11)
+
+
+
+### Declarations
+
+<SwitchView content ={{
+    "cpp23" : <Tan_Function_Declaration_Cpp23 />,
+    "cpp11" : <Tan_Function_Declaration_Cpp11 />,
+}}/>
+
+
+### Parameters
+ 
+`num`	-	floating-point or integer value representing angle in radians
+
+### Return value
+
+If no errors occur, the tangent of `num` (tan(num)) is returned.
+
+The result may have little or no significance if the magnitude of `num` is large. (until C++11)
+
+If a domain error occurs, an implementation-defined value is returned (NaN where supported).
+
+If a range error occurs due to underflow, the correct result (after rounding) is returned.
+
+### Error handling
+
+Errors are reported as specified in math_errhandling.
+
+If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+
+if the argument is `±0`, it is returned unmodified <br/>
+if the argument is `±∞`, NaN is returned and `FE_INVALID` is raised<br/>
+if the argument is NaN, NaN is returned<br/>
+
+### Notes
+The case where the argument is infinite is not specified to be a domain error in C (to which C++ defers), but it is defined as a domain error in 
+[POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/tan.html).
+
+The function has mathematical poles at `π(1/2 + n)`; however no common floating-point representation is able to represent `π/2` exactly,
+ thus there is no value of the argument for which a pole error occurs.
+
+The additional overloads are not required to be provided exactly as `Additional overloads`.
+They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+`std::tan(num)` has the same effect as `std::tan(static_cast<double>(num))`.
+
+### Examples
+
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cerrno>
+#include <cfenv>
+#include <cmath>
+#include <iostream>
+ 
+// #pragma STDC FENV_ACCESS ON
+const double pi = std::acos(-1); // or C++20's std::numbers::pi
+ 
+int main()
+{
+    // typical usage
+    std::cout 
+        << "tan(1*pi/4) = " 
+        << std::tan(1*pi/4) 
+        << '\n' // 45°
+        << "tan(3*pi/4) = " 
+        << std::tan(3*pi/4) 
+        << '\n' // 135°
+        << "tan(5*pi/4) = " 
+        << std::tan(5*pi/4) 
+        << '\n' // -135°
+        << "tan(7*pi/4) = " 
+        << std::tan(7*pi/4) 
+        << '\n'; // -45°
+ 
+    // special values
+    std::cout 
+        << "tan(+0) = " 
+        << std::tan(0.0) << '\n'
+        << "tan(-0) = " 
+        << std::tan(-0.0) << '\n';
+ 
+    // error handling
+    std::feclearexcept(FE_ALL_EXCEPT);
+ 
+    std::cout 
+        << "tan(INFINITY) = " 
+        << std::tan(INFINITY) << '\n';
+    if (std::fetestexcept(FE_INVALID))
+        std::cout 
+            << "FE_INVALID raised\n";
+}
+
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+tan(1*pi/4) = 1
+tan(3*pi/4) = -1
+tan(5*pi/4) = 1
+tan(7*pi/4) = -1
+tan(+0) = 0
+tan(-0) = -0
+tan(INFINITY) = -nan
+```
+
+</div>
+</Columns>

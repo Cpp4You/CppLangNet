@@ -1,8 +1,53 @@
+Defined in `<cstdlib>`:
+
 ```cpp
 // 1)
-int abs (int n);
+int abs ( int n );
 // 2)
-long int abs (long int n);
+long int abs ( long int n );
 // 3)
-long long int abs (long long int n);
+long long int abs ( long long int n );
+// 4)
+long labs( long n );
+// 5)
+long long llabs( long long n );
+// 6)
+float abs( float n );
+// 7)
+double abs( double n );
+// 8)
+long double abs( long double n );
+```
+
+Defined in `<cmath>`:
+
+```cpp
+// 9)
+float fabs ( float n );
+// 10)
+double fabs ( double n );
+// 11)
+long double fabs ( long double n );
+// 12)
+float fabsf( float n );
+// 13)
+long double fabsl( long double n );
+```
+
+
+Defined in `<cinttypes>`:
+
+```cpp
+// 14)
+std::intmax_t abs( std::intmax_t n );
+// 15)
+std::intmax_t imaxabs( std::intmax_t n );
+```
+
+`Additional Overloads`
+
+```cpp
+// 16)
+template< class Integer >
+double fabs ( Integer n );
 ```
