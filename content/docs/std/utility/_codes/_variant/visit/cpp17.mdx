@@ -1,0 +1,17 @@
+```cpp
+// 1)
+template <class Visitor, class... Variants>
+constexpr /* see below */ visit( Visitor&& vis, Variants&&... vars );
+// 3)
+template<class... Ts>
+auto&& as-variant( std::variant<Ts...>& var );        // exposition only
+// 4)
+template<class... Ts>
+auto&& as-variant( const std::variant<Ts...>& var );  // exposition only
+// 5)
+template<class... Ts>
+auto&& as-variant( std::variant<Ts...>&& var );       // exposition only
+// 6)
+template<class... Ts>
+auto&& as-variant( const std::variant<Ts...>&& var ); // exposition only
+```

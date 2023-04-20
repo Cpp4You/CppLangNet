@@ -1,0 +1,302 @@
+---
+sidebar_position:	2
+title:				std::variant - utility
+sidebar_label:		std::variant
+tags:				[variant, utility]
+hide_title:			true
+---
+
+import Columns					from "@site-comps/Columns";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import SwitchView				from "@site-comps/SwitchView";
+
+# std::variant
+
+Defined in header `<variant>`.
+
+### Declarations
+```cpp
+template< class... Types >
+class variant;
+```
+
+The class template std::variant represents a type-safe union. An instance of std::variant at any given time either holds a value of one of its alternative types, or in the case of error - no value (this state is hard to achieve, see valueless_by_exception).
+
+As with unions, if a variant holds a value of some object type T, the object representation of T is allocated directly within the object representation of the variant itself.
+Variant is not allowed to allocate additional (dynamic) memory.
+
+A variant is not permitted to hold references, arrays, or the type void. Empty variants are also ill-formed (`std::variant<std::monostate>` can be used instead).
+
+A variant is permitted to hold the same type more than once, and to hold differently cv-qualified versions of the same type.
+
+Consistent with the behavior of unions during aggregate initialization, a default-constructed variant holds a value of its first alternative, 
+unless that alternative is not default-constructible (in which case the variant is not default-constructible either). 
+The helper class std::monostate can be used to make such variants default-constructible.
+
+### Template parameters
+`Types`	-	the types that may be stored in this variant. All types must meet the Destructible requirements 
+(in particular, array types and non-object types are not allowed).
+
+
+### Member functions
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/utility/_variant/variant" name="(constructors)"              
+    desc={<>
+                constructs the variant object<br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/utility/_variant/~variant" name="(destructor)"
+    desc={<>
+                destroys the variant, along with its contained value<br/>
+                <small>(public member function)</small>
+                </>}  
+                />
+    <Symbol autoLink linkName="/docs/std/utility/_variant/operator=" name="operator="
+    desc={<>
+                assignes a variant<br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+</SymbolTable>
+
+
+#### `Observers`
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/utility/_variant/ind" name ="index"
+    desc={<>
+                returns the zero-based index of the alternative held by the variant<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+    <Symbol autoLink linkName="/docs/std/utility/_variant/valueless_by_exception" name ="valueless_by_exception"
+    desc={<>
+                checks if the variant is in the invalid state<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+</SymbolTable>
+
+
+#### `Modifiers`
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/utility/_variant/emplace" name ="emplace"
+    desc={<>
+                constructs a value in the variant, in place<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+    <Symbol autoLink linkName="/docs/std/utility/_variant/swap" name ="swap"
+    desc={<>
+                swaps with another variant<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+</SymbolTable>
+
+### Non-member functions
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/utility/_variant/visit" name={<>
+                visit <small>(C++17)</small><br/>
+			    </>}                
+            desc={<>
+                calls the provided functor with the arguments held by one or more variants<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+
+    
+    <Symbol autoLink linkName="/docs/std/utility/_variant/holds_alternative" name={<>
+                holds_alternative<small>(C++17)</small>
+			    </>}                
+            desc={<>
+                checks if a variant currently holds a given type<br/>
+                </>} 
+                />
+
+    <Symbol autoLink linkName="/docs/std/utility/_variant/get" name={<>
+                std::get<small>(std::variant)(C++17)</small>
+			    </>}                
+            desc={<>
+                reads the value of the variant given the index or the type (if the type is unique), 
+                throws on error<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+
+    <Symbol autoLink linkName="/docs/std/utility/_variant/get_if" name={<>
+                get_if<small>(C++17)</small>
+			    </>}                
+            desc={<>
+                obtains a pointer to the value of a pointed-to variant given the index or the type (if unique), 
+                returns null on error<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+<Symbol autoLink linkName="/docs/std/utility/_variant/operator_cmp" name={<>
+                operator== <small>(C++17)</small><br/>
+                operator!= <small>(C++17)</small><br/>
+                operator&lt; <small>(C++17)</small><br/>
+                operator&lt;= <small>(C++17)</small><br/>
+                operator&gt;<small>(C++17)</small> <br/>
+                operator&gt;= <small>(C++17)</small><br/>
+                operator&lt;=&gt; <small>(C++20)</small>
+                </>}
+            desc={<>
+                compares variant objects as their contained values<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+
+    <Symbol autoLink linkName="/docs/std/utility/_variant/swap2" name={<>
+                std::swap<small>(std::variant)(C++17)</small>
+			    </>}                
+            desc={<>
+                specializes the std::swap algorithm<br/>
+                <small>(function template)</small>
+                </>} 
+                />
+</SymbolTable>
+
+### Helper Classes
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/utility/_variant/monostate" name={<>
+                monostate<small>(C++17)</small>
+			    </>}                
+            desc={<>
+                placeholder type for use as the first alternative in a 
+                variant of non-default-constructible types<br/>
+                <small>(class)</small>
+                </>} 
+                />
+
+    <Symbol autoLink linkName="/docs/std/utility/_variant/bad_variant_access" name={<>
+                bad_variant_access<small>(C++17)</small>
+			    </>}                
+            desc={<>
+                exception thrown on invalid accesses to the value of a variant<br/>
+                <small>(class)</small>
+                </>} 
+                />
+
+    <Symbol autoLink linkName="/docs/std/utility/_variant/variant_size" name={<>
+                variant_size <br/>
+                variant_size_v<small>(C++17)</small>
+			    </>}                
+            desc={<>
+                obtains the size of the variant's list of alternatives at compile time<br/>
+                <small>(class template) (variable template)</small>
+                </>} 
+                />
+                
+    <Symbol autoLink linkName="/docs/std/utility/_variant/variant_alternative" name={<>
+                variant_alternative <br/>
+                variant_alternative_t <small>(C++17)</small>
+			    </>}                
+            desc={<>
+                obtains the type of the alternative specified by its index, at compile time<br/>
+                <small>(class template) (alias template)</small>
+                </>} 
+                />
+
+    <Symbol autoLink linkName="/docs/std/utility/_variant/hash" name={<>
+                std::hash<small>(std::variant)(C++17)</small>
+			    </>}                
+            desc={<>
+                specializes the std::hash algorithm<br/>
+                <small>(class template specialization)</small>
+                </>} 
+                />
+</SymbolTable>
+
+### Helper Object
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/utility/_variant/variant_npos" name={<>
+                variant_npos<small>(C++17)</small>
+			    </>}                
+            desc={<>
+                index of the variant in the invalid state<br/>
+                <small>(constant)</small>
+                </>} 
+                />
+</SymbolTable>
+
+### Notes
+
+| Feature-test macro |  Value  |      Std     |                      Comment                     |
+|:------------------:|:-------:|:------------:|:------------------------------------------------:|
+|   __cpp_lib_variant | 201606L | (C++17)      | std::variant: a type-safe union for C++17        |
+|   __cpp_lib_variant | 202102L | (C++17) (DR) | std::visit for classes derived from std::variant |
+|   __cpp_lib_variant | 202106L | (C++20) (DR) | Fully constexpr std::variant                     |
+
+### Example
+
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cassert>
+#include <iostream>
+#include <string>
+#include <variant>
+ 
+int main()
+{
+    std::variant<int, float> v, w;
+    v = 42; // v contains int
+    int i = std::get<int>(v);
+    assert(42 == i); // succeeds
+    w = std::get<int>(v);
+    w = std::get<0>(v); // same effect as the previous line
+    w = v; // same effect as the previous line
+ 
+//  std::get<double>(v); // error: no double in [int, float]
+//  std::get<3>(v);      // error: valid index values are 0 and 1
+ 
+    try
+    {
+        std::get<float>(w); // w contains int, not float: will throw
+    }
+    catch (const std::bad_variant_access& ex)
+    {
+        std::cout << ex.what() << '\n';
+    }
+ 
+    using namespace std::literals;
+ 
+    std::variant<std::string> x("abc");
+    // converting constructors work when unambiguous
+    x = "def"; // converting assignment also works when unambiguous
+ 
+    std::variant<std::string, void const*> y("abc");
+    // casts to void const * when passed a char const *
+    assert(std::holds_alternative<void const*>(y)); // succeeds
+    y = "xyz"s;
+    assert(std::holds_alternative<std::string>(y)); // succeeds
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+std::get: wrong index for variant
+```
+
+</div>
+</Columns>
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                                        Behavior as published                                        |    Correct behavior    |
+|:--------:|:----------:|:---------------------------------------------------------------------------------------------------:|:----------------------:|
+| LWG 2901 | C++17      | specialization of std::uses_allocator provided, but std::variant cannot properly support allocators | specialization removed |
