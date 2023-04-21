@@ -1,0 +1,74 @@
+---
+title:				std::variant<Types...>::~variant
+tags:				[variant, utility, visit]
+hide_title:			true
+---
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+# std::variant&lt;Types...>::~variant
+
+### Declarations
+`C++17`
+```cpp
+~variant()
+```
+`C++20`
+```cpp
+constexpr ~variant()
+```
+
+If [valueless_by_exception()](./valueless_by_exception) is true, does nothing. Otherwise, destroys the currently contained value.
+
+This destructor is trivial if `std::is_trivially_destructible_v<T_i>` is true for all `T_i` in `Types...`.
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <variant>
+#include <cstdio>
+ 
+int main()
+{
+    struct X { ~X() { puts("X::~X();"); } };
+    struct Y { ~Y() { puts("Y::~Y();"); } };
+ 
+    {
+        puts("entering block #1");
+        std::variant<X,Y> var;
+        puts("leaving block #1");
+    }
+ 
+    {
+        puts("entering block #2");
+        std::variant<X,Y> var{ std::in_place_index_t<1>{} }; // constructs var(Y)
+        puts("leaving block #2");
+    }
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+entering block #1
+leaving block #1
+X::~X();
+entering block #2
+leaving block #2
+Y::~Y();
+```
+
+</div>
+</Columns>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR   | Applied to |                                   Behavior as published                                  | Correct behavior |
+|:-------:|:----------:|:----------------------------------------------------------------------------------------:|:----------------:|
+| P2231R1 | C++20      | the destructor was not constexpr while non-trivial destructors can be constexpr in C++20 | made constexpr   |

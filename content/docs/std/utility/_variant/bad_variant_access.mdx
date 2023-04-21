@@ -1,0 +1,161 @@
+---
+title:				std::bad_variant_access
+tags:				[variant, utility, visit]
+hide_title:			true
+---
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+# std::bad_variant_access
+
+Defined in header `<variant>`.
+
+`C++17`
+```cpp
+class bad_variant_access : public std::exception;
+```
+
+		
+`std::bad_variant_access` is the type of the exception thrown in the following situations:
+
+* `std::get(std::variant)` called with an index or type that does not match the currently active alternative
+* [std::visit](./visit) called to visit a variant that is [valueless_by_exception](./valueless_by_exception)
+
+### Member functions
+
+<SymbolTable noTraits>
+    <Symbol name = {<>
+                (constructor)
+                </>}
+    desc={<>
+                constructs a new bad_variant_access object<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+    <Symbol name ={<>
+                operator=
+                </>}
+    desc={<>
+                replaces the bad_variant_access object<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+    <Symbol name ={<>
+                what
+                </>}
+    desc={<>
+                returns the explanatory string<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+</SymbolTable>
+
+---
+
+std::bad_variant_access::**bad_variant_access**
+```cpp
+bad_variant_access() noexcept;                                     // 1) (since C++17)
+bad_variant_access( const bad_variant_access& other ) noexcept;    // 2) (since C++17) 
+```
+Constructs a new `bad_variant_access` object with an implementation-defined null-terminated byte string which is accessible through what().
+
+    * 1) Default constructor.
+    * 2) Copy constructor. If `*this` and other both have dynamic type `std::bad_variant_access` then `std::strcmp(what(), other.what()) == 0`.
+
+
+    #### Parameters
+    `other`	-	another exception object to copy
+
+---
+
+std::bad_variant_access::**operator=**
+```cpp
+bad_variant_access& operator=( const bad_variant_access& other ) noexcept;  // (since C++17) 
+```
+Assigns the contents with those of other. If `*this` and other both have dynamic type `std::bad_variant_access` then `std::strcmp(what(), other.what()) == 0` 
+after assignment.
+
+#### Parameters
+`other`	-	another exception object to assign with
+#### Return value
+`*this`
+
+---
+
+std::bad_variant_access::**what**
+```cpp
+virtual const char* what() const noexcept;  // (since C++17) 
+```
+Returns the explanatory string.
+
+#### Parameters
+(none)
+#### Return value
+Pointer to a null-terminated string with explanatory information. The string is suitable for conversion and display as a `std::wstring`. 
+The pointer is guaranteed to be valid at least until the exception object from which it is obtained is destroyed, or until a non-const member function 
+(e.g. copy assignment operator) on the exception object is called.
+
+#### Notes
+
+Implementations are allowed but not required to override what().
+
+---
+
+### Inherited from **std::exception**
+
+#### Member functions
+
+<SymbolTable noTraits>
+    <Symbol name = {<>
+                (destructor) <small>[virtual]</small>
+                </>}
+    desc={<>
+                destroys the exception object<br/>
+                <small>(virtual public member function of std::exception)</small>
+                </>}
+                />
+    <Symbol name ={<>
+                what <small>[virtual]</small>
+                </>}
+    desc={<>
+                returns an explanatory string<br/>
+                <small>(virtual public member function of std::exception)</small>
+                </>}
+                />
+</SymbolTable>
+
+---
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <variant>
+#include <iostream>
+ 
+int main()
+{
+    std::variant<int, float> v;
+    v = 12;
+    try {
+      std::get<float>(v);
+    }
+    catch(const std::bad_variant_access& e) {
+        std::cout << e.what() << '\n';
+    }
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+bad_variant_access
+```
+
+</div>
+</Columns>
