@@ -9,6 +9,7 @@ hide_title:			true
 
 import CodeBlock	from '@theme/CodeBlock'
 
+import Tooltip		from '@site-comps/Tooltip';
 import Columns		from '@site-comps/Columns'
 
 # Introduction to C++
@@ -20,14 +21,13 @@ You will need programmer tools for code editing.
 
 ## The First Program
 
-Once you have your code editor ready, you can start writing your first program.
+Once you have your editor ready, you can start writing your first program.
 
-When learning a new programming language, the first thing you do
-is a simple application that displays the following text: **"Hello, World!"**.
+When learning a new programming language there is a tradition of starting with a program that writes "Hello, World!". Let’s do just that!
 
-After creating the project, in your environment, a file with the extension `.cpp` has probably been automatically added.
-Most often it is called `main.cpp` (sometimes `Source.cpp` or `ProjectName.cpp`).
-If there is none, create one and name it `main.cpp`.
+Create a project in your editor.
+A file called <Tooltip title={<>It could also be called <code>Source.cpp</code> or <code>ProjectName.cpp</code></>}>`main.cpp`</Tooltip> should have been created.
+If it wasn’t, create one and name it `main.cpp`
 
 :::tip New files
 If you don't know how to add a file to your project, see the <a href="/tools" target="_blank">tools</a>
@@ -38,7 +38,7 @@ We will save all our code in this file for now.
 
 ### Application code
 
-Paste the following code and run it:
+Copy the following code into your editor, compile it and then run it:
 
 <Columns spacing={40} columns={['8fr', '4fr']}>
 <div>
