@@ -1,0 +1,19 @@
+```cpp
+// 1)
+constexpr unique_ptr() noexcept;
+constexpr unique_ptr( std::nullptr_t ) noexcept;
+// 2)
+template< class U > 
+explicit unique_ptr( U p ) noexcept;
+// 3)
+template< class U > 
+unique_ptr( U p, /* see below */ d1 ) noexcept;
+// 4)
+template< class U > 
+unique_ptr( U p, /* see below */ d2 ) noexcept;
+// 5)
+unique_ptr( unique_ptr&& u ) noexcept;
+// 6)
+template< class U, class E >
+unique_ptr( unique_ptr<U, E>&& u ) noexcept;
+```

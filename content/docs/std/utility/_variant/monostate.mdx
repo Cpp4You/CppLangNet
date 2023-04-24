@@ -1,0 +1,146 @@
+---
+title:				std::monostate
+tags:				[variant, utility, visit]
+hide_title:			true
+---
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+# std::monostate
+
+Defined in header `<variant>`.
+
+`C++17`
+```cpp
+struct monostate { };
+```
+
+Unit type intended for use as a well-behaved empty alternative in [std::variant](../variant). In particular, a 
+variant of non-default-constructible types may list `std::monostate` as its first alternative: this makes the variant itself default-constructible.
+
+### Member functions
+
+<SymbolTable noTraits>
+    <Symbol name = {<>
+                (constructor)<small>(implicitly declared)</small>
+                </>}
+    desc={<>
+                trivial implicit default/copy/move constructor<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+    <Symbol name ={<>
+                (destructor)<small>(implicitly declared)</small>
+                </>}
+    desc={<>
+                trivial implicit destructor<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+    <Symbol name ={<>
+                (operator=)<small>(implicitly declared)</small>
+                </>}
+    desc={<>
+                trivial implicit copy/move assignment<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+</SymbolTable>
+
+### Non-member functions
+
+---
+
+std::**operator==, !=, &lt;, &lt;=, >, >=, &lt;=>**(std::monostate)
+```cpp
+constexpr bool operator==( monostate, monostate ) noexcept { return true; }     // 1) (since C++17)
+```
+```cpp
+constexpr bool operator!=( monostate, monostate ) noexcept { return false; }
+constexpr bool operator< ( monostate, monostate ) noexcept { return false; }
+constexpr bool operator> ( monostate, monostate ) noexcept { return false; }
+constexpr bool operator<=( monostate, monostate ) noexcept { return true; }
+constexpr bool operator>=( monostate, monostate ) noexcept { return true; }     // 2) (C++17)
+```
+```cpp
+constexpr std::strong_ordering operator<=>( monostate, monostate ) noexcept     
+{
+    return std::strong_ordering::equal;
+}                                                                               // 2) (since C++20)
+```
+All instances of std::monostate compare equal.
+
+*The &lt;, &lt;=, >, >=, and != operators are synthesized from operator&lt;=> and operator== respectively. (since C++20)*
+
+---
+
+### Helper classes
+
+---
+
+std::**hash**&lt;std::monostate>
+```cpp
+template <>
+struct std::hash<monostate>;    // 2) (since C++17) 
+```
+Specializes the `std::hash` algorithm for `std::monostate`.
+
+---
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cassert>
+#include <iostream>
+#include <variant>
+ 
+struct S
+{
+    S(int i) : i(i) {}
+    int i;
+};
+ 
+int main()
+{
+    // Without the monostate type this declaration will fail.
+    // This is because S is not default-constructible.
+    std::variant<std::monostate, S> var;
+    assert(var.index() == 0);
+ 
+    try
+    {
+        std::get<S>(var); 
+        // throws! We need to assign a value
+    }
+    catch(const std::bad_variant_access& e)
+    {
+        std::cout << e.what() << '\n';
+    }
+ 
+    var = 42;
+    std::cout 
+        << "std::get: " 
+        << std::get<S>(var).i << '\n'
+        << "std::hash: " 
+        << std::hex << std::showbase
+        << std::hash<std::monostate>{}(std::monostate{})
+         << '\n';
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+std::get: wrong index for variant
+std::get: 42
+std::hash: 0xffffffffffffe19f
+```
+
+</div>
+</Columns>

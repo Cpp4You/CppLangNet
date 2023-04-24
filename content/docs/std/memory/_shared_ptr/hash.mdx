@@ -1,0 +1,26 @@
+---
+title:                  std::hash(std::shared_ptr)
+tags:                   [memory,shared_ptr, hash]
+hide_title:             true
+---
+import Columns      from "@site-comps/Columns";
+
+# std::hash(std::shared_ptr)
+
+```cpp
+template<class T> struct hash<shared_ptr<T>>;
+(since C++11)
+```
+The template specialization of `std::hash` for `std::shared_ptr<T>` allows users to obtain hashes of objects of type `std::shared_ptr<T>`.
+
+For a given `std::shared_ptr<T> p`, this specialization ensures that
+
+```cpp
+std::hash<std::shared_ptr<T>>()(p) == std::hash<T*>()(p.get()) // Until C++17
+
+std::hash<std::shared_ptr<T>>()(p) == std::hash<typename std::shared_ptr<T>::element_type*>()(p.get()) // Since C++17
+```
+
+### Example
+
+#### This section is incomplete

@@ -1,0 +1,119 @@
+---
+title:                  operator==,!=,<,<=,>,>=,<=>(std::unique_ptr)
+description:            ---
+tags:                   [memory,unique_ptr]
+#slug:                  /std/memory/unique_ptr/
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+import Tabs						                from "@theme/Tabs";
+import TabItem					                from "@theme/TabItem";
+
+import CmpCPP23                     from ".//_codes/cmp/cpp23.mdx"
+import CmpCPP20                     from ".//_codes/cmp/cpp20.mdx"
+import CmpCPP11                     from ".//_codes/cmp/cpp11.mdx"
+
+# operator==,!=,&lt;,&lt;=,&gt;,&gt;=,&lt;=&gt;(std::unique_ptr)
+
+### Declaration
+<Tabs>
+<TabItem value="cpp23" label="C++23" default>
+    <CmpCPP23/>
+</TabItem>
+<TabItem value="cpp20" label="C++20">
+    <CmpCPP20/>
+</TabItem>
+<TabItem value="cpp11" label="C++11">
+    <CmpCPP11/>
+</TabItem>
+</Tabs>
+
+
+Compares the pointer values of two `unique_ptr`s, or a `unique_ptr` and `nullptr`.
+
+1-7) <br/>
+Compares two `unique_ptr`s <br/>
+8-20) <br/>
+Compares a `unique_ptr` and `nullptr`.
+
+The `!=` operator is synthesized from `operator==`.(since C++20)
+
+### Parameters
+
+`x`, `y` - `unique_ptr`s to compare
+
+### Return value
+1) `x.get() == y.get()` <br/>
+2) `x.get() != y.get()`<br/>
+3) `std::less<CT>()(x.get(), y.get())`, <br/> where `CT` is `std::common_type<unique_ptr<T1, D1>::pointer, unique_ptr<T2, D2>::pointer>::type`<br/>
+4) `!(y < x)`<br/>
+5) `y < x`<br/>
+6) `!(x < y)`<br/>
+7) `std::compare_three_way{}(x.get(), y.get())`<br/>
+8-9) `!x`<br/>
+10-11) `(bool)x`<br/>
+12) `std::less<unique_ptr<T,D>::pointer>()(x.get(), nullptr)<br/>`
+13) `std::less<unique_ptr<T,D>::pointer>()(nullptr, y.get())<br/>`
+14) `!(nullptr < x)`<br/>
+15) `!(y < nullptr)`<br/>
+16) `nullptr < x`<br/>
+17) `y < nullptr`<br/>
+18) `!(x < nullptr)`<br/>
+19) `!(nullptr < y)`<br/>
+20) `std::compare_three_way{}(x.get(), static_cast<typename unique_ptr<T, D>::pointer>(nullptr))`<br/>
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <memory>
+ 
+int main()
+{
+    std::unique_ptr<int> p1(new int(42));
+    std::unique_ptr<int> p2(new int(42));
+ 
+    std::cout << std::boolalpha
+        << "(p1 == p1)       : " 
+        << (p1 == p1) << '\n'
+        << "(p1 <=> p1) == 0 : " 
+        << ((p1 <=> p1) == 0) << '\n' // Since C++20
+ 
+    // p1 and p2 point to different memory locations, so p1 != p2
+        << "(p1 == p2)       : " 
+        << (p1 == p2) << '\n'
+        << "(p1 < p2)        : " 
+        << (p1 < p2) << '\n'
+        << "(p1 <=> p2) < 0  : " 
+        << ((p1 <=> p2) < 0) << '\n'   // Since C++20
+        << "(p1 <=> p2) == 0 : " 
+        << ((p1 <=> p2) == 0) << '\n'; // Since C++20
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Possible Result"
+(p1 == p1)       : true
+(p1 <=> p1) == 0 : true
+(p1 == p2)       : false
+(p1 < p2)        : true
+(p1 <=> p2) < 0  : true
+(p1 <=> p2) == 0 : false
+```
+
+</div>
+</Columns>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|DR	|Applied to|	Behavior as published|	Correct behavior|
+|---|---|---|---|
+|LWG 3426|C++20|	uoperator&lt;=&gt;(unique_ptr, nullptr_t) was ill-formed	|	constraints and definition fixed|

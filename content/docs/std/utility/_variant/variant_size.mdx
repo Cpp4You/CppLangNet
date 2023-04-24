@@ -1,0 +1,124 @@
+---
+title:				std::variant_size, std::variant_size_v
+tags:				[variant, utility, visit]
+hide_title:			true
+---
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+# std::variant_size, std::variant_size_v
+
+Defined in header `<variant>`.
+
+``` cpp
+// 1)
+template <class T>
+struct variant_size; /* undefined */                        // (since C++17)
+// 2)
+template <class... Types>
+struct variant_size<std::variant<Types...>>
+: std::integral_constant<std::size_t, sizeof...(Types)> { };// (since C++17)
+// 3)	
+template <class T> class variant_size<const T>;             // (since C++17)
+// 3)	
+template <class T> class variant_size<volatile T>;
+template <class T> class variant_size<const volatile T>;    // (since C++17, deprecated in C++20)
+```
+
+Provides access to the number of alternatives in a possibly cv-qualified variant as a compile-time constant expression.
+
+Formally,
+
+2) 
+meets the UnaryTypeTrait requirements with a base characteristic of `std::integral_constant<std::size_t, sizeof...(Types)>`
+
+3) 
+meets the UnaryTypeTrait requirements with a base characteristic of `std::integral_constant<std::size_t, variant_size<T>>`
+
+### Helper variable template
+
+```cpp
+template <class T>
+inline constexpr std::size_t variant_size_v = std::variant_size<T>::value;  // (since C++17)
+```
+
+### Inherited from std::integral_constant
+
+#### Member constants
+
+<SymbolTable noTraits>
+    <Symbol name = {<>
+                value <small>[static]</small>
+                </>}
+    desc={<>
+                sizeof...(Types)<br/>
+                <small>(public static member constant)</small>
+                </>}
+                />
+</SymbolTable>
+
+#### Member functions
+
+<SymbolTable noTraits>
+    <Symbol name = {<>
+                operator std::size_t
+                </>}
+    desc={<>
+                converts the object to std::size_t, returns value<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+    <Symbol name = {<>
+                operator()<small>(C++14)</small>
+                </>}
+    desc={<>
+                returns value<br/>
+                <small>(public member function)</small>
+                </>}
+                />
+</SymbolTable>
+
+#### Member types
+
+|Type|Definition|
+|::|::|
+|value_type|`std::size_t`|
+|type|`std::integral_constant<std::size_t, value>`|
+
+### Notes
+All specializations of `std::variant_size` satisfy UnaryTypeTrait with base characteristic `std::integral_constant<std::size_t, N>` for some `N`.
+
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <any>
+#include <cstdio>
+#include <variant>
+ 
+static_assert(std::variant_size_v<std::variant<>> == 0);
+static_assert(std::variant_size_v<std::variant<int>> == 1);
+static_assert(std::variant_size_v<std::variant<int, int>> == 2);
+static_assert(std::variant_size_v<std::variant<int, int, int>> == 3);
+static_assert(std::variant_size_v<std::variant<int, float, double>> == 3);
+static_assert(std::variant_size_v<std::variant<std::monostate, void>> == 2);
+static_assert(std::variant_size_v<std::variant<const int, const float>> == 2);
+static_assert(std::variant_size_v<std::variant<std::variant<std::any>>> == 1);
+ 
+int main() { std::puts("All static assertions passed."); }
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+All static assertions passed.
+```
+
+</div>
+</Columns>

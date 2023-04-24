@@ -1,0 +1,55 @@
+---
+title:				std::holds_alternative
+tags:				[variant, utility, holds_alternative]
+hide_title:			true
+---
+
+# std::holds_alternative
+
+Defined in header `<variant>`.
+
+### Declarations
+`Since C++17`
+```cpp
+template< class T, class... Types >
+constexpr bool holds_alternative( const std::variant<Types...>& v ) noexcept;
+```
+
+Checks if the variant `v` holds the alternative `T`. The call is ill-formed if `T` does not appear exactly once in `Types...`
+
+### Parameters
+`v`	-	variant to examine
+### Return value
+`true` if the variant currently holds the alternative `T`, `false` otherwise.
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <variant>
+#include <string>
+#include <iostream>
+int main()
+{
+    std::variant<int, std::string> v = "abc";
+    std::cout << std::boolalpha
+              << "variant holds int? "
+              << std::holds_alternative<int>(v) << '\n'
+              << "variant holds string? "
+              << std::holds_alternative<std::string>(v) << '\n';
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+variant holds int? false
+variant holds string? true
+```
+
+</div>
+</Columns>

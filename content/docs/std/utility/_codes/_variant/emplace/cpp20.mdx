@@ -1,0 +1,15 @@
+```cpp
+// 1)
+template <class T, class... Args>
+constexpr T& emplace(Args&&... args);
+// 2)
+template <class T, class U, class... Args>
+constexpr T& emplace( std::initializer_list<U> il, Args&&... args );
+// 3)
+template <std::size_t I, class... Args>
+constexpr std::variant_alternative_t<I, variant>& emplace( Args&&... args );
+// 4)
+template <std::size_t I, class U, class... Args>
+constexpr std::variant_alternative_t<I, variant>&
+    emplace( std::initializer_list<U> il, Args&&... args );
+```

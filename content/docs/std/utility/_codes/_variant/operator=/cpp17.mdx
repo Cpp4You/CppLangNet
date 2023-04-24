@@ -1,0 +1,9 @@
+```cpp
+// 1)
+constexpr variant& operator=( const variant& rhs );
+// 2)
+constexpr variant& operator=( variant&& rhs ) noexcept(/* see below */);
+// 3)
+template< class T >
+variant& operator=( T&& t ) noexcept(/* see below */);
+```

@@ -1,0 +1,21 @@
+`Since C++20`
+
+```cpp
+// 2)
+template< class T, class Alloc >
+shared_ptr<T> allocate_shared( const Alloc& alloc, std::size_t N );
+// 3)
+template< class T, class Alloc >
+shared_ptr<T> allocate_shared( const Alloc& alloc );
+// 4)
+template< class T, class Alloc >
+shared_ptr<T> allocate_shared( const Alloc& alloc, std::size_t N,
+                               const std::remove_extent_t<T>& u );
+// 5)
+template< class T, class Alloc >
+shared_ptr<T> allocate_shared( const Alloc& alloc,
+                               const std::remove_extent_t<T>& u );
+// 7)
+template< class T, class Alloc >
+shared_ptr<T> allocate_shared_for_overwrite( const Alloc& alloc, std::size_t N );
+```

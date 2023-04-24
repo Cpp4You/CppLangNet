@@ -1,0 +1,83 @@
+---
+title:				std::get_if (std::variant)
+tags:				[variant, utility, visit]
+hide_title:			true
+---
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+
+# std::get_if (std::variant)
+
+Defined in header `<variant>`.
+
+### Declarations
+
+`C++17`
+```cpp
+// 1)
+template< std::size_t I, class... Types >
+constexpr std::add_pointer_t<std::variant_alternative_t<I, std::variant<Types...>>>
+    get_if( std::variant<Types...>* pv ) noexcept;
+template< std::size_t I, class... Types >
+constexpr std::add_pointer_t<const std::variant_alternative_t<I, std::variant<Types...>>>
+    get_if( const std::variant<Types...>* pv ) noexcept;
+
+// 2)
+template< class T, class... Types >
+constexpr std::add_pointer_t<T> get_if( std::variant<Types...>* pv ) noexcept;
+template< class T, class... Types >
+constexpr std::add_pointer_t<const T> get_if( const std::variant<Types...>* pv ) noexcept;
+```
+1) <br/>
+Index-based non-throwing accessor: If `pv` is *not* a null pointer and `pv->index() == I`, 
+returns a pointer to the value stored in the variant pointed to by `pv`. Otherwise, returns a null pointer value. 
+The call is ill-formed if `I` is not a valid index in the variant.<br/>
+2) <br/>
+Type-based non-throwing accessor: Equivalent to (1) with `I` being the zero-based index of `T` in `Types...`. 
+The call is ill-formed if `T` is not a unique element of `Types...`.
+
+### Parameters
+`I`	-	index to look up
+`Type`	-	unique type to look up
+`pv`	-	pointer to a variant
+
+### Return value
+Pointer to the value stored in the pointed-to variant or null pointer on error.
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <variant>
+#include <iostream>
+ 
+int main()
+{
+    auto check_value = [](const std::variant<int, float>& v)
+    {
+        if(const int* pval = std::get_if<int>(&v))
+          std::cout << "variant value: " << *pval << '\n'; 
+        else 
+          std::cout << "failed to get value!" << '\n'; 
+    };
+ 
+    std::variant<int, float> v{12}, w{3.f};
+    check_value(v);
+    check_value(w);
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+variant value: 12
+failed to get value!
+```
+
+</div>
+</Columns>

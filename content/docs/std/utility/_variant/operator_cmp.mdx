@@ -1,0 +1,243 @@
+---
+title:				operator==, !=, <, <=, >, >=, <=>(std::variant)
+tags:				[variant, utility, visit]
+hide_title:			true
+---
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+
+# operator==, !=, &lt;, &lt;=, >, >=, &lt;=>(std::variant)
+
+Defined in header `<variant>`.
+
+### Declarations
+
+`Since C++17`
+```cpp
+// 1)
+template< class... Types >
+constexpr bool operator==( const std::variant<Types...>& v,
+                           const std::variant<Types...>& w );
+// 2)
+template< class... Types >
+constexpr bool operator!=( const std::variant<Types...>& v,
+                           const std::variant<Types...>& w );
+// 3)
+template< class... Types >
+constexpr bool operator<( const std::variant<Types...>& v,
+                          const std::variant<Types...>& w );
+// 4)
+template< class... Types >
+constexpr bool operator>( const std::variant<Types...>& v,
+                          const std::variant<Types...>& w );
+// 5)
+template< class... Types >
+constexpr bool operator<=( const std::variant<Types...>& v,
+                           const std::variant<Types...>& w );
+// 6)
+template< class... Types >
+constexpr bool operator>=( const std::variant<Types...>& v,
+                           const std::variant<Types...>& w );
+```
+`Since C++20`
+```cpp
+// 7)
+template< class... Types >
+constexpr std::common_comparison_category_t<
+    std::compare_three_way_result_t<Types>...>
+    operator<=>( const std::variant<Types...>& v,
+                 const std::variant<Types...>& w );
+```
+
+
+1) <br/>
+Equality operator for variants:
+* If `v.index() != w.index()`, returns false;
+* otherwise if `v.valueless_by_exception()`, returns true;
+* otherwise returns `std::get<v.index()>(v) == std::get<v.index()>(w)`. <br/>
+*The behavior is undefined (until C++20) / The program is ill-formed (since C++20)* if 
+`std::get<i>(v) == std::get<i>(w)` is not a valid expression returning a type convertible to `bool`, for any `i`.
+
+2) <br/>
+Inequality operator for variants:
+* If `v.index() != w.index()`, returns true;
+* otherwise if `v.valueless_by_exception()`, returns false;
+* otherwise returns `std::get<v.index()>(v) != std::get<v.index()>(w)`. <br/>
+*The behavior is undefined (until C++20) / The program is ill-formed (since C++20)* if `std::get<i>(v) != std::get<i>(w)` is not a 
+valid expression returning a type convertible to `bool`, for any `i`.
+
+3) <br/>
+Less-than operator for variants:
+* If `w.valueless_by_exception()`, returns false;
+* otherwise if `v.valueless_by_exception()`, returns true;
+* otherwise if `v.index() < w.index()`, returns true;
+* otherwise if `v.index() > w.index()`, returns false;
+* otherwise returns `std::get<v.index()>(v) < std::get<v.index()>(w)`.<br/>
+*The behavior is undefined (until C++20) / The program is ill-formed (since C++20)* if `std::get<i>(v) < std::get<i>(w)` is 
+not a valid expression returning a type convertible to `bool`, for any `i`.
+
+4) <br/>
+Greater-than operator for variants:
+* If `v.valueless_by_exception()`, returns false;
+* otherwise if `w.valueless_by_exception()`, returns true;
+* otherwise if `v.index() > w.index()`, returns true;
+* otherwise if `v.index() < w.index()`, returns false;
+* otherwise returns `std::get<v.index()>(v) > std::get<v.index()>(w)`. <br/>
+*The behavior is undefined (until C++20) / The program is ill-formed (since C++20)* if `std::get<i>(v) > std::get<i>(w)` is not a valid 
+expression returning a type convertible to `bool`, for any `i`.
+
+5) <br/>
+Less-equal operator for variants:
+* If `v.valueless_by_exception()`, returns true;
+* otherwise if `w.valueless_by_exception()`, returns false;
+* otherwise if `v.index() < w.index()`, returns true;
+* otherwise if `v.index() > w.index()`, returns false;<br/>
+* otherwise returns `std::get<v.index()>(v) <= std::get<v.index()>(w)`. 
+*The behavior is undefined (until C++20) / The program is ill-formed (since C++20)* if `std::get<i>(v) <= std::get<i>(w)` is not 
+a valid expression returning a type convertible to `bool`, for any `i`.
+
+6) <br/>
+Greater-equal operator for variants:
+* If `w.valueless_by_exception()`, returns true;
+* otherwise if `v.valueless_by_exception()`, returns false;
+* otherwise if `v.index() > w.index()`, returns true;
+* otherwise if `v.index() < w.index()`, returns false;
+* otherwise `std::get<v.index()>(v) >= std::get<v.index()>(w)`.<br/>
+*The behavior is undefined (until C++20)The program is ill-formed (since C++20)* if `std::get<i>(v) >= std::get<i>(w)` is not a 
+valid expression returning a type convertible to `bool`, for any `i`.
+
+7) <br/>
+Three-way comparison operator for variants:
+* If both `v.valueless_by_exception()` and `w.valueless_by_exception()` are true, returns `std::strong_ordering::equal`;
+* otherwise if `v.valueless_by_exception()` is true, returns `std::strong_ordering::less`;
+* otherwise if `w.valueless_by_exception()` is true, returns `std::strong_ordering::greater`;
+* otherwise if `v.index() != w.index()`, returns `v.index() <=> w.index()`;
+* otherwise equivalent to `std::get<v.index()>(v) <=> std::get<v.index()>(w)`.
+
+### Parameters
+`v`,`w`	-	variants to compare
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <string>
+#include <variant>
+ 
+int main()
+{
+    std::cout << std::boolalpha;
+    std::string cmp;
+    bool result;
+ 
+    auto print2 = [&cmp, &result](const auto& lhs, const auto& rhs) {
+        std::cout << lhs << ' ' << cmp << ' ' << rhs << " : " << result << '\n';
+    };
+ 
+    std::variant<int, std::string> v1, v2;
+ 
+    std::cout << "operator==\n";
+    {
+        cmp = "==";
+ 
+        // by default v1 = 0, v2 = 0;
+        result = v1 == v2; // true
+        std::visit(print2, v1, v2);
+ 
+        v1 = v2 = 1;
+        result = v1 == v2; // true
+        std::visit(print2, v1, v2);
+ 
+        v2 = 2;
+        result = v1 == v2; // false
+        std::visit(print2, v1, v2);
+ 
+        v1 = "A";
+        result = v1 == v2; // false: v1.index == 1, v2.index == 0
+        std::visit(print2, v1, v2);
+ 
+        v2 = "B";
+        result = v1 == v2; // false
+        std::visit(print2, v1, v2);
+ 
+        v2 = "A";
+        result = v1 == v2; // true
+        std::visit(print2, v1, v2);
+    }
+ 
+    std::cout << "operator<\n";
+    {
+        cmp = "<";
+ 
+        v1 = v2 = 1;
+        result = v1 < v2; // false
+        std::visit(print2, v1, v2);
+ 
+        v2 = 2;
+        result = v1 < v2; // true
+        std::visit(print2, v1, v2);
+ 
+        v1 = 3;
+        result = v1 < v2; // false
+        std::visit(print2, v1, v2);
+ 
+        v1 = "A"; v2 = 1;
+        result = v1 < v2; // false: v1.index == 1, v2.index == 0
+        std::visit(print2, v1, v2);
+ 
+        v1 = 1; v2 = "A";
+        result = v1 < v2; // true: v1.index == 0, v2.index == 1
+        std::visit(print2, v1, v2);
+ 
+        v1 = v2 = "A";
+        result = v1 < v2; // false
+        std::visit(print2, v1, v2);
+ 
+        v2 = "B";
+        result = v1 < v2; // true
+        std::visit(print2, v1, v2);
+ 
+        v1 = "C";
+        result = v1 < v2; // false
+        std::visit(print2, v1, v2);
+    }
+ 
+    {
+        std::variant<int, std::string> v1;
+        std::variant<std::string, int> v2;
+    //  v1 == v2;  // Compilation error: no known conversion
+    }
+ 
+    // TODO: C++20 three-way comparison operator <=> for variants
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+operator==
+0 == 0 : true
+1 == 1 : true
+1 == 2 : false
+A == 2 : false
+A == B : false
+A == A : true
+operator<
+1 < 1 : false
+1 < 2 : true
+3 < 2 : false
+A < 1 : false
+1 < A : true
+A < A : false
+A < B : true
+C < B : false
+```
+
+</div>
+</Columns>

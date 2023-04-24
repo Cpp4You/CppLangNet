@@ -1,0 +1,52 @@
+---
+title:				std::variant<Types...>::index
+tags:				[variant, utility, visit]
+hide_title:			true
+---
+import Columns					from "@site-comps/Columns";
+import SwitchView				from "@site-comps/SwitchView";
+
+
+# std::variant&lt;Types...>::index
+
+### Declarations
+`C++17`
+```
+constexpr std::size_t index() const noexcept;
+```
+Returns the zero-based index of the alternative that is currently held by the variant.
+
+If the variant is [valueless_by_exception](./valueless_by_exception), returns [variant_npos](./variant_npos).
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <variant>
+#include <string>
+#include <iostream>
+int main()
+{
+    std::variant<int, std::string> v = "abc";
+ 
+    std::cout << "v.index = " << v.index() << '\n';
+ 
+    v = {}; 
+ 
+    std::cout << "v.index = " << v.index() << '\n';
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+v.index = 1
+v.index = 0
+```
+
+</div>
+</Columns>
