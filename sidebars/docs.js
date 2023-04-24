@@ -853,5 +853,53 @@ module.exports = {
 				},
 			],
 		},
+		{
+			type: 'category',
+			label: 'Memory Management Library',
+			collapsed: false,
+			link: { type: 'doc', id: 'std/memory/memory_management_index' },
+			items: [
+				{
+				type: 'category',
+				label: 'Smart Pointers',
+				collapsed: false,
+					items: [
+						{
+						type: 'category',
+						label: 'Pointer Categories',
+						collapsed: false,
+						items: [
+							docsClassCat('unique_ptr', 'std/memory/unique_ptr', '', []),
+							docsClassCat('shared_ptr', 'std/memory/shared_ptr', '', []),							
+							docsClassCat('weak_ptr', 'std/memory/weak_ptr', '', []),
+							docsClassCat('auto_ptr', 'std/memory/auto_ptr', '', []),
+							],					
+						},
+						{
+							type: 'category',
+							label: 'Helper classes',
+							collapsed: false,
+							items: [
+								docsClassCat('owner_less', 'std/memory/owner_less', '', []),
+								docsClassCat('enable_shared_from_this', 'std/memory/enable_shared_from_this', '', []),							
+								docsClassCat('bad_weak_ptr', 'std/memory/bad_weak_ptr', '', []),
+								docsClassCat('default_delete', 'std/memory/default_delete', '', []),
+								],					
+						},
+						{
+							type: 'category',
+							label: 'Smart pointer adaptors',
+							collapsed: false,
+							items: [
+								docsClassCat('out_ptr_t', 'std/memory/out_ptr_t', '', []),
+								docsClassCat('out_ptr', 'std/memory/out_ptr', '', []),							
+								docsClassCat('inout_ptr_t', 'std/memory/inout_ptr_t', '', []),
+								docsClassCat('inout_ptr', 'std/memory/inout_ptr', '', []),
+								],					
+						},
+					],
+				}
+			],
+		}
 	],
 };

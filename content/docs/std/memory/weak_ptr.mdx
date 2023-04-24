@@ -1,0 +1,234 @@
+---
+title:                  std::weak_ptr
+description:            Smart Pointer
+tags:                   [memory,weak_ptr]
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+# std::weak_ptr
+
+Defined in header `<memory>`.
+
+`C++11`
+```cpp
+template< class T > class weak_ptr;
+```
+
+std::weak_ptr is a smart pointer that holds a non-owning ("weak") reference to an object that is managed by [std::shared_ptr](../shared_ptr). 
+It must be converted to [std::shared_ptr](../shared_ptr) in order to access the referenced object.
+
+std::weak_ptr models temporary ownership: when an object needs to be accessed only if it exists, and it may be deleted at any time by someone else, 
+std::weak_ptr is used to track the object, and it is converted to [std::shared_ptr](../shared_ptr) to assume temporary ownership. 
+If the original [std::shared_ptr](../shared_ptr) is destroyed at this time, 
+the object's lifetime is extended until the temporary [std::shared_ptr](../shared_ptr) is destroyed as well.
+
+Another use for std::weak_ptr is to break reference cycles formed by objects managed by [std::shared_ptr](../shared_ptr). If such cycle is orphaned 
+(i.e., there are no outside shared pointers into the cycle), the shared_ptr reference counts cannot reach zero and the memory is leaked. To prevent this, 
+one of the pointers in the cycle can be made weak.
+
+### Member types
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+                element_type
+                </>}
+    		desc={<>
+                T <small>(until C++17)</small>  <br/>
+                std::remove_extent_t&lt;T&gt; <small>(since C++17)</small> <br/>
+                </>} 
+                />
+</SymbolTable>
+
+### Member functions
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="/docs/std/memory/_weak_ptr/weak_ptr"
+            name={<>
+                (constructor)
+                </>}
+    		desc={<>
+                creates a new weak_ptr <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_weak_ptr/~weak_ptr"
+            name={<>
+                (destructor)
+                </>}
+    		desc={<>
+                destroys a weak_ptr <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_weak_ptr/operator="
+            name={<>
+                operator=
+                </>}
+    		desc={<>
+                assigns the weak_ptr <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+</SymbolTable>
+
+#### `Modifiers`
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="/docs/std/memory/_weak_ptr/reset"
+            name={<>
+                reset
+                </>}
+    		desc={<>
+                releases the ownership of the managed object <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_weak_ptr/swap"
+            name={<>
+                swap
+                </>}
+    		desc={<>
+                swaps the managed objects <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+</SymbolTable>
+
+#### `Observers`
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="/docs/std/memory/_weak_ptr/use_count"
+            name={<>
+                use_count
+                </>}
+    		desc={<>
+                returns the number of shared_ptr objects that manage the object <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_weak_ptr/expired"
+            name={<>
+                expired
+                </>}
+    		desc={<>
+                checks whether the referenced object was already deleted <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_weak_ptr/lock"
+            name={<>
+                lock
+                </>}
+    		desc={<>
+                creates a shared_ptr that manages the referenced object <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_weak_ptr/owner_before"
+            name={<>
+                owner_before
+                </>}
+    		desc={<>
+                provides owner-based ordering of weak pointers <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+</SymbolTable>
+
+### Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="/docs/std/memory/_weak_ptr/swap2"
+            name={<>
+                std::swap<small>(std::weak_ptr)</small> <small>(C++11)</small>
+                </>}
+    		desc={<>
+                specializes the std::swap algorithm <br/>
+                <small>(function template)</small>
+                </>} 
+                />
+</SymbolTable>
+
+### Helper classes
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="/docs/std/memory/_weak_ptr/atomic2"
+            name={<>
+                std::atomic<small>(std::weak_ptr)</small> <small>(C++20)</small>
+                </>}
+    		desc={<>
+                atomic weak pointer <br/>
+                <small>(class template specialization)</small>
+                </>} 
+                />
+</SymbolTable>
+
+### [Deduction guides (since C++17)](../deduction_guides)
+
+### Notes
+Like [std::shared_ptr](../shared_ptr), a typical implementation of weak_ptr stores two pointers:
+
+* a pointer to the control block; and
+* the stored pointer of the [std::shared_ptr](../shared_ptr) it was constructed from.
+
+A separate stored pointer is necessary to ensure that converting a [std::shared_ptr](../shared_ptr) to weak_ptr and then back works correctly, 
+even for aliased [std::shared_ptr](../shared_ptr)s. It is not possible to access the stored pointer in a weak_ptr without locking it into a [std::shared_ptr](../shared_ptr).
+
+### Example
+Demonstrates how lock is used to ensure validity of the pointer.
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <memory>
+ 
+std::weak_ptr<int> gw;
+ 
+void observe()
+{
+    std::cout << "gw.use_count() == " << gw.use_count() << "; ";
+    // we have to make a copy of shared pointer before usage:
+    if (std::shared_ptr<int> spt = gw.lock()) {
+        std::cout << "*spt == " << *spt << '\n';
+    }
+    else {
+        std::cout << "gw is expired\n";
+    }
+}
+ 
+int main()
+{
+    {
+        auto sp = std::make_shared<int>(42);
+        gw = sp;
+ 
+        observe();
+    }
+ 
+    observe();
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+gw.use_count() == 1; *spt == 42
+gw.use_count() == 0; gw is expired
+```
+
+</div>
+</Columns>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |              Behavior as published             | Correct behavior |
+|:--------:|:----------:|:----------------------------------------------:|:----------------:|
+| LWG 3001 | C++17      | element_type was not updated for array support | updated          |

@@ -1,0 +1,135 @@
+---
+title:                  std::auto_ptr
+description:            Smart Pointer
+tags:                   [memory,auto_ptr]
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+# std::auto_ptr
+
+Defined in header `<memory>`.
+
+```cpp
+// 1)
+template< class T > class auto_ptr; 	// (deprecated in C++11, removed in C++17)
+// 2)
+template<> class auto_ptr<void>;        // (deprecated in C++11, removed in C++17)
+```
+
+auto_ptr is a smart pointer that manages an object obtained via new expression and deletes that object when auto_ptr itself is destroyed. 
+It may be used to provide exception safety for dynamically allocated objects, for passing ownership of dynamically allocated objects 
+into functions and for returning dynamically allocated objects from functions.
+
+Copying an auto_ptr copies the pointer and transfers ownership to the destination: both copy construction and copy assignment of auto_ptr modify their right-hand arguments, 
+and the "copy" is not equal to the original. Because of these unusual copy semantics, auto_ptr may not be placed in standard containers.
+
+*std::unique_ptr is preferred for this and other uses. (since C++11)*
+
+    2) Specialization for type `void` is provided, it declares the typedef element_type, but no member functions.
+
+An additional class template auto_ptr_ref is referred to throughout the documentation. It is an implementation-defined type that holds a reference to auto_ptr.
+ The implementation is allowed to provide the template with a different name or implement the functions returning it or accepting it as parameter in other ways.
+
+### Member types
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+                element_type
+                </>}
+    		desc={<>
+                T
+                </>} 
+                />
+</SymbolTable>
+
+### Member functions
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="/docs/std/memory/_auto_ptr/auto_ptr"
+            name={<>
+                (constructor)
+                </>}
+    		desc={<>
+                creates a new auto_ptr <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_auto_ptr/~auto_ptr"
+            name={<>
+                (destructor)
+                </>}
+    		desc={<>
+                destroys an auto_ptr and the managed object <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_auto_ptr/operator="
+            name={<>
+                operator=
+                </>}
+    		desc={<>
+                transfers ownership from another auto_ptr <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_auto_ptr/operator_auto_ptr"
+            name={<>
+                operator auto_ptr&lt;Y> <br/>
+                operator auto_ptr_ref&lt;Y>
+                </>}
+    		desc={<>
+                converts the managed pointer to a pointer to different type <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+</SymbolTable>
+
+#### `Observers`
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="/docs/std/memory/_weak_ptr/get"
+            name={<>
+                get
+                </>}
+    		desc={<>
+                returns a pointer to the managed object <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_weak_ptr/operator*"
+            name={<>
+                operator* <br/>
+                operator->
+                </>}
+    		desc={<>
+                accesses the managed object <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+</SymbolTable>
+
+#### `Modifiers`
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName="/docs/std/memory/_weak_ptr/reset"
+            name={<>
+                reset
+                </>}
+    		desc={<>
+                replaces the managed object <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+    <Symbol autoLink linkName="/docs/std/memory/_weak_ptr/release"
+            name={<>
+                release
+                </>}
+    		desc={<>
+                releases ownership of the managed object <br/>
+                <small>(public member function)</small>
+                </>} 
+                />
+</SymbolTable>
