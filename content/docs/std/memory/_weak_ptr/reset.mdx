@@ -1,0 +1,78 @@
+---
+title:                  std::weak_ptr<T>::reset
+description:            Smart Pointer
+tags:                   [memory,weak_ptr]
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+
+# std::weak_ptr&lt;T>::reset
+
+`Since C++11`
+```cpp
+void reset() noexcept;
+```
+
+Releases the reference to the managed object. After the call `*this` manages no object.
+
+### Parameters
+(none)
+
+### Return value
+(none)
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory>
+#include <iostream>
+ 
+int main()
+{
+    auto shared = std::make_shared<int>(), 
+            shared2 = shared, shared3 = shared2;
+ 
+    auto weak = std::weak_ptr<int>{shared};
+ 
+    std::cout 
+        << std::boolalpha 
+        << "shared.use_count(): " 
+        << shared.use_count() << '\n'
+        << "weak.use_count(): " 
+        << weak.use_count() << '\n'
+        << "weak.expired(): " 
+        << weak.expired() << '\n';
+ 
+    weak.reset();
+ 
+    std::cout 
+        << "weak.reset();\n"
+        << "shared.use_count(): " 
+        << shared.use_count() << '\n'
+        << "weak.use_count(): " 
+        << weak.use_count() << '\n'
+        << "weak.expired(): " 
+        << weak.expired() << '\n';
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+shared.use_count(): 3
+weak.use_count(): 3
+weak.expired(): false
+weak.reset();
+shared.use_count(): 3
+weak.use_count(): 0
+weak.expired(): true
+```
+
+</div>
+</Columns>

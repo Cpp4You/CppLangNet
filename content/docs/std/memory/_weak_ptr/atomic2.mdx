@@ -1,0 +1,50 @@
+---
+title:                  std::weak_ptr<T>::swap
+description:            Smart Pointer
+tags:                   [memory,weak_ptr]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+# std::atomic(std::weak_ptr)
+
+`Since C++20`
+```cpp
+template <class T> struct std::atomic<std::weak_ptr<T>>;
+```
+The partial template specialization of std::atomic for std::weak_ptr&lt;T> allows users to manipulate weak_ptr objects atomically.
+
+If multiple threads of execution access the same std::weak_ptr object without synchronization and any of those accesses uses a non-const member function of 
+weak_ptr then a data race will occur unless all such access is performed through an instance of std::atomic&lt;std::weak_ptr>.
+
+Associated use_count increments are guaranteed to be part of the atomic operation. Associated use_count decrements are sequenced after the atomic operation, 
+but are not required to be part of it, except for the use_count change when overriding expected in a failed CAS. 
+Any associated deletion and deallocation are sequenced after the atomic update step and are not part of the atomic operation.
+
+Note that the control block used by [std::weak_ptr](../weak_ptr)  and [std::shared_ptr](../shared_ptr) is thread-safe: different non-atomic [std::weak_ptr](../weak_ptr) 
+objects can be accessed using mutable operations, 
+such as operator= or reset, simultaneously by multiple threads, even when these instances are copies or otherwise share the same control block internally.
+
+The type T may be an incomplete type.
+
+### Member types
+
+<SymbolTable noTraits>
+	<Symbol
+            name={<>
+                <b>Member type</b>
+                </>}
+    		desc={<>
+                <b>Definition</b>
+                </>} 
+    />
+    <Symbol
+            name={<>
+                value_type
+                </>}
+    		desc={<>
+                std::weak_ptr&lt;T>
+                </>} 
+    />
+</SymbolTable>

@@ -880,7 +880,15 @@ module.exports = {
 							label: 'Helper classes',
 							collapsed: false,
 							items: [
-								docsClassCat('owner_less', 'std/memory/owner_less', '', []),
+								{
+									type: 'category',
+									label: 'owner_less',
+									collapsed: false,
+									link: { type: 'doc', id: 'std/memory/owner_less' },
+									items: [
+										docsClassCat('owner_less_void', 'std/memory/owner_less_void', '', []),
+										],					
+								},
 								docsClassCat('enable_shared_from_this', 'std/memory/enable_shared_from_this', '', []),							
 								docsClassCat('bad_weak_ptr', 'std/memory/bad_weak_ptr', '', []),
 								docsClassCat('default_delete', 'std/memory/default_delete', '', []),
