@@ -1,0 +1,20 @@
+---
+title:                  std::auto_ptr<T>::reset
+description:            Smart Pointer Modifier
+tags:                   [memory,auto_ptr]
+hide_title:             true
+---
+
+# std::auto_ptr&lt;T>::reset
+
+`Deprecated in C++11` `Removed in C++17`
+```cpp
+void reset( T* p = 0 ) throw();
+```
+
+Replaces the held pointer by `p`. If the currently held pointer is not null pointer, `delete get()` is called.
+
+### Parameters
+`p`	-	a pointer to an object to manage
+### Return value
+(none)
