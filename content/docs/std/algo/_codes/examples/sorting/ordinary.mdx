@@ -1,0 +1,28 @@
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp" showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> numbers = { 5, 12, 2137, 1, -5, 22, 96 };
+    std::sort(numbers.begin(), numbers.end());
+
+    for(int number : numbers) {
+        std::cout << number << ' ';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+-5 1 5 12 22 96 2137
+```
+
+</div>
+</Columns>
+

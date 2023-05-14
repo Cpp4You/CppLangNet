@@ -1,0 +1,44 @@
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp" showLineNumbers
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> numbers = { 5, 12, 2137, 1, -5, 22, 96 };
+
+    // We obtain the iterator here,
+    // we use the ordinary version because we do intend to change the contents of the vector,
+    std::vector<int>::iterator begin = numbers.begin();
+    std::vector<int>::iterator end = numbers.end();
+
+    // here we first check if begin is not equal to end, if it is, then we've traversed the entire container
+    // if it's not, we print the number
+    // then we increment the iterator
+    for(; begin != end; ++begin) {
+        // *begin means "access the element the iterator points to"
+        *begin = 0;
+    }
+
+    // Let's print out the container and see the result:
+
+    // NOTE: we have to reassign the value to begin because we've changed it while iterating over it
+    begin = numbers.begin();
+    for(; begin != end; ++begin) {
+        // *begin means "access the element the iterator points to"
+        *begin = 0;
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+0 0 0 0 0 0 0
+```
+
+</div>
+</Columns>
+

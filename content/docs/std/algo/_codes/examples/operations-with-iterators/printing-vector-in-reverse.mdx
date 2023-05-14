@@ -1,0 +1,36 @@
+<Columns spacing="20px" columns={['8fr', '4fr']}>
+<div>
+
+```cpp title="main.cpp" showLineNumbers
+#include <iostream>
+#include <vector>
+
+int main() {
+    std::vector<int> numbers = { 5, 12, 2137, 1, -5, 22, 96 };
+
+    // We obtain the reverse iterator here,
+    // we use  the `c` version because we don't intend to change the contents of the vector,
+    // we only want to print it
+    std::vector<int>::const_reverse_iterator begin = numbers.crbegin();
+    std::vector<int>::const_reverse_iterator end = numbers.crend();
+
+    // here we first check if begin is not equal to end, if it is, then we've traversed the entire container
+    // if it's not, we print the number
+    // then we increment the iterator
+    for(; begin != end; ++begin) {
+        // *begin means "access the element the iterator points to"
+        std::cout << *begin << ' ';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result (console)"
+96 22 -5 1 2137 12 5
+```
+
+</div>
+</Columns>
+

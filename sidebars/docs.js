@@ -845,6 +845,12 @@ module.exports = {
 				},
 				{
 					type: 'category',
+					label: 'Algorithms',
+					link: { type: 'doc', id: 'std/containers/index' },
+					items: []
+				},
+				{
+					type: 'category',
 					label: 'Utility',
 					items: [
 						docsMethod('std/utility/forward', 'since-cpp11'),
