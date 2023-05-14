@@ -4,4 +4,159 @@ title: Summary
 slug: /std/algo/
 ---
 
+import SwitchView from  "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+import Sorting_Example_Rangified			from "./_codes/examples/sorting/rangified.mdx";
+import Sorting_Example_Ordinary				from "./_codes/examples/sorting/ordinary.mdx";
+
+import Iterator_Example_Printing			from "./_codes/examples/operations-with-iterators/printing-vector.mdx";
+import Iterator_Example_Printing_Reverse	from "./_codes/examples/operations-with-iterators/printing-vector-in-reverse.mdx";
+import Iterator_Example_Zeroing				from "./_codes/examples/operations-with-iterators/setting-all-numbers-to-0.mdx";
+
 # Algorithms
+
+The C++ algorithm library is a collection of functions that are designed to make it easier to write **correct**,
+**efficient**, **expressive** and reusable code.
+
+It provides a set of common, highly optimized algorithms that can be used to perform a variety of tasks,
+such as searching for an item in a list, sorting a collection of data, or manipulating the contents of a container.
+
+
+One of the main benefits of using the algorithm library is that it allows you to write code that is easier to understand and less error prone.
+All the algorithms have **almost universally recognized names** which helps understanding what certain parts of code using them do without having to do a lot of digging.
+Because the algorithms from the standard library have been thoroughly **tested** and **optimized**, you can rely on them to work correctly and efficiently.
+This can save you time and effort when developing software and it can help to reduce the risk of introducing bugs into your code.
+
+
+Another benefit of the algorithm library is that it promotes **code reuse**.
+By using the algorithms provided by the library, you can avoid having to reimplement common operations, which can save time and make it easier to maintain your code.
+
+
+Overall, the C++ algorithm library is an important tool for C++ programmers that makes it easier to write **reliable**, **efficient**, and **reusable** code.
+
+# Usage
+
+To use the algorithms you have to include the `<algorithm>` header, like so:
+
+```cpp
+#include <algorithm>
+```
+
+Then you can use them in code:
+
+<SwitchView content={{
+	'Rangified version': <Sorting_Example_Rangified/>,
+	'Ordinary version': <Sorting_Example_Ordinary/>
+}}/>
+
+<details>
+<summary>Rangified vs ordinary version</summary>
+<div>
+
+As you can see in the example above, there are two versions of algorithms. The **rangified** one and the **ordinary** one.
+The rangified version came to C++ with the **C++20** standard. If you have a new enough compiler, you should be able to use it.
+
+
+The basic difference between the two is that the ordinary version only accepts iterators,
+while the rangified version is more convenient and allows one to pass the whole range and enables the use of [projections](#).
+
+
+The rangified version is also **less error-prone**, as you can't pass invalid iterators by mistake (it also handles a few advanced things better than the ordinary version).
+
+
+All that being said, using the rangified version is more beneficial and convenient, so if you have a possibility of choosing so, prefer the rangified version.
+
+</div>
+</details>
+
+<details>
+<summary>Ranges and iterators</summary>
+<div>
+
+# Iterators
+
+Iteration is the action of repeating a process, in case of containers, **iteration** means traversing the container in a particular order while obtaining each of it's elements.
+
+
+Iterators are special objects with [pointer](#) semantics (having semantics of something basically means acting like something,
+pointer semantics mean that the iterator objects act like pointers in most ways, they can be dereferenced, incremented, etc.. **Pointers are also valid iterators**),
+that are used to iterate over containers (like strings, arrays, maps, sets, etc.).
+
+
+They are obtained via the `begin()` and `end()` functions, and their variants:
+
+ - `cbegin()`/`cend()` - return a **const iterator** to a container (you cannot change the contents via it)
+ - `rbegin()`/`rend()` - return a **reverse iterator** to a container (iteration in reverse order)
+ - `crbegin()`/`crend()` - return a **const reverse iterator** to a container (iteration in reverse order and you cannot change the contents via it)
+
+
+Not every container has all the variations, for example [std::unordered_set](/docs/std/containers/sets/unordered-set) doesn't have the `r` and `cr` versions.
+
+
+Different iterators have different types and they work a little bit differently, but the most basic things you can do with an iterator is:
+ - increment it (`it++` and `++it`), which traverses onto the next object in a container
+ - dereference it (`*it`), which returns the value that the iterator points to
+
+
+ Here are a few examples of using iterators with [std::vector](/docs/std/containers/arrays/vector):
+
+
+<SwitchView content={{
+	'Printing vector': <Iterator_Example_Printing/>,
+	'Printing vector in reverse': <Iterator_Example_Printing_Reverse/>,
+	'Zeroing vector': <Iterator_Example_Zeroing/>,
+}}/>
+
+Now, notice how we had to manually specify the type (`std::vector<int>::iterator`, `std::vector<int>::reverse_iterator`, etc.) every time. It is not very convenient. For that purpose you can use the `auto` placeholder:
+
+```cpp
+auto begin = numbers.begin();
+```
+```cpp
+auto begin = numbers.rbegin();
+```
+```cpp
+auto begin = numbers.crbegin();
+```
+
+`auto` deduces the type for us and it has no performance penalty. The code is easier to read that way, so if you can, prefer it. Read more about it here: [auto](#).
+
+# Ranges
+
+Now what exactly is a range? The exact definition and inner workings in C++ are a little bit complicated, but a range can be defined as anything that we can iterate over. An array, vector, string, map, etc..
+
+All rangified algorithms accept a range. The same way iterators can be different types and have slightly different behaviours, some ranges also differ from others and cannot be used with some algorithms.
+
+</div>
+</details>
+
+# List of algorithms
+
+## Non-modifying
+
+## Modifying
+
+## Partitioning
+
+## Sorting
+
+## Binary search
+
+## Other operations on sorted ranges
+
+## Set
+
+## Heap
+
+## Min/max
+
+## Comparison
+
+## Permutation
+
+## Numeric
+
+## Operations on uninitialized memory
+
+## C algorithms
