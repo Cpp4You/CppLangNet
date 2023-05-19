@@ -1,0 +1,41 @@
+---
+title:                  std::allocator<T>::destroy
+description:            Allocator member functiton
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+# std::allocator&lt;T>::destroy
+
+Defined in header `<memory>`
+
+```cpp title="Until C++11"
+// 1)
+void destroy( pointer p );
+```
+```cpp title="Since C++11, Deprecated in C++17, Removed in C++20"
+// 2)
+template< class U >
+void destroy( U* p );
+```
+
+Calls the destructor of the object pointed to by `p`.
+
+1)
+Calls `p->~T()`.
+
+2)
+Calls `p->~U()`.
+
+### Parameters
+`p`	-	pointer to the object that is going to be destroyed
+
+### Return value
+(none)
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR   | Applied to |            Behavior as published           |      Correct behavior      |
+|:-------:|:----------:|:------------------------------------------:|:--------------------------:|
+| LWG 400 | C++98      | `p` was casted to `T*`, which is the type of `p` | removed the redundant cast |

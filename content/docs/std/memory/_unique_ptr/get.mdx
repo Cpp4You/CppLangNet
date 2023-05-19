@@ -10,10 +10,11 @@ import Columns						            from "@site-comps/Columns";
 
 # std::unique_ptr&lt;T,Deleter&gt;::get
 
-```cpp
-pointer get() const noexcept;  //(Since C++11)
-
-constexpr pointer get() const noexcept; //(Since C++23)
+```cpp title="Since C++11"
+pointer get() const noexcept;
+```
+```cpp title="Since C++23"
+constexpr pointer get() const noexcept;
 ```
 
 Returns a pointer to the managed object or `nullptr` if no object is owned.

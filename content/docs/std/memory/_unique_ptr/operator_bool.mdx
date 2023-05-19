@@ -8,10 +8,12 @@ hide_title:             true
 
 # std::unique_ptr&lt;T,Deleter>&gt;::operator bool
 
-```cpp
-explicit operator bool() const noexcept;  //(Since C++11)
+```cpp title="Since C++11"
+explicit operator bool() const noexcept;
+```
 
-constexpr explicit operator bool() const noexcept;    //(Since C++23)
+```cpp title="Since C++23"
+constexpr explicit operator bool() const noexcept;
 ```
 
 Checks whether `*this` owns an object, i.e. whether `get() != nullptr`.

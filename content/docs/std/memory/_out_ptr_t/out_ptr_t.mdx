@@ -7,10 +7,12 @@ hide_title:             true
 
 # std::out_ptr_t&lt;Smart,Pointer,Args...>::out_ptr_t
 
-`Since C++23`
-```cpp
-explicit out_ptr_t( Smart &sp, Args... args );      (1)
-out_ptr_t( const out_ptr_t& ) = delete;             (2)
+
+```cpp title="Since C++23"
+// 1)
+explicit out_ptr_t( Smart &sp, Args... args );
+// 2)
+out_ptr_t( const out_ptr_t& ) = delete;
 ```
 
 1) <br/>

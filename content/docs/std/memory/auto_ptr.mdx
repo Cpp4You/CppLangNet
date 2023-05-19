@@ -12,11 +12,11 @@ import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 
 Defined in header `<memory>`.
 
-```cpp
+```cpp title="Deprecated in C++11, Removed in C++17"
 // 1)
-template< class T > class auto_ptr; 	// (deprecated in C++11, removed in C++17)
+template< class T > class auto_ptr;
 // 2)
-template<> class auto_ptr<void>;        // (deprecated in C++11, removed in C++17)
+template<> class auto_ptr<void>;
 ```
 
 auto_ptr is a smart pointer that manages an object obtained via new expression and deletes that object when auto_ptr itself is destroyed. 

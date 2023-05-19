@@ -1,0 +1,308 @@
+---
+title:                  std::allocator
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns      from "@site-comps/Columns";
+
+import RebindCode from "./_allocator/rebind.mdx"
+
+
+# std::allocator
+
+Defined in header `<memory>`
+
+```cpp
+template< class T >
+struct allocator;           // (1)	
+
+template<>
+struct allocator<void>;     // (2)	(deprecated in C++17, removed in C++20)
+```
+
+The std::allocator class template is the default [Allocator](/docs/std/named_req/Allocator) used by all standard library containers 
+if no user-specified allocator is provided. The default allocator is stateless, that is, all instances of the given allocator are interchangeable, 
+compare equal and can deallocate memory allocated by any other instance of the same allocator type.
+
+
+&emsp;*The explicit specialization for void lacks the member typedefs reference, const_reference, size_type and difference_type. <br/>
+&emsp;This specialization declares no member functions.* (until C++20)
+
+
+&emsp;*The default allocator satisfies allocator completeness requirements.*(since C++17)
+
+### Member types
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+                <b>Type</b>
+                </>}
+    		desc={<>
+                <b>Definition</b>
+                </>} 
+/>
+    <Symbol name={<>
+                value_type
+                </>}
+    		desc={<>
+                T
+                </>} 
+/>
+    <Symbol name={<>
+                pointer <br/>
+                <small>(deprecated in C++17)(removed in C++20)</small>
+                </>}
+    		desc={<>
+                T*
+                </>} 
+/>
+    <Symbol name={<>
+                const_pointer <br/>
+                <small>(deprecated in C++17)(removed in C++20)</small>
+                </>}
+    		desc={<>
+                const T*
+                </>} 
+/>
+    <Symbol name={<>
+                reference <br/>
+                <small>(deprecated in C++17)(removed in C++20)</small>
+                </>}
+    		desc={<>
+                T&
+                </>} 
+/>
+    <Symbol name={<>
+                const_reference<br/>
+                <small>(deprecated in C++17)(removed in C++20)</small>
+                </>}
+    		desc={<>
+                const T&
+                </>} 
+/>
+    <Symbol name={<>
+                size_type
+                </>}
+    		desc={<>
+                <a href="/docs/std/types/size_t">std::ptrdiff_t </a>
+                </>} 
+/>
+    <Symbol name={<>
+                difference_type
+                </>}
+    		desc={<>
+                <a href="/docs/std/types/ptrdiff_t">std::ptrdiff_t </a>
+                </>} 
+/>
+    <Symbol name={<>
+                propagate_on_container_move_assignment<br/>
+                <small>(C++11)</small>
+                </>}
+            desc={<>
+                <a href="/docs/std/types/true_type">std::true_type </a>
+                </>} 
+/>
+    <Symbol name={<>
+                rebind <br/>
+                <small>(deprecated in C++17)(removed in C++20)</small>
+                </>}
+            desc={<RebindCode/>} 
+/>
+    <Symbol name={<>
+                is_always_equal<br/>
+                <small>(C++11)(deprecated in C++23)</small>
+                </>}
+            desc={<>
+                <a href="/docs/std/types/true_type">std::true_type </a>
+                </>} 
+/>
+</SymbolTable>  
+
+### Member function
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName = "/docs/std/memory/_allocator/allocator"
+            name={<>
+                (constructor)
+                </>}
+    		desc={<>
+                creates a new allocator instance  <br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+<Symbol autoLink linkName = "/docs/std/memory/_allocator/~allocator"
+            name={<>
+                (destructor)
+                </>}
+    		desc={<>
+                destructs an allocator instance  <br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+<Symbol autoLink linkName = "/docs/std/memory/_allocator/address"
+            name={<>
+                address <br/>
+                <small>(until C++20)</small> 
+                </>}
+    		desc={<>
+                obtains the address of an object, even if operator& is overloaded <br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+<Symbol autoLink linkName = "/docs/std/memory/_allocator/allocate"
+            name={<>
+                allocate
+                </>}
+    		desc={<>
+                allocates uninitialized storage <br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+<Symbol autoLink linkName = "/docs/std/memory/_allocator/allocate_at_least"
+            name={<>
+                allocate_at_least <br/>
+                <small>(C++23)</small> 
+                </>}
+    		desc={<>
+                allocates uninitialized storage at least as large as requested size<br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+<Symbol autoLink linkName = "/docs/std/memory/_allocator/deallocate"
+            name={<>
+                deallocate
+                </>}
+    		desc={<>
+                deallocates storage <br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+<Symbol autoLink linkName = "/docs/std/memory/_allocator/max_size"
+            name={<>
+                max_size <br/>
+                <small>(until C++20)</small> 
+                </>}
+    		desc={<>
+                returns the largest supported allocation size <br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+<Symbol autoLink linkName = "/docs/std/memory/_allocator/construct"
+            name={<>
+                construct <br/>
+                <small>(until C++20)</small> 
+                </>}
+    		desc={<>
+                constructs an object in allocated storage <br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+<Symbol autoLink linkName = "/docs/std/memory/_allocator/destroy"
+            name={<>
+                destroy <br/>
+                <small>(until C++20)</small> 
+                </>}
+    		desc={<>
+                destructs an object in allocated storage <br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+</SymbolTable> 
+
+### Non-member functions
+
+<SymbolTable noTraits>
+	<Symbol autoLink linkName = "/docs/std/memory/_allocator/operator_cmp"
+            name={<>
+                operator== <br/>
+                operator!= <br/>
+                <small>(removed in C++20)</small>
+                </>}
+    		desc={<>
+                compares two allocator instances  <br/>
+                <small>(public member function)</small>                
+                </>} 
+/>
+</SymbolTable>
+
+### Notes
+
+The member template class rebind provides a way to obtain an allocator for a different type. For example, std::list&lt;T, A> allocates nodes 
+of some internal type Node&lt;T>, using the allocator: <br/>
+&emsp;*`A::rebind&lt;Node&lt;T>>::other`*    ***(until C++11)*** <br/>
+&emsp;*`std::allocator_traits&lt;A>::rebind_alloc&lt;Node&lt;T>>`, which is implemented in terms of `A::rebind&lt;Node&lt;T>>::other` 
+if `A` is an `std::allocator`* ***(since C++11)***.
+
+Member type is_always_equal is deprecated via [LWG issue 3170](https://cplusplus.github.io/LWG/issue3170), because it makes custom allocators derived from std::allocator treated as always equal 
+by default. [std::allocator_traits](/docs/std/memory/allocator_traits)&lt;std::allocator&lt;T>>::is_always_equal is not deprecated and its 
+member constant value is true for any `T`.
+
+### Example
+
+<Columns spacing = '20px' columns = {['6fr','4fr']}>
+<div>
+
+```cpp
+#include <memory>
+#include <iostream>
+#include <string>
+ 
+int main()
+{
+    // default allocator for ints
+    std::allocator<int> alloc1;
+ 
+    // demonstrating the few directly usable members
+    static_assert(std::is_same_v<int, decltype(alloc1)::value_type>);
+    int* p1 = alloc1.allocate(1); // space for one int
+    alloc1.deallocate(p1, 1);     // and it is gone
+ 
+    // Even those can be used through traits though, so no need
+    using traits_t1 = std::allocator_traits<decltype(alloc1)>; // The matching trait
+    p1 = traits_t1::allocate(alloc1, 1);
+    traits_t1::construct(alloc1, p1, 7);  // construct the int
+    std::cout << *p1 << '\n';
+    traits_t1::deallocate(alloc1, p1, 1); // deallocate space for one int
+ 
+    // default allocator for strings
+    std::allocator<std::string> alloc2;
+    // matching traits
+    using traits_t2 = std::allocator_traits<decltype(alloc2)>;
+ 
+    // Rebinding the allocator using the trait for strings gets the same type
+    traits_t2::rebind_alloc<std::string> alloc_ = alloc2;
+ 
+    std::string* p2 = traits_t2::allocate(alloc2, 2); // space for 2 strings
+ 
+    traits_t2::construct(alloc2, p2, "foo");
+    traits_t2::construct(alloc2, p2 + 1, "bar");
+ 
+    std::cout << p2[0] << ' ' << p2[1] << '\n';
+ 
+    traits_t2::destroy(alloc2, p2 + 1);
+    traits_t2::destroy(alloc2, p2);
+    traits_t2::deallocate(alloc2, p2, 2);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+7
+foo bar
+```
+
+</div>
+</Columns>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                   Behavior as published                  |                 Correct behavior                |
+|:--------:|:----------:|:--------------------------------------------------------:|:-----------------------------------------------:|
+| LWG 2103 | C++11      | redundant comparison between allocator might be required | propagate_on_container_move_assignment provided |
+| LWG 2108 | C++11      | there was no way to show allocator is stateless          | is_always_equal provided                        |
