@@ -96,3 +96,12 @@ export function Removed({children, v}: VersionProps)
 		</MarkedText>
 	);
 }
+
+export function Version({children, v}: VersionProps)
+{
+	return (
+		<MarkedText className={styles.version}>{children} 
+			<span className={styles.versionNumber}><small>({LanguageVersions.get(`${v}`)})</small></span>
+		</MarkedText>
+	);
+}
