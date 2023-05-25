@@ -33,9 +33,9 @@ The default, non-specialized, std::allocator_traits contains the following membe
     <Symbol name={<>value_type</>}                             desc={<>Alloc::value_type                                                   </>}/>
     <Symbol name={<>pointer</>}                                desc={<>Alloc::pointer if present, otherwise value_type*                    </>}/>
     <Symbol name={<>const_pointer</>}                          desc={<>Alloc::const_pointer if present, otherwise                          <br/><a href="../pointer_traits">std::pointer_traits</a>             &lt;pointer&gt;::rebind&lt;const value_type&gt;</>}/>
-    <Symbol name={<>void_pointer</>}                           desc={<>Alloc::void_pointer if present, otherwise                           <br/><a href="./pointer_traits">std::pointer_traits</a>              &lt;pointer&gt;::rebind&lt;void&gt;</>}/>
-    <Symbol name={<>const_void_pointer</>}                     desc={<>Alloc::const_void_pointer if present, otherwise                     <br/><a href="./pointer_traits">std::pointer_traits</a>              &lt;pointer&gt;::rebind&lt;const_void&gt;</>}/>
-    <Symbol name={<>difference_type</>}                        desc={<>Alloc::difference_type if present, otherwise                        <br/><a href="./pointer_traits">std::pointer_traits</a>              &lt;pointer&gt;::difference_type</>}/>
+    <Symbol name={<>void_pointer</>}                           desc={<>Alloc::void_pointer if present, otherwise                           <br/><a href="../pointer_traits">std::pointer_traits</a>              &lt;pointer&gt;::rebind&lt;void&gt;</>}/>
+    <Symbol name={<>const_void_pointer</>}                     desc={<>Alloc::const_void_pointer if present, otherwise                     <br/><a href="../pointer_traits">std::pointer_traits</a>              &lt;pointer&gt;::rebind&lt;const_void&gt;</>}/>
+    <Symbol name={<>difference_type</>}                        desc={<>Alloc::difference_type if present, otherwise                        <br/><a href="../pointer_traits">std::pointer_traits</a>              &lt;pointer&gt;::difference_type</>}/>
     <Symbol name={<>size_type</>}                              desc={<>Alloc::size_type if present, otherwise                              <br/><a href="/docs/std/types/make_unsigned">std::make_unsigned</a>  &lt;difference_type&gt;::type</>}/>
     <Symbol name={<>propagate_on_container_copy_assignment</>} desc={<>Alloc::propagate_on_container_copy_assignment if present, otherwise <br/><a href="/docs/std/types/integral_constant">std::false_type</a> </>}/>
     <Symbol name={<>propagate_on_container_move_assignment</>} desc={<>Alloc::propagate_on_container_move_assignment if present, otherwise <br/><a href="/docs/std/types/integral_constant">std::false_type</a> </>}/>
@@ -55,13 +55,13 @@ The default, non-specialized, std::allocator_traits contains the following membe
 ### Member functions
 
 <SymbolTable>
-    <Symbol pub autoLink linkName="" name={<>allocate<Static></Static></>}                                       desc={<>allocates uninitialized storage using the allocator</>}/>
-    <Symbol pub autoLink linkName="" name={<>allocate_at_least<Version v='cpp23'></Version><Static></Static></>} desc={<>allocates uninitialized storage using the allocator</>}/>
-    <Symbol pub autoLink linkName="" name={<>deallocate<Static></Static></>}                                     desc={<>deallocates storage using the allocator</>}/>
-    <Symbol pub autoLink linkName="" name={<>construct<Static></Static></>}                                      desc={<>constructs an object in the allocated storage</>}/>
-    <Symbol pub autoLink linkName="" name={<>destroy<Static></Static></>}                                        desc={<>destructs an object stored in the allocated storage</>}/>    
-    <Symbol pub autoLink linkName="" name={<>max_size<Static></Static></>}                                       desc={<>returns the maximum object size supported by the allocator</>}/>    
-    <Symbol pub autoLink linkName="" name={<>select_on_container_copy_construction<Static></Static></>}          desc={<>obtains the allocator to use after copying a standard container</>}/>    
+    <Symbol pub autoLink linkName="../_allocator_traits/allocate"                              name={<>allocate<Static></Static></>}                                       desc={<>allocates uninitialized storage using the allocator</>}/>
+    <Symbol pub autoLink linkName="../_allocator_traits/allocate_at_least"                     name={<>allocate_at_least<Version v='cpp23'></Version><Static></Static></>} desc={<>allocates uninitialized storage using the allocator</>}/>
+    <Symbol pub autoLink linkName="../_allocator_traits/deallocate"                            name={<>deallocate<Static></Static></>}                                     desc={<>deallocates storage using the allocator</>}/>
+    <Symbol pub autoLink linkName="../_allocator_traits/construct"                             name={<>construct<Static></Static></>}                                      desc={<>constructs an object in the allocated storage</>}/>
+    <Symbol pub autoLink linkName="../_allocator_traits/destroy"                               name={<>destroy<Static></Static></>}                                        desc={<>destructs an object stored in the allocated storage</>}/>    
+    <Symbol pub autoLink linkName="../_allocator_traits/max_size"                              name={<>max_size<Static></Static></>}                                       desc={<>returns the maximum object size supported by the allocator</>}/>    
+    <Symbol pub autoLink linkName="../_allocator_traits/select_on_container_copy_construction" name={<>select_on_container_copy_construction<Static></Static></>}          desc={<>obtains the allocator to use after copying a standard container</>}/>    
 </SymbolTable>
 
 ### Defect reports
