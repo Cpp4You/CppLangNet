@@ -1,0 +1,26 @@
+---
+title:                  std::allocator_traits<Alloc>::select_on_container_copy_construction
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+# std::allocator_traits&lt;Alloc>::select_on_container_copy_construction
+
+```cpp title="Since C++20"
+static constexpr Alloc select_on_container_copy_construction( const Alloc& a );
+```
+```cpp title="Since C++11, Until C++20"
+static Alloc select_on_container_copy_construction( const Alloc& a );
+```
+If possible, obtains the copy-constructed version of the allocator `a`, by calling `a.select_on_container_copy_construction()`. 
+If the above is not possible (e.g. Alloc does not have the member function select_on_container_copy_construction()), then returns `a`, unmodified.
+
+This function is called by the copy constructors of all standard library containers. 
+It allows the allocator used by the constructor's argument to become aware that the container is being copied and modify state if necessary.
+
+### Parameters
+`a`	-	allocator used by a standard container passed as an argument to a container copy constructor
+
+### Return value
+The allocator to use by the copy-constructed standard containers.

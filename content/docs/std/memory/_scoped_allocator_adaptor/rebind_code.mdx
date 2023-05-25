@@ -1,0 +1,9 @@
+```cpp
+template< class T >
+struct rebind {
+    typedef scoped_allocator_adaptor<
+        std::allocator_traits<OuterAlloc>::template rebind_alloc<T>, 
+        InnerAllocs...
+    > other;
+};
+```

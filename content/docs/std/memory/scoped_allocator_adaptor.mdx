@@ -1,0 +1,137 @@
+---
+title:                  std::scoped_allocator_adaptor
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+import ClassSummary				            from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }             from "@site-comps/SymbolTable";
+import { Since, Until, Removed, Version }  from "@site-comps/Versions";
+import Columns                                  from "@site-comps/Columns";
+
+import Rebind                               from "./_scoped_allocator_adaptor/rebind_code.mdx"
+
+<ClassSummary name="scoped_allocator_adaptor" namespaces="std" folder="memory" headerName="memory"/>
+
+```cpp title='Since C++11'
+template< class OuterAlloc, class... InnerAllocs >
+class scoped_allocator_adaptor : public OuterAlloc;
+```
+
+The std::scoped_allocator_adaptor class template is an allocator which can be used with multilevel containers (vector of sets of lists of tuples of maps, etc). 
+It is instantiated with one outer allocator type OuterAlloc and zero or more inner allocator types InnerAlloc.... 
+A container constructed directly with a scoped_allocator_adaptor uses OuterAlloc to allocate its elements, but if an element is itself a container, 
+it uses the first inner allocator. The elements of that container, if they are themselves containers, use the second inner allocator, etc. 
+If there are more levels to the container than there are inner allocators, the last inner allocator is reused for all further nested containers.
+
+The purpose of this adaptor is to correctly initialize stateful allocators in nested containers, 
+such as when all levels of a nested container must be placed in the same shared memory segment. 
+The adaptor's constructor takes the arguments for all allocators in the list, 
+and each nested container obtains its allocator's state from the adaptor as needed.
+
+The purpose of this adaptor is to correctly initialize stateful allocators in nested containers, 
+such as when all levels of a nested container must be placed in the same shared memory segment. 
+The adaptor's constructor takes the arguments for all allocators in the list, 
+and each nested container obtains its allocator's state from the adaptor as needed.
+
+For the purpose of scoped_allocator_adaptor, if the next inner allocator is A, any class T for which `std::uses_allocator<T,A>::value == true` 
+participates in the recursion as if it was a container. Additionally, [std::pair](/docs/std/utility/pair) is treated as such a container by 
+specific overloads of [scoped_allocator_adaptor::construct](/docs/std/memory/_scoped_allocator_adaptor/construct).
+
+Typical implementation holds an instance of a `std::scoped_allocator_adaptor<InnerAllocs...>` as a member object.
+
+### Member types
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Type</b>}                                 desc={<b>Definition</b>}/>
+    <Symbol name={<>outer_allocator_type</>}                   desc={<code>OuterAlloc</code>}/>
+    <Symbol name={<>inner_allocator_type</>}                   desc={<><code>scoped_allocator_adaptor&lt;InnerAllocs...&gt;</code> or, if <code>sizeof...(InnerAllocs) == 0</code>, <code>scoped_allocator_adaptor&lt;OuterAlloc&gt;</code></>}/>
+    <Symbol name={<>value_type</>}                             desc={<code><a href = "/docs/std/memory/allocator_traits">std::allocator_traits&lt;OuterAlloc&gt;</a>::value_type</code>}/>
+    <Symbol name={<>size_type</>}                              desc={<code><a href = "/docs/std/memory/allocator_traits">std::allocator_traits&lt;OuterAlloc&gt;</a>::size_type</code>}/>
+    <Symbol name={<>pointer</>}                                desc={<code><a href = "/docs/std/memory/allocator_traits">std::allocator_traits&lt;OuterAlloc&gt;</a>::pointer</code>}/>
+    <Symbol name={<>const_pointer</>}                          desc={<code><a href = "/docs/std/memory/allocator_traits">std::allocator_traits&lt;OuterAlloc&gt;</a>::const_pointer</code>}/>
+    <Symbol name={<>const_void_pointer</>}                     desc={<code><a href = "/docs/std/memory/allocator_traits">std::allocator_traits&lt;OuterAlloc&gt;</a>::const_void_pointer</code>}/>
+    <Symbol name={<>propagate_on_container_copy_assignment</>} desc={<><a href = "/docs/std/types/integral_constant">std::true_type</a> if <code> std::allocator_traits&lt;A&gt;::propagate_on_container_copy_assignment::value </code> is true for at least one allocator A among OuterAlloc and InnerAlloc...</>}/>
+    <Symbol name={<>propagate_on_container_move_assignment</>} desc={<><a href = "/docs/std/types/integral_constant">std::true_type</a> if <code> std::allocator_traits&lt;A&gt;::propagate_on_container_move_assignment::value </code> is true for at least one allocator A among OuterAlloc and InnerAlloc...</>}/>
+    <Symbol name={<>propagate_on_container_swap</>}            desc={<><a href = "/docs/std/types/integral_constant">std::true_type</a> if <code> std::allocator_traits&lt;A&gt;::propagate_on_container_swap::value </code> is true for at least one allocator A among OuterAlloc and InnerAlloc...</>}/>
+    <Symbol name={<>is_always_equal</>}                        desc={<><a href = "/docs/std/types/integral_constant">std::true_type</a> if <code> std::allocator_traits&lt;A&gt;::propagate_on_container_swap::value </code> is true for at least one allocator A among OuterAlloc and InnerAlloc...</>}/>
+    <Symbol name={<>rebind</>}                                 desc={<Rebind/>}/>
+</SymbolTable>
+
+### Member functions
+
+<SymbolTable >
+    <Symbol pub autoLink linkName="" name="(constructor)"                         desc="creates a new scoped_allocator_adaptor instance"/>
+    <Symbol pub autoLink linkName="" name="(destructor)"                          desc="destructs a scoped_allocator_adaptor instance"/>
+    <Symbol pub autoLink linkName="" name="operator="                             desc="assigns a scoped_allocator_adaptor"/>
+    <Symbol pub autoLink linkName="" name="inner_allocator"                       desc="obtains an inner_allocator reference"/>
+    <Symbol pub autoLink linkName="" name="outer_allocator"                       desc="obtains an outer_allocator reference"/>
+    <Symbol pub autoLink linkName="" name="allocate"                              desc="allocates uninitialized storage using the outer allocator"/>
+    <Symbol pub autoLink linkName="" name="deallocate"                            desc="deallocates storage using the outer allocator"/>
+    <Symbol pub autoLink linkName="" name="max_size"                              desc="returns the largest allocation size supported by the outer allocator"/>
+    <Symbol pub autoLink linkName="" name="construct"                             desc="constructs an object in allocated storage, passing the inner allocator to its constructor if appropriate"/>
+    <Symbol pub autoLink linkName="" name="destroy"                               desc="destructs an object in allocated storage"/>
+    <Symbol pub autoLink linkName="" name="select_on_container_copy_construction" desc="copies the state of scoped_allocator_adaptor and all its allocators"/>
+</SymbolTable>
+
+### Non-member functions
+
+<SymbolTable noTraits>
+    <Symbol name={<Removed v='cpp20'>operator==<br/>operator!=</Removed>} desc={<>compares two scoped_allocator_adaptor instances</>}/>
+</SymbolTable>
+
+
+
+<details>
+<summary><Since v='cpp17'>Deduction guides</Since></summary>
+<div>
+
+Defined in header [&lt;scoped_allocator&gt;](/docs/std/header/scoped_allocator)
+
+```cpp title='Since C++17'
+template<class OuterAlloc, class... InnerAllocs>
+scoped_allocator_adaptor(OuterAlloc, InnerAllocs...)
+  -> scoped_allocator_adaptor<OuterAlloc, InnerAllocs...>;
+```
+One deduction guide is provided for std::scoped_allocator_adaptor to make it possible to deduce its outer allocator.
+
+</div>
+</details>
+
+### Example
+
+```cpp
+#include <vector>
+#include <scoped_allocator>
+#include <boost/interprocess/managed_shared_memory.hpp>
+#include <boost/interprocess/allocators/adaptive_pool.hpp>
+namespace bi = boost::interprocess;
+template<class T> using alloc = bi::adaptive_pool<T,
+                                    bi::managed_shared_memory::segment_manager>;
+using ipc_row = std::vector<int, alloc<int>>;
+using ipc_matrix = std::vector<ipc_row, std::scoped_allocator_adaptor<alloc<ipc_row>>>;
+int main ()
+{
+   bi::managed_shared_memory s(bi::create_only, "Demo", 65536);
+ 
+   // create vector of vectors in shared memory
+   ipc_matrix v(s.get_segment_manager());
+ 
+   // for all these additions, the inner vectors obtain their allocator arguments
+   // from the outer vector's scoped_allocator_adaptor
+   v.resize(1); v[0].push_back(1);
+   v.emplace_back(2);
+   std::vector<int> local_row = {1,2,3};
+   v.emplace_back(local_row.begin(), local_row.end());
+ 
+   bi::shared_memory_object::remove("Demo");
+}
+```
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                       Behavior as published                       |     Correct behavior     |
+|:--------:|:----------:|:-----------------------------------------------------------------:|:------------------------:|
+| LWG 2108 | C++11      | there was no way to show if scoped_allocator_adaptor is stateless | is_always_equal provided |

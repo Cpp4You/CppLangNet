@@ -914,7 +914,7 @@ module.exports = {
 					items: [
 							docsClassCat('allocator', 'std/memory/allocator', '', []),
 							docsClassCat('allocator_traits', 'std/memory/allocator_traits', '', []),							
-							docsClassCat('allocation_resut', 'std/memory/allocation_resut', '', []),
+							docsClassCat('allocation_result', 'std/memory/allocation_result', '', []),
 							docsClassCat('allocator_arg', 'std/memory/allocator_arg', '', []),	
 							docsClassCat('uses_allocator', 'std/memory/uses_allocator', '', []),
 							docsClassCat('uses_allocator_construction_args', 'std/memory/uses_allocator_construction_args', '', []),							
