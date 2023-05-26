@@ -1,0 +1,81 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::construct
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+import { Since, Until, Removed, Version, Deprecated }  from "@site-comps/Versions";
+
+import Overloads                                        from "./_codes/construct.mdx";
+
+# std::pmr::polymorphic_allocator&lt;T>::construct
+
+```cpp title='Since C++17'
+// 1)
+template < class U, class... Args >
+void construct( U* p, Args&&... args );
+```
+```cpp title='Since C++17, Until C++20'
+// 2)
+template< class T1, class T2, class... Args1, class... Args2 >
+void construct( std::pair<T1, T2>* p,
+                std::piecewise_construct_t,
+                std::tuple<Args1...> x,
+                std::tuple<Args2...> y );
+// 3)
+template< class T1, class T2 >
+void construct( std::pair<T1, T2>* p );
+// 4)
+template< class T1, class T2, class U, class V >
+void construct( std::pair<T1, T2>* p, U&& x, V&& y );
+// 5)
+template< class T1, class T2, class U, class V >
+void construct( std::pair<T1, T2>* p, const std::pair<U, V>& xy );
+// 6)
+template< class T1, class T2, class U, class V >
+void construct( std::pair<T1, T2>* p, std::pair<U, V>&& xy );
+// 7)
+template< class T1, class T2, class NonPair >
+void construct( std::pair<T1, T2>* p, NonPair&& non_pair );
+```
+
+Constructs an object in allocated, but not initialized storage pointed to by `p` the provided constructor arguments. 
+If the object is of type that itself uses allocators, or if it is [std::pair](/docs/std/utility/pair), passes `*this` down to the constructed object.
+
+    1) Creates an object of the given type U by means of uses-allocator construction at the uninitialized memory location indicated by `p`, using `*this`
+    as the allocator. <br/> <Until v='cpp20'>This overload participates in overload resolution only if U is not a specialization of [std::pair](/docs/std/utility/pair).</Until>
+
+    <Until block v='cpp20'> <Overloads/> </Until>
+
+
+
+
+
+
+
+
+### Parameters
+`p`	-	pointer to allocated, but not initialized storage <br/>
+`args...`	-	the constructor arguments to pass to the constructor of T <br/>
+`x`	-	the constructor arguments to pass to the constructor of T1 <br/>
+`y`	-	the constructor arguments to pass to the constructor of T2 <br/>
+`xy`	-	the pair whose two members are the constructor arguments for T1 and T2 <br/>
+`non_pair`	-	non-pair argument to convert to pair for further construction
+
+### Return value
+(none)
+
+### Notes
+This function is called (through [std::allocator_traits](/docs/std/memory/allocator_traits)) by any allocator-aware object, 
+such as [std::pmr::vector](/docs/std/containers/arrays/vector) (or another [std::vector](/docs/std/containers/arrays/vector) 
+that was given a std::pmr::polymorphic_allocator as the allocator to use).
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                         Behavior as published                         |         Correct behavior        |
+|:--------:|:----------:|:---------------------------------------------------------------------:|:-------------------------------:|
+| LWG 2969 | C++17      | uses-allocator construction passed resource()                         | passes *this                    |
+| LWG 2975 | C++17      | first overload is mistakenly used for pair construction in some cases | constrained to not accept pairs |
+| LWG 3525 | C++17      | no overload could handle non-pair types convertible to pair           | reconstructing overload added   |

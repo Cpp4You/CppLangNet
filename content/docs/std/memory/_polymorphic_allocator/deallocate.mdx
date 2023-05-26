@@ -1,0 +1,24 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::deallocate
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::deallocate
+
+```cpp title='Since C++17'
+void deallocate( T* p, std::size_t n );
+```
+Deallocates the storage pointed to by `p`, which must have been allocated from a [std::pmr::memory_resource](/docs/std/memory/memory_resource) `x` 
+that compares equal to `*resource()` using `x.allocate(n * sizeof(T), alignof(T))`.
+
+Equivalent to `this->resource()->deallocate(p, n * sizeof(T), alignof(T));`.
+
+### Parameters
+`p`	-	pointer to memory to deallocate <br/>
+`n`	-	the number of objects originally allocated
+
+
+### Exceptions
+Throws nothing.

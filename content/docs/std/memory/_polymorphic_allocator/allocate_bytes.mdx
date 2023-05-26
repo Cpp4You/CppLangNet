@@ -1,0 +1,33 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::allocate_bytes
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::allocate_bytes
+
+```cpp title='Since C++20'
+[[nodiscard]] void* allocate_bytes( std::size_t nbytes,
+                                    std::size_t alignment = alignof(std::max_align_t) );
+```
+
+Allocates nbytes bytes of storage at specified alignment alignment using the underlying memory resource. <br/>
+Equivalent to `return resource()->allocate(nbytes, alignment);`.
+
+### Parameters
+`nbytes`	-	the number of bytes to allocate  <br/>
+`alignment`	-	the alignment to use
+
+### Return value
+A pointer to the allocated storage.
+
+### Notes
+This function was introduced for use with the fully-specialized allocator <code>[std::pmr::polymorphic_allocator&lt;&gt;](../polymorphic_allocator)</code>, 
+but it may be useful in any specialization.
+
+The return type is `void*` (rather than, e.g., [std::byte](/docs/std/types/byte)\*) to support conversion to an arbitrary 
+pointer type U\* by `static_cast<U*>`.
+
+### Exceptions
+May throw any exceptions thrown by the call to `resource()->allocate`.

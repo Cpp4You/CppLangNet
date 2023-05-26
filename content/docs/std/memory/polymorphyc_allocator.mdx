@@ -1,0 +1,74 @@
+---
+title:                  std::pmr::polymorphic_allocator
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+import ClassSummary				                        from "@site-comps/ClassSummary";
+import SymbolTable, { Symbol }                          from "@site-comps/SymbolTable";
+import { Since, Until, Removed, Version, Deprecated }  from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns";
+
+<ClassSummary name="polymorphic_allocator" namespaces="std::pmr" folder="memory" headerName="memory_resource"/>
+
+```cpp title='Since C++20'
+template< class T = std::byte >
+class polymorphic_allocator;
+```
+```cpp title='Since C++17, Until C++17'
+template< class T >
+class polymorphic_allocator;
+```
+The class template std::pmr::polymorphic_allocator is an [Allocator](/docs/std/named_req/Allocator) which exhibits different allocation behavior 
+depending upon the [std::pmr::memory_resource](/docs/std/memory/memory_resource) from which it is constructed. 
+Since memory_resource uses runtime polymorphism to manage allocations, different container instances with polymorphic_allocator as their static allocator 
+type are interoperable, but can behave as if they had different allocator types.
+
+All specializations of polymorphic_allocator meet the [Allocator completeness requirements](/docs/std/named_req/Allocator).
+
+The polymorphic_allocator::construct member function does [uses-allocator](/docs/std/memory/uses_allocator) construction, 
+so that the elements of a container using a polymorphic_allocator will use that same allocator for their own allocations. 
+For example, a [std::pmr::vector](/docs/std/containers/arrays/vector)[&lt;std::pmr::string>](/docs/std/containers/strings/string)
+will use the same memory_resource for the vector's storage and each string's storage.
+
+### Member types
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Member Type</b>} desc={<b>Definition</b>}/>
+    <Symbol name={<>value_type</>} desc={<>T</>}/>
+</SymbolTable>
+
+### Member functions
+
+<SymbolTable>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/polymorphic_allocator"                 name={<>(constructor)</>}                                    desc={<>Constructs a polymorphic_allocator</>}/>
+    <Symbol pub                                                                                     name={<>(destructor)<small>(implicitly declared)</small></>} desc={<>Implicitly declared destructor</>}/>
+    <Symbol pub                                                                                     name={<Removed v=''>operator=</Removed>}                     desc={<>Copy assignment operator is deleted</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/allocate"                              name={<>allocate</>}                                         desc={<>Allocate memory</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/deallocate"                            name={<>deallocate</>}                                       desc={<>Deallocate memory</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/construct"                             name={<>construct</>}                                        desc={<>Constructs an object in allocated storage</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/destroy"                               name={<Deprecated v='cpp20'>destroy</Deprecated>}            desc={<>Destroys an object in allocated storage</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/allocate_bytes"                        name={<Version v='cpp20'>allocate_bytes</Version>}           desc={<>Allocate raw aligned memory from the underlying resource</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/deallocate_bytes"                      name={<Version v='cpp20'>deallocate_bytes</Version>}         desc={<>Free raw memory obtained from allocate_bytes</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/allocate_object"                       name={<Version v='cpp20'>allocate_object</Version>}          desc={<>Allocates raw memory suitable for an object or an array</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/deallocate_object"                     name={<Version v='cpp20'>deallocate_object</Version>}        desc={<>Frees raw memory obtained by allocate_object</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/new_object"                            name={<Version v='cpp20'>new_object</Version>}               desc={<>Allocates and constructs an object</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/delete_object"                         name={<Version v='cpp20'>delete_object</Version>}            desc={<>Destroys and deallocates an object</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/select_on_container_copy_construction" name={<>select_on_container_copy_construction</>}            desc={<>Create a new polymorphic_allocator for use by a container's copy constructor</>}/>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/resource"                              name={<>resource</>}                                         desc={<>Returns a pointer to the underlying memory resource</>}/>
+</SymbolTable>
+
+### Non-member functions
+
+<SymbolTable>
+    <Symbol pub autoLink linkName="../_polymorphic_allocator/operator_cmp" name={<Removed v='cpp20'>operator==<br/>operator!=</Removed>} desc={<>compare two polymorphic_allocators</>}/>
+</SymbolTable>
+
+### Notes
+polymorphic_allocator does not propagate on container copy assignment, move assignment, or swap. As a result, move assignment of a polymorphic_allocator-using container can throw, 
+and swapping two polymorphic_allocator-using containers whose allocators do not compare equal results in undefined behavior.
+
+|        Feature-test macro       |
+|:-------------------------------:|
+| __cpp_lib_polymorphic_allocator |

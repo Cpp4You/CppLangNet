@@ -1,7 +1,7 @@
 ---
 title:                  std::scoped_allocator_adaptor
 description:            Allocator
-tags:                   [memory,allocator]
+tags:                   [memory,allocator,scoped_allocator_adaptor]
 hide_title:             true
 ---
 
@@ -12,7 +12,7 @@ import Columns                                  from "@site-comps/Columns";
 
 import Rebind                               from "./_scoped_allocator_adaptor/rebind_code.mdx"
 
-<ClassSummary name="scoped_allocator_adaptor" namespaces="std" folder="memory" headerName="memory"/>
+<ClassSummary name="scoped_allocator_adaptor" namespaces="std" folder="memory" headerName="scoped_allocator"/>
 
 ```cpp title='Since C++11'
 template< class OuterAlloc, class... InnerAllocs >
@@ -62,23 +62,23 @@ Typical implementation holds an instance of a `std::scoped_allocator_adaptor<Inn
 ### Member functions
 
 <SymbolTable >
-    <Symbol pub autoLink linkName="" name="(constructor)"                         desc="creates a new scoped_allocator_adaptor instance"/>
-    <Symbol pub autoLink linkName="" name="(destructor)"                          desc="destructs a scoped_allocator_adaptor instance"/>
-    <Symbol pub autoLink linkName="" name="operator="                             desc="assigns a scoped_allocator_adaptor"/>
-    <Symbol pub autoLink linkName="" name="inner_allocator"                       desc="obtains an inner_allocator reference"/>
-    <Symbol pub autoLink linkName="" name="outer_allocator"                       desc="obtains an outer_allocator reference"/>
-    <Symbol pub autoLink linkName="" name="allocate"                              desc="allocates uninitialized storage using the outer allocator"/>
-    <Symbol pub autoLink linkName="" name="deallocate"                            desc="deallocates storage using the outer allocator"/>
-    <Symbol pub autoLink linkName="" name="max_size"                              desc="returns the largest allocation size supported by the outer allocator"/>
-    <Symbol pub autoLink linkName="" name="construct"                             desc="constructs an object in allocated storage, passing the inner allocator to its constructor if appropriate"/>
-    <Symbol pub autoLink linkName="" name="destroy"                               desc="destructs an object in allocated storage"/>
-    <Symbol pub autoLink linkName="" name="select_on_container_copy_construction" desc="copies the state of scoped_allocator_adaptor and all its allocators"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/scoped_allocator_adaptor"              name="(constructor)"                         desc="creates a new scoped_allocator_adaptor instance"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/~scoped_allocator_adaptor"             name="(destructor)"                          desc="destructs a scoped_allocator_adaptor instance"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/operator="                             name="operator="                             desc="assigns a scoped_allocator_adaptor"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/inner_allocator"                       name="inner_allocator"                       desc="obtains an inner_allocator reference"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/outer_allocator"                       name="outer_allocator"                       desc="obtains an outer_allocator reference"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/allocate"                              name="allocate"                              desc="allocates uninitialized storage using the outer allocator"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/deallocate"                            name="deallocate"                            desc="deallocates storage using the outer allocator"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/max_size"                              name="max_size"                              desc="returns the largest allocation size supported by the outer allocator"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/construct"                             name="construct"                             desc="constructs an object in allocated storage, passing the inner allocator to its constructor if appropriate"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/destroy"                               name="destroy"                               desc="destructs an object in allocated storage"/>
+    <Symbol pub autoLink linkName="../_scoped_allocator_adaptor/select_on_container_copy_construction" name="select_on_container_copy_construction" desc="copies the state of scoped_allocator_adaptor and all its allocators"/>
 </SymbolTable>
 
 ### Non-member functions
 
 <SymbolTable noTraits>
-    <Symbol name={<Removed v='cpp20'>operator==<br/>operator!=</Removed>} desc={<>compares two scoped_allocator_adaptor instances</>}/>
+    <Symbol autoLink linkName="../_scoped_allocator_adaptor/operator_cmp" name={<Removed v='cpp20'>operator==<br/>operator!=</Removed>} desc={<>compares two scoped_allocator_adaptor instances</>}/>
 </SymbolTable>
 
 

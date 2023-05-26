@@ -1,0 +1,25 @@
+---
+title:                  std::scoped_allocator_adaptor<OuterAlloc,InnerAlloc...>::outer_allocator
+description:            Allocator
+tags:                   [memory,scoped_allocator_adaptor]
+hide_title:             true
+---
+
+# std::scoped_allocator_adaptor&lt;OuterAlloc,InnerAlloc...>::outer_allocator
+
+```cpp title='Since C++11'
+// 1)
+outer_allocator_type& outer_allocator() noexcept;
+// 2)
+const outer_allocator_type& outer_allocator() const noexcept;
+```
+Obtains a reference to the outer allocator used to declare this class.
+
+1) Returns `static_cast<OuterAlloc&>(*this)`. <br/>
+2) Returns `static_cast<const OuterAlloc&>(*this)`.
+
+### Parameters
+(none)
+
+### Return value
+A reference to OuterAlloc.

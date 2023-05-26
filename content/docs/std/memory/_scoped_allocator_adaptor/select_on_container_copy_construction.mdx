@@ -1,0 +1,21 @@
+---
+title:                  std::scoped_allocator_adaptor<OuterAlloc,InnerAlloc...>::select_on_container_copy_construction
+description:            Allocator
+tags:                   [memory,scoped_allocator_adaptor]
+hide_title:             true
+---
+
+# std::scoped_allocator_adaptor&lt;OuterAlloc,InnerAlloc...>::select_on_container_copy_construction
+
+```cpp title='Since C++11'
+scoped_allocator_adaptor select_on_container_copy_construction() const;
+```
+		
+Creates a new instance of [std::scoped_allocator_adaptor](../scoped_allocator_adaptor), where the outer allocator base class and each inner allocator subobject 
+are obtained by calling `std::allocator_traits<A>::select_on_container_copy_construction()`.
+
+### Parameters
+(none)
+
+### Return value
+A new std::scoped_allocator_adaptor object, constructed from correctly copied allocators.

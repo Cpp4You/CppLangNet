@@ -1,0 +1,68 @@
+
+2) First, if either T1 or T2 is allocator-aware, modifies the tuples x and y to include the appropriate inner allocator,
+    resulting in the two new tuples xprime and yprime, according to the following three rules:
+    
+        2a) if T1 is not allocator-aware
+        (`std::uses_allocator<T1, inner_allocator_type>::value == false`), then xprime is `std::tuple<Args1&&...>(std::move(x))`. 
+        (It is also required that `std::is_constructible<T1, Args1...>::value == true`).
+    
+        2b) if T1 is allocator-aware (`std::uses_allocator<T1, inner_allocator_type>::value == true`), and its constructor takes an allocator ta
+```cpp
+std::is_constructible<T1, std::allocator_arg_t,
+    inner_allocator_type&, Args1...>::value == true
+```
+        then xprime is
+```cpp
+std::tuple_cat(std::tuple<std::allocator_arg_t, inner_allocator_type&>(
+    std::allocator_arg, inner_allocator()
+    ),
+    std::tuple<Args1&&...>(std::move(x)))
+```
+        2c) if T1 is allocator-aware (`std::uses_allocator<T1, inner_allocator_type>::value == true`), 
+        and its constructor takes the allocator as the last argument
+```cpp
+std::is_constructible<T1, Args1..., inner_allocator_type&>::value == true
+```
+        ,then xprime is
+```cpp
+std::tuple_cat(std::tuple<Args1&&...>(std::move(x)),
+    std::tuple<inner_allocator_type&>(inner_allocator()))
+```
+        Same rules apply to T2 and the replacement of y with yprime
+        Once xprime and yprime are constructed, constructs the pair p in allocated storage by calling
+```cpp
+std::allocator_traits<O>::construct( OUTERMOST,
+                                    p,
+                                    std::piecewise_construct,
+                                    std::move(xprime),
+                                    std::move(yprime) );
+```
+        3) Equivalent to
+```cpp
+construct(p, std::piecewise_construct, std::tuple<>(), std::tuple<>())
+```
+        ,that is, passes the inner allocator on to the pair's member types if they accept them.
+
+        4) Equivalent to
+```cpp
+construct(p, std::piecewise_construct, std::forward_as_tuple(std::forward<U>(x)),
+                                       std::forward_as_tuple(std::forward<V>(y)))
+```     
+        5) Equivalent to
+```cpp
+construct(p, std::piecewise_construct, std::forward_as_tuple(xy.first),
+                                       std::forward_as_tuple(xy.second))
+``` 
+        6) Equivalent to
+```cpp
+construct(p, std::piecewise_construct,
+             std::forward_as_tuple(std::forward<U>(xy.first)),
+             std::forward_as_tuple(std::forward<V>(xy.second)))
+```
+        7) This overload participates in overload resolution only if given the exposition-only function template
+```cpp
+template< class A, class B >
+void /*deduce-as-pair*/( const std::pair<A, B>& );
+```
+        ,`/*deduce-as-pair*/(non_pair)` is ill-formed when considered as an unevaluated operand. <br/>
+        Equivalent to `construct<T1, T2, T1, T2>(p, std::forward<NonPair>(non_pair));`.

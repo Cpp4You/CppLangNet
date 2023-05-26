@@ -1,0 +1,54 @@
+---
+title:                  std::scoped_allocator_adaptor<OuterAlloc,InnerAlloc...>::scoped_allocator_adaptor
+description:            Allocator
+tags:                   [memory,scoped_allocator_adaptor]
+hide_title:             true
+---
+
+# std::scoped_allocator_adaptor&lt;OuterAlloc,InnerAlloc...>::scoped_allocator_adaptor
+
+```cpp title='Since C++11'
+// 1)
+scoped_allocator_adaptor();
+// 2)
+template< class OuterA2 >
+scoped_allocator_adaptor( OuterA2&& outerAlloc, const InnerAllocs&... innerAllocs) noexcept;
+// 3)
+scoped_allocator_adaptor( const scoped_allocator_adaptor& other ) noexcept;
+// 4)
+scoped_allocator_adaptor( scoped_allocator_adaptor&& other ) noexcept;
+// 5)
+template< class OuterA2 >
+scoped_allocator_adaptor( const scoped_allocator_adaptor<OuterA2, InnerAllocs...>& other )  noexcept;
+// 6)
+template< class OuterA2 >
+scoped_allocator_adaptor( scoped_allocator_adaptor<OuterA2, InnerAllocs...>&& other ) noexcept;
+```
+
+1) Default constructor: value-initializes the OuterAlloc base class and the inner allocator member object, if used by the implementation.
+
+2) Constructs the base class OuterAlloc from std::forward&lt;OuterA2>(outerAlloc), and the inner allocators with `innerAllocs...`. 
+This overload participates in overload resolution only if `std::is_constructible<OuterAlloc, OuterA2>::value` is `true`. 
+
+3) Copy-constructor: initializes each allocator from the corresponding allocator of other 
+
+4) Move-constructor: moves each allocator from the corresponding allocator of other into `*this` 
+
+5) Initializes each allocator from the corresponding allocator of other. 
+This overload participates in overload resolution only if `std::is_constructible<OuterAlloc, const OuterA2&>::value` is `true`. 
+
+6) Initializes each allocator from the corresponding allocator of other, using move semantics. 
+This overload participates in overload resolution only if `std::is_constructible<OuterAlloc, OuterA2>::value` is `true`. 
+
+
+### Parameters
+`outerAlloc`	-	constructor argument for the outer allocator <br/>
+`innerAllocs...`	-	constructor arguments for the inner allocators <br/>
+`other`	-	another std::scoped_allocator_adaptor <br/>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                               Behavior as published                               | Correct behavior |
+|:--------:|:----------:|:---------------------------------------------------------------------------------:|:----------------:|
+| LWG 2782 | C++11      | constructors taking OuterA2 weren't constrained, interfering with metaprogramming | constraint added |

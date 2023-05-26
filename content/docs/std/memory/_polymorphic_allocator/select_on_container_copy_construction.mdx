@@ -1,0 +1,22 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::select_on_container_copy_construction
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::select_on_container_copy_construction
+
+```cpp title='Since C++17'
+polymorphic_allocator select_on_container_copy_construction() const;
+```
+Returns a default-constructed polymorphic_allocator object.
+
+### Parameters
+(none)
+
+### Return Value
+A default-constructed polymorphic_allocator object.
+
+### Notes
+polymorphic_allocators do not propagate on container copy construction.
