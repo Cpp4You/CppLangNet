@@ -1,0 +1,149 @@
+---
+title:                  Named Requirements
+description:            Smart Pointer
+tags:                   [named_req]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import {Deprecated, Version}               from "@site-comps/Versions";
+
+# Named Requirements
+
+The *named requirements* listed on this page are the named requirements used in the normative text of the C++ standard to define the expectations of the
+standard library.
+
+Some of these requirements are being formalized in C++20 using the [concepts](language/constraints) language feature. 
+Until then, the burden is on the programmer to ensure that library templates are instantiated with template arguments that satisfy these requirements. 
+Failure to do so may result in very complex compiler diagnostics.
+
+### Basic
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/DefaultConstructible" name={<i>DefaultConstructible</i>}                                desc={<>specifies that an object of the type can be default constructed</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/MoveConstructible"    name={<><i>MoveConstructible</i><Version v='cpp11'></Version></>} desc={<>specifies that an object of the type can be constructed from rvalue</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/CopyConstructible"    name={<i>CopyConstructible</i>}                                   desc={<>specifies that an object of the type can be constructed from lvalue</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/MoveAssignable"       name={<><i>MoveAssignable</i><Version v='cpp11'></Version></>}    desc={<>specifies that an object of the type can be assigned from rvalue</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/CopyAssignable"       name={<i>CopyAssignable</i>}                                      desc={<>specifies that an object of the type can be assigned from lvalue</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/Destructible"         name={<i>Destructible</i>}                                        desc={<>specifies that an object of the type can be destroyed</>}/>
+</SymbolTable>
+
+### Type properties
+
+---
+Note: the standard does not define named requirements with names specified in this subcategory.
+These are type categories defined by the core language. They are included here as named requirements only for consistency.
+
+---
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/ScalarType"           name={<i>ScalarType</i>}                                           desc={<>object types that are not array types or class types</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/PODType"              name={<Deprecated v='cpp20'><i>PODType</i></Deprecated>}           desc={<>POD (Plain Old Data) types, compatible with C <code>struct</code></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/TriviallyCopyable"    name={<><i>TriviallyCopyable</i><Version v='cpp11'></Version></>}  desc={<>objects of these types can maintain their values after copying their underlying bytes</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/TrivialType"          name={<><i>TrivialType</i><Version v='cpp11'></Version></>}        desc={<>objects of these types can be trivially constructed and copied</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/StandardLayoutType"   name={<><i>StandardLayoutType</i><Version v='cpp11'></Version></>} desc={<>these types are useful for communicating with code written in other programming languages</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/ImplicitLifetimeType" name={<i>ImplicitLifetimeType</i>}                                 desc={<>objects of these types can be implicitly created, and their lifetimes can be implicitly started</>}/>
+</SymbolTable>
+
+### Library-wide
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/EqualityComparable" name={<i>EqualityComparable</i>}                                desc={<>operator== is an equivalence relation</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/LessThanComparable" name={<i>LessThanComparable</i>}                                desc={<>operator&lt; is a strict weak ordering relation</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/Swappable"          name={<i>Swappable</i>}                                         desc={<>can be swapped with an unqualified non-member function call <code>swap()</code></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/ValueSwappable"     name={<><i>ValueSwappable</i><Version v='cpp11'></Version></>}  desc={<>a <a href="/docs/std/named_req/Iterator">LegacyIterator</a> that dereferences to a <a href="/docs/std/named_req/Swappable">Swappable</a> type</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/NullablePointer"    name={<><i>NullablePointer</i><Version v='cpp11'></Version></>} desc={<>a pointer-like type supporting a null value</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/Hash"               name={<><i>Hash</i><Version v='cpp11'></Version></>}            desc={<>a <a href="/docs/std/named_req/FunctionObject">FunctionObject</a> that for inputs with different values has a low probability of giving the same output</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/Allocator"          name={<i>Allocator</i>}                                         desc={<>a class type that contains allocation information</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/FunctionObject"     name={<i>FunctionObject</i>}                                    desc={<>an object that can be called with the function call syntax</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/Callable"           name={<i>Callable</i>}                                          desc={<>a type for which the invoke operation is defined</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/Predicate"          name={<i>Predicate</i>}                                         desc={<>a <a href="/docs/std/named_req/FunctionObject">FunctionObject</a> that returns a value convertible to <code>bool</code> for one argument without modifying it</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/BinaryPredicate"    name={<i>BinaryPredicate</i>}                                   desc={<>a <a href="/docs/std/named_req/FunctionObject">FunctionObject</a> that returns a value convertible to <code>bool</code> for two arguments without modifying them</>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/Compare"            name={<i>Compare</i>}                                           desc={<>a <a href="/docs/std/named_req/BinaryPredicate">BinaryPredicate</a> that establishes an ordering relation</>}/>
+</SymbolTable>
+
+### Container
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+</SymbolTable>
+
+#### Container element
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+</SymbolTable>
+
+### Iterator
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+</SymbolTable>
+
+### Stream I/O functions
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+</SymbolTable>
+
+### Formatters
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+</SymbolTable>
+
+### Random Number Generation
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+</SymbolTable>
+
+### Concurrency
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+</SymbolTable>
+
+### Ranges
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+</SymbolTable>
+
+### Other
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+    <Symbol autoLink linkName="/docs/std/named_req/"                                    name={<i></i>}                                                                             desc={<></>}/>
+</SymbolTable>
