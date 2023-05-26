@@ -846,7 +846,7 @@ module.exports = {
 				{
 					type: 'category',
 					label: 'Algorithms',
-					link: { type: 'doc', id: 'std/containers/index' },
+					link: { type: 'doc', id: 'std/algo/index' },
 					items: []
 				},
 				{
