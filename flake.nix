@@ -1,26 +1,26 @@
 {
-  description = "A very basic flake";
+  description = "CppLangNet development flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-  }:
-    flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import nixpkgs {inherit system;};
-    in {
-      formatter = pkgs.alejandra;
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
+      perSystem = {
+        config,
+        inputs',
+        pkgs,
+        system,
+        ...
+      }: {
+        formatter = pkgs.alejandra;
 
-      devShells.default = with pkgs;
-        mkShell {
-          buildInputs = [
-            nodejs-19_x
-          ];
+        devShells.default = pkgs.mkShell {
+          buildInputs = [pkgs.nodejs];
         };
-    });
+      };
+    };
 }
