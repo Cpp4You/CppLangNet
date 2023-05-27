@@ -1,0 +1,230 @@
+---
+title:			ranges::transform algorithm
+sidebar_label:	ranges::transform(  )
+description:	ranges::transform algorithm C++ documentation
+hide_title:		true
+tags:			[ranges, algorithm, transform, map]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/transform
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_ContAlias_ReverseIterator	from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
+import Term_UndefinedBehaviour			from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed 	from './_codes/ranges-transform/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified	from './_codes/ranges-transform/since-cpp20-simplified.mdx';
+
+# std::ranges::transform() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using unary_transform_result = ranges::in_out_result<I, O>;
+
+template< class I1, class I2, class O >
+using binary_transform_result = ranges::in_in_out_result<I1, I2, O>;
+```
+
+Applies the given function to a range and stores the result in another range, beginning at `result`.
+
+- **(1)** The unary operation `op` is applied to the range defined by **[ first1; last1 )** (after projecting with the projection `proj`).
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+- **(3)** The binary operation `binary_op` is applied to pairs of elements from two ranges:
+	- one defined by **[ first1; last1 )**
+	- the other defined by **[ first2; last2 )** (after respectively projecting with the projections `proj1` and `proj2`).
+
+- **(4)** Same as **(3)**, but uses `r1` as the first source range, as if using `ranges::begin(r1)` as `first1` and `ranges::end(r1)` as `last1`, and similarly for `r2`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+- `first1`, `last1` - the first range of elements to transform (iterator, sentinel pair)
+- `r`, `r1` - the first range of elements to transform (ranges)
+- `first2`, `last2` - the second range of elements to transform (iterator, sentinel pair)
+- `r2` - the second range of elements to transform (range)
+- `result` - the beginning of the destination range, may be equal to `first1` or `first2`
+- `op`, `binary_op` - operation to apply to the projected element(s)
+- `proj1` - projection to apply to the elements in the first range
+- `proj2` - projection to apply to the elements in the second range
+
+### Return value
+
+- **(1-2)** Returns a `unary_transform_result` which contains an input iterator equal to `last` and an output iterator to the element past the last element transformed.
+- **(3-4)** Returns a `binary_transform_result` contains input iterators to last transformed elements from ranges **[ first1; last1 )** and **[ first2; last2 )** as `in1` and `in2` respectively, and the output iterator to the element past the last element transformed as out.
+
+### Complexity
+
+- **(1-2)** Exactly `ranges::distance(first1, last1)` applications of `op` and `proj`.
+- **(3-4)** Exactly `ranges::min(ranges::distance(first1, last1), ranges::distance(first2, last2))` applications of `binary_op` and projections.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>Click to expand</summary>
+
+```cpp
+struct transform_fn
+{
+	// First version
+	template<std::input_iterator I, std::sentinel_for<I> S, std::weakly_incrementable O,
+		std::copy_constructible F, class Proj = std::identity>
+			requires std::indirectly_writable<O, std::indirect_result_t<F&, std::projected<I, Proj>>>
+			constexpr ranges::unary_transform_result<I, O>
+			operator()(I first1, S last1, O result, F op, Proj proj = {}) const
+			{
+				for (; first1 != last1; ++first1, (void)++result)
+					*result = std::invoke(op, std::invoke(proj, *first1));
+
+				return {first1, result};
+			}
+
+	// Second version
+	template<ranges::input_range R, std::weakly_incrementable O,
+		std::copy_constructible F, class Proj = std::identity>
+			requires std::indirectly_writable<O,
+		std::indirect_result_t<F&, std::projected<ranges::iterator_t<R>, Proj>>>
+			constexpr ranges::unary_transform_result<ranges::borrowed_iterator_t<R>, O>
+			operator()(R&& r, O result, F op, Proj proj = {}) const
+			{
+				return (*this)(ranges::begin(r), ranges::end(r), result, std::ref(op), std::ref(proj));
+			}
+
+	// Third version
+	template<std::input_iterator I1, std::sentinel_for<I1> S1,
+		std::input_iterator I2, std::sentinel_for<I2> S2,
+		std::weakly_incrementable O,
+		std::copy_constructible F,
+		class Proj1 = std::identity, class Proj2 = std::identity>
+			requires std::indirectly_writable<O,
+		std::indirect_result_t<F&,
+		std::projected<I1, Proj1>,
+		std::projected<I2, Proj2>>>
+			constexpr ranges::binary_transform_result<I1, I2, O>
+			operator()(I1 first1, S1 last1, I2 first2, S2 last2, O result,
+					F binary_op, Proj1 proj1 = {}, Proj2 proj2 = {}) const
+			{
+				for (; first1 != last1 && first2 != last2; ++first1, (void)++first2, (void)++result)
+					*result = std::invoke(binary_op,
+							std::invoke(proj1, *first1),
+							std::invoke(proj2, *first2));
+
+				return {first1, first2, result};
+			}
+
+	// Fourth version
+	template<ranges::input_range R1, ranges::input_range R2,
+		std::weakly_incrementable O, std::copy_constructible F,
+		class Proj1 = std::identity, class Proj2 = std::identity>
+			requires std::indirectly_writable<O,
+		std::indirect_result_t<F&,
+		std::projected<ranges::iterator_t<R1>, Proj1>,
+		std::projected<ranges::iterator_t<R2>, Proj2>>>
+			constexpr ranges::binary_transform_result<ranges::borrowed_iterator_t<R1>,
+		ranges::borrowed_iterator_t<R2>, O>
+			operator()(R1&& r1, R2&& r2, O result,
+					F binary_op, Proj1 proj1 = {}, Proj2 proj2 = {}) const
+			{
+				return (*this)(ranges::begin(r1), ranges::end(r1),
+						ranges::begin(r2), ranges::end(r2),
+						result, std::ref(binary_op),
+						std::ref(proj1), std::ref(proj2));
+			}
+};
+
+inline constexpr transform_fn transform;
+```
+
+</details>
+
+### Notes
+
+`ranges::transform` does not guarantee in-order application of `op` or `binary_op`.  
+
+To apply a function to a sequence in-order or to apply a function that modifies the elements of a sequence, use `ranges::for_each`.
+
+
+### Examples
+
+The following code uses `ranges::transform` to convert a string in place to uppercase using the `std::toupper` function and then transforms each char to its ordinal value.  
+
+Then `ranges::transform` with a projection is used to transform elements of `std::vector<Foo>` into chars to fill a `std::string`.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cctype>
+#include <functional>
+#include <iostream>
+#include <string>
+#include <vector>
+
+int main()
+{
+    std::string s {"hello"};
+
+    namespace ranges = std::ranges;
+
+    ranges::transform(s.begin(), s.end(), s.begin(),
+                      [](unsigned char c) -> unsigned char { return std::toupper(c); });
+
+    std::vector<std::size_t> ordinals;
+    ranges::transform(s, std::back_inserter(ordinals),
+                      [](unsigned char c) -> std::size_t { return c; });
+
+    std::cout << s << ':';
+    for (auto ord : ordinals)
+        std::cout << ' ' << ord;
+
+    ranges::transform(ordinals, ordinals, ordinals.begin(), std::plus {});
+
+    std::cout << '\n';
+    for (auto ord : ordinals)
+        std::cout << ord << ' ';
+    std::cout << '\n';
+
+    struct Foo
+    {
+        char bar;
+    };
+    const std::vector<Foo> f = { {'h'},{'e'},{'l'},{'l'},{'o'} };
+    std::string bar;
+    ranges::transform(f, std::back_inserter(bar), &Foo::bar);
+    std::cout << bar << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+HELLO: 72 69 76 76 79
+144 138 152 152 158
+hello
+```
+
+</div>
+</Columns>

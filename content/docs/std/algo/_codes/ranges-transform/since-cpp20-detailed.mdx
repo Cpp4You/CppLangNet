@@ -1,0 +1,61 @@
+
+```cpp
+// (1)
+template<
+	std::input_iterator I,
+	std::sentinel_for<I> S,
+	std::weakly_incrementable O,
+	std::copy_constructible F,
+	class Proj = std::identity
+>
+	requires std::indirectly_writable<O, std::indirect_result_t<F&, std::projected<I, Proj>>>
+constexpr unary_transform_result<I, O>
+	transform( I first1, S last1, O result, F op, Proj proj = {} );
+
+// (2)
+template<
+	ranges::input_range R,
+	std::weakly_incrementable O,
+	std::copy_constructible F,
+	class Proj = std::identity
+>
+	requires std::indirectly_writable<O, std::indirect_result_t< F&, std::projected<ranges::iterator_t<R>, Proj>>
+constexpr unary_transform_result<ranges::borrowed_iterator_t<R>, O>
+    transform( R&& r, O result, F op, Proj proj = {} );
+
+// (3)
+template<
+	std::input_iterator I1, std::sentinel_for<I1> S1,
+    std::input_iterator I2, std::sentinel_for<I2> S2,
+    std::weakly_incrementable O,
+    std::copy_constructible F,
+	class Proj1 = std::identity, class Proj2 = std::identity
+>
+	requires std::indirectly_writable<O,
+				std::indirect_result_t<F&, std::projected<I1, Proj1>, std::projected<I2, Proj2>>>
+constexpr binary_transform_result<I1, I2, O>
+    transform(
+		I1 first1, S1 last1,
+		I2 first2, S2 last2,
+		O result,
+		F binary_op,
+		Proj1 proj1 = {}, Proj2 proj2 = {}
+	);
+
+// (4)
+template<
+	ranges::input_range R1, ranges::input_range R2,
+	std::weakly_incrementable O,
+	std::copy_constructible F,
+	class Proj1 = std::identity, class Proj2 = std::identity >
+requires std::indirectly_writable<O,
+             std::indirect_result_t<F&, std::projected<ranges::iterator_t<R1>, Proj1>, std::projected<ranges::iterator_t<R2>, Proj2>>>
+constexpr binary_transform_result<ranges::borrowed_iterator_t<R1>,
+                                  ranges::borrowed_iterator_t<R2>, O>
+    transform(
+		R1&& r1, R2&& r2,
+		O result,
+		F binary_op,
+		Proj1 proj1 = {}, Proj2 proj2 = {}
+	);
+```
