@@ -1,0 +1,31 @@
+---
+title:                  C++ named requirements:LessThanComparable
+tags:                   [named_req,LessThanComparable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Deprecated}             from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *LessThanComparable*
+The type must work with < operator and the result should have standard semantics.
+
+### Requirements
+The type T satisfies LessThanComparable if
+
+Given
+* `a`, `b`, and `c,` expressions of type `T` or `const T`
+
+The following expressions must be valid and have their specified effects:
+
+| **Expression** |           **Return type**          |                                          **Requirements**                                                                                                                  |
+|:----------:|:------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| `a < b`      | [implicitly convertible](language/implicit_conversion) to bool | Establishes [strict weak ordering](https://en.wikipedia.org/wiki/Weak_ordering#Strict_weak_orderings) relation with the following properties <br/> \* For all `a`, `!(a < a)` <br/> \* If `a < b` then `!(b < a)` <br/> \* If `a < b` and `b < c` then `a < c` <br/> \* Defining `equiv(a, b)` as `!(a < b) && !(b < a)`, if `equiv(a, b)` and `equiv(b, c)`, then `equiv(a, c)` |
+
+### Notes
+To satisfy this requirement, types that do not have built-in [comparison operators](/docs/std/language/operator_comparison)
+have to provide a [user-defined operator&lt;](/docs/std/language/operators)
+
+For the types that are both [*EqualityComparable*](/docs/std/named_req/LessThanComparable) and *LessThanComparable*, 
+the C++ standard library makes a distinction between equality, which is the value of the expression `a == b` and equivalence, 
+which is the value of the expression `!(a < b) && !(b < a)`.

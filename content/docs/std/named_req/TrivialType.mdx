@@ -1,0 +1,23 @@
+---
+title:                  C++ named requirements:TrivialType
+tags:                   [named_req,TrivialType]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Deprecated}             from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *TrivialType*</Since>
+
+Specifies that a type is a trivial type.
+
+Note: the standard doesn't define a named requirement with this name. This is a type category defined by the core language. 
+It is included here as a named requirement only for consistency.
+
+### Requirements
+The following types are collectively called *trivial types*:
+
+* [scalar types](/docs/std/named_req/ScalarType)
+* [trivial class types](/docs/std/language/classes#Trivial_class)
+* arrays of such types
+* cv-qualified versions of these types

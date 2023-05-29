@@ -1,0 +1,33 @@
+---
+title:                  C++ named requirements:Destructible  
+tags:                   [named_req,Destructible]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Version}             from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *Destructible *
+Specifies that an instance of the type can be destructed.
+
+### Requirements
+The type T satisfies *Destructible * if 
+
+Given
+* u, an expression of type T
+
+The following expressions must be valid and have their specified effects
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Expression</b>}      desc={<b>Post-conditions</b>}/>
+    <Symbol name={<code>u.~T()</code>} desc={<>All resources owned by u are reclaimed, no exceptions are thrown</>}/>
+</SymbolTable>
+
+### Notes
+
+Destructors are called implicitly at the end of [object lifetime](/docs/std/language/lifetime) such as when leaving [scope](/docs/std/language/scope) 
+or by the [delete-expression](/docs/std/language/delete). Explicit destructor call as shown in the type requirement table is rare.
+
+Thanks to [pseudo destructor call](operator_member_access#Built-in_member_access_operators), all scalar types meet the requirement of *Destructible*,
+while array types and reference types do not. 
+Note that [std::is_destructible](/docs/std/types/is_destructible) allows arrays and reference types.

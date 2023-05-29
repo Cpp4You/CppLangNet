@@ -1,0 +1,46 @@
+---
+title:                  C++ named requirements:DefaultConstructible
+tags:                   [named_req,DefaultConstructible]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Version}             from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *DefaultConstructible*
+Specifies that an instance of the type can be default constructed.
+
+### Requirements
+The type T satisfies *DefaultConstructible* if <br/>
+Given
+* `u`, an arbitrary identifier
+
+The following expressions must be valid and have their specified effects
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Expression</b>}                                    desc={<b>Post-conditions</b>}/>
+    <Symbol name={<code>T u;</code>}                                    desc={<>The object u is <a href="/docs/std//language/default_initialization">default-initialized</a></>}/>
+    <Symbol name={<code>T u{};</code>}                                  desc={<>The object u is <a href="/docs/std//language/value_initialization">value-initialized</a> or <a href="/docs/std//language/aggregate_initialization">aggregate-initialized</a></>}/>
+    <Symbol name={<><code>T()</code><br/><code>T&#123;&#125;</code></>} desc={<>A temporary object of type T is <a href="/docs/std//language/value_initialization">value-initialized</a> or <a href="/docs/std//language/aggregate_initialization">aggregate-initialized</a></>}/>
+</SymbolTable>
+
+### Notes
+
+For objects of non-aggregate class type, a public [default constructor](/docs/std/language/default_constructor) must be defined 
+(either user-defined or implicitly defined) to satisfy *DefaultConstructible*.
+
+Non-const objects of [non-class object type](/docs/std/language/type) are always *DefaultConstructible*.
+
+Const non-class types are not *DefaultConstructible*.
+
+Const aggregate types are not *DefaultConstructible* if any of their members is an object of non-class type.
+
+Non-object types (function types, reference types, and the (possibly cv-qualified) type void) 
+as well as the const non-object types are never *DefaultConstructible*
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR   | Applied to |                 Behavior as published                 | Correct behavior |
+|:-------:|:----------:|:-----------------------------------------------------:|:----------------:|
+| LWG 724 | C++98      | the requirements of DefaultConstructible were missing | added            |

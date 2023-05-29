@@ -1,0 +1,54 @@
+---
+title:                  C++ named requirements:ImplicitLifetimeType
+tags:                   [named_req,ImplicitLifetimeType]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Deprecated}             from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *ImplicitLifetimeType*
+Note: the standard doesn't define a named requirement with this name. This is a type category defined by the core language. 
+It is included here as a named requirement only for consistency.
+
+### Requirements
+The following types are collectively called *implicit-lifetime types*:
+
+* [scalar types](/docs/std/named_req/ScalarType)
+* [implicit-lifetime class types](/docs/std/language/classes#Implicit-lifetime_class)
+* arrays of such types
+* cv-qualified versions of these types
+
+### Notes
+
+Certain operations may implicitly create and start the [lifetime](/docs/std/language/lifetime) of objects of implicit-lifetime types, 
+if doing so would prevent [undefined behavior](language/ub). 
+However, such operations do not start the lifetimes of subobjects of such objects that are not themselves of implicit-lifetime types.
+
+The following operations may implicitly create objects:
+
+* An operation that begins the lifetime of an array of `unsigned char` or <Since v='cpp17'>[std::byte](/docs/std/types/byte)</Since>.
+* An invocation of <Since v='cpp17'>[std::aligned_alloc](/docs/std/memory/c/aligned_alloc)</Since>, [std::calloc](/docs/std/memory/c/calloc), 
+[std::malloc](/docs/std/memory/c/malloc), or [std::realloc](/docs/std/memory/c/realloc).
+* Any implicit or explicit invocation of a function named [operator new](/docs/std/memory/new/operator_new) or [operator new[]]((/docs/std/memory/new/operator_new))
+(including non-allocating and user-defined placement allocation functions). Including
+
+    * [std::allocator::allocate](/docs/std/memory/allocator/allocate)
+    * <Since v='cpp23'>[std::allocator::allocate_at_least](/docs/std/memory/allocator/allocate_at_least)</Since>
+* <Since v='cpp17'> An invocation of <a href="/docs/std/memory/memory_resource/allocate">std::memory_resource::allocate</a>, 
+regardless of how storage is obtained. Including </Since>
+
+    * <a href="/docs/std/memory/polymorphic_allocator/allocate">std::pmr::polymorphic_allocator::allocate</a>
+    * <Since v='cpp20'><a href="/docs/std/memory/polymorphic_allocator/allocate_bytes">std::pmr::polymorphic_allocator::allocate_bytes</a></Since>
+    * <Since v='cpp20'><a href="/docs/std/memory/polymorphic_allocator/allocate_objects">std::pmr::polymorphic_allocator::allocate_objects</a></Since>
+* An invocation of [std::memcpy](/docs/std/string/byte/memcpy) or [std::memmove](/docs/std/string/byte/memmove).
+* <Since v='cpp20'>An invocation of <a href="/docs/std/numeric/bit_cast">std::bit_cast</a></Since>
+* <Since v='cpp23'>An invocation of std::start_lifetime_as or std::start_lifetime_as_array.</Since>
+* An assignment expression that involves [union members](/docs/std/language/union#Member_lifetime) if the union's assignment operator is built-in or trivial.
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                               Behavior as published                              | Correct behavior |
+|:--------:|:----------:|:--------------------------------------------------------------------------------:|:----------------:|
+| CWG 2489 | C++20      | an operation that begins the lifetime of a char array implicitly creates objects | it does not      |
