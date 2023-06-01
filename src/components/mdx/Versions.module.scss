@@ -27,6 +27,12 @@
 	background-color: rgba(red, 0.15);
 }
 
+.markedText.version {
+	border-color: rgba(green, 1);
+	background-color: rgba(green, 0.1);
+	padding-bottom: 3px;
+}
+
 
 .versionNumber {
 	background-color: rgba(black, 0.1);

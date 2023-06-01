@@ -11,10 +11,8 @@ import Columns from "@site-comps/Columns"
 ### Declarations
 
 
-```cpp
+```cpp title="Deprecated in C++17, Removed in C++20"
 bool unique() const noexcept;
-//deprecated in C++17
-//removed in C++20
 ```
 
 Checks if `*this` is the only `shared_ptr` instance managing the current object, i.e. whether `use_count() == 1`.

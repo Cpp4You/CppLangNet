@@ -1,0 +1,43 @@
+---
+title:                  std::allocator<T>::allocator
+description:            Allocator COnstructor
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+# std::allocator&lt;T>::allocator
+
+```cpp title="Since C++20"
+// 1)
+constexpr allocator() noexcept;
+// 2)
+constexpr allocator( const allocator& other ) noexcept;
+// 3)
+template< class U >
+constexpr allocator( const allocator<U>& other ) noexcept;
+```
+
+```cpp title="Since C++11, Until C++20"
+// 1)
+allocator() noexcept;
+// 2)
+allocator( const allocator& other ) noexcept;
+// 3)
+template< class U >
+allocator( const allocator<U>& other ) noexcept;
+```
+
+```cpp title="Until C++11"
+// 1)
+allocator() throw();
+// 2)
+allocator( const allocator& other ) throw();
+// 3)
+template< class U >
+allocator( const allocator<U>& other ) throw();
+```
+
+Constructs the default allocator. Since the default allocator is stateless, the constructors have no visible effect.
+
+### Parameters
+`other`	-	another allocator to construct with

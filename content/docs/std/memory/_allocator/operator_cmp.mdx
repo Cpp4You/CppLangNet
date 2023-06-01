@@ -1,0 +1,49 @@
+---
+title:                  operator==,!=(std::allocator)
+description:            Allocator Member Function
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+import { Since }                from "@site-comps/Versions";
+
+# operator==,!=(std::allocator)
+
+```cpp title="Since C++20"
+// 1)
+template< class T1, class T2 >
+constexpr bool operator==( const allocator<T1>& lhs, const allocator<T2>& rhs ) noexcept;
+```
+
+```cpp title="Since C++11, Until C++20"
+// 1)
+template< class T1, class T2 >
+bool operator==( const allocator<T1>& lhs, const allocator<T2>& rhs ) noexcept;
+// 2)
+template< class T1, class T2 >
+bool operator!=( const allocator<T1>& lhs, const allocator<T2>& rhs ) noexcept;
+```
+
+```cpp title="Until C++11"
+// 1)
+template< class T1, class T2 >
+bool operator==( const allocator<T1>& lhs, const allocator<T2>& rhs ) throw();
+// 2)
+template< class T1, class T2 >
+bool operator!=( const allocator<T1>& lhs, const allocator<T2>& rhs ) throw();
+```
+
+Compares two default allocators. Since default allocators are stateless, two default allocators are always equal.
+
+1) Returns true <br/>
+2) Returns false
+
+
+<Since v='cpp20'>The != operator is synthesized from operator==.</Since>
+
+### Parameters
+`lhs`, `rhs`	-	default allocators to compare
+
+### Return value
+1) true <br/>
+2) false

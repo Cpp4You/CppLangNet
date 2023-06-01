@@ -1,0 +1,19 @@
+---
+title:                  std::scoped_allocator_adaptor<OuterAlloc,InnerAlloc...>::max_size
+description:            Allocator
+tags:                   [memory,scoped_allocator_adaptor]
+hide_title:             true
+---
+
+# std::scoped_allocator_adaptor&lt;OuterAlloc,InnerAlloc...>::max_size
+
+```cpp title='Since C++11'
+size_type max_size() const;
+```
+Reports the maximum allocation size supported by the outer allocator, by calling `std::allocator_traits<OuterAlloc>::max_size(outer_allocator())`
+
+### Parameters
+(none)
+
+### Return value
+The maximum allocation size for OuterAlloc.

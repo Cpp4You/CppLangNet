@@ -1,0 +1,32 @@
+---
+title:                  std::allocator_arg
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+import ClassSummary				      from "@site-comps/ClassSummary";
+import { Since, Until, Removed, Version }       from "@site-comps/Versions";
+
+<ClassSummary name="allocator_arg" namespaces="std" folder="memory" headerName="memory"/>
+
+```cpp title='Since C++17'
+inline constexpr std::allocator_arg_t allocator_arg = std::allocator_arg_t();
+```
+```cpp title='Since C++11'
+struct allocator_arg_t { explicit allocator_arg_t() = default; };
+
+constexpr std::allocator_arg_t allocator_arg = std::allocator_arg_t();  // Until C++17
+```
+
+std::allocator_arg_t is an empty class type used to disambiguate the overloads of constructors and member functions of allocator-aware objects,
+including [std::tuple](/docs/std/utility/tuple), <Until v='cpp17'>[std::function](/docs/std/utility/functional/function), 
+[std::packaged_task](/docs/std/thread/packaged_task),</Until>and std::promise. std::allocator_arg is a constant of it.
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                          Behavior as published                          | Correct behavior |
+|:--------:|:----------:|:-----------------------------------------------------------------------:|:----------------:|
+| LWG 2510 | C++11      | the default constructor was non-explicit, which could lead to ambiguity | made explicit    |

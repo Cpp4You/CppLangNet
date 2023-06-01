@@ -1,0 +1,33 @@
+---
+title:                  std::scoped_allocator_adaptor<OuterAlloc,InnerAlloc...>::allocate
+description:            Allocator
+tags:                   [memory,scoped_allocator_adaptor]
+hide_title:             true
+---
+
+# std::scoped_allocator_adaptor&lt;OuterAlloc,InnerAlloc...>::allocate
+
+```cpp title='Since C++20'
+// 1)
+[[nodiscard]] pointer allocate( size_type n );
+// 2)
+[[nodiscard]] pointer allocate( size_type n, const_void_pointer hint );
+```
+
+```cpp title='Since C++11, Until C++20'
+// 1)
+pointer allocate( size_type n );
+// 2)
+pointer allocate( size_type n, const_void_pointer hint );
+```
+Uses the outer allocator to allocate uninitialized storage.
+
+1) Calls `std::allocator_traits<OuterAlloc>::allocate(outer_allocator(), n)` <br/>
+2) Additionally provides memory locality hint, by calling `std::allocator_traits<OuterAlloc>::allocate(outer_allocator(), n, hint)`
+
+### Parameters
+`n`	-	the number of objects to allocate storage for <br/>
+`hint`	-	pointer to a nearby memory location
+
+### Return value
+The pointer to the allocated storage

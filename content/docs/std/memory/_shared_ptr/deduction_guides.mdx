@@ -8,8 +8,8 @@ hide_title:             true
 
 # Deduction guides for std::shared_ptr
 
-`C++17`
-```cpp
+
+```cpp title="C++17"
 template< class T >
 shared_ptr( std::weak_ptr<T> ) -> shared_ptr<T>;
 

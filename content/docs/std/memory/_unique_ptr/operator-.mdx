@@ -9,16 +9,15 @@ hide_title:             true
 
 # std::unique_ptr&lt;T,Deleter&gt;::operator*, std::unique_ptr&lt;T,Deleter&gt;::operator-&gt;
 
-`Since C++11`
-```cpp
+
+```cpp title="Since C++11"
 typename std::add_lvalue_reference<T>::type operator*() const
     noexcept(noexcept(*std::declval<pointer>()));
 
 pointer operator->() const noexcept;                            
 ```
 
-`Since C++23`
-```cpp
+```cpp title="Since C++23"
 typename std::add_lvalue_reference<T>::type operator*() constexpr
     noexcept(noexcept(*std::declval<pointer>()));
 

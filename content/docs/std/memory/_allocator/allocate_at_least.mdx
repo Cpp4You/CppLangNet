@@ -1,0 +1,52 @@
+---
+title:                  std::allocator<T>::allocate_at_least
+description:            Allocator Member Function
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+# std::allocator&lt;T>::allocate_at_least
+
+```cpp title="Since C++23"
+[[nodiscard]] constexpr std::allocation_result<T*, std::size_t>
+    allocate_at_least( std::size_t n );
+```
+Allocates `count * sizeof(T)` bytes of uninitialized storage, where count is an unspecified integer value not less than `n`, by calling 
+`::operator new (an additional std::align_val_t argument might be provided)`, but it is unspecified when and how this function is called.
+
+Then, this function creates an array of type `T[count]` in the storage and starts its lifetime, but does not start lifetime of any of its elements.
+
+In order to use this function in a constant expression, the allocated storage must be deallocated within the evaluation of the same expression.
+
+Use of this function is ill-formed if `T` is an [incomplete type](/docs/std/language/type).
+
+### Parameters
+`n`	-	the lower bound of number of objects to allocate storage for
+
+### Return value
+`std::allocation_result<T*>{p, count}`, 
+where `p` points to the first element of an array of `count` objects of type `T` whose elements have not been constructed yet.
+
+### Exceptions
+Throws [std::bad_array_new_length](/docs/std/memory/new/bad_array_new_length) if 
+`std::numeric_limits<std::size_t>::max() / sizeof(T) < n`, or [std::bad_alloc](/docs/std/memory/new/bad_alloc) if allocation fails.
+
+### Notes 
+allocate_at_least is mainly provided for contiguous containers, e.g. [std::vector](/docs/std/containers/arrays/vector) 
+and [std::basic_string](/docs/std/containers/strings/string), 
+in order to reduce reallocation by making their capacity match the actually allocated size when possible.
+
+The "unspecified when and how" wording makes it possible to combine or optimize away heap allocations made by the standard library containers, 
+even though such optimizations are disallowed for direct calls to `::operator new`. 
+For example, this is implemented by libc++ ([[1]](https://github.com/llvm-mirror/libcxx/blob/master@%7B2017-02-09%7D/include/memory#L1766-L1772) and 
+[[2]](https://github.com/llvm-mirror/libcxx/blob/master@%7B2017-02-09%7D/include/new#L211-L217)).
+
+After calling allocate_at_least and before construction of elements, pointer arithmetic of `T*` is well-defined within the allocated array, 
+but the behavior is undefined if elements are accessed.
+
+|      Feature-test macro     |  Value  |   Std   |         Comment        |
+|:---------------------------:|:-------:|:-------:|:----------------------:|
+| __cpp_lib_allocate_at_least | 202302L | (C++23) | allocate_at_least etc. |
+
+### Example
+#### This section is incomplete

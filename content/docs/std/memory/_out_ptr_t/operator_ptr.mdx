@@ -8,8 +8,10 @@ hide_title:             true
 # std::out_ptr_t&lt;Smart,Pointer,Args...>::operator Pointer\*, std::out_ptr_t&lt;Smart,Pointer,Args...>::operator void\*\*
 
 ```cpp
-operator Pointer*() const noexcept;     (1)
-operator void**() const noexcept;       (2)
+// 1)
+operator Pointer*() const noexcept;
+// 2)
+operator void**() const noexcept;
 ```
 
 Exposes the address of a Pointer or `void*` object to a foreign function which will generally re-initialize it.

@@ -1,0 +1,30 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::delete_object
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::delete_object
+
+```cpp title='Since C++20'
+template <class U>
+void delete_object( U* p );
+```
+Destroys the object of type U and deallocates storage allocated for it.
+
+Equivalent to
+```cpp
+std::allocator_traits<polymorphic_allocator>::destroy(*this, p);
+deallocate_object(p);
+```
+
+### Parameters
+`p`	-	pointer to the object to destroy and deallocate
+
+### Exceptions
+Throws nothing.
+
+### Notes
+This function was introduced for use with the fully-specialized allocator <code>[std::pmr::polymorphic_allocator&lt;&gt;](../polymorphic_allocator)</code>, 
+but it may be useful in any specialization.

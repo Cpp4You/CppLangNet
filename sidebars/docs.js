@@ -862,7 +862,7 @@ module.exports = {
 				{
 				type: 'category',
 				label: 'Smart Pointers',
-				collapsed: false,
+				collapsed: true,
 					items: [
 						{
 						type: 'category',
@@ -883,7 +883,7 @@ module.exports = {
 								{
 									type: 'category',
 									label: 'owner_less',
-									collapsed: false,
+									collapsed: true,
 									link: { type: 'doc', id: 'std/memory/owner_less' },
 									items: [
 										docsClassCat('owner_less_void', 'std/memory/owner_less_void', '', []),
@@ -905,6 +905,23 @@ module.exports = {
 								docsClassCat('inout_ptr', 'std/memory/inout_ptr', '', []),
 								],					
 						},
+					],
+				},
+				{
+				type: 'category',
+				label: 'Allocators',
+				collapsed: true,
+					items: [
+							docsClassCat('allocator', 'std/memory/allocator', '', []),
+							docsClassCat('allocator_traits', 'std/memory/allocator_traits', '', []),							
+							docsClassCat('allocation_result', 'std/memory/allocation_result', '', []),
+							docsClassCat('allocator_arg', 'std/memory/allocator_arg', '', []),	
+							docsClassCat('uses_allocator', 'std/memory/uses_allocator', '', []),
+							docsClassCat('uses_allocator_construction_args', 'std/memory/uses_allocator_construction_args', '', []),							
+							docsClassCat('make_obj_using_allocator', 'std/memory/make_obj_using_allocator', '', []),
+							docsClassCat('uninitialized_construct_using_allocator', 'std/memory/uninitialized_construct_using_allocator', '', []),
+							docsClassCat('scoped_allocator_adaptor', 'std/memory/scoped_allocator_adaptor', '', []),
+							docsClassCat('polymorphyc_allocator', 'std/memory/polymorphyc_allocator', '', []),	
 					],
 				}
 			],

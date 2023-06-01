@@ -1,0 +1,38 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::allocate_object
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::allocate_object
+
+```cpp title='Since C++20'
+template< class U >
+[[nodiscard]] U* allocate_object( std::size_t n = 1 );
+```
+
+Allocates storage for `n` objects of type U using the underlying memory resource.
+
+If `std::numeric_limits<std::size_t>::max() / sizeof(U) < n`, throws [std::bad_array_new_length](/docs/std/memory/new/bad_array_new_length), 
+otherwise equivalent to `return static_cast<U*>(allocate_bytes(n * sizeof(U), alignof(U)) );`
+
+
+### Parameters
+`n`	-	the number of objects to allocate storage for
+
+### Return value
+A pointer to the allocated storage.
+
+### Notes
+
+This function was introduced for use with the fully-specialized allocator <code>[std::pmr::polymorphic_allocator&lt;&gt;](../polymorphic_allocator)</code>, 
+but it may be useful in any specialization as a shortcut to avoid having to rebind from <code>[std::pmr::polymorphic_allocator&lt;T&gt;](../polymorphic_allocator)</code> 
+to <code>[std::pmr::polymorphic_allocator&lt;U&gt;](../polymorphic_allocator)</code>.
+
+Since U is not deduced, it must be provided as a template argument when calling this function.
+
+### Exceptions
+Throws [std::bad_array_new_length](/docs/std/memory/new/bad_array_new_length) 
+if `n > std::numeric_limits<std::size_t>::max() / sizeof(U);` <br/>
+may also be any exceptions thrown by the call to `resource()->allocate`.

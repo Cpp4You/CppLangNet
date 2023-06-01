@@ -1,0 +1,22 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::destroy
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::destroy
+
+```cpp title='Since C++17, Deprecated in C++20'
+template<class U>
+void destroy( U* p );
+```
+
+Destroys the object pointed to by `p`, as if by calling `p->~U()`.
+
+### Parameters
+`p`	-	pointer to the object being destroyed
+
+### Notes
+This function is deprecated via [LWG issue 3036](https://cplusplus.github.io/LWG/issue3036), 
+because its functionality can be provided by the default implementation of [std::allocator_traits::destroy](/memory/allocator_traits/destroy) and hence extraneous.
