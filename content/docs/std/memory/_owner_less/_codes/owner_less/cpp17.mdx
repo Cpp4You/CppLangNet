@@ -1,0 +1,14 @@
+```cpp
+// 1)
+template< class T = void >
+struct owner_less; /* undefined */
+// 2)
+template< class T >
+struct owner_less<std::shared_ptr<T>>;
+// 3)
+template< class T >
+struct owner_less<std::weak_ptr<T>>;
+// 4)
+template<>
+struct owner_less<void>;
+```

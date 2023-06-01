@@ -1,0 +1,169 @@
+---
+title:                  std::bad_weak_ptr
+description:            Exception Object thrown by std::shared_ptr constructors
+tags:                   [memory,bad_weak_ptr]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns      from "@site-comps/Columns";
+
+# std::bad_weak_ptr
+Defined in header `<memory>`
+
+`Since C++11`
+```cpp
+class bad_weak_ptr;
+```
+
+std::bad_weak_ptr is the type of the object thrown as exceptions by the constructors of [std::shared_ptr](../shared_ptr) that take [std::weak_ptr](../weak_ptr) as the argument,
+when the [std::weak_ptr](../weak_ptr) refers to an already deleted object.
+
+### Inheritance
+
+[exception](/docs/std/error/exception) &lt;-  bad_weak_ptr
+
+### Member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+                (constructor)
+                </>}
+    		desc={<>
+                constructs a new bad_weak_ptr object <br/>
+                <small>(public member function)</small>
+                </>} 
+/>
+    <Symbol name={<>
+                operator=
+                </>}
+    		desc={<>
+                replaces the bad_weak_ptr object <br/>
+                <small>(public member function)</small>
+                </>} 
+/>
+    <Symbol name={<>
+                what
+                </>}
+    		desc={<>
+                returns the explanatory string <br/>
+                <small>(public member function)</small>
+                </>} 
+/>
+</SymbolTable>  
+
+---
+
+std::bad_weak_ptr::**bad_weak_ptr** <br/>
+`Since C++11`
+```cpp
+bad_weak_ptr() noexcept;                              (1)
+bad_weak_ptr( const bad_weak_ptr& other ) noexcept;   (2)
+```
+		
+Constructs a new bad_weak_ptr object with an implementation-defined null-terminated byte string which is accessible through `what()`.
+1) Default constructor.
+2) Copy constructor. If `*this` and other both have dynamic type std::bad_weak_ptr then `std::strcmp(what(), other.what()) == 0`.
+
+#### Parameters
+`other`	-	another exception object to copy
+
+---
+
+std::bad_weak_ptr::**operator=** <br/>
+`Since C++11`
+```cpp
+bad_weak_ptr& operator=( const bad_weak_ptr& other ) noexcept;
+```
+Assigns the contents with those of other. If `*this` and other both have dynamic type std::bad_weak_ptr then `std::strcmp(what(), other.what()) == 0` after assignment.
+
+#### Parameters
+`other`	-	another exception object to assign with
+
+#### Return value
+`*this`
+
+---
+
+std::bad_weak_ptr::**what** <br/>
+`Since C++11`
+```cpp
+virtual const char* what() const noexcept;
+```
+Returns the explanatory string.
+
+#### Parameters
+(none)
+
+#### Return value
+Pointer to a null-terminated string with explanatory information. The string is suitable for conversion and display as a std::wstring. 
+The pointer is guaranteed to be valid at least until the exception object from which it is obtained is destroyed, or until a non-const member function 
+(e.g. copy assignment operator) on the exception object is called.
+
+#### Notes
+Implementations are allowed but not required to override `what()`.
+
+---
+
+### Inherited from [std::exception](/docs/std/error/exception)
+
+#### Member functions
+
+<SymbolTable noTraits>
+      <Symbol autoLink linkName="/docs/std/error/_exception/~exception"
+            name={<>
+                (destructor) <small> [virtual] </small>
+                </>}
+    		desc={<>
+                destroys the exception object <br/>
+                <small>(virtual public member function of std::exception)</small>
+                </>} 
+/>
+      <Symbol autoLink linkName="/docs/std/error/_exception/what1"
+            name={<>
+                what <small> [virtual] </small>
+                </>}
+    		desc={<>
+                returns an explanatory string <br/>
+                <small>(virtual public member function of std::exception)</small>
+                </>} 
+/>
+</SymbolTable>  
+
+### Example
+
+<Columns spacing = '20px' columns = {['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory>
+#include <iostream>
+int main()
+{
+    std::shared_ptr<int> p1(new int(42));
+    std::weak_ptr<int> wp(p1);
+    p1.reset();
+    try {
+        std::shared_ptr<int> p2(wp);
+    } catch(const std::bad_weak_ptr& e) {
+        std::cout << e.what() << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Result"
+std::bad_weak_ptr
+```
+
+</div>
+</Columns>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                                   Behavior as published                                  |              Correct behavior              |
+|:--------:|:----------:|:----------------------------------------------------------------------------------------:|:------------------------------------------:|
+| LWG 2376 | C++11      | calling what on a default-constructed bad_weak_ptr was required to return "bad_weak_ptr" | the return value is implementation-defined |

@@ -1,0 +1,46 @@
+---
+title:                  std::out_ptr
+description:            Smart Pointer Adaptor
+tags:                   [memory,out_ptr_t, out_ptr]
+hide_title:             true
+---
+
+# std::out_ptr
+
+Defined in header `<memory>`.
+
+`C++23`
+```cpp
+template< class Pointer = void, class Smart, class... Args >
+auto out_ptr( Smart& s, Args&&... args );
+```
+
+Returns an out_ptr_t with deduced template arguments that captures arguments for resetting by reference.
+
+The program is ill-formed if construction of the return value (see below) is ill-formed.
+
+### Parameters
+
+`s`	-	the object (typically a smart pointer) to adapt
+`args...`	-	the arguments for resetting to capture
+
+### Return value
+`std::out_ptr_t<Smart, P, Args&&>(s, std::forward<Args>(args)...)`, where `P` is
+
+* `Pointer`, if `Pointer` is not same as `void`,
+* otherwise, `Smart::pointer`, if it is valid and denotes a type,
+* otherwise, `Smart::element_type*`, if `Smart::element_type` is valid and denotes a type,
+* otherwise, `std::pointer_traits<Smart>::element_type*`.
+
+### Notes
+Users may specify the template argument for the template parameter `Pointer`, in order to interoperate with foreign functions that take a `Pointer*`.
+
+As all arguments for resetting are captured by reference, the returned out_ptr_t should be a temporary object destroyed 
+at the end of the full-expression containing the call to the foreign function, in order to avoid dangling references.
+
+| Feature-test macro |  Value  |   Std   |
+|:------------------:|:-------:|:-------:|
+| __cpp_lib_out_ptr  | 202106L | (C++23) |
+
+### Example
+#### This section is incomplete

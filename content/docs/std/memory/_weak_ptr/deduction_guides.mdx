@@ -1,0 +1,37 @@
+---
+title:                  std::weak_ptr<T>::swap
+description:            Smart Pointer
+tags:                   [memory,weak_ptr]
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+
+# deduction guides for std::weak_ptr
+
+`Since C++17`
+```cpp
+template<class T>
+weak_ptr(std::shared_ptr<T>) -> weak_ptr<T>;
+```
+
+One deduction guide is provided for std::weak_ptr to account for the edge case missed by the implicit deduction guides.
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory>
+ 
+int main()
+{
+    auto p = std::make_shared<int>(42);
+    std::weak_ptr w{p};    // explicit deduction guide is used in this case
+}
+```
+
+</div>
+
+</Columns>

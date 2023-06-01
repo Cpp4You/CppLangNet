@@ -1,0 +1,102 @@
+---
+title:                  std::weak_ptr<T>::weak_ptr
+description:            Smart Pointer
+tags:                   [memory,weak_ptr]
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+
+# std::weak_ptr&lt;T>::weak_ptr
+
+`Since C++11`
+```cpp
+// 1)
+constexpr weak_ptr() noexcept;
+// 2)
+weak_ptr( const weak_ptr& r ) noexcept;
+
+template< class Y >
+weak_ptr( const weak_ptr<Y>& r ) noexcept;
+
+template< class Y >
+weak_ptr( const std::shared_ptr<Y>& r ) noexcept;
+// 3)
+weak_ptr( weak_ptr&& r ) noexcept;
+
+template< class Y >
+weak_ptr( weak_ptr<Y>&& r ) noexcept;
+```
+
+Constructs new weak_ptr that potentially shares an object with `r`.
+
+1) <br/>
+Default constructor. Constructs empty weak_ptr.
+
+2) <br/> 
+Constructs new weak_ptr which shares an object managed by `r`. If `r` manages no object, 
+`*this` manages no object too. The templated overloads don't participate in the overload resolution unless `Y*` is implicitly convertible to `T*`, <br/>
+*or Y is the type "array of N U" for some type U and some number N, and T is the type "array of unknown bound of (possibly cv-qualified) U".**(since C++17)*
+
+3) <br/>
+Move constructors. Moves a weak_ptr instance from `r` into `*this`. After this, `r` is empty and `r.use_count()==0`. 
+The templated overload doesn't participate in the overload resolution unless `Y*` is implicitly convertible to `T*`.
+
+### Parameters
+`r`	-	a [std::shared_ptr](../shared_ptr) or [std::weak_ptr](../weak_ptr) that will be viewed by this [std::weak_ptr](../weak_ptr).
+
+### Notes
+Because the default constructor is constexpr, static std::weak_ptrs are initialized as part of static non-local initialization, 
+before any dynamic non-local initialization begins. This makes it safe to use a [std::weak_ptr](../weak_ptr) in a constructor of any static object.
+
+### Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <memory>
+#include <iostream>
+ 
+struct Foo {};
+ 
+int main()
+{
+   std::weak_ptr<Foo> w_ptr;
+ 
+   {
+      auto ptr = std::make_shared<Foo>();
+      w_ptr = ptr;
+      std::cout 
+            << "w_ptr.use_count() inside scope: " 
+            << w_ptr.use_count() << '\n';
+   }
+ 
+   std::cout 
+        << "w_ptr.use_count() out of scope: " 
+        << w_ptr.use_count() << '\n';
+   std::cout 
+        << "w_ptr.expired() out of scope: " 
+        << std::boolalpha << w_ptr.expired() << '\n';
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+w_ptr.use_count() inside scope: 1
+w_ptr.use_count() out of scope: 0
+w_ptr.expired() out of scope: true
+```
+
+</div>
+</Columns>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |            Behavior as published           | Correct behavior |
+|:--------:|:----------:|:------------------------------------------:|:----------------:|
+| LWG 2315 | C++11      | move semantic was not enabled for weak_ptr | enabled          |
