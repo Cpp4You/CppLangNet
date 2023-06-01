@@ -27,7 +27,7 @@ The following expressions must be valid and have their specified effects:
 To satisfy this requirement, types that do not have built-in [comparison operators](/docs/std/language/operator_comparison) 
 have to provide a [user-defined operator==](/docs/std/language/operators).
 
-For the types that are both *EqualityComparable* and [*LessThanComparable*](/docs/std/named_req/LessThanComparable), 
+For the types that are both *EqualityComparable* and [*LessThanComparable*](/docs/named_req/LessThanComparable), 
 the C++ standard library makes a distinction between equality, which is the value of the expression `a == b` and equivalence, 
 which is the value of the expression `!(a < b) && !(b < a)`.
 

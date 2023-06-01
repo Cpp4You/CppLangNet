@@ -1,0 +1,40 @@
+---
+title:                  C++ named requirements:Hash 
+tags:                   [named_req,Hash]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version}             from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *Hash*</Since>
+A ***Hash*** is a function object for which the output depends only on the input and has a very low probability of 
+yielding the same output given different input values.
+
+### Requirements
+The type T satisfies *Hash* if
+
+* The type T satisfies [FunctionObject](/docs/named_req/FunctionObject), [CopyConstructible](/docs/named_req/CopyConstructible), [Destructible](/docs/named_req/Destructible), and
+
+Given
+
+* `h`, a value of type `T` or `const T`, whose argument type is `Key`
+* `k`, a value of type convertible to `Key` or `const Key`
+* `u`, an [lvalue](/docs/std/language/value_category) expression of type `Key`
+
+| Expression | Return type |                                                                                                                                                 Requirements                                                                                                                                                |
+|:----------:|:-----------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `h(k)`       | std::size_t | the returned value depends only on the value of k for the duration of the program <br/> All evaluations of `h(k)` executed within a given execution of a program yield the same result for the same value of k. <br/> The probability of `h(a)==h(b)` for `a!=b` should approach <code>1.0/<a href="/docs/std/types/numeric_limits">std::numeric_limits</a><a href="/docs/std/types/size_t">&lt;std::size_t&gt;</a>::max().</code> |
+| `h(u)`       | std::size_t | `u` is not modified                                                                                                                                                                                                                                                                                           |
+
+### Standard library
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/utility/hash" name={<>hash<Version v='cpp11'></Version></>} desc={<>hash function object</>}/>
+</SymbolTable>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                    Behavior as published                   |             Correct behavior            |
+|:--------:|:----------:|:----------------------------------------------------------:|:---------------------------------------:|
+| LWG 2291 | C++11      | same results for same arguments were required in all cases | only required within a single execution |
