@@ -1,0 +1,90 @@
+---
+title:                  C++ named requirements:FunctionObject 
+tags:                   [named_req,FunctionObject]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version}              from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <small>C++ named requirements:</small> *FunctionObject*
+A ***FunctionObject*** type is the type of an object that can be used on the left of the function call operator.
+
+### Requirements
+The type T satisfies *FunctionObject* if
+
+* The type T satisfies [std::is_object](/docs/std/types/is_object), and
+
+Given
+
+* `f`, a value of type `T` or `const T`
+* `args`, suitable argument list, which may be empty
+
+The following expressions must be valid:
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Expression</b>}    desc={<b>Requirements</b>}/>
+    <Symbol name={<code>f(args)</code>} desc={<>performs a function call</>}/>
+</SymbolTable>
+
+### Notes
+Functions and references to functions are not function object types, 
+but can be used where function object types are expected due to function-to-pointer [implicit conversion](/docs/std/language/implicit_conversion).
+
+### Standard library
+* All [pointers to functions](/docs/std/language/pointer#Pointers_to_functions) satisfy this requirement.
+* All function objects defined in [&lt;functional&gt](/docs/std/header/functional);
+* Some return types of functions of [&lt;functional&gt](/docs/std/header/functional);
+
+### Example
+demonstrates different types of function objects
+
+<Columns spacing='20px' columns={['6fr','4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+ 
+void foo(int x) { std::cout << "foo(" << x << ")\n"; }
+ 
+int main()
+{
+    void(*fp)(int) = foo;
+    fp(1); // calls foo using the pointer to function
+ 
+    struct S {
+        void operator()(int x) const { std::cout << "S::operator(" << x << ")\n"; }
+    } s;
+    s(2); // calls s.operator()
+    s.operator()(3); // the same
+ 
+    auto lam = [](int x) { std::cout << "lambda(" << x << ")\n"; };
+    lam(4); // calls the lambda
+    lam.operator()(5); // the same
+ 
+    struct T {
+        static void bar(int x) { std::cout << "T::bar(" << x << ")\n"; }
+        using FP = void (*)(int);
+        operator FP() const { return bar; }
+    } t;
+    t(6); // t is converted to a function pointer
+    static_cast<void (*)(int)>(t)(7); // the same
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+foo(1)
+S::operator(2)
+S::operator(3)
+lambda(4)
+lambda(5)
+T::bar(6)
+T::bar(7)
+```
+
+</div>
+</Columns>

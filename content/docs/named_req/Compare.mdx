@@ -1,0 +1,88 @@
+---
+title:                  C++ named requirements:Compare 
+tags:                   [named_req,Compare]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}              from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <small>C++ named requirements:</small> *Compare*
+***Compare*** is a set of requirements expected by some of the standard library facilities from the user-provided function object types.
+
+The return value of the function call operation applied to an object of a type satisfying *Compare*, when [contextually converted](/docs/std/language/implicit_conversion)
+to `bool`, yields `true` if the first argument of the call appears before the second in the 
+[strict weak ordering relation](https://en.wikipedia.org/wiki/Weak_ordering#Strict_weak_orderings) induced by this type, and `false` otherwise.
+
+As with any [*BinaryPredicate*](/docs/named_req/BinaryPredicate), evaluation of that expression is not allowed to call non-const functions through the dereferenced 
+iterators <Since v='cpp20'>and, syntactically, the function call operation must accept const object arguments, with the same behavior regardless 
+of whether the arguments are const or non-const</Since>.
+
+### Requirements
+The type T satisfies *Compare* if
+
+* The type T satisfies [*BinaryPredicate*](/docs/named_req/BinaryPredicate), and
+
+Given
+
+* `comp`, an object of type `T`
+* `equiv(a, b)`, an [expression-equivalent](/docs/std/language/expressions#Expression-equivalence) to `!comp(a, b) && !comp(b, a)`.
+
+The following expressions must be valid and have their specified effects:
+
+| **Expression** | **Return type**                                                            | **Requirements**                                                                                                                                                                                                                                                                                                                          |
+|:--------------:|:--------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `comp(a, b)`   | [implicitly convertible](/docs/std/language/implicit_conversion) to `bool` | Establishes [strict weak ordering](https://en.wikipedia.org/wiki/Weak_ordering#Strict_weak_orderings) relation with the following properties <br/> \*  For all `a`, `comp(a, a) == false` <br/> \* If `comp(a, b) == true` then `comp(b, a) == false` <br/> \* if `comp(a, b) == true` and `comp(b, c) == true` then `comp(a, c) == true` |
+| `equiv(a, b)`  | `bool`                                                                     | Establishes [equivalence relationship](https://en.wikipedia.org/wiki/Equivalence_relation) with the following properties <br/> \* For all `a`, `equiv(a, a) == true` <br/> \* If `equiv(a, b) == true`, then `equiv(b, a) == true`<br/> \*  If `equiv(a, b) == true` and `equiv(b, c) == true`, then `equiv(a, c) == true`                |
+
+Note: comp induces a [strict total ordering](https://en.wikipedia.org/wiki/Total_order#Strict_and_non-strict_total_orders) on the equivalence 
+classes determined by `equiv`.
+
+### Standard library
+The following standard library facilities expect a *Compare* type.
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/container/set"                      name={<>set</>}                                          desc={<>collection of unique keys, sorted by keys</>}/>
+    <Symbol autoLink linkName="/docs/std/container/map"                      name={<>map</>}                                          desc={<>collection of key-value pairs, sorted by keys, keys are unique</>}/>
+    <Symbol autoLink linkName="/docs/std/container/multiset"                 name={<>multiset</>}                                     desc={<>collection of keys, sorted by keys</>}/>
+    <Symbol autoLink linkName="/docs/std/container/multimap"                 name={<>multimap</>}                                     desc={<>collection of key-value pairs, sorted by keys</>}/>
+    <Symbol autoLink linkName="/docs/std/container/priority_queue"           name={<>priority_queue</>}                               desc={<>adapts a container to provide priority queue</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/sort"                     name={<>sort</>}                                         desc={<>sorts a range into ascending order<br/><small>(function template)</small></>}/>
+    <Symbol autoLink linkName="/docs/std/container/forward_list/sort"        name={<>sort<Version v='cpp11'></Version></>}            desc={<>sorts the elements<br/><small>(public member function of std::forward_list&lt;T,Allocator&gt;)</small></>}/>
+    <Symbol autoLink linkName="/docs/std/container/list/sort"                name={<>sort</>}                                         desc={<>sorts the elements<br/><small>(public member function of std::list&lt;T,Allocator&gt;)</small></>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/stable_sort"              name={<>stable_sort</>}                                  desc={<>sorts a range of elements while preserving order between equal elements</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/partial_sort"             name={<>partial_sort</>}                                 desc={<>sorts the first N elements of a range</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/partial_sort_copy"        name={<>partial_sort_copy</>}                            desc={<>copies and partially sorts a range of elements</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/is_sorted"                name={<>is_sorted<Version v='cpp11'></Version></>}       desc={<>checks whether a range is sorted into ascending order</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/is_sorted_until"          name={<>is_sorted_until<Version v='cpp11'></Version></>} desc={<>finds the largest sorted subrange</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/nth_element"              name={<>nth_element</>}                                  desc={<>partially sorts the given range making sure that it is partitioned by the given element</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/lower_bound"              name={<>lower_bound</>}                                  desc={<>returns an iterator to the first element not less than the given value</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/upper_bound"              name={<>upper_bound</>}                                  desc={<>returns an iterator to the first element greater than a certain value</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/binary_search"            name={<>binary_search</>}                                desc={<>determines if an element exists in a partially-ordered range</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/equal_range"              name={<>equal_range</>}                                  desc={<>returns range of elements matching a specific key</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/merge"                    name={<>merge</>}                                        desc={<>merges two sorted ranges<br/><small>(function template)</small></>}/>
+    <Symbol autoLink linkName="/docs/std/container/forward_list/merge"       name={<>merge<Version v='cpp11'></Version></>}           desc={<>merges two sorted lists<br/><small>(public member function of std::forward_list&lt;T,Allocator&gt;)</small></>}/>
+    <Symbol autoLink linkName="/docs/std/container/list/merge"               name={<>merge</>}                                        desc={<>merges two sorted lists<br/><small>(public member function of std::list&lt;T,Allocator&gt;)</small></>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/inplace_merge"            name={<>inplace_merge</>}                                desc={<>merges two ordered ranges in-place</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/includes"                 name={<>includes</>}                                     desc={<>returns <code>true</code> if one sequence is a subsequence of another</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/set_difference"           name={<>set_difference</>}                               desc={<>computes the difference between two sets</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/set_intersection"         name={<>set_intersection</>}                             desc={<>computes the intersection of two sets</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/set_symmetric_difference" name={<>set_symetric_difference</>}                      desc={<>computes the symmetric difference between two sets</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/set_union"                name={<>set_union</>}                                    desc={<>computes the union of two sets</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/push_heap"                name={<>push_heap</>}                                    desc={<>adds an element to a max heap</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/pop_heap"                 name={<>pop_heap</>}                                     desc={<>removes the largest element from a max heap</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/make_heap"                name={<>make_heap</>}                                    desc={<>creates a max heap out of a range of elements</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/sort_heap"                name={<>sort_heap</>}                                    desc={<>turns a max heap into a range of elements sorted in ascending order</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/is_heap"                  name={<>is_heap<Version v='cpp11'></Version></>}         desc={<>checks if the given range is a max heap</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/is_heap_until"            name={<>is_heap_until<Version v='cpp11'></Version></>}   desc={<>finds the largest subrange that is a max heap</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/max"                      name={<>max</>}                                          desc={<>returns the greater of the given values</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/max_element"              name={<>max_element</>}                                  desc={<>returns the largest element in a range</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/min"                      name={<>min</>}                                          desc={<>returns the smaller of the given values</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/min_element"              name={<>min_element</>}                                  desc={<>returns the smallest element in a range</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/minmax"                   name={<>minmax<Version v='cpp11'></Version></>}          desc={<>returns the smaller and larger of two elements</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/minmax_element"           name={<>minmax_element<Version v='cpp11'></Version></>}  desc={<>returns the smallest and the largest elements in a range</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/lexicographical_compare"  name={<>lexicographical_compare</>}                      desc={<>returns <code>true</code> if one range is lexicographically less than another</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/next_permutation"         name={<>next_permutation</>}                             desc={<>generates the next greater lexicographic permutation of a range of elements</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/prev_permutation"         name={<>prev_permutation</>}                             desc={<>generates the next smaller lexicographic permutation of a range of elements</>}/>
+</SymbolTable>

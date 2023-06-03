@@ -1,0 +1,54 @@
+---
+title:                  C++ named requirements:Callable 
+tags:                   [named_req,Callable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}              from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <small>C++ named requirements:</small> *Callable*
+
+A ***Callable*** type is a type for which the [INVOKE](/docs/std/utility/functional) and [INVOKE&lt;R&gt;](/docs/std/utility/functional) operations 
+(used by, e.g., [std::function](/docs/std/utility/functional/function), [std::bind](/docs/std/utility/functional/bind), 
+and [std::thread&#58;:thread](/docs/std/thread/_thread/thread)) are applicable.
+
+<Since v='cpp17'>INVOKE can be performed explicitly using the library function <a href="/docs/std/utility/functional/invoke">std::invoke</a>.</Since> <br/>
+<Since v='cpp23'>INVOKE&lt;R&gt; can be performed explicitly using the library function <a href="/docs/std/utility/functional/invoke">std::invoke_r</a>.</Since>
+
+### Requirements
+The type T satisfies *Callable* if <br/>
+Given
+
+* `f`, an object of type `T`
+* `ArgTypes`, suitable list of argument types
+* `R`, suitable return type
+
+The following expressions must be valid:
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Expression</b>}    desc={<b>Requirements</b>}/>
+    <Symbol name={<code><a href="/docs/std/utility/functional">INVOKE&lt;R&gt;</a>(f,<a href="/docs/std/utility/declval">std::declval</a>&lt;ArgTypes&gt;()...)</code>} 
+            desc={<>the expression is well-formed in unevaluated context</>}/>
+</SymbolTable>
+
+### Notes
+[Pointers to data](/docs/std/language/pointer#Pointers_to_data_members) members are *Callable*, even though no function calls take place.
+
+### Standard library
+In addition, the following standard library facilities accept any *Callable* type (not just [FunctionObject](/docs/named_req/FunctionObject)):
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/utility/functional/function"          name={<>function<Version v='cpp11'></Version></>}                                                                              desc={<>wraps callable object of any copy constructible type with specified function call signature</>}/>
+    <Symbol autoLink linkName="/docs/std/functional/move_only_function"        name={<>move_only_function<Version v='cpp23'></Version></>}                                                                    desc={<>wraps callable object of any type with specified function call signature</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/functional/bind"              name={<>bind<Version v='cpp11'></Version></>}                                                                                  desc={<>binds one or more arguments to a function object</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/functional/bind_front"        name={<>bind_front<Version v='cpp20'></Version><br/>bind_back<Version v='cpp23'></Version></>}                                 desc={<>bind a variable number of arguments, in order, to a function object</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/functional/reference_wrapper" name={<>reference_wrapper<Version v='cpp11'></Version></>}                                                                     desc={<><a href="/docs/named_req/CopyConstructible">CopyConstructible</a> and <a href="/docs/named_req/CopyAssignable">CopyAssignable</a> reference wrapper</>}/>
+    <Symbol autoLink linkName="/docs/std/types/result_of"                      name={<><Removed v='cpp20'>result_of<Version v='cpp11'></Version></Removed><br/>invoke_result<Version v='cpp17'></Version></>} desc={<>deduces the result type of invoking a callable object with a set of arguments</>}/>
+    <Symbol autoLink linkName="/docs/std/thread/thread"                        name={<>thread<Version v='cpp11'></Version></>}                                                                                desc={<>manages a separate thread</>}/>
+    <Symbol autoLink linkName="/docs/std/thread/jthread"                       name={<>jthread<Version v='cpp20'></Version></>}                                                                               desc={<><a href="/docs/std/thread/thread">std::thread</a> with support for auto-joining and cancellation</>}/>
+    <Symbol autoLink linkName="/docs/std/thread/call_once"                     name={<>call_once<Version v='cpp11'></Version></>}                                                                             desc={<>invokes a function only once even if called from multiple threads</>}/>
+    <Symbol autoLink linkName="/docs/std/thread/async"                         name={<>async<Version v='cpp11'></Version></>}                                                                                 desc={<>runs a function asynchronously (potentially in a new thread) and returns a <a href="/docs/std/thread/future">std::future</a> that will hold the result</>}/>
+    <Symbol autoLink linkName="/docs/std/thread/packaged_task"                 name={<>packaged_task<Version v='cpp11'></Version></>}                                                                         desc={<>packages a function to store its return value for asynchronous retrieval</>}/>
+</SymbolTable>

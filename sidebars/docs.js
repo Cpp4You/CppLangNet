@@ -853,5 +853,12 @@ module.exports = {
 				},
 			],
 		},
+		{
+			type: 'category',
+			label: 'Named Requirements',
+			collapsed: false,
+			link: { type: 'doc', id: 'named_req/named_req' },
+			items: [],
+		},
 	],
 };
