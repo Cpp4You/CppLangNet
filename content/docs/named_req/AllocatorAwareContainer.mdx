@@ -1,0 +1,91 @@
+---
+title:                  C++ named requirements:AllocatorAwareContainer 
+tags:                   [named_req,AllocatorAwareContainer]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}     from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *AllocatorAwareContainer*</Since>
+An ***AllocatorAwareContainer*** is a [*Container*](/docs/named_req/Container) that holds an instance of an [*Allocator*](/docs/named_req/Allocator) 
+and uses that instance in all its member functions to allocate and deallocate memory and to construct and destroy objects in that memory 
+(such objects may be container elements, nodes, or, for unordered containers, bucket arrays)<Since v='cpp23'>, except that [std::basic_string](/docs/std/containers/strings/string) 
+specializations do not use the allocators for construction/destruction of their elements</Since>.
+
+The following rules apply to container construction
+
+* Copy constructors of *AllocatorAwareContainers* obtain their instances of the allocator by calling 
+<code><a href="/docs/std/memory/allocator_traits">std::allocator_traits</a>&lt;allocator_type&gt;::select_on_container_copy_construction</code>
+on the allocator of the container being copied.
+* Move constructors obtain their instances of allocators by move-constructing from the allocator belonging to the old container.
+* All other constructors take a const allocator_type& parameter.
+
+The only way to replace an allocator is copy-assignment, move-assignment, and swap:
+
+* Copy-assignment will replace the allocator only if 
+<code><a href="/docs/std/memory/allocator_traits">std::allocator_traits</a>&lt;allocator_type&gt;::propagate_on_container_copy_assignment::value</code> is <code>true</code>
+* Move-assignment will replace the allocator only if
+<code><a href="/docs/std/memory/allocator_traits">std::allocator_traits</a>&lt;allocator_type&gt;::propagate_on_container_move_assignment::value</code> is <code>true</code>
+* Swap will replace the allocator only if
+<code><a href="/docs/std/memory/allocator_traits">std::allocator_traits</a>&lt;allocator_type&gt;::propagate_on_container_swap::value</code> is <code>true</code> 
+<br/> Specifically, it will exchange the allocator instances through an unqualified call to the non-member function swap, 
+see <a href="/docs/named_req/Swappable"><i>Swappable</i></a>.
+
+Note: swapping two containers with unequal allocators if propagate_on_container_swap is `false` is undefined behavior.
+
+* The accessor get_allocator() obtains a copy of the allocator that was used to construct the container or installed by the most recent allocator replacement operation.
+
+### Requirements
+#### Legend
+
+`X`       - Container type                                <br/>
+`T`	      - Element type                                  <br/>
+`A`	      - Allocator for **T**                           <br/>
+`a`, `b`  - Objects of type **X** (non-const lvalue)      <br/>
+`t`	      - Object of type **X** (lvalue or const rvalue) <br/>
+`rv`	  - Object of type **X** (non-const rvalue)       <br/>
+`m`	      - Object of type **A**                          
+
+
+| **Expression**    | **Return type** |                                                     **Pre/Requirements**                                                                                                                         |    **Post/Effects**                                                                                                                                                                |     **Complexity**                                      |
+|:-----------------:|:---------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------:|
+| `allocator_type`  | **A**           | `allocator_type::value_type` must be the same as `X::value_type`                                                                                                                                 |                                                                                                                                                                                    | compile-time                                            |
+| `get_allocator()` | **A**           |                                                                                                                                                                                                  |                                                                                                                                                                                    | constant                                                |
+| `X u;`            |                 | **A** is [DefaultConstructible](/docs/named_req/DefaultConstructible)                                                                                                                            | `u.empty() == true && u.get_allocator() == A()`                                                                                                                                    | constant                                                |
+| `X u(m);`         |                 |                                                                                                                                                                                                  | `u.empty() == true && u.get_allocator() == m`                                                                                                                                      | constant                                                |
+| `X u(t,m);`       |                 | **T** is [CopyInsertable](/docs/named_req/CopyInsertable) into **X**                                                                                                                             | `u == t && u.get_allocator() == m`                                                                                                                                                 | linear                                                  |
+| `X u(rv);`        |                 | Move constructor of **A** must *not* throw exceptions                                                                                                                                            | `u` has the same elements and an equal allocator as `rv` had before the construction                                                                                               | constant                                                |
+| `X u(rv,m);`      |                 | **T** is [MoveInsertable](/docs/named_req/MoveInsertable) into **X**                                                                                                                             | The elements of `u` are the same or copies of those of `rv` and `u.get_allocator() == m`                                                                                           | constant if `m == rv.get_allocator()`, otherwise linear |
+| `a = t`           | `X&`            | **T** is [CopyInsertable](/docs/named_req/CopyInsertable) into **X** and [CopyAssignable](/docs/named_req/CopyAssignable)                                                                        | `a == t`                                                                                                                                                                           | linear                                                  |
+| `a = rv`          | `X&`            | If the allocator will not be replaced by move-assignment (see above), then **T** is [MoveInsertable](/docs/named_req/MoveInsertable) into X and [MoveAssignable](/docs/named_req/MoveAssignable) | All existing elements of `a` are either move assigned to or destroyed; if `a` and `rv` do not refer the same object, `a` is equal to the value that `rv` had before the assignment | linear                                                  |
+| `a.swap(b)`       | void            |                                                                                                                                                                                                  | Exchanges the contents of `a` and `b`                                                                                                                                              | constant                                                 |
+
+
+### Notes
+
+Allocator-aware containers always call `std::allocator_traits<A>::construct(m, p, args)` to construct an object of type `T` at `p` using `args`, with `m == get_allocator()`. <Until v='cpp20'>The default construct 
+in <code><a href="/docs/std/memory/allocator">std::allocator</a></code> calls <code>::new((void*)p) T(args)</code> </Until> <Since v='cpp20'><code><a href="/docs/std/memory/allocator">std::allocator</a></code> has no construct member and <code><a href="/docs/std/memory/construct_at">std::construct_at</a>(p, args)</code> is called when constructing elements </Since>, but specialized allocators may choose a different definition
+
+### Standard library
+* [std::basic_string](/docs/std/containers/strings/string)
+* [std::deque](/docs/std/containers/queues/deque)
+* [std::forward_list](/docs/std/containers/lists/forward_list)
+* [std::list](/docs/std/containers/lists/list)
+* [std::vector](/docs/std/container/vector)
+* [std::map](/docs/std/containers/maps/map)
+* [std::multimap](/docs/std/containers/maps/multimap)
+* [std::set](/docs/std/containers/sets/set)
+* [std::multiset](/docs/std/containers/sets/multiset)
+* [std::unordered_map](/docs/std/containers/maps/unordered-map)
+* [std::unordered_multimap](/docs/std/containers/maps/unordered-multimap)
+* [std::unordered_set](/docs/std/containers/sets/unordered-set)
+* [std::unordered_multiset](/docs/std/containers/sets/unordered-multiset)
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                    Behavior as published                    |           Correct behavior           |
+|:--------:|:----------:|:-----------------------------------------------------------:|:------------------------------------:|
+| LWG 2839 | C++11      | self move assignment of standard containers was not allowed | allowed but the result is unspecifed |

@@ -1,0 +1,93 @@
+---
+title:                  C++ named requirements:Container 
+tags:                   [named_req,Container]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}     from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <small>C++ named requirements:</small> *Container*
+A ***Container*** is an object used to store other objects and taking care of the management of the memory used by the objects it contains.
+
+### Requirements
+* `T`, an element type;
+* `C`, a *Container* type containing elements of type `T`;
+* `a` and `b`, objects of type `C`;
+* `rv`, a prvalue expression of type `C`.
+
+### Types
+
+|   **Name**      |               **Type**                                                              |                                 **Requirements**                                                                                                                    |
+|:---------------:|:-----------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| value_type      | T                                                                                   | <Until v='cpp11'><a href="/docs/named_req/CopyConstructible"><i>CopyConstructible</i></a></Until> <Since v='cpp11'><a href="/docs/named_req/Erasable"><i>Erasable</i></a></Since> |
+| reference       | T&                                                                                  |                                                                                                                                                                     |
+| const_reference | const T&                                                                            |                                                                                                                                                                     |
+| iterator        | iterator whose [value type](/docs/std/iterator#Types_and_writability) is T          | [*LegacyForwardIterator*](/docs/named_req/LegacyForwardIterator) convertible to const_iterator                                                                        |
+| const_iterator  | constant iterator whose [value type](/docs/std/iterator#Types_and_writability) is T | [*LegacyForwardIterator*](/docs/named_req/LegacyForwardIterator)                                                                                                      |
+| difference_type | signed integer                                                                      | must be the same as [iterator_traits::](/docs/std/iterator/iterator_traits)difference_type for iterator and const_iterator                                          |
+| size_type       | unsigned integer                                                                    | large enough to represent all positive values of difference_type                                                                                                    |
+
+### Methods and operators
+
+| **Expression**                                   | **Return type**     | **Semantics** |  **Conditions**  | **Complexity**   |
+|:------------------------------------------------:|:-------------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------:|
+| `C()`                                            | C                   | creates an empty container                                                                                                                                                                                                  | Post:`C().empty() == true `                                                                                   | Constant                                                        |
+| `C(a)`                                           | C                   | creates a copy of `a`                                                                                                                                                                                                       | Pre: `T` must be [CopyInsertable](/docs/named_req/CopyInsertable) <br/> Post:  `a == C(a)`                    | Linear                                                          |
+| <Since v='cpp11'><code>C(rv)</code></Since>      | C                   | moves `rv`                                                                                                                                                                                                                  | Post: equal to the value `rv` had before this construction                                                    | Constant[[1]](#notes)                                           |
+| `a = b`                                          | C&                  | destroys or copy-assigns all elements of `a` from elements of `b`                                                                                                                                                           | Post: `a == b`                                                                                                | Linear                                                          |
+| <Since v='cpp11'><code>a = rv</code></Since>     | C&                  | destroys or move-assigns all elements of `a` from elements of `rv`                                                                                                                                                          | Post: if `a` and `rv` do not refer the same object, `a` is equal to the value `rv` had before this assignment | Linear                                                          |
+| `a.~C()`                                         | void                | destroys all elements of `a` and frees all memory                                                                                                                                                                           |                                                                                                               | Linear                                                          |
+| `a.begin()`                                      | (const_)iterator    | Iterator to the first element of `a`                                                                                                                                                                                        |                                                                                                               | Constant                                                        |
+| `a.end()`                                        | (const_)iterator    | Iterator to one past the last element of `a`                                                                                                                                                                                |                                                                                                               | Constant                                                        |
+| <Since v='cpp11'><code>a.cbegin()</code></Since> | const_iterator      | `const_cast<const C&>(a).begin()`                                                                                                                                                                                           |                                                                                                               | Constant                                                        |
+| <Since v='cpp11'><code>a.cend()</code></Since>   | const_iterator      | `const_cast<const C&>(a).end()`                                                                                                                                                                                             |                                                                                                               | Constant                                                        |
+| `a == b`                                         | convertible to bool | <Until block v='cpp14'><code>a.size() == b.size() && <br/>std::equal(a.begin(), <br/>a.end(), b.begin())</code></Until> <Since block v='cpp14'><code>std::equal(a.begin(), a.end(), <br/>b.begin(), b.end())</code></Since> | Pre: `T` must be [EqualityComparable](/docs/named_req/EqualityComparable)                                     | Constant[[2]](#notes) if a.size() != b.size(), linear otherwise |
+| `a != b`                                         | convertible to bool | `!(a == b)`                                                                                                                                                                                                                 |                                                                                                               | Linear                                                          |
+| `a.swap(b)`                                      | void                | exchanges the values of `a` and `b`                                                                                                                                                                                         |                                                                                                               | Constant[[1][3]](#notes)                                        |
+| `swap(a, b) `                                    | void                | `a.swap(b)`                                                                                                                                                                                                                 |                                                                                                               | Constant[[1]](#notes)                                           |
+| `a.size()`                                       | size_type           | <code><a href="/docs/std/iterator/distance">std::distance</a>(a.begin(), a.end())</code>                                                                                                                                    |                                                                                                               | Constant[[3]](#notes)                                           |
+| `a.max_size()`                                   | size_type           | `b.size()` where `b` is the largest possible container                                                                                                                                                                      |                                                                                                               | Constant[[3]](#notes)                                           |
+| `a.empty()`                                      | convertible to bool | `a.begin() == a.end()`                                                                                                                                                                                                      |                                                                                                               | Constant                                                        |
+
+#### Notes
+
+1 Linear for [std::array](/docs/std/containers/arrays/array) <br/>
+2 always linear for [std::forward_list](/docs/std/containers/lists/forward-list/)<br/>
+3 <Until v='cpp11'>Not strictly constant</Until><br/>
+
+Given
+
+* `i` and `j`, objects of a container's iterator type,
+
+in the expressions `i == j`, `i != j`, `i < j`, `i <= j`, `i >= j`, `i > j`, `i - j`, 
+either or both may be replaced by an object of the container's const_iterator type referring to the same element with no change in semantics.
+
+### Container data races
+see [container thread safety](/docs/std/container#Thread_safety)
+
+### Other requirements
+
+#### C
+* [DefaultConstructible](/docs/named_req/DefaultConstructible)
+* [CopyConstructible](/docs/named_req/CopyConstructible)
+* [EqualityComparable](/docs/named_req/EqualityComparable)
+* [Swappable](/docs/named_req/Swappable)
+
+#### T
+* [CopyInsertable](/docs/named_req/CopyInsertable)
+* [EqualityComparable](/docs/named_req/EqualityComparable)
+* [Destructible](/docs/named_req/Destructible)
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                       Behavior as published                       |            Correct behavior           |
+|:--------:|:----------:|:-----------------------------------------------------------------:|:-------------------------------------:|
+| LWG 179  | C++98      | iterator and const_iterator types might be incomparable           | required to be comparable             |
+| LWG 276  | C++98      | T was required to be CopyAssignable                               | T is required to be CopyConstructible |
+| LWG 322  | C++98      | the value types of iterator and const_iterator were not specified | specified as T                        |
+| LWG 774  | C++98      | there was no requirement on swap(a, b)                            | added                                 |
+| LWG 2263 | C++11      | the resolution of LWG issue 179 was accidentally dropped in C++11 | restored                              |
+| LWG 2839 | C++11      | self move assignment of standard containers was not allowed       | allowed but the result is unspecifed  | 
