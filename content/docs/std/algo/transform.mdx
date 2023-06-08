@@ -100,7 +100,7 @@ The overloads with a template parameter named `ExecutionPolicy` report errors as
 <details>
 <summary>transform (1)</summary>
 
-```
+```cpp
 template< class InputIt, class OutputIt, class UnaryOperation >
 OutputIt transform( InputIt first1, InputIt last1, OutputIt d_first, UnaryOperation unary_op )
 {
@@ -116,7 +116,7 @@ OutputIt transform( InputIt first1, InputIt last1, OutputIt d_first, UnaryOperat
 <details>
 <summary>transform (2)</summary>
 
-```
+```cpp
 template< class InputIt1, class InputIt2, class OutputIt, class BinaryOperation >
 OutputIt transform(InputIt1 first1, InputIt1 last1,
 		InputIt2 first2, OutputIt d_first,
@@ -139,7 +139,7 @@ To apply a function to a sequence in-order or to apply a function that modifies 
 
 ### Examples
 
-The following code uses `transform` to convert a string in place to uppercase using the `std::toupper` function and then transforms each char to its ordinal value.  
+The following code uses `transform` to convert a string in place to uppercase using the `std::toupper` function and then transforms each char to its ordinal value.
 
 Then `transform` with a projection is used to transform elements of `std::vector<Foo>` into chars to fill a `std::string`.
 
@@ -196,10 +196,10 @@ int main()
 </div>
 <div>
 
-plaintext title="Output"
-```s = "HELLO"
+```plaintext title="Output"
+s = "HELLO"
 g = "HELLO"
-ordinals:  72  69  76  76  79
+ordinals:  72  69  76  76  79 
 ordinals: 144 138 152 152 158
 ```
 
