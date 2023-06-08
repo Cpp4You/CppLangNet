@@ -20,16 +20,16 @@ import Term_UndefinedBehaviour			from "@site/i18n/en/presets/terms/undefined-beh
 
 <!----------------- Codes ---------------------->
 
-import Signature_UntilCpp17		from './_codes/transform/until-cpp20.mdx';
+import Signature_UntilCpp17		from './_codes/transform/until-cpp17.mdx';
 import Signature_SinceCpp17		from './_codes/transform/since-cpp17.mdx';
 import Signature_SinceCpp20		from './_codes/transform/since-cpp20.mdx';
 
 # std::transform() algorithm
 
 <SwitchView content={{
-	'until-cpp17': <Signature_UntilCpp17>,
-	'since-cpp17': <Signature_SinceCpp17>,
-	'since-cpp20': <Signature_SinceCpp20>,
+	'since-cpp20': <Signature_SinceCpp20 />,
+	'since-cpp17': <Signature_SinceCpp17 />,
+	'until-cpp17': <Signature_UntilCpp17 />
 }} />
 
 Applies the given function to a range and stores the result in another range, keeping the original elements order and beginning at `d_first`.
