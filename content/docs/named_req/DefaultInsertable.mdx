@@ -1,0 +1,39 @@
+---
+title:                  C++ named requirements:DefaultInsertable 
+tags:                   [named_req,DefaultInsertable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}     from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *DefaultInsertable*</Since>
+
+Specifies that an instance of the type can be default-constructed in-place by a given allocator.
+
+### Requirements
+The type **T** is *DefaultInsertable* into the [*Container*](/docs/named_req/Container) **X** whose value_type is identical to **T** if, given
+
+* `A` an allocator type
+* `m` an lvalue of type `A`
+* `p` the pointer of type `T*` prepared by the container
+where **X::allocator_type** is identical to <code><a href="/docs/std/memory/allocator_traits">std::allocator_traits</a>&lt;A&gt;::rebind_alloc&lt;T&gt;</code>,
+
+the following expression is well-formed:
+```cpp
+std::allocator_traits<A>::construct(m, p);
+```
+If **X** is not allocator-aware or is a [std::basic_string](/docs/std/containers/strings/string) specialization, 
+the term is defined as if **A** were [std::allocator](/docs/std/memory/allocator)&lt;T&gt;, 
+except that no allocator object needs to be created, and user-defined specializations of [std::allocator](/docs/std/memory/allocator) are not instantiated.
+
+### Notes
+By default, this will [value-initialize](/docs/std/language/value_initialization) the object, 
+as by <Until v='cpp20'><code>::new((void*)p) T()</code></Until> <Since v='cpp20'><code><a href="/docs/std/memory/construct_at">std::construct_at</a>(p)</code></Since>. 
+If value-initialization is undesirable, for example, if the object is of non-class type and zeroing out is not needed, 
+it can be avoided by providing a [custom Allocator::construct](https://stackoverflow.com/questions/21028299/is-this-behavior-of-vectorresizesize-type-n-under-c11-and-boost-container/21028912#21028912).
+
+Although it is required that customized construct is used when constructing elements of [std::basic_string](/docs/std/containers/strings/string) until C++23, 
+all implementations only used the default mechanism. 
+The requirement is corrected by [P1072R10](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p1072r10.html) to match existing practice.

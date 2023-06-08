@@ -1,0 +1,28 @@
+---
+title:                  C++ named requirements:ContiguousContainer 
+tags:                   [named_req,ContiguousContainer]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}     from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <Since v='cpp17'><small>C++ named requirements:</small> *ContiguousContainer*</Since>
+A ***ContiguousContainer*** is a [*Container*](/docs/named_req/Container) that stores objects in contiguous memory locations.
+
+### Requirements
+The type X satisfies *ContiguousContainer* if
+
+* The type X satisfies [*Container*](/docs/named_req/Container)
+* The type X supports [*LegacyRandomAccessIterators*](/docs/named_req/LegacyRandomAccessIterators)
+* The member types `X::iterator` and `X::const_iterator` 
+are <Until v='cpp20'><a href="/docs/named_req/LegacyContiguousIterators"><i>LegacyContiguousIterators</i></a></Until> <Since v='cpp20'><a href="/docs/std/iterator/contiguous_iterator"><i>contiguous_iterators</i></a></Since>
+
+### Contiguous containers in the standard library
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/containers/strings/string"     name="basic_string"                                    desc="stores and manipulates sequences of characters"/>
+    <Symbol autoLink linkName="/docs/std/containers/arrays/array"       name={<>array<Version v='cpp11'></Version></>}         desc="static contiguous array"/>
+    <Symbol autoLink linkName="/docs/std/containers/arrays/vector"      name="vector"                                          desc="dynamic contiguous array"/>
+</SymbolTable>
