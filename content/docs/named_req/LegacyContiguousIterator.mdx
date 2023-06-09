@@ -1,0 +1,46 @@
+---
+title:                  C++ named requirements:LegacyContiguousIterator
+tags:                   [named_req,LegacyContiguousIterator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp17'><small>C++ named requirements:</small> *LegacyContiguousIterator*</Since>
+
+A ***LegacyContiguousIterator*** is a [*LegacyIterator*](/docs/named_req/LegacyIterator) 
+whose logically adjacent elements are also physically adjacent in memory.
+
+A pointer to an element of an array satisfies all requirements of ***LegacyContiguousIterator***.
+
+### Requirements
+The type **It** satisfies *LegacyContiguousIterator* if
+
+The type **It** satisfies [*LegacyIterator*](/docs/named_req/LegacyIterator) 
+And, for every
+
+* `a`, a dereferenceable iterator of type **It**
+* `n`, an integral value
+
+such that
+* `a + n` is a valid and dereferenceable iterator value
+
+then
+* `*(a + n)` is equivalent to `*(std::addressof(*a) + n)`.
+
+### Standard library
+The following standard library types are *LegacyContiguousIterator*s.
+
+* [array::iterator](/docs/std/containers/arrays/array).
+* [basic_string_view::iterator](/docs/std/containers/strings/string/operator_string_view).
+* [basic_string::iterator](/docs/std/containers/strings/string).
+* [vector::iterator](/docs/std/containers/arrays/vector) for `value_type` other than `bool`.
+* The return type of <a href="/docs/std/numeric/valarray/begin2">std::begin<small>(std::valarray)</small></a>
+and <a href="/docs/std/numeric/valarray/end2">std::end<small>(std::valarray)</small></a>.
+
+### Notes
+[Fancy pointer](/docs/named_req/Allocator#fancy-pointers) to object types are also required to satisfy *LegacyContiguousIterator*.
+
+<Since v='cpp20'><i>LegacyContiguousIterator</i> is replaced with the <a href="/docs/std/iterator/contiguous_iterator">contiguous_iterator</a> concept: 
+iterator types in the standard library that are required to satisfy <i>LegacyContiguousIterator</i> in C++17 are required to model contiguous_iterator in C++20.</Since>

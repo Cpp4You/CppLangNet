@@ -1,0 +1,33 @@
+---
+title:                  C++ named requirements:ConstexprIterator
+tags:                   [named_req,ConstexprIterator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *ConstexprIterator*
+
+A ***ConstexprIterator*** is a [*LegacyIterator*](/docs/named_req/LegacyIterator)  
+that can be used during constant expression evaluation.
+
+### Requirements
+The type `It` satisfies *ConstexprIterator* if
+
+* The type `It` satisfies [*Iterator*](/docs/named_req/LegacyIterator)
+
+And, for every
+* `foo`, an operation on It that is required to be supported by [*Iterator*](/docs/named_req/LegacyIterator),
+* `args...`, a set of arguments to `foo` that meets the requirements for that operation,
+
+Then
+* `foo(args...)` may be used in a constant expression if `args...` can also be used.
+
+### Standard library
+The following standard library types are *ConstexprIterators*.
+
+* [array::iterator](/docs/std/containers/arrays/array) and [array::const_iterator](/docs/std/containers/arrays/array).
+* [basic_string_view::iterator](/docs/std/containers/strings/string/operator_string_view).
+* [span::iterator](/docs/std/containers/other/span/).
+* [vector::iterator](/docs/std/containers/arrays/vector) and [vector::const_iterator](/docs/std/containers/arrays/vector).
