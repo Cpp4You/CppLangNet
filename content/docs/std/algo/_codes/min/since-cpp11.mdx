@@ -1,0 +1,17 @@
+```cpp
+// (1)
+template< class T >
+const T& min( const T& a, const T& b );
+
+// (2)
+template< class T, class Compare >
+const T& min( const T& a, const T& b, Compare comp );
+
+// (3)
+template< class T >
+T min( std::initializer_list<T> ilist );
+
+// (4)
+template< class T, class Compare >
+T min( std::initializer_list<T> ilist, Compare comp );
+```
