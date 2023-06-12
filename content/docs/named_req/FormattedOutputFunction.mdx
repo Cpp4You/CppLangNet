@@ -1,0 +1,77 @@
+---
+title:                  C++ named requirements:FormattedOutputFunction
+tags:                   [named_req,FormattedOutputFunction]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *FormattedOutputFunction*
+
+### Requirements
+A ***FormattedOutputFunction*** is a stream output function that performs the following:
+
+* Constructs an object of type [basic_istream::sentry](/docs/std/io/basic_ostream/sentry) with automatic storage duration, which performs the following
+    * if [eofbit](/docs/std/io/ios_base/iostate) or [badbit](/docs/std/io/ios_base/iostate) are set on the output stream, 
+sets the failbit as well, and if exceptions on failbit are enabled in this output stream's 
+[exception mask](/docs/std/io/basic_ios/exceptions) `((exceptions() & failbit) != 0)`, throws [ios_base::failure](/docs/std/io/ios_base/failure).
+    * flushes the tie()'d output stream, if applicable.
+* Checks the status of the sentry by calling sentry::operator bool(), which is equivalent to basic_ios::good.
+* If the sentry returned false or sentry's constructor threw an exception, no output takes place
+* If the sentry returned true, attempts to perform the desired output by inserting the characters into the output stream as if by calling `rdbuf()->sputc()`. 
+Other public members of [std::basic_ostream](/docs/std/io/basic_ostream) may also be used, but virtual members of `rdbuf()` except 
+[overflow()](/docs/std/io/basic_streambuf/overflow), [xsputn()](/docs/std/io/basic_streambuf/xsputn) and [sync()](/docs/std/io/basic_streambuf/sync) will never be called.
+    * If the output could not be generated, sets failbit. If exceptions on failbit are enabled in this stream's 
+    [exception mask](/docs/std/io/basic_ios/exceptions) `((exceptions() & failbit) != 0)`, throws [ios_base::failure](/docs/std/io/ios_base/failure).
+    * if an exception is thrown during output, sets badbit in the output stream. If exceptions on badbit are enabled in this stream's 
+    [exception mask](/docs/std/io/basic_ios/exceptions) `((exceptions() & failbit) != 0)`, the exception is also rethrown.
+    * If no exception was thrown, returns `*this`.
+* In any event, whether terminating by exception or returning, the sentry's destructor is called before leaving this function.
+
+### Padding
+<Until block v='cpp14'>
+Formatted output functions determine padding according to <a href="/docs/std/locale/num_put/put">std::num_put::do_put()</a> stage 3.
+</Until>
+<br/><Since block v='cpp14'>
+If a formatted output function of a stream <code>os</code> determines padding, it does so as follows. <br/>
+Given a CharT character sequence <code>seq</code> where CharT is the character type of <code>os</code>, if the length of <code>seq</code> is 
+less than <code>os.width()</code>, then enough copies of <code>os.fill()</code> are added to this sequence as necessary to pad to a width 
+of <code>os.width()</code> characters. <br/>
+If <code>(os.flags() & <a href="/docs/std/io/ios_base/fmtflags">std::ios_base::adjustfield</a>) 
+== <a href="/docs/std/io/ios_base/fmtflags">std::ios_base::left</a></code> is <code>true</code>, 
+the fill characters are placed after the character sequence; otherwise, they are placed before the character sequence.
+</Since>
+
+### Standard library
+The following standard library functions are FormattedOutputFunctions.
+
+* [basic_ostream::operator&lt;&lt;<small>((std::basic_ostream&, int, long, double, void\*, bool)</small>](/docs/std/io/basic_ostream/operator_ltlt)
+* [operator&lt;&lt;<small>(std::basic_ostream, char&)</small>](/docs/std/io/basic_ostream/operator_ltlt2)
+* [operator&lt;&lt;<small>(std::basic_ostream, char\*)</small>](/docs/std/io/basic_ostream/operator_ltlt2)
+* [operator&lt;&lt;<small>(std::basic_ostream, const std::bitset&))</small>](/docs/std/io/basic_ostream/operator_ltlt2)
+* [operator&lt;&lt;<small>(std::basic_ostream, const std::basic_string&)</small>](/docs/std/io/basic_ostream/operator_ltlt2)
+* operator&lt;&lt;, when called on the return value of [std::get_money](/docs/std/io/manip/get_money)
+* <Since v='cpp17'><a href="/docs/std/io/basic_ostream/operator_ltlt">operator&lt;&lt;<small>(std::basic_ostream&, std::basic_string_view)</small></a></Since>
+
+<Since block v='cpp23'>
+
+* <a href="/docs/std/io/basic_ostream/print">print(std::ostream&, std::format_string&lt;Args...&gt;, Args&&...) </a>,
+* <a href="/docs/std/io/basic_ostream/println">println(std::ostream&, std::format_string&lt;Args...&gt;, Args&&...) </a>,
+* <a href="/docs/std/io/basic_ostream/vprint_unicode">vprint_unicode(std::ostream&, std::string_view, std::format_args) </a>,
+* <a href="/docs/std/io/basic_ostream/vprint_nonunicode">vprint_nonunicode(std::ostream&, std::string_view, std::format_args) </a>,
+except that (given os is an output stream object):
+
+    * any exception thrown by the call to <a href="/docs/std/utility/format/vformat">std::vformat</a> is propagated without regard to the value 
+    of <code>os.exceptions()</code> and without turning on <a href="/docs/std/io/ios_base/iostate">ios_base::badbit></a> in the error state of <code>os</code>;
+    * if inserting into <code>os</code> fails, calls <code>os.setstate(ios_base::badbit)</code> (which may throw <a href="/docs/std/io/ios_base/failure">ios_base::failure</a>).
+
+</Since>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR   | Applied to |                                               Behavior as published                                               |         Correct behavior         |
+|:-------:|:----------:|:-----------------------------------------------------------------------------------------------------------------:|:--------------------------------:|
+| LWG 160 | C++98      | the process of determining whether the exception caught is rethrown mentioned a non-existing function exception() | corrected to exceptions()        |
+| LWG 165 | C++98      | the only virtual member allowed to be called on rdbuf() was overflow()                                            | also allowed xsputn() and sync() |

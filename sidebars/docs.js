@@ -961,10 +961,10 @@ module.exports = {
 					collapsed: true,
 					link: { type: 'doc', id: 'named_req/named_req' },
 					items: [
-						// docsClassCat('UnformattedInputFunction',  'named_req/UnformattedInputFunction', '', []),
-						// docsClassCat('FormattedInputFunction', 	  'named_req/FormattedInputFunction', '', []),
-						// docsClassCat('UnformattedOutputFunction', 'named_req/UnformattedOutputFunction', '', []),
-						// docsClassCat('FormattedOutputFunction',   'named_req/FormattedOutputFunction', '', []),
+						docsClassCat('UnformattedInputFunction',  'named_req/UnformattedInputFunction', '', []),
+						docsClassCat('FormattedInputFunction', 	  'named_req/FormattedInputFunction', '', []),
+						docsClassCat('UnformattedOutputFunction', 'named_req/UnformattedOutputFunction', '', []),
+						docsClassCat('FormattedOutputFunction',   'named_req/FormattedOutputFunction', '', []),
 						
 					],
 				},
@@ -974,8 +974,8 @@ module.exports = {
 					collapsed: true,
 					link: { type: 'doc', id: 'named_req/named_req' },
 					items: [
-						// docsClassCat('BasicFormatter', 'named_req/BasicFormatter', '', []),
-						// docsClassCat('Formatter', 	   'named_req/Formatter', '', []),
+						docsClassCat('BasicFormatter', 'named_req/BasicFormatter', '', []),
+						docsClassCat('Formatter', 	   'named_req/Formatter', '', []),
 					],
 				},
 				{
@@ -984,9 +984,9 @@ module.exports = {
 					collapsed: true,
 					link: { type: 'doc', id: 'named_req/named_req' },
 					items: [
-						// docsClassCat('SeedSequence', 			  'named_req/SeedSequence', '', []),
-						// docsClassCat('UniformRandomBitGenerator', 'named_req/UniformRandomBitGenerator', '', []),
-						// docsClassCat('RandomNumberEngine', 		  'named_req/RandomNumberEngine', '', []),
+						docsClassCat('SeedSequence', 			  'named_req/SeedSequence', '', []),
+						docsClassCat('UniformRandomBitGenerator', 'named_req/UniformRandomBitGenerator', '', []),
+						docsClassCat('RandomNumberEngine', 		  'named_req/RandomNumberEngine', '', []),
 						// docsClassCat('RandomNumberEngineAdaptor', 'named_req/RandomNumberEngineAdaptor', '', []),
 						// docsClassCat('RandomNumberDistribution',  'named_req/RandomNumberDistribution', '', []),
 						
