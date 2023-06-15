@@ -79,7 +79,7 @@ obtained by calling [std::allocator_traits](/docs/std/memory/allocator_traits)&l
 
 |**Expression**|**Return type**|**Requirements**                                                                                                                                                                                           |
 |:------------:|:-------------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `a1 == a2`   | bool          | \* `true` only if the storage allocated by the allocator `a1` can be deallocated through `a2`.<br/> \*  Establishes reflexive, symmetric, and transitive relationship. <br/> \* Does not throw exceptions.|
+| `a1 == a2`   | bool          | \* <a>true</a> only if the storage allocated by the allocator `a1` can be deallocated through `a2`.<br/> \*  Establishes reflexive, symmetric, and transitive relationship. <br/> \* Does not throw exceptions.|
 | `a1 != a2`   | bool          | \* Same as `!(a1 == a2)`.                                                                                                                                                                                 |
 
 |**Declaration**                                                                           |**Effect**                                                                                                                                                                    |**Requirements**                                                                     |
@@ -92,7 +92,7 @@ obtained by calling [std::allocator_traits](/docs/std/memory/allocator_traits)&l
 
 |**Type-id**         |**Aliased type**                                                                                                                  |**Requirements**                                                                                                                                                                                                                  |
 |:------------------:|:---------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| A::is_always_equal | [std::true_type](/doce/std/types/integral_constant) or [std::false_type](/doce/std/types/integral_constant) or derived from such.| \* `true` if any two allocators of type A always compare equal. <br/> \* (If not provided, [std::allocator_traits](/docs/std/memory/allocator_traits) defaults this to [std::is_empty](/docs/std/types/is_empty)&lt;A&gt;::type.)|
+| A::is_always_equal | [std::true_type](/doce/std/types/integral_constant) or [std::false_type](/doce/std/types/integral_constant) or derived from such.| \* <a>true</a> if any two allocators of type A always compare equal. <br/> \* (If not provided, [std::allocator_traits](/docs/std/memory/allocator_traits) defaults this to [std::is_empty](/docs/std/types/is_empty)&lt;A&gt;::type.)|
 
 #### Influence on container operations
 
@@ -117,7 +117,7 @@ Given
 * `x1` and `x2`, objects of (possibly different) types X::void_pointer, X::const_void_pointer, X::pointer, or X::const_pointer
   Then, `x1` and `x2` are equivalently-valued pointer values, if and only if both `x1` and `x2` can be explicitly converted to 
   the two corresponding objects `px1` and `px2` of type X::const_pointer, using a sequence of static_casts using only these four types, 
-  and the expression `px1 == px2` evaluates to `true`.
+  and the expression `px1 == px2` evaluates to <a>true</a>.
     
 Given
 

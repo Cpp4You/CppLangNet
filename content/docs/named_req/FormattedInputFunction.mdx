@@ -25,7 +25,7 @@ with automatic storage duration and with the noskipws argument set to `false`, w
         [ios_base::failure](/docs/std/io/ios_base/failure) is thrown.
 * Checks the status of the sentry by calling sentry::operator bool(), which is equivalent to [basic_ios::good](/docs/std/io/ios_base/good).
 * If the sentry returned `false` or sentry's constructor threw an exception, no input takes place
-* If the sentry returned `true`, performs the input as if by calling `rdbuf()->sbumpc()` or `rdbuf()->sgetc()`.
+* If the sentry returned <a>true</a>, performs the input as if by calling `rdbuf()->sbumpc()` or `rdbuf()->sgetc()`.
     * if the end of the stream is reached (the call to `rdbuf()->sbumpc()` or `rdbuf()->sgetc()` returns `Traits::eof()`), sets eofbit. 
     If exceptions on eofbit are enabled in this stream's [exception mask](/docs/std/io/basic_ios/exceptions) `((exceptions() & eofbit) != 0)`, 
     throws [ios_base::failure](/docs/std/io/ios_base/failure).

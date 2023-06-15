@@ -48,7 +48,7 @@ the [*LegacyOutputIterator*](/docs/named_req/LegacyOutputIterator) requirements.
 ### Multipass guarantee
 Given `a` and `b`, dereferenceable iterators of type **It**
 
-* If `a` and `b` compare equal (`a == b` is contextually convertible to `true`) 
+* If `a` and `b` compare equal (`a == b` is contextually convertible to <a>true</a>) 
 then either they are both non-dereferenceable or `*a` and `*b` are references bound to the same object.
 * If `*a` and `*b` refer to the same object, then `a == b`.
 * Assignment through a mutable *ForwardIterator* iterator cannot invalidate the iterator (implicit due to `reference` defined as a true reference).

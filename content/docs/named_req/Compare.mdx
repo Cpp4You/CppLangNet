@@ -12,8 +12,8 @@ import Columns                                          from "@site-comps/Column
 ***Compare*** is a set of requirements expected by some of the standard library facilities from the user-provided function object types.
 
 The return value of the function call operation applied to an object of a type satisfying *Compare*, when [contextually converted](/docs/std/language/implicit_conversion)
-to `bool`, yields `true` if the first argument of the call appears before the second in the 
-[strict weak ordering relation](https://en.wikipedia.org/wiki/Weak_ordering#Strict_weak_orderings) induced by this type, and `false` otherwise.
+to `bool`, yields <a>true</a> if the first argument of the call appears before the second in the 
+[strict weak ordering relation](https://en.wikipedia.org/wiki/Weak_ordering#Strict_weak_orderings) induced by this type, and <a>false</a> otherwise.
 
 As with any [*BinaryPredicate*](/docs/named_req/BinaryPredicate), evaluation of that expression is not allowed to call non-const functions through the dereferenced 
 iterators <Since v='cpp20'>and, syntactically, the function call operation must accept const object arguments, with the same behavior regardless 

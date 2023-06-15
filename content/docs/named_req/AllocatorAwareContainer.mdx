@@ -33,7 +33,7 @@ The only way to replace an allocator is copy-assignment, move-assignment, and sw
 <br/> Specifically, it will exchange the allocator instances through an unqualified call to the non-member function swap, 
 see <a href="/docs/named_req/Swappable"><i>Swappable</i></a>.
 
-Note: swapping two containers with unequal allocators if propagate_on_container_swap is `false` is undefined behavior.
+Note: swapping two containers with unequal allocators if propagate_on_container_swap is <a>false</a> is undefined behavior.
 
 * The accessor get_allocator() obtains a copy of the allocator that was used to construct the container or installed by the most recent allocator replacement operation.
 

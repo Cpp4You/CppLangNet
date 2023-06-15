@@ -13,7 +13,7 @@ import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
 An ***UnformattedOutputFunction*** is a stream output function that performs the following:
 
 * Constructs an object of type [basic_istream::sentry](/docs/std/io/basic_ostream/sentry) 
-with automatic storage duration and with the noskipws argument set to `true`, which performs the following:
+with automatic storage duration and with the noskipws argument set to <a>true</a>, which performs the following:
     * If [eofbit](/docs/std/io/ios_base/iostate) or [badbit](/docs/std/io/ios_base/iostate) are set on the output stream, sets the failbit as well, 
     and if exceptions on failbit are enabled in this output stream's [exception mask](/docs/std/io/basic_ios/exceptions) `((exceptions() & failbit) != 0)`, 
     throws [ios_base::failure](/docs/std/io/ios_base/failure).
