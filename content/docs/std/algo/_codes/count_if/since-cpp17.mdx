@@ -1,0 +1,12 @@
+```cpp
+// (1)
+template< class InputIt, class UnaryPredicate >
+typename iterator_traits<InputIt>::difference_type
+    count_if( InputIt first, InputIt last, UnaryPredicate p );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class UnaryPredicate >
+typename iterator_traits<ForwardIt>::difference_type
+    count_if( ExecutionPolicy&& policy,
+              ForwardIt first, ForwardIt last, UnaryPredicate p );
+```
