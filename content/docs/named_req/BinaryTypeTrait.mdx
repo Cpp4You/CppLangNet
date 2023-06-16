@@ -1,0 +1,30 @@
+---
+title:                  C++ named requirements:BinaryTypeTrait   
+tags:                   [named_req,BinaryTypeTrait]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *BinaryTypeTrait*</Since>
+
+A ***BinaryTypeTrait*** is a class template that describes a relationship between its two template type parameters with a `intergral_constant` 
+(typically `bool_constant`) specialization.
+
+### Requirements
+* [*DefaultConstructible*](/docs/named_req/DefaultConstructible) and [*CopyConstructible*](/docs/named_req/CopyConstructible)
+* Takes one template type parameter (additional template parameters are optional and allowed)
+* Publicly and unambiguously derived from a specialization of `integral_constant`, known as its *base characteristic*
+* The member names of the base characteristic are not hidden and are unambiguously available
+
+### Standard library
+The following standard library class templates satisfy *BinaryTypeTrait*.
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/types/is_same"         name={<>is_same<Version v='cpp11'></Version></>}                                                                             desc={<>checks if two types are the same</>}/>
+    <Symbol autoLink linkName="/docs/std/types/is_base_of"      name={<>is_base_of<Version v='cpp17'></Version></>}                                                                          desc={<>checks if a type is derived from the other type</>}/>
+    <Symbol autoLink linkName="/docs/std/types/is_convertible"  name={<>is_convertible<Version v='cpp11'></Version><br/>is_nothrow_convertible<Version v='cpp20'></Version></>}              desc={<>checks if a type can be converted to the other type</>}/>
+    <Symbol autoLink linkName="/docs/std/types/is_invocable"    name={<>is_invocable<br/>is_invocable_r<br/>is_nothrow_invocable<br/>is_nothrow_invocable_r<Version v='cpp17'></Version></>} desc={<>checks if a type can be invoked (as if by <a href="/docs/std/utility/functional/invoke">std::invoke</a>) with the given argument types</>}/>
+    <Symbol autoLink linkName="/docs/std/memory/uses_allocator" name={<>uses_allocator<Version v='cpp11'></Version></>}                                                                      desc={<>checks if the specified type supports uses-allocator construction</>}/>
+</SymbolTable>
