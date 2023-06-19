@@ -13,6 +13,7 @@ LanguageVersions.set("cpp17", "C++17");
 LanguageVersions.set("cpp20", "C++20");
 LanguageVersions.set("cpp23", "C++23");
 
+LanguageVersions.set("deprecated-",		 <Translate>deprecated</Translate>)
 LanguageVersions.set("deprecated-cpp98", <Translate>deprecated in C++98</Translate>);
 LanguageVersions.set("deprecated-cpp03", <Translate>deprecated in C++03</Translate>);
 LanguageVersions.set("deprecated-cpp11", <Translate>deprecated in C++11</Translate>);
@@ -37,6 +38,7 @@ LanguageVersions.set("since-cpp17", <Translate>since C++17</Translate>);
 LanguageVersions.set("since-cpp20", <Translate>since C++20</Translate>);
 LanguageVersions.set("since-cpp23", <Translate>since C++23</Translate>);
 
+LanguageVersions.set("removed-",	  <Translate>deleted</Translate>);
 LanguageVersions.set("removed-cpp98", <Translate>removed in C++98</Translate>);
 LanguageVersions.set("removed-cpp03", <Translate>removed in C++03</Translate>);
 LanguageVersions.set("removed-cpp11", <Translate>removed in C++11</Translate>);
@@ -93,6 +95,15 @@ export function Removed({children, v}: VersionProps)
 	return (
 		<MarkedText className={styles.removed}>{children} 
 			&nbsp;<span className={styles.versionNumber}><small>({LanguageVersions.get(`removed-${v}`)})</small></span>
+		</MarkedText>
+	);
+}
+
+export function Version({children, v}: VersionProps)
+{
+	return (
+		<MarkedText className={styles.version}>{children} 
+			<span className={styles.versionNumber}><small>({LanguageVersions.get(`${v}`)})</small></span>
 		</MarkedText>
 	);
 }
