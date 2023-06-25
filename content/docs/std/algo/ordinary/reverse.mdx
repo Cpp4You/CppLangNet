@@ -10,7 +10,12 @@ cppreference_origin_rel: w/cpp/algorithm/ranges/reverse
 
 import Columns				from "@site-comps/Columns";
 import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from '@site-comps/Tooltip';
 import { Since, Until }		from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
 
 <!----------------- Codes ---------------------->
 
@@ -61,7 +66,7 @@ Exactly `(last - first) / 2` swaps.
 
 The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
 - If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
-	For any other `ExecutionPolicy`, the behavior is **implementation-defined**.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
 - If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
 
 ### Possible implementation
