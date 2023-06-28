@@ -40,7 +40,7 @@ Returns the smaller of the given values.
 	```cpp
 	bool cmp(const Type1 &a, const Type2 &b);
 	```
-	While the signature does not need to have `const&`, the function must not modify the objects passed to it and must be able to accept all values of type (possibly const) `Type1` and `Type2` regardless of value category (thus, `Type1&` is not allowed, <Since v='cpp1'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>).
+	While the signature does not need to have `const&`, the function must not modify the objects passed to it and must be able to accept all values of type (possibly const) `Type1` and `Type2` regardless of value category (thus, `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>).
 
 	The types `Type1` and `Type2` must be such that an object of type `T` can be implicitly converted to both of them.
 
@@ -102,8 +102,6 @@ T min(std::initializer_list<T> ilist)
 ```
 
 </details>
-
-
 
 <details>
 <summary>min (4)</summary>
