@@ -33,7 +33,7 @@ import Signature_SinceCpp20		from './_codes/sort/since-cpp20.mdx';
 
 Sorts the elements in the range [`first`; `last`) in ascending order.
 
-A sequence is sorted with respect to a comparator `comp` if for any iterator `it` pointing to the sequence and any non-negative integer `n` such that `it + n` is a valid iterator pointing to an element of the sequence, `comp(*(it + n), *it)` (or *(it + n) < *it) evaluates to `false`.
+A sequence is sorted with respect to a comparator `comp` if for any iterator `it` pointing to the sequence and any non-negative integer `n` such that `it + n` is a valid iterator pointing to an element of the sequence, `comp(*(it + n), *it)` (or `*(it + n) < *it`) evaluates to `false`.
 
 :::important
 The order of equal elements is not guaranteed to be preserved.
