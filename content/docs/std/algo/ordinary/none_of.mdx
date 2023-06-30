@@ -1,0 +1,140 @@
+---
+title:			none_of algorithm
+sidebar_label:	none_of(  )
+description:	none_of algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, none_of, condition, predicate, none]
+
+cppreference_origin_rel: w/cpp/algorithm/all_any_none_of
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import { Since, Until }		from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11		from './_codes/none_of/since-cpp11.mdx';
+import Signature_SinceCpp17		from './_codes/none_of/since-cpp17.mdx';
+import Signature_SinceCpp20		from './_codes/none_of/since-cpp20.mdx';
+
+# std::none_of() algorithm
+
+<SwitchView content={{
+	'since-cpp11': <Signature_SinceCpp11 />,
+	'since-cpp17': <Signature_SinceCpp17 />,
+	'since-cpp20': <Signature_SinceCpp20 />
+}} />
+
+Checks if a predicate holds for none of the elements in a range.
+
+- **(1)** Checks if unary predicate `p` returns false for every element in the range [`first`; `last`).
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Until>
+	<Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Since>
+	:::
+
+### Parameters
+
+- `first`, `last` - the range of elements to examine
+- `p` - unary predicate.
+
+	The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>
+
+- `policy` - the execution policy to use. See [execution policy](#) for details.
+
+#### Type requirements
+
+ - `InputIt` must meet the requirements of [LegacyInputIterator](/docs/named_req/LegacyInputIterator).
+ - `ForwardIt` must meet the requirements of [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator).
+ - `UnaryPredicate` must meet the requirements of [Predicate](/docs/named_req/Predicate).
+
+### Return value
+
+`true` if unary predicate returns `true` for no elements in the range, `false` otherwise.
+
+:::important
+Returns `true` if the range is empty.
+:::
+
+### Complexity
+
+- **(1)** At most `last - first` applications of the predicate.
+- **(2)** **O(last - first)** applications of the predicate.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For none other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>none_of (1)</summary>
+
+```cpp
+template<class InputIt, class UnaryPredicate>
+constexpr bool none_of(InputIt first, InputIt last, UnaryPredicate p)
+{
+    return std::find_if(first, last, p) == last;
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <numeric>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v(10, 2);
+    std::partial_sum(v.cbegin(), v.cend(), v.begin());
+    std::cout << "Among the numbers: ";
+    std::copy(v.cbegin(), v.cend(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+
+    if (std::none_of(v.cbegin(), v.cend(), [](int i) { return i % 2 == 0; }))
+        std::cout << "All numbers are even\n";
+
+    if (std::none_of(v.cbegin(), v.cend(), std::bind(std::modulus<>(),
+                                                     std::placeholders::_1, 2)))
+        std::cout << "None of them are odd\n";
+
+    struct DivisibleBy
+    {
+        const int d;
+        DivisibleBy(int n) : d(n) {}
+        bool operator()(int n) const { return n % d == 0; }
+    };
+
+    if (std::none_of(v.cbegin(), v.cend(), DivisibleBy(7)))
+        std::cout << "At least one number is divisible by 7\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Among the numbers: 2 4 6 8 10 12 14 16 18 20
+All numbers are even
+None of them are odd
+At least one number is divisible by 7
+```
+
+</div>
+</Columns>

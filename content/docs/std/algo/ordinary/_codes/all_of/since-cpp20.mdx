@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class InputIt, class UnaryPredicate >
+constexpr bool all_of( InputIt first, InputIt last, UnaryPredicate p );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class UnaryPredicate >
+bool all_of( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last,
+             UnaryPredicate p );
+```
