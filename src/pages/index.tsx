@@ -6,11 +6,11 @@ import Supporters from "../components/Supporters";
 import { HomepageFeatures } from "../components/HomepageFeatures";
 import styles from "./index.module.scss";
 
-import Contact from "./components/Homepage/Contact";
-// import ProjectsGallery from "./components/Homepage/ProjectsGallery";
-import LanguageOverview from "./components/Homepage/LanguageOverview";
-import Links from "./components/Homepage/Links";
-import SiteFeaturesSlider from "./components/Homepage/SiteFeaturesSlider";
+import Contact from "../components/page/Homepage/Contact";
+// import ProjectsGallery from "../components/page/Homepage/ProjectsGallery";
+import LanguageOverview from "../components/page/Homepage/LanguageOverview";
+import Links from "../components/page/Homepage/Links";
+import SiteFeaturesSlider from "../components/page/Homepage/SiteFeaturesSlider";
 
 
 function HomepageHeader() {
