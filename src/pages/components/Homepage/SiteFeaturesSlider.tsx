@@ -5,7 +5,6 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 import "./SiteFeaturesSlider.scss";
 
 type Feature = {
-  heading: string,
   title: string,
   imageUrl: string,
   description: React.ReactNode,
@@ -13,19 +12,16 @@ type Feature = {
 
 const features: Array<Feature> = [
   {
-    heading: "Our website is...",
     title: "Up-to-date",
     imageUrl: "img/homepage/Modern.webp",
     description: <>We aim to provide the <a href="#" target="_blank">latest knowledge</a> about C++ with focus on modern practices.</>,
   },
   {
-    heading: "Try it out",
     title: "Quizzes",
     imageUrl: "img/homepage/Quiz.webp",
     description: <>You can test your knowledge with our <a href="#" target="_blank">quizzes</a>.</>,
   },
   {
-    heading: "What you'll find here",
     title: "Blog posts",
     imageUrl: "img/homepage/Blog.webp",
     description: 
@@ -84,7 +80,6 @@ export default function SiteFeaturesSlider() {
 
   return (
     <div className="homepage-slider-container">
-      {/* <h2>{features[currentIndex].heading}</h2> */}
       <figure>
         <img src={useBaseUrl(features[currentIndex].imageUrl)} alt={features[currentIndex].title} />
       </figure>
