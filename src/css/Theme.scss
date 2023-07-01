@@ -1,0 +1,9 @@
+@mixin dark-theme
+{
+}
+
+@mixin light-theme
+{
+}
+
+$IS_DARK_THEME: "html[data-theme='dark']";

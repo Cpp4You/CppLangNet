@@ -16,15 +16,21 @@
 		background: $srcLight no-repeat;
 	}
 	
-	html[data-scrolled-to-top="true"]:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plugin-docs"]) {	
-		.header-#{$name}-link::before {
-			background: $srcDark no-repeat;
-		}
+	////////////////////////////////
+	// Legacy: makes the logos use dark mode when the page is scrolled to the top
+	// this was used in previous site versions. 
+	//
+	// html[data-scrolled-to-top="true"]:not([class*="docs-version-"]):not([class*="plugin-blog"]):not([class*="plugin-docs"]) {	
+	// 	.header-#{$name}-link::before {
+	// 		background: $srcDark no-repeat;
+	// 	}
 
-		.header-#{$name}-link:hover {
-			background-color: var(--dark-theme-navbar-button-bgc);	
-		}
-	}
+	// 	.header-#{$name}-link:hover {
+	// 		background-color: var(--dark-theme-navbar-button-bgc);	
+	// 	}
+	// }
+	//
+	////////////////////////////////
 
 	html[data-theme='dark'] {
 		.header-#{$name}-link::before {

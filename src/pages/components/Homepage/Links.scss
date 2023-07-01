@@ -1,0 +1,23 @@
+.homepage-links-container {
+	// max-height: 200px;
+	padding-bottom: 20px;
+	padding-top: 10px;
+	width: 100%;
+	max-width: 700px;
+
+	h2 {
+		font-weight: normal;
+	}
+
+	ul {
+		display: block;
+		float: left;
+		margin: 0;
+		padding: 0;
+		width: 30%;
+
+		&:not(:first-child) {
+			margin-left: 5%;
+		}
+	}
+}

@@ -1,0 +1,135 @@
+@import "@site/src/css/Theme.scss";
+
+.container {
+	padding: 20px 0;
+	width: 100%;
+	max-width: 750px;
+	margin-bottom: 2rem;
+}
+
+// The "Supporters" heading
+.container>h2 {
+	display: block;
+	font-weight: normal;
+	width: 100%;
+	text-align: center;
+	font-size: 1.4rem;
+	margin-bottom: 0.5em;
+	color: #1B1B1B;
+}
+
+#{$IS_DARK_THEME}
+.container>h2
+{
+	color: white;
+}
+
+$cardWidth: 250px;
+$cardIconSize: 60px;
+
+// grid of logos, up to 4 per row, centered, spaced evenly
+.supportersList {
+	max-width: calc(4*$cardWidth + 3*20px);
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax($cardWidth, 1fr));
+	grid-gap: 20px;
+	justify-items: center;
+	align-items: center;
+	width: 100%;
+}
+
+.supporterCard {
+	--card-bgc: white;
+	--card-color: rgb(5, 8, 20);
+
+	max-width: $cardWidth;
+	
+	color: var(--card-color);
+
+	// border-bottom: 1px solid white;
+	// box-shadow: 0px 0px 10px 0px rgb(53, 219, 244);
+
+	z-index: 1;
+
+	&:hover {
+		text-decoration: none;
+		color: var(--card-color);
+	}
+}
+
+#{$IS_DARK_THEME}
+.supporterCard {
+	--card-bgc: rgb(5, 8, 20);
+	--card-color: #cfcfcf;
+}
+
+.supporterCardInner {
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+	height: 100%;
+
+	padding: 10px 10px;
+
+	position: relative;
+	
+	background-color: var(--card-bgc);
+	border-radius: 20px;
+	// border-top-left-radius: 60px;
+	// border-bottom-left-radius: 60px;
+	// background-clip: padding-box;
+
+	&:before {
+		content: '';
+		position: absolute;
+		top: 0; right: 0; bottom: 0; left: 0;
+		z-index: -1;
+		margin: 1px;
+		margin-bottom: -1px;
+		border-radius: inherit;
+		// background: linear-gradient(to right, rgb(0, 170, 255), rgb(132, 0, 255));
+	}
+}
+
+// Each logo
+.supporterCardInner>figure
+{
+	height: $cardIconSize;
+	width: $cardIconSize;
+	flex-basis: $cardIconSize;
+	margin: 0;
+	margin-right: 10px;
+	background-color: rgba(white, 0.85);
+	border-radius: 20px;
+	
+	>img {
+		display: block;
+		height: $cardIconSize;
+		width: $cardIconSize;
+	}
+}
+
+// vertically aligned texts
+.supporterCardInner>div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: calc(100% - 80px);
+}
+
+// title
+.supporterCardInner h3 {
+	display: block;
+	width: 100%;
+	line-height: 1;
+	font-size: 1.2rem;
+	margin-bottom: 0.2em;
+}
+
+// description
+.supporterCardInner p {
+	margin-bottom: 0;
+	font-size: 0.7rem;
+}
