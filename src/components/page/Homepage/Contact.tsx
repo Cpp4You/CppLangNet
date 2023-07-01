@@ -1,6 +1,8 @@
 import React from "react";
 import "./Contact.scss";
 
+const PROFILE_PIC = "https://i.imgur.com/31E5neo.jpg";
+
 const CONTACT_LINKS = {
   LinkedIn: "https://www.linkedin.com/in/pawe%C5%82-syska-b00155227/",
   Discord: "https://discord.gg/NvBNvpgUHZ",
@@ -18,7 +20,7 @@ export default function Contact() {
       </header>
       <main>
         <figure>
-          <img src="https://i.imgur.com/31E5neo.jpg" alt="Paweł's profile picture" />
+          <img src={PROFILE_PIC} alt="Paweł's profile picture" />
         </figure>
         <p>
           Hi, my name is Paweł Syska and I'm the maintainer of the Cpp-Lang.net website.
