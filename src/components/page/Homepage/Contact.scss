@@ -1,0 +1,45 @@
+.homepage-contact-section
+{
+	--section-bgc: rgb(10, 10, 10);
+	--section-text-color: white;
+
+	font-size: 1.2rem;
+
+	main {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		figure{
+			margin: 0 initial;
+			>img {
+				border: 5px solid white;
+				border-radius: 50%;
+				max-height: 120px;
+				max-width: auto;
+			}
+		}
+		p {
+			margin: 0;
+			position: relative;
+			background-color: white;
+			padding: 16px;
+			border-radius: 10px;
+			color: black;
+		}
+		p:after {
+			content: '';
+			position: absolute;
+			left: 0;
+			top: 50%;
+			width: 0;
+			height: 0;
+			border: 33px solid transparent;
+			border-right-color: white;
+			border-left: 0;
+			border-bottom: 0;
+			margin-top: -16.5px;
+			margin-left: -33px;
+		}
+	}
+	padding-bottom: 100px;
+}

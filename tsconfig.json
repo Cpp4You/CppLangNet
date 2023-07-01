@@ -4,5 +4,12 @@
 		".docusaurus/*",
 		"**/node_modules/",
 		"build"
-	]
+	],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@site/*": ["./*"],
+			"@site-comps/*": ["./src/components/mdx/*"]
+		}
+	},
 }
