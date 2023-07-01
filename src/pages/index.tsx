@@ -7,7 +7,7 @@ import { HomepageFeatures } from "../components/HomepageFeatures";
 import styles from "./index.module.scss";
 
 import Contact from "./components/Homepage/Contact";
-import ProjectsGallery from "./components/Homepage/ProjectsGallery";
+// import ProjectsGallery from "./components/Homepage/ProjectsGallery";
 import LanguageOverview from "./components/Homepage/LanguageOverview";
 import Links from "./components/Homepage/Links";
 import SiteFeaturesSlider from "./components/Homepage/SiteFeaturesSlider";
