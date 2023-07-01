@@ -1,0 +1,18 @@
+```cpp
+// (1)
+constexpr bool all_of( I first, S last, Pred pred, Proj proj = {} );
+
+// (2)
+constexpr bool all_of( R&& r, Pred pred, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `ranges::input_range`
+- `Proj` - **(none)**
+- `Pred`:
+	- **(1)** - `std::indirect_unary_predicate<std::projected<I, Proj>>`
+	- **(2)** - `std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>>`
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
