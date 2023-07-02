@@ -1348,23 +1348,6 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Allocators",
-      collapsed: true,
-      items: [
-        docsClassCat("allocator", "std/memory/allocator", "", []),
-        docsClassCat("allocator_traits", "std/memory/allocator_traits", "", []),
-        docsClassCat("allocation_result", "std/memory/allocation_result", "", []),
-        docsClassCat("allocator_arg", "std/memory/allocator_arg", "", []),
-        docsClassCat("uses_allocator", "std/memory/uses_allocator", "", []),
-        docsClassCat("uses_allocator_construction_args", "std/memory/uses_allocator_construction_args", "", []),
-        docsClassCat("make_obj_using_allocator", "std/memory/make_obj_using_allocator", "", []),
-        docsClassCat("uninitialized_construct_using_allocator", "std/memory/uninitialized_construct_using_allocator", "", []),
-        docsClassCat("scoped_allocator_adaptor", "std/memory/scoped_allocator_adaptor", "", []),
-        docsClassCat("polymorphyc_allocator", "std/memory/polymorphyc_allocator", "", []),
-      ],
-    },
-    {
-      type: "category",
       label: "Memory Management Library",
       collapsed: false,
       link: { type: "doc", id: "std/memory/memory_management_index" },
@@ -1416,7 +1399,24 @@ module.exports = {
               ],
             },
           ]
-        }
+        },
+        {
+          type: "category",
+          label: "Allocators",
+          collapsed: true,
+          items: [
+            docsClassCat("allocator", "std/memory/allocator", "", []),
+            docsClassCat("allocator_traits", "std/memory/allocator_traits", "", []),
+            docsClassCat("allocation_result", "std/memory/allocation_result", "", []),
+            docsClassCat("allocator_arg", "std/memory/allocator_arg", "", []),
+            docsClassCat("uses_allocator", "std/memory/uses_allocator", "", []),
+            docsClassCat("uses_allocator_construction_args", "std/memory/uses_allocator_construction_args", "", []),
+            docsClassCat("make_obj_using_allocator", "std/memory/make_obj_using_allocator", "", []),
+            docsClassCat("uninitialized_construct_using_allocator", "std/memory/uninitialized_construct_using_allocator", "", []),
+            docsClassCat("scoped_allocator_adaptor", "std/memory/scoped_allocator_adaptor", "", []),
+            docsClassCat("polymorphyc_allocator", "std/memory/polymorphyc_allocator", "", []),
+          ],
+        },
       ]
     }
   ],
