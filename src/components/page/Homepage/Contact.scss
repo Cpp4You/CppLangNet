@@ -7,10 +7,11 @@
 
 	main {
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		figure{
-			margin: 0 initial;
+			// margin: 0;
 			>img {
 				border: 5px solid white;
 				border-radius: 50%;
@@ -26,6 +27,22 @@
 			border-radius: 10px;
 			color: black;
 		}
+		
+	}
+	padding-bottom: 100px;
+}
+
+@media (min-width: 780px) {
+	.homepage-contact-section main {
+		flex-direction: row;
+		// figure {
+		// 	margin-right: 50px;
+		// }
+		figure {
+			margin: 0;
+			margin-right: 40px;
+		}
+
 		p:after {
 			content: '';
 			position: absolute;
@@ -38,8 +55,7 @@
 			border-left: 0;
 			border-bottom: 0;
 			margin-top: -16.5px;
-			margin-left: -33px;
+			margin-left: -30px;
 		}
 	}
-	padding-bottom: 100px;
 }

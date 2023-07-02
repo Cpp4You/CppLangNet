@@ -38,7 +38,7 @@ function HomepageHeader() {
       </section>
       <section className={styles["features-part"]}>
         <SiteFeaturesSlider />
-        <div className={styles["background-circle"]}><div><div></div></div></div>
+        <div className={styles["background-circle"]}><div></div></div>
       </section>
       <section className={styles["links-part"]}>
         <Links />
