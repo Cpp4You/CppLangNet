@@ -20,6 +20,7 @@ import Code_HelloWorld_Cpp23 from "!!raw-loader!./examples/hello-world-cpp23.cpp
 import Code_HelloWorld_Cpp11 from "!!raw-loader!./examples/hello-world-cpp11.cpp";
 import Code_SortArray_Cpp20 from "!!raw-loader!./examples/sort-array-cpp20.cpp";
 import Code_ReverseWordsInString_Cpp23 from "!!raw-loader!./examples/reverse-words-in-string-cpp23.cpp";
+import Code_SimplePlayerStruct_Cpp20 from "!!raw-loader!./examples/simple-player-struct-cpp20.cpp";
 
 type ExampleSelectionProps = {
   onChange?: (event: React.ChangeEvent<unknown>, newValue: Example) => void,
@@ -112,6 +113,12 @@ const EXAMPLES: Example[] = [
     code: Code_ReverseWordsInString_Cpp23,
     codeTitle: "Reverse words in string (C++23)",
     runUrl: "https://compiler-explorer.com/z/Pxbf86dM6",
+  },
+  {
+    title: "Simple structure (C++20)",
+    code: Code_SimplePlayerStruct_Cpp20,
+    codeTitle: "A simple structure of a player (C++20)",
+    runUrl: "https://compiler-explorer.com/z/EPcfEa4E6",
   },
 ];
 
