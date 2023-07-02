@@ -132,7 +132,7 @@ $IS_DARK_THEME: ":root[data-theme='dark']";
 	.title {
 		margin-top: 40px;
 		margin-bottom: 10px;
-		font-size: 5em;
+		font-size: 3.5em;
 		font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 		// letter-spacing: 10px;
 		font-weight: normal;
@@ -198,6 +198,15 @@ $IS_DARK_THEME: ":root[data-theme='dark']";
 
 }
 
+@media (min-width: 640px)
+{
+
+:global(.site-hero-banner) .title {
+	font-size: 5em;
+}
+
+}
+
 @media (min-width: 1200px)
 {
 
@@ -235,12 +244,11 @@ $IS_DARK_THEME: ":root[data-theme='dark']";
 
 	:global(.site-hero-banner) {
 
-		// position: relative;
 		// The fancy background circle only looks good on larger screens
 		.background-circle {
 			display: block;
 
-			// position: absolute;
+			position: relative;
 			>div {
 				z-index: -1;
 				position: absolute;
@@ -249,7 +257,7 @@ $IS_DARK_THEME: ":root[data-theme='dark']";
 				width: calc(0.75 * 1920px);
 				aspect-ratio: 16 / 20;
 				border-radius: 50%;
-				transform: translate(-8%, -30%);
+				transform: translate(-8%, -60%);
 				background-color: var(--background-circle-color);
 			}
 		}
@@ -379,6 +387,7 @@ html[data-theme="dark"] {
 	}
 
 	min-height: 600px;
+	padding-bottom: 30px;
 }
 
 
