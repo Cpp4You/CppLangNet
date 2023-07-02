@@ -1149,6 +1149,79 @@ module.exports = {
         },
         {
           type: "category",
+          label: "Memory",
+          collapsed: true,
+          link: { type: "doc", id: "std/memory/memory_management_index" },
+          items: [
+            {
+              type: "category",
+              label: "Smart Pointers",
+              collapsed: true,
+              items: [
+                {
+                  type: "category",
+                  label: "Pointer Categories",
+                  collapsed: true,
+                  items: [
+                    docsClassCat("unique_ptr", "std/memory/unique_ptr", "", []),
+                    docsClassCat("shared_ptr", "std/memory/shared_ptr", "", []),
+                    docsClassCat("weak_ptr", "std/memory/weak_ptr", "", []),
+                    docsClassCat("auto_ptr", "std/memory/auto_ptr", "", []),
+                  ],
+                },
+                {
+                  type: "category",
+                  label: "Helper classes",
+                  collapsed: true,
+                  items: [
+                    {
+                      type: "category",
+                      label: "owner_less",
+                      collapsed: true,
+                      link: { type: "doc", id: "std/memory/owner_less" },
+                      items: [
+                        docsClassCat("owner_less_void", "std/memory/owner_less_void", "", []),
+                      ],
+                    },
+                    docsClassCat("enable_shared_from_this", "std/memory/enable_shared_from_this", "", []),
+                    docsClassCat("bad_weak_ptr", "std/memory/bad_weak_ptr", "", []),
+                    docsClassCat("default_delete", "std/memory/default_delete", "", []),
+                  ],
+                },
+                {
+                  type: "category",
+                  label: "Smart pointer adaptors",
+                  collapsed: true,
+                  items: [
+                    docsClassCat("out_ptr_t", "std/memory/out_ptr_t", "", []),
+                    docsClassCat("out_ptr", "std/memory/out_ptr", "", []),
+                    docsClassCat("inout_ptr_t", "std/memory/inout_ptr_t", "", []),
+                    docsClassCat("inout_ptr", "std/memory/inout_ptr", "", []),
+                  ],
+                },
+              ]
+            },
+            {
+              type: "category",
+              label: "Allocators",
+              collapsed: true,
+              items: [
+                docsClassCat("allocator", "std/memory/allocator", "", []),
+                docsClassCat("allocator_traits", "std/memory/allocator_traits", "", []),
+                docsClassCat("allocation_result", "std/memory/allocation_result", "", []),
+                docsClassCat("allocator_arg", "std/memory/allocator_arg", "", []),
+                docsClassCat("uses_allocator", "std/memory/uses_allocator", "", []),
+                docsClassCat("uses_allocator_construction_args", "std/memory/uses_allocator_construction_args", "", []),
+                docsClassCat("make_obj_using_allocator", "std/memory/make_obj_using_allocator", "", []),
+                docsClassCat("uninitialized_construct_using_allocator", "std/memory/uninitialized_construct_using_allocator", "", []),
+                docsClassCat("scoped_allocator_adaptor", "std/memory/scoped_allocator_adaptor", "", []),
+                docsClassCat("polymorphyc_allocator", "std/memory/polymorphyc_allocator", "", []),
+              ],
+            },
+          ]
+        },
+        {
+          type: "category",
           label: "Utility",
           items: [
             docsMethod("std/utility/forward", "since-cpp11"),
@@ -1167,7 +1240,6 @@ module.exports = {
           type: "category",
           label: "Basic",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("DefaultConstructible", "named_req/DefaultConstructible", "", []),
             docsClassCat("MoveConstructible", "named_req/MoveConstructible", "", []),
@@ -1181,7 +1253,6 @@ module.exports = {
           type: "category",
           label: "Type properties",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("ScalarType", "named_req/ScalarType", "", []),
             docsClassCat("PODType", "named_req/PODType", "", []),
@@ -1195,7 +1266,6 @@ module.exports = {
           type: "category",
           label: "Library-wide",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("EqualityComparable", "named_req/EqualityComparable", "", []),
             docsClassCat("LessThanComparable", "named_req/LessThanComparable", "", []),
@@ -1216,7 +1286,6 @@ module.exports = {
           type: "category",
           label: "Container",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("Container", "named_req/Container", "", []),
             docsClassCat("ReversibleContainer", "named_req/ReversibleContainer", "", []),
@@ -1229,15 +1298,13 @@ module.exports = {
             {
               type: "category",
               label: "Container element",
-              collapsed: false,
-              link: { type: "doc", id: "named_req/named_req" },
+              collapsed: true,
               items: [
                 docsClassCat("DefaultInsertable", "named_req/DefaultInsertable", "", []),
                 docsClassCat("CopyInsertable", "named_req/CopyInsertable", "", []),
                 docsClassCat("MoveInsertable", "named_req/MoveInsertable", "", []),
                 docsClassCat("EmplaceConstructible", "named_req/EmplaceConstructible", "", []),
                 docsClassCat("Erasable", "named_req/Erasable", "", []),
-
               ],
             },
           ],
@@ -1246,7 +1313,6 @@ module.exports = {
           type: "category",
           label: "Iterator",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("LegacyIterator", "named_req/LegacyIterator", "", []),
             docsClassCat("LegacyInputIterator", "named_req/LegacyInputIterator", "", []),
@@ -1256,27 +1322,23 @@ module.exports = {
             docsClassCat("LegacyRandomAccessIterator", "named_req/LegacyRandomAccessIterator", "", []),
             docsClassCat("LegacyContiguousIterator", "named_req/LegacyContiguousIterator", "", []),
             docsClassCat("ConstexprIterator", "named_req/ConstexprIterator", "", []),
-
           ],
         },
         {
           type: "category",
           label: "Stream I/O functions",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("UnformattedInputFunction", "named_req/UnformattedInputFunction", "", []),
             docsClassCat("FormattedInputFunction", "named_req/FormattedInputFunction", "", []),
             docsClassCat("UnformattedOutputFunction", "named_req/UnformattedOutputFunction", "", []),
             docsClassCat("FormattedOutputFunction", "named_req/FormattedOutputFunction", "", []),
-
           ],
         },
         {
           type: "category",
           label: "Formatters",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("BasicFormatter", "named_req/BasicFormatter", "", []),
             docsClassCat("Formatter", "named_req/Formatter", "", []),
@@ -1286,21 +1348,18 @@ module.exports = {
           type: "category",
           label: "Random Number Generation",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("SeedSequence", "named_req/SeedSequence", "", []),
             docsClassCat("UniformRandomBitGenerator", "named_req/UniformRandomBitGenerator", "", []),
             docsClassCat("RandomNumberEngine", "named_req/RandomNumberEngine", "", []),
             docsClassCat("RandomNumberEngineAdaptor", "named_req/RandomNumberEngineAdaptor", "", []),
             docsClassCat("RandomNumberDistribution", "named_req/RandomNumberDistribution", "", []),
-
           ],
         },
         {
           type: "category",
           label: "Concurrency",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("BasicLockable", "named_req/BasicLockable", "", []),
             docsClassCat("Lockable", "named_req/Lockable", "", []),
@@ -1311,25 +1370,21 @@ module.exports = {
             docsClassCat("TimedMutex", "named_req/TimedMutex", "", []),
             docsClassCat("SharedMutex", "named_req/SharedMutex", "", []),
             docsClassCat("SharedTimedMutex", "named_req/SharedTimedMutex", "", []),
-
           ],
         },
         {
           type: "category",
           label: "Ranges",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("RangeAdaptorObject", "named_req/RangeAdaptorObject", "", []),
             docsClassCat("RangeAdaptorClosureObject", "named_req/RangeAdaptorClosureObject", "", []),
-
           ],
         },
         {
           type: "category",
           label: "Other",
           collapsed: true,
-          link: { type: "doc", id: "named_req/named_req" },
           items: [
             docsClassCat("UnaryTypeTrait", "named_req/UnaryTypeTrait", "", []),
             docsClassCat("BinaryTypeTrait", "named_req/BinaryTypeTrait", "", []),
@@ -1341,83 +1396,9 @@ module.exports = {
             docsClassCat("NumericType", "named_req/NumericType", "", []),
             docsClassCat("RegexTraits", "named_req/RegexTraits", "", []),
             docsClassCat("LiteralType", "named_req/LiteralType", "", []),
-
           ],
         },
       ],
     },
-    {
-      type: "category",
-      label: "Memory Management Library",
-      collapsed: false,
-      link: { type: "doc", id: "std/memory/memory_management_index" },
-      items: [
-        {
-          type: "category",
-          label: "Smart Pointers",
-          collapsed: true,
-          items: [
-            {
-              type: "category",
-              label: "Pointer Categories",
-              collapsed: false,
-              items: [
-                docsClassCat("unique_ptr", "std/memory/unique_ptr", "", []),
-                docsClassCat("shared_ptr", "std/memory/shared_ptr", "", []),
-                docsClassCat("weak_ptr", "std/memory/weak_ptr", "", []),
-                docsClassCat("auto_ptr", "std/memory/auto_ptr", "", []),
-              ],
-            },
-            {
-              type: "category",
-              label: "Helper classes",
-              collapsed: false,
-              items: [
-                {
-                  type: "category",
-                  label: "owner_less",
-                  collapsed: true,
-                  link: { type: "doc", id: "std/memory/owner_less" },
-                  items: [
-                    docsClassCat("owner_less_void", "std/memory/owner_less_void", "", []),
-                  ],
-                },
-                docsClassCat("enable_shared_from_this", "std/memory/enable_shared_from_this", "", []),
-                docsClassCat("bad_weak_ptr", "std/memory/bad_weak_ptr", "", []),
-                docsClassCat("default_delete", "std/memory/default_delete", "", []),
-              ],
-            },
-            {
-              type: "category",
-              label: "Smart pointer adaptors",
-              collapsed: false,
-              items: [
-                docsClassCat("out_ptr_t", "std/memory/out_ptr_t", "", []),
-                docsClassCat("out_ptr", "std/memory/out_ptr", "", []),
-                docsClassCat("inout_ptr_t", "std/memory/inout_ptr_t", "", []),
-                docsClassCat("inout_ptr", "std/memory/inout_ptr", "", []),
-              ],
-            },
-          ]
-        },
-        {
-          type: "category",
-          label: "Allocators",
-          collapsed: true,
-          items: [
-            docsClassCat("allocator", "std/memory/allocator", "", []),
-            docsClassCat("allocator_traits", "std/memory/allocator_traits", "", []),
-            docsClassCat("allocation_result", "std/memory/allocation_result", "", []),
-            docsClassCat("allocator_arg", "std/memory/allocator_arg", "", []),
-            docsClassCat("uses_allocator", "std/memory/uses_allocator", "", []),
-            docsClassCat("uses_allocator_construction_args", "std/memory/uses_allocator_construction_args", "", []),
-            docsClassCat("make_obj_using_allocator", "std/memory/make_obj_using_allocator", "", []),
-            docsClassCat("uninitialized_construct_using_allocator", "std/memory/uninitialized_construct_using_allocator", "", []),
-            docsClassCat("scoped_allocator_adaptor", "std/memory/scoped_allocator_adaptor", "", []),
-            docsClassCat("polymorphyc_allocator", "std/memory/polymorphyc_allocator", "", []),
-          ],
-        },
-      ]
-    }
   ],
 };
