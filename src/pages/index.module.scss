@@ -9,6 +9,18 @@ $IS_DARK_THEME: ":root[data-theme='dark']";
 }
 
 :global(.homepage-main-wrapper) {
+	// Note: cannot apply it on html and body elements because it breaks sidebar scrolling
+	// and also:
+	// https://stackoverflow.com/questions/14270084/overflow-xhidden-doesnt-prevent-content-from-overflowing-in-mobile-browsers
+	max-width: 100vw;
+	// We cannot just clip X axis because it also clips Y.
+	overflow: hidden;
+
+	// Move it up a bit to make clipping invisible
+	// (make up for the navbar space at the top)
+	padding-top: var(--ifm-navbar-height);
+	margin-top: calc(-1 * var(--ifm-navbar-height));
+
 	// background-color: #D5E2FF;
 	--background-circle-color: #BBD2FF;
 }
@@ -127,12 +139,13 @@ $IS_DARK_THEME: ":root[data-theme='dark']";
 		grid-area: links;
 		display: flex;
 		justify-content: left;
+		margin-top: 40px;
 	}
 
 	.title {
 		margin-top: 40px;
 		margin-bottom: 10px;
-		font-size: 3.5em;
+		font-size: 2.5rem;
 		font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 		// letter-spacing: 10px;
 		font-weight: normal;
@@ -155,7 +168,7 @@ $IS_DARK_THEME: ":root[data-theme='dark']";
 
 	.subtitle {
 		margin-top: 20px;
-		font-size: 160%;
+		font-size: 1.2rem;
 		text-shadow: var(--subtitle-text-shadow);
 		color: var(--subtitle-color);
 	}
@@ -198,11 +211,25 @@ $IS_DARK_THEME: ":root[data-theme='dark']";
 
 }
 
+@media (min-width: 450px)
+{
+
+:global(.site-hero-banner) {
+	.title {
+		font-size: 3.5rem;
+	}
+	.subtitle {
+		font-size: 1.6rem;
+	}
+}
+
+}
+
 @media (min-width: 640px)
 {
 
 :global(.site-hero-banner) .title {
-	font-size: 5em;
+	font-size: 5rem;
 }
 
 }
@@ -226,6 +253,7 @@ $IS_DARK_THEME: ":root[data-theme='dark']";
 
 	.links-part {
 		justify-content: left;
+		margin-top: 0;
 	}
 }
 
