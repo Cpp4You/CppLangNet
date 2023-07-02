@@ -27,11 +27,15 @@
 	}
 }
 
-/* You can override the default Infima variables here. */
-:root {
+#__docusaurus {
+	// Note: cannot apply it on html and body elements because of
+	// https://stackoverflow.com/questions/14270084/overflow-xhidden-doesnt-prevent-content-from-overflowing-in-mobile-browsers
 	max-width: 100vw;
 	overflow-x: hidden;
+}
 
+/* You can override the default Infima variables here. */
+:root {
 	@include light-theme;
 	@include remove-bgc-on-doc-pages;
 

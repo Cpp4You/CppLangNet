@@ -1,0 +1,19 @@
+.homepage-code-run-button {
+	display: inline-block;
+	padding: 2px 10px;
+	margin-bottom: 10px;
+	background-color: rgba(0, 255, 17, 0.3);
+	border-radius: 8px;
+
+	a, span {
+		color: var(--ifm-font-color-base);
+	}
+
+	&[data-disabled="true"] {
+		background-color: rgba(127, 127, 127, 0.4);
+
+		&:hover {
+			cursor: not-allowed;
+		}
+	}
+}
