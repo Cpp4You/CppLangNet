@@ -1215,7 +1215,7 @@ module.exports = {
                 docsClassCat("make_obj_using_allocator", "std/memory/make_obj_using_allocator", "", []),
                 docsClassCat("uninitialized_construct_using_allocator", "std/memory/uninitialized_construct_using_allocator", "", []),
                 docsClassCat("scoped_allocator_adaptor", "std/memory/scoped_allocator_adaptor", "", []),
-                docsClassCat("polymorphyc_allocator", "std/memory/polymorphyc_allocator", "", []),
+                docsClassCat("polymorphic_allocator", "std/memory/polymorphic_allocator", "", []),
               ],
             },
           ]
