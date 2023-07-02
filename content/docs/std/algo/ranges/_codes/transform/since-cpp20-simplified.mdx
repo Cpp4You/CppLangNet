@@ -1,0 +1,47 @@
+
+```cpp
+// (1)
+constexpr unary_transform_result<I, O>
+	transform( I first1, S last1, O result, F op, Proj proj = {} );
+
+// (2)
+constexpr unary_transform_result<ranges::borrowed_iterator_t<R>, O>
+    transform( R&& r, O result, F op, Proj proj = {} );
+
+// (3)
+constexpr binary_transform_result<I1, I2, O>
+    transform(
+		I1 first1, S1 last1,
+		I2 first2, S2 last2,
+		O result,
+		F binary_op,
+		Proj1 proj1 = {}, Proj2 proj2 = {}
+	);
+
+// (4)
+constexpr binary_transform_result<ranges::borrowed_iterator_t<R1>,
+                                  ranges::borrowed_iterator_t<R2>, O>
+    transform(
+		R1&& r1, R2&& r2,
+		O result,
+		F binary_op,
+		Proj1 proj1 = {}, Proj2 proj2 = {}
+	);
+```
+
+The type of arguments are generic and have following constraints:
+- `I`, `I1`, `I2` - `std::input_iterator`
+- `S`, `I1`, `I2` - `std::sentinel_for<I>`
+- `R`, `R1`, `R2` - `std::ranges::input_range`
+- `O` - `std::weakly_incrementable`
+- `F` - `std::copy_constructible`
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
+
+Additionaly, each overload has the following constraints:
+- **(1)** - `indirectly_writable<O, indirect_result_t<F&, projected<I, Proj>> >`
+- **(2)** - `indirectly_writable<O, indirect_result_t<F&, projected<ranges::iterator_t<R>, Proj>>`
+- **(3)** - `indirect_result_t<F&, projected<I1, Proj1>, projected<I2, Proj2>>>`
+- **(4)** - `indirectly_writable<O, indirect_result_t<F&, projected<ranges::iterator_t<R1>, Proj1>, projected<ranges::iterator_t<R2>, Proj2>>>`
+
+(The `std::` namespace was ommitted here for readability)

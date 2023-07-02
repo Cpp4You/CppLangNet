@@ -1,0 +1,157 @@
+---
+title:			sort algorithm
+sidebar_label:	sort(  )
+description:	sort algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, sort, ascending, order]
+
+cppreference_origin_rel: w/cpp/algorithm/sort
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from '@site-comps/Tooltip';
+import { Since, Until }		from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17		from './_codes/sort/until-cpp17.mdx';
+import Signature_SinceCpp17		from './_codes/sort/since-cpp17.mdx';
+import Signature_SinceCpp20		from './_codes/sort/since-cpp20.mdx';
+
+# std::sort() algorithm
+
+<SwitchView content={{
+	'since-cpp20': <Signature_SinceCpp20 />,
+	'since-cpp17': <Signature_SinceCpp17 />,
+	'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+Sorts the elements in the range [`first`; `last`) in ascending order.
+
+A sequence is sorted with respect to a comparator `comp` if for any iterator `it` pointing to the sequence and any non-negative integer `n` such that `it + n` is a valid iterator pointing to an element of the sequence, `comp(*(it + n), *it)` (or `*(it + n) < *it`) evaluates to `false`.
+
+:::important
+The order of equal elements is not guaranteed to be preserved.
+:::
+
+- **(1)** Elements are compared using `operator<`.
+
+- **(2)** Elements are compared using the given binary comparison function `comp`.
+
+- **(3, 4)** Same as **(1)** and **(2)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Until>
+	<Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Since>
+	:::
+
+### Parameters
+
+- `first1`, `last1` - the range of elements to sort
+- `policy` - the execution policy to use. See execution policy for details.
+- `cmp` - comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
+	The signature of the comparison function should be equivalent to the following:
+	```cpp
+	bool cmp(const Type1 &a, const Type2 &b);
+	```
+	- The signature does not need to have `const&`, but must not modify arguments.
+	- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+	- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+
+#### Type requirements
+
+- `RandomIt` must meet the requirements of [`ValueSwappable`](/docs/named_req/ValueSwappable) and [`LegacyRandomAccessIterator`](/docs/named_req/LegacyRandomAccessIterator) .
+- The type of dereferenced `RandomIt` must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable) and [`MoveConstructible`](/docs/named_req/MoveConstructible).
+- **(2, 4)** - `Compare` must meet the requirements of [`Compare`](/docs/named_req/Compare).
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Regardless of implementation, guaranteed **O(N \* log(N))** comparisons, where **N** is `std::distance(first, last)`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+See implementations from [libstdc++](https://github.com/gcc-mirror/gcc/blob/d9375e490072d1aae73a93949aa158fcd2a27018/libstdc%2B%2B-v3/include/bits/stl_algo.h#L1950) and [libc++](https://github.com/llvm/llvm-project/blob/e7fc254875ca9e82b899d5354fae9b5b779ff485/libcxx/include/__algorithm/sort.h#L264).
+
+### Notes
+
+Before [`LWG713`](https://cplusplus.github.io/LWG/issue713), the complexity requirement allowed `sort()` to be implemented using only Quicksort,
+which may need **O(N<sup>2</sup>)** comparisons in the worst case.
+
+Introsort can handle all cases with **O(N \* log(N))** comparisons (without incurring additional overhead in the average case), and thus is usually used for implementing `sort()`.
+
+libc++ has not implemented the corrected time complexity requirement until [`LLVM 14`](https://reviews.llvm.org/D113413).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <functional>
+#include <iostream>
+#include <string_view>
+
+int main()
+{
+    std::array<int, 10> s {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+
+    auto print = [&s](std::string_view const rem)
+    {
+        for (auto a : s)
+            std::cout << a << ' ';
+        std::cout << ": " << rem << '\n';
+    };
+
+    std::sort(s.begin(), s.end());
+    print("sorted with the default operator<");
+
+    std::sort(s.begin(), s.end(), std::greater<int>());
+    print("sorted with the standard library compare function object");
+
+    struct
+    {
+        bool operator()(int a, int b) const { return a < b; }
+    }
+    customLess;
+
+    std::sort(s.begin(), s.end(), customLess);
+    print("sorted with a custom function object");
+
+    std::sort(s.begin(), s.end(), [](int a, int b)
+                                  {
+                                      return a > b;
+                                  });
+    print("sorted with a lambda expression");
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+0 1 2 3 4 5 6 7 8 9 : sorted with the default operator<
+9 8 7 6 5 4 3 2 1 0 : sorted with the standard library compare function object
+0 1 2 3 4 5 6 7 8 9 : sorted with a custom function object
+9 8 7 6 5 4 3 2 1 0 : sorted with a lambda expression
+```
+
+</div>
+</Columns>

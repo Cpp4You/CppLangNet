@@ -1,0 +1,37 @@
+---
+title:                  std::allocator<T>::construct
+description:            Allocator Member Function
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+# std::allocator&lt;T>::construct
+
+```cpp title="Since C++11, Deprecated in C++17, Removed in C++20"
+template< class U, class... Args >
+void construct( U* p, Args&&... args );
+```
+
+```cpp title="Until C++11"
+void construct( pointer p, const_reference val );
+```
+
+Constructs an object of type `T` in allocated uninitialized storage pointed to by `p`, using global placement-new.
+
+    1) Calls `::new((void*)p) T(val)`. <br/>
+    2) Calls `::new((void*)p) U(std::forward<Args>(args)...)`.
+
+### Parameters
+`p`	-	pointer to allocated uninitialized storage <br/>
+`val`	-	the value to use as the copy constructor argument <br/>
+`args...`	-	the constructor arguments to use
+
+### Return value
+(none)
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR   | Applied to |                    Behavior as published                   |           Correct behavior          |
+|:-------:|:----------:|:----------------------------------------------------------:|:-----------------------------------:|
+| LWG 402 | C++98      | if T::operator new exists, the program might be ill-formed | uses global replacement-new instead |

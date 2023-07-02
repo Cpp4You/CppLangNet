@@ -1,0 +1,12 @@
+```cpp
+// (1)
+template< class InputIt, class T >
+constexpr typename iterator_traits<InputIt>::difference_type
+    count( InputIt first, InputIt last, const T& value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class T >
+typename iterator_traits<ForwardIt>::difference_type
+    count( ExecutionPolicy&& policy,
+           ForwardIt first, ForwardIt last, const T& value );
+```

@@ -1,0 +1,27 @@
+---
+title:                  std::enable_shared_from_this<T>::weak_from_this
+description:            Smart Pointer Member Function
+tags:                   [memory,enable_shared_from_this]
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+
+# std::enable_shared_from_this&lt;T>::weak_from_this
+
+
+```cpp title="Since C++17"
+std::weak_ptr<T> weak_from_this() noexcept;                 (1)
+std::weak_ptr<T const> weak_from_this() const noexcept;     (2)
+```
+
+Returns a `std::weak_ptr<T>` that tracks ownership of `*this` by all existing [std::shared_ptr](../shared_ptr) that refer to `*this`.
+
+### Notes
+This is a copy of the private mutable weak_ptr member that is part of enable_shared_from_this.
+
+### Return value
+`std::weak_ptr<T>` that shares ownership of `*this` with pre-existing [std::shared_ptr](../shared_ptr)
+
+### Example
+#### This section is incomplete

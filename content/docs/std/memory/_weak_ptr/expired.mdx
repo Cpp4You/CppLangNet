@@ -1,0 +1,79 @@
+---
+title:                  std::weak_ptr<T>::expired
+description:            Smart Pointer
+tags:                   [memory,weak_ptr]
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+
+# std::weak_ptr&lt;T>::expired
+
+```cpp title="Since C++11"
+bool expired() const noexcept;
+```
+
+Equivalent to `use_count() == 0`. The destructor for the managed object may not yet have been called, 
+but this object's destruction is imminent (or may have already happened).
+
+### Parameters
+
+(none))
+
+### Return value
+
+`true` if the managed object has already been deleted, `false` otherwise.
+
+### Notes
+
+This function is inherently racy if the managed object is shared among threads. In particular, 
+a false result may become stale before it can be used. A true result is reliable.
+
+
+### Example
+
+Demonstrates how expired is used to check validity of the pointer.
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+#include <memory>
+ 
+std::weak_ptr<int> gw;
+ 
+void f()
+{
+    if (!gw.expired()) {
+	std::cout << "gw is valid\n";
+    }
+    else {
+        std::cout << "gw is expired\n";
+    }
+}
+ 
+int main()
+{
+    {
+        auto sp = std::make_shared<int>(42);
+	gw = sp;
+ 
+	f();
+    }
+ 
+    f();
+}
+```
+
+</div>
+
+<div>
+
+```plaintext title="Result"
+gw is valid
+gw is expired
+```
+
+</div>
+</Columns>

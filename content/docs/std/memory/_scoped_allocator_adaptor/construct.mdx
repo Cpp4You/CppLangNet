@@ -1,0 +1,86 @@
+---
+title:                  std::scoped_allocator_adaptor<OuterAlloc,InnerAlloc...>::construct
+description:            Allocator
+tags:                   [memory,scoped_allocator_adaptor]
+hide_title:             true
+---
+
+import { Since, Until, Removed, Version }  from "@site-comps/Versions";
+
+import Overload1                            from "./_codes/construct_overloads_1.mdx";
+import Overloads_Rest                         from "./_codes/construct_overloads_rest.mdx";
+
+# std::scoped_allocator_adaptor&lt;OuterAlloc,InnerAlloc...>::construct
+
+```cpp
+// 1)
+template < class T, class... Args >
+void construct( T* p, Args&&... args );
+```
+```cpp title='Until C++20'
+// 2)
+template< class T1, class T2, class... Args1, class... Args2 >
+void construct( std::pair<T1, T2>* p,
+                std::piecewise_construct_t,
+                std::tuple<Args1...> x,
+                std::tuple<Args2...> y );
+// 3)
+template< class T1, class T2 >
+void construct( std::pair<T1, T2>* p );
+// 4)
+template< class T1, class T2, class U, class V >
+void construct( std::pair<T1, T2>* p, U&& x, V&& y );
+// 5)
+template< class T1, class T2, class U, class V >
+void construct( std::pair<T1, T2>* p, const std::pair<U, V>& xy );
+// 6)
+template< class T1, class T2, class U, class V >
+void construct( std::pair<T1, T2>* p, std::pair<U, V>&& xy );
+// 7)
+template< class T1, class T2, class NonPair >
+void construct( std::pair<T1, T2>* p, NonPair&& non_pair );
+```
+
+Constructs an object in allocated, but not initialized storage pointed to by `p` using OuterAllocator and the provided constructor arguments. 
+If the object is of type that itself uses allocators, or if it is [std::pair](/docs/std/utility/pair), 
+passes InnerAllocator down to the constructed object.
+
+First, retrieve the outermost allocator OUTERMOST by calling `this->outer_allocator()`, and then calling the outer_allocator() 
+member function recursively on the result of this call until reaching an allocator that has no such member function.
+
+Define *OUTERMOST_ALLOC_TRAITS*(x) as `std::allocator_traits<std::remove_reference_t<decltype(OUTERMOST(x))>>`
+
+    1) Creates an object of the given type T by means of uses-allocator construction at the uninitialized memory location indicated by `p`, 
+    using OUTERMOST as the allocator. After adjustment for uses-allocator convention expected by T's constructor, 
+    calls `OUTERMOST_ALLOC_TRAITS(*this)::construct`.
+
+    <Until v='cpp20'>This overload participates in overload resolution only if U is not a specialization of [std::pair](/docs/std/utility/pair)</Until>
+    <br/><Since v='cpp20'> Equivalent to <Overload1/> </Since>
+
+    <br/><Until block v='cpp20'> <Overloads_Rest/> </Until>
+
+### Parameters
+`p`	-	pointer to allocated, but not initialized storage <br/>
+`args...`	-	the constructor arguments to pass to the constructor of T <br/>
+`x`	-	the constructor arguments to pass to the constructor of T1 <br/>
+`y`	-	the constructor arguments to pass to the constructor of T2 <br/>
+`xy`	-	the pair whose two members are the constructor arguments for T1 and T2 <br/>
+`non_pair`	-	non-pair argument to convert to pair for further construction
+
+### Return value
+(none)
+
+### Notes
+This function is called (through [std::allocator_traits](../allocator_traits)) by any allocator-aware object, such as [std::vector](/docs/std/containers/arrays/vector), 
+that was given a [std::scoped_allocator_adaptor](../scoped_allocator_adaptor) as the allocator to use. 
+Since inner_allocator is itself an instance of std::scoped_allocator_adaptor, this function will also be called when the allocator-aware objects constructed through 
+this function start constructing their own members.
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                         Behavior as published                         |                  Correct behavior                 |
+|:--------:|:----------:|:---------------------------------------------------------------------:|:-------------------------------------------------:|
+| LWG 2975 | C++11      | first overload is mistakenly used for pair construction in some cases | constrained to not accept pairs                   |
+| P0475R1  | C++11      | pair piecewise construction may copy the arguments                    | transformed to tuples of references to avoid copy |
+| LWG 3525 | C++11      | no overload could handle non-pair types convertible to pair           | reconstructing overload added                     |

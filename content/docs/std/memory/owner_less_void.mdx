@@ -1,0 +1,95 @@
+---
+title:                  std::owner_less_void
+description:            Smart Pointer Helper Class Specialization
+tags:                   [memory,owner_less, owner_less_void]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+
+# std::owner_less
+
+Defined in header `<memory>`.
+
+
+```cpp title="Since C++17"
+template<>
+struct owner_less<void>;
+```
+
+`std::owner_less<>` is a specialization of [std::owner_less](./owner_less) with parameter types deduced.
+
+### Member types
+
+|Member type |	Definition|
+|:--:|:--:|
+|is_transparent	| `/* unspecified */` |
+
+### Notes
+The member type is_transparent indicates to the caller that this function object is a *transparent* function object: 
+it accepts arguments of arbitrary types and uses perfect forwarding, which avoids unnecessary copying and conversion when the function object is used in heterogeneous context, 
+or with rvalue arguments. In particular, template functions such as `std::set::find` and `std::set::lower_bound` make use of this member type on their Compare types.
+
+
+|Feature-test macro |
+|:--:|
+|__cpp_lib_transparent_operators|
+
+### Member functions
+
+---
+
+
+ 
+
+
+
+<SymbolTable noTraits>
+    <Symbol     name={<>
+                operator()
+			    </>}               
+                desc={<>
+                compares its arguments using owner-based semantics<br/>
+                <small>(function)</small>
+                </>}
+                />
+</SymbolTable>
+
+---
+
+std::owner_less&lt;void>::**operator()**
+
+```cpp
+template<class T, class U>
+bool operator()( const std::shared_ptr<T>& lhs,
+                 const std::shared_ptr<U>& rhs ) const noexcept;    // (since C++11)
+```
+```cpp
+template<class T, class U>
+bool operator()( const std::shared_ptr<T>& lhs,
+                 const std::weak_ptr<U>& rhs ) const noexcept;      // (since C++11)
+```
+```cpp
+template<class T, class U>
+bool operator()( const std::weak_ptr<T>& lhs,
+                 const std::shared_ptr<U>& rhs ) const noexcept;    // (since C++11)
+```
+```cpp
+template<class T, class U>
+bool operator()( const std::weak_ptr<T>& lhs,
+                 const std::weak_ptr<U>& rhs ) const noexcept;      // (since C++11)
+```
+
+Compares `lhs` and `rhs` using owner-based semantics. Effectively calls `lhs.owner_before(rhs)`.
+
+The ordering is strict weak ordering relation.
+
+`lhs` and `rhs` are equivalent only if they are both empty or share ownership.
+
+#### Parameters
+`lhs`, `rhs`	-	shared-ownership pointers to compare
+#### Return value
+`true` if `lhs` is less than `rhs` as determined by the owner-based ordering.
+
+
+---

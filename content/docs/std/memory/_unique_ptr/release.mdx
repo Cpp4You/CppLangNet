@@ -10,10 +10,11 @@ import Columns						            from "@site-comps/Columns";
 
 # std::unique_ptr&lt;T,Deleter&gt;::release
 
-```cpp
-pointer release() noexcept; //(since C++11)
-
-constexpr pointer release() noexcept; //(since C++23)
+```cpp title="Since C++11"
+pointer release() noexcept; 
+```
+```cpp title="Since C++23"
+constexpr pointer release() noexcept;
 ```
 
 Releases the ownership of the managed object, if any.

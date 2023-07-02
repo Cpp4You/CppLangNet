@@ -12,12 +12,13 @@ import Columns						            from "@site-comps/Columns";
 # std::unique_ptr&lt;T,Deleter&gt;::get_deleter
 
 
-``` cpp
+``` cpp title="Since C++11"
 Deleter& get_deleter() noexcept;
-const Deleter& get_deleter() const noexcept;  //(Since C++11)
-
+const Deleter& get_deleter() const noexcept;
+```
+```cpp title="Since C++23"
 constexpr Deleter& get_deleter() noexcept;
-constexpr const Deleter& get_deleter() const noexcept;  //(Since C++23)
+constexpr const Deleter& get_deleter() const noexcept;
 ```
 
 Returns the deleter object which would be used for destruction of the managed object.

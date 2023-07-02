@@ -1,0 +1,23 @@
+---
+title:                  std::auto_ptr<T>::release
+description:            Smart Pointer Modifier
+tags:                   [memory,auto_ptr]
+hide_title:             true
+---
+
+# std::auto_ptr&lt;T>::release
+
+
+```cpp title="Deprecated in C++11, Removed in C++17"
+T* release() throw();
+```
+		
+Releases the held pointer. After the call `*this` holds the null pointer.
+
+### Parameters
+		
+(none)
+
+### Return value
+
+`get()`.

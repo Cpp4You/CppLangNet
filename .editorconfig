@@ -4,7 +4,8 @@ root = true
 indent_size=4
 
 [*.{mdx,js,jsx,ts,tsx}]
-indent_style = tab
+indent_style = space
+indent_size = 2
 
-[*.{mdx}]
+[*.{md,mdx}]
 trim_trailing_whitespace = false

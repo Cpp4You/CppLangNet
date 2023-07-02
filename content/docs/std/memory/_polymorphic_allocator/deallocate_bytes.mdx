@@ -1,0 +1,31 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::deallocate_bytes
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::deallocate_bytes
+
+```cpp title='Since C++20'
+void deallocate_bytes( void* p,
+                       std::size_t nbytes,
+                       std::size_t alignment = alignof(std::max_align_t) );
+```
+
+Deallocates the storage pointed to by `p`, which must have been allocated from a [std::pmr::memory_resource](/docs/std/memory/memory_resource) `x` 
+that compares equal to `*resource()`. using `x.allocate(nbytes, alignment)`, typically through a call to `allocate_bytes(nbytes, alignment)`.
+
+Equivalent to `resource()->deallocate(p, nbytes, alignment)`;
+
+### Parameters
+`p`	-	pointer to memory to deallocate <br/>
+`nbytes`	-	the number of bytes originally allocated <br/>
+`alignment`	-	the alignment originally allocated
+
+### Exceptions
+Throws nothing.
+
+### Notes
+This function was introduced for use with the fully-specialized allocator <code>[std::pmr::polymorphic_allocator&lt;&gt;](../polymorphic_allocator)</code>, 
+but it may be useful in any specialization.

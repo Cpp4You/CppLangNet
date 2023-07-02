@@ -2,7 +2,7 @@
 
 <p align=center>
 	<a href="https://cpp-lang.net">
-		<img src="resources/KeyArt.png" />
+		<img src="resources/KeyArt.webp" />
 	</a>
 </p>
 
@@ -68,7 +68,7 @@ to write course lessons, articles, docs etc.
 
 <p align=center>
 	<a href="https://cpp-lang.net">
-		<img src="resources/Website.jpg" />
+		<img src="resources/Website.webp" />
 	</a>
 </p>
 

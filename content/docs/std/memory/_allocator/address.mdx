@@ -1,0 +1,32 @@
+---
+title:                  std::allocator<T>::address
+description:            Allocator Member Function
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+# std::allocator&lt;T>::address
+
+```cpp title="Since C++11, Deprecated in C++17 , Removed in C++20"
+pointer address( reference x ) const noexcept;
+const_pointer address( const_reference x ) const noexcept;
+```
+
+```cpp title="Until C++11"
+pointer address( reference x ) const;
+const_pointer address( const_reference x ) const;
+```
+Returns the actual address of `x` even in presence of overloaded operator&.
+
+### Parameters
+`x`	-	the object to acquire address of
+
+### Return value
+The actual address of `x`.
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|        DR       | Applied to |                        Behavior as published                       |         Correct behavior        |
+|:---------------:|:----------:|:------------------------------------------------------------------:|:-------------------------------:|
+| LWG 634 (N2436) | C++98      | the return value is &x (which is affected by overloaded operator&) | returns the actual address of `x` |

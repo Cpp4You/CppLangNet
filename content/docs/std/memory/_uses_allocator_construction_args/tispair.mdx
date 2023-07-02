@@ -1,0 +1,35 @@
+```cpp title='Since C++20'
+// 2)
+template< class T, class Alloc, class Tuple1, class Tuple2 >
+constexpr auto uses_allocator_construction_args( const Alloc& alloc,
+    std::piecewise_construct_t, Tuple1&& x, Tuple2&& y) noexcept;
+// 3)
+template< class T, class Alloc >
+constexpr auto uses_allocator_construction_args( const Alloc& alloc ) noexcept;
+// 4)
+template< class T, class Alloc, class U, class V >
+constexpr auto uses_allocator_construction_args( const Alloc& alloc,
+    U&& u, V&& v) noexcept;
+// 6)
+template< class T, class Alloc, class U, class V >
+constexpr auto uses_allocator_construction_args( const Alloc& alloc,
+    const std::pair<U, V>& pr ) noexcept;
+// 7)
+template< class T, class Alloc, class U, class V >
+constexpr auto uses_allocator_construction_args( const Alloc& alloc,
+    std::pair<U, V>&& pr ) noexcept;
+//9)
+template< class T, class Alloc, class NonPair >
+constexpr auto uses_allocator_construction_args( const Alloc& alloc,
+    NonPair&& non_pair ) noexcept;
+```
+```cpp title='Since C++23'
+// 5)
+template< class T, class Alloc, class U, class V >
+constexpr auto uses_allocator_construction_args( const Alloc& alloc,
+    std::pair<U, V>& pr ) noexcept;
+// 8)
+template< class T, class Alloc, class U, class V >
+constexpr auto uses_allocator_construction_args( const Alloc& alloc,
+    const std::pair<U, V>&& pr ) noexcept;
+```

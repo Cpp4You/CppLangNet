@@ -1,0 +1,16 @@
+```cpp
+// (1)
+template<
+	std::bidirectional_iterator I,
+	std::sentinel_for<I> S
+>
+	requires std::permutable<I>
+constexpr I reverse( I first, S last );
+
+// (2)
+template<
+	ranges::bidirectional_range R
+>
+	requires std::permutable<ranges::iterator_t<R>>
+constexpr ranges::borrowed_iterator_t<R> reverse( R&& r );
+```

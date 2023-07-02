@@ -1,0 +1,46 @@
+---
+title:                  std::weak_ptr<T>::operator=
+description:            Smart Pointer
+tags:                   [memory,weak_ptr]
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+
+# std::weak_ptr&lt;T>::operator=
+
+```cpp
+// 1)
+weak_ptr& operator=( const weak_ptr& r ) noexcept;
+// 2)
+template< class Y >
+weak_ptr& operator=( const weak_ptr<Y>& r ) noexcept;
+// 3)
+template< class Y >
+weak_ptr& operator=( const shared_ptr<Y>& r ) noexcept;
+// 4)
+weak_ptr& operator=( weak_ptr&& r ) noexcept;
+// 5)
+template< class Y >
+weak_ptr& operator=( weak_ptr<Y>&& r ) noexcept;
+```
+
+Replaces the managed object with the one managed by `r`. The object is shared with `r`. If `r` manages no object, `*this` manages no object too.
+
+1-3) Equivalent to `std::weak_ptr<T>(r).swap(*this)`.
+4,5) Equivalent to `std::weak_ptr<T>(std::move(r)).swap(*this)`.
+
+### Parameters
+`r`	-	smart pointer to share an object with
+### Return value
+`*this`
+
+### Notes
+The implementation may meet the requirements without creating a temporary weak_ptr object.
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|                                                  Defect reports                                                  | Applied to |            Behavior as published           | Correct behavior |
+|:----------------------------------------------------------------------------------------------------------------:|:----------:|:------------------------------------------:|:----------------:|
+| The following behavior-changing defect reports were applied retroactively to previously published C++ standards. | C++11      | move semantic was not enabled for weak_ptr | enabled          |

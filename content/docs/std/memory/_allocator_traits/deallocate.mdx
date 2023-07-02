@@ -1,0 +1,26 @@
+---
+title:                  std::allocator_traits<Alloc>::deallocate
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+# std::allocator_traits&lt;Alloc>::deallocate
+
+```cpp title="Since C++20"
+static constexpr void deallocate( Alloc& a, pointer p, size_type n );
+```
+```cpp title="Since C++11, Until C++20"
+static void deallocate( Alloc& a, pointer p, size_type n );
+```
+
+
+Uses the allocator `a` to deallocate the storage referenced by `p`, by calling `a.deallocate(p, n)`
+
+### Parameters
+`a`	-	allocator to use <br/>
+`p`	-	pointer to the previously allocated storage <br/>
+`n`	-	the number of objects the storage was allocated for
+
+### Return value
+(none)

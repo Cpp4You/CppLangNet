@@ -7,9 +7,8 @@ import Columns      from "@site-comps/Columns";
 
 # std::hash(std::shared_ptr)
 
-```cpp
+```cpp title="Since C++11"
 template<class T> struct hash<shared_ptr<T>>;
-(since C++11)
 ```
 The template specialization of `std::hash` for `std::shared_ptr<T>` allows users to obtain hashes of objects of type `std::shared_ptr<T>`.
 

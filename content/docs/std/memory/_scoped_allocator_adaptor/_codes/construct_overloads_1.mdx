@@ -1,0 +1,12 @@
+```cpp
+std::apply(
+    [p,this](auto&&... newargs) {
+        OUTERMOST_ALLOC_TRAITS(*this)::construct(
+            OUTERMOST(*this), p, std::forward<decltype(newargs)>(newargs)...);
+    },
+    std::uses_allocator_construction_args(
+        inner_allocator(),
+        std::forward<Args>(args)...
+    )
+);
+```

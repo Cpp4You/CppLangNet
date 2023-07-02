@@ -1,0 +1,38 @@
+---
+title:                  std::enable_shared_from_this<T>::enable_shared_from_this
+description:            Smart Pointer Constructor
+tags:                   [memory,enable_shared_from_this]
+hide_title:             true
+---
+
+
+# std::enable_shared_from_this&lt;T>::enable_shared_from_this
+
+
+```cpp title="Since C++11"
+constexpr enable_shared_from_this() noexcept;                               (1)
+enable_shared_from_this( const enable_shared_from_this<T>&obj ) noexcept;   (2)
+```
+		
+Constructs a new enable_shared_from_this object. The private `std::weak_ptr<T>` member is value-initialized.
+
+### Parameters
+`obj`	-	an enable_shared_from_this to copy
+### Notes
+There is no move constructor: moving from an object derived from enable_shared_from_this does not transfer its shared identity.
+
+### Example
+
+```cpp
+#include <memory>
+ 
+struct Foo : public std::enable_shared_from_this<Foo> {
+    Foo() {}  // implicitly calls enable_shared_from_this constructor
+    std::shared_ptr<Foo> getFoo() { return shared_from_this(); }
+};
+ 
+int main() {
+    std::shared_ptr<Foo> pf1(new Foo);
+    auto pf2 = pf1->getFoo();  // shares ownership of object with pf1
+}
+```

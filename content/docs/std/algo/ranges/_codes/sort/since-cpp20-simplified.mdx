@@ -1,0 +1,24 @@
+```cpp
+// (1)
+constexpr I
+    sort( I first, S last, Comp comp = {}, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R>
+    sort( R&& r, Comp comp = {}, Proj proj = {} );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::input_range`
+- `Comp` - **(none)**
+- `Proj` - **(none)**
+
+The `Proj` and `Comp` template arguments have, the following default types for all overloads: `std::identity`, `ranges::less`.
+
+Additionaly, each overload has the following constraints:
+- **(1)** - `sortable<I, Comp, Proj>`
+- **(2)** - `sortable<ranges::iterator_t<R>, Comp, Proj>`
+
+(The `std::` namespace was ommitted here for readability)

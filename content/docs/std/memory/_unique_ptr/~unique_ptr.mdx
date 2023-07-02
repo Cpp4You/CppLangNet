@@ -14,10 +14,11 @@ import Columns						            from "@site-comps/Columns";
 # std::unique_ptr&lt;T,Deleter&gt;::~unique_ptr
 
 
-```cpp
-~unique_ptr(); //(since C++11)
-
-constexpr ~unique_ptr(); //(since C++23)
+```cpp title="Since C++11"
+~unique_ptr();
+```
+```cpp title="Since C++23"
+constexpr ~unique_ptr();
 ```
 
 If `get() == nullptr` there are no effects. Otherwise, the owned object is destroyed via `get_deleter()(get())`.

@@ -14,11 +14,11 @@
 
 	window.addEventListener("load", () => {
 		// update data-scroll html attribute
-		document.documentElement.dataset.scroll = window.scrollY;
+		document.documentElement.dataset.scrolledToTop = window.scrollY == 0;
 	});
 	window.addEventListener("scroll", () => {
 		// update data-scroll html attribute
-		document.documentElement.dataset.scroll = window.scrollY;
+		document.documentElement.dataset.scrolledToTop = window.scrollY == 0;
 
 		updateNavbarScroll();
 	});
