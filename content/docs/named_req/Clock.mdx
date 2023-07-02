@@ -1,0 +1,26 @@
+---
+title:                  C++ named requirements:Clock
+tags:                   [named_req,Clock]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *Clock*</Since>
+
+The ***Clock*** requirements describe a bundle consisting of a [std::chrono::duration](/docs/std/chrono/duration), a [std::chrono::time_point](/docs/std/chrono/time_point), 
+and a function `now()` to get the current *time_point*. The origin of the clock's time_point is referred to as the clock's *epoch*.
+
+### Requirements
+`C1` and `C2` denote clock types. `t1` and `t2` are values returned by `C1::now()` where the call returning `t1` happens before the call returning `t2` and 
+both of these calls occur before `C1::time_point::max()`.
+
+| **Expression**   | **Return type**                                                                                                                                                                                          | **Operational semantics**                                                                                                                                                                                                                                      |
+|:-----------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `C1::rep`        | An arithmetic type or a class emulating an arithmetic type                                                                                                                                               | The representation type of `C1::duration`.                                                                                                                                                                                                                     |
+| `C1::period`     | A specialization of [std::ratio](/docs/std/numeric/ratio/ratio)                                                                                                                                          | The tick period of the clock in seconds.                                                                                                                                                                                                                       |
+| `C1::duration`   | <code><a href="/docs/std/chrono/duration">std::chrono::duration</a>&lt;C1::rep, C1::period&gt;</code>                                                                                                    | The duration type of the clock.                                                                                                                                                                                                                                |
+| `C1::time_point` | <code><a href="/docs/std/chrono/time_point">std::chrono::time_point</a>&lt;C1&gt;</code> or <br/> <code><a href="/docs/std/chrono/time_point">std::chrono::time_point</a>&lt;C2, C1::duration&gt;</code> | The [std::chrono::time_point](/docs/std/chrono/time_point) type of the clock. **C1** and **C2** shall refer to the same epoch.                                                                                                                                 |
+| `C1::is_steady`  | <a>const bool</a>                                                                                                                                                                                        | <a>true</a> if `t1 <= t2` is always <a>true</a> and the clock advances at a steady rate relative to real time (so the difference between two distinct reported times is approximately the elapsed real time between the clock updates), otherwise <a>false</a> |
+| `C1::now()`      | `C1::time_point`                                                                                                                                                                                         | Returns a `time_point` object representing the current point in time.                                                                                                                                                                                          |

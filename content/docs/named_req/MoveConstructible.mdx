@@ -1,0 +1,33 @@
+---
+title:                  C++ named requirements:MoveConstructible 
+tags:                   [named_req,MoveConstructible ]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Version}             from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *MoveConstructible*</Since>
+Specifies that an instance of the type can be constructed from an [rvalue](/docs/std/language/value_category) argument.
+
+### Requirements
+The type T satisfies *MoveConstructible* if <br/>
+Given
+* `rv`, an [rvalue](/docs/std/language/value_category) expression of type T
+* `u`, an arbitrary identifier
+
+The following expressions must be valid and have their specified effects
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Expression</b>}      desc={<b>Post-conditions</b>}/>
+    <Symbol name={<code>T u = rv;</code>} desc={<>The value of u is equivalent to the value of rv before the initialization.<br/>The new value of rv is unspecified</>}/>
+    <Symbol name={<code>T(rv)</code>}     desc={<>The value of T(rv) is equivalent to the value of rv before the initialization.<br/>The new value of rv is unspecified</>}/>
+</SymbolTable>
+
+### Notes
+
+A class does not have to implement a [move constructor](/docs/std/language/move_constructor) to satisfy this type requirement: 
+a [copy constructor](/docs/std/copy_constructor) that takes a const T& argument can bind rvalue expressions.
+
+If a *MoveConstructible* class implements a [move constructor](/docs/std/utility/move), 
+it may also implement move semantics to take advantage of the fact that the value of rv after construction is unspecified.

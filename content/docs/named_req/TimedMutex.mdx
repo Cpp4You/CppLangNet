@@ -1,0 +1,47 @@
+---
+title:                  C++ named requirements:TimedMutex     
+tags:                   [named_req,TimedMutex]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *TimedMutex*</Since>
+
+The ***TimedMutex*** requirements extend the [*TimedLockable*](/docs/named_req/TimedLockable) requirements to include inter-thread synchronization.
+
+### Requirements
+* [*TimedLockable*](/docs/named_req/TimedLockable)
+* [*Mutex*](/docs/named_req/Mutex)
+
+Additionally, for an object `m` of *TimedMutex* type:
+
+* The expression `m.try_lock_for(duration)` has the following properties
+    * Behaves as an atomic operation.
+    * Attempts to obtain exclusive ownership of the mutex within the duration specified by duration. If duration is less or equal duration.zero(), attempts to obtain the ownership without blocking (as if by try_lock()). 
+      Otherwise, this function blocks until the mutex is acquired or until the time specified by duration passes. It returns within duration only if it succeeds, but it is allowed to fail to acquire the mutex even if at some point in time during duration it was not owned by another thread. 
+      In any case, it returns <a>true</a> if the mutex was acquired and <a>false</a> otherwise.
+    * If try_lock_for(duration) succeeds, prior unlock() operations on the same object synchronize-with this operation (equivalent to release-acquire [std::memory_order](/docs/std/atomic/memory_order)).
+    * The behavior is undefined if the calling thread already owns the mutex (except if `m` is [std::recursive_timed_mutex](/docs/std/thread/recursive_timed_mutex)).
+    * An exception may be thrown by clock, time point, or duration during the execution (clocks, time points, and durations provided by the standard library never throw).
+* The expression `m.try_lock_until(time_point)` has the following properties
+    * Behaves as an atomic operation.
+    * Attempts to obtain exclusive ownership of the mutex within the time left until time_point. If time_point already passed, attempts to obtain the ownership without blocking (as if by try_lock()). Otherwise, this function blocks until the mutex is acquired or until the time specified by time_point passes. It returns before time_point only if it succeeds, but it is allowed to fail to acquire the mutex even if at some point in time before time_point it was not owned by another thread. In any case, it returns true if the mutex was acquired and false otherwise.
+    * If try_lock_until(time_point) succeeds, prior unlock() operations on the same object synchronize-with this operation (equivalent to release-acquire [std::memory_order](/docs/std/atomic/memory_order)).
+    * The behavior is undefined if the calling thread already owns the mutex (except if `m` is [std::recursive_timed_mutex](/docs/std/thread/recursive_timed_mutex)).
+    * An exception may be thrown by clock, time point, or duration during the execution (clocks, time points, and durations provided by the standard library never throw).
+
+### Library types
+The following standard library types satisfy *TimedMutex*:
+
+* [std::timed_mutex](/docs/std/thread/timed_mutex)
+* [std::recursive_timed_mutex](/docs/std/thread/recursive_timed_mutex)
+* [std::shared_timed_mutex](/docs/std/thread/shared_timed_mutex)
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                     Behavior as published                    | Correct behavior |
+|:--------:|:----------:|:------------------------------------------------------------:|:----------------:|
+| LWG 2093 | C++11      | timeout-related exceptions were missing in the specification | mentioned        |

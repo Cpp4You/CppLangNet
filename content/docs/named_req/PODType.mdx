@@ -1,0 +1,27 @@
+---
+title:                  C++ named requirements:PODType
+tags:                   [named_req,PODType]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Deprecated}             from "@site-comps/Versions";
+
+# <Deprecated v='cpp20'><small>C++ named requirements:</small> *PODType*</Deprecated>
+
+Specifies that the type is POD (Plain Old Data) type. This means the type is compatible with the types used in the C programming language, 
+that is, can be exchanged with C libraries directly, in its binary form.
+
+Note: the standard doesn't define a named requirement with this name. This is a type category defined by the core language. 
+It is included here as a named requirement only for consistency.
+&emsp;<br/><Since v='cpp20'> This type requirement is deprecated in the C++ standard. All of its uses have been replaced by the more refined type requirements, 
+such as [TrivialType](/docs/named_req/TrivialType), [ScalarType](/docs/named_req/ScalarType), or [StandardLayoutType](/docs/named_req/StandardLayoutType). </Since>
+
+
+### Requirements
+The following types are collectively called *POD types*:
+
+* [scalar types](/docs/named_req/ScalarType)
+* [POD classes](/docs/std/language/classes#POD_class)
+* arrays of such types
+* cv-qualified versions of these types

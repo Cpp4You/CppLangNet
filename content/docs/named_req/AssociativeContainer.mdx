@@ -1,0 +1,111 @@
+---
+title:                  C++ named requirements:AssociativeContainer 
+tags:                   [named_req,AssociativeContainer]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}     from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <small>C++ named requirements:</small> *AssociativeContainer*
+An ***AssociativeContainer*** is an ordered [Container](/docs/named_req/Container) that provides fast lookup of objects based on keys.
+
+An associative container supports unique keys if it may contain at most one element for each key. Otherwise, it supports equivalent keys.
+
+### Requirements
+The type X satisfies *AssociativeContainer* if
+
+* The type X satisfies <Until v='cpp11'><a href="/docs/named_req/Container"><i>Container</i></a></Until> <Since v='cpp11'><a href="/docs/named_req/AllocatorAwareContainer"><i>AllocatorAwareContainer</i></a></Since>
+* is parameterized on Key and an ordering relation Compare that induces a [strict weak ordering](/docs/named_req/Compare) on elements of Key, and
+    * In addition, [std::map](/docs/std/containers/maps/map) and [std::multimap](/docs/std/containers/maps/multimap) 
+    associate an arbitrary mapped type T with the Key.
+    * The object of type Compare is called the *comparison object* of a container of type X.
+
+Given
+
+* `a`, a value of type X
+* `a2`, a value of a type Y whose [node handles](/docs/std/containers/other/node_handle) are compatible with X
+* `b`, a value of type X or const X
+* `a_uniq`, a value of type X when X supports unique keys
+* `a_eq`, a value of type X when X supports equivalent keys
+* `a_tran`, a value of type X or const X when type `X::key_compare::is_transparent` exists
+* `i` and `j`, [LegacyInputIterators](/docs/named_req/LegacyInputIterators) denoting a valid range and referring to elements implicitly convertible to `X::value_type`
+* `p`, a valid constant iterator to `a`
+* `q`, a valid dereferenceable constant iterator to `a`
+* `r`, a valid dereferenceable iterator to `a`
+* `q1` and `q2`, const iterators denoting a valid range in `a`
+* `il`, an object of type <code><a href="/docs/std/utility/initializer_list">std::initializer_list</a>&lt;X::value_type&gt;</code>
+* `t`, a value of type `X::value_type`
+* `k`, a value of type `X::key_type`
+* `c`, a value of type `X::key_compare` or `const X::key_compare`
+* `kl`, a value such that a is partitioned with respect to `c(x, kl)`, with `x` the key value of `e` and `e` in `a`
+* `ku`, a value such that a is partitioned with respect to `!c(ku, x)`, with `x` the key value of `e` and `e` in `a`
+* `ke`, a value such that a is partitioned with respect to `c(x, ke)` and `!c(ke, x)`, with `c(x, ke)` implying `!c(ke, x)` and with `x` the key value of `e` and `e` in `a`
+* `kx`, a value such that
+    * `a` is partitioned with respect to `c(x, kx)` and `!c(kx, x)`, with `c(x, kx)` implying `!c(kx, x)` and with `x` the key value of `e` and `e` in `a`, and
+    * `kx` is not convertible to either `X::iterator` or `X::const_iterator`
+* `A`, the allocator type of X: `X::allocator_type` if it exists, otherwise <code><a href="/docs/std/memory/allocator">std::allocator</a>&lt;X::value_type&gt;</code>
+* `m`, an allocator of a type convertible to `A`
+* `nh`, a non-const rvalue of type `X::node_type`
+
+### Types
+
+| **Name**      | **Type**                                                                                                                                                                                                                                                                                                                | **Requirements**                                       |
+|:-------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------------:|
+| key_type      | Key                                                                                                                                                                                                                                                                                                                     |                                                        |
+| mapped_type   | T (for [std::map](/docs/std/containers/maps/map) and [std::multimap](/docs/std/containers/maps/multimap) only)                                                                                                                                                                                                          |                                                        |
+| value_type    | \* Key (for [std::set](/docs/std/containers/sets/set) and [std::multiset](/docs/std/containers/sets/multiset) only) <br/> \* [std::pair](/docs/std/utility/pair)&lt;const Key, T&gt;(for [std::map](/docs/std/containers/maps/map) and [std::multimap](/docs/std/containers/maps/multimap) only)                        | [Erasable](/docs/named_req/Erasable) from X            |
+| key_compare   | Compare                                                                                                                                                                                                                                                                                                                 | [CopyConstructible](/docs/named_req/CopyConstructible) |
+| value_compare | \* same as key_compare (for [std::set](/docs/std/containers/sets/set) and [std::multiset](/docs/std/containers/sets/multiset)) <br/> \* an ordering relation on pairs induced by the first component (i.e. Key) (for [std::map](/docs/std/containers/maps/map) and [std::multimap](/docs/std/containers/maps/multimap)) | [BinaryPredicate](/docs/named_req/BinaryPredicate)     |
+| node_type     | A specialization of the [node-handle class template](/docs/std/containers/other/node_handle), such that the public nested types are the same types as the corresponding types in X.                                                                                                                                     |                                                        |
+
+### Methods and operators
+
+| **Expression**           | **Return type**  | **Pre/Requirements**                                                                                                                                                                      | **Post/Effects**                                                                                                            | **Complexity**                                                                                                                      |
+|:------------------------:|:-----------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------:|
+| `X(c)`                   |                  |                                                                                                                                                                                           | Construct an empty container using a copy of `c` as the comparison object                                                   | constant                                                                                                                            |
+| `X()`,<br/> `X a = X();` |                  | `X::key_compare` is [DefaultConstructible](/docs/named_req/DefaultConstructible)                                                                                                          | Construct an empty container using a `Compare()` as the comparison object                                                   | constant                                                                                                                            |
+| `X(i, j, c)`             |                  | `X::value_type` is [EmplaceConstructible](/docs/named_req/EmplaceConstructible) into **X** from `*i`                                                                                      | Constructs an empty container using a copy of `c` as the comparison object and inserts all elements from the range `[i, j)` | generally `N·log N`, or `N` if `[i, j)` is sorted (where `N` is `std::distance(i, j)`)                                              |
+| `X(i, j)`                |                  | `X::key_compare` is [DefaultConstructible](/docs/named_req/DefaultConstructible) and `X::value_type` is [EmplaceConstructible](/docs/named_req/EmplaceConstructible) into **X** from `*i` | Constructs an empty container using a `Compare()` as the comparison object and inserts all elements from the range `[i, j)` | generally `N·log N`, or `N` if `[i, j)` is sorted according to `value_comp()` (where `N` is `std::distance(i, j)`)                  |
+| `X(il);`                 |                  | Equivalent to `X(il.begin(),   il.end());`                                                                                                                                                | Equivalent to `X(il.begin(),    il.end());`                                                                                 |                                                                                                                                     |
+| `a = il`                 | X&               | **T** is [CopyInsertable](/docs/named_req/CopyInsertable) into **X** and also [CopyAssignable](/docs/named_req/CopyAssignable)                                                            | Assign the range `[il.begin(), il.end())` into `a`. Elements of a that were not assigned to are destroyed                   | generally `N·log N`, or `N` if `[il.begin(), il.end())` is sorted according to `value_comp()` (where `N` is `il.size() + a.size()`) |
+| `a.key_comp()`           | X::key_compare   |                                                                                                                                                                                           | The comparison object with which a was constructed is returned.                                                             | constant                                                                                                                            |
+| `a.value_comp()`         | X::value_compare |                                                                                                                                                                                           | An object of type `X::value_compare` constructed out of the comparison object is returned.                                  | constant                                                                                                                            |
+
+### Iterators
+Iterators of associative containers satisfy the requirements of [*LegacyBidirectionalIterator*](/docs/named_req/LegacyBidirectionalIterator).
+
+For associative containers where value_type is the same as key_type, both iterator and const_iterator are constant iterators. 
+It is unspecified whether or not iterator and const_iterator are the same type.
+
+Iterators of associative containers iterate through the containers in the non-descending order of keys where non-descending 
+is defined by the comparison that was used to construct the containers. That is, given
+
+* `a`, an associative container
+* `i` and `j`, dereferenceable iterators to `a`
+
+If the distance from `i` to `j` is positive, then `a.value_comp()(*j, *i) == false`. 
+Additionally, if a is an associative container with unique keys, the stronger condition `a.value_comp()(*i, *j) != false` holds.
+
+:::caution
+This section is incomplete <br/>
+Reason: Unfinished requirements
+:::
+
+### Associative containers in the standard library
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/containers/sets/set"      name="std::set"      desc="collection of unique keys, sorted by keys"/>
+    <Symbol autoLink linkName="/docs/std/containers/sets/multiset" name="std::multiset" desc="collection of keys, sorted by keys"/>
+    <Symbol autoLink linkName="/docs/std/containers/maps/map"      name="std::map"      desc="collection of key-value pairs, sorted by keys, keys are unique"/>
+    <Symbol autoLink linkName="/docs/std/containers/maps/multimap" name="std::multimap" desc="collection of key-value pairs, sorted by keys"/>
+</SymbolTable>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR   | Applied to |                                Behavior as published                               |                     Correct behavior                     |
+|:-------:|:----------:|:----------------------------------------------------------------------------------:|:--------------------------------------------------------:|
+| LWG 354 | C++98      | lower_bound and upper_bound did not return the end iterator if no element is found | they return the end iterator in this case                |
+| LWG 589 | C++98      | the elements that `i` and `j` refer to had the type `X::value_type`                      | the elements are implicitly convertible to `X::value_type` |

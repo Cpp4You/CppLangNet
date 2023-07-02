@@ -1,0 +1,45 @@
+---
+title:                  C++ named requirements:BinaryPredicate 
+tags:                   [named_req,BinaryPredicate]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}              from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <small>C++ named requirements:</small> *BinaryPredicate*
+***BinaryPredicate*** is a set of requirements expected by some of the standard library facilities from the user-provided arguments.
+
+Given a *BinaryPredicate* `bin_pred` and a pair of iterators `iter1` and `iter2` or an iterator `iter` and a <Since v='cpp20'>(possibly const)</Since> value `value`, 
+the expression `bin_pred(*iter1, *iter2)` or, respectively, `bin_pred(*iter, value)`, must be [contextually convertible](/docs/std/language/implicit_conversion) to `bool`.
+
+In addition, evaluation of that expression is not allowed to call non-const member functions of the dereferenced iterators; <Since v='cpp20'> syntactically, 
+the predicate must accept const object arguments, with the same behavior regardless of whether its arguments are const or non-const</Since>.
+
+### Requirements
+* [Predicate](/docs/named_req/Predicate)
+* [CopyConstructible](/docs/named_req/CopyConstructible) (unless otherwise specified)
+
+### Standard library
+The following standard library facilities expect a *BinaryPredicate* which isn't a [Compare](/docs/named_req/Compare) type.
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/container/forward_list/unique" name={<>unique<Version v='cpp11'></Version></>}                                  desc={<>removes consecutive duplicate elements<br/><small>(public member function of std::forward_list&lt;T,Allocator&gt;)</small></>}/>
+    <Symbol autoLink linkName="/docs/std/container/list/unique"         name={<>unique</>}                                                               desc={<>removes consecutive duplicate elements<br/><small>(public member function of std::list&lt;T,Allocator&gt;)</small></>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/find_end"            name={<>find_end</>}                                                             desc={<>finds the last sequence of elements in a certain range</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/find_first_of"       name={<>find_first_of</>}                                                        desc={<>searches for any one of a set of elements</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/adjacent_find"       name={<>adjacent_find</>}                                                        desc={<>finds the first two adjacent items that are equal (or satisfy a given predicate)</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/mismatch"            name={<>mismatch</>}                                                             desc={<>finds the first position where two ranges differ</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/equal"               name={<>equal</>}                                                                desc={<>determines if two sets of elements are the same</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/is_permutation"      name={<>is_permutation<Version v='cpp11'></Version></>}                          desc={<>determines if a sequence is a permutation of another sequence</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/search"              name={<>search</>}                                                               desc={<>searches for a range of elements</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/search_n"            name={<>search_n</>}                                                             desc={<>searches a range for a number of consecutive copies of an element</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/unique"              name={<>unique</>}                                                               desc={<>removes consecutive duplicate elements in a range<br/><small>(function template)</small></>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/unique_copy"         name={<>unique_copy</>}                                                          desc={<>creates a copy of some range of elements that contains no consecutive duplicates</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/functional/not2"       name={<>not2<Deprecated v='cpp17'></Deprecated><Removed v='cpp20'></Removed></>} desc={<>constructs custom std::binary_negate object</>}/>
+    <Symbol autoLink linkName="/docs/std/container/unordered_set"       name={<>unordered_set<Version v='cpp11'></Version></>}                           desc={<>collection of unique keys, hashed by keys</>}/>
+    <Symbol autoLink linkName="/docs/std/container/unordered_map"       name={<>unordered_map<Version v='cpp11'></Version></>}                           desc={<>collection of key-value pairs, hashed by keys, keys are unique</>}/>
+    <Symbol autoLink linkName="/docs/std/container/unordered_multiset"  name={<>unordered_multiset<Version v='cpp11'></Version></>}                      desc={<>collection of keys, hashed by keys</>}/>
+    <Symbol autoLink linkName="/docs/std/container/unordered_multimap"  name={<>unordered_multimap<Version v='cpp11'></Version></>}                      desc={<>collection of key-value pairs, hashed by keys</>}/>
+</SymbolTable>

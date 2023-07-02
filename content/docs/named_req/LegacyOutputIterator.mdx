@@ -1,0 +1,66 @@
+---
+title:                  C++ named requirements:LegacyOutputIterator
+tags:                   [named_req,LegacyOutputIterator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *LegacyOutputIterator*
+A ***LegacyOutputIterator*** is a [*LegacyIterator*](/docs/named_req/LegacyIterator) that can write to the pointed-to element.
+
+An example of a type that implements *LegacyOutputIterator* is [std::ostream_iterator](/docs/std/iterator/ostream_iterator).
+
+When [*LegacyForwardIterator*](/docs/named_req/LegacyForwardIterator), [*LegacyBidirectionalIterator*](/docs/named_req/LegacyBidirectionalIterator), or 
+[*LegacyRandomAccessIterator*](/docs/named_req/LegacyRandomAccessIterator) satisfies the *LegacyOutputIterator* requirements 
+in addition to its own requirements, it is described as mutable.
+
+### Requirements
+The type **X** satisfies *LegacyOutputIterator* if
+
+* The type **X** satisfies [*LegacyIterator*](/docs/named_req/LegacyIterator)
+* **X** is a class type or a pointer type
+
+And, given
+
+* `o`, a value of some type that is writable to the output iterator (there may be multiple types that are writable, e.g. if `operator=` may be a template. 
+There is no notion of value_type as for the input iterators)
+* `r`, an lvalue of type **X**,
+The following expressions must be valid and have their specified effects
+
+| **Expression** | **Return**                  | **Equivalent expression**                          | **Pre-condition**      | **Post-conditions**                                                                      | **Notes**                                                                                                                                                                 |
+|:--------------:|:---------------------------:|:---------------------------------------------------|:-----------------------|:-----------------------------------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `*r = o`       | (not used)                  |                                                    | `r` is dereferenceable | `r` is incrementable                                                                     | After this operation `r` is not required to be dereferenceable and any copies of the previous value of `r` are no longer required to be dereferenceable or incrementable. |
+| `++r`          | **X&**                      |                                                    | `r` is incrementable   | `r` and `++r` designate the same iterator object, `r` is dereferenceable or past-the-end | After this operation `r` is not required to be incrementable and any copies of the previous value of `r` are no longer required to be dereferenceable or incrementable.   |
+| `r++`          | convertible to **const X&** | <code>X temp = r;<br/>++r;<br/>return temp;</code> |                        |                                                                                          |                                                                                                                                                                           |
+| `*r++ = o`     | (not used)                  | <code>*r = o;<br/>++r;</code>                      |                        |                                                                                          |                                                                                                                                                                           |
+
+### Notes
+The only valid use of `operator*` with an output iterator is on the left of an assignment: 
+`operator*` may return a proxy object, which defines a member `operator=` (which may be a template).
+
+Equality and inequality may not be defined for output iterators. Even if an `operator==` is defined, `x == y` need not imply `++x == ++y`.
+
+Assignment through the same value of an output iterator happens only once: algorithms on output iterators must be single-pass algorithms.
+
+Assignment through an output iterator is expected to alternate with incrementing.
+Double-increment is undefined behavior (C++ standard currently claims that double increment is supported, contrary to the STL documentation; 
+this is [LWG issue 2035](https://cplusplus.github.io/LWG/issue2035)).
+
+Pure output-only iterator is allowed to declare its <code><a href="/docs/std/iterator/iterator_traits">iterator_traits</a>&lt;X&gt;::value_type</code> 
+,<code><a href="/docs/std/iterator/iterator_traits">iterator_traits</a>&lt;X&gt;::difference_type</code>
+,<code><a href="/docs/std/iterator/iterator_traits">iterator_traits</a>&lt;X&gt;::pointer</code>, 
+and <code><a href="/docs/std/iterator/iterator_traits">iterator_traits</a>&lt;X&gt;::reference</code> to be void 
+(and iterators such as [std::back_insert_iterator](/docs/std/iterator/back_insert_iterator) 
+do just that <Since v='cpp20'>except for difference_type, 
+which is now defined to satisfy <code><a href="/docs/std/iterator/output_iterator">std::output_iterator</a></code></Since>).
+
+### Standard library
+The following standard library iterators are output iterators that are not forward iterators:
+
+* [std::ostream_iterator](/docs/std/iterator/ostream_iterator)
+* [std::ostreambuf_iterator](/docs/std/iterator/ostreambuf_iterator)
+* [std::insert_iterator](/docs/std/iterator/insert_iterator)
+* [std::back_insert_iterator](/docs/std/iterator/back_insert_iterator)
+* [std::front_insert_iterator](/docs/std/iterator/front_insert_iterator)

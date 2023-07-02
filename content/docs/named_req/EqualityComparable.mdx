@@ -1,0 +1,39 @@
+---
+title:                  C++ named requirements:EqualityComparable
+tags:                   [named_req,EqualityComparable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Deprecated}             from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *EqualityComparable*
+The type must work with == operator and the result should have standard semantics.
+
+### Requirements
+The type T satisfies EqualityComparable if
+
+Given
+* `a`, `b` and `c`, expressions of type `T` <Since v='cpp17'>or `const T`</Since>
+
+The following expressions must be valid and have their specified effects:
+
+| **Expression** |           **Return type**          |                                                                                      **Requirements**                                                                                      |
+|:----------:|:------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| `a == b`     | [implicitly convertible](language/implicit_conversion) to bool | Establishes an [equivalence relation](https://en.wikipedia.org/wiki/Equivalence_relation), that is, it satisfies the following properties:<br/> \* For all values of `a`, `a == a `yields <a>true</a>.<br/> \* If `a == b`, then `b == a` <br/> \* If `a == b` and `b == c`, then `a == c` |
+
+### Notes
+
+To satisfy this requirement, types that do not have built-in [comparison operators](/docs/std/language/operator_comparison) 
+have to provide a [user-defined operator==](/docs/std/language/operators).
+
+For the types that are both *EqualityComparable* and [*LessThanComparable*](/docs/named_req/LessThanComparable), 
+the C++ standard library makes a distinction between equality, which is the value of the expression `a == b` and equivalence, 
+which is the value of the expression `!(a < b) && !(b < a)`.
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR   | Applied to |                                Behavior as published                               |          Correct behavior          |
+|:-------:|:----------:|:----------------------------------------------------------------------------------:|:----------------------------------:|
+| LWG 283 | C++98      | even if T is EqualityComparable, the requirements did not apply to const T objects | they apply to const T instead of T |

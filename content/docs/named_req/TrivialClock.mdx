@@ -1,0 +1,32 @@
+---
+title:                  C++ named requirements:TrivialClock
+tags:                   [named_req,TrivialClock]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small>*TrivialClock*</Since>
+
+The TrivialClock requirements describe the requirements satisfied by several clocks in the [chrono library](/docs/std/chrono).
+
+### Requirements
+For a type `TC`:
+
+* The type must meet [*Clock*](/docs/named_req/Clock) requirements.
+* The types `TC::rep`, `TC::duration`, and `TC::time_point` satisfy the requirements of [*EqualityComparable*](/docs/named_req/EqualityComparable), [*LessThanComparable*](/docs/named_req/LessThanComparable), 
+  [*DefaultConstructible*](/docs/named_req/DefaultConstructible), [*CopyConstructible*](/docs/named_req/CopyConstructible), [*CopyAssignable*](/docs/named_req/CopyAssignable), 
+  [*Destructible*](/docs/named_req/Destructible), and [*NumericType*](/docs/named_req/NumericType).
+* lvalues of the types `TC::rep`, `TC::duration`, and `TC::time_point` are [*Swappable*](/docs/named_req/Swappable).
+* The function `TC::now()` does not throw exceptions.
+* The type `TC::time_point::clock` meets the *TrivialClock* requirements, recursively.
+
+### Usage
+The following types in the standard library satisfy these requirements:
+
+* [std::chrono::system_clock](/docs/std/chrono/system_clock)
+* [std::chrono::steady_clock](/docs/std/chrono/steady_clock)
+* [std::chrono::high_resolution_clock](/docs/std/chrono/high_resolution_clock)
+* [std::filesystem::file_time_type::clock](/docs/std/filesystem/file_time_type)
+* [std::chrono::file_clock](/docs/std/chrono/file_clock)

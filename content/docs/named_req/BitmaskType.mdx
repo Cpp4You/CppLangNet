@@ -1,0 +1,51 @@
+---
+title:                  C++ named requirements:BitmaskType
+tags:                   [named_req,BitmaskType]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small>*BitmaskType*
+
+Defines a type that can be used to represent a set of constant values or any combination of those values. 
+This trait is typically implemented by integer types, [std::bitset](/docs/std/utility/bitset), or enumerations (scoped and unscoped) with additional operator overloads.
+
+### Requirements
+The bitmask type supports a finite number of bitmask elements, which are distinct non-zero values of the bitmask type, 
+such that, for any pair `Ci` and `Cj`, `Ci & Ci` is *nonzero* and `Ci & Cj` is zero. 
+In addition, the value ​0​ is used to represent an empty bitmask, with no values set.
+
+The bitwise operators `operator&`, `operator|`, `operator^`, `operator~`, `operator&=`, `operator|=`, and `operator^=` 
+are defined for values of the bitmask type and have the same semantics as the corresponding built-in operators 
+on unsigned integers would have if the bitmask elements were the distinct integer powers of two.
+
+The following expressions are well-formed and have the following meaning for any *BitmaskType*:
+<SymbolTable noTraits>
+    <Symbol name={<code>X |= Y</code>}  desc="sets the value Y in the object X"/>
+    <Symbol name={<code>X &= ~Y</code>} desc="clears the value Y in the object X"/>
+    <Symbol name={<code>X & Y</code>}   desc="nonzero result indicates that the value Y is set in the object X"/>
+</SymbolTable>
+
+Each representable bitmask element is defined as a <Since v='cpp17'><a>inline</a></Since> <a>constexpr</a> value of the bitmask type
+
+### Usage
+The following standard library types satisfy *BitmaskType*:
+
+* <Since v='cpp17'><a href="/docs/std/utility/chars_format">std::chars_format</a></Since>
+* [std::ctype_base::mask](/docs/std/locale/ctype_base)
+* [std::ios_base::fmtflags](/docs/std/io/ios_base/fmtflags)
+* [std::ios_base::iostate](/docs/std/io/ios_base/iostate)
+* [std::ios_base::openmode](/docs/std/io/ios_base/openmode)
+* <Since v='cpp11'><a href="/docs/std/regex/regex_traits#Member_types">std::regex_traits::char_class_type</a></Since>
+* <Since v='cpp11'><a href="/docs/std/regex/syntax_option_type">std::regex_constants::syntax_option_type</a></Since>
+* <Since v='cpp11'><a href="/docs/std/regex/match_flag_type">std::regex_constants::match_flag_type</a></Since>
+* <Since v='cpp11'><a href="/docs/std/thread/launch">std::launch</a></Since>
+* <Since v='cpp17'><a href="/docs/std/filesystem/perms">std::filesystem::perms</a></Since>
+* <Since v='cpp17'><a href="/docs/std/filesystem/perm_options">std::filesystem::perm_options</a></Since>
+* <Since v='cpp17'><a href="/docs/std/filesystem/copy_options">std::filesystem::copy_options</a></Since>
+* <Since v='cpp17'><a href="/docs/std/filesystem/directory_options">std::filesystem::directory_options</a></Since>
+
+Code that relies on some particular implementation option (e.g. <code><a>int</a> n = <a href="/docs/std/io/ios_base/fmtflags">std::ios_base::hex</a></code>), 
+is nonportable because [std::ios_base::fmtflags](/docs/std/io/ios_base/fmtflags) is not necessarily implicitly convertible to <a>int</a>.

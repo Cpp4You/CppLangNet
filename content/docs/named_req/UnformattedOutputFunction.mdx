@@ -1,0 +1,52 @@
+---
+title:                  C++ named requirements:UnformattedOutputFunction
+tags:                   [named_req,UnformattedOutputFunction]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *UnformattedOutputFunction*
+
+### Requirements
+An ***UnformattedOutputFunction*** is a stream output function that performs the following:
+
+* Constructs an object of type [basic_istream::sentry](/docs/std/io/basic_ostream/sentry) 
+with automatic storage duration and with the noskipws argument set to <a>true</a>, which performs the following:
+    * If [eofbit](/docs/std/io/ios_base/iostate) or [badbit](/docs/std/io/ios_base/iostate) are set on the output stream, sets the failbit as well, 
+    and if exceptions on failbit are enabled in this output stream's [exception mask](/docs/std/io/basic_ios/exceptions) `((exceptions() & failbit) != 0)`, 
+    throws [ios_base::failure](/docs/std/io/ios_base/failure).
+    * Flushes the tie()'d output stream, if applicable.
+
+* Checks the status of the sentry by calling sentry::operator bool(), which is equivalent to [basic_ios::good](/docs/std/io/ios_base/good).
+    * If the operator returns `false` or sentry's constructor throws an exception, no output takes place.
+    * If the operator returns `true`, attempts to perform the desired output by inserting the characters into the output stream 
+    as if by calling `rdbuf()->sputc()`. Other public members of [std::basic_ostream](/docs/std/io/basic_ostream/) may also be used, 
+    but virtual members of `rdbuf()` except [overflow()](/docs/std/io/basic_streambuf/overflow), 
+    [xsputn()](/docs/std/io/basic_streambuf/xsputn) and [sync()](/docs/std/io/basic_streambuf/sync) will never be called.
+        * If an exception is thrown during output, sets badbit in the output stream. If exceptions on badbit are enabled in this stream's 
+        [exception mask](/docs/std/io/basic_ios/exceptions) `((exceptions() & failbit) != 0)`, the exception is also rethrown.
+        * If no exception was thrown, returns the value specified by the function.
+
+* In any event, whether terminating by exception or returning, the sentry's destructor is called before leaving this function.
+
+### Standard library
+The following standard library functions are ***UnformattedOutputFunctions***.
+
+* [basic_ostream::operator&lt;&lt;<small>(basic_streambuf\*)</small>](/docs/std/io/basic_ostream/operator_ltlt)
+* [basic_ostream::put](/docs/std/io/basic_ostream/put)
+* [basic_ostream::write](/docs/std/io/basic_ostream/write)
+* [basic_ostream::flush](/docs/std/io/basic_ostream/flush)
+* <Since v='cpp11'><a href="/docs/std/io/basic_ostream/tellp">basic_ostream::tellp</a> (except calls pubseekoff instead of output)</Since>
+* <Since v='cpp11'><a href="/docs/std/io/basic_ostream/seekp">basic_ostream::seekp</a> (except calls pubseekoff or pubseekpos instead of output)</Since>
+
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR   | Applied to |                                               Behavior as published                                               |         Correct behavior         |
+|:-------:|:----------:|:-----------------------------------------------------------------------------------------------------------------:|:--------------------------------:|
+| LWG 63  | C++98      | the exception-handling policy was missing                                                                         | added                            |
+| LWG 160 | C++98      | the process of determining whether the exception caught is rethrown mentioned a non-existing function exception() | corrected to exceptions()        |
+| LWG 165 | C++98      | the only virtual member allowed to be called on rdbuf() was overflow()                                            | also allowed xsputn() and sync() |

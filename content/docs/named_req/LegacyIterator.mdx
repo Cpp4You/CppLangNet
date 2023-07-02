@@ -1,0 +1,70 @@
+---
+title:                  C++ named requirements:LegacyIterator
+tags:                   [named_req,LegacyIterator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *LegacyIterator*
+
+The ***LegacyIterator*** requirements describe types that can be used to identify and traverse the elements of a container.
+
+*LegacyIterator* is the base set of requirements used by other iterator types: 
+[*LegacyInputIterator*](/docs/named_req/LegacyInputIterator), [*LegacyOutputIterator*](/docs/named_req/LegacyOutputIterator), 
+[*LegacyForwardIterator*](/docs/named_req/LegacyForwardIterator), [*LegacyBidirectionalIterator*](/docs/named_req/LegacyBidirectionalIterator), 
+and [*LegacyRandomAccessIterator*](/docs/named_req/LegacyRandomAccessIterator). 
+Iterators can be thought of as an abstraction of pointers.
+
+All the categories of iterators require only those functions that are realizable for a given category in constant time (amortized). 
+Therefore, requirement tables <Since v='cpp20'>and concept definitions</Since> for the iterators do not specify complexity.
+
+### Requirements
+The type **It** satisfies *LegacyIterator* if
+
+* The type **It** satisfies [*CopyConstructible*](/docs/named_req/CopyConstructible), and
+* The type **It** satisfies [*CopyAssignable*](/docs/named_req/CopyAssignable), and
+* The type **It** satisfies [*Destructible*](/docs/named_req/Destructible), and
+* lvalues of type **It** satisfy [*Swappable*](/docs/named_req/Swappable), and
+* <code><a href="/docs/std/iterator/iterator_traits">std::iterator_traits</a>&lt;It&gt;</code> has member typedefs, <Until v='cpp20'>value_type</Until>, 
+difference_type, reference, pointer, and iterator_category , and
+
+Given 
+
+* `r`, an lvalue of type **It**, the following expressions must be valid and have their specified effects:
+
+| **Expression** | **Return Type** |  **Precondition**                                                            |
+|:--------------:|:---------------:|:-----------------------------------------------------------------------------|
+| `*r`           | unspecified     | `r` is [dereferenceable](/docs/std/iterator#Dereferenceability_and_validity) |
+| `++r`          | **It**&         | `r` is incrementable (the behavior of the expression `++r` is defined)       |
+
+
+### <Since v='cpp20'>Concept</Since>
+
+<details>
+<summary>Click to expand</summary>
+<div>
+
+For the definition of [std::iterator_traits](/docs/std/iterator/iterator_traits), the following exposition-only concept is defined.
+```cpp
+template<class I>
+concept __LegacyIterator =
+    requires(I i)
+    {
+        {   *i } -> __Referenceable;
+        {  ++i } -> std::same_as<I&>;
+        { *i++ } -> __Referenceable;
+    } && std::copyable<I>;
+```
+where the exposition-only concept `__Referenceable<T>` is satisfied if and only if `T&` is a valid type (in particular, `T` must not be void).
+
+</div>
+</details>
+
+### Defect Reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |               Behavior as published               |                         Correct behavior                        |
+|:--------:|:----------:|:-------------------------------------------------:|:---------------------------------------------------------------:|
+| LWG 3420 | C++20      | the exposition-only concept checks copyable first | copyable is checked only if the requires-expression yields true |

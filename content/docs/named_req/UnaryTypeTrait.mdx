@@ -1,0 +1,41 @@
+---
+title:                  C++ named requirements:UnaryTypeTrait   
+tags:                   [named_req,UnaryTypeTrait]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *UnaryTypeTrait*</Since>
+
+A ***UnaryTypeTrait*** is a class template that describes a property of its template type parameter with an `integral_constant` (typically `bool_constant`) specialization.
+
+### Requirements
+* [*DefaultConstructible*](/docs/named_req/DefaultConstructible) and [*CopyConstructible*](/docs/named_req/CopyConstructible)
+* Takes one template type parameter (additional template parameters are optional and allowed)
+* Publicly and unambiguously derived from a specialization of `integral_constant`, known as its *base characteristic*
+* The member names of the base characteristic are not hidden and are unambiguously available
+
+### Standard library
+The following [type properties](/docs/std/types#Type_properties) all satisfy *UnaryTypeTrait*.
+
+* Primary type categories
+* Composite type categories
+* Type properties
+* Supported operations
+* Property queries
+
+The following standard library class templates also satisfy *UnaryTypeTrait*.
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/types/integral_constant"               name={<>integral_constant<Version v='cpp11'></Version></>}                                desc={<>compile-time constant of specified type with specified value</>}/>
+    <Symbol autoLink linkName="/docs/std/types/negation"                        name={<>negation<Version v='cpp17'></Version></>}                                         desc={<>logical NOT metafunction</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/tuple/tuple_size"              name={<>std::tuple_size<small>&lt;std::tuple&gt;</small><Version v='cpp11'></Version></>} desc={<>obtains the size of tuple at compile time</>}/>
+    <Symbol autoLink linkName="/docs/std/container/array/tuple_size"            name={<>std::tuple_size<small>&lt;std::array&gt;</small><Version v='cpp11'></Version></>} desc={<>obtains the size of an array</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/pair/tuple_size"               name={<>std::tuple_size<small>&lt;std::pair&gt;</small><Version v='cpp11'></Version></>}  desc={<>obtains the size of a pair</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/variant/variant_size"          name={<>variant_size<br/>variant_size_v<Version v='cpp17'></Version></>}                  desc={<>obtains the size of the variant's list of alternatives at compile time</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/functional/is_bind_expression" name={<>is_bind_expression<Version v='cpp11'></Version></>}                               desc={<>indicates that an object is std::bind expression or can be used as one</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/functional/is_placeholder"     name={<>is_placeholder<Version v='cpp11'></Version></>}                                   desc={<>indicates that an object is a standard placeholder or can be used as one</>}/>
+    <Symbol autoLink linkName="/docs/std/algorithm/is_execution_policy"         name={<>is_execution_policy<Version v='cpp17'></Version></>}                              desc={<>test whether a class represents an execution policy</>}/>
+</SymbolTable>

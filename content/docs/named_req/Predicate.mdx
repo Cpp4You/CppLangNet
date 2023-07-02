@@ -1,0 +1,38 @@
+---
+title:                  C++ named requirements:Predicate 
+tags:                   [named_req,Predicate]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}              from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <small>C++ named requirements:</small> *Predicate*
+
+The ***Predicate*** requirements describe a callable that returns a value testable as a `bool`.
+
+Predicate is typically used with algorithms that take input data (individual objects/containers) and a predicate, 
+which is then called on input data to decide on further course of action. Some examples of predicate usage in C++ standard library are:
+
+* [`std::all_of`](/docs/std/algorithm/all_any_none_of), [`std::any_of`](/docs/std/algorithm/all_any_none_of), [`std::none_of`](/docs/std/algorithm/all_any_none_of) 
+Take an array of elements and a predicate as an input. Call predicate on individual input elements, and return true if for all/any/none elements, predicate returns true.
+
+* [`std::find_if`](/docs/std/algorithm/find) Take sequence of elements, and a predicate. 
+Return first element in the sequence, for which predicate returns value equal to <a>true</a>
+
+<small><small><small> Description of algorithm facilities, given above, is crude and intended to explain Predicate in simple terms. For detailed info, refer to individual pages. </small></small></small>
+
+In other words, if an algorithm takes a *Predicate* `pred` and an iterator `first`, 
+it should be able to test the object of the type pointed to by the iterator `first` using the given predicate via a construct like `if(pred(*first)) {...}`.
+
+The function object `pred` shall not apply any non-constant function through the dereferenced iterator <Since v='cpp20'> and must accept a const object argument, 
+with the same behavior regardless of whether its argument is const or non-const </Since>. 
+This function object may be a pointer to function or an object of a type with an appropriate function call operator.
+
+### Requirements
+
+* [FunctionObject](/docs/named_req/FunctionObject)
+
+>	This section is incomplete <br/>
+>   Reason: better describe actual requirements

@@ -1,0 +1,50 @@
+---
+title:                  C++ named requirements:ValueSwappable
+tags:                   [named_req,ValueSwappable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Deprecated}             from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *ValueSwappable*</Since>
+Two objects of this type can be dereferenced and the resulting values can be swapped using unqualified function call `swap()` 
+in the context where both [std::swap](/docs/std/algorithm/swap) and the user-defined `swap()`s are visible.
+
+### Requirements
+
+A type T is *ValueSwappable* if
+* T satisfies the [*LegacyIterator*](/docs/named_req/LegacyIterator) requirements 
+* For any dereferenceable object `x` of type T (that is, any value other than the end iterator), 
+`*x` satisfies the [*Swappable*](/docs/named_req/Swappable) requirements.
+
+Many standard library functions expect their arguments to satisfy *ValueSwappable*, 
+which means that any time the standard library performs a swap, it uses the equivalent of using `std::swap; swap(*iter1, *iter2);`.
+
+### Example
+```cpp
+#include <iostream>
+#include <vector>
+ 
+class IntVector {
+    std::vector<int> v;
+//  IntVector& operator=(IntVector); // not assignable (C++98 way)
+ public:
+    IntVector& operator=(IntVector) = delete; // not assignable
+    void swap(IntVector& other) {
+        v.swap(other.v);
+    }
+};
+void swap(IntVector& v1, IntVector& v2) {
+    v1.swap(v2);
+}
+ 
+int main()
+{
+    IntVector v1, v2;    // IntVector is Swappable, but not MoveAssignable
+    IntVector* p1 = &v1;
+    IntVector* p2 = &v2; // IntVector* is ValueSwappable
+    std::iter_swap(p1, p2); // OK: iter_swap requires ValueSwappable
+//  std::swap(v1, v2); // compiler error! std::swap requires MoveAssignable
+}
+```

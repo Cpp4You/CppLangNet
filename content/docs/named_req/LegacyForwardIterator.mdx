@@ -1,0 +1,102 @@
+---
+title:                  C++ named requirements:LegacyForwardIterator
+tags:                   [named_req,LegacyForwardIterator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *LegacyForwardIterator*
+
+A ***LegacyForwardIterator*** is a [*LegacyIterator*](/docs/named_req/LegacyIterator) that can read data from the pointed-to element.
+
+Unlike [*LegacyInputIterator*](/docs/named_req/LegacyInputIterator) and [*LegacyOutputIterator*](/docs/named_req/LegacyOutputIterator), 
+it can be used in multipass algorithms.
+
+If a *LegacyForwardIterator* `it` originates from a [*Container*](/docs/named_req/Container), then `it`'s `value_type` is the same as the container's, 
+so dereferencing (`*it`) obtains the container's `value_type`.
+
+### Requirements
+The type **It** satisfies *LegacyForwardIterator* if
+
+* The type **It** satisfies [*LegacyInputIterator*](/docs/named_req/LegacyInputIterator)
+* The type **It** satisfies [*DefaultConstructible*](/docs/named_req/DefaultConstructible)
+* Objects of the type **It** provide *multipass guarantee* [described below](#multipass-guarantee)
+* Let T be the value type of It. The type <code><a href="/docs/std/iterator/iterator_traits">std::iterator_traits</a>&lt;It&tg;::reference</code> must be either
+    * **T&** <Since v='cpp11'><b>or T&&</b></Since> if **It** satisfies [*LegacyOutputIterator*](/docs/named_req/LegacyOutputIterator) (It is mutable), or
+    * **const T&** <Since v='cpp11'><b>or const T&&</b></Since> otherwise (**It** is constant),
+<br/>(where **T** is the type denoted by <code><a href="/docs/std/iteratpr/iterator_traits">std::iterator_traits</a>&lt;It&gt;::value_type</code>)
+* Equality and inequality comparison is defined over all iterators for the same underlying 
+sequence <Since v='cpp14'>and the value initialized-iterators</Since>.
+
+And, given
+
+* `i`, dereferenceable lvalue of type **It**
+* `reference`, the type denoted by `std::iterator_traits<It>::reference`
+
+The following expressions must be valid and have their specified effects
+
+| Expression | Return type |    Equivalent expression   |
+|:----------:|:-----------:|:--------------------------:|
+| `i++`        | **It**          | `It ip = i; ++i; return ip;` |
+| `*i++`       | `reference`   |                            |
+
+A mutable *LegacyForwardIterator* is a *LegacyForwardIterator* that additionally satisfies 
+the [*LegacyOutputIterator*](/docs/named_req/LegacyOutputIterator) requirements.
+
+### Multipass guarantee
+Given `a` and `b`, dereferenceable iterators of type **It**
+
+* If `a` and `b` compare equal (`a == b` is contextually convertible to <a>true</a>) 
+then either they are both non-dereferenceable or `*a` and `*b` are references bound to the same object.
+* If `*a` and `*b` refer to the same object, then `a == b`.
+* Assignment through a mutable *ForwardIterator* iterator cannot invalidate the iterator (implicit due to `reference` defined as a true reference).
+* Incrementing a copy of a does not change the value read from a (formally, either It is a raw pointer type or the expression 
+`(void)++It(a), *a` is equivalent to the expression `*a`).
+* `a == b` implies `++a == ++b`.
+
+### <Since v='cpp14'>Singular iterators</Since>
+
+<details>
+<summary>Click to expand</summary>
+<div>
+
+A [value-initialized](/docs/std/language/value_initialization) *LegacyForwardIterator* behaves like the past-the-end iterator of some unspecified empty container: 
+it compares equal to all value-initialized *LegacyForwardIterator*s of the same type.
+
+</div>
+</details>
+
+### <Since v='cpp20'>Concept</Since>
+
+<details>
+<summary>Click to expand</summary>
+<div>
+
+For the definition of [std::iterator_traits](/docs/std/iterator/iterator_traits), the following exposition-only concept is defined.
+```cpp
+template<class It>
+concept __LegacyForwardIterator =
+  __LegacyInputIterator<It> && std::constructible_from<It> &&
+  std::is_reference_v<std::iter_reference_t<It>> &&
+  std::same_as<
+    std::remove_cvref_t<std::iter_reference_t<It>>,
+    typename std::indirectly_readable_traits<It>::value_type> &&
+  requires(It it) {
+    {  it++ } -> std::convertible_to<const It&>;
+    { *it++ } -> std::same_as<std::iter_reference_t<It>>;
+  };
+```
+where the exposition-only concept `__LegacyIterator` is described in [LegacyIterator#Concept](/docs/named_req/LegacyIterator#concept).
+
+</div>
+</details>
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                                   Behavior as published                                       |       Correct behavior       |
+|:--------:|:----------:|:---------------------------------------------------------------------------------------------:|:----------------------------:|
+| LWG 3798 | C++20      | `__LegacyForwardIterator` requires `std::iter_reference_t<It>` to be an lvalue reference type | also allows rvalue reference |

@@ -1,0 +1,79 @@
+---
+title:                  C++ named requirements:LegacyInputIterator
+tags:                   [named_req,LegacyInputIterator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *LegacyInputIterator*
+
+A ***LegacyInputIterator*** is a [*LegacyIterator*](/docs/named_req/LegacyIterator) that can read from the pointed-to element. 
+*LegacyInputIterator*s only guarantee validity for single pass algorithms: once a *LegacyInputIterator* `i` has been incremented, 
+all copies of its previous value may be invalidated.
+
+### Requirements
+The type **It** satisfies *LegacyInputIterator* if
+
+* The type **It** satisfies [*LegacyIterator*](/docs/named_req/LegacyIterator)
+* The type **It** satisfies [*EqualityComparable*](/docs/named_req/EqualityComparable)
+
+And, given
+
+* `i` and `j`, values of type **It** or **const It**
+* `r`, an lvalue of type **It**
+* `reference`, the type denoted by `std::iterator_traits<It>::reference`
+* `value_type`, the type denoted by `std::iterator_traits<It>::value_type`
+
+The following expressions must be valid and have their specified effects:
+
+| **Expression** | **Return type**                          | **Equivalent expression**                                                          | **Notes**                                                                                                                                                                                                                                                  |
+|:--------------:|:----------------------------------------:|:-----------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `i != j`       | contextually convertible to `bool`       | `!(i == j)`                                                                        | Precondition: `(i, j)` is in the domain of `==`.                                                                                                                                                                                                           |                       
+| `*i`           | `reference`, convertible to `value_type` | If `i == j` and `(i, j)` is in the domain of `==` then this is equivalent to `*j`. | Precondition: `i` is dereferenceable. The expression `(void)*i, *i` is equivalent to `*i`.                                                                                                                                                                 |
+| `i->m`         |                                          | `(*i).m`                                                                           | Precondition: `i` is dereferenceable.                                                                                                                                                                                                                      |
+| `++r`          | **It**&                                  |                                                                                    | Precondition: `r` is dereferenceable. <br/> Postcondition: `r` is dereferenceable or `r` is past-the-end. <br/> Postcondition: Any copies of the previous value of `r` are no longer required to be either dereferenceable or to be in the domain of `==`. |
+| `(void)r++`    |                                          | `(void)++r`                                                                        |                                                                                                                                                                                                                                                            |
+| `*r++`         | convertible to `value_type`              | <code>value_type x = \*r; <br/>++r; <br/>return x; </code>                         |                                                                                                                                                                                                                                                            |                       
+
+### Notes
+"in the domain of ==" means equality comparison is defined between the two iterator values. 
+For input iterators, equality comparison does not need to be defined for all values, and the set of the values in the domain of == may change over time.
+
+The reference type for an input iterator that is not also a [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator) does not have to be a reference type: 
+dereferencing an input iterator may return a proxy object or `value_type` itself by value (as in the case of [std::istreambuf_iterator](/docs/std/iterator/istreambuf_iterator)).
+
+
+### <Since v='cpp20'>Concept</Since>
+
+<details>
+<summary>Click to expand</summary>
+<div>
+
+For the definition of [std::iterator_traits](/docs/std/iterator/iterator_traits), the following exposition-only concept is defined.
+```cpp
+template<class I>
+concept __LegacyInputIterator =
+  __LegacyIterator<I> && std::equality_comparable<I> && requires(I i) {
+    typename std::incrementable_traits<I>::difference_type;
+    typename std::indirectly_readable_traits<I>::value_type;
+    typename std::common_reference_t<std::iter_reference_t<I>&&,
+                                     typename std::indirectly_readable_traits<I>::value_type&>;
+    *i++;
+    typename std::common_reference_t<decltype(*i++)&&,
+                                     typename std::indirectly_readable_traits<I>::value_type&>;
+    requires std::signed_integral<typename std::incrementable_traits<I>::difference_type>;
+  };
+```
+where the exposition-only concept `__LegacyIterator` is described in [LegacyIterator#Concept](/docs/named_req/LegacyIterator#concept).
+
+</div>
+</details>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|   DR   | Applied to |          Behavior as published             |               Correct behavior                 |
+|:------:|:----------:|:------------------------------------------:|:----------------------------------------------:|
+| LWG 98 | C++98      | the return type of `*i++` was `value_type` | it can be any type convertible to `value_type` |
