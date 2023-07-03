@@ -7,10 +7,17 @@
 	],
 	"compilerOptions": {
 		"baseUrl": ".",
-		"types": ["raw-loader.d.ts", "node"],
+		"types": [
+			"raw-loader.d.ts",
+			"node"
+		],
 		"paths": {
-			"@site/*": ["./*"],
-			"@site-comps/*": ["./src/components/mdx/*"]
+			"@site/*": [
+				"./*"
+			],
+			"@site-comps/*": [
+				"./src/components/mdx/*"
+			]
 		}
 	},
 }
