@@ -1,0 +1,167 @@
+---
+title:			ranges::for_each_n algorithm
+sidebar_label:	ranges::for_each_n(  )
+description:	ranges::for_each_n algorithm C++ documentation
+hide_title:		true
+tags:			[ranges, algorithm, for_each_n, every, size, foreach]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/for_each_n
+---
+
+import Columns				from "@site-comps/Columns";
+import SwitchView			from "@site-comps/SwitchView";
+import Tooltip				from "@site-comps/Tooltip";
+import Tabs					from "@theme/Tabs";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed 	from './_codes/for_each_n/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified	from './_codes/for_each_n/since-cpp20-simplified.mdx';
+
+# std::ranges::for_each_n() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class F >
+using for_each_n_result = ranges::in_fun_result<I, F>;
+```
+
+- **(1)** Applies the given function object `f` to the result of the value projected by each iterator in the range [`first`, `first + n`), in order.
+
+For both overloads, if the iterator type is mutable, `f` may modify the elements of the range.
+If `f` returns a result, the result is ignored.
+
+:::danger Undefined Behaviour
+If `n` is less than zero, the <Tooltip title={Term_UndefinedBehaviour}>behavior is undefined</Tooltip>.
+:::
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+- `first` - the beginning of the range to apply the function to
+- `n` - the number of elements to apply the function to
+- `f` - function object, to be applied to every element of the range.
+	The signature of the function should be equivalent to the following:
+	```cpp
+	void fun(const Type& a);
+	```
+	- The signature does not need to have `const&`.
+	- The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
+- `proj` - projection to apply to the elements
+
+### Return value
+
+An object of of type `for_each_n_result` initialized as follows:
+```cpp
+{
+	first + n,
+	std::move(f)
+}
+```
+Where `first + n` may be evaluated as `std::ranges::next(std::move(first), n)` depending on iterator category.
+
+### Complexity
+
+Exactly `n` applications of `f` and `proj`.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>Click to expand</summary>
+
+```cpp
+struct for_each_n_fn
+{
+    template<std::input_iterator I, class Proj = std::identity,
+             std::indirectly_unary_invocable<std::projected<I, Proj>> Fun>
+    constexpr for_each_n_result<I, Fun>
+        operator()(I first, std::iter_difference_t<I> n, Fun fun, Proj proj = Proj{}) const
+    {
+        for (; n-- > 0; ++first)
+            std::invoke(fun, std::invoke(proj, *first));
+        return {std::move(first), std::move(fun)};
+    }
+};
+
+inline constexpr for_each_n_fn for_each_n {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <ranges>
+#include <string_view>
+
+struct P
+{
+    int first;
+    char second;
+    friend std::ostream& operator<<(std::ostream& os, const P& p)
+    {
+        return os << '{' << p.first << ",'" << p.second << "'}";
+    }
+};
+
+auto print = [](std::string_view name, auto const& v)
+{
+    std::cout << name << ": ";
+    for (auto n = v.size(); const auto& e : v)
+        std::cout << e << (--n ? ", " : "\n");
+};
+
+int main()
+{
+    std::array a {1, 2, 3, 4, 5};
+    print("a", a);
+    // Negate first three numbers:
+    std::ranges::for_each_n(a.begin(), 3, [](auto& n) { n *= -1; });
+    print("a", a);
+
+    std::array s { P{1,'a'}, P{2, 'b'}, P{3, 'c'}, P{4, 'd'} };
+    print("s", s);
+    // Negate data members 'P::first' using projection:
+    std::ranges::for_each_n(s.begin(), 2, [](auto& x) { x *= -1; }, &P::first);
+    print("s", s);
+    // Capitalize data members 'P::second' using projection:
+    std::ranges::for_each_n(s.begin(), 3, [](auto& c) { c -= 'a'-'A'; }, &P::second);
+    print("s", s);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+a: 1, 2, 3, 4, 5
+a: -1, -2, -3, 4, 5
+s: {1,'a'}, {2,'b'}, {3,'c'}, {4,'d'}
+s: {-1,'a'}, {-2,'b'}, {3,'c'}, {4,'d'}
+s: {-1,'A'}, {-2,'B'}, {3,'C'}, {4,'d'}
+```
+
+</div>
+</Columns>

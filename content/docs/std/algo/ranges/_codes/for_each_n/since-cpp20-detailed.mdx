@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template<
+	std::input_iterator I,
+	class Proj = std::identity,
+	std::indirectly_unary_invocable<std::projected<I, Proj>> Fun
+>
+constexpr for_each_n_result<I, Fun>
+    for_each_n( I first, std::iter_difference_t<I> n, Fun f, Proj proj = {});
+```
