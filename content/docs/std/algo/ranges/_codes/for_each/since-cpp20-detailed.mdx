@@ -1,0 +1,22 @@
+```cpp
+// (1)
+template<
+	std::input_iterator I,
+	std::sentinel_for<I> S,
+	class Proj = std::identity,
+	std::indirectly_unary_invocable<std::projected<I, Proj>> Fun
+>
+constexpr for_each_result<I, Fun>
+    for_each( I first, S last, Fun f, Proj proj = {} );
+
+
+// (2)
+template<
+	ranges::input_range R,
+	class Proj = std::identity,
+	std::indirectly_unary_invocable<
+	std::projected<ranges::iterator_t<R>, Proj>> Fun
+>
+constexpr for_each_result<ranges::borrowed_iterator_t<R>, Fun>
+    for_each( R&& r, Fun f, Proj proj = {} );
+```
