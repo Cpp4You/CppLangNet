@@ -146,7 +146,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 				Checks if all elements in a range hold a condition.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/all_of" name="all_of">
+			<Symbol pub autoLink linkName="./ordinary/all_of" name={ <Since v='cpp11'>all_of</Since> }>
 				Checks if all elements in a range hold a condition.
 			</Symbol>,
 	}}/>
@@ -157,7 +157,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 				Checks if any elements in a range hold a condition.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/any_of" name="any_of">
+			<Symbol pub autoLink linkName="./ordinary/any_of" name={ <Since v='cpp11'>any_of</Since> }>
 				Checks if any elements in a range hold a condition.
 			</Symbol>,
 	}}/>
@@ -168,7 +168,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 				Checks if no elements in a range hold a condition.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/none_of" name="none_of">
+			<Symbol pub autoLink linkName="./ordinary/none_of" name={ <Since v='cpp11'>none_of</Since> }>
 				Checks if no elements in a range hold a condition.
 			</Symbol>,
 	}}/>
@@ -215,6 +215,17 @@ All rangified algorithms accept a range. The same way iterators can be different
 		'Ordinary':
 			<Symbol pub autoLink linkName="./ordinary/for_each_n" name="for_each_n">
 				Applies a function to a range of elements consisting of an iterator and a size.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol pub autoLink linkName="./ranges/find_if" name={ <Since v='cpp20'>ranges::find_if</Since> }>
+				Finds the first element satisfying specific criteria.
+			</Symbol>,
+		'Ordinary':
+			<Symbol pub autoLink linkName="./ordinary/find_if" name="find_if">
+				Finds the first element satisfying specific criteria.
 			</Symbol>,
 	}}/>
 
