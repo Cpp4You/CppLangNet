@@ -38,6 +38,8 @@ module.exports = {
             docsMethod("std/algo/ordinary/for_each"),
             docsMethod("std/algo/ordinary/for_each_n", "since-cpp17"),
             docsMethod("std/algo/ordinary/find"),
+            docsMethod("std/algo/ordinary/find_if"),
+            docsMethod("std/algo/ordinary/find_if_not"),
           ]
         }
       ]
