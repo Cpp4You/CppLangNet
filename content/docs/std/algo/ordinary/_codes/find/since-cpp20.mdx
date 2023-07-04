@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class InputIt, class T >
+constexpr InputIt find( InputIt first, InputIt last, const T& value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class T >
+ForwardIt find( ExecutionPolicy&& policy,
+                ForwardIt first, ForwardIt last, const T& value );
+```

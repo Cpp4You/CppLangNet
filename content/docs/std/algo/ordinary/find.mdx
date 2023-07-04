@@ -1,0 +1,131 @@
+---
+title:			find algorithm
+sidebar_label:	find(  )
+description:	find algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, find, find, search, look]
+
+cppreference_origin_rel: w/cpp/algorithm/find
+---
+
+import Columns			from "@site-comps/Columns";
+import SwitchView		from "@site-comps/SwitchView";
+import Tooltip				from '@site-comps/Tooltip';
+import { Since, Until }	from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17		from './_codes/find/until-cpp17.mdx';
+import Signature_SinceCpp17		from './_codes/find/since-cpp17.mdx';
+import Signature_SinceCpp20		from './_codes/find/since-cpp20.mdx';
+
+# std::find() algorithm
+
+<SwitchView content={{
+	'until-cpp17': <Signature_UntilCpp17 />,
+	'since-cpp17': <Signature_SinceCpp17 />,
+	'since-cpp20': <Signature_SinceCpp20 />
+}} />
+
+
+Returns an iterator to the first element in the range satisfiying specific criteria (or `last` iterator if there is no such iterator):
+
+- **(1)** Searches for an element equal to `value` (using `operator==`)
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt; </Until> <Since v='cpp20'>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+- `first`, `last` - the range of elements to apply the function to.
+- `value` - value to compare the elements to
+- `policy` - the execution policy to use. See [execution policy](#) for details.
+
+#### Type requirements
+
+- `InputIt` must meet the requirements of [LegacyInputIterator](/docs/named_req/LegacyInputIterator).
+
+### Return value
+
+The first iterator it in the range [`first`, `last`) for which `*it == value` is `true`.
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+At most N comparisons with `value` using `operator==`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>find (1)</summary>
+
+```cpp
+template<class InputIt, class T>
+constexpr InputIt find(InputIt first, InputIt last, const T& value)
+{
+    for (; first != last; ++first)
+        if (*first == value)
+            return first;
+
+    return last;
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+
+int main()
+{
+    const auto v = {1, 2, 3, 4};
+
+    for (int n : {3, 5})
+        (std::find(v.begin(), v.end(), n) == std::end(v))
+            ? std::cout << "v does not contain " << n << '\n'
+            : std::cout << "v contains " << n << '\n';
+
+    auto is_even = [](int i) { return i % 2 == 0; };
+
+    for (auto const& w : {std::array{3, 1, 4}, {1, 3, 5}})
+        if (auto it = std::find_if(begin(w), end(w), is_even); it != std::end(w))
+            std::cout << "w contains an even number " << *it << '\n';
+        else
+            std::cout << "w does not contain even numbers\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+v contains 3
+v does not contain 5
+w contains an even number 4
+w does not contain even numbers
+```
+
+</div>
+</Columns>
