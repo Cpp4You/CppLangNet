@@ -24,6 +24,7 @@ module.exports = {
             docsMethod("std/algo/ranges/for_each", "since-cpp20"),
             docsMethod("std/algo/ranges/for_each_n", "since-cpp20"),
             docsMethod("std/algo/ranges/find", "since-cpp20"),
+            docsMethod("std/algo/ranges/find_if", "since-cpp20"),
           ]
         },
         {
