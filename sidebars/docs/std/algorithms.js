@@ -42,6 +42,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/find"),
             docsMethod("std/algo/ordinary/find_if"),
             docsMethod("std/algo/ordinary/find_if_not"),
+            docsMethod("std/algo/ranges/find_end"),
           ]
         }
       ]
