@@ -16,16 +16,28 @@ module.exports = {
           type: "category",
           label: "Rangified",
           items: [
+            docsMethod("std/algo/ranges/all_of", "since-cpp20"),
+            docsMethod("std/algo/ranges/any_of", "since-cpp20"),
+            docsMethod("std/algo/ranges/none_of", "since-cpp20"),
             docsMethod("std/algo/ranges/count", "since-cpp20"),
             docsMethod("std/algo/ranges/count_if", "since-cpp20"),
+            docsMethod("std/algo/ranges/for_each", "since-cpp20"),
+            docsMethod("std/algo/ranges/for_each_n", "since-cpp20"),
+            docsMethod("std/algo/ranges/find", "since-cpp20"),
           ]
         },
         {
           type: "category",
           label: "Ordinary",
           items: [
+            docsMethod("std/algo/ordinary/all_of", "since-cpp11"),
+            docsMethod("std/algo/ordinary/any_of", "since-cpp11"),
+            docsMethod("std/algo/ordinary/none_of", "since-cpp11"),
             docsMethod("std/algo/ordinary/count"),
             docsMethod("std/algo/ordinary/count_if"),
+            docsMethod("std/algo/ordinary/for_each"),
+            docsMethod("std/algo/ordinary/for_each_n", "since-cpp17"),
+            docsMethod("std/algo/ordinary/find"),
           ]
         }
       ]
