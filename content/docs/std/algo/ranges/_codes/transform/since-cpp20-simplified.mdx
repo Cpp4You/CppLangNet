@@ -29,9 +29,9 @@ constexpr binary_transform_result<ranges::borrowed_iterator_t<R1>,
 	);
 ```
 
-The type of arguments are generic and have following constraints:
+The type of arguments are generic and have the following constraints:
 - `I`, `I1`, `I2` - `std::input_iterator`
-- `S`, `I1`, `I2` - `std::sentinel_for<I>`
+- `S`, `S1`, `S2` - `std::sentinel_for<I>`, `std::sentinel_for<I1>`, `std::sentinel_for<I2>`
 - `R`, `R1`, `R2` - `std::ranges::input_range`
 - `O` - `std::weakly_incrementable`
 - `F` - `std::copy_constructible`
