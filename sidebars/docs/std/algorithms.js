@@ -44,6 +44,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/find_if"),
             docsMethod("std/algo/ordinary/find_if_not"),
             docsMethod("std/algo/ordinary/find_end"),
+            docsMethod("std/algo/ordinary/search"),
           ]
         }
       ]
