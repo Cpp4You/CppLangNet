@@ -15,8 +15,6 @@ import Columns			from "@site-comps/Columns";
 import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
 import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
 
-<NotFinished/>
-
 # Loops
 
 In this lesson, we'll make the program execute a given code multiple times, that is, we'll use a loop.
@@ -42,7 +40,7 @@ for (int n : numbers)
 This is the simplest version of a loop in C++.
 You will learn more about their types in the following sections.
 
-## Loop types
+## Explanation
 
 In C++, we have the following loops:
 
@@ -59,8 +57,6 @@ If you want to read about the `do ... while` loop, see the article:
 :::important Iteration (definition)
 **Iteration** - a single loop body execution.
 :::
-
-## Explanation
 
 ### Range-based `for`
 
@@ -99,7 +95,7 @@ We do not use any equal sign (`=`) in this notation, because the value of each e
 will be automatically assigned to `n`.
 :::
 
-## `while` loop
+### `while` loop
 
 <Image center border maxheight="300px"
 		src="/img/tutorials/course/basic/loops/while-en.png"
@@ -229,7 +225,7 @@ for ( ; ; )
 The above will make the `for` loop execute infinitely (due to the empty condition),
 unless we manually break it...
 
-## Stopping a loop
+### Breaking a loop (`break`)
 
 We can stop the loop at any point using the `break` statement:
 
@@ -246,7 +242,7 @@ for (int i = 0; i < 10; i++)
 This loop will display numbers from 0 to 4, because at `i` equal to `5` the execution of the loop will be aborted.
 We can break the `while` loop in the same way.
 
-## Skipping a single iteration
+### Skipping a single iteration (`continue`)
 
 To skip further execution of the current loop iteration we use the `continue` statement:
 
