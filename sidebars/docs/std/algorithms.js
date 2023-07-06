@@ -27,6 +27,7 @@ module.exports = {
             docsMethod("std/algo/ranges/find_if", "since-cpp20"),
             docsMethod("std/algo/ranges/find_if_not", "since-cpp20"),
             docsMethod("std/algo/ranges/find_end", "since-cpp20"),
+            docsMethod("std/algo/ranges/search", "since-cpp20"),
             docsMethod("std/algo/ranges/search_n", "since-cpp20"),
           ]
         },
