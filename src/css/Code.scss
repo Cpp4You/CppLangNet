@@ -102,4 +102,9 @@ html[data-theme="dark"] {
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
 	}
+	
+}
+
+pre.prism-code+div button{
+	opacity: 0.6 !important;
 }

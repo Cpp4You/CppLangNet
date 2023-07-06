@@ -88,6 +88,27 @@ table {
 	border: 2px solid rgba(gray, 0.4);
 }
 
+.theme-doc-markdown details
+{
+	--docusaurus-details-decoration-color: rgba(76, 179, 212, 0.4);
+	border-color: rgba(76, 179, 212, 0.4);
+	>summary {
+		display: flex;
+		align-items: center;
+		&::before {
+			top: unset !important;
+		}
+	}
+	&[data-size="small"]>summary {
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
+
+	&[data-size="normal"]>summary {
+		padding-top: 6px;
+		padding-bottom: 6px;
+	}
+}
 
 @import './Code.scss';
 @import './Logos.scss';
