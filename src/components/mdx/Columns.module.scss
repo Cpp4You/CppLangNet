@@ -1,3 +1,10 @@
+$breakpoint-xs: 0px;
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 120px;
+  
+
 .columns {
 	display: grid;
 	max-width: 100%;
@@ -5,3 +12,25 @@
 		min-width: 0;
 	}
 }
+
+@mixin break-columns {
+	display: flex;
+	flex-direction: column;
+}
+
+
+@mixin generate-breakpoint($breakpoint-name, $breakpoint-size)
+{
+	@media (max-width: $breakpoint-size)
+	{		
+	.columns[data-break-at=#{$breakpoint-name}] {
+		@include break-columns;
+	}
+	}	
+}
+
+@include generate-breakpoint("xs", $breakpoint-xs);
+@include generate-breakpoint("sm", $breakpoint-sm);
+@include generate-breakpoint("md", $breakpoint-md);
+@include generate-breakpoint("lg", $breakpoint-lg);
+@include generate-breakpoint("xl", $breakpoint-xl);
