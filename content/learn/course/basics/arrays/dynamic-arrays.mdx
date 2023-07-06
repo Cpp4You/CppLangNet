@@ -9,7 +9,7 @@ hide_title:			true
 import Image			from "@site-comps/Image";
 import Tooltip			from "@site-comps/Tooltip";
 import Columns			from "@site-comps/Columns";
-import FullCode			from "@site-comps/FullCode";
+import CustomCodeBlock			from "@site-comps/CustomCodeBlock";
 
 <!-- Presets -->
 import NotFinished		from "@site/i18n/en/presets/NotFinished.mdx";
@@ -56,13 +56,15 @@ Let's go back and consider the code we've shown in the [Motivation](../introduct
 There is a great candidate to be turned into an array. The following variables are of the same type (`std::string`)
 and differ only in number at the end of their name.
 
+<CustomCodeBlock fullCode={<FullCode_Motivation/>}>
+
 ```cpp
 std::string playerName1;
 std::string playerName2;
 std::string playerName3;
 ```
 
-<FullCode content={<FullCode_Motivation/>} />
+</CustomCodeBlock>
 
 Instead of creating three separate variables, we can create one array that contains three elements.
 
@@ -263,6 +265,8 @@ The name of the second player has 15 characters.
 
 There is also a way to provide initial values for the elements of the `vector` right from the beginning:
 
+<CustomCodeBlock fullCode={<FullCode_InitializingVector/>}>
+
 ```cpp
 vector<string> playerNames = {
 	"HappyBanana",
@@ -271,7 +275,7 @@ vector<string> playerNames = {
 };
 ```
 
-<FullCode content={<FullCode_InitializingVector/>} />
+</CustomCodeBlock>
 
 <details>
 <summary>Alternative syntax</summary>
@@ -298,6 +302,7 @@ We will use this method of initialization in the current lesson from now on.
 ## Adding elements at the end
 
 To add an item to the end of an array (in this case `playerNames`), we need to use `push_back` like this:
+<CustomCodeBlock fullCode={<FullCode_AddingElementToArray/>}>
 
 ```cpp
 // highlight-next-line
@@ -310,8 +315,7 @@ cout << "Name of the player with index 3: " << playerNames[3];
 ```console title="Output"
 Name of the player with index 3: WickedWitch
 ```
-
-<FullCode content={<FullCode_AddingElementToArray/>} />
+</CustomCodeBlock>
 
 From the moment `.push_back(...)` instruction was executed, the `playerNames` array already has four elements.
 We say that we are *calling* the `push_back(...)` *method*. We'll talk more about calls and methods in the future.
@@ -377,11 +381,13 @@ which isn't the same thing as an index. To obtain it, we need to use `begin()` a
 
 Knowing this, we will now insert a new player just before the `AngryCrab` (index `1`):
 
+<CustomCodeBlock fullCode={<FullCode_InsertingElement />}>
+
 ```cpp
 playerNames.insert(playerNames.begin() + 1, "BadPenguin");
 ```
 
-<FullCode content={<FullCode_InsertingElement />} />
+</CustomCodeBlock>
 
 This is how the array changes after the insertion:
 
@@ -424,11 +430,13 @@ playerNames.erase( playerNames.begin() + n );
 
 We'll now erase the first player from the array:
 
+<CustomCodeBlock fullCode={<FullCode_ErasingElement />}>
+
 ```cpp
 playerNames.erase( playerNames.begin() + 0 );
 ```
 
-<FullCode content={<FullCode_ErasingElement />} />
+</CustomCodeBlock>
 
 Note that in this case `+ 0` actually does nothing, but I put it there to make it clear: `playerNames.begin()`
 is the same as `playerNames.begin() + 0`.
@@ -502,6 +510,8 @@ After the call, the array will be empty.
 Because `vector` can change size whenever you want it to, you may sometimes need to read the number of elements
 it currently contains. The current size can be read using the `size()` method:
 
+<CustomCodeBlock fullCode={<FullCode_ReadingSize/>}>
+
 ```cpp
 vector<string> playerNames = {
 	"HappyBanana",
@@ -519,13 +529,13 @@ cout << "Added new player.\n";
 cout << "The array contains " << playerNames.size() << " elements\n";
 ```
 
+</CustomCodeBlock>
+
 ```console title="Output"
 The array contains 3 elements
 Added new player.
 The array contains 4 elements
 ```
-
-<FullCode content={<FullCode_ReadingSize/>}/>
 
 Just like we previously did with the method `push_back`, we write the name after the dot.
 Then we put the parentheses, and in the case of `.size` we leave them empty.
@@ -549,6 +559,8 @@ If we want to display **all** the elements of an array, we'll have to use a *loo
 We will tell more about loops in the future. They allow you to execute the same
 piece of code multiple times.
 
+<CustomCodeBlock fullCode={<FullCode_DisplayingArrayOfPlayerNames/>}>
+
 ```cpp title="🔹 Displaying items"
 for (string name : playerNames)
 {
@@ -556,14 +568,14 @@ for (string name : playerNames)
 }
 ```
 
+</CustomCodeBlock>
+
 ```console title="Output"
 Player name: HappyBanana
 Player name: AngryCrab
 Player name: SadWolf
 Player name: WickedWitch
 ```
-
-<FullCode content={<FullCode_DisplayingArrayOfPlayerNames/>}/>
 
 To understand this, let me show you how to "read" it:
 
