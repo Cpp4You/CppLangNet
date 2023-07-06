@@ -10,19 +10,12 @@ module.exports = {
   items: [
     {
       type: "category",
-      label: "Non-modifying",
+      label: "Searching",
       items: [
         {
           type: "category",
           label: "Rangified",
           items: [
-            docsMethod("std/algo/ranges/all_of", "since-cpp20"),
-            docsMethod("std/algo/ranges/any_of", "since-cpp20"),
-            docsMethod("std/algo/ranges/none_of", "since-cpp20"),
-            docsMethod("std/algo/ranges/count", "since-cpp20"),
-            docsMethod("std/algo/ranges/count_if", "since-cpp20"),
-            docsMethod("std/algo/ranges/for_each", "since-cpp20"),
-            docsMethod("std/algo/ranges/for_each_n", "since-cpp20"),
             docsMethod("std/algo/ranges/find", "since-cpp20"),
             docsMethod("std/algo/ranges/find_if", "since-cpp20"),
             docsMethod("std/algo/ranges/find_if_not", "since-cpp20"),
@@ -36,13 +29,6 @@ module.exports = {
           type: "category",
           label: "Ordinary",
           items: [
-            docsMethod("std/algo/ordinary/all_of", "since-cpp11"),
-            docsMethod("std/algo/ordinary/any_of", "since-cpp11"),
-            docsMethod("std/algo/ordinary/none_of", "since-cpp11"),
-            docsMethod("std/algo/ordinary/count"),
-            docsMethod("std/algo/ordinary/count_if"),
-            docsMethod("std/algo/ordinary/for_each"),
-            docsMethod("std/algo/ordinary/for_each_n", "since-cpp17"),
             docsMethod("std/algo/ordinary/find"),
             docsMethod("std/algo/ordinary/find_if"),
             docsMethod("std/algo/ordinary/find_if_not"),
@@ -50,6 +36,56 @@ module.exports = {
             docsMethod("std/algo/ordinary/adjacent_find"),
             docsMethod("std/algo/ordinary/search"),
             docsMethod("std/algo/ordinary/search_n"),
+          ]
+        }
+      ]
+    },
+    {
+      type: "category",
+      label: "Determining conditions",
+      items: [
+        {
+          type: "category",
+          label: "Rangified",
+          items: [
+            docsMethod("std/algo/ranges/all_of", "since-cpp20"),
+            docsMethod("std/algo/ranges/any_of", "since-cpp20"),
+            docsMethod("std/algo/ranges/none_of", "since-cpp20"),
+            docsMethod("std/algo/ranges/count", "since-cpp20"),
+            docsMethod("std/algo/ranges/count_if", "since-cpp20"),
+          ]
+        },
+        {
+          type: "category",
+          label: "Ordinary",
+          items: [
+            docsMethod("std/algo/ordinary/all_of", "since-cpp11"),
+            docsMethod("std/algo/ordinary/any_of", "since-cpp11"),
+            docsMethod("std/algo/ordinary/none_of", "since-cpp11"),
+            docsMethod("std/algo/ordinary/count"),
+            docsMethod("std/algo/ordinary/count_if"),
+          ]
+        }
+      ]
+    },
+    {
+      type: "category",
+      label: "Other non-modifying",
+      items: [
+        {
+          type: "category",
+          label: "Rangified",
+          items: [
+            docsMethod("std/algo/ranges/for_each", "since-cpp20"),
+            docsMethod("std/algo/ranges/for_each_n", "since-cpp20"),
+          ]
+        },
+        {
+          type: "category",
+          label: "Ordinary",
+          items: [
+            docsMethod("std/algo/ordinary/for_each"),
+            docsMethod("std/algo/ordinary/for_each_n", "since-cpp17"),
           ]
         }
       ]

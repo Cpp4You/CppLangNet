@@ -136,87 +136,9 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 # List of algorithms
 
-## Non-modifying
+## Searching
 
 <SymbolTable>
-
-	<SwitchView content={{
-		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/all_of" name={ <Since v='cpp20'>ranges::all_of</Since> }>
-				Checks if all elements in a range hold a condition.
-			</Symbol>,
-		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/all_of" name={ <Since v='cpp11'>all_of</Since> }>
-				Checks if all elements in a range hold a condition.
-			</Symbol>,
-	}}/>
-
-	<SwitchView content={{
-		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/any_of" name={ <Since v='cpp20'>ranges::any_of</Since> }>
-				Checks if any elements in a range hold a condition.
-			</Symbol>,
-		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/any_of" name={ <Since v='cpp11'>any_of</Since> }>
-				Checks if any elements in a range hold a condition.
-			</Symbol>,
-	}}/>
-
-	<SwitchView content={{
-		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/none_of" name={ <Since v='cpp20'>ranges::none_of</Since> }>
-				Checks if no elements in a range hold a condition.
-			</Symbol>,
-		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/none_of" name={ <Since v='cpp11'>none_of</Since> }>
-				Checks if no elements in a range hold a condition.
-			</Symbol>,
-	}}/>
-
-	<SwitchView content={{
-		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/count" name={ <Since v='cpp20'>ranges::count</Since> }>
-				Returns the number of certain elements.
-			</Symbol>,
-		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/count" name="count">
-				Returns the number of certain elements.
-			</Symbol>,
-	}}/>
-
-
-	<SwitchView content={{
-		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/count_if" name={ <Since v='cpp20'>ranges::count_if</Since> }>
-				Returns the number of elements satisfying specific criteria.
-			</Symbol>,
-		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/count_if" name="count_if">
-				Returns the number of elements satisfying specific criteria.
-			</Symbol>,
-	}}/>
-
-	<SwitchView content={{
-		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/for_each" name={ <Since v='cpp20'>ranges::for_each</Since> }>
-				Applies a function to a range of elements.
-			</Symbol>,
-		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/for_each" name="for_each">
-				Applies a function to a range of elements.
-			</Symbol>,
-	}}/>
-
-	<SwitchView content={{
-		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/for_each_n" name={ <Since v='cpp20'>ranges::for_each_n</Since> }>
-				Applies a function to a range of elements consisting of an iterator and a size.
-			</Symbol>,
-		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/for_each_n" name={ <Since v='cpp17'>for_each_n</Since> }>
-				Applies a function to a range of elements consisting of an iterator and a size.
-			</Symbol>,
-	}}/>
 
 	<SwitchView content={{
 		'Rangified':
@@ -292,6 +214,95 @@ All rangified algorithms accept a range. The same way iterators can be different
 		'Ordinary':
 			<Symbol pub autoLink linkName="./ordinary/search_n" name="search_n">
         Searches a range for a consecutive sequence of an element.
+			</Symbol>,
+	}}/>
+
+</SymbolTable>
+
+## Determining conditions
+
+<SymbolTable>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol pub autoLink linkName="./ranges/all_of" name={ <Since v='cpp20'>ranges::all_of</Since> }>
+				Checks if all elements in a range hold a condition.
+			</Symbol>,
+		'Ordinary':
+			<Symbol pub autoLink linkName="./ordinary/all_of" name={ <Since v='cpp11'>all_of</Since> }>
+				Checks if all elements in a range hold a condition.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol pub autoLink linkName="./ranges/any_of" name={ <Since v='cpp20'>ranges::any_of</Since> }>
+				Checks if any elements in a range hold a condition.
+			</Symbol>,
+		'Ordinary':
+			<Symbol pub autoLink linkName="./ordinary/any_of" name={ <Since v='cpp11'>any_of</Since> }>
+				Checks if any elements in a range hold a condition.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol pub autoLink linkName="./ranges/none_of" name={ <Since v='cpp20'>ranges::none_of</Since> }>
+				Checks if no elements in a range hold a condition.
+			</Symbol>,
+		'Ordinary':
+			<Symbol pub autoLink linkName="./ordinary/none_of" name={ <Since v='cpp11'>none_of</Since> }>
+				Checks if no elements in a range hold a condition.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol pub autoLink linkName="./ranges/count" name={ <Since v='cpp20'>ranges::count</Since> }>
+				Returns the number of certain elements.
+			</Symbol>,
+		'Ordinary':
+			<Symbol pub autoLink linkName="./ordinary/count" name="count">
+				Returns the number of certain elements.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol pub autoLink linkName="./ranges/count_if" name={ <Since v='cpp20'>ranges::count_if</Since> }>
+				Returns the number of elements satisfying specific criteria.
+			</Symbol>,
+		'Ordinary':
+			<Symbol pub autoLink linkName="./ordinary/count_if" name="count_if">
+				Returns the number of elements satisfying specific criteria.
+			</Symbol>,
+	}}/>
+
+</SymbolTable>
+
+## Other non-modifying
+
+<SymbolTable>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol pub autoLink linkName="./ranges/for_each" name={ <Since v='cpp20'>ranges::for_each</Since> }>
+				Applies a function to a range of elements.
+			</Symbol>,
+		'Ordinary':
+			<Symbol pub autoLink linkName="./ordinary/for_each" name="for_each">
+				Applies a function to a range of elements.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol pub autoLink linkName="./ranges/for_each_n" name={ <Since v='cpp20'>ranges::for_each_n</Since> }>
+				Applies a function to a range of elements consisting of an iterator and a size.
+			</Symbol>,
+		'Ordinary':
+			<Symbol pub autoLink linkName="./ordinary/for_each_n" name={ <Since v='cpp17'>for_each_n</Since> }>
+				Applies a function to a range of elements consisting of an iterator and a size.
 			</Symbol>,
 	}}/>
 
