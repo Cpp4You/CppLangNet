@@ -1,0 +1,198 @@
+---
+title:			ranges::search_n algorithm
+sidebar_label:	ranges::search_n(  )
+description:	ranges::search_n algorithm C++ documentation
+hide_title:		true
+tags:			[ranges, algorithm, find, search_n, search, consecutive, sequence, look]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/search_n
+---
+
+import Columns    from "@site-comps/Columns";
+import SwitchView from "@site-comps/SwitchView";
+import Tooltip    from "@site-comps/Tooltip";
+import Tabs       from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/search_n/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/search_n/since-cpp20-simplified.mdx';
+
+# std::ranges::search_n() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Searches the range for the first sequence of `count` identical elements, each equal to the given `value`.
+
+- **(1)** Searches the range [`first`; `last`) for the first sequence of `count` elements whose projected values are each equal to the given `value` according to the binary predicate `pred`.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+- `first`, `last` - the range of elements to examine
+- `r` - the range of elements to examine
+- `count` - the length of the sequence to search for
+- `value` - the value to search for
+- `pred` - the binary predicate that compares the projected elements with `value`
+- `proj` - projection to apply to the elements
+
+### Return value
+
+- **(1)** Value of type `ranges::subrange<I>{}` that denotes the first occurrence of the desired sequence of `count` `value`s.
+
+  If no such subsequence is found, returns `std::ranges::subrange{ last, last }`.  
+  If `count <= 0`, returns `std::ranges::subrange{ first, first }`.
+
+- **(2)** Same as **(1)**, except that the return type is `ranges::borrowed_subrange_t<R>`.
+
+### Complexity
+
+Given `N` as `ranges::distance(first, last)`
+
+At most **N** applications of the predicate and the projection.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>search_n(1)</summary>
+
+```cpp
+struct search_n_fn
+{
+    template<std::forward_iterator I, std::sentinel_for<I> S, class T,
+             class Pred = ranges::equal_to, class Proj = std::identity>
+    requires std::indirectly_comparable<I, const T*, Pred, Proj>
+    constexpr ranges::subrange<I>
+        operator()(I first, S last, std::iter_difference_t<I> count,
+                   const T& value, Pred pred = {}, Proj proj = {}) const
+    {
+        if (count <= 0)
+            return {first, first};
+        for (; first != last; ++first)
+        {
+            if (std::invoke(pred, std::invoke(proj, *first), value))
+            {
+                I start = first;
+                std::iter_difference_t<I> n{1};
+                for (;;)
+                {
+                    if (n++ == count)
+                        return {start, std::next(first)}; // found
+                    if (++first == last)
+                        return {first, first}; // not found
+                    if (!std::invoke(pred, std::invoke(proj, *first), value))
+                        break; // not equ to value
+                }
+            }
+        }
+        return {first, first};
+    }
+
+    template<ranges::forward_range R, class T, class Pred = ranges::equal_to,
+             class Proj = std::identity>
+    requires std::indirectly_comparable<ranges::iterator_t<R>, const T*, Pred, Proj>
+    constexpr ranges::borrowed_subrange_t<R>
+        operator()(R&& r, ranges::range_difference_t<R> count,
+                   const T& value, Pred pred = {}, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r),
+                       std::move(count), value,
+                       std::move(pred), std::move(proj));
+    }
+};
+
+inline constexpr search_n_fn search_n {};
+```
+
+</details>
+
+### Notes
+
+An implementation can improve efficiency of the search in average if the iterators model [`std::random_access_iterator`](#).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <string>
+
+int main()
+{
+    static constexpr auto nums = {1, 2, 2, 3, 4, 1, 2, 2, 2, 1};
+    constexpr int count {3};
+    constexpr int value {2};
+    typedef int count_t, value_t;
+
+    constexpr auto result1 = std::ranges::search_n(
+        nums.begin(), nums.end(), count, value
+    );
+    static_assert( // found
+        result1.size() == count &&
+        std::distance(nums.begin(), result1.begin()) == 6 &&
+        std::distance(nums.begin(), result1.end()) == 9
+    );
+
+    constexpr auto result2 = std::ranges::search_n(nums, count, value);
+    static_assert( // found
+        result2.size() == count &&
+        std::distance(nums.begin(), result2.begin()) == 6 &&
+        std::distance(nums.begin(), result2.end()) == 9
+    );
+
+    constexpr auto result3 = std::ranges::search_n(nums, count, value_t{5});
+    static_assert( // not found
+        result3.size() == 0 &&
+        result3.begin() == result3.end() &&
+        result3.end() == nums.end()
+    );
+
+    constexpr auto result4 = std::ranges::search_n(nums, count_t{0}, value_t{1});
+    static_assert( // not found
+        result4.size() == 0 &&
+        result4.begin() == result4.end() &&
+        result4.end() == nums.begin()
+    );
+
+    constexpr char symbol {'B'};
+    auto to_ascii = [](const int z) -> char { return 'A' + z - 1; };
+    auto is_equ = [](const char x, const char y) { return x == y; };
+
+    std::cout << "Find a sub-sequence " << std::string(count, symbol) << " in the ";
+    std::ranges::transform(nums, std::ostream_iterator<char>(std::cout, ""), to_ascii);
+    std::cout << '\n';
+
+    auto result5 = std::ranges::search_n(nums, count, symbol, is_equ, to_ascii);
+    if (not result5.empty())
+        std::cout << "Found at position "
+                  << std::ranges::distance(nums.begin(), result5.begin()) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Find a sub-sequence BBB in the ABBCDABBBA
+Found at position 6
+```
+
+</div>
+</Columns>

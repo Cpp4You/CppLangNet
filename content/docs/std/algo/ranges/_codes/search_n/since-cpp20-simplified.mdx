@@ -1,0 +1,27 @@
+```cpp
+// (1)
+constexpr ranges::subrange<I>
+    search_n( I first, S last, std::iter_difference_t<I> count,
+              const T& value, Pred pred = {}, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_subrange_t<R>
+    search_n( R&& r, ranges::range_difference_t<R> count,
+              const T& value, Pred pred = {}, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I`  - `std::forward_iterator`
+- `S` - `std::sentinel_for<I>`
+- `T` - **(none)**
+- `Pred` - **(none)**
+- `Proj` - **(none)**
+- **(2)** - `R` - `std::ranges::forward_range`
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
+
+Additionaly, each overload has the following constraints:
+- **(1)** - `indirectly_comparable<I, const T*, Pred, Proj>`
+- **(2)** - `indirectly_comparable<ranges::iterator_t<R>, const T*, Pred, Proj>`
+
+(The `std::` namespace was ommitted here for readability)
