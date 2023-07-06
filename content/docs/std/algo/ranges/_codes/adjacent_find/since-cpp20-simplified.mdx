@@ -1,0 +1,22 @@
+```cpp
+// (1)
+constexpr I
+    adjacent_find( I first, S last, Pred pred = {}, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R>
+    adjacent_find( R&& r, Pred pred = {}, Proj proj = {} );
+```
+The type of arguments are generic and have the following constraints:
+- `I` - `std::forward_iterator`
+- `S` - `std::sentinel_for<I>`
+- `Proj` - **(none)**
+- `Pred`:
+  - **(1)** - `indirect_binary_predicate<projected<I, Proj>, projected<I, Proj>>`
+  - **(2)** - `indirect_binary_predicate<projected<ranges::iterator_t<R>, Proj>, projected<ranges::iterator_t<R>, Proj>>`
+
+  (The `std::` namespace was ommitted here for readability))
+
+- **(2)** - `R` - `std::ranges::input_range`
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
