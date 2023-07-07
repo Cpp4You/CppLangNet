@@ -1,0 +1,24 @@
+```cpp
+// (1)
+constexpr ranges::subrange<I>
+    find_last( I first, S last, const T& value, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_subrange_t<R>
+    find_last( R&& r, const T& value, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::forward_iterator`
+- `S` - `std::sentinel_for<I>`
+- `T` - **(none)**
+- `Proj` - **(none)**
+- **(2)** - `R` - `std::ranges::forward_range`
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
+
+Additionaly, each overload has the following constraints:
+- **(1)** - `indirect_binary_predicate<ranges::equal_to, projected<I, Proj>, const T*>`
+- **(2)** - `indirect_binary_predicate<ranges::equal_to, projected<ranges::iterator_t<R>, Proj>, const T*>`
+
+(The `std::` namespace was ommitted here for readability)
