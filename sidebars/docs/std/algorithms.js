@@ -56,6 +56,7 @@ module.exports = {
             docsMethod("std/algo/ranges/mismatch", "since-cpp20"),
             docsMethod("std/algo/ranges/find_last", "since-cpp20"),
             docsMethod("std/algo/ranges/find_last_if", "since-cpp20"),
+            docsMethod("std/algo/ranges/find_last_if_not", "since-cpp20"),
           ]
         },
         {
