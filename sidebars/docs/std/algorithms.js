@@ -64,6 +64,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/none_of", "since-cpp11"),
             docsMethod("std/algo/ordinary/count"),
             docsMethod("std/algo/ordinary/count_if"),
+            docsMethod("std/algo/ordinary/mismatch"),
           ]
         }
       ]
