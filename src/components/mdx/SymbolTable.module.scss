@@ -6,6 +6,10 @@
 	table-layout: fixed;
     border-collapse: collapse;
 
+    tr, td, th {
+        border: none;
+    }
+
 	td:last-child {
 		width: 100%;
 	}
