@@ -1,0 +1,179 @@
+---
+title:			copy_if algorithm
+sidebar_label:	copy_if(  )
+description:	copy_if algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, copy, copy_if, clone, predicate, condition]
+
+cppreference_origin_rel: w/cpp/algorithm/copy_if
+---
+
+import Columns           from "@site-comps/Columns";
+import SwitchView        from "@site-comps/SwitchView";
+import Tooltip           from '@site-comps/Tooltip';
+import { Since, Until }  from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11 from './_codes/copy_if/since-cpp11.mdx';
+import Signature_SinceCpp17 from './_codes/copy_if/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/copy_if/since-cpp20.mdx';
+
+# std::copy_if() algorithm
+
+<SwitchView content={{
+	'since-cpp11': <Signature_SinceCpp11 />,
+	'since-cpp17': <Signature_SinceCpp17 />,
+	'since-cpp20': <Signature_SinceCpp20 />
+}} />
+
+Copies the elements in the range, defined by [`first`; `last`), to another range beginning at `d_first`.
+
+- **(1)**
+  Only copies the elements for which the predicate `pred` returns `true`.
+
+  :::danger Undefined Behaviour
+  The behavior is undefined if `d_first` is within the range [`first`; `last`).
+  :::
+
+ - **(2)** Same as **(1)**, but executed according to `policy`.
+  :::important Overload Resolution
+  These overloads participate in overload resolution only if
+  <Until v='cpp20'> std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt; </Until> <Since v='cpp20'>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</Since> is <code>true</code>.
+  :::
+
+### Parameters
+
+- `first`, `last` - the range of elements to copy_if
+- `d_first` - the beginning of the destination range
+- `policy` - the execution policy to use. See [execution policy](#) for details
+- `pred` - unary predicate which returns `true` for the required elements.
+  The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`,
+  regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>,
+  nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>
+
+#### Type requirements
+
+- **(1)**:
+  - `InputIt` must meet the requirements of [LegacyInputIterator](/docs/named_req/LegacyInputIterator).
+  - `OutputIt` must meet the requirements of [LegacyOutputIterator](/docs/named_req/LegacyOutputIterator).
+- **(2)** - `ForwardIt1`, `ForwardIt2` must meet the requirements of [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator).
+- `UnaryPredicate` must meet the requirements of [Predicate](/docs/named_req/Predicate).
+
+### Return value
+
+Output iterator to the element in the destination range, one past the last element copied.
+
+### Complexity
+
+Exactly `last - first` applications of the predicate, between `0` and `last - first` assignments (assignment for every element for which predicate is equal to true).
+
+For the overloads with an `ExecutionPolicy`, there may be a performance cost if `ForwardIt1`'s value type is not [`MoveConstructible`](/docs/named_req/MoveConstructible).
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For none other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>copy_if (1)</summary>
+
+```cpp
+template<class InputIt, class OutputIt, class UnaryPredicate>
+OutputIt copy_if(InputIt first, InputIt last,
+                 OutputIt d_first, UnaryPredicate pred)
+{
+    for (; first != last; ++first)
+    {
+        if (pred(*first))
+        {
+            *d_first = *first;
+            ++d_first;
+        }
+    }
+
+    return d_first;
+}
+```
+
+</details>
+
+### Notes
+
+In practice, implementations of [`std::copy_if`](#) avoid multiple assignments and use bulk copy_if functions such as [`std::memmove`](#)
+if the value type is [`TriviallyCopyable`](/docs/named_req/TriviallyCopyable) and the iterator types satisfy [`LegacyContiguousIterator`](/docs/named_req/LegacyContiguousIterator).
+
+When copy_ifing overlapping ranges, [`std::copy_if`](#) is appropriate when copy_ifing to the left (**beginning of the destination range is outside the source range**),
+while [`std::copy_if_backward`](/docs/algo/ordinary/copy_if_backward) is appropriate when copy_ifing to the right (**end of the destination range is outside the source range**).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <numeric>
+#include <vector>
+
+int main()
+{
+    std::vector<int> from_vector(10);
+    std::iota(from_vector.begin(), from_vector.end(), 0);
+
+    std::vector<int> to_vector;
+    std::copy_if(from_vector.begin(), from_vector.end(),
+              std::back_inserter(to_vector));
+// or, alternatively,
+//  std::vector<int> to_vector(from_vector.size());
+//  std::copy_if(from_vector.begin(), from_vector.end(), to_vector.begin());
+// either way is equivalent to
+//  std::vector<int> to_vector = from_vector;
+
+    std::cout << "to_vector contains: ";
+
+    std::copy_if(to_vector.begin(), to_vector.end(),
+              std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+
+    std::cout << "odd numbers in to_vector are: ";
+
+    std::copy_if_if(to_vector.begin(), to_vector.end(),
+                 std::ostream_iterator<int>(std::cout, " "),
+                 [](int x) { return x % 2 != 0; });
+    std::cout << '\n';
+
+    std::cout << "to_vector contains these multiples of 3: ";
+
+    to_vector.clear();
+    std::copy_if_if(from_vector.begin(), from_vector.end(),
+                 std::back_inserter(to_vector),
+                 [](int x) { return x % 3 == 0; });
+
+    for (int x : to_vector)
+        std::cout << x << ' ';
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+to_vector contains: 0 1 2 3 4 5 6 7 8 9
+odd numbers in to_vector are: 1 3 5 7 9
+to_vector contains these multiples of 3: 0 3 6 9
+```
+
+</div>
+</Columns>
