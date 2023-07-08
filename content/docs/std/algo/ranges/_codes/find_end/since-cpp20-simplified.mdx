@@ -9,8 +9,8 @@ constexpr ranges::borrowed_subrange_t<R1>
 ```
 
 The type of arguments are generic and have the following constraints:
-- `I1`, 'I2' - `std::forward_iterator`
-- `S1`, 'S2' - `std::sentinel_for<I1>`, `std::sentinel_for<I2>`
+- `I1`, `I2` - `std::forward_iterator`
+- `S1`, `S2` - `std::sentinel_for<I1>`, `std::sentinel_for<I2>`
 - `Pred` - **(none)**
 - `Proj1`, `Proj2` - **(none)**
 - **(2)** - `R1`, `R2` - `std::ranges::forward_range`
