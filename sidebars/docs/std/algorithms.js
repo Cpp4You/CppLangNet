@@ -21,6 +21,9 @@ module.exports = {
             docsMethod("std/algo/ranges/find_if_not", "since-cpp20"),
             docsMethod("std/algo/ranges/find_end", "since-cpp20"),
             docsMethod("std/algo/ranges/adjacent_find", "since-cpp20"),
+            docsMethod("std/algo/ranges/find_last", "since-cpp20"),
+            docsMethod("std/algo/ranges/find_last_if", "since-cpp20"),
+            docsMethod("std/algo/ranges/find_last_if_not", "since-cpp20"),
             docsMethod("std/algo/ranges/search", "since-cpp20"),
             docsMethod("std/algo/ranges/search_n", "since-cpp20"),
           ]
@@ -54,9 +57,6 @@ module.exports = {
             docsMethod("std/algo/ranges/count", "since-cpp20"),
             docsMethod("std/algo/ranges/count_if", "since-cpp20"),
             docsMethod("std/algo/ranges/mismatch", "since-cpp20"),
-            docsMethod("std/algo/ranges/find_last", "since-cpp20"),
-            docsMethod("std/algo/ranges/find_last_if", "since-cpp20"),
-            docsMethod("std/algo/ranges/find_last_if_not", "since-cpp20"),
           ]
         },
         {
