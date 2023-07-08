@@ -1,0 +1,19 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I,
+  std::sentinel_for<I> S,
+  std::weakly_incrementable O
+>
+  requires std::indirectly_copyable<I, O>
+constexpr copy_result<I, O> copy( I first, S last, O result );
+
+
+// (2)
+template<
+  ranges::input_range R,
+  std::weakly_incrementable O
+>
+  requires std::indirectly_copyable<ranges::iterator_t<R>, O>
+constexpr copy_result<ranges::borrowed_iterator_t<R>, O> copy( R&& r, O result );
+```
