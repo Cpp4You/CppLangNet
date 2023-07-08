@@ -4,9 +4,11 @@
 	border: none;
 	display: block;
 	table-layout: fixed;
-	>tr {
-		
-	}
+    border-collapse: collapse;
+
+    tr, td, th {
+        border: none;
+    }
 
 	td:last-child {
 		width: 100%;
@@ -31,14 +33,13 @@
 	}
 }
 
-.symbolProp {	
+.symbolProp {
 	padding: 3px 10px;
 	>span {
 		display: inline-block;
 		width: 40px;
 		text-align: center;
 		font-size: 75%;
-		// border: 1px solid ;
 		border-radius: 20px;
 		&:not(:last-child) {
 			margin-right: 5px;
