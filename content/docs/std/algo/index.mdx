@@ -4,18 +4,17 @@ title: Summary
 slug: /std/algo/
 ---
 
-import SwitchView					from  "@site-comps/SwitchView";
-import SymbolTable, { Symbol }		from "@site-comps/SymbolTable";
-
-import { Since, Until, Removed }	from "@site-comps/Versions";
+import SwitchView                from  "@site-comps/SwitchView";
+import SymbolTable, { Symbol }   from "@site-comps/SymbolTable";
+import { Since, Until, Removed } from "@site-comps/Versions";
 
 <!----------------- Codes ---------------------->
-import Sorting_Example_Rangified			from "./_codes/main-page/sorting/rangified.mdx";
-import Sorting_Example_Ordinary				from "./_codes/main-page/sorting/ordinary.mdx";
+import Sorting_Example_Rangified         from "./_codes/main-page/sorting/rangified.mdx";
+import Sorting_Example_Ordinary          from "./_codes/main-page/sorting/ordinary.mdx";
 
-import Iterator_Example_Printing			from "./_codes/main-page/operations-with-iterators/printing-vector.mdx";
-import Iterator_Example_Printing_Reverse	from "./_codes/main-page/operations-with-iterators/printing-vector-in-reverse.mdx";
-import Iterator_Example_Zeroing				from "./_codes/main-page/operations-with-iterators/setting-all-numbers-to-0.mdx";
+import Iterator_Example_Printing         from "./_codes/main-page/operations-with-iterators/printing-vector.mdx";
+import Iterator_Example_Printing_Reverse from "./_codes/main-page/operations-with-iterators/printing-vector-in-reverse.mdx";
+import Iterator_Example_Zeroing          from "./_codes/main-page/operations-with-iterators/setting-all-numbers-to-0.mdx";
 
 # Algorithms
 
@@ -480,3 +479,48 @@ All rangified algorithms accept a range. The same way iterators can be different
 ## Operations on uninitialized memory
 
 ## C algorithms
+
+
+
+
+### Parameters
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>first</code> }>
+    The beginning of the range to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>count</code> }>
+    The beginning of the range to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+</SymbolTable>
+
+- `first` - the beginning of the range to copy from
+- `count` - number of elements to copy
+- `result` - the beginning of the destination range
+- `policy` - the execution policy to use. See [execution policy](#) for details.
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </>}>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+- `InputIt` must meet the requirements of [LegacyInputIterator](/docs/named_req/LegacyInputIterator).
+- `OutputIt` must meet the requirements of [LegacyOutputIterator](/docs/named_req/LegacyOutputIterator).
+- `ForwardIt1`, `ForwardIt2` must meet the requirements of [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator).
+
+
