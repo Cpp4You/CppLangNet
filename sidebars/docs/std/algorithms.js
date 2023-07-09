@@ -121,6 +121,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/copy_if", "since-cpp11"),
             docsMethod("std/algo/ordinary/copy_n", "since-cpp11"),
             docsMethod("std/algo/ordinary/copy_backward"),
+            docsMethod("std/algo/ordinary/move"),
             docsMethod("std/algo/ordinary/transform"),
             docsMethod("std/algo/ordinary/reverse"),
           ]
