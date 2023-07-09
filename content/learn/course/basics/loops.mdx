@@ -8,43 +8,58 @@ hide_title:			true
 ---
 
 <!-- Components -->
-import Image			from "@site-comps/Image";
-import Columns			from "@site-comps/Columns";
+import Tabs             from "@theme/Tabs";
+import TabItem          from "@theme/TabItem";
+
+import Image            from "@site-comps/Image";
+import CustomCodeBlock  from "@site-comps/CustomCodeBlock";
+import Columns          from "@site-comps/Columns";
 
 <!-- Presets -->
-import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
-import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
+import ImproveSection   from '@site/i18n/en/presets/ImproveSection.mdx';
+import NotFinished      from '@site/i18n/en/presets/NotFinished.mdx';
 
-<NotFinished/>
+<!-- Code -->
+import FullCode_PrintNumbersRangeBasedFor from './_codes/loops/print-numbers-range-based-for-full.mdx';
 
 # Loops
 
-In this lesson, we'll make the program execute a given code multiple times, that is, we'll use a loop.
+In this lesson, we'll make the program execute a certain code multiple times, that is, we'll use a loop.
 
 ## Motivation
 
-Loops have many uses, here are a few of them:
+Loops are essential in programming because they allow us to repeat a set of instructions multiple times.
+They are useful in various scenarios, including:
 
-- 👾 adding, for example, 10 new opponents to the level in the game
-- 🖥 displaying each element in an array
-- ➗ multiple calculations (e.g. counting factorials, fibonacci sequence)
+- 🖥 **Array Operations**: Often, we need to perform actions on each element of an array individually.
+  Using loops, we can effortlessly display or manipulate every element in the array.
+- ➗ **Mathematical Computations**: Loops come in handy when performing repeated calculations, such as
+  counting factorials or generating a Fibonacci sequence. They enable us to execute the necessary
+  operations multiple times, simplifying complex mathematical tasks.
+- 👾 **Game Development**: Imagine adding 10 new opponents to a level in a game. With loops, we can
+  easily repeat the code that creates the opponents without having to write it 10 times.
 
-In the lesson about vectors, we already showed one loop that displayed
-all the elements of an array:
+In summary, loops provide us with a way to automate repetitive tasks and efficiently process large
+sets of data. They significantly improve the flexibility and power of our programs by reducing code duplication.
 
-```cpp title="🔹 Print each number from an array"
+In the previous lesson on vectors, we already demonstrated one loop that displayed all the elements of an array:
+
+<CustomCodeBlock fullCode={<FullCode_PrintNumbersRangeBasedFor />}>
+
+```cpp showLineNumbers title="Print each number from an array"
 for (int n : numbers)
 {
-	std::cout << n << ' ';
+  std::cout << n << ' ';
 }
 ```
 
-This is the simplest version of a loop in C++.
-You will learn more about their types in the following sections.
+</CustomCodeBlock>
 
-## Loop types
+This is the simplest version of a loop in C++, but there are other types of loops that we'll cover in this lesson.
 
-In C++, we have the following loops:
+## Explanation
+
+In C++, there are three types of loops:
 
 - **`for`**
 	- range-based version
@@ -60,8 +75,6 @@ If you want to read about the `do ... while` loop, see the article:
 **Iteration** - a single loop body execution.
 :::
 
-## Explaination
-
 ### Range-based `for`
 
 This type of loop is most commonly used for working with arrays,
@@ -74,13 +87,15 @@ although it can also be used in other ways.
 	/>
 <br/>
 
-In the example shown in the [**Motivation**](#motivation) section, there is a **range-based for** loop,
-which is a version of the `for` loop for the so-called ranges.
-An array as understood in C++ is also a range, so feel free to use it.
+In the example provided in the [**Motivation**](#motivation) section, we have a special type of loop called the **range-based for** loop.
+It's a variation of the regular `for` loop used for working with collections of items. It is worth mentioning that
+an array in C++ is also a range, so we can use this loop to iterate over it.
 
-The simplest example:
+Take a look at the example:
 
-```cpp title="🔹 Print each number from an array"
+<CustomCodeBlock fullCode={<FullCode_PrintNumbersRangeBasedFor />}>
+
+```cpp showLineNumbers title="Print each number from an array"
 std::vector<int> numbers = { 13, 42, -1, 0, -3, -5 };
 
 for (int n : numbers)
@@ -88,6 +103,8 @@ for (int n : numbers)
 	std::cout << n << ' ';
 }
 ```
+
+</CustomCodeBlock>
 
 This loop sequentially traverses each element of the array `numbers` and writes it to the
 variable `n`. The block of code enclosed in the curly braces is then executed.
@@ -99,7 +116,115 @@ We do not use any equal sign (`=`) in this notation, because the value of each e
 will be automatically assigned to `n`.
 :::
 
-## `while` loop
+#### Altering the content
+
+It is possible to modify each element of the array in the loop body. Let's write a program that
+will increase each even number in the array by 100 and decrease each odd number by 100.
+use the reference to the element. Before we explain exactly what it is and how it works, let's
+look at the following example:
+
+<Tabs>
+<TabItem value="with_ref" label="✅ Modify an original number">
+
+```cpp showLineNumbers
+std::vector<int> numbers = { 13, 42, -1, 0, -3, -5 };
+
+// highlight-next-line
+for (int& n : numbers)
+{
+  if (n % 2 == 0) {
+    n += 100;
+  }
+  else {
+    n -= 100;
+  }
+}
+
+// warning-next-line
+// numbers: { -87, 142, -101, 100, -103, -105 }
+```
+
+</TabItem>
+<TabItem value="without_ref" label="❌ Modify a copy">
+
+```cpp showLineNumbers
+std::vector<int> numbers = { 13, 42, -1, 0, -3, -5 };
+
+// warning-next-line
+for (int n : numbers)
+{
+  if (n % 2 == 0) {
+    n += 100;
+  }
+  else {
+    n -= 100;
+  }
+}
+
+// warning-next-line
+// numbers: { 13, 42, -1, 0, -3, -5 }
+```
+
+</TabItem>
+</Tabs>
+
+In the first case, we used a **reference** type, which is denoted by the ampersand (`&`) right after the
+type name. For now the key thing to know is:
+
+- using a reference type (e.g. `for (int& n : numbers)`)  
+  In this case, the variable `n` uses a **reference type** allowing you to modify the original element of the array.
+  This is because with each iteration of the loop, the variable `n` becomes an *alias* of the currently processed element.
+- using a non-reference (e.g. `for (int n : numbers)`)  
+  On the other hand, if we don't use a reference type, with each iteration of the loop, a **copy** of the currently processed element
+  is created and assigned to the variable `n`. This means that the original element of the array cannot be modified.
+
+This applies to any type, not only an `int`. This means that it is equally possible to modify the elements of an array of strings,
+real numbers (e.g. `float`) and custom types that we will cover in the next lessons.
+
+We'll talk more about references in one of the next lessons: [References](../references).
+
+#### With an initializer list
+
+This loop can also be used with the so-called *initializer list*
+
+<Tabs>
+<TabItem value="numbers" label="Numbers">
+
+```cpp showLineNumbers title="Print each number from an initializer list"
+for (int number : { 2, 1, 3, 7 })
+{
+  std::cout << number << ' ';
+}
+```
+
+</TabItem>
+<TabItem value="strings" label="Strings">
+
+```cpp showLineNumbers title="Print each number from an initializer list"
+for (std::string str : { "hello", "world", "using", "initializer", "list" })
+{
+  std::cout << str << ' ';
+}
+````
+
+</TabItem>
+</Tabs>
+
+Note that you cannot use the range-based `for` loop to modify the elements of an initializer list,
+so the following code will produce an error:
+
+```cpp title="❌ Cannot modify elements of an initializer list"
+// error-next-line
+for (int& a_number_from_list : { 2, 1, 3, 7 })
+```
+
+#### There's more
+
+Range-based for loops are simple and easy to use, but at the same time are very flexible.
+We only scratched the surface of what you can do with them. We'll cover them in more detail later
+in the course.
+
+### `while` loop
 
 <Image center border maxheight="300px"
 		src="/img/tutorials/course/basic/loops/while-en.png"
@@ -114,7 +239,7 @@ the explanation easier. The while loop executes its body as long as the conditio
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Print numbers from 0 to 3"
+```cpp title="Print numbers from 0 to 3"
 int number = 0;
 while (number <= 3)
 {
@@ -156,7 +281,7 @@ typically used to step through some range (such as numeric range).
 
 Let's start with an example:
 
-```cpp title="🔹 Display numbers from 0 to 9"
+```cpp title="Display numbers from 0 to 9"
 for (int i = 0; i < 10; i++)
 {
 	std::cout << i << ' ';
@@ -199,7 +324,7 @@ The `for` loop is very often used to iterate through arrays, in situations where
 we either need access to the iteration number or we do not want to iterate
 over the entire range.
 
-```cpp title="🔹 Iterating over an entire array"
+```cpp title="Iterating over an entire array"
 std::vector<int> numbers = {10, 13, 15, 18, 60};
 for (int i = 0; i < numbers.size(); i++)
 {
@@ -207,7 +332,7 @@ for (int i = 0; i < numbers.size(); i++)
 }
 ```
 
-```cpp title="🔹 Iterating over half of an array"
+```cpp title="Iterating over half of an array"
 std::vector<int> numbers = {10, 13, 15, 18, 60};
 for (int i = 0; i < numbers.size() / 2; i++)
 {
@@ -219,7 +344,7 @@ for (int i = 0; i < numbers.size() / 2; i++)
 
 The code given in the `for` loop parentheses is optional. **The semicolons are required**.
 
-```cpp title="🔹 For loop with empty parentheses"
+```cpp title="For loop with empty parentheses"
 for ( ; ; )
 {
 	// code
@@ -229,7 +354,7 @@ for ( ; ; )
 The above will make the `for` loop execute infinitely (due to the empty condition),
 unless we manually break it...
 
-## Stopping a loop
+### Breaking a loop (`break`)
 
 We can stop the loop at any point using the `break` statement:
 
@@ -246,7 +371,7 @@ for (int i = 0; i < 10; i++)
 This loop will display numbers from 0 to 4, because at `i` equal to `5` the execution of the loop will be aborted.
 We can break the `while` loop in the same way.
 
-## Skipping a single iteration
+### Skipping a single iteration (`continue`)
 
 To skip further execution of the current loop iteration we use the `continue` statement:
 

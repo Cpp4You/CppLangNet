@@ -77,15 +77,26 @@
 	}
 }
 
-$minHeadingSize: 0.6;
-$maxHeadingSize: 1.0;
+$minHeadingSize: 0.8;
+$maxHeadingSize: 1.1;
 
-@function linearScaleAt($scaleLevel) {
-	@return $minHeadingSize + ($maxHeadingSize - $minHeadingSize) * ($scaleLevel / 5.0);
+$minTextSize: 0.6;
+$maxTextSize: 1.0;
+
+@function linearScaleAt($scaleLevel, $min, $max) {
+	@return $min + ($max - $min) * ($scaleLevel / 5.0);
 }
 
-@include generateSizeMode(1, linearScaleAt(1) - 0.1, linearScaleAt(1));
-@include generateSizeMode(2, linearScaleAt(2) - 0.1, linearScaleAt(2));
-@include generateSizeMode(3, linearScaleAt(3) - 0.1, linearScaleAt(3));
-@include generateSizeMode(4, linearScaleAt(4) - 0.1, linearScaleAt(4));
-@include generateSizeMode(5, linearScaleAt(5) - 0.1, linearScaleAt(5));
+@function linearTextScaleAt($scaleLevel) {
+	@return linearScaleAt($scaleLevel, $minTextSize, $maxTextSize);
+}
+
+@function linearHeadingScaleAt($scaleLevel) {
+	@return linearScaleAt($scaleLevel, $minHeadingSize, $maxHeadingSize);
+}
+
+@include generateSizeMode(1, linearHeadingScaleAt(1), linearTextScaleAt(1));
+@include generateSizeMode(2, linearHeadingScaleAt(2), linearTextScaleAt(2));
+@include generateSizeMode(3, linearHeadingScaleAt(3), linearTextScaleAt(3));
+@include generateSizeMode(4, linearHeadingScaleAt(4), linearTextScaleAt(4));
+@include generateSizeMode(5, linearHeadingScaleAt(5), linearTextScaleAt(5));
