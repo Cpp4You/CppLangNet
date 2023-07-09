@@ -1,0 +1,121 @@
+---
+title:			copy_backward algorithm
+sidebar_label:	copy_backward(  )
+description:	copy_backward algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, copy_backward, copy, clone]
+
+cppreference_origin_rel: w/cpp/algorithm/copy_backward
+---
+
+import Columns           from "@site-comps/Columns";
+import SwitchView        from "@site-comps/SwitchView";
+import Tooltip           from '@site-comps/Tooltip';
+import { Since, Until }  from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp20 from './_codes/copy_backward/until-cpp20.mdx';
+import Signature_SinceCpp20 from './_codes/copy_backward/since-cpp20.mdx';
+
+# std::copy_backward() algorithm
+
+<SwitchView content={{
+	'until-cpp20': <Signature_UntilCpp20 />,
+	'since-cpp20': <Signature_SinceCpp20 />
+}} />
+
+- **(1)**
+  Copies the elements from the range, defined by [`first`; `last`), to another range ending at `d_last`.
+  The elements are copied in **reverse order** (the last element is copied first), but their relative order is preserved.
+
+  :::danger Undefined Behaviour
+  The behavior is undefined if `d_first` is within [`first`; `last`). In this case, [`std::copy_backward`](/docs/algo/ordinary/copy_backward_backward) may be used instead.
+  :::
+
+### Parameters
+
+- `first`, `last` - the range of elements to copy_backward
+- `d_first` - the beginning of the destination range
+
+#### Type requirements
+
+- `BidirIt` must meet the requirements of [LegacyBidirectionalIterator](/docs/named_req/LegacyBidirectionalIterator).
+
+### Return value
+
+Iterator to the last element copied.
+
+### Complexity
+
+Exactly `last - first` assignments.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>copy_backward (1)</summary>
+
+```cpp
+
+template<class BidirIt1, class BidirIt2>
+BidirIt2 copy_backward_backward(BidirIt1 first, BidirIt1 last, BidirIt2 d_last)
+{
+    while (first != last)
+        *(--d_last) = *(--last);
+
+    return d_last;
+}
+```
+
+</details>
+
+### Notes
+
+When copying overlapping ranges:
+- [`std::copy`](/docs/std/algo/ordinary/copy) is appropriate when copying to the left (**beginning of the destination range is outside the source range**).  
+- [`std::copy_backward`](#) is appropriate when copying to the right (**end of the destination range is outside the source range**).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <numeric>
+#include <vector>
+
+int main()
+{
+    std::vector<int> source(4);
+    std::iota(source.begin(), source.end(), 1); // fills with 1, 2, 3, 4
+
+    std::vector<int> destination(6);
+
+    std::copy_backward(source.begin(), source.end(), destination.end());
+
+    std::cout << "destination contains: ";
+    for (auto i: destination)
+        std::cout << i << ' ';
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+destination contains: 0 0 1 2 3 4
+```
+
+</div>
+</Columns>
