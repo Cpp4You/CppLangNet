@@ -104,8 +104,8 @@ inline constexpr copy_backward_fn copy_backward{};
 
 ### Notes
 
-When copying overlapping ranges, [`ranges::copy_backward`](#) is appropriate when copy_backwarding to the left (**beginning of the destination range is outside the source range**),  
-while [`ranges::copy_backward_backward`](/docs/std/algo/ranges/copy_backward_backward) is appropriate when copy_backwarding to the right (**end of the destination range is outside the source range**).
+When copying overlapping ranges, [`ranges::copy`](/docs/std/algo/ranges/copy) is appropriate when copy_backwarding to the left (**beginning of the destination range is outside the source range**),  
+while [`ranges::copy_backward`](#) is appropriate when copy_backwarding to the right (**end of the destination range is outside the source range**).
 
 ### Examples
 
