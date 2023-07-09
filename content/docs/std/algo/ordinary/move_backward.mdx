@@ -1,0 +1,148 @@
+---
+title:			move_backward algorithm
+sidebar_label:	move_backward(  )
+description:	move_backward algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, move_backward, move]
+
+cppreference_origin_rel: w/cpp/algorithm/move_backward
+---
+
+import Columns           from "@site-comps/Columns";
+import SwitchView        from "@site-comps/SwitchView";
+import Tooltip           from '@site-comps/Tooltip';
+import { Since, Until }  from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11 from './_codes/move_backward/since-cpp11.mdx';
+import Signature_SinceCpp20 from './_codes/move_backward/since-cpp20.mdx';
+
+# std::move_backward() algorithm
+
+<SwitchView content={{
+	'since-cpp11': <Signature_SinceCpp11 />,
+	'since-cpp20': <Signature_SinceCpp20 />
+}} />
+
+- **(1)**
+  Moves the elements from the range [`first`; `last`), to another range ending at `d_last`.
+
+  The elements are moved in **reverse order** (the last element is moved first), but their relative order is preserved.
+
+  :::danger Undefined Behaviour
+  The behavior is undefined if `d_first` is within [`first`; `last`). In this case, [`std::move`](/docs/algo/ordinary/move) may be used instead.
+  :::
+
+### Parameters
+
+- `first`, `last` - the range of elements to move_backward
+- `d_first` - the beginning of the destination range
+
+#### Type requirements
+
+- `BidirIt1`, `BidirIt2` must meet the requirements of [LegacyBidirectionalIterator](/docs/named_req/LegacyBidirectionalIterator).
+
+### Return value
+
+Iterator in the destination range, pointing at the last element moved.
+
+### Complexity
+
+Exactly `last - first` assignments.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>move_backward (1)</summary>
+
+```cpp
+template<class BidirIt1, class BidirIt2>
+BidirIt2 move_backward(BidirIt1 first, BidirIt1 last,
+                       BidirIt2 d_last)
+{
+    while (first != last)
+        *(--d_last) = std::move(*(--last));
+
+    return d_last;
+}
+```
+
+</details>
+
+### Notes
+
+When moving overlapping ranges:
+- [`std::move`](/docs/std/algo/ordinary/move) is appropriate when moving to the left (**beginning of the destination range is outside the source range**).  
+- [`std::move_backward`](#) is appropriate when moving to the right (**end of the destination range is outside the source range**).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <string>
+#include <string_view>
+#include <vector>
+
+using container = std::vector<std::string>;
+
+void print(std::string_view comment, const container& src, const container& dst = {})
+{
+    auto prn = [](std::string_view name, const container& cont)
+    {
+        std::cout << name;
+        for (const auto &s : cont) { std::cout << (s.empty() ? "∙" : s.data()) << ' '; }
+        std::cout << '\n';
+    };
+    std::cout << comment << '\n';
+    prn("src: ", src);
+    if (dst.empty()) return;
+    prn("dst: ", dst);
+}
+
+int main()
+{
+    container src {"foo", "bar", "baz"};
+    container dst {"qux", "quux", "quuz", "corge"};
+    print("Non-overlapping case; before move_backward:", src, dst);
+    std::move_backward(src.begin(), src.end(), dst.end());
+    print("After:", src, dst);
+
+    src = {"snap", "crackle", "pop", "lock", "drop"};
+    print("Overlapping case; before move_backward:", src);
+    std::move_backward(src.begin(), std::next(src.begin(), 3), src.end());
+    print("After:", src);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Non-overlapping case; before move_backward:
+src: foo bar baz
+dst: qux quux quuz corge
+After:
+src: ∙ ∙ ∙
+dst: qux foo bar baz
+Overlapping case; before move_backward:
+src: snap crackle pop lock drop
+After:
+src: ∙ ∙ snap crackle pop
+```
+
+</div>
+</Columns>
