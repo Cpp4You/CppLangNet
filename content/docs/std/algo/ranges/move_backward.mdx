@@ -1,0 +1,178 @@
+---
+title:			ranges::move_backward algorithm
+sidebar_label:	ranges::move_backward(  )
+description:	ranges::move_backward algorithm C++ documentation
+hide_title:		true
+
+tags:			[ranges, algorithm, move_backward, move]
+cppreference_origin_rel: w/cpp/algorithm/ranges/move_backward
+---
+
+import Columns    from "@site-comps/Columns";
+import SwitchView from "@site-comps/SwitchView";
+import Tooltip    from "@site-comps/Tooltip";
+import Tabs       from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/move_backward/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/move_backward/since-cpp20-simplified.mdx';
+
+# std::ranges::move_backward() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using move_backward_result = ranges::in_out_result<I, O>;
+```
+
+- **(1)** Copies the elements from the range, defined by [`first`; `last`), to another range [`result - N`; `result`), where `N = ranges::distance(first, last)`.  
+  The elements are copied in **reverse order** (the last element is copied first), but their relative order is preserved.
+
+  :::danger Undefined Behaviour
+  The behavior is undefined if `result` is within the range (`first`; `last`]. In this case, [`ranges::move`](/docs/std/algo/ranges/move) may be used instead.
+  :::
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The elements in the moved-from range will still contain valid values of the appropriate type, but not necessarily the same values as before the move, as if using `*(result - n) = ranges::iter_move(last - n)` for each integer `n`, where `0 ≤ n < N`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+- `first`, `last` - the range of elements to move
+- `r` - the range of elements to move
+- `result` - the destination range
+
+### Return value
+
+A value of type `ranges::move_backward_result` initialized as follows:
+```cpp
+{
+  last,
+  result - N
+}
+```
+Where `N` is the size of the range to move.
+
+### Complexity
+
+Exactly `N` assignments, where `N` is the size of the range to move.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>move_backward(1) and move_backward(2)</summary>
+
+```cpp
+struct move_backward_fn
+{
+    template<std::bidirectional_iterator I1, std::sentinel_for<I1> S1,
+             std::bidirectional_iterator I2>
+    requires std::indirectly_movable<I1, I2>
+    constexpr ranges::move_backward_result<I1, I2>
+        operator()(I1 first, S1 last, I2 result) const
+    {
+        auto i {last};
+        for (; i != first; *--result = ranges::iter_move(--i))
+        {}
+        return {std::move(last), std::move(result)};
+    }
+
+    template<ranges::bidirectional_range R, std::bidirectional_iterator I>
+    requires std::indirectly_movable<ranges::iterator_t<R>, I>
+    constexpr ranges::move_backward_result<ranges::borrowed_iterator_t<R>, I>
+        operator()(R&& r, I result) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::move(result));
+    }
+};
+
+inline constexpr move_backward_fn move_backward {};
+```
+
+</details>
+
+### Notes
+
+When moveing overlapping ranges, [`ranges::move](/docs/std/algo/ranges/move) is appropriate when moving to the left (**beginning of the destination range is outside the source range**),  
+while [`ranges::move_backward](#) is appropriate when moving to the right (**end of the destination range is outside the source range**).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <string_view>
+#include <vector>
+
+using Vec = std::vector<std::string>;
+
+void print(std::string_view rem, Vec const& vec)
+{
+    std::cout << rem << "[" << vec.size() << "]: ";
+    for (const std::string& s : vec)
+        std::cout << (s.size() ? s : std::string{"·"}) << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    Vec a{"▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"};
+    Vec b(a.size());
+
+    print("Before move:\n" "a", a);
+    print("b", b);
+
+    std::ranges::move_backward(a, b.end());
+
+    print("\n" "Move a >> b:\n" "a", a);
+    print("b", b);
+
+    std::ranges::move_backward(b.begin(), b.end(), a.end());
+    print("\n" "Move b >> a:\n" "a", a);
+    print("b", b);
+
+    std::ranges::move_backward(a.begin(), a.begin()+3, a.end());
+    print("\n" "Overlapping move a[0, 3) >> a[5, 8):\n" "a", a);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Before move:
+a[8]: ▁ ▂ ▃ ▄ ▅ ▆ ▇ █
+b[8]: · · · · · · · ·
+
+Move a >> b:
+a[8]: · · · · · · · ·
+b[8]: ▁ ▂ ▃ ▄ ▅ ▆ ▇ █
+
+Move b >> a:
+a[8]: ▁ ▂ ▃ ▄ ▅ ▆ ▇ █
+b[8]: · · · · · · · ·
+
+Overlapping move a[0, 3) >> a[5, 8):
+a[8]: · · · ▄ ▅ ▁ ▂ ▃
+```
+
+</div>
+</Columns>
