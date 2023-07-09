@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I,
+  std::weakly_incrementable O
+>
+  requires std::indirectly_copyable<I, O>
+constexpr copy_n_result<I, O> copy_n( I first, std::iter_difference_t<I> n, O result );
+```

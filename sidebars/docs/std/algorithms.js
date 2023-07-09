@@ -105,6 +105,7 @@ module.exports = {
           type: "category",
           label: "Rangified",
           items: [
+            docsMethod("std/algo/ranges/copy_n", "since-cpp20"),
             docsMethod("std/algo/ranges/transform", "since-cpp20"),
             docsMethod("std/algo/ranges/reverse", "since-cpp20"),
           ]

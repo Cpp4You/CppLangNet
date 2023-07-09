@@ -1,0 +1,12 @@
+```cpp
+// (1)
+constexpr copy_n_result<I, O>
+    copy_n( I first, std::iter_difference_t<I> n, O result );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `O` - `std::weakly_incrementable`
+
+Additionaly, **(1)** has the following constraints:
+  - `std::indirectly_copyable<I, O>`
