@@ -105,6 +105,8 @@ module.exports = {
           type: "category",
           label: "Rangified",
           items: [
+            docsMethod("std/algo/ranges/copy", "since-cpp20"),
+            docsMethod("std/algo/ranges/copy_if", "since-cpp20"),
             docsMethod("std/algo/ranges/copy_n", "since-cpp20"),
             docsMethod("std/algo/ranges/transform", "since-cpp20"),
             docsMethod("std/algo/ranges/reverse", "since-cpp20"),
@@ -114,7 +116,9 @@ module.exports = {
           type: "category",
           label: "Ordinary",
           items: [
-            docsMethod("std/algo/ordinary/copy_n"),
+            docsMethod("std/algo/ordinary/copy"),
+            docsMethod("std/algo/ordinary/copy_if", "since-cpp11"),
+            docsMethod("std/algo/ordinary/copy_n", "since-cpp11"),
             docsMethod("std/algo/ordinary/transform"),
             docsMethod("std/algo/ordinary/reverse"),
           ]
