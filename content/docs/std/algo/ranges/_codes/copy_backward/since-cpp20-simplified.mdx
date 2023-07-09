@@ -13,6 +13,6 @@ The type of arguments are generic and have following constraints:
 - `S` - `std::sentinel_for<I1>`
 - **(2)** - `R` - `std::ranges::bidirectional_range`
 
-Additionaly, each overload has the following constraints:
+Additionally, each overload has the following constraints:
 - **(1)** - `std::indirectly_copyable<I1, I2>`
 - **(2)** - `std::indirectly_copyable<ranges::iterator_t<R>, I>`

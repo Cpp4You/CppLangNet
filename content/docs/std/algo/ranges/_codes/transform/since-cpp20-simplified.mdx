@@ -38,7 +38,7 @@ The type of arguments are generic and have the following constraints:
 
 The `Proj` template argument has a default type of `std::identity` for all overloads.
 
-Additionaly, each overload has the following constraints:
+Additionally, each overload has the following constraints:
 - **(1)** - `indirectly_writable<O, indirect_result_t<F&, projected<I, Proj>> >`
 - **(2)** - `indirectly_writable<O, indirect_result_t<F&, projected<ranges::iterator_t<R>, Proj>>`
 - **(3)** - `indirect_result_t<F&, projected<I1, Proj1>, projected<I2, Proj2>>>`
