@@ -136,11 +136,11 @@ export default function CustomCodeBlock(props: CustomCodeBlockProps) {
       <div ref={containerRef} style={{ display: displayFullCode ? "none" : "block" }}>
         {props.children}
       </div>
-      <ControlButtons container={currentContainer}
-        onShowFullCode={handleFullCodeSwitch}
-      />
       {props.fullCode &&
         <>
+          <ControlButtons container={currentContainer}
+            onShowFullCode={handleFullCodeSwitch}
+          />
           <div ref={fullCodeRef} style={{ display: displayFullCode ? "block" : "none" }}>
             {typeof props.fullCode === "string" ?
               <CodeBlock language="cpp">
