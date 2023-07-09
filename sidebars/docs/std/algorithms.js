@@ -127,6 +127,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/move_backward", "since-cpp11"),
             docsMethod("std/algo/ordinary/transform"),
             docsMethod("std/algo/ordinary/reverse"),
+            docsMethod("std/algo/ordinary/fill"),
           ]
         }
       ]
