@@ -8,10 +8,11 @@ tags:			[algorithm, adjacent_find, find, search, look, predicate, condition]
 cppreference_origin_rel: w/cpp/algorithm/adjacent_find
 ---
 
-import Columns          from "@site-comps/Columns";
-import SwitchView       from "@site-comps/SwitchView";
-import Tooltip          from '@site-comps/Tooltip';
-import { Since, Until } from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
 
 <!-- Terms -->
 
@@ -46,17 +47,31 @@ Searches the range [`first`; `last`) for two consecutive equal elements.
 
 ### Parameters
 
-- `first`, `last` - the range of elements to examine
-- `p` - binary predicate which returns `true` if the elements should be treated as equal.
-	The signature of the function should be equivalent to the following:
-	```cpp
-	bool fun(const Type1& a, const Type2& b);
-	```
-	- The signature does not need to have `const&`.
-	- The function **must not** modify the objects passed to it.
-	- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
-	- The types `Type1` and `Type2` must be such that an object of type `ForwardIt` can be dereferenced and then implicitly converted to them.
-- `policy` - the execution policy to use. See [execution policy](#) for details.
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Binary predicate which returns `true` if the elements should be treated as equal.
+
+The signature of the function should be equivalent to the following:
+```cpp
+bool fun(const Type1& a, const Type2& b);
+```
+- The signature does not need to have `const&`.
+- The function **must not** modify the objects passed to it.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `ForwardIt` can be dereferenced and then implicitly converted to them.
+
+
+  </Symbol>
+
+</SymbolTable>
 
 #### Type requirements
 

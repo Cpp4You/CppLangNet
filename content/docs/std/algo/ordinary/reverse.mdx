@@ -8,10 +8,11 @@ tags:			[algorithm, reverse, order, backwards]
 cppreference_origin_rel: w/cpp/algorithm/ranges/reverse
 ---
 
-import Columns          from "@site-comps/Columns";
-import SwitchView       from "@site-comps/SwitchView";
-import Tooltip          from '@site-comps/Tooltip';
-import { Since, Until } from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
 
 <!-- Terms -->
 
@@ -47,8 +48,16 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first`, `last` - the range of elements to reverse (iterator, sentinel pair)
-- `policy` - the execution policy to use. See execution policy for details.
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>second</code> </> }>
+    The range of elements to reverse (iterator, sentinel pair).
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
 
 #### Type requirements
 

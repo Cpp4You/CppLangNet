@@ -8,8 +8,9 @@ tags:			[ranges, algorithm, none_of, condition, none]
 cppreference_origin_rel: w/cpp/algorithm/all_any_none_of
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
@@ -35,10 +36,22 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first`, `last` - the range of elements to examine
-- `r` - the range of elements to examine
-- `proj` - projection to apply to the elements
-- `pred` - predicate to apply to projected elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Predicate to apply to projected elements.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

@@ -8,10 +8,11 @@ tags:			[algorithm, find, find, search, look]
 cppreference_origin_rel: w/cpp/algorithm/find
 ---
 
-import Columns          from "@site-comps/Columns";
-import SwitchView       from "@site-comps/SwitchView";
-import Tooltip          from '@site-comps/Tooltip';
-import { Since, Until } from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
 
 <!-- Terms -->
 
@@ -44,9 +45,19 @@ Returns an iterator to the first element in the range satisfiying specific crite
 
 ### Parameters
 
-- `first`, `last` - the range of elements to apply the function to.
-- `value` - value to compare the elements to
-- `policy` - the execution policy to use. See [execution policy](#) for details.
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to apply the function to.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    Value to compare the elements to.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
 
 #### Type requirements
 

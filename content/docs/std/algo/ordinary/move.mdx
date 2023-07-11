@@ -8,10 +8,11 @@ tags:			[algorithm, move]
 cppreference_origin_rel: w/cpp/algorithm/move
 ---
 
-import Columns          from "@site-comps/Columns";
-import SwitchView       from "@site-comps/SwitchView";
-import Tooltip          from '@site-comps/Tooltip';
-import { Since, Until } from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
 
 <!-- Terms -->
 
@@ -46,13 +47,25 @@ import Signature_SinceCpp20 from './_codes/move/since-cpp20.mdx';
 
 ### Parameters
 
-- `first`, `last` - the range of elements to move
-- `d_first` - the beginning of the destination range.
+<SymbolTable>
 
-  :::danger Undefined Behaviour
-  The behavior is undefined if `d_first` is within the range [`first`; `last`). In this case, [`std::move_backward`](/docs/std/algo/ordinary/move_backward) may be used instead.
-  :::
-- `policy` - the execution policy to use. See [execution policy](#) for details
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to move.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+
+The beginning of the destination range.
+
+:::danger Undefined Behaviour
+The behavior is undefined if `d_first` is within the range [`first`; `last`). In this case, [`std::move_backward`](/docs/std/algo/ordinary/move_backward) may be used instead.
+:::
+
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
 
 #### Type requirements
 

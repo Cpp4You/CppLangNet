@@ -8,9 +8,10 @@ tags:			[algorithm, fill]
 cppreference_origin_rel: w/cpp/algorithm/ranges/fill
 ---
 
-import Columns          from "@site-comps/Columns";
-import SwitchView       from "@site-comps/SwitchView";
-import { Since, Until } from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import { Since, Until }        from "@site-comps/Versions";
 
 <!----------------- Codes ---------------------->
 
@@ -33,9 +34,19 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first`, `last` - the range of elements to examine
-- `r` - the range of elements to examine
-- `value` - the value to assign
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </>}>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to assign.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

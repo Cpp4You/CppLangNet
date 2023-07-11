@@ -8,10 +8,11 @@ tags:			[ranges, algorithm, move]
 cppreference_origin_rel: w/cpp/algorithm/ranges/move
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
-import Tooltip    from "@site-comps/Tooltip";
-import Tabs       from "@theme/Tabs";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
 
 <!----------------- Codes ---------------------->
 
@@ -35,7 +36,7 @@ using move_result = ranges::in_out_result<I, O>;
 
 - **(1)** Moves the elements in the range, defined by [`first`; `last`), to another range beginning at `result`.
 
-The elements in the moved-from range will still contain valid values of the appropriate type, but not necessarily the same values as before the move.
+  The elements in the moved-from range will still contain valid values of the appropriate type, but not necessarily the same values as before the move.
 
   :::danger Undefined Behaviour
   The behavior is undefined if `result` is within the range [`first`; `last`). In this case, [`ranges::move_backward`](/docs/std/algo/ranges/move_backward) may be used instead.
@@ -48,9 +49,19 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first`, `last` - the range of elements to move
-- `r` - the range of elements to move
-- `result` - the beginning of the destination range
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to move.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to move.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

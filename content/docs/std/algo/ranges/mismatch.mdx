@@ -8,10 +8,11 @@ tags:			[ranges, algorithm, mismatch, adjacent, pair]
 cppreference_origin_rel: w/cpp/algorithm/ranges/mismatch
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
-import Tooltip    from "@site-comps/Tooltip";
-import Tabs       from "@theme/Tabs";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
 
 <!----------------- Codes ---------------------->
 
@@ -43,13 +44,31 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first1`, `last1` - an iterator-sentinel pair denoting the first range of the elements to compare
-- `r1` - the first range of the elements to compare
-- `first2`, `last2` - an iterator-sentinel pair denoting the second range of the elements to compare
-- `r2` - the second range of the elements to compare
-- `pred` - predicate to apply to the projected elements
-- `proj1` - projection to apply to the first range of elements
-- `proj2` - projection to apply to the second range of elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    An iterator-sentinel pair denoting the first range of the elements to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>r1</code> }>
+    The first range of the elements to compare.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    An iterator-sentinel pair denoting the second range of the elements to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The second range of the elements to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the first range of elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the second range of elements.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

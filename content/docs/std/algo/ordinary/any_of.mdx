@@ -8,9 +8,10 @@ tags:			[algorithm, any_of, condition, predicate, any, some]
 cppreference_origin_rel: w/cpp/algorithm/all_any_none_of
 ---
 
-import Columns          from "@site-comps/Columns";
-import SwitchView       from "@site-comps/SwitchView";
-import { Since, Until } from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import { Since, Until }        from "@site-comps/Versions";
 
 <!----------------- Codes ---------------------->
 
@@ -39,12 +40,24 @@ Checks if a predicate holds for any of the elements in a range.
 
 ### Parameters
 
-- `first`, `last` - the range of elements to examine
-- `p` - unary predicate.
+<SymbolTable>
 
-	The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
 
-- `policy` - the execution policy to use. See [execution policy](#) for details.
+Unary predicate.
+
+The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>.
+
+
+  </Symbol>
+
+</SymbolTable>
 
 #### Type requirements
 

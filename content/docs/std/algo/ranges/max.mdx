@@ -8,8 +8,9 @@ tags:			[ranges, algorithm, max, maximum, biggest, greatest, bigger, greater]
 cppreference_origin_rel: w/cpp/algorithm/ranges/max
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
@@ -37,10 +38,22 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `a`, `b` - the values to compare
-- `r` - the range of values to compare
-- `comp` - comparison to apply to the projected elements
-- `proj` - projection to apply to the elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>a</code> <br/> <code>b</code> </> }>
+    The values to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of values to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

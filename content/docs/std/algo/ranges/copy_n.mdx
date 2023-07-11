@@ -8,10 +8,11 @@ tags:			[ranges, algorithm, copy_n, copy, clone]
 cppreference_origin_rel: w/cpp/algorithm/ranges/copy_n
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
-import Tooltip    from "@site-comps/Tooltip";
-import Tabs       from "@theme/Tabs";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
 
 <!-- Terms -->
 
@@ -47,9 +48,19 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first` - the beginning of the range to copy from
-- `n` - number of elements to copy
-- `result` - the beginning of the destination range
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>first</code> }>
+    The beginning of the range to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code> }>
+    Number of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

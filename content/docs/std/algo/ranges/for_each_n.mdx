@@ -8,10 +8,11 @@ tags:			[ranges, algorithm, for_each_n, every, size, foreach]
 cppreference_origin_rel: w/cpp/algorithm/ranges/for_each_n
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
-import Tooltip    from "@site-comps/Tooltip";
-import Tabs       from "@theme/Tabs";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
 
 <!-- Terms -->
 
@@ -50,16 +51,31 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first` - the beginning of the range to apply the function to
-- `n` - the number of elements to apply the function to
-- `f` - function object, to be applied to every element of the range.
-	The signature of the function should be equivalent to the following:
-	```cpp
-	void fun(const Type& a);
-	```
-	- The signature does not need to have `const&`.
-	- The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
-- `proj` - projection to apply to the elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The beginning of the range to apply the function to.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code> }>
+    The number of elements to apply the function to.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>f</code> }>
+
+Function object, to be applied to every element of the range.
+The signature of the function should be equivalent to the following:
+```cpp
+void fun(const Type& a);
+```
+- The signature does not need to have `const&`.
+- The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
+
+
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

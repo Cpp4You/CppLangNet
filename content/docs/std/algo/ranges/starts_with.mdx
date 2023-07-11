@@ -8,10 +8,11 @@ tags:			[ranges, algorithm, find, starts_with, sequence, search, look]
 cppreference_origin_rel: w/cpp/algorithm/ranges/starts_with
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
-import Tooltip    from "@site-comps/Tooltip";
-import Tabs       from "@theme/Tabs";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
 
 <!----------------- Codes ---------------------->
 
@@ -38,13 +39,31 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first1`, `last1` - the range of elements to examine
-- `r1` - the range of elements to examine
-- `first2`, `last2` - the range of elements to be used as prefix
-- `r2` - the range of elements to be used as prefix
-- `pred` - binary predicate to compare the elemenets with
-- `proj1` - projection to apply to the elements in the first range
-- `proj2` - projection to apply to the elements in the second range
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r1</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The range of elements to be used as prefix.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The range of elements to be used as prefix.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Binary predicate to compare the elements with.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the elements in the first range.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the elements in the second range.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

@@ -8,10 +8,11 @@ tags:			[algorithm, for_each, each, every, foreach]
 cppreference_origin_rel: w/cpp/algorithm/for_each
 ---
 
-import Columns          from "@site-comps/Columns";
-import SwitchView       from "@site-comps/SwitchView";
-import Tooltip          from '@site-comps/Tooltip';
-import { Since, Until } from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
 
 <!-- Terms -->
 
@@ -53,15 +54,30 @@ Unlike the rest of the parallel algorithms, [`for_each`](#) is **not** allowed t
 
 ### Parameters
 
-- `first`, `last` - the range of elements to apply the function to.
-- `policy` - the execution policy to use. See [execution policy](#) for details.
-- `f` - function object, to be applied to every element of the range.
-	The signature of the function should be equivalent to the following:
-	```cpp
-	void fun(const Type& a);
-	```
-	- The signature does not need to have `const&`.
-	- The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to apply the function to.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>f</code> }>
+
+Function object, to be applied to every element of the range.
+
+The signature of the function should be equivalent to the following:
+```cpp
+void fun(const Type& a);
+```
+- The signature does not need to have `const&`.
+- The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
+
+
+  </Symbol>
+
+</SymbolTable>
+
 
 #### Type requirements
 - `InputIt` must meet the requirements of [LegacyInputIterator](/docs/named_req/LegacyInputIterator).

@@ -8,10 +8,11 @@ tags:			[ranges, algorithm, copy, copy_if, clone, predicate, condition]
 cppreference_origin_rel: w/cpp/algorithm/ranges/copy_if
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
-import Tooltip    from "@site-comps/Tooltip";
-import Tabs       from "@theme/Tabs";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
 
 <!----------------- Codes ---------------------->
 
@@ -48,11 +49,25 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first`, `last` - the range of elements to copy
-- `r` - the range of elements to copy
-- `result` - the beginning of the destination range
-- `pred` - predicate to apply to the projected elements
-- `proj` - projection to apply to the elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

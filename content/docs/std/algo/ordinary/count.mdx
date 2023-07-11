@@ -8,10 +8,11 @@ tags:			[algorithm, count, number, quantity]
 cppreference_origin_rel: w/cpp/algorithm/count
 ---
 
-import Columns          from "@site-comps/Columns";
-import SwitchView       from "@site-comps/SwitchView";
-import Tooltip          from '@site-comps/Tooltip';
-import { Since, Until } from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
 
 <!-- Terms -->
 
@@ -42,9 +43,19 @@ Returns the number of elements equal to `value` in the range [`first1`; `last1`)
 
 ### Parameters
 
-- `first`, `lazy` - the range of elements to examine
-- `value` - the value to search for
-- `policy` - the execution policy to use. See [execution policy](#) for details.
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
 
 #### Type requirements
 - **(1 - 2)** - `InputIt` must meet the requirements of [LegacyInputIterator](/docs/named_req/LegacyInputIterator).

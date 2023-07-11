@@ -8,10 +8,11 @@ tags:			[ranges, algorithm, find, search_n, search, consecutive, sequence, look]
 cppreference_origin_rel: w/cpp/algorithm/ranges/search_n
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
-import Tooltip    from "@site-comps/Tooltip";
-import Tabs       from "@theme/Tabs";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
 
 <!----------------- Codes ---------------------->
 
@@ -37,12 +38,28 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first`, `last` - the range of elements to examine
-- `r` - the range of elements to examine
-- `count` - the length of the sequence to search for
-- `value` - the value to search for
-- `pred` - the binary predicate that compares the projected elements with `value`
-- `proj` - projection to apply to the elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>count</code> }>
+    The length of the sequence to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    The binary predicate that compares the projected elements with <code>value</code>.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

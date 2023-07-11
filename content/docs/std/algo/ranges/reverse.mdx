@@ -8,10 +8,11 @@ tags:			[ranges, algorithm, reverse, order, backwards]
 cppreference_origin_rel: w/cpp/algorithm/ranges/reverse
 ---
 
-import Columns    from "@site-comps/Columns";
-import SwitchView from "@site-comps/SwitchView";
-import Tooltip    from "@site-comps/Tooltip";
-import Tabs       from "@theme/Tabs";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
 
 <!-- Terms -->
 
@@ -43,8 +44,16 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Parameters
 
-- `first`, `last` - the range of elements to reverse (iterator, sentinel pair)
-- `r`- the range of elements to reverse (ranges)
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to reverse (iterator, sentinel pair).
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to reverse (ranges).
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

@@ -8,10 +8,11 @@ tags:			[algorithm, move_backward, move]
 cppreference_origin_rel: w/cpp/algorithm/move_backward
 ---
 
-import Columns          from "@site-comps/Columns";
-import SwitchView       from "@site-comps/SwitchView";
-import Tooltip          from '@site-comps/Tooltip';
-import { Since, Until } from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
 
 <!-- Terms -->
 
@@ -40,8 +41,16 @@ import Signature_SinceCpp20 from './_codes/move_backward/since-cpp20.mdx';
 
 ### Parameters
 
-- `first`, `last` - the range of elements to move_backward
-- `d_first` - the beginning of the destination range
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to move.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range.
+  </Symbol>
+
+</SymbolTable>
 
 #### Type requirements
 
