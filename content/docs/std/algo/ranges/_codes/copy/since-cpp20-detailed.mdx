@@ -8,7 +8,6 @@ template<
   requires std::indirectly_copyable<I, O>
 constexpr copy_result<I, O> copy( I first, S last, O result );
 
-
 // (2)
 template<
   ranges::input_range R,

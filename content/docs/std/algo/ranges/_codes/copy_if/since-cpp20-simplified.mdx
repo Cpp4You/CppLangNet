@@ -3,7 +3,6 @@
 constexpr copy_if_result<I, O>
     copy_if( I first, S last, O result, Pred pred, Proj proj = {} );
 
-
 // (2)
 constexpr copy_if_result<ranges::borrowed_iterator_t<R>, O>
     copy_if( R&& r, O result, Pred pred, Proj proj = {} );
