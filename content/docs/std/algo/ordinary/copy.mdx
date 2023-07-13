@@ -65,10 +65,17 @@ Copies the elements in the range, defined by [`first`; `last`), to another range
 
 #### Type requirements
 
-- **(1)**:
-  - `InputIt` must meet the requirements of [LegacyInputIterator](/docs/named_req/LegacyInputIterator).
-  - `OutputIt` must meet the requirements of [LegacyOutputIterator](/docs/named_req/LegacyOutputIterator).
-- **(2)** - `ForwardIt1`, `ForwardIt2` must meet the requirements of [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator).
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
 
 ### Return value
 

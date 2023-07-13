@@ -79,9 +79,19 @@ bool cmp(const Type1 &a, const Type2 &b);
 
 #### Type requirements
 
-- `RandomIt` must meet the requirements of [`ValueSwappable`](/docs/named_req/ValueSwappable) and [`LegacyRandomAccessIterator`](/docs/named_req/LegacyRandomAccessIterator) .
-- The type of dereferenced `RandomIt` must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable) and [`MoveConstructible`](/docs/named_req/MoveConstructible).
-- **(2, 4)** - `Compare` must meet the requirements of [`Compare`](/docs/named_req/Compare).
+<SymbolTable>
+  <Symbol none noLink name={ <code>RandomIt</code> }>
+    <a href="/docs/named_req/ValueSwappable">ValueSwappable</a> <br/>
+    <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> Type of dereferenced <code>RandomIt</code> </> }>
+    <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> <br/>
+    <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>Compare</code> }>
+    <a href="/docs/named_req/Compare">Compare</a>
+  </Symbol>
+</SymbolTable>
 
 ### Return value
 

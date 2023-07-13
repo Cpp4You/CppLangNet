@@ -84,9 +84,17 @@ bool fun(const Type1& a, const Type2& b);
 
 #### Type requirements
 
-- `InputIt1`, `InputIt2` must meet the requirements of [LegacyInputIterator](/docs/named_req/LegacyInputIterator).
-- `ForwardIt1`, `ForwardIt2` must meet the requirements of [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator).
-- `BinaryPredicate` must meet the requirements of [BinaryPredicate](/docs/named_req/BinaryPredicate).
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>InputIt1</code> <br/> <code>InputIt2</code> </> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>BinaryPredicate</code> }>
+    <a href="/docs/named_req/BinaryPredicate">BinaryPredicate</a>
+  </Symbol>
+</SymbolTable>
 
 ### Return value
 

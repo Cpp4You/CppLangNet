@@ -82,8 +82,14 @@ bool fun(const Type1& a, const Type2& b);
 
 #### Type requirements
 
-- `ForwardIt` must meet the requirements of [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator).
-- `Size` must be [implicitly convertible](#) to an [integral type](#).
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>Size</code> }>
+    Must be <a href="#">implicitly convertible</a> to an <a href="#">integral type </a>.
+  </Symbol>
+</SymbolTable>
 
 ### Return value
 

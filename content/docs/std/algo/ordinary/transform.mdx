@@ -100,9 +100,17 @@ Ret fun(const Type1& a, const Type2& b);
 
 #### Type requirements
 
-- `InputIt`, `InputIt1`, `InputIt2` must meet the requirements of [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator).
-- `OutputIt `must meet the requirements of [`LegacyOutputIterator`](/docs/named_req/LegacyOutputIterator).
-- `ForwardIt1`, `ForwardIt2`, `ForwardIt3 `must meet the requirements of [`LegacyForwardIterator`](/docs/named_req/LegacyForwardIterator).
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>InputIt</code> <br/> <code>InputIt1</code> <code>InputIt2</code> </> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> <code>ForwardIt3</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
 
 ### Return value
 

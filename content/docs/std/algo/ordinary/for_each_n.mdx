@@ -85,10 +85,21 @@ void fun(const Type& a);
 </SymbolTable>
 
 #### Type requirements
-- `InputIt` must meet the requirements of [LegacyInputIterator](/docs/named_req/LegacyInputIterator).
-- `ForwardIt` must meet the requirements of [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator).
-- `UnaryFunction` must meet the requirements of [MoveConstructible](/docs/named_req/MoveConstructible). It does **not** have to be [CopyConstructible](/docs/named_req/CopyConstructible)
-- **(2)** - `UnaryFunction2` must meet the requirements of [CopyConstructible](/docs/named_req/CopyConstructible).
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>UnaryFunction</code> }>
+    <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>UnaryFunction2</code> }>
+    <a href="/docs/named_req/CopyConstructible">CopyConstructible</a>
+  </Symbol>
+</SymbolTable>
 
 ### Return value
 

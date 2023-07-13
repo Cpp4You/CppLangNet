@@ -57,8 +57,14 @@ import Signature_SinceCpp20 from './_codes/fill/since-cpp20.mdx';
 
 #### Type requirements
 
-- `ForwardIt` must meet the requirements of [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator).
-- `value` must [writable](#) to `first`.
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    Must be <a href="#">writable</a> to <code>first</code>.
+  </Symbol>
+</SymbolTable>
 
 ### Return value
 
