@@ -1,0 +1,147 @@
+---
+title:			fill_n algorithm
+sidebar_label:	fill_n(  )
+description:	fill_n algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, fill_n]
+
+cppreference_origin_rel: w/cpp/algorithm/fill_n
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp11 from './_codes/fill_n/until-cpp11.mdx';
+import Signature_SinceCpp11 from './_codes/fill_n/until-cpp11.mdx';
+import Signature_SinceCpp17 from './_codes/fill_n/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/fill_n/since-cpp20.mdx';
+
+# std::fill_n() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'since-cpp11': <Signature_SinceCpp11 />,
+  'until-cpp11': <Signature_UntilCpp11 />
+}} />
+
+- **(1)** Assigns the given value to the first `count` elements in the range beginning at `first` if `count > 0`.  
+  Does nothing otherwise.
+
+- **(2)** Same as **(1)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt; </Until> <Since v='cpp20'>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>first</code> }>
+    The range of elements to modify.
+  </Symbol>
+  <Symbol none noLink name={ <code>count</code> }>
+    Number of elements to modify.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to assign.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/OutputIterator">OutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>LegacyForwardIterator</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>Size</code> }>
+    Must be <a href="#">convertible</a> to <a href="#">integral type</a>.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    Must be <a href="#">writable</a> to <code>first</code>.
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+<Since v="cpp11">Iterator one past the last element assigned if <code>count > 0</code>, <code>first</code> otherwise.</Since> <br/>
+<Until v="cpp11"><b>(none)</b></Until>
+
+### Complexity
+
+Exactly `std::max(0, count)` assignments.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>fill_n (1)</summary>
+
+```cpp
+template<class OutputIt, class Size, class T>
+OutputIt fill_n(OutputIt first, Size count, const T& value)
+{
+    for (Size i = 0; i < count; i++)
+        *first++ = value;
+    return first;
+}
+```
+
+</details>
+
+### Examples
+
+The following code uses [`fill_n()`](#) to assign `-1` to the first half of a vector of integers:
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v1 {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    std::fill_n(v1.begin(), 5, -1);
+
+    std::copy(begin(v1), end(v1), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+-1 -1 -1 -1 -1 5 6 7 8 9
+```
+
+</div>
+</Columns>
