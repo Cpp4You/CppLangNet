@@ -1,0 +1,197 @@
+---
+title:			remove_if algorithm
+sidebar_label:	remove_if(  )
+description:	remove_if algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, remove, remove_if, erase, delete]
+
+cppreference_origin_rel: w/cpp/algorithm/remove_if
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/remove_if/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/remove_if/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/remove_if/since-cpp20.mdx';
+
+# std::remove_if() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+Removes all elements satisfying specific criteria from the range [`first`; `last`) and returns a past-the-end iterator for the new end of the range.
+
+- **(1)** Removes all elements for which predicate `p` returns `true`.
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt; </Until> <Since v='cpp20'>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</Since> is <code>true</code>.
+	:::
+
+<SwitchView content={{
+  'since-cpp11': <>
+    If the type of <code>*first</code> is not <a href="/docs/named_req/MoveAssignable">MoveAssignable</a>, the <Tooltip term={ <Term_UndefinedBehaviour/> }>behaviour is undefined</Tooltip>.
+  </>,
+  'until-cpp11': <>
+    If the <a href="#">value type</a> of <code>ForwardIt</code> is not <a href="/docs/named_req/CopyAssignable">CopyAssignable</a>, the <Tooltip term={ <Term_UndefinedBehaviour/> }>behaviour is undefined</Tooltip>.
+  </>
+}} />
+
+Removing is done by shifting (by means of <Until v='cpp11'>copy assignment</Until> <Since v='cpp11'>move assignment</Since>) the elements in the range in such a way that the elements that are not to be removed appear in the beginning of the range.
+
+:::important
+Relative order of the elements that remain is preserved and the physical size of the container is unchanged.
+:::
+
+:::warning
+Iterators pointing to an element between the new *logical* end and the *physical* end of the range are still <a href="#">dereferenceable</a>, <Since v='cpp11'>but the elements themselves have unspecified values (as per <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> post-condition).</Since>
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Unary predicate which returns `true` if the element should be removed.
+
+The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>UnaryPredicate</code> }>
+    <a href="/docs/named_req/Predicate">Predicate</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+Past-the-end iterator for the new range of values (if this is not `end`, then it points to an unspecified value, and so do iterators to any values between this iterator and `end`).
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+At most N applications of predicate `p`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>remove_if (1)</summary>
+
+```cpp
+template<class ForwardIt, class UnaryPredicate>
+ForwardIt remove_if(ForwardIt first, ForwardIt last, UnaryPredicate p)
+{
+    first = std::find_if(first, last, p);
+    if (first != last)
+        for (ForwardIt i = first; ++i != last;)
+            if (!p(*i))
+                *first++ = std::move(*i);
+    return first;
+}
+```
+
+</details>
+
+### Notes
+
+A call to remove_if is typically followed by a call to a container's erase member function, which erases the unspecified values and reduces the *physical size* of the container to match its new *logical size*.
+These two invocations together constitute a so-called [Erase–remove_if idiom](#)<Since v='cpp20'>, which can be achieved by the free function std::erase that has overloads for all standard sequence containers, or std::erase_if that has overloads for all standard containers</Since>
+
+The similarly-named container member functions [list::remove_if](#), [list::remove_if_if](#), [forward_list::remove_if](/docs/std/containers/lists/forward-list/remove_if), and [forward_list::remove_if_if](/docs/std/containers/lists/forward-list/remove_if) erase the remove_ifd elements.
+
+These algorithms cannot be used with associative containers such as [std::set](/docs/std/containers/sets/set) and [std::map](/docs/std/containers/maps/map) because their iterator types do not dereference to [MoveAssignable](/docs/named_req/MoveAssignable) types (the keys in these containers are not modifiable).
+
+The standard library also defines an overload of [`std::remove_if`](#) in `<cstdio>`, which takes a `const char*` and is used to delete files.
+
+Because [`std::remove_if`](#) takes `value` by reference, it can have unexpected behavior if it is a reference to an element of the range [`first`; `last`).
+
+### Examples
+
+The following code remove_ifs all spaces from a string by shifting all non-space characters to the left and then erasing the extra.
+This is an example of [Erase-remove_if idiom](#).
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cctype>
+#include <iostream>
+#include <string>
+#include <string_view>
+
+int main()
+{
+    std::string str1 {"Text with some   spaces"};
+
+    auto noSpaceEnd = std::remove_if(str1.begin(), str1.end(), ' ');
+
+    // The spaces are remove_ifd from the string only logically.
+    // Note, we use view, the original string is still not shrunk:
+    std::cout << std::string_view(str1.begin(), noSpaceEnd)
+              << " size: " << str1.size() << '\n';
+
+    str1.erase(noSpaceEnd, str1.end());
+
+    // The spaces are remove_ifd from the string physically.
+    std::cout << str1 << " size: " << str1.size() << '\n';
+
+    std::string str2 = "Text\n with\tsome \t  whitespaces\n\n";
+    str2.erase(std::remove_if_if(str2.begin(),
+                              str2.end(),
+                              [](unsigned char x) { return std::isspace(x); }),
+               str2.end());
+    std::cout << str2 << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Textwithsomespaces size: 23
+Textwithsomespaces size: 18
+Textwithsomewhitespaces
+```
+
+</div>
+</Columns>
