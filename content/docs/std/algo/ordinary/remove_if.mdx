@@ -140,10 +140,6 @@ The similarly-named container member functions [list::remove_if](#), [list::remo
 
 These algorithms cannot be used with associative containers such as [std::set](/docs/std/containers/sets/set) and [std::map](/docs/std/containers/maps/map) because their iterator types do not dereference to [MoveAssignable](/docs/named_req/MoveAssignable) types (the keys in these containers are not modifiable).
 
-The standard library also defines an overload of [`std::remove_if`](#) in `<cstdio>`, which takes a `const char*` and is used to delete files.
-
-Because [`std::remove_if`](#) takes `value` by reference, it can have unexpected behavior if it is a reference to an element of the range [`first`; `last`).
-
 ### Examples
 
 The following code remove_ifs all spaces from a string by shifting all non-space characters to the left and then erasing the extra.
