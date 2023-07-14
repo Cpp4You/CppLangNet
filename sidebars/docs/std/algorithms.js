@@ -135,6 +135,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/fill_n"),
             docsMethod("std/algo/ordinary/generate"),
             docsMethod("std/algo/ordinary/generate_n"),
+            docsMethod("std/algo/ordinary/remove"),
           ]
         }
       ]
