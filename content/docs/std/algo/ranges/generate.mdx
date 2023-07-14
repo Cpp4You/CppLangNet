@@ -68,6 +68,7 @@ Exactly `ranges::distance(first, last)` invocations of `gen()` and assignments.
 <summary>generate(1) and generate(2)</summary>
 
 ```cpp
+struct generate_fn
 {
     template<std::input_or_output_iterator O, std::sentinel_for<O> S,
              std::copy_constructible F>
