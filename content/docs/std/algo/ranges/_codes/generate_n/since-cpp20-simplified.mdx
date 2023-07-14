@@ -1,0 +1,13 @@
+```cpp
+// (1)
+constexpr O generate_n( O first, std::iter_difference_t<O> n, F gen );
+```
+
+The type of arguments are generic and have following constraints:
+- `O` - `std::input_or_output_iterator`
+- `F` - `std::copy_constructible`
+
+Additionally, each overload has the following constraints:
+- **(1)** - `invocable<F&> && indirectly_writable<O, invoke_result_t<F&>>`
+
+(The `std::` namespace was ommitted here for readability)

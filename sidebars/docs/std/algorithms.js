@@ -116,6 +116,7 @@ module.exports = {
             docsMethod("std/algo/ranges/fill", "since-cpp20"),
             docsMethod("std/algo/ranges/fill_n", "since-cpp20"),
             docsMethod("std/algo/ranges/generate", "since-cpp20"),
+            docsMethod("std/algo/ranges/generate_n", "since-cpp20"),
           ]
         },
         {
