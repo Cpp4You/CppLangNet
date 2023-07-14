@@ -129,6 +129,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/transform"),
             docsMethod("std/algo/ordinary/reverse"),
             docsMethod("std/algo/ordinary/fill"),
+            docsMethod("std/algo/ordinary/generate_n"),
           ]
         }
       ]
