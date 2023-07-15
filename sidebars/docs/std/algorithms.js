@@ -138,6 +138,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/generate_n"),
             docsMethod("std/algo/ordinary/remove"),
             docsMethod("std/algo/ordinary/remove_if"),
+            docsMethod("std/algo/ordinary/remove_copy"),
           ]
         }
       ]
