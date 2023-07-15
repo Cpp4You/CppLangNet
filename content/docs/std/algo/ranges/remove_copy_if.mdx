@@ -28,6 +28,12 @@ import Signature_SinceCpp20_Simplified from './_codes/remove_copy_if/since-cpp20
 	}
 }} />
 
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using remove_copy_if_result = ranges::in_out_result<I, O>;
+```
+
 - **(1)** Ignores all elements for which predicate `pred` returns `true`.
 
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
