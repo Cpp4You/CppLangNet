@@ -1,0 +1,29 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I,
+  std::sentinel_for<I> S,
+  class T1,
+  class T2,
+  class Proj = std::identity
+>
+  requires std::indirectly_writable<I, const T2&> &&
+           std::indirect_binary_predicate<ranges::equal_to,
+            std::projected<I, Proj>, const T1*>
+constexpr I
+    replace( I first, S last, const T1& old_value, const T2& new_value,
+             Proj proj = {} );
+
+// (2)
+template<
+  ranges::input_range R,
+  class T1,
+  class T2,
+  class Proj = std::identity
+>
+requires std::indirectly_writable<ranges::iterator_t<R>, const T2&> &&
+         std::indirect_binary_predicate<ranges::equal_to,
+             std::projected<ranges::iterator_t<R>, Proj>, const T1*>
+constexpr ranges::borrowed_iterator_t<R>
+    replace( R&& r, const T1& old_value, const T2& new_value, Proj proj = {} );
+```

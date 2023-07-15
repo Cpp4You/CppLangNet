@@ -120,6 +120,7 @@ module.exports = {
             docsMethod("std/algo/ranges/remove", "since-cpp20"),
             docsMethod("std/algo/ranges/remove_copy", "since-cpp20"),
             docsMethod("std/algo/ranges/remove_copy_if", "since-cpp20"),
+            docsMethod("std/algo/ranges/replace", "since-cpp20"),
           ]
         },
         {
