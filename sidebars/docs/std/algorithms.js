@@ -143,6 +143,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/remove_if"),
             docsMethod("std/algo/ordinary/remove_copy"),
             docsMethod("std/algo/ordinary/remove_copy_if"),
+            docsMethod("std/algo/ordinary/replace"),
           ]
         }
       ]
