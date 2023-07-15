@@ -1,0 +1,185 @@
+---
+title:			remove_copy_if algorithm
+sidebar_label:	remove_copy_if(  )
+description:	remove_copy_if algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, remove, remove_if, remove_copy, remove_copy_if, erase, delete]
+
+cppreference_origin_rel: w/cpp/algorithm/remove_copy_if
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/remove_copy_if/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/remove_copy_if/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/remove_copy_if/since-cpp20.mdx';
+
+# std::remove_copy_if() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+- **(1)** Ignores all elements for which predicate `p` returns `true`.
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt; </Until> <Since v='cpp20'>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</Since> is <code>true</code>.
+	:::
+
+<SwitchView content={{
+  'since-cpp11': <>
+    If the type of <code>*first</code> is not <a href="/docs/named_req/MoveAssignable">MoveAssignable</a>, the <Tooltip term={ <Term_UndefinedBehaviour/> }>behaviour is undefined</Tooltip>.
+  </>,
+  'until-cpp11': <>
+    If the <a href="#">value type</a> of <code>ForwardIt</code> is not <a href="/docs/named_req/CopyAssignable">CopyAssignable</a>, the <Tooltip term={ <Term_UndefinedBehaviour/> }>behaviour is undefined</Tooltip>.
+  </>
+}} />
+
+Removing is done by shifting (by means of <Until v='cpp11'>copy assignment</Until> <Since v='cpp11'>move assignment</Since>) the elements in the range in such a way that the elements that are not to be removed appear in the beginning of the range.
+
+:::important
+Relative order of the elements that remain is preserved and the physical size of the container is unchanged.
+:::
+
+:::warning
+Iterators pointing to an element between the new *logical* end and the *physical* end of the range are still <a href="#">dereferenceable</a>, <Since v='cpp11'>but the elements themselves have unspecified values (as per <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> post-condition).</Since>
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Unary predicate which returns `true` if the element should be **ignored**.
+
+The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OuputIt</code> }>
+    <a href="/docs/named_req/LegacyOuputIterator">LegacyOuputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={  <code>Predicate</code> }>
+    <a href="/docs/named_req/UnaryPredicate">UnaryPredicate</a>
+  </Symbol>
+</SymbolTable>
+
+<SwitchView content={{
+  'since-cpp20': <SymbolTable>
+    <Symbol none noLink name={ <code>*first</code> }>
+      Must be <a href="#">writable</a> to <code>d_first</code>.
+    </Symbol>
+  </SymbolTable>,
+  'until-cpp20': <>
+    <code>*first</code> must be <a href="#">writable</a> to <code>d_first</code>.
+  </>,
+}} />
+
+### Return value
+
+Iterator to the element past the last element copied.
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+Exactly N applications of the predicate `p`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>remove_copy_if (1)</summary>
+
+```cpp
+template<class InputIt, class OutputIt, class UnaryPredicate>
+OutputIt remove_copy_if(InputIt first, InputIt last, OutputIt d_first, UnaryPredicate p)
+{
+    for (; first != last; ++first)
+        if (!p(*first))
+            *d_first++ = *first;
+    return d_first;
+}
+```
+
+</details>
+
+### Examples
+
+The following code outputs a string while erasing the hash characters '#' on the fly.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <string>
+
+int main()
+{
+    std::string str = "#Return #Value #Optimization";
+    std::cout << "before: " << std::quoted(str) << '\n';
+
+    std::cout << "after:  \"";
+    std::remove_copy(str.begin(), str.end(),
+                     std::ostream_iterator<char>(std::cout), '#');
+    std::cout << "\"\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+before: "#Return #Value #Optimization"
+after:  "Return Value Optimization"
+```
+
+</div>
+</Columns>
