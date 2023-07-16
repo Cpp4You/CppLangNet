@@ -1,0 +1,36 @@
+```cpp
+// (1)
+constexpr replace_copy_result<I, O>
+    replace_copy( I first, S last, O result, const T1& old_value, const T2& new_value,
+                  Proj proj = {} );
+
+// (2)
+constexpr replace_copy_result<ranges::borrowed_iterator_t<R>, O>
+    replace_copy( R&& r, O result, const T1& old_value, const T2& new_value,
+                  Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `O` - `std::output_iterator<const T2&>`
+- `R` - `std::input_range`
+- `T1` - **(none)**
+- `T2` - **(none)**
+- `Proj` - **(none)**
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)**:
+  ```cpp
+  indirectly_copyable<I, O>
+  && indirect_binary_predicate<ranges::equal_to, projected<I, Proj>, const T1*>
+  ```
+- **(2)**:
+  ```cpp
+  indirectly_copyable<ranges::iterator_t<R>, O>
+  && indirect_binary_predicate<ranges::equal_to, projected<ranges::iterator_t<R>, Proj>, const T1*>
+  ```
+
+(The `std::` namespace was ommitted here for readability)
