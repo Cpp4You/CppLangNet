@@ -129,6 +129,7 @@ module.exports = {
           type: "category",
           label: "Ordinary",
           items: [
+            docsMethod("std/algo/ordinary/swap"),
             docsMethod("std/algo/ordinary/copy"),
             docsMethod("std/algo/ordinary/copy_if", "since-cpp11"),
             docsMethod("std/algo/ordinary/copy_n", "since-cpp11"),

@@ -1,0 +1,345 @@
+---
+title:			swap algorithm
+sidebar_label:	swap(  )
+description:	swap algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, swap]
+
+cppreference_origin_rel: w/cpp/algorithm/swap
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp11 from './_codes/swap/until-cpp11.mdx';
+import Signature_SinceCpp11 from './_codes/swap/since-cpp11.mdx';
+import Signature_SinceCpp20 from './_codes/swap/since-cpp20.mdx';
+
+import NoexceptSpecification_Overload1_SinceCpp11 from './_codes/swap/noexcept-specification/overload-1-since-cpp11.mdx';
+
+import NoexceptSpecification_Overload2_SinceCpp17 from './_codes/swap/noexcept-specification/overload-2-since-cpp17.mdx';
+import NoexceptSpecification_Overload2_UntilCpp17 from './_codes/swap/noexcept-specification/overload-2-until-cpp17.mdx';
+
+
+# std::swap() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp11': <Signature_SinceCpp11 />,
+  'until-cpp11': <Signature_UntilCpp11 />
+}} />
+
+Exchanges the given values.
+
+- **(1)** Swaps the values `a` and `b`.
+
+  :::important Overload Resolution
+  <Since v='cpp17'>This overload does not participate in overload resolution unless <code>std::is_move_constructible_v&lt;T&gt; && std::is_move_assignable_v&lt;T&gt;</code> is <code>true</code>.</Since>
+  :::
+
+- **(2)** Swaps the arrays `a` and `b`. In effect calls `std::swap_ranges(a, a + N, b)`.
+
+  :::important Overload Resolution
+  <Since v='cpp17'>This overload does not participate in overload resolution unless <code>std::is_swappable_v&lt;T2&gt;</code> is <code>true</code>.</Since>
+  :::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>a</code> <br/> <code>b</code> </> }>
+    The values to be swapped.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>T</code> }>
+  <Since v='cpp11'> <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>, <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> </Since> <br/>
+    <Until v='cpp11'> <a href="/docs/named_req/CopyConstructible">CopyConstructible</a>, <a href="/docs/named_req/CopyAssignable">CopyAssignable</a> </Until>
+  </Symbol>
+  <Symbol none noLink name={ <code>T2</code> }>
+    <a href="/docs/named_req/Swappable">Swappable</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+- **(1)** - Constant.
+- **(1)** - Linear in `N`.
+
+### Exceptions
+
+Before C++11 no exceptions were thrown.
+
+- **(1)**
+  <SwitchView content={{
+    'since-cpp11': <NoexceptSpecification_Overload1_SinceCpp11 />,
+  }} />
+
+- **(2)**
+  <SwitchView content={{
+    'since-cpp17': <NoexceptSpecification_Overload2_SinceCpp17 />,
+    'until-cpp17': <NoexceptSpecification_Overload2_UntilCpp17 />,
+  }} />
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For none other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Specializations
+
+<SwitchView content={{
+  'until-cpp20': <>
+  std::swap may be specialized in namespace std for program-defined types, but such specializations are not found by <a href="#">ADL</a> (the namespace std is not the associated namespace for the program-defined type).
+  </>
+}} />
+
+The expected way to make a program-defined type swappable is to provide a non-member function swap in the same namespace as the type: see [Swappable](/docs/named_req/Swappable) for details.
+
+The following overloads are already provided by the standard library:
+
+<SymbolTable>
+
+  <Symbol none name={ <> std::swap<small>(std::pair)</small></> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::pair</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::tuple)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::tuple</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::shader_ptr)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::shader_ptr</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::weak_ptr)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::weak_ptr</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::unique_ptr)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::unique_ptr</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::function)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::function</code>
+  </Symbol>
+  <Symbol none name={ <> std::swap<small>(std::basic_string)</small> </> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_string</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::array)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::array</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::deque)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::deque</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::forward_list)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::forward_list</code>
+  </Symbol>
+  <Symbol none name={ <> std::swap<small>(std::list)</small> </> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::list</code>
+  </Symbol>
+  <Symbol none name={ <> std::swap<small>(std::vector)</small> </> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::vector</code>
+  </Symbol>
+  <Symbol none name={ <> std::swap<small>(std::map)</small> </> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::map</code>
+  </Symbol>
+  <Symbol none name={ <> std::swap<small>(std::multimap)</small> </> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::multimap</code>
+  </Symbol>
+  <Symbol none name={ <> std::swap<small>(std::set)</small> </> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::set</code>
+  </Symbol>
+  <Symbol none name={ <> std::swap<small>(std::multiset)</small> </> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::multiset</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::unordered_map)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::unordered_map</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::unordered_multimap)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::unordered_multimap</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::unordered_set)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::unordered_set</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::unordered_multiset)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::unordered_multiset</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::queue)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::queue</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::priority_queue)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::priority_queue</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::stack)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::stack</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::valarray)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::valarray</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::basic_stringbuf)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_stringbuf</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::basic_istringstream)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_istringstream</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::basic_ostringstream)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_ostringstream</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::basic_stringstream)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_stringstream</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::basic_filebuf)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_filebuf</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::basic_ifstream)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_ifstream</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::basic_ofstream)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_ofstream</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::basic_fstream)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_fstream</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp20'> std::swap<small>(std::basic_syncbuf)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_syncbuf</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp23'> std::swap<small>(std::basic_spanbuf)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_spanbuf</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp23'> std::swap<small>(std::basic_ispanstream)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_ispanstream</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp23'> std::swap<small>(std::basic_ospanstream)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_ospanstream</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp23'> std::swap<small>(std::basic_spanstream)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_spanstream</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::basic_regex)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_regex</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::match_results)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::match_results</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::thread)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::thread</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::unique_lock)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::unique_lock</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp14'> std::swap<small>(std::shared_lock)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::shared_lock</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::promise)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::promise</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp11'> std::swap<small>(std::packaged_task)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::packaged_task</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp17'> std::swap<small>(std::optional)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::optional</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp17'> std::swap<small>(std::any)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::any</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp17'> std::swap<small>(std::variant)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::variant</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp17'> std::swap<small>(std::basic_stacktrace)</small> </Since> }>
+    Specializes the <a href="#"><code>std::swap</code></a> algorithm for <code>std::basic_stacktrace</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp17'> swap<small>(std::filesystem::path)</small> </Since> }>
+    Specializes (hidden friend) the <a href="#"><code>std::swap</code></a> algorithm for <code>std::filesystem::path</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp23'> swap<small>(std::expected)</small> </Since> }>
+    Specializes (hidden friend) the <a href="#"><code>std::swap</code></a> algorithm for <code>std::expected</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp20'> swap<small>(std::jthread)</small> </Since> }>
+    Specializes (hidden friend) the <a href="#"><code>std::swap</code></a> algorithm for <code>std::jthread</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp23'> swap<small>(std::move_only_function)</small> </Since> }>
+    Specializes (hidden friend) the <a href="#"><code>std::swap</code></a> algorithm for <code>std::move_only_function</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp20'> swap<small>(std::stop_source)</small> </Since> }>
+    Specializes (hidden friend) the <a href="#"><code>std::swap</code></a> algorithm for <code>std::stop_source</code>
+  </Symbol>
+  <Symbol none name={ <Since v='cpp20'> swap<small>(std::stop_token)</small> </Since> }>
+    Specializes (hidden friend) the <a href="#"><code>std::swap</code></a> algorithm for <code>std::stop_token</code>
+  </Symbol>
+
+</SymbolTable>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+
+namespace Ns
+{
+    class A
+    {
+        int id {};
+
+        friend void swap(A& lhs, A& rhs)
+        {
+            std::cout << "swap(" << lhs << ", " << rhs << ")\n";
+            std::swap(lhs.id, rhs.id);
+        }
+
+        friend std::ostream& operator<<(std::ostream& os, A const& a)
+        {
+            return os << "A::id=" << a.id;
+        }
+
+    public:
+        A(int i) : id {i} {}
+        A(A const&) = delete;
+        A& operator = (A const&) = delete;
+    };
+}
+
+int main()
+{
+    int a = 5, b = 3;
+    std::cout << a << ' ' << b << '\n';
+    std::swap(a, b);
+    std::cout << a << ' ' << b << '\n';
+
+    Ns::A p {6}, q {9};
+    std::cout << p << ' ' << q << '\n';
+//  std::swap(p, q); // error, type requirements are not satisfied
+    swap(p, q);      // OK, ADL finds the appropriate friend `swap`
+    std::cout << p << ' ' << q << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+5 3
+3 5
+A::id=6 A::id=9
+swap(A::id=6, A::id=9)
+A::id=9 A::id=6
+```
+
+</div>
+</Columns>
