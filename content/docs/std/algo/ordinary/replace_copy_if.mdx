@@ -1,0 +1,153 @@
+---
+title:			replace_copy_if algorithm
+sidebar_label:	replace_copy_if(  )
+description:	replace_copy_if algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, replace, replace_if, replace_copy, replace_copy_if]
+
+cppreference_origin_rel: w/cpp/algorithm/replace_copy_if
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/replace_copy_if/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/replace_copy_if/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/replace_copy_if/since-cpp20.mdx';
+
+# std::replace_copy_if() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+- **(1)** Copies the elements from the range [`first`; `last`) to another range beginning at `d_first`, while replacing elements that satisfy prediate `p` with `new_value` (compared using `operator==`).
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt; </Until> <Since v='cpp20'>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Unary predicate which returns `true` if the element should be replaced.
+
+The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OuputIt</code> }>
+    <a href="/docs/named_req/LegacyOuputIterator">LegacyOuputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={  <code>Predicate</code> }>
+    <a href="/docs/named_req/UnaryPredicate">UnaryPredicate</a>
+  </Symbol>
+</SymbolTable>
+
+The results of the expressions `*first` and `new_value` must be [writable](#) to `d_first`.
+
+### Return value
+
+Iterator to the element past the last element copied.
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+Exactly N applications of the predicate `p`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>replace_copy_if (1)</summary>
+
+```cpp
+template<class InputIt, class OutputIt, class UnaryPredicate, class T>
+OutputIt replace_copy_if(InputIt first, InputIt last, OutputIt d_first,
+                         UnaryPredicate p, const T& new_value)
+{
+    for (; first != last; ++first)
+        *d_first++ = p(*first) ? new_value : *first;
+    return d_first;
+}
+```
+
+</details>
+
+### Examples
+
+The following copy-prints a vector, replacing all values over `5` with `99` on the fly.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+    std::replace_copy_if(v.begin(), v.end(),
+                         std::ostream_iterator<int>(std::cout, " "),
+                         [](int n){ return n > 5; }, 99);
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+5 99 4 2 99 99 1 99 0 3
+```
+
+</div>
+</Columns>
