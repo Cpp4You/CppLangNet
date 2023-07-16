@@ -1,19 +1,22 @@
 ```cpp
 // (1)
-constexpr remove_copy_if_result<I, O>
-    remove_copy_if( I first, S last, O result, Pred pred, Proj proj = {} );
+constexpr replace_copy_if_result<I, O>
+    replace_copy_if( I first, S last, O result, Pred pred, const T& new_value,
+                     Proj proj = {} );
 
 // (2)
-constexpr remove_copy_if_result<ranges::borrowed_iterator_t<R>, O>
-    remove_copy_if( R&& r, O result, Pred pred, Proj proj = {} );
+constexpr replace_copy_if_result<ranges::borrowed_iterator_t<R>, O>
+    replace_copy_if( R&& r, O result, Pred pred, const T& new_value,
+                     Proj proj = {} );
 ```
 
 The type of arguments are generic and have the following constraints:
 - `I` - `std::input_iterator`
 - `S` - `std::sentinel_for<I>`
-- `O` - `std::weakly_incrementable`
+- `O` - `std::output_iterator<const T& >`
 - `R` - `std::input_range`
 - `Proj` - **(none)**
+- `T` - **(none)**
 - `Pred`:
   - **(1)** - `std::indirect_unary_predicate<std::projected<I, Proj>>`
   - **(2)** - `std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>>`
