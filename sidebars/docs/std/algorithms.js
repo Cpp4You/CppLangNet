@@ -113,6 +113,7 @@ module.exports = {
             docsMethod("std/algo/ranges/move_backward", "since-cpp20"),
             docsMethod("std/algo/ranges/transform", "since-cpp20"),
             docsMethod("std/algo/ranges/reverse", "since-cpp20"),
+            docsMethod("std/algo/ranges/reverse_copy", "since-cpp20"),
             docsMethod("std/algo/ranges/fill", "since-cpp20"),
             docsMethod("std/algo/ranges/fill_n", "since-cpp20"),
             docsMethod("std/algo/ranges/generate", "since-cpp20"),
