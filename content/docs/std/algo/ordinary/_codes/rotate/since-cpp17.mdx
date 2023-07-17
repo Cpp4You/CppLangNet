@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class ForwardIt >
+ForwardIt rotate( ForwardIt first, ForwardIt middle, ForwardIt last );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt >
+ForwardIt rotate( ExecutionPolicy&& policy,
+                  ForwardIt first, ForwardIt middle, ForwardIt last );
+```
