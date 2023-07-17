@@ -1,0 +1,139 @@
+---
+title:			iter_swap algorithm
+sidebar_label:	iter_swap(  )
+description:	iter_swap algorithm C++ documentation
+hide_title:		true
+tags:			[algorithm, iter_swap, swap, iterator]
+
+cppreference_origin_rel: w/cpp/algorithm/iter_swap
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp20 from './_codes/iter_swap/until-cpp20.mdx';
+import Signature_SinceCpp20 from './_codes/iter_swap/since-cpp20.mdx';
+
+# std::iter_swap() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'until-cpp20': <Signature_UntilCpp20 />
+}} />
+
+Swaps the values of the elements the given iterators are pointing to.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>a</code> <br/> <code>b</code> </> }>
+    Iterators to the elements to swap.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>*a</code> <br/> <code>*b</code> </> }>
+    <a href="/docs/named_req/Swappable">Swappable</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Constant.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>iter_swap(1)</summary>
+
+```cpp
+template<class ForwardIt1, class ForwardIt2>
+constexpr void iter_swap(ForwardIt1 a, ForwardIt2 b) // constexpr since C++20
+{
+    using std::swap; // for ADL
+    swap(*a, *b);
+}
+```
+
+</details>
+
+### Notes
+
+This function template models the semantics of the swap operation given by [Swappable](/docs/named_req/Swappable). That is, overloads of swap found by [ADL](#) and the fall back of [`std::swap`](/docs/std/algo/ordinary/swap) are considered.
+
+### Examples
+
+The following is an implementation of selection sort in C++.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <random>
+#include <vector>
+
+template<class ForwardIt>
+void selection_sort(ForwardIt begin, ForwardIt end)
+{
+  for (ForwardIt i = begin; i != end; ++i)
+    std::iter_swap(i, std::min_element(i, end));
+}
+
+int main()
+{
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_int_distribution<> dist(-9, +9);
+  std::vector<int> v;
+  std::generate_n(back_inserter(v), 20, bind(dist, gen));
+
+  std::cout << "Before sort: " << std::showpos;
+  for (auto e : v)
+    std::cout << e << ' ';
+
+  selection_sort(v.begin(), v.end());
+
+  std::cout << "\nAfter sort : ";
+  for (auto e : v)
+    std::cout << e << ' ';
+  std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Before sort: -9 -3 +2 -8 +0 -1 +8 -4 -5 +1 -4 -5 +4 -9 -8 -6 -6 +8 -4 -6
+After sort : -9 -9 -8 -8 -6 -6 -6 -5 -5 -4 -4 -4 -3 -1 +0 +1 +2 +4 +8 +8
+```
+
+</div>
+</Columns>
