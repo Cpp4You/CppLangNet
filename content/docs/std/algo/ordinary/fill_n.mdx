@@ -40,7 +40,7 @@ import Signature_SinceCpp20 from './_codes/fill_n/since-cpp20.mdx';
 - **(2)** Same as **(1)**, but executed according to policy.
 	:::important Overload Resolution
 	These overloads participate in overload resolution only if
-	<Until v='cpp20'> std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt; </Until> <Since v='cpp20'>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</Since> is <code>true</code>.
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
 	:::
 
 ### Parameters
