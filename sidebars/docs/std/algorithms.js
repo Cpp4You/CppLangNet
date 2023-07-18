@@ -126,6 +126,7 @@ module.exports = {
             docsMethod("std/algo/ranges/replace_copy", "since-cpp20"),
             docsMethod("std/algo/ranges/swap_ranges", "since-cpp20"),
             docsMethod("std/algo/ranges/rotate", "since-cpp20"),
+            docsMethod("std/algo/ranges/rotate_copy", "since-cpp20"),
           ]
         },
         {
@@ -157,6 +158,9 @@ module.exports = {
             docsMethod("std/algo/ordinary/swap_ranges"),
             docsMethod("std/algo/ordinary/iter_swap"),
             docsMethod("std/algo/ordinary/rotate"),
+            docsMethod("std/algo/ordinary/rotate_copy"),
+            docsMethod("std/algo/ordinary/shift_left"),
+            docsMethod("std/algo/ordinary/shift_right"),
           ]
         }
       ]
