@@ -1,0 +1,164 @@
+---
+title:         ranges::rotate_copy algorithm
+sidebar_label: ranges::rotate_copy(  )
+description:   ranges::rotate_copy algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, rotate_copy, replace]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/rotate_copy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/rotate_copy/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/rotate_copy/since-cpp20-simplified.mdx';
+
+# std::ranges::rotate_copy() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using rotate_copy_result = in_out_result<I, O>;
+```
+
+- **(1)** Copies the elements from the source range [`first`; `last`), to the destination range beginning at `result` in such a way, that the element `*middle` becomes the first element of the destination range and `*(middle - 1)` becomes the last element.
+
+  The result is that the destination range contains a left rotated copy of the source range.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+:::danger Undefined Behaviour
+ The <Tooltip term={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if either [`first`; `middle`) or [`middle`; `last`) is not a valid range, or the source and destination ranges overlap.
+:::
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>middle</code> }>
+    The iterator to the element that should appear at the beginning of the destination range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+```cpp
+{
+  last,
+  result + N
+}
+```
+Where N is `ranges::distance(first, last)`.
+
+### Complexity
+
+Exactly `ranges::distance(first, last)` assignments.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>rotate_copy(1) and rotate_copy(2)</summary>
+
+```cpp
+struct rotate_copy_fn
+{
+    template<std::forward_iterator I, std::sentinel_for<I> S, std::weakly_incrementable O>
+    requires std::indirectly_copyable<I, O>
+    constexpr ranges::rotate_copy_result<I, O>
+        operator()(I first, I middle, S last, O result) const
+    {
+        auto c1 {ranges::copy(middle, std::move(last), std::move(result))};
+        auto c2 {ranges::copy(std::move(first), std::move(middle), std::move(c1.out))};
+        return {std::move(c1.in), std::move(c2.out)};
+    }
+
+    template<ranges::forward_range R, std::weakly_incrementable O>
+    requires std::indirectly_copyable<ranges::iterator_t<R>, O>
+    constexpr ranges::rotate_copy_result<ranges::borrowed_iterator_t<R>, O>
+        operator()(R&& r, ranges::iterator_t<R> middle, O result) const
+    {
+        return (*this)(ranges::begin(r), std::move(middle),
+                       ranges::end(r), std::move(result));
+    }
+};
+
+inline constexpr rotate_copy_fn rotate_copy {};
+```
+
+</details>
+
+### Notes
+
+If the value type is [TriviallyCopyable](/docs/named_req/TriviallyCopyable) and the iterator types satisfy [`contiguous_iterator`](#), implementations of [`ranges::rotate_copy`](#) usually avoid multiple assignments by using a "bulk copy" function such as [`std::memmove`](#).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+    std::vector<int> src {1, 2, 3, 4, 5};
+    std::vector<int> dest(src.size());
+    auto pivot = std::ranges::find(src, 3);
+
+    std::ranges::rotate_copy(src, pivot, dest.begin());
+    for (int i : dest)
+        std::cout << i << ' ';
+    std::cout << '\n';
+
+    // copy the rotation result directly to the std::cout
+    pivot = std::ranges::find(dest, 1);
+    std::ranges::rotate_copy(dest, pivot, std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+3 4 5 1 2
+1 2 3 4 5
+```
+
+</div>
+</Columns>
