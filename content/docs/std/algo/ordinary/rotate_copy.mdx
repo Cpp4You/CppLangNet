@@ -1,0 +1,154 @@
+---
+title:         rotate_copy algorithm
+sidebar_label: rotate_copy(  )
+description:   rotate_copy algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, rotate, rotate_copy]
+
+cppreference_origin_rel: w/cpp/algorithm/rotate_copy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/rotate_copy/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/rotate_copy/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/rotate_copy/since-cpp20.mdx';
+
+# std::rotate_copy() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+- **(1)** Copies the elements from the range [`first`; `last`), to another range beginning at `d_first` in such a way, that the element `*(n_first)` becomes the first element of the new range and `*(n_first - 1)` becomes the last element.
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt; </Until> <Since v='cpp20'>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</Since> is <code>true</code>.
+	:::
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if either [`first`; `n_first`) or [`n_first`; `last`) is not a valid range, or the source and destination ranges overlap.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>n_first</code> }>
+	  An iterator to an element in [`first`; `last`) that should appear at the beginning of the new range.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> <br/> <code>ForwardIt3</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OuputIt</code> }>
+    <a href="/docs/named_req/LegacyOuputIterator">LegacyOuputIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+Output iterator to the element past the last element copied.
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+Linear in N.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={ <Term_ImplementationDefined/> }>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>rotate_copy (1)</summary>
+
+```cpp
+template<class ForwardIt, class OutputIt>
+constexpr // since C++20
+OutputIt rotate_copy(ForwardIt first, ForwardIt n_first,
+                     ForwardIt last, OutputIt d_first)
+{
+    d_first = std::copy(n_first, last, d_first);
+    return std::copy(first, n_first, d_first);
+}
+```
+
+</details>
+
+### Examples
+
+The following copy-prints a vector, replacing all values over `5` with `99` on the fly.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+    std::vector<int> src {1, 2, 3, 4, 5};
+    std::vector<int> dest(src.size());
+    auto pivot = std::find(src.begin(), src.end(), 3);
+
+    std::rotate_copy(src.begin(), pivot, src.end(), dest.begin());
+    for (int i : dest)
+        std::cout << i << ' ';
+    std::cout << '\n';
+
+    // copy the rotation result directly to the std::cout
+    pivot = std::find(dest.begin(), dest.end(), 1);
+    std::rotate_copy(dest.begin(), pivot, dest.end(),
+                     std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+3 4 5 1 2
+1 2 3 4 5
+```
+
+</div>
+</Columns>
