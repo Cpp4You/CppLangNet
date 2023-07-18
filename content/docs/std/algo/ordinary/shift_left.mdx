@@ -1,0 +1,177 @@
+---
+title:         shift_left algorithm
+sidebar_label: shift_left(  )
+description:   shift_left algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, shift, shift_left]
+
+cppreference_origin_rel: w/cpp/algorithm/shift
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20 from './_codes/shift_left/since-cpp20.mdx';
+
+# std::shift_left() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+}} />
+
+- **(1)** Shifts the elements towards the beginning of the range:
+  - if `n == 0 || n >= last - first`, there are no effects.
+  - if `n < 0`, the <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+
+  Otherwise, for every integer `i` in [`0`; `last - first - n`), moves the element originally at position `first + n + i` to position `first + i`. The moves are performed in increasing order of `i` starting from `0`.
+
+ - **(2)** Same as **(1)**, but executed according to `policy`.
+  :::important Overload Resolution
+  These overloads participate in overload resolution only if `std::is_execution_policy_v<std::remove_cvref_t<ExecutionPolicy>>` is <code>true</code>.
+  :::
+
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The original range.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code>  }>
+    The number of positions to shift.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code>  }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+The type of dereferenced `ForwardIt` must meet the requirements of [MoveAssignable](/docs/named_req/MoveAssignable).
+
+### Return value
+
+The end of the resulting range:
+- If `n` is less than `last - first`, returns `first + (last - first - n)`.
+- Otherwise, returns `first`.
+
+### Complexity
+
+At most `std::distance(first, last) - n` assignments.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For none other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <type_traits>
+#include <vector>
+
+struct S
+{
+    int value {0};
+    bool specified_state {true};
+
+    S(int v = 0) : value {v} {}
+    S(S const& rhs) = default;
+    S(S&& rhs) { *this = std::move(rhs); }
+    S& operator=(S const& rhs) = default;
+    S& operator=(S&& rhs)
+    {
+        if (this != &rhs)
+        {
+            value = rhs.value;
+            specified_state = rhs.specified_state;
+            rhs.specified_state = false;
+        }
+        return *this;
+    }
+};
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, std::vector<T> const& v)
+{
+    for (const auto& s : v)
+    {
+        if constexpr (std::is_same_v<T, S>)
+            s.specified_state ? os << s.value << ' ' : os << ". ";
+        else if constexpr (std::is_same_v<T, std::string>)
+            os << (s.empty() ? "." : s) << ' ';
+        else
+            os << s << ' ';
+    }
+    return os;
+}
+
+int main()
+{
+    std::cout << std::left;
+
+    std::vector<S>            a {1, 2, 3, 4, 5, 6, 7};
+    std::vector<int>          b {1, 2, 3, 4, 5, 6, 7};
+    std::vector<std::string>  c {"α", "β", "γ", "δ", "ε", "ζ", "η"};
+
+    std::cout << "vector<S> \tvector<int> \tvector<string>\n";
+    std::cout << a << "  " << b << "  " << c << '\n';
+
+    std::shift_left(begin(a), end(a), 3);
+    std::shift_left(begin(b), end(b), 3);
+    std::shift_left(begin(c), end(c), 3);
+    std::cout << a << "  " << b << "  " << c << '\n';
+
+    std::shift_right(begin(a), end(a), 2);
+    std::shift_right(begin(b), end(b), 2);
+    std::shift_right(begin(c), end(c), 2);
+    std::cout << a << "  " << b << "  " << c << '\n';
+
+    std::shift_left(begin(a), end(a), 8);  // has no effect: n >= last - first
+    std::shift_left(begin(b), end(b), 8);  // ditto
+    std::shift_left(begin(c), end(c), 8);  // ditto
+    std::cout << a << "  " << b << "  " << c << '\n';
+
+//  std::shift_left(begin(a), end(a), -3); // UB, e.g. segfault.)
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+vector<S>       vector<int>     vector<string>
+1 2 3 4 5 6 7   1 2 3 4 5 6 7   α β γ δ ε ζ η
+4 5 6 7 . . .   4 5 6 7 5 6 7   δ ε ζ η . . .
+. . 4 5 6 7 .   4 5 4 5 6 7 5   . . δ ε ζ η .
+. . 4 5 6 7 .   4 5 4 5 6 7 5   . . δ ε ζ η .
+```
+
+</div>
+</Columns>
