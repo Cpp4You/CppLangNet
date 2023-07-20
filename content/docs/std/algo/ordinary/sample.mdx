@@ -1,0 +1,140 @@
+---
+title:         sample algorithm
+sidebar_label: sample(  )
+description:   sample algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, random, sample]
+
+cppreference_origin_rel: w/cpp/algorithm/sample
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp17 from './_codes/sample/since-cpp17.mdx';
+
+# std::sample() algorithm
+
+<SwitchView content={{
+  'since-cpp17': <Signature_SinceCpp17 />,
+}} />
+
+Selects `n` elements from the sequence [`first`; `last`) (without replacement) such that each possible sample has equal probability of appearance, and writes those selected elements into the output iterator `out`.
+
+Random numbers are generated using the random number generator `g`.
+
+If `n` is greater than the number of elements in the sequence, selects `last - first` elements.
+
+The algorithm is stable (preserves the relative order of the selected elements) only if `PopulationIterator` meets the requirements of [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator).
+
+:::danger Undefined Behaviour
+The <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if `out` is in [`first`; `last`).
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements from which to make the sampling (population).
+  </Symbol>
+  <Symbol none noLink name={ <code>out</code> }>
+    The output iterator where the samples are written.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code> }>
+    The number of samples.
+  </Symbol>
+  <Symbol none noLink name={ <code>g</code> }>
+    The random number generator used as a source of randomness.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>PopulationIterator</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a> <br/>
+  </Symbol>
+  <Symbol none noLink name={ <code>SampleIterator</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>SampleIterator</code> }>
+    <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a> <br/>
+    <span class="inline-caution">Only if <code>PopulationIterator</code> doesn't meet <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a> </span>
+  </Symbol>
+  <Symbol none noLink name={ <code>Distance</code> }>
+    Must be an integer type.
+  </Symbol>
+</SymbolTable>
+
+With `URBG_NoRef` defined as `std::remove_reference_t<URBG>`:
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>URBG_NoRef</code> }>
+    <a href="/docs/named_req/UniformRandomBitGenerator">UniformRandomBitGenerator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> Return type of <code>URBG_NoRef</code> </> }>
+    <a href="#">Convertible</a> to <code>Distance</code>
+  </Symbol>
+
+</SymbolTable>
+
+
+`PopulationIterator::value_type`  must be [writeable](#) to `out`.
+
+### Return value
+
+Returns a copy of `out` after the last sample that was output, that is, end of the sample range.
+
+### Complexity
+
+Linear in `std::distance(first, last)`;
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+This function may implement selection sampling or reservoir sampling.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <random>
+#include <string>
+
+int main()
+{
+    std::string in {"ABCDEFGHIJK"}, out;
+    std::sample(in.begin(), in.end(), std::back_inserter(out), 4,
+                std::mt19937 {std::random_device{}()});
+    std::cout << "Four random letters out of " << in << " : " << out << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+Four random letters out of ABCDEFGHIJK: ACID
+```
+
+</div>
+</Columns>

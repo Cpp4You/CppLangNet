@@ -166,6 +166,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/shift_right"),
             docsMethod("std/algo/ordinary/random_shuffle"),
             docsMethod("std/algo/ordinary/shuffle"),
+            docsMethod("std/algo/ordinary/sample"),
           ]
         }
       ]
