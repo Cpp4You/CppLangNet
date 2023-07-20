@@ -1,0 +1,185 @@
+---
+title:         ranges::shift_right algorithm
+sidebar_label: ranges::shift_right(  )
+description:   ranges::shift_right algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, shift_right, order, backwards]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/shift_right
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/shift_right/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/shift_right/since-cpp20-simplified.mdx';
+
+# std::ranges::shift_right() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified: <Signature_SinceCpp20_Simplified />,
+		detailed: <Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Shifts the elements in the range [`first`; `last`) or `r` by `n` positions.
+
+- **(1)** Shifts the elements towards the end of the range:
+  - If `n == 0 || n >= last - first`, there are no effects.
+  - If `n < 0`, the <Tooltip term={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip>.
+  - Otherwise, for every integer `i` in [`0`; `last - first - n`), moves the element originally at position `first + i` to position `first + n + i`.
+
+  If `I` models [`bidirectional_iterator`](#), then the moves are performed in decreasing order of `i` starting from `last - first - n - 1`.
+
+- ** (2)** Same as **(1)**, but uses `r` as the range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+:::danger Undefined Behaviour
+The <Tooltip term={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if [`first`; `last`) is not a valid range.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The original range.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to shift.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code> }>
+    The number of positions to shift.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+```cpp
+{
+  first,
+  /* NEW_LAST */
+}
+```
+Where `NEW_LAST` is the end of the resulting range and equivalent to:
+ - If `n` is less than `last - first`, `first + n`.
+ - Otherwise, `last`.
+
+### Complexity
+
+At most `ranges::distance(first, last) - n` assignments or swaps.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+[`ranges::shift_right`](#) / [`ranges::shift_right`](/docs/std/algo/ranges/shift_right) has better efficiency on common implementations if `I` models [`bidirectional_iterator`](#) or [`random_access_iterator`](#).
+
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable
+vectorization when the iterator type models [`contiguous_iterator`](#) and swapping its value type calls neither non-trivial special member function nor [ADL](#)-found swap.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <type_traits>
+#include <vector>
+
+struct S
+{
+    int value {0};
+    bool specified_state {true};
+
+    S(int v = 0) : value {v} {}
+    S(S const& rhs) = default;
+    S(S&& rhs) { *this = std::move(rhs); }
+    S& operator=(S const& rhs) = default;
+    S& operator=(S&& rhs)
+    {
+        if (this != &rhs)
+        {
+            value = rhs.value;
+            specified_state = rhs.specified_state;
+            rhs.specified_state = false;
+        }
+        return *this;
+    }
+};
+
+template<typename T>
+std::ostream& operator<<(std::ostream& os, std::vector<T> const& v)
+{
+    for (const auto& s : v)
+    {
+        if constexpr (std::is_same_v<T, S>)
+            s.specified_state ? os << s.value << ' ' : os << ". ";
+        else if constexpr (std::is_same_v<T, std::string>)
+            os << (s.empty() ? "." : s) << ' ';
+        else
+            os << s << ' ';
+    }
+    return os;
+}
+
+int main()
+{
+    std::cout << std::left;
+
+    std::vector<S> a {1, 2, 3, 4, 5, 6, 7};
+    std::vector<int> b {1, 2, 3, 4, 5, 6, 7};
+    std::vector<std::string> c {"α", "β", "γ", "δ", "ε", "ζ", "η"};
+
+    std::cout << "vector<S> \tvector<int> \tvector<string>\n";
+    std::cout << a << "  " << b << "  " << c << '\n';
+
+    std::ranges::shift_left(a, 3);
+    std::ranges::shift_left(b, 3);
+    std::ranges::shift_left(c, 3);
+    std::cout << a << "  " << b << "  " << c << '\n';
+
+    std::ranges::shift_right(a, 2);
+    std::ranges::shift_right(b, 2);
+    std::ranges::shift_right(c, 2);
+    std::cout << a << "  " << b << "  " << c << '\n';
+
+    std::ranges::shift_left(a, 8);  // has no effect: n >= last - first
+    std::ranges::shift_left(b, 8);  // ditto
+    std::ranges::shift_left(c, 8);  // ditto
+    std::cout << a << "  " << b << "  " << c << '\n';
+
+//  std::ranges::shift_left(a, -3);  // UB
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+vector<S>       vector<int>     vector<string>
+1 2 3 4 5 6 7   1 2 3 4 5 6 7   α β γ δ ε ζ η
+4 5 6 7 . . .   4 5 6 7 5 6 7   δ ε ζ η . . .
+. . 4 5 6 7 .   4 5 4 5 6 7 5   . . δ ε ζ η .
+. . 4 5 6 7 .   4 5 4 5 6 7 5   . . δ ε ζ η .
+```
+
+</div>
+</Columns>

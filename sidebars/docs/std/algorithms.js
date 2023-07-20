@@ -128,6 +128,7 @@ module.exports = {
             docsMethod("std/algo/ranges/rotate", "since-cpp20"),
             docsMethod("std/algo/ranges/rotate_copy", "since-cpp20"),
             docsMethod("std/algo/ranges/shift_left", "since-cpp20"),
+            docsMethod("std/algo/ranges/shift_right", "since-cpp20"),
           ]
         },
         {
