@@ -1,0 +1,151 @@
+---
+title:         ranges::shuffle algorithm
+sidebar_label: ranges::shuffle(  )
+description:   ranges::shuffle algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, shuffle, random]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/shuffle
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+
+<!-- Terms -->
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/shuffle/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/shuffle/since-cpp20-simplified.mdx';
+
+# std::ranges::shuffle() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Reorders the elements in the given range [`first`; `last`) such that each possible permutation of those elements has equal probability of appearance.
+
+- **(2)** Same as **(1)**, but uses `r` as the range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to shuffle.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to shuffle.
+  </Symbol>
+  <Symbol none noLink name={ <code>gen</code> }>
+    The random number generator.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An iterator equal to `last`.
+
+### Complexity
+
+Exactly `(last - first) - 1` swaps.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>shuffle(1) and shuffle(2)</summary>
+
+```cpp
+struct shuffle_fn
+{
+    template<std::random_access_iterator I, std::sentinel_for<I> S, class Gen>
+    requires std::permutable<I> &&
+             std::uniform_random_bit_generator<std::remove_reference_t<Gen>>
+    I operator()(I first, S last, Gen&& gen) const
+    {
+        using diff_t = std::iter_difference_t<I>;
+        using distr_t = std::uniform_int_distribution<diff_t>;
+        using param_t = typename distr_t::param_type;
+        distr_t D;
+        const auto n {last - first};
+        for (diff_t i {1}; i < n; ++i)
+            ranges::iter_swap(first + i, first + D(gen, param_t(0, i)));
+        return ranges::next(first, last);
+    }
+
+    template<ranges::random_access_range R, class Gen>
+    requires std::permutable<ranges::iterator_t<R>> &&
+             std::uniform_random_bit_generator<std::remove_reference_t<Gen>>
+    ranges::borrowed_iterator_t<R> operator()(R&& r, Gen&& gen) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::forward<Gen>(gen));
+    }
+};
+
+inline constexpr shuffle_fn shuffle {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <random>
+
+void print(const auto& a)
+{
+    for (const auto e : a)
+        std::cout << e << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    std::array a {'A', 'B', 'C', 'D', 'E', 'F'};
+    print(a);
+
+    std::random_device rd;
+    std::mt19937 gen {rd()};
+
+    for (int i {}; i != 3; ++i)
+    {
+        std::ranges::shuffle(a, gen);
+        print(a);
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+A B C D E F
+F E A C D B
+E C B F A D
+B A E C F D
+```
+
+</div>
+</Columns>
