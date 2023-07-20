@@ -96,6 +96,28 @@ module.exports = {
           ]
         }
       ]
+    }{
+      type: "category",
+      label: "Random operations",
+      items: [
+        {
+          type: "category",
+          label: "Rangified",
+          items: [
+            docsMethod("std/algo/ranges/shuffle", "since-cpp20"),
+            docsMethod("std/algo/ranges/sample", "since-cpp20"),
+          ]
+        },
+        {
+          type: "category",
+          label: "Ordinary",
+          items: [
+            docsMethod("std/algo/ordinary/random_shuffle"),
+            docsMethod("std/algo/ordinary/shuffle"),
+            docsMethod("std/algo/ordinary/sample"),
+          ]
+        }
+      ]
     },
     {
       type: "category",
@@ -129,8 +151,6 @@ module.exports = {
             docsMethod("std/algo/ranges/rotate_copy", "since-cpp20"),
             docsMethod("std/algo/ranges/shift_left", "since-cpp20"),
             docsMethod("std/algo/ranges/shift_right", "since-cpp20"),
-            docsMethod("std/algo/ranges/shuffle", "since-cpp20"),
-            docsMethod("std/algo/ranges/sample", "since-cpp20"),
           ]
         },
         {
@@ -165,9 +185,6 @@ module.exports = {
             docsMethod("std/algo/ordinary/rotate_copy"),
             docsMethod("std/algo/ordinary/shift_left"),
             docsMethod("std/algo/ordinary/shift_right"),
-            docsMethod("std/algo/ordinary/random_shuffle"),
-            docsMethod("std/algo/ordinary/shuffle"),
-            docsMethod("std/algo/ordinary/sample"),
           ]
         }
       ]
