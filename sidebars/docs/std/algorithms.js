@@ -130,6 +130,7 @@ module.exports = {
             docsMethod("std/algo/ranges/shift_left", "since-cpp20"),
             docsMethod("std/algo/ranges/shift_right", "since-cpp20"),
             docsMethod("std/algo/ranges/shuffle", "since-cpp20"),
+            docsMethod("std/algo/ranges/sample", "since-cpp20"),
           ]
         },
         {
