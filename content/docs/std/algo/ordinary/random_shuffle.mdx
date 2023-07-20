@@ -1,0 +1,154 @@
+---
+title:         random_shuffle algorithm
+sidebar_label: random_shuffle(  )
+description:   random_shuffle algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, random_shuffle, random, shuffle]
+
+cppreference_origin_rel: w/cpp/algorithm/random_shuffle
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp11 from './_codes/random_shuffle/until-cpp11.mdx';
+import Signature_SinceCpp11 from './_codes/random_shuffle/since-cpp11.mdx';
+
+# std::random_shuffle() algorithm
+
+<SwitchView content={{
+  'since-cpp11': <Signature_SinceCpp11 />,
+  'until-cpp11': <Signature_UntilCpp11 />
+}} />
+
+Reorders the elements in the given range [`first`; `last`) such that each possible permutation of those elements has equal probability of appearance.
+
+- **(1)** The source of randomness is <Tooltip term={ <Term_ImplementationDefined /> }>implementation-defined</Tooltip>, but the function [`std::rand`](#) is often used.
+
+- **(2)** The source of randomness is the function object `r`.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to shuffle.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    Function object returning a randomly chosen value of type convertible to <code>std::iterator_traits&lt;RandomIt&gt;::difference_type</code> in the interval [<code>0</code>; <code>n</code>) if invoked as <code>r(n)</code>.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>RandomIt</code> }>
+    <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a> <br/>
+    <a href="/docs/named_req/ValueSwappable">ValueSwappable</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Linear in `std::distance(first, last)`;
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>random_shuffle (1)</summary>
+
+```cpp
+template<class RandomIt>
+void random_shuffle(RandomIt first, RandomIt last)
+{
+    typedef typename std::iterator_traits<RandomIt>::difference_type diff_t;
+
+    for (diff_t i = last - first - 1; i > 0; --i)
+    {
+        using std::swap;
+        swap(first[i], first[std::rand() % (i + 1)]);
+        // rand() % (i + 1) is not actually correct, because the generated number
+        // is not uniformly distributed for most values of i. A correct implementation
+        // will need to essentially reimplement C++11 std::uniform_int_distribution,
+        // which is beyond the scope of this example.
+    }
+}
+```
+
+</details>
+
+<details>
+<summary>random_shuffle (2)</summary>
+
+```cpp
+template<class RandomIt, class RandomFunc>
+void random_shuffle(RandomIt first, RandomIt last, RandomFunc&& r)
+{
+    typedef typename std::iterator_traits<RandomIt>::difference_type diff_t;
+
+    for (diff_t i = last - first - 1; i > 0; --i)
+    {
+        using std::swap;
+        swap(first[i], first[r(i + 1)]);
+    }
+}
+```
+
+</details>
+
+### Notes
+
+Note that the implementation is not dictated by the standard, so even if you use exactly the same `RandomFunc` you may get different results with different standard library implementations.
+
+The reason for removing [`std::random_shuffle`](#) in C++17 is that the iterator-only version usually depends on [`std::rand`](#), which is now also discussed for deprecation.
+([`std::rand`](#) should be replaced with the classes of the `<random>` header, as `std::rand` is considered harmful.)
+
+In addition, the iterator-only [`std::random_shuffle`](#) version usually depends on a global state. The [`std::shuffle`](/docs/std/algo/ordinary/shuffle) shuffle algorithm is the preferred replacement, as it uses a `URBG` as its 3rd parameter.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+    std::random_shuffle(v.begin(), v.end());
+
+    std::copy(v.begin(), v.end(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+8 6 10 4 2 3 7 1 9 5
+```
+
+</div>
+</Columns>
