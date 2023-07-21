@@ -96,7 +96,8 @@ module.exports = {
           ]
         }
       ]
-    }{
+    },
+    {
       type: "category",
       label: "Random operations",
       items: [
