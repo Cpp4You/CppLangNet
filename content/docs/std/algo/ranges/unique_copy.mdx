@@ -1,0 +1,214 @@
+---
+title:         ranges::unique_copy algorithm
+sidebar_label: ranges::unique_copy(  )
+description:   ranges::unique_copy algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, unique, unique_copy]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/unique_copy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+
+<!-- Terms -->
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/unique_copy/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/unique_copy/since-cpp20-simplified.mdx';
+
+# std::ranges::unique_copy() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With helper types defined as follows:
+```cpp
+template< class I, class O >
+using unique_copy_result = ranges::in_out_result<I, O>;
+```
+
+- **(1)** Copies the elements from the source range [`first`; `last`), to the destination range beginning at `result` in such a way that there are no consecutive equal elements.
+
+  Only the first element of each group of equal elements is copied.
+
+  Two consecutive elements `*(i - 1)` and `*i` are considered equivalent if `std::invoke(comp, std::invoke(proj, *(i - 1)), std::invoke(proj, *i)) == true`, where `i` is an iterator in the range [`first + 1`, `last`).
+
+- **(2)** Same as **(1)**, but uses `r` as the range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+:::caution
+The ranges [`first`; `last`) and [`result`; `result + ranges::distance(first, last)`) must not overlap.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The source range to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The source range to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    Iterator to the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    The binary predicate to compare the projected elements with.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    The projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+Given `N` as `ranges::distance(first, last)`:
+```cpp
+{
+  last,
+  result + N
+}
+```
+
+### Complexity
+
+Exactly `N - 1` applications of the corresponding predicate `comp` and no more than twice as many applications of any projection `proj`.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>unique_copy(1) and unique_copy(2)</summary>
+
+```cpp
+struct unique_copy_fn
+{
+    template<std::input_iterator I, std::sentinel_for<I> S, std::weakly_incrementable O,
+             class Proj = std::identity,
+             std::indirect_equivalence_relation<std::projected<I,
+                 Proj>> C = ranges::equal_to>
+    requires std::indirectly_copyable<I, O> && (std::forward_iterator<I> or
+                 (std::input_iterator<O> && std::same_as<std::iter_value_t<I>,
+                     std::iter_value_t<O>>) or std::indirectly_copyable_storable<I, O>)
+    constexpr ranges::unique_copy_result<I, O>
+        operator()(I first, S last, O result, C comp = {}, Proj proj = {}) const
+    {
+        if (!(first == last))
+        {
+            std::iter_value_t<I> value = *first;
+            *result = value;
+            ++result;
+            while (!(++first == last))
+            {
+                auto&& value2 = *first;
+                if (!std::invoke(comp, std::invoke(proj, value2),
+                        std::invoke(proj, value)))
+                {
+                    value = std::forward<decltype(value2)>(value2);
+                    *result = value;
+                    ++result;
+                }
+            }
+        }
+
+            return {std::move(first), std::move(result)};
+    }
+
+    template<ranges::input_range R, std::weakly_incrementable O, class Proj = std::identity,
+             std::indirect_equivalence_relation<std::projected<ranges::iterator_t<R>,
+                 Proj>> C = ranges::equal_to>
+    requires std::indirectly_copyable<ranges::iterator_t<R>, O> &&
+                 (std::forward_iterator<ranges::iterator_t<R>> or
+                 (std::input_iterator<O> && std::same_as<ranges::range_value_t<R>,
+                     std::iter_value_t<O>>) ||
+                 std::indirectly_copyable_storable<ranges::iterator_t<R>, O>)
+    constexpr ranges::unique_copy_result<ranges::borrowed_iterator_t<R>, O>
+        operator()(R&& r, O result, C comp = {}, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::move(result),
+                       std::move(comp), std::move(proj));
+    }
+};
+
+inline constexpr unique_copy_fn unique_copy {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <iterator>
+#include <list>
+#include <string>
+#include <type_traits>
+
+void print(const auto& rem, const auto& v)
+{
+    using V = std::remove_cvref_t<decltype(v)>;
+    constexpr bool sep {std::is_same_v<typename V::value_type, int>};
+    std::cout << rem << std::showpos;
+    for (const auto& e : v)
+        std::cout << e << (sep ? " " : "");
+    std::cout << '\n';
+}
+
+int main()
+{
+    std::string s1 {"The      string    with many       spaces!"};
+    print("s1: ", s1);
+
+    std::string s2;
+    std::ranges::unique_copy(
+        s1.begin(), s1.end(), std::back_inserter(s2),
+        [](char c1, char c2) { return c1 == ' ' && c2 == ' '; }
+    );
+    print("s2: ", s2);
+
+    const auto v1 = {-1, +1, +2, -2, -3, +3, -3};
+    print("v1: ", v1);
+    std::list<int> v2;
+    std::ranges::unique_copy(
+        v1, std::back_inserter(v2),
+        {}, // default comparator std::ranges::equal_to
+        [](int x) { return std::abs(x); } // projection
+    );
+    print("v2: ", v2);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+s1: The      string    with many       spaces!
+s2: The string with many spaces!
+v1: -1 +1 +2 -2 -3 +3 -3
+v2: -1 +2 -3
+```
+
+</div>
+</Columns>
