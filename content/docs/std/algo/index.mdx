@@ -684,6 +684,28 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/unique" name={ <Since v='cpp20'>ranges::unique</Since> }>
+        Removes consecutive duplicates of an element in a range.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/unique" name="unique">
+        Removes consecutive duplicates of an element in a range.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/unique_copy" name={ <Since v='cpp20'>ranges::unique_copy</Since> }>
+        Creates a copy of range with no consecutive duplicates.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/unique_copy" name="unique_copy">
+        Creates a copy of range with no consecutive duplicates.
+      </Symbol>,
+  }}/>
+
 </SymbolTable>
 
 ## Partitioning

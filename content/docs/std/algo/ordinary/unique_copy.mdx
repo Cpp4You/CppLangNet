@@ -1,0 +1,163 @@
+---
+title:         unique_copy algorithm
+sidebar_label: unique_copy(  )
+description:   unique_copy algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, unique, unique_copy]
+
+cppreference_origin_rel: w/cpp/algorithm/unique_copy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/unique_copy/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/unique_copy/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/unique_copy/since-cpp20.mdx';
+
+# std::unique_copy() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+Copies the elements from the range [`first`; `last`), to another range beginning at `d_first` in such a way that there are no consecutive equal elements.
+
+Only the first element of each group of equal elements is copied.
+
+- **(1)** Elements are compared using `operator==`.
+
+- **(2)** Elements are compared using the given binary predicate `p`.
+
+- **(3 - 4)** Same as **(1 - 2)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+:::danger Undefined Behaviour
+The <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if it is not an equivalence relation.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Binary predicate which returns `true` if the elements should be treated as equal.
+
+The signature of the function should be equivalent to the following:
+```cpp
+bool fun(const Type1& a, const Type2& b);
+```
+- The signature does not need to have `const&`.
+- The function **must not** modify the objects passed to it.
+- Must accept all values of type (possibly const) `Type1` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+The type of dereferenced `InputIt` must meet the requirements of [CopyConstructible](/docs/named_req/CopyConstructible), if:
+- neither `InputIt`, nor `OutputIt` satisfies [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator), or
+- `InputIt` doesn't satisfy [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator) and the value type of `InputIt` differs from that of `OutputIt`
+
+### Return value
+
+Output iterator to the element past the last written element.
+
+### Complexity
+
+For nonempty ranges, exactly `std::distance(first, last) - 1` applications of the corresponding predicate.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={ <Term_ImplementationDefined/> }>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Notes
+
+If `InputIt` satisfies [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator), this function rereads the input in order to detect duplicates.
+
+Otherwise, if `OutputIt` satisfies [LegacyForwardIterator](/docs/named_req/LegacyForwardIterator), and the value type of `InputIt` is the same as that of `OutputIt`, this function compare `*d_first` to `*first`.
+
+Otherwise, this function compares `*first` to a local element copy.
+
+For the overloads with an `ExecutionPolicy`, there may be a performance cost if the value type of `ForwardIt1` is not both [CopyConstructible](/docs/named_req/CopyConstructible) and [CopyAssignable](/docs/named_req/CopyAssignable).
+
+### Examples
+
+The following copy-prints a vector, replacing all values over `5` with `99` on the fly.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <string>
+
+int main()
+{
+    std::string s1 {"The      string    with many       spaces!"};
+    std::cout << "before: " << s1 << '\n';
+
+    std::string s2;
+    std::unique_copy(s1.begin(), s1.end(), std::back_inserter(s2),
+                     [](char c1, char c2) { return c1 == ' ' && c2 == ' '; });
+
+    std::cout << "after:  " << s2 << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+before: The      string    with many       spaces!
+after:  The string with many spaces!
+```
+
+</div>
+</Columns>

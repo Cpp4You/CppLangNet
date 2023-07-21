@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class InputIt, class OutputIt >
+OutputIt unique_copy( InputIt first, InputIt last, OutputIt d_first );
+
+// (2)
+template< class InputIt, class OutputIt, class BinaryPredicate >
+OutputIt unique_copy( InputIt first, InputIt last,
+                      OutputIt d_first, BinaryPredicate p );
+```

@@ -186,6 +186,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/rotate_copy"),
             docsMethod("std/algo/ordinary/shift_left"),
             docsMethod("std/algo/ordinary/shift_right"),
+            docsMethod("std/algo/ordinary/unique_copy"),
           ]
         }
       ]
