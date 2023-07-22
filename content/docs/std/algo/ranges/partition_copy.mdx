@@ -1,0 +1,178 @@
+---
+title:         ranges::partition_copy algorithm
+sidebar_label: ranges::partition_copy(  )
+description:   ranges::partition_copy algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, partition_copy]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/partition_copy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+
+<!-- Terms -->
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/partition_copy/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/partition_copy/since-cpp20-simplified.mdx';
+
+# std::ranges::partition_copy() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Copies the elements from the input range [`first`; `last`) to two different output ranges depending on the value returned by the predicate `pred`.
+
+  The elements that satisfy the predicate `pred` after projection by `proj` are copied to the range beginning at `out_true`.  
+  The rest of the elements are copied to the range beginning at `out_false`.
+
+  :::danger Undefined Behaviour
+  The <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if the input range overlaps either of the output ranges.
+  :::
+
+- **(2)** Same as **(1)**, but uses `r` as the range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The input range of elements to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The input range of elements to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>out_true</code> }>
+    The beginning of the output range for the elements that satisfy <code>pred</code>.
+  </Symbol>
+  <Symbol none noLink name={ <code>out_false</code> }>
+    The beginning of the output range for the elements that <b>don't</b> satisfy <code>pred</code>.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    The predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    The projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+```cpp
+{
+  last,
+  o1,
+  o2
+}
+```
+Where `o1` and `o2` are the ends of the output ranges respectively, after the copying is complete.
+
+### Complexity
+
+Exactly `ranges::distance(first, last)` applications of the corresponding predicate `pred` and any projection `proj`.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>partition_copy(1) and partition_copy(2)</summary>
+
+```cpp
+struct partition_copy_fn
+{
+    template<std::input_iterator I, std::sentinel_for<I> S,
+             std::weakly_incrementable O1, std::weakly_incrementable O2,
+             class Proj = std::identity, std::indirect_unary_predicate<
+             std::projected<I, Proj>> Pred>
+    requires std::indirectly_copyable<I, O1> && std::indirectly_copyable<I, O2>
+    constexpr ranges::partition_copy_result<I, O1, O2>
+        operator()(I first, S last, O1 out_true, O2 out_false, Pred pred, Proj proj = {}) const
+    {
+        for (; first != last; ++first)
+            if (!!std::invoke(pred, std::invoke(proj, *first)))
+                *out_true = *first, ++out_true;
+            else
+                *out_false = *first, ++out_false;
+        return {std::move(first), std::move(out_true), std::move(out_false)};
+    }
+
+    template<ranges::input_range R,
+             std::weakly_incrementable O1, std::weakly_incrementable O2,
+             class Proj = std::identity,
+             std::indirect_unary_predicate<std::projected<iterator_t<R>, Proj>> Pred>
+    requires std::indirectly_copyable<ranges::iterator_t<R>, O1> &&
+             std::indirectly_copyable<ranges::iterator_t<R>, O2>
+    constexpr ranges::partition_copy_result<ranges::borrowed_iterator_t<R>, O1, O2>
+        operator()(R&& r, O1 out_true, O2 out_false, Pred pred, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::move(out_true),
+                       std::move(out_false), std::move(pred), std::move(proj));
+    }
+};
+
+inline constexpr partition_copy_fn partition_copy {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cctype>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+    const auto in = {'N', '3', 'U', 'M', '1', 'B', '4', 'E', '1', '5', 'R', '9'};
+
+    std::vector<int> o1(size(in)), o2(size(in));
+
+    auto pred = [](char c) { return std::isalpha(c); };
+
+    auto ret = std::ranges::partition_copy(in, o1.begin(), o2.begin(), pred);
+
+    std::ostream_iterator<char> cout {std::cout, " "};
+    std::cout << "in = ";
+    std::ranges::copy(in, cout);
+    std::cout << "\no1 = ";
+    std::copy(o1.begin(), ret.out1, cout);
+    std::cout << "\no2 = ";
+    std::copy(o2.begin(), ret.out2, cout);
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+in = N 3 U M 1 B 4 E 1 5 R 9
+o1 = N U M B E R
+o2 = 3 1 4 1 5 9
+```
+
+</div>
+</Columns>

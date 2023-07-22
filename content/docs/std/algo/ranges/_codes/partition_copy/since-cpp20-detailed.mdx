@@ -1,0 +1,30 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I,
+  std::sentinel_for<I> S,
+  std::weakly_incrementable O1,
+  std::weakly_incrementable O2,
+  class Proj = std::identity,
+  std::indirect_unary_predicate<std::projected<I, Proj>> Pred
+>
+  requires std::indirectly_copyable<I, O1>
+           && std::indirectly_copyable<I, O2>
+constexpr partition_copy_result<I, O1, O2>
+    partition_copy( I first, S last, O1 out_true, O2 out_false,
+                    Pred pred, Proj proj = {} );
+
+// (2)
+template<
+  ranges::input_range R,
+  std::weakly_incrementable O1,
+  std::weakly_incrementable O2,
+  class Proj = std::identity,
+  std::indirect_unary_predicate<std::projected<iterator_t<R>, Proj>> Pred
+>
+  requires std::indirectly_copyable<ranges::iterator_t<R>, O1>
+           && std::indirectly_copyable<ranges::iterator_t<R>, O2>
+constexpr partition_copy_result<ranges::borrowed_iterator_t<R>, O1, O2>
+    partition_copy( R&& r, O1 out_true, O2 out_false,
+                    Pred pred, Proj proj = {} );
+```

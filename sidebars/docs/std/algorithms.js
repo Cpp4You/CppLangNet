@@ -203,6 +203,7 @@ module.exports = {
           label: "Rangified",
           items: [
             docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ranges/partition_copy", "since-cpp20"),
           ]
         },
         {
