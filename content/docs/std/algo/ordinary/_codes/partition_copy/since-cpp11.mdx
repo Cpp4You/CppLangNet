@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class InputIt, class OutputIt1,
+          class OutputIt2, class UnaryPredicate >
+std::pair<OutputIt1, OutputIt2>
+    partition_copy( InputIt first, InputIt last,
+                    OutputIt1 d_first_true, OutputIt2 d_first_false,
+                    UnaryPredicate p );
+```
