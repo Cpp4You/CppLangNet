@@ -203,6 +203,7 @@ module.exports = {
           label: "Rangified",
           items: [
             docsMethod("std/algo/ranges/is_partitioned", "since-cpp20"),
+            docsMethod("std/algo/ranges/partition", "since-cpp20"),
             docsMethod("std/algo/ranges/partition_copy", "since-cpp20"),
           ]
         },
