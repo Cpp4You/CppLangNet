@@ -229,6 +229,7 @@ module.exports = {
           items: [
             docsMethod("std/algo/ranges/sort", "since-cpp20"),
             docsMethod("std/algo/ranges/is_sorted", "since-cpp20"),
+            docsMethod("std/algo/ranges/is_sorted_until", "since-cpp20"),
           ]
         },
         {
@@ -236,6 +237,7 @@ module.exports = {
           label: "Ordinary",
           items: [
             docsMethod("std/algo/ordinary/sort"),
+            docsMethod("std/algo/ordinary/is_sorted", "since-cp11"),
           ]
         }
       ]
