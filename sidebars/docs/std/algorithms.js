@@ -216,6 +216,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/partition"),
             docsMethod("std/algo/ordinary/partition_copy", "since-cpp11"),
             docsMethod("std/algo/ordinary/stable_partition", "since-cpp11"),
+            docsMethod("std/algo/ordinary/partition_point", "since-cpp11"),
           ]
         }
       ]
