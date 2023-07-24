@@ -205,6 +205,7 @@ module.exports = {
             docsMethod("std/algo/ranges/is_partitioned", "since-cpp20"),
             docsMethod("std/algo/ranges/partition", "since-cpp20"),
             docsMethod("std/algo/ranges/partition_copy", "since-cpp20"),
+            docsMethod("std/algo/ranges/stable_partition", "since-cpp20"),
           ]
         },
         {

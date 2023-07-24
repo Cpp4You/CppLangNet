@@ -1,0 +1,22 @@
+```cpp
+// (1)
+template<
+  std::bidirectional_iterator I,
+  std::sentinel_for<I> S,
+  class Proj = std::identity,
+  std::indirect_unary_predicate<std::projected<I, Proj>> Pred
+>
+  requires std::permutable<I>
+constexpr ranges::subrange<I>
+    stable_partition( I first, S last, Pred pred, Proj proj = {} );
+
+// (2)
+template<
+  ranges::bidirectional_range R,
+  class Proj = std::identity,
+  std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>> Pred
+>
+  requires std::permutable<ranges::iterator_t<R>>
+constexpr ranges::borrowed_subrange_t<R>
+    stable_partition( R&& r, Pred pred, Proj proj = {} );
+```
