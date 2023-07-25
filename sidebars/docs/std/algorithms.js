@@ -241,6 +241,7 @@ module.exports = {
           items: [
             docsMethod("std/algo/ordinary/sort"),
             docsMethod("std/algo/ordinary/partial_sort"),
+            docsMethod("std/algo/ordinary/nth_element"),
             docsMethod("std/algo/ordinary/is_sorted", "since-cpp11"),
             docsMethod("std/algo/ordinary/is_sorted_until", "since-cpp11"),
           ]
