@@ -231,6 +231,7 @@ module.exports = {
           label: "Rangified",
           items: [
             docsMethod("std/algo/ranges/sort", "since-cpp20"),
+            docsMethod("std/algo/ranges/stable_sort", "since-cpp20"),
             docsMethod("std/algo/ranges/partial_sort", "since-cpp20"),
             docsMethod("std/algo/ranges/partial_sort_copy", "since-cpp20"),
             docsMethod("std/algo/ranges/nth_element", "since-cpp20"),
