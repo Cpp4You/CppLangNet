@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class InputIt, class RandomIt >
+RandomIt partial_sort_copy( InputIt first, InputIt last, RandomIt d_first, RandomIt d_last );
+
+// (2)
+template< class InputIt, class RandomIt, class Compare >
+RandomIt partial_sort_copy( InputIt first, InputIt last, RandomIt d_first, RandomIt d_last, Compare comp );
+```
