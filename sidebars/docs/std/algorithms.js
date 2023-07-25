@@ -243,6 +243,7 @@ module.exports = {
           label: "Ordinary",
           items: [
             docsMethod("std/algo/ordinary/sort"),
+            docsMethod("std/algo/ordinary/stable_sort"),
             docsMethod("std/algo/ordinary/partial_sort"),
             docsMethod("std/algo/ordinary/partial_sort_copy"),
             docsMethod("std/algo/ordinary/nth_element"),
