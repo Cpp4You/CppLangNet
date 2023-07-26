@@ -44,7 +44,7 @@ using replace_copy_if_result = ranges::in_out_result<I, O>;
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
 :::danger Undefined Behaviour
-The <Tooltip term={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if the source and destination ranges overlap.
+The <Tooltip title={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if the source and destination ranges overlap.
 :::
 
 The function-like entities described on this page are [**niebloids**](#).
@@ -66,7 +66,7 @@ The function-like entities described on this page are [**niebloids**](#).
     The value to replace.
   </Symbol>
   <Symbol none noLink name={ <code>pred</code> }>
-    Unary predicate which returns `true` if the element should be <b>ignored</b>.
+    Unary predicate which returns <code>true</code> if the element should be <b>ignored</b>.
   </Symbol>
   <Symbol none noLink name={ <code>proj</code> }>
     The projection to apply to the elements.

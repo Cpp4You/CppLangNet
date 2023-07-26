@@ -30,7 +30,7 @@ import Signature_SinceCpp20_Simplified from './_codes/replace_if/since-cpp20-sim
 
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
-Removing is done by shifting (by means of move assignment) the elements in the range in such a way that the elements that are not to be replace_ifd appear in the beginning of the range.
+Removing is done by shifting (by means of move assignment) the elements in the range in such a way that the elements that are not to be replaced appear in the beginning of the range.
 
 :::important
 Relative order of the elements that remain is preserved and the physical size of the container is unchanged.
@@ -53,7 +53,7 @@ The function-like entities described on this page are [**niebloids**](#).
     The range of elements to process.
   </Symbol>
   <Symbol none noLink name={ <code>new_value</code> }>
-    The value to use as a replace_ifment.
+    The value to use as a replacement.
   </Symbol>
   <Symbol none noLink name={ <code>proj</code> }>
     Projection to apply to the elements.

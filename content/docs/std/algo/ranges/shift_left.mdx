@@ -35,16 +35,16 @@ import Signature_SinceCpp20_Simplified from './_codes/shift_left/since-cpp20-sim
 Shifts the elements in the range [`first`; `last`) or `r` by `n` positions.
 
 - **(1)** Shifts the elements towards the beginning of the range:
- - If `n == 0 || n >= last - first`, there are no effects.
- - If `n < 0`, the <Tooltip term={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip>.
- - Otherwise, for every integer `i` in [`0`; `last - first - n`), moves the element originally at position `first + n + i` to position `first + i`. The moves are performed in increasing order of `i` starting from `0`.
+  - If `n == 0 || n >= last - first`, there are no effects.
+  - <span class="inline-danger">If <code>n &lt; 0</code>, the <Tooltip title={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip></span>.
+  - Otherwise, for every integer `i` in [`0`; `last - first - n`), moves the element originally at position `first + n + i` to position `first + i`. The moves are performed in increasing order of `i` starting from `0`.
 
 - ** (2)** Same as **(1)**, but uses `r` as the range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
 The function-like entities described on this page are [**niebloids**](#).
 
 :::danger Undefined Behaviour
-The <Tooltip term={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if [`first`; `last`) is not a valid range.
+The <Tooltip title={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if [`first`; `last`) is not a valid range.
 :::
 
 ### Parameters
@@ -86,7 +86,7 @@ At most `ranges::distance(first, last) - n` assignments.
 ### Possible implementation
 
 <details>
-<summary>Click to expand</summary>
+<summary>shift_left(1) and shift_left(2)</summary>
 
 ```cpp
 struct shift_left_fn

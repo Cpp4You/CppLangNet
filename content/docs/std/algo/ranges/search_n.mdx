@@ -63,7 +63,7 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Return value
 
-- **(1)** Value of type `ranges::subrange<I>{}` that denotes the first occurrence of the desired sequence of `count` `value`s.
+- **(1)** Value of type `ranges::subrange<I>` that denotes the first occurrence of the desired sequence of `count` `value`s.
 
   If no such subsequence is found, returns `std::ranges::subrange{ last, last }`.  
   If `count <= 0`, returns `std::ranges::subrange{ first, first }`.

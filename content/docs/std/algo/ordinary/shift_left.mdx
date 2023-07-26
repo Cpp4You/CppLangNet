@@ -31,7 +31,7 @@ import Signature_SinceCpp20 from './_codes/shift_left/since-cpp20.mdx';
 
 - **(1)** Shifts the elements towards the beginning of the range:
   - if `n == 0 || n >= last - first`, there are no effects.
-  - if `n < 0`, the <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+  - if `n < 0`, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
 
   Otherwise, for every integer `i` in [`0`; `last - first - n`), moves the element originally at position `first + n + i` to position `first + i`. The moves are performed in increasing order of `i` starting from `0`.
 

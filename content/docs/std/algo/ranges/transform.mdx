@@ -44,8 +44,8 @@ Applies the given function to a range and stores the result in another range, be
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
 - **(3)** The binary operation `binary_op` is applied to pairs of elements from two ranges:
-	- one defined by **[ first1; last1 )**
-	- the other defined by **[ first2; last2 )** (after respectively projecting with the projections `proj1` and `proj2`).
+	- One defined by **[ first1; last1 )**.
+	- The other defined by **[ first2; last2 )** (after respectively projecting with the projections `proj1` and `proj2`).
 
 - **(4)** Same as **(3)**, but uses `r1` as the first source range, as if using `ranges::begin(r1)` as `first1` and `ranges::end(r1)` as `last1`, and similarly for `r2`.
 
@@ -84,13 +84,13 @@ The function-like entities described on this page are [**niebloids**](#).
 
 ### Return value
 
-- **(1-2)** Returns a `unary_transform_result` which contains an input iterator equal to `last` and an output iterator to the element past the last element transformed.
-- **(3-4)** Returns a `binary_transform_result` contains input iterators to last transformed elements from ranges **[ first1; last1 )** and **[ first2; last2 )** as `in1` and `in2` respectively, and the output iterator to the element past the last element transformed as out.
+- **(1 - 2)** Returns a `unary_transform_result` which contains an input iterator equal to `last` and an output iterator to the element past the last element transformed.
+- **(3 - 4)** Returns a `binary_transform_result` contains input iterators to last transformed elements from ranges **[ first1; last1 )** and **[ first2; last2 )** as `in1` and `in2` respectively, and the output iterator to the element past the last element transformed as out.
 
 ### Complexity
 
-- **(1-2)** Exactly `ranges::distance(first1, last1)` applications of `op` and `proj`.
-- **(3-4)** Exactly `ranges::min(ranges::distance(first1, last1), ranges::distance(first2, last2))` applications of `binary_op` and projections.
+- **(1 - 2)** Exactly `ranges::distance(first1, last1)` applications of `op` and `proj`.
+- **(3 - 4)** Exactly `ranges::min(ranges::distance(first1, last1), ranges::distance(first2, last2))` applications of `binary_op` and projections.
 
 ### Exceptions
 
@@ -99,7 +99,7 @@ The function-like entities described on this page are [**niebloids**](#).
 ### Possible implementation
 
 <details>
-<summary>Click to expand</summary>
+<summary>transform(1) and transform(2)</summary>
 
 ```cpp
 struct transform_fn

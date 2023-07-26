@@ -36,7 +36,7 @@ Shifts the elements in the range [`first`; `last`) or `r` by `n` positions.
 
 - **(1)** Shifts the elements towards the end of the range:
   - If `n == 0 || n >= last - first`, there are no effects.
-  - If `n < 0`, the <Tooltip term={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip>.
+  - <span class="inline-danger">If <code>n &lt; 0</code>, the <Tooltip title={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip></span>.
   - Otherwise, for every integer `i` in [`0`; `last - first - n`), moves the element originally at position `first + i` to position `first + n + i`.
 
   If `I` models [`bidirectional_iterator`](#), then the moves are performed in decreasing order of `i` starting from `last - first - n - 1`.
@@ -46,7 +46,7 @@ Shifts the elements in the range [`first`; `last`) or `r` by `n` positions.
 The function-like entities described on this page are [**niebloids**](#).
 
 :::danger Undefined Behaviour
-The <Tooltip term={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if [`first`; `last`) is not a valid range.
+The <Tooltip title={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if [`first`; `last`) is not a valid range.
 :::
 
 ### Parameters

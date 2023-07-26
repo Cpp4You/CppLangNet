@@ -1,10 +1,9 @@
 ```cpp
 // (1)
-template< class InputIt, class OutputIt >
-constexpr OutputIt copy( InputIt first, InputIt last, OutputIt d_first );
+template< class T >
+constexpr void swap( T& a, T& b ) noexcept(/* see below */);
 
 // (2)
-template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2 >
-ForwardIt2 copy( ExecutionPolicy&& policy,
-                 ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first );
+template< class T2, std::size_t N >
+constexpr void swap( T2 (&a)[N], T2 (&b)[N] ) noexcept(/* see below */);
 ```

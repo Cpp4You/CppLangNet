@@ -45,14 +45,14 @@ Removes all elements satisfying specific criteria from the range [`first`; `last
 
 <SwitchView content={{
   'since-cpp11': <>
-    If the type of <code>*first</code> is not <a href="/docs/named_req/MoveAssignable">MoveAssignable</a>, the <Tooltip term={ <Term_UndefinedBehaviour/> }>behaviour is undefined</Tooltip>.
+    If the type of <code>*first</code> is not <a href="/docs/named_req/MoveAssignable">MoveAssignable</a>, the <Tooltip title={ <Term_UndefinedBehaviour/> }>behaviour is undefined</Tooltip>.
   </>,
   'until-cpp11': <>
-    If the <a href="#">value type</a> of <code>ForwardIt</code> is not <a href="/docs/named_req/CopyAssignable">CopyAssignable</a>, the <Tooltip term={ <Term_UndefinedBehaviour/> }>behaviour is undefined</Tooltip>.
+    If the <a href="#">value type</a> of <code>ForwardIt</code> is not <a href="/docs/named_req/CopyAssignable">CopyAssignable</a>, the <Tooltip title={ <Term_UndefinedBehaviour/> }>behaviour is undefined</Tooltip>.
   </>
 }} />
 
-Removing is done by shifting (by means of <Until v='cpp11'>copy assignment</Until> <Since v='cpp11'>move assignment</Since>) the elements in the range in such a way that the elements that are not to be removed appear in the beginning of the range.
+Removing is done by shifting (by means of <Since v='cpp11'>move assignment</Since><Until v='cpp11'>copy assignment</Until>) the elements in the range in such a way that the elements that are not to be removed appear in the beginning of the range.
 
 :::important
 Relative order of the elements that remain is preserved and the physical size of the container is unchanged.

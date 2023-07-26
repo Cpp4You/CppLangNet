@@ -37,7 +37,7 @@ Reverses the order of elements.
 - **(1)** Performs a left rotation on a range of elements. Specifically, [`ranges::rotate`](#) swaps the elements in the range [`first`; `last`) in such a way that the element `*middle` becomes the first element of the new range and `*(middle - 1)` becomes the last element.
 
 :::danger undefined Behaviour
-The <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if [`first`; `last`) is not a valid range or `middle` is not in [`first`; `last`).
+The <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if [`first`; `last`) is not a valid range or `middle` is not in [`first`; `last`).
 :::
 
 - ** (2)** Same as **(1)**, but uses `r` as the range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
@@ -81,7 +81,7 @@ Linear at worst: `ranges::distance(first, last)` swaps.
 ### Possible implementation
 
 <details>
-<summary>Click to expand</summary>
+<summary>rotate(1) and rotate(2)</summary>
 
 ```cpp
 struct rotate_fn
@@ -176,7 +176,7 @@ inline constexpr rotate_fn rotate {};
 
 [`ranges::rotate`](#) has better efficiency on common implementations if I models [`bidirectional_iterator`](#) or (better) [`random_access_iterator`](#).
 
-Implementations (e.g. **MSVC STL**) may enable vectorization when the iterator type models [`contiguous_iterator`](#) and swapping its value type calls neither non-trivial special member function nor ADL-found swap.
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable vectorization when the iterator type models [`contiguous_iterator`](#) and swapping its value type calls neither non-trivial special member function nor ADL-found swap.
 
 ### Examples
 

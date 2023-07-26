@@ -35,7 +35,7 @@ import Signature_SinceCpp20 from './_codes/reverse_copy/since-cpp20.mdx';
 
 - **(1)** Copies the elements from the range [`first`; `last`) to another range beginning at `d_first` in such a way that the elements in the new range are in reverse order.
 
-Behaves as if by executing the assignment `*(d_first + (last - first) - 1 - i) = *(first + i)` once for each non-negative `i < (last - first)`.
+  Behaves as if by executing the assignment `*(d_first + (last - first) - 1 - i) = *(first + i)` once for each non-negative `i < (last - first)`.
 
 - **(2)** Same as **(1)**, but executed according to `policy`.
 	:::important Overload Resolution
@@ -44,7 +44,7 @@ Behaves as if by executing the assignment `*(d_first + (last - first) - 1 - i) =
 	:::
 
 :::danger Undefined Behaviour
-If the source and destination ranges (that is, [`first`; `last`) and [`d_first`; `d_first + (last - first`)), respectively) overlap, the <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+If the source and destination ranges (that is, [`first`; `last`) and [`d_first`; `d_first + (last - first)`), respectively) overlap, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
 :::
 
 ### Parameters
@@ -112,7 +112,7 @@ OutputIt reverse_copy(BidirIt first, BidirIt last, OutputIt d_first)
 
 ### Notes
 
-Implementations (e.g. [**MSVC STL](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable vectorization when the both iterator types
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable vectorization when the both iterator types
 satisfy [LegacyContiguousIterator](/docs/named_req/LegacyContiguousIterator) and have the same value type, and the value type is [TriviallyCopyable](/docs/named_req/TriviallyCopyable).
 
 ### Examples

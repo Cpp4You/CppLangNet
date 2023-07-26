@@ -86,12 +86,6 @@ Iterator to the first element of the second group.
 
 ### Complexity
 
-Given N = std::distance(first, last),
-
-1) Exactly N applications of the predicate and O(N) swaps if there is enough extra memory. 
-2) O(N log N) swaps and O(N) applications of the predicate
-
-
 Given `N` as `std::distance(first, last)`:
 
 **(1)** Exactly `N` applications of `p` and **O(N)** swaps if there is enough extra memory. If memory is insufficient, at most **N * log(N)** swaps.
@@ -136,7 +130,7 @@ ForwardIt stable_partition(ForwardIt first, ForwardIt last, UnaryPredicate p)
 This function attempts to allocate a temporary buffer. If the allocation fails, the less efficient algorithm is chosen.
 
 Implementations in [**libc++**](https://github.com/llvm/llvm-project/blob/eda14ebf6a43d9ada6a2be3d1b06b8b6036eb774/libcxx/include/__algorithm/stable_partition.h#L316)
-and [libstdc++](https://github.com/gcc-mirror/gcc/blob/d2a499a9881c7c079d2a722b57c7fcf022a864dd/libstdc%2B%2B-v3/include/bits/stl_algo.h#L1608)
+and [**libstdc++**](https://github.com/gcc-mirror/gcc/blob/d2a499a9881c7c079d2a722b57c7fcf022a864dd/libstdc%2B%2B-v3/include/bits/stl_algo.h#L1608)
 also accept ranges denoted by `LegacyForwardIterator`s as an extension.
 
 ### Examples

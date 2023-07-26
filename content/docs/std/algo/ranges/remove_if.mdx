@@ -130,8 +130,8 @@ inline constexpr remove_if_fn remove_if {};
 
 ### Notes
 
-A call to remove_if is typically followed by a call to a container's erase member function, which erases the unspecified values and reduces the *physical size* of the container to match its new *logical size*.
-These two invocations together constitute a so-called [Erase–removef idiom](#)<Since v='cpp20'>, which can be achieved by the free function std::erase that has overloads for all standard sequence containers, or std::erase_if that has overloads for all standard containers</Since>
+A call to [`remove_if`](#) is typically followed by a call to a container's erase member function, which erases the unspecified values and reduces the *physical size* of the container to match its new *logical size*.
+These two invocations together constitute a so-called [Erase–remove idiom](#)<Since v='cpp20'>, which can be achieved by the free function std::erase that has overloads for all standard sequence containers, or std::erase_if that has overloads for all standard containers</Since>
 
 The similarly-named container member functions [list::remove](#), [list::remove_if](#), [forward_list::remove](/docs/std/containers/lists/forward-list/remove), and [forward_list::remove_if](/docs/std/containers/lists/forward-list/remove) erase the removed elements.
 

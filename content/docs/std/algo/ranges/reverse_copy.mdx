@@ -38,17 +38,17 @@ template< class I, class O >
 using reverse_copy_result = ranges::in_out_result<I, O>;
 ```
 
-- **(1)** Given **N** as ranges::distance(first, last):
+- **(1)** Given **N** as `ranges::distance(first, last)`:
 
   Copies the elements from the source range [`first`; `last`) to the destination range [`result`; `result + N`), in such a way that the elements in the new range are in reverse order.
 
-  Behaves as if by executing the assignment `*(result + N - 1 - i) = *(first + i)` once for each integer i in [`0`; `N`).
+  Behaves as if by executing the assignment `*(result + N - 1 - i) = *(first + i)` once for each integer `i` in [`0`; `N`).
 
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
 
 :::danger Undefined Behaviour
-The <Tooltip term={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if the source and destination ranges overlap.
+The <Tooltip title={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if the source and destination ranges overlap.
 :::
 
 The function-like entities described on this page are [**niebloids**](#).
@@ -124,7 +124,7 @@ inline constexpr reverse_copy_fn reverse_copy {};
 
 ### Notes
 
-Implementations (e.g. [**MSVC STL](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable vectorization when the both iterator types
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable vectorization when the both iterator types
 satisfy [LegacyContiguousIterator](/docs/named_req/LegacyContiguousIterator) and have the same value type, and the value type is [TriviallyCopyable](/docs/named_req/TriviallyCopyable).
 
 ### Examples

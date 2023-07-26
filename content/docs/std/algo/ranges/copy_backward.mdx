@@ -38,7 +38,7 @@ using copy_backward_result = ranges::in_out_result<I1, I2>;
   The elements are copied in **reverse order** (the last element is copied first), but their relative order is preserved.
 
   :::danger Undefined Behaviour
-  The behavior is undefined if `result` is within the range [`first`; `last`). In this case, [`ranges::copy_`](/docs/std/algo/ranges/copy_backward_backward) may be used instead.
+  The behavior is undefined if `result` is within the range [`first`; `last`). In this case, [`ranges::copy_`](/docs/std/algo/ranges/copy_backward) may be used instead.
   :::
 
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
@@ -115,8 +115,8 @@ inline constexpr copy_backward_fn copy_backward{};
 
 ### Notes
 
-When copying overlapping ranges, [`ranges::copy`](/docs/std/algo/ranges/copy) is appropriate when copy_backwarding to the left (**beginning of the destination range is outside the source range**),  
-while [`ranges::copy_backward`](#) is appropriate when copy_backwarding to the right (**end of the destination range is outside the source range**).
+When copying overlapping ranges, [`ranges::copy`](/docs/std/algo/ranges/copy) is appropriate when copying to the left (**beginning of the destination range is outside the source range**),  
+while [`ranges::copy_backward`](#) is appropriate when copying to the right (**end of the destination range is outside the source range**).
 
 ### Examples
 
