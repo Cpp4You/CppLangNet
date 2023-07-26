@@ -269,7 +269,7 @@ module.exports = {
           type: "category",
           label: "Ordinary",
           items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ordinary/lower_bound"),
           ]
         }
       ]
