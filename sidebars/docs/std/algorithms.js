@@ -265,6 +265,7 @@ module.exports = {
             docsMethod("std/algo/ranges/binary_search", "since-cpp20"),
             docsMethod("std/algo/ranges/lower_bound", "since-cpp20"),
             docsMethod("std/algo/ranges/upper_bound", "since-cpp20"),
+            docsMethod("std/algo/ranges/equal_range", "since-cpp20"),
           ]
         },
         {

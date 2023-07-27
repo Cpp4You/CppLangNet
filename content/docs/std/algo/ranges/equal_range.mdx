@@ -1,0 +1,196 @@
+---
+title:         ranges::equal_range algorithm
+sidebar_label: ranges::equal_range(  )
+description:   ranges::equal_range algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, equal_range, bound, binary_search]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/equal_range
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import { Since, Until }        from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/equal_range/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/equal_range/since-cpp20-simplified.mdx';
+
+# std::ranges::equal_range() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Returns a view containing all elements equivalent to value in the range [`first`; `last`).
+
+  The range [`first`; `last`) must be at least partially ordered with respect to `value`, i.e. it must satisfy all of the following requirements:
+  - Partitioned with respect to `element < value` or `comp(element, value)` (that is, all elements for which the expression is `true` precedes all elements for which the expression is `false`).
+  - Partitioned with respect to `!(value < element)` or `!comp(value, element)`.
+  - For all elements, if `element < value` or `comp(element, value)` is `true` then `!(value < element)` or `!comp(value, element)` is also `true`.
+
+  A fully-sorted range meets these criteria.
+
+  The returned view is constructed from two iterators:
+    1. Pointing to the first element that is **not less** than `value`.
+    2. Pointing to the first element **greater** than `value`.
+
+  The first iterator may be alternatively obtained with `std::ranges::lower_bound()`, the second - with `std::ranges::upper_bound()`.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The partially-ordered range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The partially-ordered range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to compare the elements to.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+[`std::ranges::subrange`](#) containing a pair of iterators defining the wanted range:
+  1. Pointing to the first element that is **not less** than `value`.
+  2. Pointing to the first element **greater** than `value`.
+
+If there are no elements **not less** than `value`, `last` is returned as the first element.  
+Similarly if there are no elements **greater*8 than `value`, `last` is returned as the second element.
+
+### Complexity
+
+At most **log2(last - first) + O(1)** comparisons and applications of the projection.
+
+However, for an iterator that does not model [`random_access_iterator`](#), the number of iterator increments is **linear**.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>ranges::equal_range</summary>
+
+```cpp
+struct equal_range_fn
+{
+    template<std::forward_iterator I, std::sentinel_for<I> S,
+             class T, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                 const T*,
+                 std::projected<I, Proj>> Comp = ranges::less>
+    constexpr ranges::subrange<I>
+        operator()(I first, S last, const T& value, Comp comp = {}, Proj proj = {}) const
+    {
+        return ranges::subrange(
+            ranges::lower_bound(first, last, value, std::ref(comp), std::ref(proj)),
+            ranges::upper_bound(first, last, value, std::ref(comp), std::ref(proj)));
+    }
+
+    template<ranges::forward_range R, class T, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                 const T*,
+                 std::projected<std::ranges::iterator_t<R>, Proj>> Comp = ranges::less>
+    constexpr ranges::borrowed_subrange_t<R>
+        operator()(R&& r, const T& value, Comp comp = {}, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), value,
+                       std::ref(comp), std::ref(proj));
+    }
+};
+
+inline constexpr equal_range_fn equal_range;
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <compare>
+#include <iostream>
+#include <vector>
+
+struct S
+{
+    int number {};
+    char name {};
+    // note: name is ignored by these comparison operators
+    friend bool operator== (const S s1, const S s2) { return s1.number == s2.number; }
+    friend auto operator<=>(const S s1, const S s2) { return s1.number <=> s2.number; }
+    friend std::ostream& operator<<(std::ostream& os, S o)
+    {
+        return os << '{' << o.number << ", '" << o.name << "'}";
+    }
+};
+
+void println(auto rem, auto const& v)
+{
+    for (std::cout << rem; auto const& e : v)
+        std::cout << e << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    // note: not ordered, only partitioned w.r.t. S defined below
+    std::vector<S> vec
+    {
+        {1,'A'}, {2,'B'}, {2,'C'}, {2,'D'}, {4, 'D'}, {4,'G'}, {3,'F'}
+    };
+
+    const S value {2, '?'};
+
+    namespace ranges = std::ranges;
+
+    auto a = ranges::equal_range(vec, value);
+    println("1. ", a);
+
+    auto b = ranges::equal_range(vec.begin(), vec.end(), value);
+    println("2. ", b);
+
+    auto c = ranges::equal_range(vec, 'D', ranges::less {}, &S::name);
+    println("3. ", c);
+
+    auto d = ranges::equal_range(vec.begin(), vec.end(), 'D', ranges::less {}, &S::name);
+    println("4. ", d);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1. {2, 'B'} {2, 'C'} {2, 'D'}
+2. {2, 'B'} {2, 'C'} {2, 'D'}
+3. {2, 'D'} {4, 'D'}
+4. {2, 'D'} {4, 'D'}
+```
+
+</div>
+</Columns>
