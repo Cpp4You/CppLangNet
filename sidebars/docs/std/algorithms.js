@@ -296,6 +296,7 @@ module.exports = {
           label: "Ordinary",
           items: [
             docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ordinary/merge"),
           ]
         }
       ]
