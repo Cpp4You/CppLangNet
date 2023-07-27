@@ -269,6 +269,7 @@ module.exports = {
           type: "category",
           label: "Ordinary",
           items: [
+            docsMethod("std/algo/ordinary/binary_search"),
             docsMethod("std/algo/ordinary/lower_bound"),
           ]
         }
