@@ -263,6 +263,7 @@ module.exports = {
           label: "Rangified",
           items: [
             docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ranges/binary_search", "since-cpp20"),
           ]
         },
         {
