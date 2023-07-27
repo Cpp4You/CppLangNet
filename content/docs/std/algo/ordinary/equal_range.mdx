@@ -1,0 +1,200 @@
+---
+title:         equal_range algorithm
+sidebar_label: equal_range(  )
+description:   equal_range algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, equal_range, bound, binary_search]
+
+cppreference_origin_rel: w/cpp/algorithm/equal_range
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp20 from './_codes/equal_range/until-cpp20.mdx';
+import Signature_SinceCpp20 from './_codes/equal_range/since-cpp20.mdx';
+
+# std::equal_range() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'until-cpp20': <Signature_UntilCpp20 />
+}} />
+
+Returns a range containing all elements equivalent to value in the range [`first`; `last`).
+
+The range [`first`; `last`) must be at least partially ordered with respect to `value`, i.e. it must satisfy all of the following requirements:
+- Partitioned with respect to `element < value` or `comp(element, value)` (that is, all elements for which the expression is `true` precedes all elements for which the expression is `false`)
+- Partitioned with respect to `!(value < element)` or `!comp(value, element)`
+- For all elements, if `element < value` or `comp(element, value)` is `true` then `!(value < element)` or `!comp(value, element)` is also `true`
+
+A fully-sorted range meets these criteria.
+
+The returned view is constructed from two iterators:
+  1. Pointing to the first element that is **not less** than `value`.
+  2. Pointing to the first element **greater** than `value`.
+
+The first iterator may be alternatively obtained with `std::ranges::lower_bound()`, the second - with `std::ranges::upper_bound()`.
+
+- **(1)** Uses `operator<` to compare the elements.
+- **(2)** Uses the given comparison function `comp`.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The partially-ordered range to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to compare the elements to.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>Compare</code> }>
+    <a href="/docs/named_req/BinaryPredicate">BinaryPredicate</a>
+  </Symbol>
+</SymbolTable>
+
+`Compare` is not required to satisfy [Compare](/docs/named_req/Compare).
+
+### Return value
+
+A [`std::pair`](#) containing a pair of iterators defining the wanted range:
+  1. Pointing to the first element that is **not less** than `value`.
+  2. Pointing to the first element **greater** than `value`.
+
+If there are no elements **not less** than `value`, `last` is returned as the first element.  
+Similarly if there are no elements **greater*8 than `value`, `last` is returned as the second element.
+
+### Complexity
+
+The number of comparisons performed is logarithmic in the distance between `first` and `last` (at most `log^2(last - first) + O(1) comparisons).
+
+However, for non-[LegacyRandomAccessIterators](/docs/named_req/LegacyRandomAccessIterators), the number of iterator increments is linear.
+
+Notably, [`std::map`](/docs/std/containers/maps/map), [`std::multimap`](/docs/std/containers/maps/multimap),
+[`std::set`](/docs/std/containers/sets/set), and [`std::multiset`](/docs/std/containers/sets/multiset) iterators are not random access,
+and so their member `equal_range()` functions should be preferred.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>equal_range (1)</summary>
+
+```cpp
+template<class ForwardIt, class T>
+std::pair<ForwardIt, ForwardIt>
+    equal_range(ForwardIt first, ForwardIt last, const T& value)
+{
+    return std::make_pair(std::lower_bound(first, last, value),
+                          std::upper_bound(first, last, value));
+}
+```
+
+</details>
+
+<details>
+<summary>equal_range (2)</summary>
+
+```cpp
+template<class ForwardIt, class T, class Compare>
+std::pair<ForwardIt, ForwardIt>
+    equal_range(ForwardIt first, ForwardIt last, const T& value, Compare comp)
+{
+    return std::make_pair(std::lower_bound(first, last, value, comp),
+                          std::upper_bound(first, last, value, comp));
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+struct S
+{
+    int number;
+    char name;
+    // note: name is ignored by this comparison operator
+    bool operator<(const S& s) const { return number < s.number; }
+};
+
+struct Comp
+{
+    bool operator()(const S& s, int i) const { return s.number < i; }
+    bool operator()(int i, const S& s) const { return i < s.number; }
+};
+
+int main()
+{
+    // note: not ordered, only partitioned w.r.t. S defined below
+    const std::vector<S> vec {{1, 'A'}, {2, 'B'}, {2, 'C'},
+                              {2, 'D'}, {4, 'G'}, {3, 'F'}};
+    const S value {2, '?'};
+
+    std::cout << "Compare using S::operator<(): ";
+    const auto p = std::equal_range(vec.begin(), vec.end(), value);
+
+    for (auto i = p.first; i != p.second; ++i)
+        std::cout << i->name << ' ';
+
+    std::cout << "\n" "Using heterogeneous comparison: ";
+    const auto p2 = std::equal_range(vec.begin(), vec.end(), 2, Comp{});
+
+    for (auto i = p2.first; i != p2.second; ++i)
+        std::cout << i->name << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Compare using S::operator<(): B C D 
+Using heterogeneous comparison: B C D
+```
+
+</div>
+</Columns>
