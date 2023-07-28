@@ -1,0 +1,32 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I1,
+  std::sentinel_for<I1> S1,
+  std::input_iterator I2,
+  std::sentinel_for<I2> S2,
+  std::weakly_incrementable O,
+  class Comp = ranges::less,
+  class Proj1 = std::identity,
+  class Proj2 = std::identity
+>
+  requires std::mergeable<I1, I2, O, Comp, Proj1, Proj2>
+constexpr set_difference_result<I1, O>
+    set_difference( I1 first1, S1 last1, I2 first2, S2 last2, O result,
+                    Comp comp = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );
+
+// (2)
+template<
+  ranges::input_range R1,
+  ranges::input_range R2,
+  std::weakly_incrementable O,
+  class Comp = ranges::less,
+  class Proj1 = std::identity,
+  class Proj2 = std::identity
+>
+  requires std::mergeable<ranges::iterator_t<R1>, ranges::iterator_t<R2>,
+                          O, Comp, Proj1, Proj2>
+constexpr set_difference_result<ranges::borrowed_iterator_t<R1>, O>
+    set_difference( R1&& r1, R2&& r2, O result, Comp comp = {},
+                    Proj1 proj1 = {}, Proj2 proj2 = {} );
+```
