@@ -282,7 +282,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Other operations on sorted ranges",
+      label: "Set",
       items: [
         {
           type: "category",
@@ -302,7 +302,7 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Set",
+      label: "Other operations on sorted ranges",
       items: [
         {
           type: "category",
