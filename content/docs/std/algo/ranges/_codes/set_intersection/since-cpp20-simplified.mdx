@@ -1,0 +1,28 @@
+```cpp
+// (1)
+constexpr set_intersection_result<I1, I2, O>
+    set_intersection( I1 first1, S1 last1, I2 first2, S2 last2, O result,
+                    Comp comp = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );
+
+// (2)
+constexpr set_intersection_result<ranges::borrowed_iterator_t<R1>,
+                                  ranges::borrowed_iterator_t<R2>, O>
+    set_intersection( R1&& r1, R2&& r2, O result, Comp comp = {},
+                    Proj1 proj1 = {}, Proj2 proj2 = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I1`, `I2` - `std::input_iterator`
+- `S1`, `S2` - `std::sentinel_for<I1>`, `std::sentinel_for<I2>`
+- `R1`, `R2` - `std::ranges::input_range`
+- `O` - `std::weakly_incrementable`
+- `Comp` - **(none)**
+- `Proj1`, `Proj2` - **(none)**
+
+The `Proj` and `Comp` template arguments have the followign default types: `std::identity`, `ranges::less` for all overloads.
+
+Additionaly, each overload has the following constraints:
+  - **(1)** - `mergeable<I1, I2, O, Comp, Proj1, Proj2>`
+  - **(2)** - `mergeable<ranges::iterator_t<R1>, ranges::iterator_t<R2>, O, Comp, Proj1, Proj2>`
+
+(The `std::` namespace was ommited here for readability)
