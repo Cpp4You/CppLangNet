@@ -35,7 +35,7 @@ using merge_result = ranges::in_in_out_result<I1, I2, O>;
 ```
 Merges two sorted ranges [`first1`; `last1`) and [`first2`; `last2`) into one sorted range beginning at `result`.
 
-A sequence is said to be sorted with respect to the `comparator` comp if for any iterator `it` pointing to the sequence
+A sequence is said to be sorted with respect to the comparator `comp` if for any iterator `it` pointing to the sequence
 and any non-negative integer `n` such that `it + n` is a valid iterator pointing to an element of the sequence,
 `std::invoke(comp, std::invoke(proj2, *(it + n)), std::invoke(proj1, *it)))` evaluates to `false`.
 

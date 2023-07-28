@@ -97,9 +97,6 @@ bool cmp(const Type1 &a, const Type2 &b);
   <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> <br/> <code>ForwardIt3</code></> }>
     <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a> <br/>
   </Symbol>
-  <Symbol none noLink name={ <code>SampleIterator</code> }>
-    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
-  </Symbol>
 </SymbolTable>
 
 ### Return value
@@ -197,6 +194,8 @@ If any equivalent values appeared `n` times in the first range and `m` times in 
 output all `n + m` occurrences whereas [`std::set_union`](#) would output `std::max(n, m)` ones only.
 
 So [`std::merge`](#) outputs exactly `std::distance(first1, last1) + std::distance(first2, last2)` values and [`std::set_union`](#) may produce fewer.
+
+### Examples
 
 <Columns columns={['8fr', '4fr']}>
 <div>
