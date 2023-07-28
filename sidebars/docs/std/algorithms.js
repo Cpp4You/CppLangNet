@@ -308,14 +308,16 @@ module.exports = {
           type: "category",
           label: "Rangified",
           items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ranges/merge", "since-cpp20"),
+            docsMethod("std/algo/ranges/inplace_merge", "since-cpp20"),
           ]
         },
         {
           type: "category",
           label: "Ordinary",
           items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ordinary/merge"),
+            docsMethod("std/algo/ordinary/inplace_merge"),
           ]
         }
       ]

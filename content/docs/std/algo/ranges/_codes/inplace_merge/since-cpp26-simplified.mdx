@@ -1,0 +1,21 @@
+```cpp
+// (1)
+constexpr I inplace_merge( I first, I middle, S last, Comp comp = {}, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R>
+    inplace_merge( R&& r, ranges::iterator_t<R> middle, Comp comp = {}, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::bidirectional_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R1` - `std::ranges::bidirectional_range`
+- `Comp` - **(none)**
+- `Proj` - **(none)**
+
+The `Proj` and `Comp` template arguments have the followign default types: `std::identity`, `ranges::less` for all overloads.
+
+Additionaly, each overload has the following constraints:
+  - **(1)** - `std::sortable<I, Comp, Proj>`
+  - **(2)** - `std::sortable<ranges::iterator_t<R>, Comp, Proj>`

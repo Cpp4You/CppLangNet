@@ -1,0 +1,192 @@
+---
+title:         inplace_merge algorithm
+sidebar_label: inplace_merge(  )
+description:   inplace_merge algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, merge, inplace_merge, in-place]
+
+cppreference_origin_rel: w/cpp/algorithm/inplace_merge
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/inplace_merge/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/inplace_merge/since-cpp17.mdx';
+import Signature_SinceCpp26 from './_codes/inplace_merge/since-cpp26.mdx';
+
+# std::inplace_merge() algorithm
+
+<SwitchView content={{
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />,
+  'since-cpp26': <Signature_SinceCpp26 />,
+}} />
+
+Merges two consecutive sorted ranges [`first`; `middle`) and [`middle`; `last`) into one sorted range [`first`; `last`).
+
+A sequence is said to be sorted with respect to a comparator `comp` if for any iterator `it` pointing to the sequence
+and any non-negative integer `n` such that `it + n` is a valid iterator pointing to an element of the sequence,
+`comp(*(it + n), *it)` evaluates to `false`.
+
+- **(1)** Elements are compared using `operator<`. <span class="inline-caution">The ranges must be sorted with respect to this operator as well</span>.
+
+- **(2)** Elements are compared using the given binary comparison function `comp`. <span class="inline-caution">The ranges must be sorted with respect to this comparator as well</span>.
+
+- **(3 - 4)** Same as **(1)** and **(2)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Until>
+	<Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Since>
+	:::
+
+This function is **stable**, which means that for equivalent elements in the original two ranges,
+the elements from the first range  precede the elements from the second range, preserving their original order.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>first</code> }>
+    The first range of elements to inplace_merge.
+  </Symbol>
+  <Symbol none noLink name={ <code>middle</code> }>
+    The end of the first sorted range and the beginning of the second.
+  </Symbol>
+  <Symbol none noLink name={ <code>last</code> }>
+    The end of the second sorted range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>BidirIt</code>  }>
+    <a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a> <br/>
+    <a href="/docs/named_req/ValueSwappable">ValuSwappable</a>
+  </Symbol>
+  <Symbol none noLink name={ <> Type of dereferenced <code>BidirIt</code> </> }>
+    <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> <br/>
+    <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+- **(1 - 2)** Exactly `N - 1` comparisons if enough additional memory is available.
+  If the memory is insufficient, **O(N \* log(N))** comparisons.
+- **(3 - 4)** **O(N \* log(N))** comparisons.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+**Vendor implementations:**
+[GCC (libstdc++)](https://github.com/gcc-mirror/gcc/blob/d9375e490072d1aae73a93949aa158fcd2a27018/libstdc%2B%2B-v3/include/bits/stl_algo.h#L2508)
+⏺
+[LLVM Clang (libc++)](https://github.com/llvm-mirror/libcxx/blob/a12cb9d211019d99b5875b6d8034617cbc24c2cc/include/algorithm#L4452)
+
+### Notes
+
+This function attempts to allocate a temporary buffer. If the allocation fails, the less efficient algorithm is chosen.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <random>
+#include <vector>
+
+auto print = [](auto const rem, auto const& v)
+{
+    std::cout << rem;
+    std::copy(v.begin(), v.end(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+};
+
+int main()
+{
+    // fill the vectors with random numbers
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<> dis(0, 9);
+
+    std::vector<int> v1(10), v2(10);
+    std::generate(v1.begin(), v1.end(), std::bind(dis, std::ref(mt)));
+    std::generate(v2.begin(), v2.end(), std::bind(dis, std::ref(mt)));
+
+    print("Originally:\nv1: ", v1);
+    print("v2: ", v2);
+
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+
+    print("After sorting:\nv1: ", v1);
+    print("v2: ", v2);
+
+    // inplace_merge
+    std::vector<int> dst;
+    std::inplace_merge(v1.begin(), v1.end(), v2.begin(), v2.end(), std::back_inserter(dst));
+
+    print("After merging:\ndst: ", dst);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+Originally:
+v1: 2 6 5 7 4 2 2 6 7 0
+v2: 8 3 2 5 0 1 9 6 5 0
+After sorting:
+v1: 0 2 2 2 4 5 6 6 7 7
+v2: 0 0 1 2 3 5 5 6 8 9
+After merging:
+dst: 0 0 0 1 2 2 2 2 3 4 5 5 5 6 6 6 7 7 8 9
+```
+
+</div>
+</Columns>
