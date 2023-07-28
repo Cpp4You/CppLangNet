@@ -288,14 +288,14 @@ module.exports = {
           type: "category",
           label: "Rangified",
           items: [
-            docsMethod("std/algo/ranges/merge", "since-cpp20"),
+            docsMethod("std/algo/ranges/includes", "since-cpp20"),
           ]
         },
         {
           type: "category",
           label: "Ordinary",
           items: [
-            docsMethod("std/algo/ordinary/merge"),
+            docsMethod("std/algo/ordinary/includes"),
           ]
         }
       ]

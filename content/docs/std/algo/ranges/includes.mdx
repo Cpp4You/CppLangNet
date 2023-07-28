@@ -1,0 +1,199 @@
+---
+title:         ranges::includes algorithm
+sidebar_label: ranges::includes(  )
+description:   ranges::includes algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, contains, has, includes]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/includes
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/includes/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/includes/since-cpp20-simplified.mdx';
+
+# std::ranges::includes() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Returns `true` if the projections of the sorted range [`first2`; `last2`) is a subsequence of the projections of the sorted range [`first1`; `last1`).
+
+  The ranges must be sorted with the given comparison function `comp`.
+
+  A subsequence need not be contiguous.
+
+- **(2)** Same as **(1)**, but uses `r1` as the first range and `r2` as the second range, as if using `ranges::begin(r1)` as `first1`, `ranges::end(r1)` as `last1`, `ranges::begin(r2)` as `first2`, and `ranges::end(r2)` as `last2`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The sorted range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>r</code> <br/> <code>r1</code> </> }>
+    The sorted range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The sorted range of elements to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The sorted range of elements to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison function to apply to projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the elements in the first range.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the elements in the second range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+`true` if [`first2`; `last2`) is a subsequence of [`first1`; `last1`).  
+Otherwise, `false`.
+
+### Complexity
+
+Given `N1` as `ranges::distance(r1)` and `N2` as `ranges::distance(r2)`:
+
+At most **2 \* (N1 + N2 − 1)** comparisons
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>includes(1) and includes(2)</summary>
+
+```cpp
+struct includes_fn
+{
+    template<std::input_iterator I1, std::sentinel_for<I1> S1,
+             std::input_iterator I2, std::sentinel_for<I2> S2,
+             class Proj1 = std::identity, class Proj2 = std::identity,
+             std::indirect_strict_weak_order<
+                 std::projected<I1, Proj1>,
+                 std::projected<I2, Proj2>> Comp = ranges::less>
+    constexpr bool operator()(I1 first1, S1 last1, I2 first2, S2 last2,
+                              Comp comp = {}, Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        for (; first2 != last2; ++first1)
+        {
+            if (first1 == last1 || comp(*first2, *first1))
+                return false;
+            if (!comp(*first1, *first2))
+                ++first2;
+        }
+        return true;
+    }
+
+    template<ranges::input_range R1, ranges::input_range R2,
+             class Proj1 = std::identity, class Proj2 = std::identity,
+             std::indirect_strict_weak_order<
+                 std::projected<ranges::iterator_t<R1>, Proj1>,
+                 std::projected<ranges::iterator_t<R2>, Proj2>> Comp = ranges::less>
+    constexpr bool operator()(R1&& r1, R2&& r2, Comp comp = {},
+                              Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        return (*this)(ranges::begin(r1), ranges::end(r1),
+                       ranges::begin(r2), ranges::end(r2),
+                       std::ref(comp), std::ref(proj1), std::ref(proj2));
+    }
+};
+
+inline constexpr auto includes = includes_fn {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+
+#include <algorithm>
+#include <cctype>
+#include <initializer_list>
+#include <iomanip>
+#include <iostream>
+#include <locale>
+#include <string>
+
+template<class T>
+std::ostream& operator<<(std::ostream& os, std::initializer_list<T> const& list)
+{
+    for (os << "{ "; auto const& elem : list)
+        os << elem << ' ';
+    return os << "} ";
+}
+
+struct true_false : std::numpunct<char>
+{
+    std::string do_truename() const { return "? Yes\n"; }
+    std::string do_falsename() const { return "? No\n"; }
+};
+
+int main()
+{
+    std::cout.imbue(std::locale(std::cout.getloc(), new true_false));
+
+    auto ignore_case = [](char a, char b) { return std::tolower(a) < std::tolower(b); };
+
+    const auto
+        a = {'a', 'b', 'c'},
+        b = {'a', 'c'},
+        c = {'a', 'a', 'b'},
+        d = {'g'},
+        e = {'a', 'c', 'g'},
+        f = {'A', 'B', 'C'},
+        z = {'a', 'b', 'c', 'f', 'h', 'x'};
+
+    std::cout
+        << z << "includes\n" << std::boolalpha
+        << a << std::ranges::includes(z.begin(), z.end(), a.begin(), a.end())
+        << b << std::ranges::includes(z, b)
+        << c << std::ranges::includes(z, c)
+        << d << std::ranges::includes(z, d)
+        << e << std::ranges::includes(z, e)
+        << f << std::ranges::includes(z, f, ignore_case);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+{ a b c f h x } includes
+{ a b c } ? Yes
+{ a c } ? Yes
+{ a a b } ? No
+{ g } ? No
+{ a c g } ? No
+{ A B C } ? Yes
+```
+
+</div>
+</Columns>
