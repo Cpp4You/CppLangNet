@@ -289,7 +289,7 @@ module.exports = {
           label: "Rangified",
           items: [
             docsMethod("std/algo/ranges/includes", "since-cpp20"),
-            docsMethod("std/algo/ranges/set_difference", "since-cpp20"),
+            docsMethod("std/algo/ranges/set_union", "since-cpp20"),
             docsMethod("std/algo/ranges/set_intersection", "since-cpp20"),
           ]
         },
@@ -298,7 +298,7 @@ module.exports = {
           label: "Ordinary",
           items: [
             docsMethod("std/algo/ordinary/includes"),
-            docsMethod("std/algo/ordinary/set_difference"),
+            docsMethod("std/algo/ordinary/set_union"),
             docsMethod("std/algo/ordinary/set_intersection"),
           ]
         }
