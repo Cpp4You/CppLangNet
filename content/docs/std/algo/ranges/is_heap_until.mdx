@@ -1,0 +1,212 @@
+---
+title:         ranges::is_heap_until algorithm
+sidebar_label: ranges::is_heap_until(  )
+description:   ranges::is_heap_until algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, is_heap_until]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/is_heap_until
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+
+<!-- Terms -->
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/is_heap_until/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/is_heap_until/since-cpp20-simplified.mdx';
+
+# std::ranges::is_heap_until() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Examines the range [`first`; `last`) and finds the largest range beginning at `first` which is a max heap.
+- **(1)** Elements are compared using the given binary comparison function `comp` and projection object `proj`.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    The projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+The upper bound of the largest range beginning at `first` which is a max heap.
+That is, the last iterator it for which range [`first`; `it`) is a max heap with respect to `comp` and `proj`.
+
+### Complexity
+
+Linear in the distance between `first` and `last`.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>is_heap_until(1) and is_heap(2)</summary>
+
+```cpp
+
+struct is_heap_until_fn
+{
+    template<std::random_access_iterator I, std::sentinel_for<I> S,
+             class Proj = std::identity, std::indirect_strict_weak_order<
+             std::projected<I, Proj>> Comp = ranges::less>
+    constexpr I
+        operator()(I first, S last, Comp comp = {}, Proj proj = {}) const
+    {
+        std::iter_difference_t<I> n {ranges::distance(first, last)}, dad {0}, son {1};
+        for (; son != n; ++son)
+        {
+            if (std::invoke(comp, std::invoke(proj, *(first + dad)),
+                                  std::invoke(proj, *(first + son))))
+                return first + son;
+            else if ((son % 2) == 0)
+                ++dad;
+        }
+        return first + n;
+    }
+
+    template<ranges::random_access_range R, class Proj = std::identity,
+             std::indirect_strict_weak_order<std::projected<ranges::iterator_t<R>, Proj>>
+             Comp = ranges::less>
+    constexpr ranges::borrowed_iterator_t<R>
+        operator()(R&& r, Comp comp = {}, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::move(comp), std::move(proj));
+    }
+};
+
+inline constexpr is_heap_until_fn is_heap_until {};
+```
+
+</details>
+
+### Notes
+
+A max heap is a range of elements [`f`; `l`), arranged with respect to comparator `comp` and projection `proj`, that has the following properties:
+ - Given `N` as `l - f`, `p = f[(i - 1) / 2]`, and `q = f[i]`, for all `0 < i < N`, the expression `std::invoke(comp, std::invoke(proj, p), std::invoke(proj, q))` evaluates to `false`.
+ - A new element can be added using [`ranges::push_heap`](#), in **O(log(N))** time.
+ - The first element can be removed using [`ranges::pop_heap`](#), in **O(log(N))** time.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+void out(const auto& what, int n = 1)
+{
+    while (n-- > 0)
+        std::cout << what;
+}
+
+void draw_bin_tree(auto first, auto last);
+
+int main()
+{
+    std::vector<int> v {3, 1, 4, 1, 5, 9};
+    std::ranges::make_heap(v);
+
+    // probably mess up the heap
+    v.push_back(2);
+    v.push_back(6);
+
+    out("v after make_heap and push_back: \n");
+    draw_bin_tree(v.begin(), v.end());
+
+    out("the max-heap prefix of v: \n");
+    const auto heap_end = std::ranges::is_heap_until(v);
+    draw_bin_tree(v.begin(), heap_end);
+}
+
+void draw_bin_tree(auto first, auto last)
+{
+    auto bails = [](int n, int w)
+    {
+        auto b = [](int w) { out("┌"), out("─", w), out("┴"), out("─", w), out("┐"); };
+        n /= 2;
+        if (!n)
+            return;
+        for (out(' ', w); n-- > 0; )
+            b(w), out(' ', w + w + 1);
+        out('\n');
+    };
+    auto data = [](int n, int w, auto& first, auto last)
+    {
+        for(out(' ', w); n-- > 0 && first != last; ++first)
+            out(*first), out(' ', w + w + 1);
+        out('\n');
+    };
+    auto tier = [&](int t, int m, auto& first, auto last)
+    {
+        const int n {1 << t};
+        const int w {(1 << (m - t - 1)) - 1};
+        bails(n, w), data(n, w, first, last);
+    };
+    const auto size {std::ranges::distance(first, last)};
+    const int m {static_cast<int>(std::ceil(std::log2(1 + size)))};
+    for (int i {}; i != m; ++i)
+        tier(i, m, first, last);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+v after make_heap and push_back: 
+       9               
+   ┌───┴───┐       
+   5       4       
+ ┌─┴─┐   ┌─┴─┐   
+ 1   1   3   2   
+┌┴┐ ┌┴┐ ┌┴┐ ┌┴┐ 
+6 
+the max-heap prefix of v: 
+   9       
+ ┌─┴─┐   
+ 5   4   
+┌┴┐ ┌┴┐ 
+1 1 3 2
+```
+
+</div>
+</Columns>

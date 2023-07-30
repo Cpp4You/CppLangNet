@@ -1,0 +1,175 @@
+---
+title:         make_heap algorithm
+sidebar_label: make_heap(  )
+description:   make_heap algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, make_heap, find_if, find, search, look, predicate, condition]
+
+cppreference_origin_rel: w/cpp/algorithm/make_heap
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp20 from './_codes/make_heap/until-cpp20.mdx';
+import Signature_SinceCpp20 from './_codes/make_heap/since-cpp20.mdx';
+
+# std::make_heap() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'until-cpp20': <Signature_UntilCpp20 />,
+}} />
+
+Checks whether the elements in range [`first`; `last`) are a [**max heap**](https://en.wikipedia.org/wiki/Binary_heap).
+
+- **(1)** Elements are compared using `operator<`.
+
+- **(2)** Elements are compared using the given binary comparison function `comp`.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to make a heap from.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>RandomIt</code> }>
+    <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> The type defereferenced <code>RandomIt</code> </> }>
+    <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> <br/>
+    <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+At most `3 * std::distance(first, last)` comparisons.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Notes
+
+A max heap is a range of elements [`f`; `l`) that has the following properties:
+
+ - Given `N` as `l - f`, for all `0 < i < N`, `f[(i - 1) / 2]` does not compare less than `f[i]`.
+ - A new element can be added using [`std::push_heap`](#), in **O(log(N))** time.
+ - The first element can be removed using [`std::pop_heap`](#), in **O(log(N))** time.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <string_view>
+#include <vector>
+
+void print(std::string_view text, std::vector<int> const& v = {})
+{
+    std::cout << text << ": ";
+    for (const auto& e : v) std::cout << e << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    print("Max heap");
+
+    std::vector<int> v {3, 2, 4, 1, 5, 9};
+    print("initially, v", v);
+
+    std::make_heap(v.begin(), v.end());
+    print("after make_heap, v", v);
+
+    std::pop_heap(v.begin(), v.end());
+    print("after pop_heap, v", v);
+
+    auto top = v.back();
+    v.pop_back();
+    print("former top element", {top});
+    print("after removing the former top element, v", v);
+
+    print("\nMin heap");
+
+    std::vector<int> v1 {3, 2, 4, 1, 5, 9};
+    print("initially, v1", v1);
+
+    std::make_heap(v1.begin(), v1.end(), std::greater<>{});
+    print("after make_heap, v1", v1);
+
+    std::pop_heap(v1.begin(), v1.end(), std::greater<>{});
+    print("after pop_heap, v1", v1);
+
+    auto top1 = v1.back();
+    v1.pop_back();
+    print("former top element", {top1});
+    print("after removing the former top element, v1", v1);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Max heap:
+initially, v: 3 2 4 1 5 9
+after make_heap, v: 9 5 4 1 2 3
+after pop_heap, v: 5 3 4 1 2 9
+former top element: 9
+after removing the former top element, v: 5 3 4 1 2
+
+Min heap:
+initially, v1: 3 2 4 1 5 9
+after make_heap, v1: 1 2 4 3 5 9
+after pop_heap, v1: 2 3 4 9 5 1
+former top element: 1
+after removing the former top element, v1: 2 3 4 9 5
+```
+
+</div>
+</Columns>
