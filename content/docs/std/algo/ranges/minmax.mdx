@@ -1,0 +1,199 @@
+---
+title:         ranges::minmax algorithm
+sidebar_label: ranges::minmax(  )
+description:   ranges::minmax algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, minmax, min, max, smallest, greatest, largest, biggest]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/minmax
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/minmax/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/minmax/since-cpp20-simplified.mdx';
+
+# std::ranges::minmax() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class T >
+using minmax_result = ranges::min_max_result<T>;
+```
+
+Returns the smallest and the greatest of the given projected values.
+
+ - **(1)** Returns references to the smaller and the greater of `a` and `b`.
+
+ - **(2)** Returns the smallest and the greatest of the values in the initializer list `r`.
+
+ - **(3)** Returns the smallest and the greatest of the values in the range `r`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> ><code>a</code> <br/> <code>b</code> </>}>
+    The values to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    A non-empty range of values to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+- **(1)**
+  - `{ b, a }`, if, according to projected values, `a` is smaller than `b`.
+  - `{ a, b }` otherwise.
+
+- **(2 - 3)**
+  `{ s, l }`, where `s` and `l` are respectively the smallest and largest values in `r`, according to their projected value.  
+  If several values are equivalent to the smallest and largest, returns the leftmost smallest value, and the rightmost largest value.  
+
+  :::danger Undefined Behavior
+  If the range is empty (as determinmaxed by `ranges::distance(r)`), the behavior is undefined.
+  :::
+
+### Complexity
+
+- **(1)** Exactly one comparison and two applications of the projection.
+- **(2 - 3)** At most ` 3 / 2 * ranges::distance(r)` comparisons and twice as many projections.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>minmax(1) and minmax(2)</summary>
+
+```cpp
+struct minmax_fn
+{
+    template<class T, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                 std::projected<const T*, Proj>> Comp = ranges::less>
+    constexpr ranges::minmax_result<const T&>
+         operator()(const T& a, const T& b, Comp comp = {}, Proj proj = {}) const
+    {
+        if (std::invoke(comp, std::invoke(proj, b), std::invoke(proj, a)))
+            return {b, a};
+
+        return {a, b};
+    }
+
+    template<std::copyable T, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                 std::projected<const T*, Proj>> Comp = ranges::less>
+    constexpr ranges::minmax_result<T>
+        operator()(std::initializer_list<T> r, Comp comp = {}, Proj proj = {}) const
+    {
+        auto result = ranges::minmax_element(r, std::ref(comp), std::ref(proj));
+        return {*result.min, *result.max};
+    }
+
+    template<ranges::input_range R, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                 std::projected<ranges::iterator_t<R>, Proj>> Comp = ranges::less>
+    requires std::indirectly_copyable_storable<ranges::iterator_t<R>,
+                                               ranges::range_value_t<R>*>
+    constexpr ranges::minmax_result<ranges::range_value_t<R>>
+        operator()(R&& r, Comp comp = {}, Proj proj = {}) const
+    {
+        auto result = ranges::minmax_element(r, std::ref(comp), std::ref(proj));
+        return {std::move(*result.min), std::move(*result.max)};
+    }
+};
+
+inline constexpr minmax_fn minmax;
+```
+
+</details>
+
+### Notes
+
+:::danger Undefined Behavior
+For overloads **(1)**, if one of the parameters is a temporary, the reference returned becomes a dangling reference at the end of the full expression that contains the call to minmax:
+
+```cpp
+int n = 1;
+auto p = std::minmax(n, n + 1);
+int m = p.first; // ok
+int x = p.second; // undefined behavior
+
+// Note that structured bindings have the same issue
+auto [mm, xx] = std::minmax(n, n + 1);
+xx; // undefined behavior
+```
+:::
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <random>
+
+int main()
+{
+    namespace ranges = std::ranges;
+
+    constexpr std::array v {3, 1, 4, 1, 5, 9, 2, 6, 5};
+
+    std::random_device rd;
+    std::mt19937_64 generator(rd());
+    std::uniform_int_distribution<> distribution(0, ranges::distance(v)); // [0..9]
+
+    // auto bounds = ranges::minmax(distribution(generator), distribution(generator));
+    // UB: dangling references: bounds.min and bounds.max have the type `const int&`.
+
+    const int x1 = distribution(generator);
+    const int x2 = distribution(generator);
+    auto bounds = ranges::minmax(x1, x2); // OK: got references to lvalues x1 and x2
+
+    std::cout << "v[" << bounds.min << ":" << bounds.max << "]: ";
+    for (int i = bounds.min; i < bounds.max; ++i)
+        std::cout << v[i] << ' ';
+    std::cout << '\n';
+
+    auto [min, max] = ranges::minmax(v);
+    std::cout << "smallest: " << min << ", " << "largest: " << max << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+v[3:9]: 1 5 9 2 6 5 
+smallest: 1, largest: 9 
+```
+
+</div>
+</Columns>

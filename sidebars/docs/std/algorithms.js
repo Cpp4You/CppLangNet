@@ -369,6 +369,10 @@ module.exports = {
           items: [
             docsMethod("std/algo/ranges/min", "since-cpp20"),
             docsMethod("std/algo/ranges/max", "since-cpp20"),
+            docsMethod("std/algo/ranges/minmax", "since-cpp20"),
+            docsMethod("std/algo/ranges/max_element", "since-cpp20"),
+            docsMethod("std/algo/ranges/min_element", "since-cpp20"),
+            docsMethod("std/algo/ranges/clamp", "since-cpp20"),
           ]
         },
         {
@@ -377,6 +381,10 @@ module.exports = {
           items: [
             docsMethod("std/algo/ordinary/min"),
             docsMethod("std/algo/ordinary/max"),
+            docsMethod("std/algo/ordinary/minmax"),
+            docsMethod("std/algo/ordinary/max_element"),
+            docsMethod("std/algo/ordinary/min_element"),
+            docsMethod("std/algo/ordinary/clamp"),
           ]
         }
       ]

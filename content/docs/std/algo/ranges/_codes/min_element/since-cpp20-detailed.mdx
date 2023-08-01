@@ -1,0 +1,19 @@
+```cpp
+// (1)
+template<
+  std::forward_iterator I,
+  std::sentinel_for<I> S,
+  class Proj = std::identity,
+  std::indirect_strict_weak_order<std::projected<I, Proj>> Comp = ranges::less
+>
+constexpr I min_element( I first, S last, Comp comp = {}, Proj proj = {} );
+
+// (2)
+template<
+  ranges::forward_range R,
+  class Proj = std::identity,
+  std::indirect_strict_weak_order<std::projected<ranges::iterator_t<R>, Proj>> Comp = ranges::less
+>
+constexpr ranges::borrowed_iterator_t<R>
+    min_element( R&& r, Comp comp = {}, Proj proj = {} );
+```
