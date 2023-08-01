@@ -1,0 +1,239 @@
+---
+title:         ranges::push_heap algorithm
+sidebar_label: ranges::push_heap(  )
+description:   ranges::push_heap algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, heap, push_heap]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/push_heap
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+
+<!-- Terms -->
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/push_heap/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/push_heap/since-cpp20-simplified.mdx';
+
+# std::ranges::push_heap() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Inserts the element at the position `last - 1` into the max heap defined by the range [`first`; `last - 1`).
+
+- **(1)** Elements are compared using the given binary comparison function `comp` and projection object `proj`.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements defining the heap to push to.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+The range of elements defining the heap to push to.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    The projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An iterator equal to `last`.
+
+### Complexity
+
+Given `N` as `ranges::distance(first, last)`:
+
+At most **log(N)** comparisons and **2 \* log(N)** projections.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>push_heap(1) and push_heap(2)</summary>
+
+```cpp
+struct push_heap_fn
+{
+    template<std::random_access_iterator I, std::sentinel_for<I> S,
+             class Comp = ranges::less, class Proj = std::identity>
+    requires std::sortable<I, Comp, Proj>
+    constexpr I
+        operator()(I first, S last, Comp comp = {}, Proj proj = {}) const
+    {
+        const auto n {ranges::distance(first, last)};
+        const auto length {n};
+        if (n > 1)
+        {
+            I last {first + n};
+            n = (n - 2) / 2;
+            I i {first + n};
+            if (std::invoke(comp, std::invoke(proj, *i), std::invoke(proj, *--last)))
+            {
+                std::iter_value_t<I> v {ranges::iter_move(last)};
+                do
+                {
+                    *last = ranges::iter_move(i);
+                    last = i;
+                    if (n == 0)
+                        break;
+                    n = (n - 1) / 2;
+                    i = first + n;
+                } while (std::invoke(comp, std::invoke(proj, *i), std::invoke(proj, v)));
+                *last = std::move(v);
+            }
+        }
+        return first + length;
+    }
+
+    template<ranges::random_access_range R, class Comp = ranges::less,
+             class Proj = std::identity>
+    requires std::sortable<ranges::iterator_t<R>, Comp, Proj>
+    constexpr ranges::borrowed_iterator_t<R>
+        operator()(R&& r, Comp comp = {}, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::move(comp), std::move(proj));
+    }
+};
+
+inline constexpr push_heap_fn push_heap {};
+```
+
+</details>
+
+### Notes
+
+A max heap is a range of elements [`f`; `l`), arranged with respect to comparator `comp` and projection `proj`, that has the following properties:
+ - Given `N` as `l - f`, `p = f[(i - 1) / 2]`, and `q = f[i]`, for all `0 < i < N`, the expression `std::invoke(comp, std::invoke(proj, p), std::invoke(proj, q))` evaluates to `false`.
+ - A new element can be added using [`ranges::push_heap`](#), in **O(log(N))** time.
+ - The first element can be removed using [`ranges::pop_heap`](#), in **O(log(N))** time.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <vector>
+
+void out(const auto& what, int n = 1)
+{
+    while (n-- > 0)
+        std::cout << what;
+}
+
+void print(auto rem, auto const& v)
+{
+    out(rem);
+    for (auto e : v)
+        out(e), out(' ');
+    out('\n');
+}
+
+void draw_heap(auto const& v);
+
+int main()
+{
+    std::vector<int> v {1, 6, 1, 8, 0, 3,};
+    print("source vector v: ", v);
+
+    std::ranges::make_heap(v);
+    print("after make_heap: ", v);
+    draw_heap(v);
+
+    v.push_back(9);
+
+    print("before push_heap: ", v);
+    draw_heap(v);
+
+    std::ranges::push_heap(v);
+    print("after push_heap: ", v);
+    draw_heap(v);
+}
+
+void draw_heap(auto const& v)
+{
+    auto bails = [](int n, int w)
+    {
+        auto b = [](int w) { out("┌"), out("─", w), out("┴"), out("─", w), out("┐"); };
+        if (!(n /= 2))
+            return;
+        for (out(' ', w); n-- > 0; )
+            b(w), out(' ', w + w + 1);
+        out('\n');
+    };
+    auto data = [](int n, int w, auto& first, auto last)
+    {
+        for (out(' ', w); n-- > 0 && first != last; ++first)
+            out(*first), out(' ', w + w + 1);
+        out('\n');
+    };
+    auto tier = [&](int t, int m, auto& first, auto last)
+    {
+        const int n {1 << t};
+        const int w {(1 << (m - t - 1)) - 1};
+        bails(n, w), data(n, w, first, last);
+    };
+    const int m {static_cast<int>(std::ceil(std::log2(1 + v.size())))};
+    auto first {v.cbegin()};
+    for (int i {}; i != m; ++i)
+        tier(i, m, first, v.cend());
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+source vector v: 1 6 1 8 0 3
+after make_heap: 8 6 3 1 0 1
+   8
+ ┌─┴─┐
+ 6   3
+┌┴┐ ┌┴┐
+1 0 1
+before push_heap: 8 6 3 1 0 1 9
+   8
+ ┌─┴─┐
+ 6   3
+┌┴┐ ┌┴┐
+1 0 1 9
+after push_heap: 9 6 8 1 0 1 3
+   9
+ ┌─┴─┐
+ 6   8
+┌┴┐ ┌┴┐
+1 0 1 3
+```
+
+</div>
+</Columns>

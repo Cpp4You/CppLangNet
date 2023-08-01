@@ -340,7 +340,7 @@ module.exports = {
           items: [
             docsMethod("std/algo/ranges/is_heap", "since-cpp20"),
             docsMethod("std/algo/ranges/is_heap_until", "since-cpp20"),
-            docsMethod("std/algo/ranges/make_haep", "since-cpp20"),
+            docsMethod("std/algo/ranges/make_heap", "since-cpp20"),
             docsMethod("std/algo/ranges/push_heap", "since-cpp20"),
             docsMethod("std/algo/ranges/pop_heap", "since-cpp20"),
             docsMethod("std/algo/ranges/sort_heap", "since-cpp20"),
@@ -354,6 +354,7 @@ module.exports = {
             docsMethod("std/algo/ordinary/is_heap_until", "since-cpp11"),
             docsMethod("std/algo/ordinary/make_heap"),
             docsMethod("std/algo/ordinary/push_heap"),
+            docsMethod("std/algo/ordinary/pop_heap"),
             docsMethod("std/algo/ordinary/sort_heap"),
           ]
         }
