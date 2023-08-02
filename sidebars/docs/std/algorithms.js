@@ -398,16 +398,16 @@ module.exports = {
           type: "category",
           label: "Rangified",
           items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
             docsMethod("std/algo/ranges/equal", "since-cpp20"),
+            docsMethod("std/algo/ranges/lexicographical_compare", "since-cpp20"),
           ]
         },
         {
           type: "category",
           label: "Ordinary",
           items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
             docsMethod("std/algo/ordinary/equal"),
+            docsMethod("std/algo/ordinary/lexicographical_compare"),
           ]
         }
       ]

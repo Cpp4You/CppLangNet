@@ -1,0 +1,28 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I1,
+  std::sentinel_for<I1> S1,
+  std::input_iterator I2,
+  std::sentinel_for<I2> S2,
+  class Proj1 = std::identity,
+  class Proj2 = std::identity,
+  std::indirect_strict_weak_order<std::projected<I1, Proj1>, std::projected<I2, Proj2>> Comp = ranges::less
+>
+constexpr bool
+    lexicographical_compare( I1 first1, S1 last1, I2 first2, S2 last2,
+                             Comp comp = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );
+
+// (2)
+template<
+  ranges::input_range R1,
+  ranges::input_range R2,
+  class Proj1 = std::identity,
+  class Proj2 = std::identity,
+  std::indirect_strict_weak_order<
+                                  std::projected<ranges::iterator_t<R1>, Proj1>,
+                                  std::projected<ranges::iterator_t<R2>, Proj2> Comp = ranges::less
+>
+constexpr bool lexicographical_compare( R1&& r1, R2&& r2, Comp comp = {},
+                                        Proj1 proj1 = {}, Proj2 proj2 = {} );
+```
