@@ -399,6 +399,7 @@ module.exports = {
           label: "Rangified",
           items: [
             docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ranges/equal", "since-cpp20"),
           ]
         },
         {
@@ -406,6 +407,7 @@ module.exports = {
           label: "Ordinary",
           items: [
             docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ordinary/equal"),
           ]
         }
       ]
