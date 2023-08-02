@@ -408,6 +408,7 @@ module.exports = {
           items: [
             docsMethod("std/algo/ordinary/equal"),
             docsMethod("std/algo/ordinary/lexicographical_compare"),
+            docsMethod("std/algo/ordinary/lexicographical_compare_three_way"),
           ]
         }
       ]

@@ -1,0 +1,12 @@
+```cpp
+// (1)
+template< class InputIt1, class InputIt2, class Cmp >
+constexpr auto lexicographical_compare_three_way( InputIt1 first1, InputIt1 last1,
+                                                  InputIt2 first2, InputIt2 last2,
+                                                  Cmp comp ) -> decltype(comp(*first1, *first2));
+
+// (2)
+template< class InputIt1, class InputIt2 >
+constexpr auto lexicographical_compare_three_way( InputIt1 first1, InputIt1 last1,
+                                                  InputIt2 first2, InputIt2 last2 );
+```
