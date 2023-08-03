@@ -1,0 +1,152 @@
+---
+title:         iota algorithm
+sidebar_label: iota(  )
+description:   iota algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, iota]
+
+cppreference_origin_rel: w/cpp/algorithm/iota
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11 from './_codes/iota/since-cpp11.mdx';
+import Signature_SinceCpp20 from './_codes/iota/since-cpp20.mdx';
+
+# std::iota() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp11': <Signature_SinceCpp11 />
+}} />
+
+Fills the range [`first`; `last`) with sequentially increasing values, starting with value and repetitively evaluating `++value`.
+
+Equivalent operation:
+```cpp
+*(first)     = value;
+*(first + 1) = ++value;
+*(first + 2) = ++value;
+*(first + 3) = ++value;
+...
+```
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>second</code> </> }>
+    The range of elements to fill with sequentially increasing values starting from `value`.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    Initial value to store.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>++value</code> }>
+    Must be well-formed.
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Exactly `last - first` increments and assignments.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>iota(1)</summary>
+
+```cpp
+template<class ForwardIt, class T>
+constexpr // since C++20
+void iota(ForwardIt first, ForwardIt last, T value)
+{
+    while (first != last)
+    {
+        *first++ = value;
+        ++value;
+    }
+}
+```
+
+</details>
+
+### Notes
+
+The function is named after the integer function `⍳` from the programming language [**APL**](https://en.wikipedia.org/wiki/APL_(programming_language)). It was one of the STL components that were not included in C++98, but made it into the standard library in C++11.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <list>
+#include <numeric>
+#include <random>
+#include <vector>
+
+class BigData // inefficient to copy
+{
+    int data[1024]; /* some raw data */
+public:
+    explicit BigData(int i = 0) { data[0] = i; /* ... */ }
+    operator int() const { return data[0]; }
+    BigData& operator=(int i) { data[0] = i; return *this; }
+    /* ... */
+};
+
+int main()
+{
+    std::list<BigData> l(10);
+    std::iota(l.begin(), l.end(), -4);
+
+    std::vector<std::list<BigData>::iterator> v(l.size());
+    std::iota(v.begin(), v.end(), l.begin());
+    // Vector of iterators (to original data) is used to avoid expensive copying,
+    // and because std::shuffle (below) cannot be applied to a std::list directly.
+
+    std::shuffle(v.begin(), v.end(), std::mt19937 {std::random_device{}()});
+
+    std::cout << "Original contents of the list l:\t";
+    for (auto const& n : l) std::cout << std::setw(2) << n << ' ';
+    std::cout << '\n';
+
+    std::cout << "Contents of l, viewed via shuffled v:\t";
+    for (auto const i : v) std::cout << std::setw(2) << *i << ' ';
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Original contents of the list l:        -4 -3 -2 -1  0  1  2  3  4  5
+Contents of l, viewed via shuffled v:   -1  5 -4  0  2  1  4 -2  3 -3
+```
+
+</div>
+</Columns>
