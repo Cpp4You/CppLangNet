@@ -108,3 +108,14 @@ html[data-theme="dark"] {
 pre.prism-code+div button{
 	opacity: 0.6 !important;
 }
+
+code-d {
+	color: #339900;
+	background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    display: inline-block;
+}
+
+.col-d {
+	color: #339900;
+}

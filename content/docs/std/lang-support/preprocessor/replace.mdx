@@ -1,0 +1,48 @@
+---
+title:          Replacing text macros
+tags:           [Language, Preprocessor]
+hide-title:     true
+---
+
+import {Since, Until, Version, Deprecated, Removed}     from "@site-comps/Versions";
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import Columns                                          from "@site-comps/Columns";
+
+# Replacing text macros
+The preprocessor supports text macro replacement. Function-like text macro replacement is also supported.
+
+## Syntax
+
+<SymbolTable noTraits>
+  <Symbol name={<><code>1</code> <code-d>#define</code-d></>} desc={<><i>identifier replacement-list</i><small class="col-d"> (optional)</small></>}/>
+  <Symbol name={<><code>2</code> <code-d>#define</code-d></>} desc={<><i>identifier (parameters) replacement-list</i><small class="col-d"> (optional)</small></>}/>
+  <Symbol name={<><code>3</code> <code-d>#define</code-d></>} desc={<><i>identifier (parameters, ...) replacement-list</i><small class="col-d"> (optional)</small><Since v='cpp11'></Since></>}/>
+  <Symbol name={<><code>4</code> <code-d>#define</code-d></>} desc={<><i>identifier (...) replacement-list</i><small class="col-d"> (optional)</small><Since v='cpp11'></Since></>}/>
+  <Symbol name={<><code>5</code> <code-d>#undef</code-d></>}  desc={<i>identifier</i>}/>
+</SymbolTable>
+
+## Explanation
+### <span class="col-d">#define</span> directives
+The #define directives define the identifier as macro, that is instruct the compiler to replace most successive occurrences of identifier with replacement-list, which will be additionally processed. Exceptions arise from the rules of scanning and replacement. If the identifier is already defined as any type of macro, the program is ill-formed unless the definitions are identical.
+
+### Object-like macros
+
+### Function-like macros
+
+### Scanning and Replacement
+
+### Reserved macro names
+
+### <span class="col-d">#</span> and <span class="col-d">##</span> operators
+
+### <span class="col-d">#undef</span> directive
+
+## Predefined macros
+
+The following macro names are predefined in every translation unit:
+
+### Language feature-testing macros
+
+## Example
+
+## Defect reports
