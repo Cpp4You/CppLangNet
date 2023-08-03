@@ -421,14 +421,18 @@ module.exports = {
           type: "category",
           label: "Rangified",
           items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ranges/is_permutation", "since-cpp20"),
+            docsMethod("std/algo/ranges/next_permutation", "since-cpp20"),
+            docsMethod("std/algo/ranges/prev_permutation", "since-cpp20"),
           ]
         },
         {
           type: "category",
           label: "Ordinary",
           items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ordinary/is_permutation", "since-cpp11"),
+            docsMethod("std/algo/ordinary/next_permutation"),
+            docsMethod("std/algo/ordinary/prev_permutation"),
           ]
         }
       ]

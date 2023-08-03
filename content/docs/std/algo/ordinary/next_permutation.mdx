@@ -1,0 +1,145 @@
+---
+title:         next_permutation algorithm
+sidebar_label: next_permutation(  )
+description:   next_permutation algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, next_permutation, permutation]
+
+cppreference_origin_rel: w/cpp/algorithm/next_permutation
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import Tooltip                 from '@site-comps/Tooltip';
+import SwitchView              from "@site-comps/SwitchView";
+import { Since, Until }        from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20 from './_codes/next_permutation/since-cpp20.mdx';
+import Signature_UntilCpp20 from './_codes/next_permutation/until-cpp20.mdx';
+
+# std::next_permutation() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'until-cpp20': <Signature_UntilCpp20 />,
+}} />
+
+Permutes the range [`first`; `last`) into the next permutation,
+where the set of all permutations is ordered lexicographically with respect to `operator<` or `comp`.
+
+Returns true if such a "next permutation" exists;
+otherwise transforms the range into the lexicographically first permutation (as if by `std::sort(first, last, comp)`) and returns `false`.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to permute.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [`Compare`](/docs/named_req/Compare))
+which returns true if the first argument is less than the second.
+
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `BidirIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/ValueSwappable">ValueSwappable</a> <br />
+    <a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a> <br />
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+`true` if the new permutation is lexicographically greater than the old.  
+`false` if the last permutation was reached and the range was reset to the first permutation.
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`
+
+At most `N / 2` swaps. Averaged over the entire sequence of permutations, typical implementations use about `3` comparisons and `1.5` swaps per call.
+
+### Exceptions
+
+Any exceptions thrown from iterator operations or the element swap.
+
+### Possible implementation
+
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp) may enable vectorization when the iterator type satisfies
+[`LegacyContiguousIterator`](/docs/named_req/LegacyContiguousIterator) and swapping its value type calls neither non-trivial special member function nor [ADL](#)-found swap.
+
+<details>
+<summary>next_permutation (1)</summary>
+
+```cpp
+template<class BidirIt>
+bool next_permutation(BidirIt first, BidirIt last)
+{
+    auto r_first = std::make_reverse_iterator(last);
+    auto r_last = std::make_reverse_iterator(first);
+    auto left = std::is_sorted_until(r_first, r_last);
+
+    if (left != r_last)
+    {
+        auto right = std::upper_bound(r_first, left, *left);
+        std::iter_swap(left, right);
+    }
+
+    std::reverse(left.base(), last);
+    return left != r_last;
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string>
+
+int main()
+{
+    std::string s = "aba";
+
+    do std::cout << s << '\n';
+    while (std::next_permutation(s.begin(), s.end()));
+
+    std::cout << s << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+
+aba
+baa
+aab
+```
+
+</div>
+</Columns>

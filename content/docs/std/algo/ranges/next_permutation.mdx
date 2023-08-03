@@ -1,0 +1,215 @@
+---
+title:         ranges::next_permutation algorithm
+sidebar_label: ranges::next_permutation(  )
+description:   ranges::next_permutation algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, next_permutation, permutation]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/next_permutation
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/next_permutation/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/next_permutation/since-cpp20-simplified.mdx';
+
+# std::ranges::next_permutation() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Transforms the range [`first`; `last`) into the next permutation, where the set of all permutations is ordered lexicographically with respect to binary comparison function object comp and projection function object `proj`.
+  Returns:
+    - `{ last, true }` if such a "next permutation" exists
+    - `{ last, false }` and transforms the range into the lexicographically first permutation as if by
+    ```cpp
+    ranges::sort(first, last, comp, proj);
+    ```
+
+- **(2)** Same as **(1)**, but uses `r1` as the first source range and `r2` as the second source range, as if using `ranges::begin(r1)` as `first1`, `ranges::end(r1)` as `last1`, `ranges::begin(r2)` as `first2`, and `ranges::end(r2)` as `last2`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The range of elements to permute.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to permute.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison function object which returns <cod>true</cod> if the first argument is less than the second.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    The projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+- **(1)** `ranges::next_permutation_result<I>{ last, true }` if the new permutation is lexicographically *greater* than the old one. `ranges::next_permutation_result<I>{ last, false }` if the last permutation was reached and the range was reset to the first permutation.
+
+- **(2)** same as **(1)** except that the return type is `ranges::next_permutation_result<ranges::borrowed_iterator_t<R>>`.
+
+### Complexity
+
+Given `N` as `ranges::distance(first, last)`:
+
+- **(1)** At most `N / 2` swaps.
+- **(2)** At most `ranges::distance(r)` swaps.
+
+Averaged over the entire sequence of permutations, typical implementations use about `3` comparisons and `1.5` swaps per call.
+
+### Exceptions
+
+Any exceptions thrown from iterator operations or the element swap.
+
+### Possible implementation
+
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp) may enable vectorization when the iterator type satisfies
+[`contiguous_iterator`](#) and swapping its value type calls neither non-trivial special member function nor [ADL](#)-found swap.
+
+<details>
+<summary>next_permutation(1) and next_permutation(2)</summary>
+
+```cpp
+struct next_permutation_fn
+{
+    template<std::bidirectional_iterator I, std::sentinel_for<I> S,
+             class Comp = ranges::less, class Proj = std::identity>
+    requires std::sortable<I, Comp, Proj>
+    constexpr ranges::next_permutation_result<I>
+        operator()(I first, S last, Comp comp = {}, Proj proj = {}) const
+    {
+        // check that the sequence has at least two elements
+        if (first == last)
+            return {std::move(first), false};
+        I i_last {ranges::next(first, last)};
+        I i {i_last};
+        if (first == --i)
+            return {std::move(i_last), false};
+        // main "permutating" loop
+        for (;;)
+        {
+            I i1 {i};
+            if (std::invoke(comp, std::invoke(proj, *--i), std::invoke(proj, *i1)))
+            {
+                I j {i_last};
+                while (!std::invoke(comp, std::invoke(proj, *i), std::invoke(proj, *--j)))
+                { }
+                std::iter_swap(i, j);
+                std::reverse(i1, i_last);
+                return {std::move(i_last), true};
+            }
+            // permutation "space" is exhausted
+            if (i == first)
+            {
+                std::reverse(first, i_last);
+                return {std::move(i_last), false};
+            }
+        }
+    }
+
+    template<ranges::bidirectional_range R, class Comp = ranges::less,
+             class Proj = std::identity>
+    requires std::sortable<ranges::iterator_t<R>, Comp, Proj>
+    constexpr ranges::next_permutation_result<ranges::borrowed_iterator_t<R>>
+        operator()(R&& r, Comp comp = {}, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r),
+                       std::move(comp), std::move(proj));
+    }
+};
+
+inline constexpr next_permutation_fn next_permutation {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <compare>
+#include <functional>
+#include <iostream>
+#include <string>
+
+struct S
+{
+    char c;
+    int i;
+    auto operator<=>(const S&) const = default;
+    friend std::ostream& operator<<(std::ostream& os, const S& s)
+    {
+        return os << "{'" << s.c << "', " << s.i << "}";
+    }
+};
+
+auto print = [](auto const& v, char term = ' ')
+{
+    std::cout << "{ ";
+    for (const auto& e : v) { std::cout << e << ' '; }
+    std::cout << '}' << term;
+};
+
+int main()
+{
+    std::cout << "Generate all permutations (iterators case):\n";
+    std::string s {"abc"};
+    do { print(s); } while (std::ranges::next_permutation(s.begin(), s.end()).found);
+
+    std::cout << "\n" "Generate all permutations (range case):\n";
+    std::array a {'a', 'b', 'c'};
+    do { print(a); } while (std::ranges::next_permutation(a).found);
+
+    std::cout << "\n" "Generate all permutations using comparator:\n";
+    using namespace std::literals;
+    std::array z { "█"s, "▄"s, "▁"s };
+    do { print(z); } while (std::ranges::next_permutation(z, std::greater()).found);
+
+    std::cout << "\n" "Generate all permutations using projection:\n";
+    std::array<S, 3> r { S{'A',3}, S{'B',2}, S{'C',1} };
+    do { print(r, '\n'); } while (std::ranges::next_permutation(r, {}, &S::c).found);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+Generate all permutations (iterators case):
+{ a b c } { a c b } { b a c } { b c a } { c a b } { c b a }
+Generate all permutations (range case):
+{ a b c } { a c b } { b a c } { b c a } { c a b } { c b a }
+Generate all permutations using comparator:
+{ █ ▄ ▁ } { █ ▁ ▄ } { ▄ █ ▁ } { ▄ ▁ █ } { ▁ █ ▄ } { ▁ ▄ █ }
+Generate all permutations using projection:
+{ {'A', 3} {'B', 2} {'C', 1} }
+{ {'A', 3} {'C', 1} {'B', 2} }
+{ {'B', 2} {'A', 3} {'C', 1} }
+{ {'B', 2} {'C', 1} {'A', 3} }
+{ {'C', 1} {'A', 3} {'B', 2} }
+{ {'C', 1} {'B', 2} {'A', 3} }
+```
+
+</div>
+</Columns>

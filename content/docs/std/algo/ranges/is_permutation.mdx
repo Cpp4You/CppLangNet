@@ -1,0 +1,214 @@
+---
+title:         ranges::is_permutation algorithm
+sidebar_label: ranges::is_permutation(  )
+description:   ranges::is_permutation algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, is_permutation, permutation]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/is_permutation
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+
+<!-- Terms -->
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/is_permutation/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/is_permutation/since-cpp20-simplified.mdx';
+
+# std::ranges::is_permutation() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Returns `true` if there exists a permutation of the elements in range [`first1`; `last1`)
+  that makes the range equal to [`first2`; `last2`) (after application of corresponding projections `Proj1`, `Proj2`,
+  and using the binary predicate `Pred` as a comparator).
+  Otherwise, returns `false`.
+
+- **(2)** Same as **(1)**, but uses `r1` as the first source range and `r2` as the second source range, as if using `ranges::begin(r1)` as `first1`, `ranges::end(r1)` as `last1`, `ranges::begin(r2)` as `first2`, and `ranges::end(r2)` as `last2`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The first range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The first range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The second range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The second range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    The predicate to apply to the projected elemenets.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    The projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+`true` if the range [`first1`; `last1`) is a permutation of the range [`first2`; `last2`).
+
+### Complexity
+
+Given `N` is `ranges::distance(first1, last1)`.
+
+At most **O(N2)** applications of the predicate and each projection, or exactly `N` if the sequences are already equal,
+
+However if `ranges::distance(first1, last1) != ranges::distance(first2, last2)`, no applications of the predicate and projections are made.
+
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>is_permutation(1) and is_permutation(2)</summary>
+
+```cpp
+struct is_permutation_fn
+{
+    template<std::forward_iterator I1, std::sentinel_for<I1> S1,
+             std::forward_iterator I2, std::sentinel_for<I2> S2,
+             class Proj1 = std::identity, class Proj2 = std::identity,
+             std::indirect_equivalence_relation<std::projected<I1, Proj1>,
+                                                std::projected<I2, Proj2>>
+                                                    Pred = ranges::equal_to>
+    constexpr bool operator()(I1 first1, S1 last1, I2 first2, S2 last2,
+                              Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        // skip common prefix
+        auto ret = std::ranges::mismatch(first1, last1, first2, last2,
+                                         std::ref(pred), std::ref(proj1), std::ref(proj2));
+        first1 = ret.in1, first2 = ret.in2;
+
+        // iterate over the rest, counting how many times each element
+        // from [first1, last1) appears in [first2, last2)
+        for (auto i {first1}; i != last1; ++i)
+        {
+            const auto i_proj {std::invoke(proj1, *i)};
+            auto i_cmp = [&]<typename T>(T&& t)
+            {
+                return std::invoke(pred, i_proj, std::forward<T>(t));
+            };
+
+            if (i != ranges::find_if(first1, i, i_cmp, proj1))
+                continue; // this *i has been checked
+
+            if (const auto m {ranges::count_if(first2, last2, i_cmp, proj2)};
+                m == 0 or m != ranges::count_if(i, last1, i_cmp, proj1))
+                return false;
+        }
+        return true;
+    }
+
+    template<ranges::forward_range R1, ranges::forward_range R2,
+             class Proj1 = std::identity, class Proj2 = std::identity,
+             std::indirect_equivalence_relation<std::projected<ranges::iterator_t<R1>, Proj1>,
+                                                std::projected<ranges::iterator_t<R2>, Proj2>>
+                                                    Pred = ranges::equal_to>
+    constexpr bool operator()(R1&& r1, R2&& r2, Pred pred = {},
+                              Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+    return (*this)(ranges::begin(r1), ranges::end(r1),
+                   ranges::begin(r2), ranges::end(r2),
+                   std::move(pred), std::move(proj1), std::move(proj2));
+    }
+};
+
+inline constexpr is_permutation_fn is_permutation {};
+```
+
+</details>
+
+### Notes
+
+The permutation relation is an equivalence relation.
+
+The [`ranges::is_permutation`](#) can be used in testing, namely to check the correctness of rearranging algorithms (e.g. sorting, shuffling, partitioning).
+
+If `x` is an original range and `y` is a permuted range then `ranges::is_permutation(x, y) == true` means that `y` consist of "the same" elements, maybe staying at other positions.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <iostream>
+#include <ranges>
+
+auto& operator<<(auto& os, std::ranges::forward_range auto const& v)
+{
+    os << "{ ";
+    for (auto const& e : v) os << e << ' ';
+    return os << "}";
+}
+
+int main()
+{
+    static constexpr auto r1 = {1, 2, 3, 4, 5};
+    static constexpr auto r2 = {3, 5, 4, 1, 2};
+    static constexpr auto r3 = {3, 5, 4, 1, 1};
+
+    static_assert(
+        std::ranges::is_permutation(r1, r1) &&
+        std::ranges::is_permutation(r1, r2) &&
+        std::ranges::is_permutation(r2, r1) &&
+        std::ranges::is_permutation(r1.begin(), r1.end(), r2.begin(), r2.end()));
+
+    std::cout
+        << std::boolalpha
+        << "is_permutation( " << r1 << ", " << r2 << " ): "
+        << std::ranges::is_permutation(r1, r2) << '\n'
+        << "is_permutation( " << r1 << ", " << r3 << " ): "
+        << std::ranges::is_permutation(r1, r3) << '\n'
+
+        << "is_permutation with custom predicate and projections: "
+        << std::ranges::is_permutation(
+            std::array {-14, -11, -13, -15, -12},  // 1st range
+            std::array {'F', 'E', 'C', 'B', 'D'},  // 2nd range
+            [](int x, int y) { return abs(x) == abs(y); }, // predicate
+            [](int x) { return x + 10; },          // projection for 1st range
+            [](char y) { return int(y - 'A'); })   // projection for 2nd range
+        << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+is_permutation( { 1 2 3 4 5 }, { 3 5 4 1 2 } ): true
+is_permutation( { 1 2 3 4 5 }, { 3 5 4 1 1 } ): false
+is_permutation with custom predicate and projections: true
+```
+
+</div>
+</Columns>
