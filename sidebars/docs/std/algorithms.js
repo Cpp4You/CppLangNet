@@ -453,6 +453,7 @@ module.exports = {
           label: "Ordinary",
           items: [
             docsMethod("std/algo/ordinary/iota", "since-cpp11"),
+            docsMethod("std/algo/ordinary/accumulate"),
           ]
         }
       ]
