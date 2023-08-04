@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class InputIt, class OutputIt >
+OutputIt partial_sum( InputIt first, InputIt last, OutputIt d_first );
+
+// (2)
+template< class InputIt, class OutputIt, class BinaryOperation >
+OutputIt partial_sum( InputIt first, InputIt last, OutputIt d_first, BinaryOperation op );
+```
