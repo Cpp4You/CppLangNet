@@ -454,6 +454,7 @@ module.exports = {
           items: [
             docsMethod("std/algo/ordinary/iota", "since-cpp11"),
             docsMethod("std/algo/ordinary/accumulate"),
+            docsMethod("std/algo/ordinary/inner_product"),
           ]
         }
       ]
