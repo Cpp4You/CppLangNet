@@ -72,13 +72,13 @@ Equivalent operation for overload **(2)**, if [`first`; `last`) is not empty:
 ```
 
 :::danger Undefined Behaviour
-If `op` invalidates any iterator (including any of the end iterators) or modify any elements of the ranges involved, the <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+If `op` invalidates any iterator (including any of the end iterators) or modify any elements of the ranges involved, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
 :::
 
 :::danger Undefined Behaviour
 For overloads <b>(1 - 2)</b>, if <code>std::iterator_traits&lt;InputIt&gt;::value_type</code> is not
 <Until v='cpp11'><a href="/docs/named_req/CopyAssignable">CopyAssignable</a></Until><Since v='cpp11'><a href="/docs/named_req/CopyAssignable">MoveAssignable</a></Since>
-, the <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
 :::
 
 ### Parameters

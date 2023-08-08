@@ -30,8 +30,7 @@ import Signature_UntilCpp20 from './_codes/partial_sum/until-cpp20.mdx';
   'until-cpp20': <Signatue_UntilCpp20 />,
 }} />
 
-If [`first`; `last`) is not empty, computes the partial sums of the elements in its subranges and writes the sums to the range beginning at `d_first`,
-<Since v='cpp11'>both applying std::move to their operands on the left hand side</Since>.
+If [`first`; `last`) is not empty, computes the partial sums of the elements in its subranges and writes the sums to the range beginning at `d_first`, <Since v='cpp11'>both applying <a href="#"><code>std::move</code></a> to their operands on the left hand side</Since>.
 
   - **(1)** Uses `operator+` to sum up the elements. Equivalent to:
   ```cpp
@@ -66,7 +65,7 @@ If [`first`; `last`) is not empty, computes the partial sums of the elements in 
   ```
 
 :::danger Undefined Behaviour
-If `op` invalidates any iterators (including the end iterators) or modifies any elements of the range involved, the <Tooltip term={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+If `op` invalidates any iterators (including the end iterators) or modifies any elements of the range involved, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
 :::
 
 ### Parameters
