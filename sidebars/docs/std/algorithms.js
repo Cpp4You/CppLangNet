@@ -475,14 +475,22 @@ module.exports = {
           type: "category",
           label: "Rangified",
           items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ranges/uninitialized_copy", "since-cpp20"),
+            docsMethod("std/algo/ranges/uninitialized_copy_n", "since-cpp20"),
+            docsMethod("std/algo/ranges/uninitialized_fill", "since-cpp20"),
+            docsMethod("std/algo/ranges/uninitialized_fill_n", "since-cpp20"),
+            docsMethod("std/algo/ranges/uninitialized_move", "since-cpp20"),
           ]
         },
         {
           type: "category",
           label: "Ordinary",
           items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
+            docsMethod("std/algo/ordinary/uninitialized_copy"),
+            docsMethod("std/algo/ordinary/uninitialized_copy_n"),
+            docsMethod("std/algo/ordinary/uninitialized_fill"),
+            docsMethod("std/algo/ordinary/uninitialized_fill_n"),
+            docsMethod("std/algo/ordinary/uninitialized_move", "since-cpp17"),
           ]
         }
       ]

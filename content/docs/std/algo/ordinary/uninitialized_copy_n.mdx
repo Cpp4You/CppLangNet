@@ -1,0 +1,170 @@
+---
+title:         uninitialized_copy_n algorithm
+sidebar_label: uninitialized_copy_n(  )
+description:   uninitialized_copy_n algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, uninitialized_copy_n, copy, uninitialized_copy, uninitialized, clone]
+
+cppreference_origin_rel: w/cpp/algorithm/uninitialized_copy_n
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp17 from './_codes/uninitialized_copy_n/since-cpp17.mdx';
+import Signature_SinceCpp11 from './_codes/uninitialized_copy_n/since-cpp11.mdx';
+
+# std::uninitialized_copy_n() algorithm
+
+<SwitchView content={{
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'since-cpp11': <Signature_SinceCpp11 />,
+}} />
+
+- **(1)** Copies `count` elements from a range beginning at `first` to an uninitialized memory area beginning at `d_first` as if by
+  ```cpp
+  for (; n > 0; ++d_first, (void) ++first, --n)
+    ::new (static_cast<void*>(std::addressof(*d_first)))
+      typename std::iterator_traits<NoThrowForwardIt>::value_type(*first);
+  ```
+  :::caution
+  If an exception is thrown during the initialization, the objects already constructed are destroyed in an unspecified order.
+  :::
+
+  :::danger Undefined Behaviour
+  <Since v='cpp20'>If d_first + [<code>0</code>, <code>n</code>) overlaps with [<code>first</code>; <code>last</code>), the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.</Since>
+  :::
+
+ - **(2)** Same as **(1)**, but executed according to `policy`.
+  :::important Overload Resolution
+  These overloads participate in overload resolution only if
+  <Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+  :::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>first</code> }>
+    The beginning of the range of the elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>copy</code> }>
+    The number of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt</code> <br /> <code>NoThrowForwardIt</code> </> } >
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+No increment, assignment, comparison, or indirection through valid instances of `NoThrowForwardIt` may throw exceptions.
+
+### Return value
+
+Iterator to the element past the last element copied.
+
+### Complexity
+
+Linear in `count`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For none other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>uninitialized_copy_n (1)</summary>
+
+```cpp
+template<class InputIt, class Size, class NoThrowForwardIt>
+NoThrowForwardIt uninitialized_copy_n(InputIt first, Size count, NoThrowForwardIt d_first)
+{
+    using T = typename std::iterator_traits<NoThrowForwardIt>::value_type;
+    NoThrowForwardIt current = d_first;
+    try
+    {
+        for (; count > 0; ++first, (void) ++current, --count)
+            ::new (static_cast<void*>(std::addressof(*current))) T(*first);
+    }
+    catch (...)
+    {
+        for (; d_first != current; ++d_first)
+            d_first->~T();
+        throw;
+    }
+    return current;
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <tuple>
+#include <vector>
+
+int main()
+{
+    std::vector<std::string> v = {"This", "is", "an", "example"};
+
+    std::string* p;
+    std::size_t sz;
+    std::tie(p, sz) = std::get_temporary_buffer<std::string>(v.size());
+    sz = std::min(sz, v.size());
+
+    std::uninitialized_copy_n(v.begin(), sz, p);
+
+    for (std::string* i = p; i != p + sz; ++i)
+    {
+        std::cout << *i << ' ';
+        i->~basic_string<char>();
+    }
+    std::cout << '\n';
+
+    std::return_temporary_buffer(p);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+This is an example
+```
+
+</div>
+</Columns>

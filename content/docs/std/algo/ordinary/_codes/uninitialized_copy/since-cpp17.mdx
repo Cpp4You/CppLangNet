@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class InputIt, class NoThrowForwardIt >
+NoThrowForwardIt uninitialized_copy( InputIt first, InputIt last, NoThrowForwardIt d_first );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class NoThrowForwardIt >
+NoThrowForwardIt uninitialized_copy( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last,
+                                     NoThrowForwardIt d_first );
+```

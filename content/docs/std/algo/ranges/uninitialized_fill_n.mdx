@@ -1,0 +1,148 @@
+---
+title:         ranges::uninitialized_fill_n algorithm
+sidebar_label: ranges::uninitialized_fill_n(  )
+description:   ranges::uninitialized_fill_n algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, uninitialized_fill_n, fill, fill_n, uninitialized]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/uninitialized_fill_n
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/uninitialized_fill_n/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/uninitialized_fill_n/since-cpp20-simplified.mdx';
+
+# std::ranges::uninitialized_fill_n() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Constructs `n` copies of the given value `x` in an uninitialized memory area, designated by the range [`first`; `first + n`), as if by
+```cpp
+for (; n--; ++first) {
+    ::new (static_cast<void*>(std::addressof(*first)))
+        std::remove_reference_t<std::iter_reference_t<I>>(x);
+}
+```
+
+:::caution
+If an exception is thrown during the initialization, the objects already constructed are destroyed in an unspecified order.
+:::
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>first</code> }>
+    The beginning of the range of the elements to initialize.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code> }>
+    Number of elements to construct.
+  </Symbol>
+  <Symbol none noLink name={ <code>x</code> }>
+    The value to construct the elements with.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An iterator equal to `first + n`.
+
+### Complexity
+
+Linear in `n`.
+
+### Exceptions
+
+The exception thrown on construction of the elements in the destination range, if any.
+
+### Possible implementation
+
+<details>
+<summary>uninitialized_fill_n(1)</summary>
+
+```cpp
+struct uninitialized_fill_n_fn
+{
+    template<no-throw-forward-range I, class T>
+    requires std::constructible_from<std::iter_value_t<I>, const T&>
+    I operator()(I first, std::iter_difference_t<I> n, const T& x) const
+    {
+        I rollback{first};
+        try
+        {
+            for (; n-- > 0; ++first)
+                ranges::construct_at(std::addressof(*first), x);
+            return first;
+        }
+        catch (...) // rollback: destroy constructed elements
+        {
+            for (; rollback != first; ++rollback)
+                ranges::destroy_at(std::addressof(*rollback));
+            throw;
+        }
+    }
+};
+
+inline constexpr uninitialized_fill_n_fn uninitialized_fill_n{};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <memory>
+#include <string>
+
+int main()
+{
+    constexpr int n{3};
+    alignas(alignof(std::string)) char out[n * sizeof(std::string)];
+
+    try
+    {
+        auto first{reinterpret_cast<std::string*>(out)};
+        auto last = std::ranges::uninitialized_fill_n(first, n, "cppreference");
+
+        for (auto it{first}; it != last; ++it)
+            std::cout << *it << '\n';
+
+        std::ranges::destroy(first, last);
+    }
+    catch (...)
+    {
+        std::cout << "Exception!\n";
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+cppreference
+cppreference
+cppreference
+```
+
+</div>
+</Columns>

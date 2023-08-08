@@ -1,0 +1,180 @@
+---
+title:         uninitialized_move algorithm
+sidebar_label: uninitialized_move(  )
+description:   uninitialized_move algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, uninitialized_move, move]
+
+cppreference_origin_rel: w/cpp/algorithm/uninitialized_move
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp17 from './_codes/uninitialized_move/since-cpp17.mdx';
+
+# std::uninitialized_move() algorithm
+
+<SwitchView content={{
+  'since-cpp17': <Signature_SinceCpp17 />,
+}} />
+
+- **(1)** Moves elements from the range [`first`; `last`) to an uninitialized memory area beginning at `d_first` as if by
+
+  ```cpp
+  for (; first != last; ++d_first, (void) ++first)
+      ::new (static_cast<void*>(std::addressof(*d_first)))
+          typename std::iterator_traits<NoThrowForwardIt>::value_type(std::move(*first));
+  ```
+  :::caution
+  If an exception is thrown during the initialization, some objects in [`first`; `last`) are left in a valid but unspecified state, and the objects already constructed are destroyed in an unspecified order.
+  :::
+
+  :::danger Undefined Behaviour
+  <Since v='cpp20'>If <code>d_first</code> + [<code>0</code>, <code>std::distance(first, last)</code>) overlaps with [<code>first</code>, <code>last</code>), the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.</Since>
+  :::
+
+ - **(2)** Same as **(1)**, but executed according to `policy`.
+  :::important Overload Resolution
+  These overloads participate in overload resolution only if
+  <Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+  :::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of the elements to move.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt</code> <br /> <code>NoThrowForwardIt</code> </> } >
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+No increment, assignment, comparison, or indirection through valid instances of `NoThrowForwardIt` may throw exceptions.
+
+### Return value
+
+Iterator to the element past the last element moved.
+
+### Complexity
+
+Linear in the distance between `first` and `last`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For none other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>uninitialized_move(1)</summary>
+
+```cpp
+template<class InputIt, class NoThrowForwardIt>
+NoThrowForwardIt uninitialized_move(InputIt first, InputIt last, NoThrowForwardIt d_first)
+{
+    using Value = typename std::iterator_traits<NoThrowForwardIt>::value_type;
+    NoThrowForwardIt current = d_first;
+    try
+    {
+        for (; first != last; ++first, (void) ++current)
+            ::new (static_cast<void*>(std::addressof(*current))) Value(std::move(*first));
+        return current;
+    }
+    catch (...)
+    {
+        std::destroy(d_first, current);
+        throw;
+    }
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cstdlib>
+#include <iomanip>
+#include <iostream>
+#include <memory>
+#include <string>
+
+void print(auto rem, auto first, auto last)
+{
+    for (std::cout << rem; first != last; ++first)
+        std::cout << std::quoted(*first) << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    std::string in[]{"Home", "Work!"};
+    print("initially, in: ", std::begin(in), std::end(in));
+
+    if (
+        constexpr auto sz = std::size(in);
+        void* out = std::aligned_alloc(alignof(std::string), sizeof(std::string) * sz))
+    {
+        try
+        {
+            auto first{static_cast<std::string*>(out)};
+            auto last{first + sz};
+            std::uninitialized_move(std::begin(in), std::end(in), first);
+
+            print("after move, in: ", std::begin(in), std::end(in));
+            print("after move, out: ", first, last);
+
+            std::destroy(first, last);
+        }
+        catch (...)
+        {
+            std::cout << "Exception!\n";
+        }
+        std::free(out);
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+initially, in: "Home" "Work!"
+after move, in: "" ""
+after move, out: "Home" "Work!"
+```
+
+</div>
+</Columns>

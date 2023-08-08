@@ -1,0 +1,18 @@
+```cpp
+// (1)
+template<
+  no-throw-forward-iterator I,
+  no-throw-sentinel-for<I> S,
+  class T
+>
+  requires std::constructible_from<std::iter_value_t<I>, const T&>
+I uninitialized_fill( I first, S last, const T& x );
+
+// (2)
+template<
+  no-throw-forward-range R,
+  class T
+>
+  requires std::constructible_from<ranges::range_value_t<R>, const T&>
+ranges::borrowed_iterator_t<R> uninitialized_fill( R&& r, const T& x );
+```

@@ -1,0 +1,14 @@
+```cpp
+// (1)
+uninitialized_copy_n_result<I, O>
+  uninitialized_copy_n( I ifirst, std::iter_difference_t<I> count, O ofirst, S olast );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `O` - [`no-throw-forward-iterator`](#)
+- `S` - `std::no-throw-sentinel-for<O>`
+
+Additionally, each overload has the following constraints:
+- **(1)** `std::constructible_from<std::iter_value_t<O>, std::iter_reference_t<I>>`
+

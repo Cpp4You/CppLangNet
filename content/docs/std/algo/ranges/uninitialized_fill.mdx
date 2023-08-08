@@ -1,0 +1,174 @@
+---
+title:         ranges::uninitialized_fill algorithm
+sidebar_label: ranges::uninitialized_fill(  )
+description:   ranges::uninitialized_fill algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, uninitialized_fill, fill, uninitialized]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/uninitialized_fill
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/uninitialized_fill/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/uninitialized_fill/since-cpp20-simplified.mdx';
+
+# std::ranges::uninitialized_fill() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using uninitialized_fill_result = ranges::in_out_result<I, O>;
+```
+
+- **(1)** Given `N` as `ranges::distance(first, last)`:
+
+  Constructs `N` copies of the given value `x` in an uninitialized memory area, designated by the range [`first`; `last`).
+  The function has the effect equivalent to:
+  ```cpp
+  for (; first != last; ++first)
+      ::new (static_cast<void*>(std::addressof(*first)))
+          std::remove_reference_t<std::iter_reference_t<I>>(x);
+
+  return first;
+  ```
+
+  :::important
+  If an exception is thrown during the initialization, the objects already constructed are destroyed in an unspecified order.
+  :::
+
+- **(2)** Same as **(1)**, but uses `r` as the range, as if using `ranges::begin(r)` as `first`, and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to fill.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to fill.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to construct the elements with.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An iterator equal to `last`.
+
+### Complexity
+
+Given `N` as `ranges::distance(first, last)`:
+
+**O(N)**
+
+### Exceptions
+
+The exception thrown on construction of the elements in the destination range, if any.
+
+### Possible implementation
+
+<details>
+<summary>uninitialized_fill(1) and uninitialized_fill(2)</summary>
+
+```cpp
+struct uninitialized_fill_fn
+{
+    template<no-throw-forward-iterator I, no-throw-sentinel-for<I> S, class T>
+    requires std::constructible_from<std::iter_value_t<I>, const T&>
+    I operator()(I first, S last, const T& x) const
+    {
+        I rollback{first};
+        try
+        {
+            for (; !(first == last); ++first)
+                ranges::construct_at(std::addressof(*first), x);
+            return first;
+        }
+        catch (...)
+        {
+            // rollback: destroy constructed elements
+            for (; rollback != first; ++rollback)
+                ranges::destroy_at(std::addressof(*rollback));
+            throw;
+        }
+    }
+
+    template<no-throw-forward-range R, class T>
+    requires std::constructible_from<ranges::range_value_t<R>, const T&>
+    ranges::borrowed_iterator_t<R>
+    operator()(R&& r, const T& x) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), x);
+    }
+};
+
+inline constexpr uninitialized_fill_fn uninitialized_fill{};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <memory>
+#include <string>
+
+int main()
+{
+    constexpr int n{4};
+    alignas(alignof(std::string)) char out[n * sizeof(std::string)];
+
+    try
+    {
+        auto first{reinterpret_cast<std::string*>(out)};
+        auto last{first + n};
+        std::ranges::uninitialized_fill(first, last, "▄▀▄▀▄▀▄▀");
+
+        int count{1};
+        for (auto it{first}; it != last; ++it)
+            std::cout << count++ << ' ' << *it << '\n';
+
+        std::ranges::destroy(first, last);
+    }
+    catch(...)
+    {
+        std::cout << "Exception!\n";
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1 ▄▀▄▀▄▀▄▀
+2 ▄▀▄▀▄▀▄▀
+3 ▄▀▄▀▄▀▄▀
+4 ▄▀▄▀▄▀▄▀
+```
+
+</div>
+</Columns>
