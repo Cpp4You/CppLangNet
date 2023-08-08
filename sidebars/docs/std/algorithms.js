@@ -457,6 +457,12 @@ module.exports = {
             docsMethod("std/algo/ordinary/inner_product"),
             docsMethod("std/algo/ordinary/adjacent_difference"),
             docsMethod("std/algo/ordinary/partial_sum"),
+            docsMethod("std/algo/ordinary/reduce"),
+            docsMethod("std/algo/ordinary/exclusive_scan"),
+            docsMethod("std/algo/ordinary/inclusive_scan"),
+            docsMethod("std/algo/ordinary/transform_reduce"),
+            docsMethod("std/algo/ordinary/transform_exclusive_scan"),
+            docsMethod("std/algo/ordinary/transform_inclusive_scan"),
           ]
         }
       ]

@@ -1252,6 +1252,48 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/reduce" name={ <Since v='cpp17'>reduce</Since> }>
+        Similar to <a href="/docs/std/algo/reduce">std::accumulate</a>, except out of order.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/exclusive_scan" name={ <Since v='cpp17'>exclusive_scan</Since> }>
+        Similar to <a href="/docs/std/algo/partial_sum">std::partial_sum</a>, excludes the ith input element from the ith sum.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/inclusive_scan" name={ <Since v='cpp17'>inclusive_scan</Since> }>
+        Similar to <a href="/docs/std/algo/partial_sum">std::partial_sum</a>, includes the ith input element from the ith sum.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/transform_reduce" name={ <Since v='cpp17'>transform_reduce</Since> }>
+        Applies an invocable, then reduces out of order.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/transform_exclusive_scan" name={ <Since v='cpp17'>transform_exclusive_scan</Since> }>
+        Applies an invocable, then calculates exclusive scan.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/transform_inclusive_scan" name={ <Since v='cpp17'>transform_inclusive_scan</Since> }>
+        Applies an invocable, then calculates inclusive scan.
+			</Symbol>
+  }}/>
+
 </SymbolTable>
 
 ## Operations on uninitialized memory
