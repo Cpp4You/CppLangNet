@@ -480,6 +480,11 @@ module.exports = {
             docsMethod("std/algo/ranges/uninitialized_fill", "since-cpp20"),
             docsMethod("std/algo/ranges/uninitialized_fill_n", "since-cpp20"),
             docsMethod("std/algo/ranges/uninitialized_move", "since-cpp20"),
+            docsMethod("std/algo/ranges/uninitialized_move_n", "since-cpp20"),
+            docsMethod("std/algo/ranges/uninitialized_default_construct", "since-cpp20"),
+            docsMethod("std/algo/ranges/uninitialized_default_construct_n", "since-cpp20"),
+            docsMethod("std/algo/ranges/uninitialized_value_construct", "since-cpp20"),
+            docsMethod("std/algo/ranges/uninitialized_value_construct_n", "since-cpp20"),
           ]
         },
         {
@@ -491,6 +496,11 @@ module.exports = {
             docsMethod("std/algo/ordinary/uninitialized_fill"),
             docsMethod("std/algo/ordinary/uninitialized_fill_n"),
             docsMethod("std/algo/ordinary/uninitialized_move", "since-cpp17"),
+            docsMethod("std/algo/ordinary/uninitialized_move_n", "since-cpp17"),
+            docsMethod("std/algo/ordinary/uninitialized_default_construct", "since-cpp17"),
+            docsMethod("std/algo/ordinary/uninitialized_default_construct_n", "since-cpp17"),
+            docsMethod("std/algo/ordinary/uninitialized_value_construct", "since-cpp17"),
+            docsMethod("std/algo/ordinary/uninitialized_value_construct_n", "since-cpp17"),
           ]
         }
       ]

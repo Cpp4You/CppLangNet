@@ -1,0 +1,185 @@
+---
+title:         ranges::uninitialized_default_construct algorithm
+sidebar_label: ranges::uninitialized_default_construct(  )
+description:   ranges::uninitialized_default_construct algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, uninitialized_default_construct, default_construct, uninitialized, clone]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/uninitialized_default_construct
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/uninitialized_default_construct/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/uninitialized_default_construct/since-cpp20-simplified.mdx';
+
+# std::ranges::uninitialized_default_construct() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Constructs objects of type `std::iter_value_t<I>` in the uninitialized storage designated by the range [`first`; `last`)
+  by [`default-initialization`](#), as if by
+  ```cpp
+  for (; first != last; ++first)
+      ::new (static_cast<void*>(std::addressof(*first)))
+          std::remove_reference_t<std::iter_reference_t<I>>;
+  ```
+  :::caution
+  If an exception is thrown during the initialization, the objects already constructed are destroyed in an unspecified order.
+  :::
+
+- **(2)** Same as **(1)**, but uses `r` as the range, as if using `ranges::begin(r)` as `first`, and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to initialize.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to initialize.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An iterator equal to `last`.
+
+### Complexity
+
+Linear in the distance between `first` and `last`.
+
+### Exceptions
+
+The exception thrown on construction of the elements in the destination range, if any.
+
+### Possible implementation
+
+<details>
+<summary>uninitialized_default_construct(1) and uninitialized_default_construct(2)</summary>
+
+```cpp
+struct uninitialized_default_construct_fn
+{
+    template<no-throw-forward-iterator I, no-throw-sentinel-for<I> S>
+    requires std::default_initializable<std::iter_value_t<I>>
+    I operator()(I first, S last) const
+    {
+        using ValueType = std::remove_reference_t<std::iter_reference_t<I>>;
+        if constexpr (std::is_trivially_default_constructible_v<ValueType>)
+            return ranges::next(first, last); // skip initialization
+        I rollback{first};
+        try
+        {
+            for (; !(first == last); ++first)
+                ::new (const_cast<void*>(static_cast<const volatile void*>
+                    (std::addressof(*first)))) ValueType;
+            return first;
+        }
+        catch (...) // rollback: destroy constructed elements
+        {
+            for (; rollback != first; ++rollback)
+                ranges::destroy_at(std::addressof(*rollback));
+            throw;
+        }
+    }
+
+    template<no-throw-forward-range R>
+    requires std::default_initializable<ranges::range_value_t<R>>
+    ranges::borrowed_iterator_t<R>
+    operator()(R&& r) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r));
+    }
+};
+
+inline constexpr uninitialized_default_construct_fn uninitialized_default_construct{};
+```
+
+</details>
+
+### Notes
+
+An implementation may skip the objects construction (without changing the observable effect) if no non-trivial
+[`std::is_trivially_default_constructible_v`](#).
+default constructor is called while default-initializing a `std::iter_value_t<I>` object, which can be detected by
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cstring>
+#include <iostream>
+#include <memory>
+#include <string>
+
+int main()
+{
+    struct S { std::string m{ "▄▀▄▀▄▀▄▀" }; };
+
+    constexpr int n{4};
+    alignas(alignof(S)) char out[n * sizeof(S)];
+
+    try
+    {
+        auto first{reinterpret_cast<S*>(out)};
+        auto last{first + n};
+
+        std::ranges::uninitialized_default_construct(first, last);
+
+        auto count{1};
+        for (auto it{first}; it != last; ++it)
+            std::cout << count++ << ' ' << it->m << '\n';
+
+        std::ranges::destroy(first, last);
+    }
+    catch (...) { std::cout << "Exception!\n"; }
+
+    // Notice that for "trivial types" the uninitialized_default_construct
+    // generally does not zero-fill the given uninitialized memory area.
+    constexpr char etalon[]{'A', 'B', 'C', 'D', '\n'};
+    char v[]{'A', 'B', 'C', 'D', '\n'};
+    std::ranges::uninitialized_default_construct(std::begin(v), std::end(v));
+    if (std::memcmp(v, etalon, sizeof(v)) == 0)
+    {
+        std::cout << "  ";
+        // Maybe undefined behavior, pending CWG 1997:
+        // for (const char c : v) { std::cout << c << ' '; }
+        for (const char c : etalon)
+            std::cout << c << ' ';
+    }
+    else
+        std::cout << "Unspecified\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1 ▄▀▄▀▄▀▄▀
+2 ▄▀▄▀▄▀▄▀
+3 ▄▀▄▀▄▀▄▀
+4 ▄▀▄▀▄▀▄▀
+  A B C D
+```
+
+</div>
+</Columns>

@@ -1,0 +1,13 @@
+```cpp
+// (1)
+template< no-throw-forward-iterator I >
+  requires std::default_initializable<std::iter_value_t<I>>
+I uninitialized_default_construct_n( I first, std::iter_difference_t<I> n );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `no-throw-forward-iterator`
+
+Additionally, each overload has the following constraints:
+- **(1)** `std::default_initializable<std::iter_value_t<I>>`
+

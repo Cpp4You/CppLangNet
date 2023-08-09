@@ -1,0 +1,13 @@
+```cpp
+// (1)
+uninitialized_move_n_result<I, O>
+  uninitialized_move_n( I ifirst, std::iter_difference_t<I> n, O ofirst, S olast );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `O` - [`no-throw-forward-iterator`](#)
+- `S` - `no-throw-sentinel-for<O>`
+
+Additionally, each overload has the following constraints:
+- **(1)** `std::constructible_from<std::iter_value_t<O>, std::iter_rvalue_reference_t<I>>`
