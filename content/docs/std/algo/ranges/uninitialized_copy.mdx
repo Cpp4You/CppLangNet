@@ -42,7 +42,7 @@ using uninitialized_copy_result = ranges::in_out_result<I, O>;
   The input and output ranges must not overlap.
   :::
 
-  :::important
+  :::caution
   If an exception is thrown during the initialization, the objects already constructed are destroyed in an unspecified order.
   :::
 

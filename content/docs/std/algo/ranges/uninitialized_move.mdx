@@ -44,8 +44,10 @@ using uninitialized_move_result = ranges::in_out_result<I, O>;
           std::remove_reference_t<std::iter_reference_t<O>>(ranges::iter_move(ifirst));
   ```
 
+  :::caution
   If an exception is thrown during the initialization then the objects that already constructed in [`ofirst`; `olast`)
   are destroyed in an unspecified order.
+  :::
 
   Also, the objects in [`ifirst`; `ilast`) that were already moved, are left in a valid but unspecified state.
 

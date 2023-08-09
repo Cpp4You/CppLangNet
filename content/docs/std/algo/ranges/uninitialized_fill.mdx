@@ -46,7 +46,7 @@ using uninitialized_fill_result = ranges::in_out_result<I, O>;
   return first;
   ```
 
-  :::important
+  :::caution
   If an exception is thrown during the initialization, the objects already constructed are destroyed in an unspecified order.
   :::
 
