@@ -116,6 +116,11 @@ code-d {
     display: inline-block;
 }
 
+// This is a bodge for <code> tags displaying equasions, until KaTeX is implemented
+.no-break{
+	display: inline-block;
+}
+
 .col-d {
 	color: #339900;
 }

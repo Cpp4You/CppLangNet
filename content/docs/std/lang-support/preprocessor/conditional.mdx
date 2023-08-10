@@ -5,7 +5,7 @@ hite_title:         true
 ---
 
 import {Since, Version}                                 from "@site-comps/Versions";
-import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
 import Columns                                          from "@site-comps/Columns";
 
 # Conditional inclusion
@@ -16,32 +16,32 @@ This behavior is controlled by <code-d>#if</code-d>, <code-d>#ifdef</code-d>, <c
 
 ## Syntax
 
-<SymbolTable noTraits>
-  <Symbol name={<code-d>#if</code-d>}        desc={<>expression</>}/>
-  <Symbol name={<code-d>#ifdef</code-d>}     desc={<>identifier</>}/>
-  <Symbol name={<code-d>#ifndef</code-d>}    desc={<>identifier</>}/>
-  <Symbol name={<code-d>#elif</code-d>}      desc={<>expression</>}/>
-  <Symbol name={<code-d>#elifdef</code-d>}   desc={<>identifier<Since v='cpp23'></Since></>}/>
-  <Symbol name={<code-d>#elifndef</code-d>}  desc={<>identifier<Since v='cpp23'></Since></>}/>
-  <Symbol name={<code-d>#else</code-d>}      desc={<></>}/>
-  <Symbol name={<code-d>#endif</code-d>}     desc={<></>}/>
-</SymbolTable>
+<SyntaxTable>
+  <Syntax directive={<span class='col-d'>#if</span>}       args={['expression']}/>
+  <Syntax directive={<span class='col-d'>#ifdef</span>}    args={['identifier']}/>
+  <Syntax directive={<span class='col-d'>#ifndef</span>}   args={['identifier']}/>
+  <Syntax directive={<span class='col-d'>#elif</span>}     args={['expression']}/>
+  <Syntax directive={<span class='col-d'>#elifdef</span>}  args={['identifier', <Since v='cpp23'></Since>]}/>
+  <Syntax directive={<span class='col-d'>#elifndef</span>} args={['identifier', <Since v='cpp23'></Since>]}/>
+  <Syntax directive={<span class='col-d'>#else</span>}     args={['']}/>
+  <Syntax directive={<span class='col-d'>#endif</span>}    args={['']}/>
+</SyntaxTable>
 
 ## Explanation
-The conditional preprocessing block starts with <code-d>#if</code-d>, <code-d>#defif</code-d> or <code-d>#ifndef</code-d> directive, 
-then optionally includes any number of <code-d>#elif</code-d>, <Since v='cpp23'><code-d>#elifdef</code-d>, or <code-d>#elifndef</code-d></Since> directives, 
-then optionally includes at most one <code-d>#else</code-d> directive and is terminated with <code-d>#endif</code-d> directive. Any inner conditional preprocessing blocks are processed separately.
+* The conditional preprocessing block starts with <span class='col-d'>#if</span>, <span class='col-d'>#defif</span> or <span class='col-d'>#ifndef</span> directive, 
+then optionally includes any number of <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, or <span class='col-d'>#elifndef</span></Since> directives, 
+then optionally includes at most one <span class='col-d'>#else</span> directive and is terminated with <span class='col-d'>#endif</span> directive. Any inner conditional preprocessing blocks are processed separately.
 
-Each of <code-d>#if</code-d>, <code-d>#ifdef</code-d>, <code-d>#ifndef</code-d>, <code-d>#elif</code-d>, <Since v='cpp23'><code-d>#elifdef</code-d>, <code-d>#elifndef</code-d></Since>, and <code-d>#else</code-d> 
-directives control the code block until the first <code-d>#elif</code-d>, <code-d>#elifdef</code-d>, <code-d>#elifndef</code-d> (since C++23), <code-d>#else</code-d>, <code-d>#endif</code-d> 
+* Each of <span class='col-d'>#if</span>, <span class='col-d'>#ifdef</span>, <span class='col-d'>#ifndef</span>, <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, and <span class='col-d'>#else</span> 
+directives control the code block until the first <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, <span class='col-d'>#else</span>, <span class='col-d'>#endif</span> 
 directive not belonging to any inner conditional preprocessing blocks.
 
-<code-d>#if</code-d>, <code-d>#defif</code-d> and <code-d>#ifndef</code-d> directives test the specified condition (see below) and if it evaluates to true, compiles the controlled code block. In that case subsequent #else, <Since v='cpp23'><code-d>#elifdef</code-d>, <code-d>#elifndef</code-d></Since>, 
-and <code-d>#elif</code-d> directives are ignored. 
-Otherwise, if the specified condition evaluates false, the controlled code block is skipped and the subsequent <code-d>#else</code-d>, <Since v='cpp23'><code-d>#elifdef</code-d>, <code-d>#elifndef</code-d></Since>, 
-or <code-d>#elif</code-d> directive (if any) is processed. If the subsequent directive is <code-d>#else</code-d>, the code block controlled by the <code-d>#else</code-d> directive is unconditionally compiled. 
-Otherwise, the <code-d>#elif</code-d>, <Since v='cpp23'><code-d>#elifdef</code-d>, <code-d>#elifndef</code-d></Since> directive acts as if it was <code-d>#if</code-d> directive: checks for condition, compiles or skips the controlled code block based on the result, 
-and in the latter case processes subsequent <code-d>#elif</code-d>, <Since v='cpp23'><code-d>#elifdef</code-d>, <code-d>#elifndef</code-d></Since>, and <code-d>#else</code-d> directives. The conditional preprocessing block is terminated by <code-d>#endif</code-d> directive.
+* <span class='col-d'>#if</span>, <span class='col-d'>#defif</span> and <span class='col-d'>#ifndef</span> directives test the specified condition (see below) and if it evaluates to true, compiles the controlled code block. In that case subsequent #else, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, 
+and <span class='col-d'>#elif</span> directives are ignored. 
+Otherwise, if the specified condition evaluates false, the controlled code block is skipped and the subsequent <span class='col-d'>#else</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, 
+or <span class='col-d'>#elif</span> directive (if any) is processed. If the subsequent directive is <span class='col-d'>#else</span>, the code block controlled by the <span class='col-d'>#else</span> directive is unconditionally compiled. 
+Otherwise, the <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since> directive acts as if it was <span class='col-d'>#if</span> directive: checks for condition, compiles or skips the controlled code block based on the result, 
+and in the latter case processes subsequent <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, and <span class='col-d'>#else</span> directives. The conditional preprocessing block is terminated by <span class='col-d'>#endif</span> directive.
 
 ## Condition evaluation
 #### <code-d>#if</code-d>, <code-d>#elif</code-d>
@@ -59,8 +59,8 @@ Then the expression is evaluated as an [integral constant expression](/docs/std/
 If the *expression* evaluates to nonzero value, the controlled code block is included and skipped otherwise.
 
 Note: Until the resolution of [CWG issue 1955](https://cplusplus.github.io/CWG/issues/1955.html), <code>#if cond1 ... #elif cond2</code> is **different** from <code>#if cond1 ... #else</code> followed by <code>#if cond2</code> 
-because if `cond1` is true, the second <code-d>#if</code-d> is skipped and `cond2` does not need to be well-formed, while <code-d>#elif</code-d>'s `cond2` must be a valid expression. 
-As of [CWG 1955](https://cplusplus.github.io/CWG/issues/1955.html), <code-d>#elif</code-d> that leads the skipped code block is also skipped.
+because if `cond1` is true, the second <span class='col-d'>#if</span> is skipped and `cond2` does not need to be well-formed, while <span class='col-d'>#elif</span>'s `cond2` must be a valid expression. 
+As of [CWG 1955](https://cplusplus.github.io/CWG/issues/1955.html), <span class='col-d'>#elif</span> that leads the skipped code block is also skipped.
 
 ### Combined directives
 Checks if the identifier was defined as a macro name.
@@ -168,4 +168,4 @@ The following behavior-changing defect reports were applied retroactively to pre
 
 | **DR**                                                       | **Applied to**                | **Behavior as published**                                           | **Correct behavior**                     |
 |:------------------------------------------------------------:|:-----------------------------:|:-------------------------------------------------------------------:|:----------------------------------------:|
-| [CWG 1955](https://cplusplus.github.io/CWG/issues/1955.html) | <Version v='cpp98'></Version> | failed <code-d>#elif</code-d>'s expression was required to be valid | failed <code-d>#elif</code-d> is skipped |
+| [CWG 1955](https://cplusplus.github.io/CWG/issues/1955.html) | <Version v='cpp98'></Version> | failed <span class='col-d'>#elif</span>'s expression was required to be valid | failed <span class='col-d'>#elif</span> is skipped |

@@ -4,7 +4,8 @@ tags:               [Language, Preprocessor]
 hite_title:         true
 ---
 
-import {Since, Version, Until}                                 from "@site-comps/Versions";
+import {Since, Version, Until}                          from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
 import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
 import Columns                                          from "@site-comps/Columns";
 
@@ -14,44 +15,28 @@ Includes other source file into current source file at the line immediately afte
 
 ## Syntax
 
-<SymbolTable noTraits>
-  <Symbol name={<><code>1</code> <code-d>#include</code-d></>} desc={<i class="col-g"><b>&lt;</b><i class="col-g">h-char-sequence</i> <b>&gt;</b>&emsp;new-line</i>}/>
-  <Symbol name={<><code>2</code> <code-d>#include</code-d></>} desc={<i class="col-g"><b>"</b> <i class="col-g">q-char-sequence</i> <b>"</b>&emsp;  new-line</i>}/>
-  <Symbol name={<><code>3</code> <code-d>#include</code-d></>} desc={<i class="col-g">pp-tokens&emsp;&emsp;&emsp;&emsp;&emsp; new-line</i>}/>
+<SyntaxTable>
+  <Syntax id ='1' directive={<span class='col-d'>#include</span>} args={['<h-char-sequence>', 'new-line']}/>
+  <Syntax id ='2' directive={<span class='col-d'>#include</span>} args={['"q-char-sequence"', 'new-line']}/>
+  <Syntax id ='3' directive={<span class='col-d'>#include</span>} args={['pp-tokens','new-line']}/>
 
-  <Symbol name={<>
-        <code>4</code>&ensp;  
-        <code-d>__has_include</code-d><br/>&emsp;&ensp;
-        <code-d>__has_include</code-d>
-    </>} desc={<>
-        <i class="col-g">
-            <b>(&lt;</b><i class="col-g">h-char-sequence</i> <b>&gt;)</b><br/>
-            <b>("</b> <i class="col-g">q-char-sequence</i> <b>")</b>&emsp;<Since v='cpp17'></Since>
-        </i>
-    </>}/>
+  <Syntax id ='4' directive={<>
+        <span class='col-d'>__has_include</span><br/>
+        <span class='col-d'>__has_include</span>
+    </>} args={[<span class='col-g'>(h-char-sequence)<br/>"q-char-sequence"</span>, <Since v='cpp17'></Since>]}/>
 
-  <Symbol name={<>
-        <code>4</code>&ensp;  
-        <code-d>__has_include</code-d><br/>&emsp;&ensp;
-        <code-d>__has_include</code-d>
-    </>} desc={<>
-        <i class="col-g">
-            <b>(</b> string literal <b>)</b><br/>
-            <b>(&lt;</b> h-pp-tokens <b>&gt;)</b>&emsp;<Since v='cpp17'></Since>
-        </i>
-    </>}/>
+  <Syntax id ='5' directive={<>
+        <span class='col-d'>__has_include</span><br/>
+        <span class='col-d'>__has_include</span>
+    </>} args={[<span class='col-g'>(string literal)<br/>&lt;h-pp-tokens&gt;</span>, <Since v='cpp17'></Since>]}/>
 
-</SymbolTable>
+</SyntaxTable>
 
-1) Searches for a header identified uniquely by <i class="col-g">h-char-sequence</i> and replaces the directive by the entire contents of the header.
-
-2) Searches for a source file identified by <i class="col-g">q-char-sequence</i> and replaces the directive by the entire contents of the source file. It may fallback to (1) and treat <i class="col-g">q-char-sequence</i> as a header identifier.
-
-3) If neither (1) nor (2) is matched, <i class="col-g">pp-tokens</i> will undergo macro replacement. The directive after replacement will be tried to match with (1) or (2) again.
-
-4) Checks whether a header or source file is available for inclusion.
-
-5) If (4) is not matched, <i class="col-g">h-pp-tokens</i> will undergo macro replacement. The directive after replacement will be tried to match with (4) again.
+1. Searches for a header identified uniquely by <i class="col-g">h-char-sequence</i> and replaces the directive by the entire contents of the header.
+2. Searches for a source file identified by <i class="col-g">q-char-sequence</i> and replaces the directive by the entire contents of the source file. It may fallback to (1) and treat <i class="col-g">q-char-sequence</i> as a header identifier.
+3. If neither (1) nor (2) is matched, <i class="col-g">pp-tokens</i> will undergo macro replacement. The directive after replacement will be tried to match with (1) or (2) again.
+4. Checks whether a header or source file is available for inclusion.
+5. If (4) is not matched, <i class="col-g">h-pp-tokens</i> will undergo macro replacement. The directive after replacement will be tried to match with (4) again.
 
 <SymbolTable noTraits>
 
@@ -110,20 +95,16 @@ Includes other source file into current source file at the line immediately afte
 
 ## Explanation
 
-1) Searches a sequence of implementation-defined places for a header identified uniquely by <i class="col-g">h-char-sequence</i> , and causes the replacement of that directive by the entire contents of the header. 
+1. Searches a sequence of implementation-defined places for a header identified uniquely by <i class="col-g">h-char-sequence</i> , and causes the replacement of that directive by the entire contents of the header. 
 How the places are specified or the header identified is implementation-defined.
-
-2) Causes the replacement of that directive by the entire contents of the source file identified by <i class="col-g">q-char-sequence</i>. The named source file is searched for in an implementation-defined manner. 
+2. Causes the replacement of that directive by the entire contents of the source file identified by <i class="col-g">q-char-sequence</i>. The named source file is searched for in an implementation-defined manner. 
 If this search is not supported, or if the search fails, the directive is reprocessed as if it reads syntax (1) with the identical contained sequence (including &gt; characters, if any) from the original directive.
-
-3) The preprocessing tokens after <span class="col-d">include</span> in the directive are processed just as in normal text (i.e., each identifier currently defined as a macro name is replaced by its replacement list of preprocessing tokens). 
+3. The preprocessing tokens after <span class="col-d">include</span> in the directive are processed just as in normal text (i.e., each identifier currently defined as a macro name is replaced by its replacement list of preprocessing tokens). 
 If the directive resulting after all replacements does not match one of the two previous forms, the behavior is undefined. 
 The method by which a sequence of preprocessing tokens between a &lt; and a &gt; preprocessing token pair or a pair of " characters is combined into a single header name preprocessing token is implementation-defined.
-
-4) The header or source file identified by <i class="col-g">h-char-sequence</i> or <i class="col-g">q-char-sequence</i> is searched for as if that preprocessing token sequence were the pp-tokens in syntax (3), except that no further macro expansion is performed. 
+4. The header or source file identified by <i class="col-g">h-char-sequence</i> or <i class="col-g">q-char-sequence</i> is searched for as if that preprocessing token sequence were the pp-tokens in syntax (3), except that no further macro expansion is performed. 
 If such a directive would not satisfy the syntactic requirements of an #include directive, the program is ill-formed. The &#95;&#95;has_include expression evaluates to `1` if the search for the source file succeeds, and to `0` if the search fails.
-
-5) This form is considered only if syntax (4) does not match, in which case the preprocessing tokens are processed just as in normal text.
+5. This form is considered only if syntax (4) does not match, in which case the preprocessing tokens are processed just as in normal text.
 
 <Since v='cpp20' block>
 

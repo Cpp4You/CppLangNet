@@ -4,7 +4,8 @@ tags:           [Language, Preprocessor]
 hide-title:     true
 ---
 
-import {Since, Until, Version, Deprecated, Removed}     from "@site-comps/Versions";
+import {Since, Until, Version, Removed}                 from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
 import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
 import Columns                                          from "@site-comps/Columns";
 
@@ -13,13 +14,13 @@ The preprocessor supports text macro replacement. Function-like text macro repla
 
 ## Syntax
 
-<SymbolTable noTraits>
-  <Symbol name={<><code>1</code> <code-d>#define</code-d></>} desc={<><i class="col-g">identifier &emsp; replacement-list</i><small class="col-d"> (optional)</small></>}/>
-  <Symbol name={<><code>2</code> <code-d>#define</code-d></>} desc={<><i class="col-g">identifier &emsp; (parameters) &emsp; replacement-list</i><small class="col-d"> (optional)</small></>}/>
-  <Symbol name={<><code>3</code> <code-d>#define</code-d></>} desc={<><i class="col-g">identifier &emsp; (parameters, ...) &emsp; replacement-list</i><small class="col-d"> (optional)</small>&emsp;<Since v='cpp11'></Since></>}/>
-  <Symbol name={<><code>4</code> <code-d>#define</code-d></>} desc={<><i class="col-g">identifier &emsp; (...) &emsp; replacement-list</i><small class="col-d"> (optional)</small>&emsp;<Since v='cpp11'></Since></>}/>
-  <Symbol name={<><code>5</code> <code-d>#undef</code-d></>}  desc={<i class="col-g">identifier</i>}/>
-</SymbolTable>
+<SyntaxTable noTraits>
+  <Syntax id='1' directive={<span class='col-d'>#define</span>} args={['identifier', 'replacement-list', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id='2' directive={<span class='col-d'>#define</span>} args={['identifier', '(parameters)', 'replacement-list', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id='3' directive={<span class='col-d'>#define</span>} args={['identifier', '(parameters, ...)', 'replacement-list', <small class="col-d"> (optional)</small>, <Since v='cpp11'></Since>]}/>
+  <Syntax id='4' directive={<span class='col-d'>#define</span>} args={['identifier', '(...)', 'replacement-list', <small class="col-d"> (optional)</small>, <Since v='cpp11'></Since>]}/>
+  <Syntax id='5' directive={<span class='col-d'>#undef</span>}  args={['identifier']}/>
+</SyntaxTable>
 
 ## Explanation
 ### <span class="col-d">#define</span> directives
