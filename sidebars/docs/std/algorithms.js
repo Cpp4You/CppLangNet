@@ -517,20 +517,8 @@ module.exports = {
       type: "category",
       label: "C algorithms",
       items: [
-        {
-          type: "category",
-          label: "Rangified",
-          items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
-          ]
-        },
-        {
-          type: "category",
-          label: "Ordinary",
-          items: [
-            docsMethod("std/utility/forward", "since-cpp11"),
-          ]
-        }
+        docsMethod("std/algo/ordinary/qsort"),
+        docsMethod("std/algo/ordinary/bsearch"),
       ]
     }
   ]

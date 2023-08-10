@@ -1,0 +1,147 @@
+---
+title:         qsort algorithm
+sidebar_label: qsort(  )
+description:   qsort algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, qsort, sort]
+
+cppreference_origin_rel: w/cpp/algorithm/qsort
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp98 from './_codes/qsort/since-cpp98.mdx';
+
+# std::qsort() algorithm
+
+<SwitchView content={{
+  'since-cpp98': <Signature_SinceCpp98 />,
+}} />
+
+With the exposition-only types defined as follows:
+```cpp
+extern "C++" using cpp_compare_pred = int(const void*, const void*);
+extern "C" using c_compare_pred = int(const void*, const void*);
+```
+
+Sorts the given array pointed to by `ptr` in ascending order.
+
+The array contains `count` elements of `size` bytes. Function pointed to by `comp` is used for object comparison.
+
+:::caution
+If `comp` indicates two elements as equivalent, their order is unspecified.
+:::
+
+:::danger Undefined Behaviour
+If the type of the elements of the array is not a <Until v='cpp11'>PODType</Until><Since v='cpp11'>TriviallyCopyable</Since> type, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>ptr</code> }>
+    Pointer to the array to sort.
+  </Symbol>
+  <Symbol none noLink name={ <code>count</code> }>
+    The number of elements in the array.
+  </Symbol>
+  <Symbol none noLink name={ <code>size</code> }>
+    The size of each element of the array in bytes.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+Comparison function which returns:
+- **A negative** integer value if the first argument is less than the second.
+- **A positive** integer value if the first argument is greater than the second.
+- **Zero** if the arguments are equivalent.
+
+The signature of the comparison function should be equivalent to the following:
+```cpp
+int cmp(const void *a, const void *b);
+```
+
+- The function must not modify the objects passed to it
+- Must return consistent results when called for the same objects, regardless of their positions in the array
+
+
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Not specified.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+Despite the name, C++, C, and POSIX standards do not require this function to be implemented using Quicksort or make any complexity or stability guarantees.
+
+The two overloads provided by the C++ standard library are distinct because the types of the parameter `comp` are distinct (language linkage is part of its type).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <array>
+#include <climits>
+#include <compare>
+#include <cstdlib>
+#include <iostream>
+
+int main()
+{
+    std::array a {-2, 99, 0, -743, INT_MAX, 2, INT_MIN, 4};
+
+    std::qsort
+    (
+        a.data(),
+        a.size(),
+        sizeof(decltype(a)::value_type),
+        [](const void* x, const void* y)
+        {
+            const int arg1 = *static_cast<const int*>(x);
+            const int arg2 = *static_cast<const int*>(y);
+            const auto cmp = arg1 <=> arg2;
+            if (cmp < 0)
+                return -1;
+            if (cmp > 0)
+                return 1;
+            return 0;
+        }
+    );
+
+    for (int ai : a)
+        std::cout << ai << ' ';
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+-2147483648 -743 -2 0 2 4 99 2147483647
+```
+
+</div>
+</Columns>
