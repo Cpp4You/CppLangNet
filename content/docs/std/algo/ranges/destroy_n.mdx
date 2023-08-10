@@ -1,0 +1,132 @@
+---
+title:         ranges::destroy_n algorithm
+sidebar_label: ranges::destroy_n(  )
+description:   ranges::destroy_n algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, destroy_n]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/destroy_n
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/destroy_n/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/destroy_n/since-cpp20-simplified.mdx';
+
+# std::ranges::destroy_n() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Destroys the `n` objects in the range starting at `first`, equivalent to
+
+```cpp
+return std::ranges::destroy(std::counted_iterator(first, n), std::default_sentinel).base();
+```
+
+The function-like entities described on this page are [**niebloids**](#).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={  <code>first</code> }>
+    The beginning of the range of elements to destroy.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code> }>
+    The number of elements to destroy.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+The end of the range of objects that has been destroyed.
+
+### Complexity
+
+Linear in `n`.
+
+### Exceptions
+
+The exception thrown on construction of the elements in the destination range, if any.
+
+### Possible implementation
+
+<details>
+<summary>destroy_n(1)</summary>
+
+```cpp
+
+struct destroy_n_fn
+{
+    template<no-throw-input-iterator I>
+        requires std::destructible<std::iter_value_t<I>>
+    constexpr I operator()(I first, std::iter_difference_t<I> n) const noexcept
+    {
+        for (; n != 0; (void)++first, --n)
+            std::ranges::destroy_at(std::addressof(*first));
+        return first;
+    }
+};
+
+inline constexpr destroy_n_fn destroy_n{};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <memory>
+#include <new>
+
+struct Tracer
+{
+    int value;
+    ~Tracer() { std::cout << value << " destructed\n"; }
+};
+
+int main()
+{
+    alignas(Tracer) unsigned char buffer[sizeof(Tracer) * 8];
+
+    for (int i = 0; i < 8; ++i)
+        new(buffer + sizeof(Tracer) * i) Tracer{i}; //manually construct objects
+
+    auto ptr = std::launder(reinterpret_cast<Tracer*>(buffer));
+
+    std::ranges::destroy_n(ptr, 8);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+0 destructed
+1 destructed
+2 destructed
+3 destructed
+4 destructed
+5 destructed
+6 destructed
+7 destructed
+```
+
+</div>
+</Columns>

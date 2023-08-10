@@ -485,6 +485,10 @@ module.exports = {
             docsMethod("std/algo/ranges/uninitialized_default_construct_n", "since-cpp20"),
             docsMethod("std/algo/ranges/uninitialized_value_construct", "since-cpp20"),
             docsMethod("std/algo/ranges/uninitialized_value_construct_n", "since-cpp20"),
+            docsMethod("std/algo/ranges/destroy", "since-cpp20"),
+            docsMethod("std/algo/ranges/destroy_n", "since-cpp20"),
+            docsMethod("std/algo/ranges/destroy_at", "since-cpp20"),
+            docsMethod("std/algo/ranges/construct_at", "since-cpp20"),
           ]
         },
         {
@@ -501,6 +505,10 @@ module.exports = {
             docsMethod("std/algo/ordinary/uninitialized_default_construct_n", "since-cpp17"),
             docsMethod("std/algo/ordinary/uninitialized_value_construct", "since-cpp17"),
             docsMethod("std/algo/ordinary/uninitialized_value_construct_n", "since-cpp17"),
+            docsMethod("std/algo/ordinary/destroy", "since-cpp17"),
+            docsMethod("std/algo/ordinary/destroy_n", "since-cpp17"),
+            docsMethod("std/algo/ordinary/destroy_at", "since-cpp17"),
+            docsMethod("std/algo/ordinary/construct_at", "since-cpp20"),
           ]
         }
       ]

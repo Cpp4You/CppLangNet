@@ -1,0 +1,11 @@
+```cpp
+// (1)
+template< no-throw-input-iterator I, no-throw-sentinel-for<I> S
+  requires std::destructible<std::iter_value_t<I>>
+constexpr I destroy( I first, S last ) noexcept;
+
+// (2)
+template< no-throw-input-range R >
+  requires std::destructible<ranges::range_value_t<R>>
+constexpr ranges::borrowed_iterator_t<R> destroy( R&& r ) noexcept;
+```

@@ -1,0 +1,16 @@
+```cpp
+// (1)
+constexpr I destroy( I first, S last ) noexcept;
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R> destroy( R&& r ) noexcept;
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `no-throw-input-iterator`
+- `S` - `no-throw-sentinel-for<O>`
+- `R` - `no-throw-input-range`
+
+Additionally, each overload has the following constraints:
+- **(1)** `std::destructible<std::iter_value_t<I>>`
+- **(1)** `std::destructible<ranges::range_value_t<R>>`

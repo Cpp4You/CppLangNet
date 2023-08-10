@@ -1,0 +1,116 @@
+---
+title:         construct_at algorithm
+sidebar_label: construct_at(  )
+description:   construct_at algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, construct_at, construct, uninitialized]
+
+cppreference_origin_rel: w/cpp/algorithm/construct_at
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20 from './_codes/construct_at/since-cpp20.mdx';
+
+# std::construct_at() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+}} />
+
+Creates a `T` object initialized with arguments `args...` at given address `p`.
+
+```cpp
+return ::new (static_cast<void*>(p)) T(std::forward<Args>(args)...);
+```
+Except that [`construct_at`](#) may be used in evaluation of [constant expressions](#).
+
+When [`construct_at`](#) is called in the evaluation of some constant expression `e`, the argument `p` must point to either storage obtained by `std::allocator<T>::allocate` or an object whose lifetime began within the evaluation of `e`.
+
+:::important Overload Resolution
+Participates in overload resolution only if `::new(std::declval<void*>()) T(std::declval<Args>()...)` is well-formed in unevaluated context.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>p</code> }>
+    Pointer to the uninitialized storage on which a <code>T</code> object will be constructed.
+  </Symbol>
+  <Symbol none noLink name={ <code>args..</code> }>
+    Args to initialize the object with.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+`p`
+
+**(none)**
+
+### Complexity
+
+**O(1)**
+
+### Exceptions
+
+**(none)**
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <memory>
+
+struct S
+{
+    int x;
+    float y;
+    double z;
+
+    S(int x, float y, double z) : x{x}, y{y}, z{z} { std::cout << "S::S();\n"; }
+
+    ~S() { std::cout << "S::~S();\n"; }
+
+    void print() const
+    {
+        std::cout << "S { x=" << x << "; y=" << y << "; z=" << z << "; };\n";
+    }
+};
+
+int main()
+{
+    alignas(S) unsigned char storage[sizeof(S)];
+
+    S* ptr = std::construct_at(reinterpret_cast<S*>(storage), 42, 2.71828f, 3.1415);
+    ptr->print();
+
+    std::destroy_at(ptr);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+S::S();
+S { x=42; y=2.71828; z=3.1415; };
+S::~S();
+```
+
+</div>
+</Columns>

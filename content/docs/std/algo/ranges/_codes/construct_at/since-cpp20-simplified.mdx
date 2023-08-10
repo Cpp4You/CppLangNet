@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class T, class... Args >
+constexpr T* construct_at( T* p, Args&&... args );
+```
+
+The type of arguments are generic and have following constraints:
+- `T` - **(none)**
+- `Args` - **(none)**
