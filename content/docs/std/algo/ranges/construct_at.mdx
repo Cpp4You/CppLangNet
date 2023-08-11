@@ -20,15 +20,11 @@ import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behav
 <!----------------- Codes ---------------------->
 
 import Signature_SinceCpp20_Detailed   from './_codes/construct_at/since-cpp20-detailed.mdx';
-import Signature_SinceCpp20_Simplified from './_codes/construct_at/since-cpp20-simplified.mdx';
 
 # std::construct_at() algorithm
 
 <SwitchView content={{
-	'since-cpp20': {
-		simplified:	<Signature_SinceCpp20_Simplified />,
-		detailed:	<Signature_SinceCpp20_Detailed />,
-	}
+	'since-cpp20': <Signature_SinceCpp20_Detailed />,
 }} />
 
 Creates a `T` object initialized with arguments `args...` at given address `p`.
