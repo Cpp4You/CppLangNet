@@ -24,7 +24,7 @@ import Signature_SinceCpp20_Detailed   from './_codes/destroy_at/since-cpp20-det
 	'since-cpp20': <Signature_SinceCpp20_Detailed />,
 }} />
 
-If `T` is not an array type, calls the destructor of the object pointed to by `p`, as if by ``p->~T()`.
+If `T` is not an array type, calls the destructor of the object pointed to by `p`, as if by `p->~T()`.
 
 Otherwise, recursively destroys elements of `*p` in order, as if by calling `std::destroy(std::begin(*p), std::end(*p))`.
 
