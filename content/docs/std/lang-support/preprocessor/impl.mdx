@@ -21,7 +21,7 @@ Implementation defined behavior is controlled by <code-d>#pragma</code-d> direct
 
 1. Behaves in implementation-defined manner.
 2. Removes the L prefix (if any), the outer quotes, and leading/trailing whitespace from <i class="col-g">string-literal</i>, replaces each `\"` with `"` and each `\\` with `\`, 
-then tokenizes the result (as in [translation phase 3](/docs/std/lang-support/translation_phases#phase-3)), and then uses the result as if the input to <span class='col-d'>#pragma</span> in (1).
+then tokenizes the result (as in [translation phase 3](/docs/std/lang-support/translation_phases#phase-3)), and then uses the result as if the input to <span class='col-d'>#pragma</span> in [(1)](#syntax).
 
 ## Non-standard pragmas
 The ISO C++ language standard does not require the compilers to support any pragmas. However, several non-standard pragmas are supported by multiple implementations:

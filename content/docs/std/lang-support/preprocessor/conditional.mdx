@@ -17,14 +17,14 @@ This behavior is controlled by <code-d>#if</code-d>, <code-d>#ifdef</code-d>, <c
 ## Syntax
 
 <SyntaxTable>
-  <Syntax directive={<span class='col-d'>#if</span>}       args={['expression']}/>
-  <Syntax directive={<span class='col-d'>#ifdef</span>}    args={['identifier']}/>
-  <Syntax directive={<span class='col-d'>#ifndef</span>}   args={['identifier']}/>
-  <Syntax directive={<span class='col-d'>#elif</span>}     args={['expression']}/>
-  <Syntax directive={<span class='col-d'>#elifdef</span>}  args={['identifier', <Since v='cpp23'></Since>]}/>
-  <Syntax directive={<span class='col-d'>#elifndef</span>} args={['identifier', <Since v='cpp23'></Since>]}/>
-  <Syntax directive={<span class='col-d'>#else</span>}     args={['']}/>
-  <Syntax directive={<span class='col-d'>#endif</span>}    args={['']}/>
+  <Syntax id='1' directive={<span class='col-d'>#if</span>}       args={['expression']}/>
+  <Syntax id='2' directive={<span class='col-d'>#ifdef</span>}    args={['identifier']}/>
+  <Syntax id='3' directive={<span class='col-d'>#ifndef</span>}   args={['identifier']}/>
+  <Syntax id='4' directive={<span class='col-d'>#elif</span>}     args={['expression']}/>
+  <Syntax id='5' directive={<span class='col-d'>#elifdef</span>}  args={['identifier', <Since v='cpp23'></Since>]}/>
+  <Syntax id='6' directive={<span class='col-d'>#elifndef</span>} args={['identifier', <Since v='cpp23'></Since>]}/>
+  <Syntax id='7' directive={<span class='col-d'>#else</span>}     args={['']}/>
+  <Syntax id='8' directive={<span class='col-d'>#endif</span>}    args={['']}/>
 </SyntaxTable>
 
 ## Explanation
@@ -46,9 +46,9 @@ and in the latter case processes subsequent <span class='col-d'>#elif</span>, <S
 ## Condition evaluation
 #### <code-d>#if</code-d>, <code-d>#elif</code-d>
 The expression may contain:
-* unary operators in form **defined** *identifier* or **defined** *(identifier)*. The result is `1` if the *identifier* was <a href="./replace">defined as a macro name</a>, 
+* unary operators in form **defined** *identifier* or **defined** *(identifier)*. The result is `1` if the *identifier* was <a href="../replace">defined as a macro name</a>, 
     otherwise the result is `0`. <Since v='cpp17'>  `__has_include` <Since v='cpp20'>and  `__has_cpp_attribute` </Since> are treated as if they were the names of defined macros in this context.</Since>
-* <Since v='cpp17'> <a href="./include">__has_include expressions</a>, which detects whether a header or source file exists</Since>.
+* <Since v='cpp17'> <a href="../include">__has_include expressions</a>, which detects whether a header or source file exists</Since>.
 * <Since v='cpp20'> <a href="/docs/std/feature_test#attributes">__has_cpp_attribute</a> expressions, which detects whether a given attribute token is supported and its supported version.</Since>
 
 After all macro expansion and evaluation of defined, <Since v='cpp20'><Since v='cpp17'>`__has_include`</Since>, and `__has_cpp_attribute`</Since> expressions, 

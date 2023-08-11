@@ -31,15 +31,15 @@ EMPTY   #   include <file.h> // not a preprocessing directive
 ## Capabilities
 The preprocessor has the source file translation capabilities:
 
-* <a href="./preprocessor/conditional">conditionally</a> compile parts of source file (controlled by directive <code-d>#if</code-d>, <code-d>#ifdef</code-d>, <code-d>#ifndef</code-d>, 
-<code-d>#else</code-d>, <code-d>#elif</code-d>, <Since v='cpp23'><code-d>#elifdef</code-d>, <code-d>#elifndef</code-d></Since> , and <code-d>#endif</code-d>).
-* <a href="./preprocessor/replace">replace</a> text macros while possibly concatenating or quoting identifiers (controlled by directives <code-d>#define</code-d> and <code-d>#undef</code-d>, and operators <code-d>#</code-d> <code-d>##</code-d>). <a href="./preprocessor/include">include</a> other files (controlled by directive <code-d>#include</code-d> <Since v='cpp17'>and checked with <code>__has_include</code></Since>).
-* cause an <a href="./preprocessor/error">error</a> <Since v='cpp23'>or <a href="./preprocessor/error">warning</a></Since> (controlled by directive <code-d>#error</code-d> <Since v='cpp23'>or <code-d>#warning</code-d> respectively</Since>).
+* <a href="./preprocessor/conditional">conditionally</a> compile parts of source file (controlled by directive <span class='col-d'>#if</span>, <span class='col-d'>#ifdef</span>, <span class='col-d'>#ifndef</span>, 
+<span class='col-d'>#else</span>, <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since> , and <span class='col-d'>#endif</span>).
+* <a href="./preprocessor/replace">replace</a> text macros while possibly concatenating or quoting identifiers (controlled by directives <span class='col-d'>#define</span> and <span class='col-d'>#undef</span>, and operators <code-d>#</code-d>, <code-d>##</code-d>). <a href="./preprocessor/include">include</a> other files (controlled by directive <span class='col-d'>#include</span> <Since v='cpp17'>and checked with <code>__has_include</code></Since>).
+* cause an <a href="./preprocessor/error">error</a> <Since v='cpp23'>or <a href="./preprocessor/error">warning</a></Since> (controlled by directive <span class='col-d'>#error</span> <Since v='cpp23'>or <span class='col-d'>#warning</span> respectively</Since>).
 
 The following aspects of the preprocessor can be controlled:
-* <a href="./preprocessor/impl">implementation-defined</a> behavior (controlled by directive <code-d>#pragma</code-d> <Since v='cpp11'>and operator <code>_Pragma</code></Since>). 
+* <a href="./preprocessor/impl">implementation-defined</a> behavior (controlled by directive <span class='col-d'>#pragma</span> <Since v='cpp11'>and operator <code>_Pragma</code></Since>). 
     In addition, some compilers support (to varying degrees) the operator <code>__pragma</code> as a <i>non-standard</i> extension.
-* <a href="./preprocessor/line">file name and line information</a> available to the preprocessor (controlled by directive <code-d>#line</code-d>).
+* <a href="./preprocessor/line">file name and line information</a> available to the preprocessor (controlled by directive <span class='col-d'>#line</span>).
 
 ### Defect reports
 The following behavior-changing defect reports were applied retroactively to previously published C++ standards.

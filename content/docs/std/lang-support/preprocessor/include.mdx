@@ -4,7 +4,7 @@ tags:               [Language, Preprocessor]
 hite_title:         true
 ---
 
-import {Since, Version, Until}                          from "@site-comps/Versions";
+import {Since, Until}                                   from "@site-comps/Versions";
 import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
 import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
 import Columns                                          from "@site-comps/Columns";
@@ -33,10 +33,10 @@ Includes other source file into current source file at the line immediately afte
 </SyntaxTable>
 
 1. Searches for a header identified uniquely by <i class="col-g">h-char-sequence</i> and replaces the directive by the entire contents of the header.
-2. Searches for a source file identified by <i class="col-g">q-char-sequence</i> and replaces the directive by the entire contents of the source file. It may fallback to (1) and treat <i class="col-g">q-char-sequence</i> as a header identifier.
-3. If neither (1) nor (2) is matched, <i class="col-g">pp-tokens</i> will undergo macro replacement. The directive after replacement will be tried to match with (1) or (2) again.
+2. Searches for a source file identified by <i class="col-g">q-char-sequence</i> and replaces the directive by the entire contents of the source file. It may fallback to [(1)](#syntax) and treat <i class="col-g">q-char-sequence</i> as a header identifier.
+3. If neither [(1)](#syntax) nor [(2)](#syntax) is matched, <i class="col-g">pp-tokens</i> will undergo macro replacement. The directive after replacement will be tried to match with [(1)](#syntax) or [(2)](#syntax) again.
 4. Checks whether a header or source file is available for inclusion.
-5. If (4) is not matched, <i class="col-g">h-pp-tokens</i> will undergo macro replacement. The directive after replacement will be tried to match with (4) again.
+5. If [(4)](#syntax) is not matched, <i class="col-g">h-pp-tokens</i> will undergo macro replacement. The directive after replacement will be tried to match with [(4)](#syntax) again.
 
 <SymbolTable noTraits>
 
@@ -47,8 +47,8 @@ Includes other source file into current source file at the line immediately afte
           desc={<>
             A sequence of one or more <i class="col-g">h-chars</i>, where the appearance of any of the following is conditionally-supported with implementation-defined semantics:
             <ul>
-                <li>the character <code class="col-d">'</code></li>
-                <li>the character <code class="col-d">"</code></li>
+                <li>the character <code>'</code></li>
+                <li>the character <code>"</code></li>
                 <li>the character <code>\</code></li>
                 <li>the character sequence <code-d>//</code-d></li>
                 <li>the character sequence <code-d>/*</code-d></li>
@@ -67,7 +67,7 @@ Includes other source file into current source file at the line immediately afte
           desc={<>
             	A sequence of one or more <i class="col-g">q-chars</i>, where the appearance of any of the following is conditionally-supported with implementation-defined semantics:
                 <ul>
-                    <li>the character <code class="col-d">'</code></li>
+                    <li>the character <code>'</code></li>
                     <li>the character <code>\</code></li>
                     <li>the character sequence <code-d>//</code-d></li>
                     <li>the character sequence <code-d>/*</code-d></li>
@@ -79,7 +79,7 @@ Includes other source file into current source file at the line immediately afte
                 Any member of the 
                 <Until v='cpp23'><a href="/docs/std/lang-support/translation_phases#phase-5">source character set</a></Until> 
                 <Since v='cpp23'><a href="/docs/std/lang-support/charset#translation-character-set">translation character set</a></Since> 
-                except new-line and <code class="col-d">"</code>
+                except new-line and <code>"</code>
           </>}/>
 
   <Symbol name={<i class="col-g">pp-tokens</i>} 
@@ -98,34 +98,34 @@ Includes other source file into current source file at the line immediately afte
 1. Searches a sequence of implementation-defined places for a header identified uniquely by <i class="col-g">h-char-sequence</i> , and causes the replacement of that directive by the entire contents of the header. 
 How the places are specified or the header identified is implementation-defined.
 2. Causes the replacement of that directive by the entire contents of the source file identified by <i class="col-g">q-char-sequence</i>. The named source file is searched for in an implementation-defined manner. 
-If this search is not supported, or if the search fails, the directive is reprocessed as if it reads syntax (1) with the identical contained sequence (including &gt; characters, if any) from the original directive.
+If this search is not supported, or if the search fails, the directive is reprocessed as if it reads syntax [(1)](#syntax) with the identical contained sequence (including <code>&gt;</code> characters, if any) from the original directive.
 3. The preprocessing tokens after <span class="col-d">include</span> in the directive are processed just as in normal text (i.e., each identifier currently defined as a macro name is replaced by its replacement list of preprocessing tokens). 
 If the directive resulting after all replacements does not match one of the two previous forms, the behavior is undefined. 
 The method by which a sequence of preprocessing tokens between a &lt; and a &gt; preprocessing token pair or a pair of " characters is combined into a single header name preprocessing token is implementation-defined.
-4. The header or source file identified by <i class="col-g">h-char-sequence</i> or <i class="col-g">q-char-sequence</i> is searched for as if that preprocessing token sequence were the pp-tokens in syntax (3), except that no further macro expansion is performed. 
+4. The header or source file identified by <i class="col-g">h-char-sequence</i> or <i class="col-g">q-char-sequence</i> is searched for as if that preprocessing token sequence were the pp-tokens in syntax [(3)](#syntax), except that no further macro expansion is performed. 
 If such a directive would not satisfy the syntactic requirements of an #include directive, the program is ill-formed. The &#95;&#95;has_include expression evaluates to `1` if the search for the source file succeeds, and to `0` if the search fails.
-5. This form is considered only if syntax (4) does not match, in which case the preprocessing tokens are processed just as in normal text.
+5. This form is considered only if syntax [(4)](#syntax) does not match, in which case the preprocessing tokens are processed just as in normal text.
 
 <Since v='cpp20' block>
 
-If the header identified by the <span class="col-g">header-name</span> (i.e., &lt; <i class="col-g">h-char-sequence</i> &gt; or <i class="col-g">" q-char-sequence "</i>) denotes an importable header, 
-t is implementation-defined whether the <span class="col-d">#include</span> preprocessing directive is instead replaced by an <a href="/docs/std/lang-support/modules#importing-modules-and-headers">import directive</a> of the form
+If the header identified by the <span class="col-g">header-name</span> (i.e., <i class="col-g">&lt; h-char-sequence &gt;</i> or <i class="col-g">" q-char-sequence "</i>) denotes an importable header, 
+it is implementation-defined whether the <span class="col-d">#include</span> preprocessing directive is instead replaced by an <a href="/docs/std/lang-support/modules#importing-modules-and-headers">import directive</a> of the form
 <code><b>import</b> <span class="col-g">header-name</span> <b>;</b> <span class="col-g">new-line</span></code>
 </Since>
 
-&#95;&#95;has_include can be expanded in the expression of <u><a href="../conditional" class="col-d">#if</a></u> and <u><a href="../conditional" class="col-d">#elif</a></u>. 
-It is treated as a defined macro by <u><a href="../conditional" class="col-d">#ifdef</a></u>, <u><a href="../conditional" class="col-d">#ifndef</a></u>
-, <Since v='cpp23'><u><a href="../conditional" class="col-d">#elifdef</a></u>, <u><a href="../conditional" class="col-d">#elifndef</a></u></Since>
+&#95;&#95;has_include can be expanded in the expression of <a href="../conditional" class="col-d"><u>#if</u></a> and <a href="../conditional" class="col-d"><u>#elif</u></a>. 
+It is treated as a defined macro by <a href="../conditional" class="col-d"><u>#ifdef</u></a>, <a href="../conditional" class="col-d"><u>#ifndef</u></a>
+, <Since v='cpp23'><a href="../conditional" class="col-d"><u>#elifdef</u></a>, <a href="../conditional" class="col-d"><u>#elifndef</u></a></Since>
 and <a href="../conditional">defined</a> but cannot be used anywhere else.
 
 ## Notes
 
-Typical implementations search only standard include directories for syntax (1). The standard C++ library and the standard C library are implicitly included in these standard include directories. 
+Typical implementations search only standard include directories for syntax [(1)](#syntax). The standard C++ library and the standard C library are implicitly included in these standard include directories. 
 he standard include directories usually can be controlled by the user through compiler options.
 
-The intent of syntax (2) is to search for the files that are not controlled by the implementation. Typical implementations first search the directory where the current file resides then falls back to (1).
+The intent of syntax [(2)](#syntax) is to search for the files that are not controlled by the implementation. Typical implementations first search the directory where the current file resides then falls back to [(1)](#syntax).
 
-When a file is included, it is processed by [translation phases](/docs/std/lang-support/translation_phases) 1-4, which may include, recursively, expansion of the nested #include directives, up to an implementation-defined nesting limit. 
+When a file is included, it is processed by [translation phases 1-4](/docs/std/lang-support/translation_phases), which may include, recursively, expansion of the nested <span class='col-d'>#include</span> directives, up to an implementation-defined nesting limit. 
 To avoid repeated inclusion of the same file and endless recursion when a file includes itself, perhaps transitively, header guards are commonly used: the entire header is wrapped in
 
 ```cpp
@@ -141,7 +141,7 @@ A sequence of characters that resembles an escape sequence in <i class="col-g">q
 depending on the implementation.
 
 A &#95;&#95;has_include result of `1` only means that a header or source file with the specified name exists. It does not mean that the header or source file, when included, would not cause an error or would contain anything useful. 
-For example, on a C++ implementation that supports both C++14 and C++17 modes (and provides `__has_include` in its C++14 mode as a conforming extension), `__has_include(<optional>)` may be `1` in C++14 mode, 
+For example, on a C++ implementation that supports both C++14 and C++17 modes (and provides &#95;&#95;has_include in its C++14 mode as a conforming extension), `__has_include(<optional>)` may be `1` in C++14 mode, 
 but actually <code-d>#include &lt;optional&gt;</code-d> may cause an error.
 
 ## Example
