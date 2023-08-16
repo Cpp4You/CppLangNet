@@ -1,0 +1,260 @@
+---
+title:         partial_sort algorithm
+sidebar_label: partial_sort(  )
+description:   partial_sort algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, partial_sort, ascending, order]
+
+cppreference_origin_rel: w/cpp/algorithm/partial_sort
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/partial_sort/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/partial_sort/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/partial_sort/since-cpp20.mdx';
+
+# std::partial_sort() algorithm
+
+<SwitchView content={{
+	'since-cpp20': <Signature_SinceCpp20 />,
+	'since-cpp17': <Signature_SinceCpp17 />,
+	'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+
+Rearranges elements such that the range [`first`; `middle`) contains the sorted middle − first smallest elements in the range [`first`; `last`).
+
+:::caution
+The order of equal elements is not guaranteed to be preserved. The order of the remaining elements in the range [`middle`; `last`) is unspecified.
+:::
+
+- **(1)** Elements are compared using `operator<`.
+
+- **(2)** Elements are compared using the given binary comparison function `comp`.
+
+- **(3, 4)** Same as **(1)** and **(2)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Until>
+	<Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Since>
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to sort partially.
+  </Symbol>
+  <Symbol none noLink name={ <code>middle</code> }>
+    Iterator defining the one-past-the-end iterator of the range to be sorted.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>cmp</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>RandomIt</code> }>
+    <a href="/docs/named_req/ValueSwappable">ValueSwappable</a> <br/>
+    <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> Type of dereferenced <code>RandomIt</code> </> }>
+    <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> <br/>
+    <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>Compare</code> }>
+    <a href="/docs/named_req/Compare">Compare</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+
+Approximately `(last - first) * log(middle - first)` applications of `comp`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>partial_sort(1)</summary>
+
+```cpp
+template<typename RandomIt>
+// constexpr since C++20
+void partial_sort(RandomIt first, RandomIt middle, RandomIt last)
+{
+    typedef typename std::iterator_traits<RandomIt>::value_type VT;
+    std::partial_sort(first, middle, last, std::less<VT>());
+}
+```
+
+</details>
+
+
+<details>
+<summary>partial_sort(2)</summary>
+
+```cpp
+namespace impl {
+
+template<typename RandomIt, typename Compare>
+// constexpr
+void sift_down(RandomIt first, RandomIt last, const Compare& comp)
+{
+    // sift down element at 'first'
+    const auto length = static_cast<size_t>(last - first);
+    std::size_t current = 0;
+    std::size_t next = 2;
+    while (next < length)
+    {
+        if (comp(*(first + next), *(first + (next - 1))))
+            --next;
+        if (!comp(*(first + current), *(first + next)))
+            return;
+        std::iter_swap(first + current, first + next);
+        current = next;
+        next = 2 * current + 2;
+    }
+    --next;
+    if (next < length && comp(*(first + current), *(first + next)))
+        std::iter_swap(first + current, first + next);
+}
+
+template<typename RandomIt, typename Compare>
+// constexpr
+void heap_select(RandomIt first, RandomIt middle, RandomIt last, const Compare& comp)
+{
+    std::make_heap(first, middle, comp);
+    for (auto i = middle; i != last; ++i)
+    {
+        if (comp(*i, *first))
+        {
+            std::iter_swap(first, i);
+            sift_down(first, middle, comp);
+        }
+    }
+}
+
+} // namespace impl
+
+template<typename RandomIt, typename Compare>
+// constexpr since C++20
+void partial_sort(RandomIt first, RandomIt middle, RandomIt last, Compare comp)
+{
+    impl::heap_select(first, middle, last, comp);
+    std::sort_heap(first, middle, comp);
+}
+```
+
+</details>
+
+### Notes
+
+The algorithm used is typically heap select to select the smallest elements, and heap sort to sort the selected elements in the heap in ascending order.
+
+To select elements, a heap is used. For example, for `operator<` as comparison function, max-heap is used to select `middle − first` smallest elements.
+
+Heap sort is used after selection to sort [`first`; `middle`) selected elements (see [`std::sort_heap`](/docs/std/algo/ordinary/sort_heap)).
+
+[`std::partial_sort`](#) algorithms are intended to be used for small constant numbers of [`first`; `middle`) selected elements.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <functional>
+#include <iostream>
+
+void print(auto const& s, int middle)
+{
+    for (int a : s)
+        std::cout << a << ' ';
+    std::cout << '\n';
+    if (middle > 0)
+    {
+        while (middle-- > 0)
+            std::cout << "--";
+        std::cout << '^';
+    }
+    else if (middle < 0)
+    {
+        for (auto i = s.size() + middle; --i; std::cout << "  ")
+        { }
+
+        for (std::cout << '^'; middle++ < 0; std::cout << "--")
+        { }
+    }
+    std::cout << '\n';
+};
+
+int main()
+{
+    std::array<int, 10> s {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+    print(s, 0);
+    std::partial_sort(s.begin(), s.begin() + 3, s.end());
+    print(s, 3);
+    std::partial_sort(s.rbegin(), s.rbegin() + 4, s.rend());
+    print(s, -4);
+    std::partial_sort(s.rbegin(), s.rbegin() + 5, s.rend(), std::greater{});
+    print(s, -5);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+5 7 4 2 8 6 1 9 0 3
+
+0 1 2 7 8 6 5 9 4 3
+------^
+4 5 6 7 8 9 3 2 1 0
+          ^--------
+4 3 2 1 0 5 6 7 8 9
+        ^----------
+```
+
+</div>
+</Columns>

@@ -1,0 +1,30 @@
+```cpp
+// (1)
+template< class ForwardIt1, class ForwardIt2 >
+constexpr ForwardIt1 search( ForwardIt1 first, ForwardIt1 last,
+                   ForwardIt2 s_first, ForwardIt2 s_last );
+
+// (2)
+template< class ForwardIt1, class ForwardIt2, class BinaryPredicate >
+constexpr ForwardIt1 search( ForwardIt1 first, ForwardIt1 last,
+                   ForwardIt2 s_first, ForwardIt2 s_last,
+                   BinaryPredicate p );
+
+// (3)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2 >
+ForwardIt1 search( ExecutionPolicy&& policy,
+                   ForwardIt1 first, ForwardIt1 last,
+                   ForwardIt2 s_first, ForwardIt2 s_last );
+
+// (4)
+template< class ExecutionPolicy,
+          class ForwardIt1, class ForwardIt2, class BinaryPredicate >
+ForwardIt1 search( ExecutionPolicy&& policy,
+                   ForwardIt1 first, ForwardIt1 last,
+                   ForwardIt2 s_first, ForwardIt2 s_last,
+                   BinaryPredicate p );
+
+// (5)
+template< class ForwardIt, class Searcher >
+constexpr ForwardIt search( ForwardIt first, ForwardIt last, const Searcher& searcher );
+```

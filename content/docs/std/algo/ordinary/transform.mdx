@@ -1,17 +1,18 @@
 ---
-title:			transform algorithm
-sidebar_label:	transform(  )
-description:	transform algorithm C++ documentation
-hide_title:		true
-tags:			[algorithm, transform, map]
+title:         transform algorithm
+sidebar_label: transform(  )
+description:   transform algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, transform, map]
 
 cppreference_origin_rel: w/cpp/algorithm/transform
 ---
 
-import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
-import Tooltip				from '@site-comps/Tooltip';
-import { Since, Until }		from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
 
 <!-- Terms -->
 
@@ -19,9 +20,9 @@ import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementati
 
 <!----------------- Codes ---------------------->
 
-import Signature_UntilCpp17		from './_codes/transform/until-cpp17.mdx';
-import Signature_SinceCpp17		from './_codes/transform/since-cpp17.mdx';
-import Signature_SinceCpp20		from './_codes/transform/since-cpp20.mdx';
+import Signature_UntilCpp17 from './_codes/transform/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/transform/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/transform/since-cpp20.mdx';
 
 # std::transform() algorithm
 
@@ -52,32 +53,64 @@ Applies the given function to a range and stores the result in another range, ke
 
 ### Parameters
 
-- `first1`, `last1` - the first range of elements to transform
-- `first2` - the beginning of the second range of elements to transform
-- `d_first` - the beginning of the destination range, may be equal to first1 or first2
-- `policy` - the execution policy to use. See execution policy for details.
-- `unary_op` - unary operation function object that will be applied.
-	The signature of the function should be equivalent to the following:
-	```cpp
-	Ret fun(const Type& a);
-	```
-	- The signature does not need to have `const&`.
-	- The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
-	- The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`.
-- `binary_op` - binary operation function object that will be applied.
-	The signature of the function should be equivalent to the following:
-	```cpp
-	Ret fun(const Type1& a, const Type2& b);
-	```
-	- The signature does not need to have `const&`.
-	- The types `Type1` and `Type2` must be such that an object of type `InputIt` and `Input2` can be dereferenced and then implicitly converted to them.
-	- The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`.
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last</code> </> }>
+    The first range of elements to transform.
+  </Symbol>
+  <Symbol none noLink name={ <code>first2</code> }>
+    The beginning of the second range of elements to transform.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range, may be equal to <code>first1</code> or <code>first2</code>.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See execution policy for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>unary_op</code> }>
+
+Unary operation function object that will be applied.
+
+The signature of the function should be equivalent to the following:
+```cpp
+Ret fun(const Type& a);
+```
+- The signature does not need to have `const&`.
+- The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
+- The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`.
+
+
+  </Symbol>
+  <Symbol none noLink name={ <code>unary_op</code> }>
+
+Binary operation function object that will be applied.
+
+The signature of the function should be equivalent to the following:
+```cpp
+Ret fun(const Type1& a, const Type2& b);
+```
+- The signature does not need to have `const&`.
+- The types `Type1` and `Type2` must be such that an object of type `InputIt` and `Input2` can be dereferenced and then implicitly converted to them.
+- The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`.
+
+
+  </Symbol>
+
+</SymbolTable>
 
 #### Type requirements
 
-- `InputIt`, `InputIt1`, `InputIt2` must meet the requirements of [`LegacyInputIterator`](/docs/named_req/LegacyInputIterator).
-- `OutputIt `must meet the requirements of [`LegacyOutputIterator`](/docs/named_req/LegacyOutputIterator).
-- `ForwardIt1`, `ForwardIt2`, `ForwardIt3 `must meet the requirements of [`LegacyForwardIterator`](/docs/named_req/LegacyForwardIterator).
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>InputIt</code> <br/> <code>InputIt1</code> <code>InputIt2</code> </> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> <code>ForwardIt3</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
 
 ### Return value
 

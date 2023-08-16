@@ -1,0 +1,173 @@
+---
+title:         ranges::uninitialized_copy_n algorithm
+sidebar_label: ranges::uninitialized_copy_n(  )
+description:   ranges::uninitialized_copy_n algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, uninitialized_copy_n, copy, uninitialized, clone]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/uninitialized_copy_n
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/uninitialized_copy_n/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/uninitialized_copy_n/since-cpp20-simplified.mdx';
+
+# std::ranges::uninitialized_copy_n() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using uninitialized_copy_n_result = ranges::in_out_result<I, O>;
+```
+
+Let `N` be `ranges::min(count, ranges::distance(ofirst, olast))`, constructs `N` elements in the output range [`ofirst`; `olast`),
+which is an uninitialized memory area, from the elements in the input range beginning at `ifirst`.
+
+The input range [`ifirst`; `ifirst + count`) must not overlap with the output range [`ofirst`; `olast`).
+
+The function has the effect equivalent to:
+```cpp
+auto ret = ranges::uninitialized_copy(std::counted_iterator(ifirst, count),
+                                      std::default_sentinel, ofirst, olast);
+return {std::move(ret.in).base(), ret.out};
+```
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>ifirst</code> }>
+    The begnning of the range of elements to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>count</code> }>
+    The number of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ofirst</code> <br/> <code>olast</code> </> }>
+    The destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>out_range</code> }>
+    The destination range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+```cpp
+{
+  ifirst + N,
+  ofirst + N
+}
+```
+
+### Complexity
+
+Given `N` as `ranges::min(count, ranges::distance(ofirst, olast))`:
+
+**O(N)**
+
+### Exceptions
+
+The exception thrown on construction of the elements in the destination range, if any.
+
+### Possible implementation
+
+<details>
+<summary>uninitialized_copy_n(1)</summary>
+
+```cpp
+struct uninitialized_copy_n_fn
+{
+    template<std::input_iterator I, no-throw-input-iterator O, no-throw-sentinel-for<O> S>
+    requires std::constructible_from<std::iter_value_t<O>, std::iter_reference_t<I>>
+    ranges::uninitialized_copy_n_result<I, O>
+    operator()(I ifirst, std::iter_difference_t<I> count, O ofirst, S olast) const
+    {
+        O current{ofirst};
+        try
+        {
+            for (; count > 0 && current != olast; ++ifirst, ++current, --count)
+                ranges::construct_at(std::addressof(*current), *ifirst);
+            return {std::move(ifirst), std::move(current)};
+        }
+        catch (...) // rollback: destroy constructed elements
+        {
+            for (; ofirst != current; ++ofirst)
+                ranges::destroy_at(std::addressof(*ofirst));
+            throw;
+        }
+    }
+};
+
+inline constexpr uninitialized_copy_n_fn uninitialized_copy_n{};
+```
+
+</details>
+
+### Notes
+
+An implementation may improve the efficiency of [`ranges::uninitialized_copy_n`](#) if the value type of the output range is [`TrivialType`](/docs/named_req/TrivialType).
+
+### Examples
+
+The following code uses [`ranges::uninitialized_copy_n`](#) to both copy the contents of one [`std::vector`](/docs/std/containers/arrays/vector) to another and to display the resulting [`std::vector`](/docs/std/containers/arrays/vector):
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iomanip>
+#include <iostream>
+#include <memory>
+#include <string>
+
+int main()
+{
+    const char* stars[]{ "Procyon", "Spica", "Pollux", "Deneb", "Polaris", };
+
+    constexpr int n{4};
+    alignas(alignof(std::string)) char out[n * sizeof(std::string)];
+
+    try
+    {
+        auto first{reinterpret_cast<std::string*>(out)};
+        auto last{first + n};
+        auto ret{std::ranges::uninitialized_copy_n(std::begin(stars), n, first, last)};
+
+        std::cout << "{ ";
+        for (auto it{first}; it != ret.out; ++it)
+            std::cout << std::quoted(*it) << ", ";
+        std::cout << "};\n";
+
+        std::ranges::destroy(first, last);
+    }
+    catch (...)
+    {
+        std::cout << "uninitialized_copy_n exception\n";
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+{ "This", "is", "an", "example", };
+```
+
+</div>
+</Columns>

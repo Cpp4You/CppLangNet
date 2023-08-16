@@ -1,0 +1,17 @@
+```cpp
+// (1)
+template< class RandomIt >
+constexpr void nth_element( RandomIt first, RandomIt nth, RandomIt last );
+
+// (2)
+template< class RandomIt, class Compare >
+constexpr void nth_element( RandomIt first, RandomIt nth, RandomIt last, Compare comp );
+
+// (3)
+template< class ExecutionPolicy, class RandomIt >
+void nth_element( ExecutionPolicy&& policy, RandomIt first, RandomIt nth, RandomIt last );
+
+// (4)
+template< class ExecutionPolicy, class RandomIt, class Compare >
+void nth_element( ExecutionPolicy&& policy, RandomIt first, RandomIt nth, RandomIt last, Compare comp );
+```

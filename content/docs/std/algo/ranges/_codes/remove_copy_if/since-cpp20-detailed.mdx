@@ -1,0 +1,24 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I,
+  std::sentinel_for<I> S,
+  std::weakly_incrementable O,
+  class Proj = std::identity,
+  std::indirect_unary_predicate<std::projected<I, Proj>> Pred
+>
+  requires std::indirectly_copyable<I, O>
+constexpr remove_copy_if_result<I, O>
+    remove_copy_if( I first, S last, O result, Pred pred, Proj proj = {} );
+
+// (2)
+template<
+  ranges::input_range R,
+  std::weakly_incrementable O,
+  class Proj = std::identity,
+  std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>> Pred
+>
+  requires std::indirectly_copyable<ranges::iterator_t<R>, O>
+constexpr remove_copy_if_result<ranges::borrowed_iterator_t<R>, O>
+    remove_copy_if( R&& r, O result, Pred pred, Proj proj = {} );
+```

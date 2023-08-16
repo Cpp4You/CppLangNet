@@ -1,0 +1,25 @@
+```cpp
+// (1)
+constexpr I
+  upper_bound( I first, S last, const T& value, Comp comp = {}, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R>
+  upper_bound( R&& r, const T& value, Comp comp = {}, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::forward_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::forward_range`
+- `Comp`:
+  - **(1)** - `indirect_strict_weak_order< const T*, projected<I, Proj>>`
+  - **(2)** - `indirect_strict_weak_order< const T*, projected<ranges::iterator_t<R>, Proj>>`
+
+  (The `std::` namespace was ommitted here for readability)
+
+- `T` - **(none)**
+- `Proj` - **(none)**
+
+
+The `Proj` and `Comp` template arguments have the following default types: `std::identity`, `ranges::less` for all overloads.

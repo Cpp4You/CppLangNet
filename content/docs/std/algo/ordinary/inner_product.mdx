@@ -1,0 +1,216 @@
+---
+title:         inner_product algorithm
+sidebar_label: inner_product(  )
+description:   inner_product algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, inner_product]
+
+cppreference_origin_rel: w/cpp/algorithm/inner_product
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20 from './_codes/inner_product/since-cpp20.mdx';
+import Signature_UntilCpp20 from './_codes/inner_product/until-cpp20.mdx';
+
+# std::inner_product() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'until-cpp20': <Signature_UntilCpp20 />,
+}} />
+
+Computes inner product (i.e. sum of products) or performs ordered map/reduce operation on the range [`first1`; `last1`)
+and the range beginning at `first2`.
+
+Initializes the accumulator `acc` (of type `T`) with the initial value `init` and then modifies it with the expression =
+
+- **(1)**
+  <Until v='cpp11'><code>acc = acc + (*i1) * (*i2)</code></Until><Since v='cpp11'><code>acc = std::move(acc) + (*i1) * (*i2)</code></Since>
+- **(2)**
+  <Until v='cpp11'><code>acc = op1(acc, op2(*i1, *i2))</code></Until><Since v='cpp11'><code>acc = op1(std::move(acc), op2(*i1, *i2))</code></Since>
+
+for every iterator `i1` in the range [`first1`; `last1`) in order and its corresponding iterator `i2` in the range beginning at `first2`.
+
+For built-in meaning of `+` and `*`, this computes inner product of the two ranges.
+
+:::danger Undefined Behaviour
+If `op1` or `op2` invalidates any iterators (including the end iterators) or modifies any elements of the range involved, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+:::
+
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The firstrange of elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>first2</code> }>
+    The beginning of the second range of elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>init</code> }>
+    Initial value of the products.
+  </Symbol>
+  <Symbol none noLink name={ <code>op1</code> }>
+
+Bnary operation function object that will be applied.
+This "sum" function takes a value returned by `op2` and the current value of the accumulator
+and produces a new value to be stored in the accumulator.
+
+The signature of the function should be equivalent to the following:
+```cpp
+ Ret fun(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`.
+- The types `Type1` and `Type2` must be such that objects of types `T` and `Type3` can be implicitly converted to them, respectively.
+- The type `Ret` must be such that an object of type `T` can be assigned a value of it's type.
+
+
+  </Symbol>
+
+  <Symbol none noLink name={ <code>op2</code> }>
+
+binary operation function object that will be applied.
+This "product" function takes one value from each range and produces a new value.
+
+The signature of the function should be equivalent to the following:
+```cpp
+ Ret fun(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`.
+- The types `Type1` and `Type2` must be such that objects of types `InputIt1` and `InputIt2` can be dereferenced
+  and then implicitly converted to them, respectively.
+- The type `Ret` must be such that an object of type `Type3` can be assigned a value of it's type.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>InputIt1</code> <br /> <code>InputIt2</code> </> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br /> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>T</code> }>
+    <a href="/docs/named_req/CopyAssignable">CopyAssignable</a> <br />
+    <a href="/docs/named_req/CopyConstructible">CopyConstructible</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+`acc` after all modifications.
+
+### Complexity
+
+Exactly `last - first` increments, assignments and applications of both `op1` and `op2`.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>inner_product(1)</summary>
+
+```cpp
+template<class InputIt1, class InputIt2, class T>
+constexpr // since C++20
+T inner_product(InputIt1 first1, InputIt1 last1, InputIt2 first2, T init)
+{
+    while (first1 != last1)
+    {
+        init = std::move(init) + (*first1) * (*first2); // std::move since C++11
+        ++first1;
+        ++first2;
+    }
+
+    return init;
+}
+```
+
+</details>
+
+<details>
+<summary>inner_product(2)</summary>
+
+```cpp
+template<class InputIt1, class InputIt2, class T,
+         class BinaryOperation1, class BinaryOperation2>
+constexpr // since C++20
+T inner_product(InputIt1 first1, InputIt1 last1,
+                InputIt2 first2, T init,
+                BinaryOperation1 op1
+                BinaryOperation2 op2)
+{
+    while (first1 != last1)
+    {
+        init = op1(std::move(init), op2(*first1, *first2)); // std::move since C++11
+        ++first1;
+        ++first2;
+    }
+
+    return init;
+}
+```
+
+</details>
+
+### Notes
+
+The parallelizable version of this algorithm, [`std::transform_reduce`](/docs/std/algo/ordinary/transform_reduce),
+requires `op1` and `op2` to be commutative and associative, but [`std::inner_product`](#) makes no such requirement,
+and always performs the operations in the order given.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <functional>
+#include <iostream>
+#include <numeric>
+#include <vector>
+
+int main()
+{
+    std::vector<int> a {0, 1, 2, 3, 4};
+    std::vector<int> b {5, 4, 2, 3, 1};
+
+    int r1 = std::inner_product(a.begin(), a.end(), b.begin(), 0);
+    std::cout << "Inner product of a and b: " << r1 << '\n';
+
+    int r2 = std::inner_product(a.begin(), a.end(), b.begin(), 0,
+                                std::plus<>(), std::equal_to<>());
+    std::cout << "Number of pairwise matches between a and b: " <<  r2 << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Inner product of a and b: 21
+Number of pairwise matches between a and b: 2
+```
+
+</div>
+</Columns>

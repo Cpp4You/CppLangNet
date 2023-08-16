@@ -1,0 +1,8 @@
+```cpp
+// (1)
+constexpr O fill_n( O first, std::iter_difference_t<O> n, const T& value );
+```
+
+The type of arguments are generic and have the following constraints:
+- `T` - **(none)**
+- `O` - `std::output_iterator<const T&>`

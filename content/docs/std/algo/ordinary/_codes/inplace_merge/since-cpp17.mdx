@@ -1,0 +1,18 @@
+```cpp
+// (1)
+template< class BidirIt >
+void inplace_merge( BidirIt first, BidirIt middle, BidirIt last );
+
+// (2)
+template< class BidirIt, class Compare >
+void inplace_merge( BidirIt first, BidirIt middle, BidirIt last, Compare comp );
+
+// (3)
+template< class ExecutionPolicy, class BidirIt >
+void inplace_merge( ExecutionPolicy&& policy, BidirIt first, BidirIt middle, BidirIt last );
+
+// (4)
+template< class ExecutionPolicy, class BidirIt, class Compare >
+void inplace_merge( ExecutionPolicy&& policy,
+                    BidirIt first, BidirIt middle, BidirIt last, Compare comp )
+```

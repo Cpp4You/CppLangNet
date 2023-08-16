@@ -1,0 +1,134 @@
+---
+title:         ranges::generate_n algorithm
+sidebar_label: ranges::generate_n(  )
+description:   ranges::generate_n algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, generate, generate_n]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/generate_n
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/generate_n/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/generate_n/since-cpp20-simplified.mdx';
+
+# std::ranges::generate_n() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />
+	}
+}} />
+
+Assigns the result of successive invocations of the function object `gen` to each element in the range [`first`; `first + n`), if `0 < n`.  
+Does nothing otherwise.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={  <code>first</code> }>
+    The beginning of the range of elements to modify.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code> }>
+    Number of elements to modify.
+  </Symbol>
+  <Symbol none noLink name={ <code>gen</code> }>
+    The generator function object.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+Iterator one past the last element assigned if `0 < count`, `first` otherwise.
+
+### Complexity
+
+Exactly `n` invocations of `gen()` and assignments.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>generate_n(1)</summary>
+
+```cpp
+struct generate_n_fn
+{
+    template<std::input_or_output_iterator O, std::copy_constructible F>
+    requires std::invocable<F&> && std::indirectly_writable<O, std::invoke_result_t<F&>>
+    constexpr O operator()(O first, std::iter_difference_t<O> n, F gen) const
+    {
+        for (; n-- > 0; *first = std::invoke(gen), ++first)
+        {}
+        return first;
+    }
+};
+
+inline constexpr generate_n_fn generate_n {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <random>
+#include <string_view>
+
+auto dice()
+{
+    static std::uniform_int_distribution<int> distr {1, 6};
+    static std::random_device engine;
+    static std::mt19937 noise {engine()};
+    return distr(noise);
+}
+
+void print(const auto& v, std::string_view comment)
+{
+    for (int i : v)
+        std::cout << i << ' ';
+    std::cout << '(' << comment << ")\n";
+}
+
+int main()
+{
+    std::array<int, 8> v;
+
+    std::ranges::generate_n(v.begin(), v.size(), dice);
+    print(v, "dice");
+
+    std::ranges::generate_n(v.begin(), v.size(), [n {0}] mutable { return n++; });
+    // same effect as std::iota(v.begin(), v.end(), 0);
+    print(v, "iota");
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+5 5 2 2 6 6 3 5 (dice)
+0 1 2 3 4 5 6 7 (iota)
+```
+
+</div>
+</Columns>

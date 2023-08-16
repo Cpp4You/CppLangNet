@@ -1,0 +1,180 @@
+---
+title:         uninitialized_default_construct algorithm
+sidebar_label: uninitialized_default_construct(  )
+description:   uninitialized_default_construct algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, uninitialized_default_construct, clone]
+
+cppreference_origin_rel: w/cpp/algorithm/uninitialized_default_construct
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp17 from './_codes/uninitialized_default_construct/since-cpp17.mdx';
+
+# std::uninitialized_default_construct() algorithm
+
+<SwitchView content={{
+  'since-cpp17': <Signature_SinceCpp17 />,
+}} />
+
+- **(1)** Constructs objects of type `typename std::iterator_traits<ForwardIt>::value_type` in the uninitialized storage
+  designated by the range [`first`; `last`) by [`default-initialization`](#), as if by:
+  ```cpp
+  for (; first != last; ++d_first, (void) ++first)
+      ::new (/* VOIDIFY */(*d_first))
+          typename std::iterator_traits<NoThrowForwardIt>::value_type(*first);
+  ```
+  :::caution
+  If an exception is thrown during the initialization, the objects already constructed are destroyed in an unspecified order.
+  :::
+
+ - **(2)** Same as **(1)**, but executed according to `policy`.
+  :::important Overload Resolution
+  These overloads participate in overload resolution only if
+  <Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+  :::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to initialize.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> } >
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+No increment, assignment, comparison, or indirection through valid instances of `NoThrowForwardIt` may throw exceptions.
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Linear in the distance between `first` and `last`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For none other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>uninitialized_default_construct(1)</summary>
+
+```cpp
+template<class ForwardIt>
+void uninitialized_default_construct(ForwardIt first, ForwardIt last)
+{
+    using Value = typename std::iterator_traits<ForwardIt>::value_type;
+    ForwardIt current = first;
+    try
+    {
+        for (; current != last; ++current)
+        {
+            ::new (const_cast<void*>(static_cast<const volatile void*>(
+                std::addressof(*current)))) Value;
+        }
+    }
+    catch (...)
+    {
+        std::destroy(first, current);
+        throw;
+    }
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+
+#include <cstring>
+#include <iostream>
+#include <memory>
+#include <string>
+
+struct S
+{
+    std::string m{"Default value"};
+};
+
+int main()
+{
+    constexpr int n{3};
+    alignas(alignof(S)) unsigned char mem[n * sizeof(S)];
+
+    try
+    {
+        auto first{reinterpret_cast<S*>(mem)};
+        auto last{first + n};
+
+        std::uninitialized_default_construct(first, last);
+
+        for (auto it{first}; it != last; ++it)
+            std::cout << it->m << '\n';
+
+        std::destroy(first, last);
+    }
+    catch (...)
+    {
+        std::cout << "Exception!\n";
+    }
+
+    // Notice that for "trivial types" the uninitialized_default_construct
+    // generally does not zero-fill the given uninitialized memory area.
+    int v[]{1, 2, 3, 4};
+    const int original[]{1, 2, 3, 4};
+    std::uninitialized_default_construct(std::begin(v), std::end(v));
+
+    // Maybe undefined behavior, pending CWG 1997.
+    // for (const int i : v)
+    //     std::cout << i << ' ';
+
+    // The result is unspecified.
+    std::cout <<
+        (std::memcmp(v, original, sizeof(v)) == 0 ? "Unmodified\n" : "Modified\n");
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Default value
+Default value
+Default value
+Unmodified
+```
+
+</div>
+</Columns>

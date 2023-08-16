@@ -1,0 +1,27 @@
+```cpp
+// (1)
+constexpr I
+    replace_if( I first, S last, Pred pred, const T& new_value, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R>
+    replace_if( R&& r, Pred pred, const T& new_value, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::input_range`
+- `T` - **(none)**
+- `Proj` - **(none)**
+- `Pred`:
+ - **(1)** - `std::indirect_unary_predicate<std::projected<I, Proj>>`
+ - **(2)** - `std::indirect_unary_predicate< std::projected<ranges::iterator_t<R>, Proj>>`
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::indirectly_writable<I, const T&>`
+- **(2)** - `std::indirectly_writable<ranges::iterator_t<R>, const T&>`
+
+(The `std::` namespace was ommitted here for readability)

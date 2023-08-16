@@ -1,0 +1,24 @@
+```cpp
+// (1)
+constexpr ranges::subrange<I> remove_if( I first, S last, Pred pred, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_subrange_t<R> remove_if( R&& r, Pred pred, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::permutable`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::forward_range`
+- `Pred`:
+  - **(1)** - `std::indirect_unary_predicate<std::projected<I, Proj>> `
+  - **(2)** - `std::projected<ranges::iterator_t<R>, Proj>>`
+- `T` - **(none)**
+- `Proj` - **(none)**
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::permutable<ranges::iterator_t<R>>`
+
+(The `std::` namespace was ommitted here for readability)

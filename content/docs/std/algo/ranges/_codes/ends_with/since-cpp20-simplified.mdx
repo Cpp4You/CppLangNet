@@ -1,0 +1,37 @@
+```cpp
+// (1)
+constexpr bool ends_with( I1 first1, S1 last1, I2 first2, S2 last2,
+                            Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );
+
+// (2)
+constexpr bool ends_with( R1&& r1, R2&& r2,
+                            Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I1`, `I2` - `std::input_iterator`
+- `S1`, `S2` - `std::sentinel_for<I1>`, `std::sentinel_for<I2>`
+- `Pred` - **(none)**
+- `Proj1`, `Proj2` - **(none)**
+- **(2)** - `R1`, `R2` - `std::ranges::input_range`
+
+The `Pred` template argumenth as a default type of `ranges::equal_to` for all overloads.
+The `Proj1` and `Proj2` template arguments have a default type of `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)**:
+  ```cpp
+  (forward_iterator<I1> || sized_sentinel_for<S1, I1>)
+  && (forward_iterator<I2> || sized_sentinel_for<S2, I2>)
+  && indirectly_comparable<I1, I2, Pred, Proj1, Proj2>`
+  ```
+- **(2)**:
+  ```cpp
+  (ranges::forward_range<R1> || ranges::sized_range<R1>)
+  && (ranges::forward_range<R2> || ranges::sized_range<R2>)
+  && std::indirectly_comparable<ranges::iterator_t<R1>,
+                                ranges::iterator_t<R2>,
+                                Pred, Proj1, Proj2>
+  ```
+
+(The `std::` namespace was ommitted here for readability)

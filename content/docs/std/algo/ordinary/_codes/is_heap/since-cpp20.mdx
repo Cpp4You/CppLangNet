@@ -1,0 +1,17 @@
+```cpp
+// (1)
+template< class RandomIt >
+constexpr bool is_heap( RandomIt first, RandomIt last );
+
+// (2)
+template< class RandomIt, class Compare >
+constexpr bool is_heap( RandomIt first, RandomIt last, Compare comp );
+
+// (3)
+template< class ExecutionPolicy, class RandomIt >
+bool is_heap( ExecutionPolicy&& policy, RandomIt first, RandomIt last );
+
+// (4)
+template< class ExecutionPolicy, class RandomIt, class Compare >
+bool is_heap( ExecutionPolicy&& policy, RandomIt first, RandomIt last, Compare comp );
+```

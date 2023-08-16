@@ -1,0 +1,23 @@
+```cpp
+// (1)
+constexpr I max_element( I first, S last, Comp comp = {}, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R>
+    max_element( R&& r, Comp comp = {}, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::forward_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::forward_range`
+- `Comp`:
+  - **(1)** - `std::indirect_strict_weak_order<std::projected<I, Proj>>`
+  - **(2)** - `std::indirect_strict_weak_order<std::projected<ranges::iterator_t<R>, Proj>>`
+- `Proj` - **(none)**
+
+The `Proj` and `Comp` template arguments have the following default types: `std::identity`, `ranges::less` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::sortable<I, Comp, Proj>`
+- **(2)** - `std::sortable<ranges::iterator_t<R>, Comp, Proj>`

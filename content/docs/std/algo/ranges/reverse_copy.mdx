@@ -1,0 +1,157 @@
+---
+title:         ranges::reverse_copy algorithm
+sidebar_label: ranges::reverse_copy(  )
+description:   ranges::reverse_copy algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, reverse_copy, search, look]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/reverse_copy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/reverse_copy/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/reverse_copy/since-cpp20-simplified.mdx';
+
+# std::ranges::reverse_copy() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using reverse_copy_result = ranges::in_out_result<I, O>;
+```
+
+- **(1)** Given **N** as `ranges::distance(first, last)`:
+
+  Copies the elements from the source range [`first`; `last`) to the destination range [`result`; `result + N`), in such a way that the elements in the new range are in reverse order.
+
+  Behaves as if by executing the assignment `*(result + N - 1 - i) = *(first + i)` once for each integer `i` in [`0`; `N`).
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if the source and destination ranges overlap.
+:::
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+A value of type `ranges::reverse_copy_result` initialized as follows:
+```cpp
+{
+  last,
+  result + N
+}
+```
+Where N is `ranges::distance(first, last)`.
+
+### Complexity
+
+Exactly `ranges::distance(first, last)` assignments.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>reverse_copy(1)</summary>
+
+```cpp
+struct reverse_copy_fn
+{
+    template<std::bidirectional_iterator I, std::sentinel_for<I> S,
+             std::weakly_incrementable O>
+    requires std::indirectly_copyable<I, O>
+    constexpr ranges::reverse_copy_result<I, O>
+        operator()(I first, S last, O result) const
+    {
+        auto ret = ranges::next(first, last);
+        for (; last != first; *result = *--last, ++result);
+        return {std::move(ret), std::move(result)};
+    }
+
+    template<ranges::bidirectional_range R, std::weakly_incrementable O>
+    requires std::indirectly_copyable<ranges::iterator_t<R>, O>
+    constexpr ranges::reverse_copy_result<ranges::borrowed_iterator_t<R>, O>
+        operator()(R&& r, O result) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::move(result));
+    }
+};
+
+inline constexpr reverse_copy_fn reverse_copy {};
+```
+
+</details>
+
+
+### Notes
+
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable vectorization when the both iterator types
+satisfy [LegacyContiguousIterator](/docs/named_req/LegacyContiguousIterator) and have the same value type, and the value type is [TriviallyCopyable](/docs/named_req/TriviallyCopyable).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string>
+
+int main()
+{
+    std::string x {"12345"}, y(x.size(), ' ');
+    std::cout << x << " → ";
+    std::ranges::reverse_copy(x.begin(), x.end(), y.begin());
+    std::cout << y << " → ";
+    std::ranges::reverse_copy(y, x.begin());
+    std::cout << x << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+12345 → 54321 → 12345
+```
+
+</div>
+</Columns>

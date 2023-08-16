@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template<
+  class T,
+  class Proj = std::identity,
+  std::indirect_strict_weak_order<std::projected<const T*, Proj>> Comp = ranges::less
+>
+constexpr const T&
+    clamp( const T& v, const T& lo, const T& hi, Comp comp = {}, Proj proj = {} );
+```

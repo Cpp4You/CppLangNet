@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class BidirIt, class OutputIt >
+OutputIt reverse_copy( BidirIt first, BidirIt last, OutputIt d_first );
+
+// (2)
+template< class ExecutionPolicy, class BidirIt, class ForwardIt >
+ForwardIt reverse_copy( ExecutionPolicy&& policy,
+                        BidirIt first, BidirIt last, ForwardIt d_first );
+```

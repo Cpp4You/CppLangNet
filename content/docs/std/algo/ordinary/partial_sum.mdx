@@ -1,0 +1,262 @@
+---
+title:         partial_sum algorithm
+sidebar_label: partial_sum(  )
+description:   partial_sum algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, partial_sum, reduce, fold]
+
+cppreference_origin_rel: w/cpp/algorithm/partial_sum
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20 from './_codes/partial_sum/since-cpp20.mdx';
+import Signature_UntilCpp20 from './_codes/partial_sum/until-cpp20.mdx';
+
+# std::partial_sum() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'until-cpp20': <Signatue_UntilCpp20 />,
+}} />
+
+If [`first`; `last`) is not empty, computes the partial sums of the elements in its subranges and writes the sums to the range beginning at `d_first`, <Since v='cpp11'>both applying <a href="#"><code>std::move</code></a> to their operands on the left hand side</Since>.
+
+  - **(1)** Uses `operator+` to sum up the elements. Equivalent to:
+  ```cpp
+  std::iterator_traits<InputIt>::value_type acc = *first;
+  *d_first = acc;
+
+  acc = std::move(acc) + *(first + 1);
+  *(d_first + 1) = acc;
+
+  acc = std::move(acc) + *(first + 2);
+  *(d_first + 2) = acc;
+
+  acc = std::move(acc) + *(first + 3);
+  *(d_first + 3) = acc;
+  // ...
+  ```
+
+  - **(2)** Uses the given binary function op. Equivalent to:
+  ```cpp
+  std::iterator_traits<InputIt>::value_type acc = *first;
+  *d_first = acc;
+
+  acc = op(std::move(acc), *(first + 1));
+  *(d_first + 1) = acc;
+
+  acc = op(std::move(acc), *(first + 2));
+  *(d_first + 2) = acc;
+
+  acc = op(std::move(acc), *(first + 3));
+  *(d_first + 3) = acc;
+  // ...
+  ```
+
+:::danger Undefined Behaviour
+If `op` invalidates any iterators (including the end iterators) or modifies any elements of the range involved, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to fold.
+  </Symbol>
+  <Symbol none noLink name={ <code>init</code> }>
+    Initial value of the fold.
+  </Symbol>
+  <Symbol none noLink name={ <code>op</code> }>
+
+Binary operation function object that will be applied.
+The signature of the function should be equivalent to the following:
+```cpp
+ Ret fun(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`.
+- The type `Type1` must be such that an object of type `std::iterator_traits<InputIt>::value_type` can be implicitly converted to it.
+- The type `Type2` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to  it.
+- The type `Ret` must be such that an object of type `InputIt` can be dereferenced and assigned a value of it's type.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+</SymbolTable>
+
+- `InputIt`'s value type must be constructible from `*first`.
+- `acc` must be writable to `d_first`.
+
+### Return value
+
+Iterator to the element past the last element written, or `d_first` if [`first`; `last`) is empty.
+
+### Complexity
+
+Given `N` as `std::distance(first, last) - 1`:
+
+- **(1)** Exactly `N` applications of `operator+`.
+- **(2)** Exactly `N` applications of the binary function `op`.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>partial_sum(1)</summary>
+
+```cpp
+template<class InputIt, class OutputIt>
+constexpr // since C++20
+OutputIt partial_sum(InputIt first, InputIt last, OutputIt d_first)
+{
+    if (first == last)
+        return d_first;
+
+    typename std::iterator_traits<InputIt>::value_type sum = *first;
+    *d_first = sum;
+
+    while (++first != last)
+    {
+        sum = std::move(sum) + *first; // std::move since C++11
+        *++d_first = sum;
+    }
+
+    return ++d_first;
+
+    // or, since C++14:
+    // return std::partial_sum(first, last, d_first, std::plus<>());
+}
+```
+
+</details>
+
+<details>
+<summary>partial_sum(2)</summary>
+
+```cpp
+template<class InputIt, class OutputIt, class BinaryOperation>
+constexpr // since C++20
+OutputIt partial_sum(InputIt first, InputIt last, OutputIt d_first, BinaryOperation op)
+{
+    if (first == last)
+        return d_first;
+
+    typename std::iterator_traits<InputIt>::value_type acc = *first;
+    *d_first = acc;
+
+    while (++first != last)
+    {
+        acc = op(std::move(acc), *first); // std::move since C++11
+        *++d_first = acc;
+    }
+
+    return ++d_first;
+}
+```
+
+</details>
+
+### Notes
+
+`acc` was introduced because of the resolution of [LWG issue 539](https://cplusplus.github.io/LWG/issue539).
+
+The reason of using `acc` rather than directly calculating the differences is because the semantic of the latter is confusing if the following types mismatch:
+- The value type of `InputIt`
+- The writable type(s) of `OutputIt`
+- The types of the parameters of `operator-` or `op`
+- The return type of `operator-` or `op`
+
+`acc` serves as the intermediate object to cache values of the iterated elements:
+- Its type is the value type of `InputIt`
+- The value written to `d_first` (which is the return value of `operator-` or `op`) is assigned to it
+- Its value is passed to `operator-` or `op`
+
+```cpp
+enum not_int { x = 1, y = 2 };
+
+char i_array[4] = {100, 100, 100, 100};
+not_int e_array[4] = {x, x, y, y};
+int  o_array[4];
+
+// OK: uses operator+(char, char) and assigns char values to int array
+std::partial_sum(i_array, i_array + 4, o_array);
+
+// Error: cannot assign not_int values to int array
+std::partial_sum(e_array, e_array + 4, o_array);
+
+// OK: performs conversions when needed
+// 1. creates `acc` of type char (the value type)
+// 2. the char arguments are used for long multiplication (char -> long)
+// 3. the long product is assigned to `acc` (long -> char)
+// 4. `acc` is assigned to an element of `o_array` (char -> int)
+// 5. go back to step 2 to process the remaining elements in the input range
+std::partial_sum(i_array, i_array + 4, o_array, std::multiplies<long>{});
+```
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <numeric>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v(10, 2); // v = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2}
+
+    std::cout << "The first " << v.size() << " even numbers are: ";
+    // write the result to the cout stream
+    std::partial_sum(v.cbegin(), v.cend(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+
+    // write the result back to the vector v
+    std::partial_sum(v.cbegin(), v.cend(),
+                     v.begin(), std::multiplies<int>());
+
+    std::cout << "The first " << v.size() << " powers of 2 are: ";
+    for (int n : v)
+        std::cout << n << ' ';
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+The first 10 even numbers are: 2 4 6 8 10 12 14 16 18 20 
+The first 10 powers of 2 are: 2 4 8 16 32 64 128 256 512 1024
+```
+
+</div>
+</Columns>

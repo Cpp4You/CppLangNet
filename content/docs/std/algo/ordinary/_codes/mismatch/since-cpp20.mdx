@@ -1,0 +1,51 @@
+```cpp
+// (1)
+template< class InputIt1, class InputIt2 >
+constexpr std::pair<InputIt1, InputIt2>
+    mismatch( InputIt1 first1, InputIt1 last1,
+              InputIt2 first2 );
+
+// (2)
+template< class InputIt1, class InputIt2, class BinaryPredicate >
+constexpr std::pair<InputIt1, InputIt2>
+    mismatch( InputIt1 first1, InputIt1 last1,
+              InputIt2 first2, BinaryPredicate p );
+
+// (3)
+template< class InputIt1, class InputIt2 >
+constexpr std::pair<InputIt1, InputIt2>
+    mismatch( InputIt1 first1, InputIt1 last1,
+              InputIt2 first2, InputIt2 last2 );
+
+// (4)
+template< class InputIt1, class InputIt2, class BinaryPredicate >
+constexpr std::pair<InputIt1, InputIt2>
+    mismatch( InputIt1 first1, InputIt1 last1,
+              InputIt2 first2, InputIt2 last2, BinaryPredicate p );
+
+// (5)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2 >
+std::pair<ForwardIt1, ForwardIt2>
+    mismatch( ExecutionPolicy&& policy, ForwardIt1 first1, ForwardIt1 last1,
+              ForwardIt2 first2 );
+
+// (6)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2,
+          class BinaryPredicate >
+std::pair<ForwardIt1, ForwardIt2>
+    mismatch( ExecutionPolicy&& policy, ForwardIt1 first1, ForwardIt1 last1,
+              ForwardIt2 first2, BinaryPredicate p );
+
+// (7)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2 >
+std::pair<ForwardIt1, ForwardIt2>
+    mismatch( ExecutionPolicy&& policy, ForwardIt1 first1, ForwardIt1 last1,
+              ForwardIt2 first2, ForwardIt2 last2 );
+
+// (8)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2,
+          class BinaryPredicate >
+std::pair<ForwardIt1, ForwardIt2>
+    mismatch( ExecutionPolicy&& policy, ForwardIt1 first1, ForwardIt1 last1,
+              ForwardIt2 first2, ForwardIt2 last2, BinaryPredicate p )
+```

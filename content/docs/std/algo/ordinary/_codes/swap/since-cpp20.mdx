@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class T >
+constexpr void swap( T& a, T& b ) noexcept(/* see below */);
+
+// (2)
+template< class T2, std::size_t N >
+constexpr void swap( T2 (&a)[N], T2 (&b)[N] ) noexcept(/* see below */);
+```

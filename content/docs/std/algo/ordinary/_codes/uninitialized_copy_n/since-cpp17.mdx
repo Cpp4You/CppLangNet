@@ -1,0 +1,14 @@
+```cpp
+// (1)
+template< class InputIt, class Size, class NoThrowForwardIt >
+NoThrowForwardIt uninitialized_copy_n( InputIt first, Size count, NoThrowForwardIt d_first );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class Size, class NoThrowForwardIt >
+NoThrowForwardIt uninitialized_copy_n(
+  ExecutionPolicy&& policy,
+  ForwardIt first,
+  Size count,
+  NoThrowForwardIt d_first
+);
+```

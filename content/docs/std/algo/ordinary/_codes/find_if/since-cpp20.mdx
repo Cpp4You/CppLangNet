@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class InputIt, class UnaryPredicate >
+constexpr InputIt find_if( InputIt first, InputIt last, UnaryPredicate p );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class UnaryPredicate >
+ForwardIt find_if( ExecutionPolicy&& policy,
+                   ForwardIt first, ForwardIt last, UnaryPredicate p );
+```

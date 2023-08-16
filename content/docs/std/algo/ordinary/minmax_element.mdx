@@ -1,0 +1,194 @@
+---
+title:         minmax_element algorithm
+sidebar_label: minmax_element(  )
+description:   minmax_element algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, minmax, minmax_element, min, max, smallest, greatest, largest, biggest]
+
+cppreference_origin_rel: w/cpp/algorithm/minmax_element
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import { Since }               from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp17 from './_codes/minmax_element/since-cpp17.mdx';
+import Signature_SinceCpp11 from './_codes/minmax_element/since-cpp11.mdx';
+
+# std::minmax_element( ) algorithm
+
+<SwitchView content={{
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'since-cpp11': <Signature_SinceCpp11 />,
+}} />
+
+Finds the smallest and greatest element in the range [`first`; `last`).
+
+- **(1)** Elements are compared using `operator<`.
+
+- **(2)** Elements are compared using the given binary comparison function `comp`.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range to find the greatest and smallest value in.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>cmp</code> }>
+
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)) which returns `true` if `*a` is less than `*b`.  
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+While the signature does not need to have `const&`, the function must not modify the objects passed to it and must be able to accept all values of type (possibly const) `Type1` and `Type2` regardless of value category (thus, `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>).
+
+The types `Type1` and `Type2` must be such that an object of type `ForwardIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+A pair consisting of an iterator to the smallest element as the first element and an iterator to the greatest element as the second.
+
+Returns `std::make_pair(first, first)` if the range is empty.
+
+If several elements are equivalent to the **smallest** element, the iterator to the `first` such element is returned.  
+If several elements are equivalent to the **largest** element, the iterator to the `last` such element is returned.
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+At most `max(floor( (3 / 2) * (N − 1) ), 0)` applications of the predicate.
+
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>minmax_element (1)</summary>
+
+```cpp
+template<class ForwardIt>
+std::pair<ForwardIt, ForwardIt>
+    minmax_element(ForwardIt first, ForwardIt last)
+{
+    using value_type = typename std::iterator_traits<ForwardIt>::value_type;
+    return std::minmax_element(first, last, std::less<value_type>());
+}
+```
+
+</details>
+
+<details>
+<summary>minmax_element (2)</summary>
+
+```cpp
+template<class ForwardIt, class Compare>
+std::pair<ForwardIt, ForwardIt>
+    minmax_element(ForwardIt first, ForwardIt last, Compare comp)
+{
+    auto min = first, max = first;
+
+    if (first == last || ++first == last)
+        return {min, max};
+
+    if (comp(*first, *min))
+        min = first;
+    else
+        max = first;
+
+    while (++first != last)
+    {
+        auto i = first;
+        if (++first == last)
+        {
+            if (comp(*i, *min))
+                min = i;
+            else if (!(comp(*i, *max)))
+                max = i;
+            break;
+        }
+        else
+        {
+            if (comp(*first, *i))
+            {
+                if (comp(*first, *min))
+                    min = first;
+                if (!(comp(*i, *max)))
+                    max = i;
+            }
+            else
+            {
+                if (comp(*i, *min))
+                    min = i;
+                if (!(comp(*first, *max)))
+                    max = first;
+            }
+        }
+    }
+    return {min, max};
+}
+```
+
+</details>
+
+### Notes
+
+This algorithm is different from `std::make_pair(std::min_element(), std::max_element())`, not only in efficiency,
+but also in that this algorithm finds the last biggest element while
+[`std::max_element()`](/docs/std/algo/ordinary/max_element) finds the first biggest element (in terms of iterators).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+
+int main()
+{
+    const auto v = {3, 9, 1, 4, 2, 5, 9};
+    const auto [min, max] = std::minmax_element(begin(v), end(v));
+
+    std::cout << "min = " << *min << ", max = " << *max << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+min = 1, max = 9
+```
+
+</div>
+</Columns>

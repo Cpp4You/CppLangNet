@@ -1,0 +1,166 @@
+---
+title:         lexicographical_compare_three_way algorithm
+sidebar_label: lexicographical_compare_three_way(  )
+description:   lexicographical_compare_three_way algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, lexicographical_compare_three_way]
+
+cppreference_origin_rel: w/cpp/algorithm/lexicographical_compare_three_way
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+import Term_IllFormed from "@site/i18n/en/presets/terms/ill-formed.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20 from './_codes/lexicographical_compare_three_way/since-cpp20.mdx';
+
+# std::lexicographical_compare_three_way() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+}} />
+
+Lexicographically compares two ranges [`first1`; `last1`) and [`first2`; `last2`) using three-way comparison and produces a result of the strongest applicable comparison category type.
+
+- **(1)** Returns the order between the first non-equivalent pair of elements according to `comp` in both ranges if any, otherwise (if one ranges is equivalent to the prefix of another according to `comp`), returns the order between the length of both ranges.
+
+- **(2)** Equivalent to:
+  ```cpp
+  return std::lexicographical_compare_three_way(first1, last1, first2, last2, std::compare_three_way());
+  ```
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The first range of elements compare.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The second range of elements compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+A function object type. The program is <Tooltip title={ <Term_IllFormed /> }>ill-formed</Tooltip> if its return type is not one of the three comparison category types ([`std::strong_ordering`](#), [`std::weak_ordering`](#), or [`std::partial_ordering`](#)).
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>InputIt1</code> <br/> <code>InputIt2</code> </> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+The value of a comparison category type specified above.
+
+### Complexity
+
+At most `N` applications of `comp`, where `N` is the smaller of length of both ranges.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>lexicographical_compare_three_way(1)</summary>
+
+```cpp
+template<class I1, class I2, class Cmp>
+constexpr auto lexicographical_compare_three_way(I1 f1, I1 l1, I2 f2, I2 l2, Cmp comp)
+    -> decltype(comp(*f1, *f2))
+{
+    using ret_t = decltype(comp(*f1, *f2));
+    static_assert(std::disjunction_v<
+                      std::is_same<ret_t, std::strong_ordering>,
+                      std::is_same<ret_t, std::weak_ordering>,
+                      std::is_same<ret_t, std::partial_ordering>>,
+                  "The return type must be a comparison category type.");
+
+    bool exhaust1 = (f1 == l1);
+    bool exhaust2 = (f2 == l2);
+    for (; !exhaust1 && !exhaust2; exhaust1 = (++f1 == l1), exhaust2 = (++f2 == l2))
+        if (auto c = comp(*f1, *f2); c != 0)
+            return c;
+
+    return !exhaust1 ? std::strong_ordering::greater:
+           !exhaust2 ? std::strong_ordering::less:
+                       std::strong_ordering::equal;
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cctype>
+#include <compare>
+#include <iomanip>
+#include <iostream>
+#include <string_view>
+#include <utility>
+using namespace std::literals;
+
+void show_result(std::string_view s1, std::string_view s2, std::strong_ordering o)
+{
+    std::cout << std::quoted(s1) << " is ";
+    std::is_lt(o) ? std::cout << "less than ":
+    std::is_gt(o) ? std::cout << "greater than ":
+                    std::cout << "equal to ";
+    std::cout << std::quoted(s2) << '\n';
+}
+
+std::strong_ordering cmp_icase(unsigned char x, unsigned char y)
+{
+    return std::toupper(x) <=> std::toupper(y);
+};
+
+int main()
+{
+    for (const auto& [s1, s2]:
+    {
+        std::pair{ "one"sv, "ONE"sv }, { "two"sv, "four"sv }, { "three"sv, "two"sv }
+    })
+    {
+        const auto res = std::lexicographical_compare_three_way(
+            s1.cbegin(), s1.cend(), s2.cbegin(), s2.cend(), cmp_icase);
+        show_result(s1, s2, res);
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+"one" is equal to "ONE"
+"two" is greater than "four"
+"three" is less than "two"
+```
+
+</div>
+</Columns>

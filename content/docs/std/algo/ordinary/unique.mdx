@@ -1,0 +1,216 @@
+---
+title:         unique algorithm
+sidebar_label: unique(  )
+description:   unique algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, unique]
+
+cppreference_origin_rel: w/cpp/algorithm/unique
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/unique/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/unique/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/unique/since-cpp20.mdx';
+
+# std::unique() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+Eliminates all except the first element from every consecutive group of equivalent elements from the range [`first`; `last`) and returns a past-the-end iterator for the new `logical` end of the range.
+
+ - **(1)** Elements are compared using `operator==`.
+ - **(2)** Elements are compared using the given binary predicate `p`.
+
+- **(3 - 4)** Same as **(1 - 2)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+:::important
+Removing is done by shifting the elements in the range in such a way that elements to be erased are overwritten.
+:::
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if it is not an equivalence relation.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Binary predicate which returns `true` if the elements should be treated as equal.
+
+The signature of the function should be equivalent to the following:
+```cpp
+bool fun(const Type1& a, const Type2& b);
+```
+- The signature does not need to have `const&`.
+- The function **must not** modify the objects passed to it.
+- Must accept all values of type (possibly const) `Type1` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `ForwardIt` can be dereferenced and then implicitly converted to them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> Dereferenced <code>ForwardIt</code> </> }>
+    <a href="/docs/named_req/MoveAssignable">MoveAssignable</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+For nonempty ranges, exactly `td::distance(first, last) - 1` applications of the corresponding predicate.
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+At most N applications of predicate `p`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>unique (1)</summary>
+
+```cpp
+template<class ForwardIt>
+ForwardIt unique(ForwardIt first, ForwardIt last)
+{
+    if (first == last)
+        return last;
+
+    ForwardIt result = first;
+    while (++first != last)
+        if (!(*result == *first) && ++result != first)
+            *result = std::move(*first);
+
+    return ++result;
+}
+```
+
+</details>
+
+<details>
+<summary>unique (2)</summary>
+
+```cpp
+template<class ForwardIt, class BinaryPredicate>
+ForwardIt unique(ForwardIt first, ForwardIt last, BinaryPredicate p)
+{
+    if (first == last)
+        return last;
+
+    ForwardIt result = first;
+    while (++first != last)
+        if (!p(*result, *first) && ++result != first)
+            *result = std::move(*first);
+
+    return ++result;
+}
+```
+
+</details>
+
+### Notes
+
+Relative order of the elements that remain is preserved and the *physical* size of the container is unchanged.
+Iterators in [`r`; `last`) (if any), where `r` is the return value, are still dereferenceable, but the elements themselves have unspecified values.
+
+A call to [`std::unique`](#) is typically followed by a call to a container's `erase` member function, which erases the unspecified values and reduces the `physical` size of the container to match its new `logical` size.
+
+### Examples
+
+The following code uniques all spaces from a string by shifting all non-space characters to the left and then erasing the extra.
+This is an example of [Erase-remove idiom](#).
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    // a vector containing several duplicate elements
+    std::vector<int> v {1, 2, 1, 1, 3, 3, 3, 4, 5, 4};
+    auto print = [&](int id)
+    {
+        std::cout << "@" << id << ": ";
+        for (int i : v)
+            std::cout << i << ' ';
+        std::cout << '\n';
+    };
+    print(1);
+
+    // remove consecutive (adjacent) duplicates
+    auto last = std::unique(v.begin(), v.end());
+    // v now holds {1 2 1 3 4 5 4 x x x}, where 'x' is indeterminate
+    v.erase(last, v.end());
+    print(2);
+
+    // sort followed by unique, to remove all duplicates
+    std::sort(v.begin(), v.end()); // {1 1 2 3 4 4 5}
+    print(3);
+
+    last = std::unique(v.begin(), v.end());
+    // v now holds {1 2 3 4 5 x x}, where 'x' is indeterminate
+    v.erase(last, v.end());
+    print(4);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+@1: 1 2 1 1 3 3 3 4 5 4
+@2: 1 2 1 3 4 5 4
+@3: 1 1 2 3 4 4 5
+@4: 1 2 3 4 5
+```
+
+</div>
+</Columns>

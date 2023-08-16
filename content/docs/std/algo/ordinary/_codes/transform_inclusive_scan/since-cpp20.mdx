@@ -1,0 +1,28 @@
+```cpp
+// (1)
+template< class InputIt, class OutputIt, class BinaryOperation, class UnaryOperation >
+constexpr OutputIt transform_inclusive_scan( InputIt first, InputIt last, OutputIt d_first, BinaryOperation binary_op,
+                                             UnaryOperation unary_op );
+
+// (2) (3)
+template< class InputIt, class OutputIt, class BinaryOperation, class UnaryOperation, class T >
+constexpr OutputIt transform_inclusive_scan( InputIt first, InputIt last, OutputIt d_first, BinaryOperation binary_op,
+                                             UnaryOperation unary_op, T init );
+
+// (3) (2)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2, class BinaryOperation, class UnaryOperation >
+ForwardIt2 transform_inclusive_scan( ExecutionPolicy&& policy, ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first,
+                                     BinaryOperation binary_op, UnaryOperation unary_op );
+
+// (4)
+template<
+  class ExecutionPolicy,
+  class ForwardIt1,
+  class ForwardIt2,
+  class BinaryOperation,
+  class UnaryOperation,
+  class T
+>
+ForwardIt2 transform_inclusive_scan( ExecutionPolicy&& policy, ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first,
+                                     BinaryOperation binary_op, UnaryOperation unary_op, T init );
+```

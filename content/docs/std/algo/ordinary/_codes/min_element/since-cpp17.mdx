@@ -1,0 +1,18 @@
+```cpp
+template< class ForwardIt >
+ForwardIt min_element( ForwardIt first, ForwardIt last );
+
+// (2)
+template< class ForwardIt, class Compare >
+ForwardIt min_element( ForwardIt first, ForwardIt last, Compare comp );
+
+// (3)
+template< class ExecutionPolicy, class ForwardIt >
+ForwardIt min_element( ExecutionPolicy&& policy,
+                       ForwardIt first, ForwardIt last );
+
+// (4)
+template< class ExecutionPolicy, class ForwardIt, class Compare >
+ForwardIt min_element( ExecutionPolicy&& policy,
+                       ForwardIt first, ForwardIt last, Compare comp );
+```

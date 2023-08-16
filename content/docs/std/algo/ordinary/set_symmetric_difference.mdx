@@ -1,0 +1,223 @@
+---
+title:         set_symmetric_difference algorithm
+sidebar_label: set_symmetric_difference(  )
+description:   set_symmetric_difference algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, set, difference, set_difference, set_symmetric_difference]
+
+cppreference_origin_rel: w/cpp/algorithm/set_symmetric_difference
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/set_symmetric_difference/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/set_symmetric_difference/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/set_symmetric_difference/since-cpp20.mdx';
+
+# std::set_symmetric_difference() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />,
+}} />
+
+
+Computes symmetric difference of two sorted ranges, the elements that are found in either of the ranges,
+but not in both of them are copied to the range beginning at `d_first`. The output range is also sorted.
+
+If [`first1`; `last1`) contains `m` elements that are equivalent to each other and [`first2`; `last2`) contains `n` elements
+that are equivalent to them, then `std::abs(m - n)` of those elements will be copied to the output range, preserving order:
+ - If `m > n`, the final `m - n` of these elements from [`first1`; `last1`)
+ - If `m < n`, the final `n - m` of these elements from [`first2`; `last2`)
+
+- **(1)** Both ranges must be sorted with respect to `operator<`.
+
+- **(2)** Both ranges must be sorted with respect to `comp`.
+
+- **(3 - 4)** Same as **(1)** and **(2)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Until>
+	<Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Since>
+	:::
+
+:::danger Undefined Behaviour
+If either of the input ranges is not sorted (using `operator<` or `comp`, respectively) or overlaps with the output range,
+the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last2</code> </> }>
+    The first sorted range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last3</code> </> }>
+    The second sorted range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>InputIt1</code> <br/> <code>InputIt2</code> </> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a> <br/>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> <br/> <code>ForwardIt3</code></> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a> <br/>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt1</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+Iterator past the end of the constructed range.
+
+### Complexity
+
+Given `M` std::distance(first1, last1) and `N` as `std::distance(first2, last2)`:
+
+- **(1, 3)** at most **2 \* (M + N) - 1** comparisons using `operator<`.
+- **(2, 4)** at most **2 \* (M + N) - 1** comparisons with `comp`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>set_symmetric_difference(1)</summary>
+
+```cpp
+template<class InputIt1, class InputIt2, class OutputIt>
+OutputIt set_symmetric_difference(InputIt1 first1, InputIt1 last1,
+                                  InputIt2 first2, InputIt2 last2, OutputIt d_first)
+{
+    while (first1 != last1)
+    {
+        if (first2 == last2)
+            return std::copy(first1, last1, d_first);
+
+        if (*first1 < *first2)
+            *d_first++ = *first1++;
+        else
+        {
+            if (*first2 < *first1)
+                *d_first++ = *first2;
+            else
+                ++first1;
+            ++first2;
+        }
+    }
+    return std::copy(first2, last2, d_first);
+}
+```
+
+</details>
+
+<details>
+<summary>set_symmetric_difference(2)</summary>
+
+```cpp
+template<class InputIt1, class InputIt2, class OutputIt, class Compare>
+OutputIt set_symmetric_difference(InputIt1 first1, InputIt1 last1,
+                                  InputIt2 first2, InputIt2 last2,
+                                  OutputIt d_first, Compare comp)
+{
+    while (first1 != last1)
+    {
+        if (first2 == last2)
+            return std::copy(first1, last1, d_first);
+
+        if (comp(*first1, *first2))
+            *d_first++ = *first1++;
+        else
+        {
+            if (comp(*first2, *first1))
+                *d_first++ = *first2;
+            else
+                ++first1;
+            ++first2;
+        }
+    }
+    return std::copy(first2, last2, d_first);
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v1 {1, 2, 3, 4, 5, 6, 7, 8};
+    std::vector<int> v2 {            5,    7,    9, 10};
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+
+    std::vector<int> v_symDifference;
+
+    std::set_symmetric_difference(v1.begin(), v1.end(), v2.begin(), v2.end(),
+                                  std::back_inserter(v_symDifference));
+
+    for (int n : v_symDifference)
+        std::cout << n << ' ';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+1 2 3 4 6 8 9 10
+```
+
+</div>
+</Columns>

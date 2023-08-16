@@ -1,0 +1,8 @@
+```cpp
+// (1)
+template<
+  class T,
+  std::output_iterator<const T&> O
+>
+constexpr O fill_n( O first, std::iter_difference_t<O> n, const T& value );
+```

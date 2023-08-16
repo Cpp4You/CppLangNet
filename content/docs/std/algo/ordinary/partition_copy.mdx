@@ -1,0 +1,196 @@
+---
+title:         partition_copy algorithm
+sidebar_label: partition_copy(  )
+description:   partition_copy algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, partition, partition_copy]
+
+cppreference_origin_rel: w/cpp/algorithm/partition_copy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11 from './_codes/partition_copy/since-cpp11.mdx';
+import Signature_SinceCpp17 from './_codes/partition_copy/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/partition_copy/since-cpp20.mdx';
+
+# std::partition_copy() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'since-cpp17': <Signature_SinceCpp11 />
+}} />
+
+- **(1)** Copies the elements from the range [`first`; `last`) to two different ranges depending on the value returned by the predicate `p`.
+
+  The elements that satisfy the predicate `p` are copied to the range beginning at `d_first_true`.
+  The rest of the elements are copied to the range beginning at `d_first_false`.
+
+  :::danger Undefined Behaviour
+  The <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if the input range overlaps either of the output ranges.
+  :::
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first_true</code> }>
+    The beginning of the output range for the elements that satisfy <code>p</code>
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first_false</code> }>
+    The beginning of the output range for the elements that <b>don't</b> satisfy <code>p</code>
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Unary predicate which returns `true` for the required element.
+
+The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> Dereferenced <code>InputIt</code> </> }>
+    <a href="/docs/named_req/CopyAssignable">CopyAssignable</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>OutputIt1</code> <br/> <code>OutputIt2</code> </> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> <br/> <code>ForwardIt3</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>UnaryPredicate</code> }>
+    <a href="/docs/named_req/Predicate">Predicate</a>
+  </Symbol>
+
+</SymbolTable>
+
+`ForwardIt1::value_type` must be:
+ - [CopyAssignable](/docs/named_req/CopyAssignable)
+ - [Writable](#) to `ForwardIt2` and `ForwardIt3`
+ - [Convertible](#) to `UnaryPredicate`'s argument type
+
+### Return value
+
+A [`std::pair`](#) constructed from the iterator to the end of the `d_first_true` range and the iterator to the end of the `d_first_false` range.
+
+### Complexity
+
+Exactly `std::distance(first, last)` applications of `p`.
+
+For the overload with an `ExecutionPolicy`, there may be a performance cost if `ForwardIt`'s value type is **not** [CopyConstructible](/docs/named_req/CopyConstructible).
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>partition_copy (1)</summary>
+
+```cpp
+template<class InputIt, class OutputIt1,
+         class OutputIt2, class UnaryPredicate>
+std::pair<OutputIt1, OutputIt2>
+    partition_copy(InputIt first, InputIt last,
+                   OutputIt1 d_first_true, OutputIt2 d_first_false,
+                   UnaryPredicate p)
+{
+    for (; first != last; ++first)
+    {
+        if (p(*first))
+        {
+            *d_first_true = *first;
+            ++d_first_true;
+        }
+        else
+        {
+            *d_first_false = *first;
+            ++d_first_false;
+        }
+    }
+
+    return std::pair<OutputIt1, OutputIt2>(d_first_true, d_first_false);
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <utility>
+
+void print(auto rem, auto const& v)
+{
+    for (std::cout << rem; auto const& x : v)
+        std::cout << x << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    int arr[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int true_arr[5] = {0};
+    int false_arr[5] = {0};
+
+    std::partition_copy(std::begin(arr), std::end(arr),
+                        std::begin(true_arr), std::begin(false_arr),
+                        [](int i) { return 4 < i; });
+
+    print("true_arr:  ", true_arr);
+    print("false_arr: ", false_arr);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+true_arr:  5 6 7 8 9
+false_arr: 0 1 2 3 4
+```
+
+</div>
+</Columns>

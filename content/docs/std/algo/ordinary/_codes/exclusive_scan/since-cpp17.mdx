@@ -1,0 +1,29 @@
+```cpp
+// (1)
+template< class InputIt, class OutputIt >
+OutputIt exclusive_scan( InputIt first, InputIt last, OutputIt d_first );
+
+// (2)
+template< class InputIt, class OutputIt, class BinaryOperation >
+OutputIt exclusive_scan( InputIt first, InputIt last, OutputIt d_first, BinaryOperation binary_op );
+
+// (3)
+template< class InputIt, class OutputIt, class BinaryOperation, class T >
+OutputIt exclusive_scan( InputIt first, InputIt last, OutputIt d_first, BinaryOperation binary_op, T init );
+
+// (4)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2 >
+ForwardtIt2 exclusive_scan( ExecutionPolicy&& policy, ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first );
+
+// (5)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2, class BinaryOperation >
+ForwardIt2 exclusive_scan( ExecutionPolicy&& policy,
+                           ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first,
+                           BinaryOperation binary_op );
+
+// (6)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2, class BinaryOperation, class T >
+ForwardIt2 exclusive_scan( ExecutionPolicy&& policy,
+                           ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first,
+                           BinaryOperation binary_op, T init );
+```

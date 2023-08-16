@@ -1,0 +1,18 @@
+```cpp
+// (1)
+constexpr move_backward_result<I1, I2>
+    move_backward( I1 first, S1 last, I2 result );
+
+// (2)
+constexpr move_backward_result<ranges::borrowed_iterator_t<R>, I>
+    move_backward( R&& r, I result );
+```
+
+The type of arguments are generic and have following constraints:
+- `I`, `I2` - `std::bidirectonal_iterator`
+- `S` - `std::sentinel_for<I1>`
+- **(2)** - `R` - `std::ranges::bidirectional_range`
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::indirectly_movable<I1, I2>`
+- **(2)** - `std::indirectly_movable<ranges::iterator_t<R>, I>`

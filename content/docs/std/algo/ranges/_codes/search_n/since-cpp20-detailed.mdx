@@ -1,0 +1,26 @@
+```cpp
+// (1)
+template<
+  std::forward_iterator I,
+  std::sentinel_for<I> S,
+  class T,
+  class Pred = ranges::equal_to,
+  class Proj = std::identity
+>
+  requires std::indirectly_comparable<I, const T*, Pred, Proj>
+constexpr ranges::subrange<I>
+    search_n( I first, S last, std::iter_difference_t<I> count,
+              const T& value, Pred pred = {}, Proj proj = {} );
+
+// (2)
+template<
+  ranges::forward_range R,
+  class T,
+  class Pred = ranges::equal_to,
+  class Proj = std::identity
+>
+  requires std::indirectly_comparable<ranges::iterator_t<R>, const T*, Pred, Proj>
+constexpr ranges::borrowed_subrange_t<R>
+    search_n( R&& r, ranges::range_difference_t<R> count,
+              const T& value, Pred pred = {}, Proj proj = {} );
+```

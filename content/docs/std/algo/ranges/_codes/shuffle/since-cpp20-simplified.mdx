@@ -1,0 +1,19 @@
+```cpp
+// (1)
+I shuffle( I first, S last, Gen&& gen );
+
+// (2)
+ranges::borrowed_iterator_t<R> shuffle( R&& r, Gen&& gen );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::random_access_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::random_access_range`
+- `G` - **(none)**
+
+Additionally, each overload has the following constraints:
+- **(1)** - `permutable<I> && uniform_random_bit_generator<remove_reference_t<Gen>>`
+- **(2)** - `permutable<ranges::iterator_t<R>> && uniform_random_bit_generator<remove_reference_t<Gen>>`
+
+(The `std::` namespace was omitted for readability)

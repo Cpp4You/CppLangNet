@@ -1,0 +1,18 @@
+```cpp
+// (1)
+template< class InputIt, class OutputIt, class T, class BinaryOperation, class UnaryOperation >
+OutputIt transform_exclusive_scan( InputIt first, InputIt last, OutputIt d_first, T init,
+                                   BinaryOperation binary_op, UnaryOperation unary_op );
+
+// (2)
+template<
+  class ExecutionPolicy,
+  class ForwardIt1,
+  class ForwardIt2,
+  class T,
+  class BinaryOperation,
+  class UnaryOperation
+>
+ForwardIt2 transform_exclusive_scan( ExecutionPolicy&& policy, ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first,
+                                     T init, BinaryOperation binary_op, UnaryOperation unary_op );
+```

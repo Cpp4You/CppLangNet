@@ -1,0 +1,15 @@
+```cpp
+// (1)
+template<
+  no-throw-forward-iterator I,
+  no-throw-sentinel-for<I> S
+>
+  requires std::default_initializable<std::iter_value_t<I>>
+I uninitialized_value_construct( I first, S last );
+
+// (2)
+template< no-throw-forward-range R >
+  requires std::default_initializable<ranges::range_value_t<R>>
+ranges::borrowed_iterator_t<R>
+  uninitialized_value_construct( R&& r );
+```
