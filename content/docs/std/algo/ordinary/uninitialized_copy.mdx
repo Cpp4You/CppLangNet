@@ -29,7 +29,7 @@ import Signature_SinceCpp17 from './_codes/uninitialized_copy/since-cpp17.mdx';
   'until-cpp17': <Signature_UntilCpp17 />
 }} />
 
-- **(1)** Copies elements from the range [`first`; `last`) to an uninitialized memory area beginning at `d_first` as if by
+- **(1)** Copies elements from the range [`first`; `last`) to an uninitialized memory area beginning at `d_first` as if by:
   ```cpp
   for (; first != last; ++d_first, (void) ++first)
       ::new (/* VOIDIFY */(*d_first))

@@ -27,7 +27,7 @@ import Signature_SinceCpp17 from './_codes/destroy/since-cpp17.mdx';
   'since-cpp17': <Signature_SinceCpp17 />,
 }} />
 
-- **(1)** Destroys the objects in the range [`first`; `last`), as if by
+- **(1)** Destroys the objects in the range [`first`; `last`), as if by:
   ```cpp
   for (; first != last; ++first)
       std::destroy_at(std::addressof(*first));

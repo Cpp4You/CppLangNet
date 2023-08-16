@@ -26,7 +26,7 @@ import Signature_SinceCpp20_Simplified from './_codes/uninitialized_fill_n/since
 	}
 }} />
 
-Constructs `n` copies of the given value `x` in an uninitialized memory area, designated by the range [`first`; `first + n`), as if by
+Constructs `n` copies of the given value `x` in an uninitialized memory area, designated by the range [`first`; `first + n`), as if by:
 ```cpp
 for (; n--; ++first) {
     ::new (static_cast<void*>(std::addressof(*first)))

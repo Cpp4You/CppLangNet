@@ -29,7 +29,7 @@ import Signature_SinceCpp17 from './_codes/uninitialized_fill/since-cpp17.mdx';
   'until-cpp17': <Signature_UntilCpp17 />
 }} />
 
-- **(1)** Copies the given value `value` to the first `count` elements in an uninitialized memory area beginning at `first` as if by
+- **(1)** Copies the given value `value` to the first `count` elements in an uninitialized memory area beginning at `first` as if by:
   ```cpp
   for (; n--; ++first)
       ::new (/* VOIDIFY */(*first))

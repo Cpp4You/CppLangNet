@@ -28,7 +28,7 @@ import Signature_SinceCpp17 from './_codes/uninitialized_default_construct_n/sin
 }} />
 
 - **(1)** Constructs `n` objects of type typename `std::iterator_traits<ForwardIt>::value_type` in the
-  uninitialized storage starting at `first` by [`default-initialization`](#), as if by
+  uninitialized storage starting at `first` by [`default-initialization`](#), as if by:
   ```cpp
   for (; n > 0; (void) ++first, --n)
       ::new (static_cast<void*>(std::addressof(*first)))

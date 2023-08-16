@@ -28,14 +28,14 @@ import Signature_SinceCpp17 from './_codes/uninitialized_value_construct_n/since
 }} />
 
 - **(1)** Constructs `n` objects of type `typename iterator_traits<ForwardIt>::value_type` in the uninitialized storage
-  starting at first by [`value-initialization`](#), as if by
+  starting at first by [`value-initialization`](#), as if by:
   ```cpp
   for (; n > 0; (void) ++first, --n)
       ::new (static_cast<void*>(std::addressof(*first)))
           typename std::iterator_traits<ForwardIt>::value_type();
   ```
 
-  ::caution
+  :::caution
   If an exception is thrown during the initialization, the objects already constructed are destroyed in an unspecified order.
   :::
 

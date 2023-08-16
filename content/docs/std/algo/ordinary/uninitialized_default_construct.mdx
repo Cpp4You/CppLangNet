@@ -28,7 +28,7 @@ import Signature_SinceCpp17 from './_codes/uninitialized_default_construct/since
 }} />
 
 - **(1)** Constructs objects of type `typename std::iterator_traits<ForwardIt>::value_type` in the uninitialized storage
-  designated by the range [`first`; `last`) by [`default-initialization`](#), as if by
+  designated by the range [`first`; `last`) by [`default-initialization`](#), as if by:
   ```cpp
   for (; first != last; ++d_first, (void) ++first)
       ::new (/* VOIDIFY */(*d_first))

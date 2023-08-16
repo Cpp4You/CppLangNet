@@ -27,7 +27,7 @@ import Signature_SinceCpp17 from './_codes/uninitialized_move/since-cpp17.mdx';
   'since-cpp17': <Signature_SinceCpp17 />,
 }} />
 
-- **(1)** Moves elements from the range [`first`; `last`) to an uninitialized memory area beginning at `d_first` as if by
+- **(1)** Moves elements from the range [`first`; `last`) to an uninitialized memory area beginning at `d_first` as if by:
 
   ```cpp
   for (; first != last; ++d_first, (void) ++first)

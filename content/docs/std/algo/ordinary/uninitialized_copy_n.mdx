@@ -29,7 +29,7 @@ import Signature_SinceCpp11 from './_codes/uninitialized_copy_n/since-cpp11.mdx'
   'since-cpp11': <Signature_SinceCpp11 />,
 }} />
 
-- **(1)** Copies `count` elements from a range beginning at `first` to an uninitialized memory area beginning at `d_first` as if by
+- **(1)** Copies `count` elements from a range beginning at `first` to an uninitialized memory area beginning at `d_first` as if by:
   ```cpp
   for (; n > 0; ++d_first, (void) ++first, --n)
     ::new (static_cast<void*>(std::addressof(*d_first)))

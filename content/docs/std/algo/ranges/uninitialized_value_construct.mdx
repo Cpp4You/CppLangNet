@@ -27,7 +27,7 @@ import Signature_SinceCpp20_Simplified from './_codes/uninitialized_value_constr
 }} />
 
 - **(1)** Constructs objects of type `std::iter_value_t<I>` in the uninitialized storage designated by the range [`first`; `last`)
-  by [`value-initialization`](#), as if by
+  by [`value-initialization`](#), as if by:
   ```cpp
   for (; first != last; ++first)
       ::new (static_cast<void*>(std::addressof(*first)))

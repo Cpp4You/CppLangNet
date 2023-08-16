@@ -15,7 +15,7 @@ import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
 <!-- Terms -->
-import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
 
 <!----------------- Codes ---------------------->
 
@@ -27,7 +27,7 @@ import Signature_SinceCpp17 from './_codes/destroy_n/since-cpp17.mdx';
   'since-cpp17': <Signature_SinceCpp17 />,
 }} />
 
-- **(1)** Destroys the `n` objects in the range starting at `first`, as if by
+- **(1)** Destroys the `n` objects in the range starting at `first`, as if by:
   ```cpp
   for (; n > 0; (void) ++first, --n)
       std::destroy_at(std::addressof(*first));

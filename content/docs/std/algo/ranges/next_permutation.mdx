@@ -29,7 +29,7 @@ import Signature_SinceCpp20_Simplified from './_codes/next_permutation/since-cpp
 - **(1)** Transforms the range [`first`; `last`) into the next permutation, where the set of all permutations is ordered lexicographically with respect to binary comparison function object comp and projection function object `proj`.
   Returns:
     - `{ last, true }` if such a "next permutation" exists
-    - `{ last, false }` and transforms the range into the lexicographically first permutation as if by
+    - `{ last, false }` and transforms the range into the lexicographically first permutation as if by:
     ```cpp
     ranges::sort(first, last, comp, proj);
     ```

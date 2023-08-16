@@ -26,7 +26,7 @@ import Signature_SinceCpp20_Simplified from './_codes/uninitialized_value_constr
 	}
 }} />
 
-Constructs `n` objects of type `std::iter_value_t<I>` in the uninitialized memory area starting at first by [`value-initialization`](#), as if by
+Constructs `n` objects of type `std::iter_value_t<I>` in the uninitialized memory area starting at first by [`value-initialization`](#), as if by:
 ```cpp
 for (; n-- > 0; ++first)
     ::new (static_cast<void*>(std::addressof(*first)))

@@ -27,7 +27,7 @@ import Signature_SinceCpp17 from './_codes/destroy_at/since-cpp17.mdx';
   'since-cpp17': <Signature_SinceCpp17 />,
 }} />
 
-If `T` is not an array type, calls the destructor of the object pointed to by p, as if by `p->~T()`.
+If `T` is not an array type, calls the destructor of the object pointed to by `p`, as if by `p->~T()`.
 <> If <code>T</code> is an array type, <Until v='cpp20'>the program is ill-formed</Until> <Since v='cpp20'>recursively destroys elements of <code>*p</code> in order, as if by calling <code>std::destroy(std::begin(*p), std::end(*p))</code></Since>. </>
 
 ### Parameters
