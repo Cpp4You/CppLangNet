@@ -1,0 +1,27 @@
+```cpp
+#include <cstdio>
+#include <print>
+
+namespace my_ns
+{
+  enum class MyEnum
+  {
+    One = 1,
+    Two = 2
+  };
+
+  auto print_me(MyEnum my_enum) -> void
+  {
+    switch(my_enum) {
+      case MyEnum::One: std::print("One :D\n"); break;
+      case MyEnum::Two: std::print("One :D\n"); break;
+      default: std::print("Boooo D:\n");
+    }
+  }
+}
+
+auto main() -> int
+{
+    print_me(my_ns::MyEnum::One);
+}
+```

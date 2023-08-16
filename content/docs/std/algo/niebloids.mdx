@@ -1,0 +1,324 @@
+---
+title:         What are niebloids?
+description:   Explanation of niebloids.
+hide_title:    true
+tags:          [niebloid, adl, unqualified, qualified, lookup, cpo]
+---
+
+import SwitchView                from "@site-comps/SwitchView";
+import SymbolTable, { Symbol }   from "@site-comps/SymbolTable";
+import { Since, Until, Removed } from "@site-comps/Versions";
+import CustomCodeBlock           from "@site-comps/CustomCodeBlock";
+
+<!----------------- Codes ---------------------->
+import FullCode_Qualified_Unqualified_Lookup from "./_codes/niebloids/qualified-unqualified-lookup.mdx";
+import FullCode_Adl                          from "./_codes/niebloids/adl.mdx";
+
+# Niebloids
+
+Niebloids as a concept and pattern existed for a long time, they were first introduced by [**Eric Niebler**](https://ericniebler.com/about/)
+in his C++14 [**range-v3**](https://github.com/ericniebler/range-v3/) library.
+
+Tche name was suggested by the author himself in a [poll on twitter in 2018](https://twitter.com/tcanens/status/1063723279414890496).
+
+Before getting to niebloids, we first have to have some understanding in the following topics:
+- Unqualified lookup / Qualified lookup
+- ADL (Argument Dependent Lookup)
+
+We will briefly go over them. You can skip to the last section if these topics are already familiar to you.
+
+## Qualified vs Unqualified Lookup
+
+When we use any kind of an identifier in our code, lookup happens - the compiler tries to determine where the identifier
+is from and what it means in our code - is it a class/an object/a function? What type does it have? What namespace is it in? Etc.
+
+We won't delve deeply into the details, because both are pretty complicated, but all we want to know is that
+the latter - unqualified lookup - is what we want.
+
+Syntatically, qualified lookup implies the use of [**scope resolution operator**](#) - `::`, that is:
+
+<CustomCodeBlock fullCode={ <FullCode_Qualified_Unqualified_Lookup /> }>
+
+```cpp
+{
+  // auto value = my_ns::x; // Qualified lookup
+  // The above fails, because `x` is not present in my_ns namespace
+
+  // krabby_patty::patty_krabby(mr_krabs::secret_recipe);
+  // The above fails, because namespaces `krabby_patty` and `mr_krabs` are not present
+
+  std::print("Hello {}!", "World"); // Qualified lookup
+
+  auto value = my_ns::MyEnum::One; // Qualified lookup
+
+  ::printf("Hello %s!", "World"); // Qualified lookup
+  // If there's nothing to the left of the scope resolution operator, it's refering to the global namespace
+}
+
+Hello hello; // Unqualified lookup to Hello, which is found in global scope
+
+{
+  // auto value = x; // Unqualified lookup, no scope resolution operator
+  // The above fails, because `x` is nowhere to be found
+
+  // foo(1, 2, 3); // Unqualified lookup, no scope resolution operator
+  // The above fails, because `foo` is nowhere to be found
+
+  std::print(  "{}", hello.world()); // Qualified lookup to `std::print`, unqualified lookup to `hello`, which is found in upper scope
+  // Unqualified searches starting from the current scope up
+
+  print_me(my_ns::MyEnum::One);
+  // Unqualified lookup to `print_me`, qualified lookup to my_ns::MyEnum::One
+  // But wait... print_me is not present in this scope, upper scope, nor global scope,
+  // unqualified lookup didn't pick it up, so how does that work??
+  // Is it a bug, magic, or maybe... ADL? :P
+}
+```
+
+</CustomCodeBlock>
+
+Both of these do a little bit different things, but unqualified lookup does one the other doesn't do - **A**rgument **D**ependent **L**ookup.
+
+## Argument Dependent Lookup
+
+Argument Dependent Lookup (also sometimes reffered to as [**Koenig lookup**](https://web.archive.org/web/20180317070215/http://www.drdobbs.com/cpp/a-personal-note-about-argument-dependent/232901443))
+calling functions from the argument's respective namespaces without qualifying them explicitly.
+or ADL for short is a very advanced topic in itself, but in short, what it allows is
+
+That sounds pretty complicated, but here's a simple example you've already seen and written a thousand times probably:
+```cpp
+std::cout << "Hello, world!";
+```
+
+Yep. What we see above would not work if it wasn't for ADL. Here's how the code above looks to the compiler:
+```cpp
+operator<<(std::cout, "Hello, world!");
+```
+
+You could even write this code yourself and see that it would compile
+(though, of course, no one would write code like this for real, it's not very practical and eliminates the convenience of overloading operators).
+
+Here's the example the previous section about lookup:
+<CustomCodeBlock fullCode={ <FullCode_Adl/> }>
+
+```cpp
+print_me(my_ns::MyEnum::One);
+```
+
+</CustomCodeBlock>
+
+You may be surprised it works - intuiton tells us that it shouldn't, because even tho we have a fully qualified `my_ns::MyEnum::One` which
+is resolved via qualified lookup correctly, `print_me` is not qualified and it should not be present in this scope, thus not reachable.
+
+And your intuition would be right.. At least if it wasn't for ADL.
+
+What ADL does is actually very simple\* - when you perform an unqualified call to a function, it looks at the types of
+the arguments of the functions and adds all the functions from each namespace the types of the arguments participate in to the resolution set.
+
+That is, when performing Argument Dependent Lookup on this function call:
+```cpp
+print_me(my_ns::MyEnum::One);
+```
+
+We look at the type of the arguments, in this case `my_ns::MyEnum`, and add it's namespace (`my_ns`) to the resolution set.
+
+`my_ns` does indeed contain `print_me` which accepts `MyEnum::One` as an argument, so it's later found and called.
+
+*\* - well, it's actually a more complicated than that and it does a little bit more things, but that's the gist and
+that's what's actually important here*
+
+## Unqualified lookup and ADL together
+
+Unqualified Lookup and Argument Dependent Lookup work together, one after another.
+The important rule to keep in mind about ADL - it is **not performed** in several different cases after unqualified lookup.
+
+One of these cases that is of interest to us is when unqualified lookup finds a declaration that is
+- neither a **function**
+- nor a **function template**
+
+```cpp
+auto x = 2137;
+auto y = x + 1; // unqualified lookup for x, no ADL because x is an object
+```
+
+And if you think about it - it makes sense, ADL should only apply to function calls, it doesn't make sense to apply
+ADL to an object that was being looked up. An object doesn't accept any parameters that we can examine.
+
+Why am I talking about it? Because it's crucial for understanding Customization Point Objects and then Niebloids.
+
+<span class="inline-important">So once again, keep in mind - <b>ADL doesn't happen if unqualified lookup found something that is neither a function nor a function template</b></span>
+
+## Niebloids
+
+Finally, we come to pinnacle of this article - niebloids.
+
+[Cppreference*](https://en.cppreference.com/w/cpp/algorithm/ranges/all_any_none_of) tells us that the key characteristics of a niebloid are:
+- Niebloids inhibit ADL
+- <span class="inline-caution">Explicit template arguments cannot be specified</span>\*\*
+
+You may also stumble upon people mentioning, that <span class="inline-danger">even though they are templated, they can be passed to higher order functions without any problem.</span>\*\*\*
+
+* - Look at the end of the description of the algorithm, each and every rangified algorithm contains the same definition.
+
+### Implementation
+
+As specified previously, niebloids inhibit (disallow) ADL, that is, when unqualified lookup happens and any of them is found, no ADL is performed.
+
+The are currently only two ways to achieve that.
+
+One of them is to to make them a function object,
+as specified in the [Unqualified lookup and ADL together](unqualified-lookup-and-adl-together) section,
+ADl doesn't happen if unqualified lookup happens to find something that is neither a **function**, nor a **function template** - a function object
+is none of those, so ADL is disabled.
+
+The other way to implement such behaviour is to use internal compiler extensions, but no known implementation does that currently.
+
+\*\* - One of the characteristics specified is not being able to specify explicit template arguments, it is true with
+how niebloids are currently implementated by all the major vendors, but keep in mind that it's not a planned feature of niebloids
+and just a side effect of niebloids being implemented as function objects. This behaviour may change in the future, if vendors
+decide to conjure a special extension for ease of implementation/maintainability.
+
+\*\*\* - People also sometimes mention, that one of the advantages of niebloids over ordinary functions is that you can pass them
+to higher order functions (functions taking other functions as arguments, in this context) with no problem.
+```cpp
+#include <algorithm>
+#include <vector>
+
+template <typename Fun>
+auto do_thing(std::vector<int>& ints1, std::vector<int>& ints2, Fun fun)
+{
+  fun(ints1, ints2);
+}
+
+auto main() -> int
+{
+  auto ints1 = std::vector { 5, 4, 3, 2, 1 };
+  auto ints2 = std::vector { 1, 2, 3, 4, 5 };
+  do_thing(ints1, ints2, std::ranges::swap); // Would not compile with std::swap
+}
+```
+And while it is true for range-v3, because the key design is to use function objects and have these advantages,
+it's not true for `std::` niebloids, the standard doesn't specify they have to be implemented to allow such behaviour.
+
+This means you **should not** rely on this behaviour, because your code may break in the future.
+
+<details>
+
+<summary>Ways to pass such a function to HOF</summary>
+
+If you have a need to pass such a function to some HOF, you can use a lambda:
+```cpp
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+template <typename Fun>
+auto do_thing(std::vector<int>& ints1, std::vector<int>& ints2, Fun fun)
+{
+  fun(ints1, ints2);
+}
+
+auto main() -> int
+{
+  auto ints1 = std::vector { 5, 4, 3, 2, 1 };
+  auto ints2 = std::vector { 1, 2, 3, 4, 5 };
+  do_thing(ints1, ints2, [](auto& a, auto &b) { std::swap(a, b); }); // Compiles, tho requires thinking and typing
+
+  std::cout << ints1[0] << ' ' << ints2[0];
+}
+```
+
+Or write a very scary looking generic macro which abstracts that away:
+
+```cpp
+#include <algorithm>
+#include <vector>
+
+#include <algorithm>
+#include <vector>
+
+#define LIFT_FWD_(...) (static_cast<decltype(__VA_ARGS__)&&>(__VA_ARGS__))
+#define LIFT(...) \
+  [](auto&&... args) \
+    noexcept(noexcept(__VA_ARGS__(LIFT_FWD_(args)...))) \
+    -> decltype(__VA_ARGS__(LIFT_FWD_(args)...)) \
+    { return __VA_ARGS__(LIFT_FWD_(args)...); }
+
+template <typename Fun>
+auto do_thing(std::vector<int>& ints1, std::vector<int>& ints2, Fun fun)
+{
+  fun(ints1, ints2);
+}
+
+auto main() -> int
+{
+  auto ints1 = std::vector { 5, 4, 3, 2, 1 };
+  auto ints2 = std::vector { 1, 2, 3, 4, 5 };
+  do_thing(ints1, ints2, LIFT(std::swap)); // Compiles, black boxed magic that just works^tm
+}
+
+template <typename Fun>
+auto do_thing(std::vector<int>& ints, Fun fun)
+{
+  fun(ints.begin(), ints.end());
+}
+
+auto main() -> int
+{
+  auto ints = std::vector { 5, 3, 2, 1 };
+  do_thing(ints, LIFT(std::sort)); // Works :)
+}
+```
+
+<details>
+<summary>Explanation of the above macro</summary>
+
+The above macro is a lot of magic, yes, but it basically handles everything properly and correctly for us.
+
+First we define `LIFT_FWD_` which basically does what [`std::forward`](/docs/std/algo/forward) does. If you don't know how
+it works, click on the [`std::forward`](/docs/std/algo/forward) link.
+
+We define a macro, because it makes no sense to include the `<utility>` header for our macro.
+
+The lift macro itself can be broken into four parts:
+```cpp
+[](auto&&... args) // just the starting declaration of a lambda, nothing fancy, we are talking a parameter pack of whatever arguments
+noexcept(noexcept(__VA_ARGS__(LIFT_FWD_(args)...))) // we are correctly handling the noexcept case - if our function call is noexcept, our lambda is noexcept as well
+-> decltype(__VA_ARGS__(LIFT_FWD_(args)...)) // we are taking the return type of our function call and setting it as our lambda return type
+{ return __VA_ARGS__(LIFT_FWD_(args)...); } // the body, actualy function call
+```
+
+The only confusing part may be `__VA_ARGS__`, why not just `#define LIFT(X) [...] X(LIFT_FWD_(args)...)`?
+
+The answer is - this would disallow passing in a type with explicit template parameters and a space in it, consider:
+```cpp
+LIFT(something<int, std::string>)
+```
+
+The space in there would make `X` only be `something<int`, so that's just a way to protect against that.
+
+</details>
+
+</details>
+
+### Reasoning
+
+If you are wondering what is the reason behind such a design, I'm here to explain.
+
+The whole point of niebloids is to make doing the correct thing easy and convenient, without the programmer having to care
+or remember any rules.
+
+By inhibiting (disallowing) ADL, the behaviour of calling an algorithm is consistent with both qualified and unqualified lookup:
+```cpp
+auto const numbers = std::vector{ 1 ,2, 3, 4, 5 };
+{
+  auto const min = std::ranges::min(numbers); // Calls std::ranges::min
+}
+
+{
+  using namespace std::ranges;
+  auto const min = min(numbers); // Calls std::ranges::min
+}
+```
+
+Then, inside, the niebloid does everything correctly. The programmer doesn't have to worry about anything.

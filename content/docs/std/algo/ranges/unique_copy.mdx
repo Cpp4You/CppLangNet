@@ -44,7 +44,7 @@ using unique_copy_result = ranges::in_out_result<I, O>;
 
 - **(2)** Same as **(1)**, but uses `r` as the range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
-The function-like entities described on this page are [**niebloids**](#).
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
 
 :::caution
 The ranges [`first`; `last`) and [`result`; `result + ranges::distance(first, last)`) must not overlap.

@@ -43,7 +43,7 @@ using move_backward_result = ranges::in_out_result<I, O>;
 
 The elements in the moved-from range will still contain valid values of the appropriate type, but not necessarily the same values as before the move, as if using `*(result - n) = ranges::iter_move(last - n)` for each integer `n`, where `0 ≤ n < N`.
 
-The function-like entities described on this page are [**niebloids**](#).
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
 
 ### Parameters
 
