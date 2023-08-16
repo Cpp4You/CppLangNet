@@ -19,7 +19,7 @@ import FullCode_Adl                          from "./_codes/niebloids/adl.mdx";
 Niebloids as a concept and pattern existed for a long time, they were first introduced by [**Eric Niebler**](https://ericniebler.com/about/)
 in his C++14 [**range-v3**](https://github.com/ericniebler/range-v3/) library.
 
-Tche name was suggested by the author himself in a [poll on twitter in 2018](https://twitter.com/tcanens/status/1063723279414890496).
+The name was suggested by the author himself in a [poll on twitter in 2018](https://twitter.com/tcanens/status/1063723279414890496).
 
 Before getting to niebloids, we first have to have some understanding in the following topics:
 - Unqualified lookup / Qualified lookup
@@ -83,7 +83,8 @@ Both of these do a little bit different things, but unqualified lookup does one 
 
 Argument Dependent Lookup (also sometimes reffered to as [**Koenig lookup**](https://web.archive.org/web/20180317070215/http://www.drdobbs.com/cpp/a-personal-note-about-argument-dependent/232901443))
 calling functions from the argument's respective namespaces without qualifying them explicitly.
-or ADL for short is a very advanced topic in itself, but in short, what it allows is
+or ADL for short is a very advanced topic in itself, but in short, what it allows is calling functions without qualifying them
+if they are present in the namespace of any of the arguments used.
 
 That sounds pretty complicated, but here's a simple example you've already seen and written a thousand times probably:
 ```cpp
@@ -122,7 +123,7 @@ print_me(my_ns::MyEnum::One);
 
 We look at the type of the arguments, in this case `my_ns::MyEnum`, and add it's namespace (`my_ns`) to the resolution set.
 
-`my_ns` does indeed contain `print_me` which accepts `MyEnum::One` as an argument, so it's later found and called.
+`my_ns` does indeed contain `print_me` which accepts `MyEnum::One` as an argument, so it's found and later called.
 
 *\* - well, it's actually a more complicated than that and it does a little bit more things, but that's the gist and
 that's what's actually important here*
@@ -144,7 +145,7 @@ auto y = x + 1; // unqualified lookup for x, no ADL because x is an object
 And if you think about it - it makes sense, ADL should only apply to function calls, it doesn't make sense to apply
 ADL to an object that was being looked up. An object doesn't accept any parameters that we can examine.
 
-Why am I talking about it? Because it's crucial for understanding Customization Point Objects and then Niebloids.
+Why am I talking about it? Because it's crucial for understanding Niebloids.
 
 <span class="inline-important">So once again, keep in mind - <b>ADL doesn't happen if unqualified lookup found something that is neither a function nor a function template</b></span>
 
@@ -154,11 +155,11 @@ Finally, we come to pinnacle of this article - niebloids.
 
 [Cppreference*](https://en.cppreference.com/w/cpp/algorithm/ranges/all_any_none_of) tells us that the key characteristics of a niebloid are:
 - Niebloids inhibit ADL
-- <span class="inline-caution">Explicit template arguments cannot be specified</span>\*\*
+- <span class="inline-caution">Explicit template arguments cannot be specified</span>**
 
 You may also stumble upon people mentioning, that <span class="inline-danger">even though they are templated, they can be passed to higher order functions without any problem.</span>\*\*\*
 
-* - Look at the end of the description of the algorithm, each and every rangified algorithm contains the same definition.
+<span>*</span> Look at the end of the description of the algorithm, each and every rangified algorithm contains the same definition.
 
 ### Implementation
 
@@ -167,19 +168,22 @@ As specified previously, niebloids inhibit (disallow) ADL, that is, when unquali
 The are currently only two ways to achieve that.
 
 One of them is to to make them a function object,
-as specified in the [Unqualified lookup and ADL together](unqualified-lookup-and-adl-together) section,
-ADl doesn't happen if unqualified lookup happens to find something that is neither a **function**, nor a **function template** - a function object
+as specified in the [Unqualified lookup and ADL together](#unqualified-lookup-and-adl-together) section,
+ADL doesn't happen if unqualified lookup happens to find something that is neither a **function**, nor a **function template** - a function object
 is none of those, so ADL is disabled.
 
 The other way to implement such behaviour is to use internal compiler extensions, but no known implementation does that currently.
 
-\*\* - One of the characteristics specified is not being able to specify explicit template arguments, it is true with
-how niebloids are currently implementated by all the major vendors, but keep in mind that it's not a planned feature of niebloids
+<span>**</span> One of the characteristics specified is not being able to specify explicit template arguments, it is true with
+how niebloids are currently implemented by all the major vendors, but keep in mind that it's not a planned feature of niebloids
 and just a side effect of niebloids being implemented as function objects. This behaviour may change in the future, if vendors
 decide to conjure a special extension for ease of implementation/maintainability.
 
-\*\*\* - People also sometimes mention, that one of the advantages of niebloids over ordinary functions is that you can pass them
+<br/> <br/>
+
+<span>***</span> People also sometimes mention, that one of the advantages of niebloids over ordinary functions is that you can pass them
 to higher order functions (functions taking other functions as arguments, in this context) with no problem.
+
 ```cpp
 #include <algorithm>
 #include <vector>
@@ -206,7 +210,7 @@ This means you **should not** rely on this behaviour, because your code may brea
 
 <summary>Ways to pass such a function to HOF</summary>
 
-If you have a need to pass such a function to some HOF, you can use a lambda:
+If you have a need to pass such a function to some HOF, you can use a lambda that mimics the intended interface:
 ```cpp
 #include <iostream>
 #include <algorithm>
@@ -256,18 +260,6 @@ auto main() -> int
   auto ints2 = std::vector { 1, 2, 3, 4, 5 };
   do_thing(ints1, ints2, LIFT(std::swap)); // Compiles, black boxed magic that just works^tm
 }
-
-template <typename Fun>
-auto do_thing(std::vector<int>& ints, Fun fun)
-{
-  fun(ints.begin(), ints.end());
-}
-
-auto main() -> int
-{
-  auto ints = std::vector { 5, 3, 2, 1 };
-  do_thing(ints, LIFT(std::sort)); // Works :)
-}
 ```
 
 <details>
@@ -275,22 +267,22 @@ auto main() -> int
 
 The above macro is a lot of magic, yes, but it basically handles everything properly and correctly for us.
 
-First we define `LIFT_FWD_` which basically does what [`std::forward`](/docs/std/algo/forward) does. If you don't know how
-it works, click on the [`std::forward`](/docs/std/algo/forward) link.
+First we define `LIFT_FWD_` which basically does what [`std::forward`](/docs/std/utility/forward/) does. If you don't know how
+it works, follow the above link and read the explanation there.
 
-We define a macro, because it makes no sense to include the `<utility>` header for our macro.
+We define it as a macro, instead of using the function from stdlib directly, because it makes no sense to include the `<utility>` header for our macro.
 
 The lift macro itself can be broken into four parts:
 ```cpp
 [](auto&&... args) // just the starting declaration of a lambda, nothing fancy, we are talking a parameter pack of whatever arguments
 noexcept(noexcept(__VA_ARGS__(LIFT_FWD_(args)...))) // we are correctly handling the noexcept case - if our function call is noexcept, our lambda is noexcept as well
 -> decltype(__VA_ARGS__(LIFT_FWD_(args)...)) // we are taking the return type of our function call and setting it as our lambda return type
-{ return __VA_ARGS__(LIFT_FWD_(args)...); } // the body, actualy function call
+{ return __VA_ARGS__(LIFT_FWD_(args)...); } // the body, actual function call
 ```
 
 The only confusing part may be `__VA_ARGS__`, why not just `#define LIFT(X) [...] X(LIFT_FWD_(args)...)`?
 
-The answer is - this would disallow passing in a type with explicit template parameters and a space in it, consider:
+The answer is - this would work, probably even 99% of the cases, but woud disallow passing in a type with explicit template parameters and a space in it, consider:
 ```cpp
 LIFT(something<int, std::string>)
 ```
@@ -302,8 +294,6 @@ The space in there would make `X` only be `something<int`, so that's just a way 
 </details>
 
 ### Reasoning
-
-If you are wondering what is the reason behind such a design, I'm here to explain.
 
 The whole point of niebloids is to make doing the correct thing easy and convenient, without the programmer having to care
 or remember any rules.
