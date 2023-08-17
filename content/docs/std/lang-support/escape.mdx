@@ -1,0 +1,198 @@
+---
+title:              Escape sequences
+tags:               [Language, Literals]
+hite_title:         true
+---
+
+import {Since, Until, Version, Deprecated, Removed}     from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import Columns                                          from "@site-comps/Columns";
+import styles                                           from "@site-comps/SyntaxTable.module.scss";
+
+# Escape sequences
+Escape sequences are used to represent certain special characters within [string literals](./string_literal) and [character literals](./character_literal).
+
+The following escape sequences are available:
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>Escape sequence</th>
+        <th>Description</th>
+        <th>Representation</th>
+    </tr>
+    <tr><th>Simple escape sequences</th></tr>
+    <tr>
+        <th>\'</th>
+        <td>single quote</td>
+        <td>byte 0x27 in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\"</th>
+        <td>double quote</td>
+        <td>byte 0x22 in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\?</th>
+        <td>question mark</td>
+        <td>byte 0x3f in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\\</th>
+        <td>backslash</td>
+        <td>byte 0x5c in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\a</th>
+        <td>audible bell</td>
+        <td>byte 0x07 in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\b</th>
+        <td>backspace</td>
+        <td>byte 0x08 in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\f</th>
+        <td>form feed - new page</td>
+        <td>byte 0x0c in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\n</th>
+        <td>line feed - new line</td>
+        <td>byte 0x0a in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\r</th>
+        <td>carriage return</td>
+        <td>byte 0x0d in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\t</th>
+        <td>horisontal tab</td>
+        <td>byte 0x09 in ASCII encoding</td>
+    </tr>
+    <tr>
+        <th>\v</th>
+        <td>vertical tab</td>
+        <td>byte 0x0b in ASCII encoding</td>
+    </tr>
+    <tr><th>Numeric escape sequences</th></tr>
+    <tr>
+        <td><table className={styles.syntaxTable}>
+            <tr><th>\<small><i>nnn</i></small></th></tr>
+            <tr><th><Since v='cpp23'>\o&#123;<small><i>n...</i></small>&#125;</Since></th></tr>        
+        </table></td>
+        <td>arbitrary octal value</td>
+        <td><table className={styles.syntaxTable}>
+            <tr><td>code unit <small><i>nnn</i></small> (1~3 octal digits)</td></tr>
+            <tr><td>code unit <small><i>n...</i></small> (arbitrary number of octal digits)</td></tr>        
+        </table></td>
+    </tr>
+    <tr>
+        <td><table className={styles.syntaxTable}>
+            <tr><th>\x<small><i>n...</i></small></th></tr>
+            <tr><th><Since v='cpp23'>\x&#123;<small><i>n...</i></small>&#125;</Since></th></tr>        
+        </table></td>
+        <td>arbitrary hexadecimal value</td>
+        <td>code unit <small><i>n...</i></small> (arbitrary number of hexadecimal digits)</td>
+    </tr>
+    <tr><th>Conditional escape sequences<sup><a href="#cite-1" id="ref-1" >[1]</a></sup></th></tr>
+    <tr>
+        <th>\<small>c</small></th>
+        <td>Implementation-defined</td>
+        <td>Implementation-defined</td>
+    </tr>
+    <tr><th>Universal character names</th></tr>
+    <tr>
+    <td><table className={styles.syntaxTable}>
+        <tr><th>\u<small><i>nnnn</i></small></th></tr>
+        <tr><th><Since v='cpp23'>\u&#123;<small><i>n..</i></small>&#125;</Since></th></tr>
+        <tr><th>\U<small><i>nnnnnnnn</i></small></th></tr>        
+    </table></td>
+    <td>arbitrary <a href="https://en.wikipedia.org/wiki/Unicode">Unicode</a> value; <br/>may result in several code units</td>
+    <td><table className={styles.syntaxTable}>
+        <tr><td>code point U+<i>nnnn</i> (4 hexadecimal digits)</td></tr>
+        <tr><td>code point U+<i>n...</i> (arbitrary number of hexadecimal digits)</td></tr>
+        <tr><td>code point U+<i>nnnnnnnn</i> (8 hexadecimal digits)</td></tr>        
+    </table></td>
+    </tr>
+    <tr>
+        <th><Since v="cpp23">\N&#123;<small>NAME</small>&#125;</Since></th>
+        <td>arbitrary Unicode character</td>
+        <td>character named by <i>NAME</i> (<a href="named-universal-character-escapes">see below</a>)</td>
+    </tr>
+</table>
+
+1. <a href="#ref-1" id="cite-1" class="reference"> ↑ </a> Conditional escape sequences are conditionally-supported. 
+The character c in each conditional escape sequence is a member of <Until v='cpp23'><a href="/docs/std/lang-support/charset#basic-source-character-set">basic source character set</a></Until><Since v='cpp23'><a href="/docs/std/lang-support/charset#basic-character-set">basic character set</a></Since>
+that is not the character following the `\` in any other escape sequence.
+
+## Range of universal character names
+
+<Until v='cpp11' block>
+
+
+If a universal character name corresponds to a code point that is not 0x24 ($), 0x40 (@), nor 0x60 (`) and less than 0xA0, the program is ill-formed. In other words, members of basic source character set and control characters (in ranges 0x0-0x1F and 0x7F-0x9F) cannot be expressed in universal character names.
+
+</Until><br/>
+<Until v='cpp20' block><Since v='cpp11' block>
+
+If a universal character name corresponding to a code point of a member of basic source character set or control characters appear outside a character or string literal, the program is ill-formed.
+
+If a universal character name corresponds surrogate code point (the range 0xD800-0xDFFF, inclusive), the program is ill-formed.
+
+If a universal character name used in a UTF-16/32 string literal does not correspond to a code point in ISO/IEC 10646 (the range 0x0-0x10FFFF, inclusive), the program is ill-formed.
+
+</Since></Until><br/>
+<Until v='cpp23' block><Since v='cpp20' block>
+
+If a universal character name corresponding to a code point of a member of basic source character set or control characters appear outside a character or string literal, the program is ill-formed.
+
+If a universal character name does not correspond to a code point in ISO/IEC 10646 (the range 0x0-0x10FFFF, inclusive) or corresponds to a surrogate code point (the range 0xD800-0xDFFF, inclusive), the program is ill-formed.
+
+</Since></Until><br/>
+<Since v='cpp23' block>
+
+If a universal character name corresponding to a scalar value of a character in the basic character set or a control character appear outside a character or string literal, the program is ill-formed.
+
+If a universal character name does not correspond to a scalar value of a character in the translation character set, the program is ill-formed.
+
+</Since>
+
+## Named universal character escapes
+
+<Since v='cpp23' block>
+
+<SyntaxTable>
+    <Syntax directive = {<>\N</>} args={[<b>&#123;</b>, "n-char-sequence", <b>&#125;</b>]}/>
+</SyntaxTable>
+<SymbolTable noTraits>
+    <Symbol name={<i class='col-g'>n-char-sequence</i>} desc={<>one or more <i class='col-g'>n-char</i>s</>}/>
+    <Symbol name={<i class='col-g'>n-char</i>} desc={<>a character from the translation character set, except the right curly bracket <code>}</code> or new-line character</>}/>
+</SymbolTable>
+
+A universal character name of the syntax above is a named universal character. It designates the corresponding character in the Unicode Standard (chapter 4.8 Name) if the n-char-sequence is equal to its character name or to one of its character name aliases of type “control”, “correction”, or “alternate”; otherwise, the program is ill-formed.
+
+These aliases are listed in the Unicode Character Database’s NameAliases.txt. None of these names or aliases have leading or trailing spaces.
+
+A valid n-char-sequence must contain only uppercase Latin letters A through Z, digits, space, and hyphen-minus. Other characters never occur in a Unicode character name, and thus their appearance in a n-char-sequence always renders the program ill-formed.
+
+</Since>
+
+## Notes
+\0 is the most commonly used octal escape sequence, because it represents the terminating null character in null-terminated strings.
+
+The new-line character \n has special meaning when used in text mode I/O: it is converted to the OS-specific newline representation, usually a byte or byte sequence. Some systems mark their lines with length fields instead.
+
+Octal escape sequences have a limit of three octal digits, but terminate at the first character that is not a valid octal digit if encountered sooner.
+
+Hexadecimal escape sequences have no length limit and terminate at the first character that is not a valid hexadecimal digit. If the value represented by a single hexadecimal escape sequence does not fit the range of values represented by the character type used in this string literal (char, char8_t, (since C++20)char16_t, char32_t, (since C++11)or wchar_t), the result is unspecified.
+
+<Since v='cpp11' block>
+
+A universal character name in a narrow string literal or a 16-bit string literal may map to more than one code unit, e.g. \U0001f34c is 4 char code units in UTF-8 (\xF0\x9F\x8D\x8C) and 2 char16_t code units in UTF-16 (\xD83C\xDF4C).
+
+</Since>
+
+The question mark escape sequence \? is used to prevent trigraphs from being interpreted inside string literals: a string such as "??/" is compiled as "\", but if the second question mark is escaped, as in "?\?/", it becomes "??/". As trigraphs have been removed from C++, the question mark escape sequence is no longer necessary. It is preserved for compatibility with C++14 (and former revisions) and C. (since C++17)
