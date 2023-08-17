@@ -44,7 +44,7 @@ Syntatically, qualified lookup implies the use of [**scope resolution operator**
   // auto value = my_ns::x; // Qualified lookup
   // The above fails, because `x` is not present in my_ns namespace
 
-  // krabby_patty::patty_krabby(mr_krabs::secret_recipe);
+  // krabby_patty::patty_krabby(mr_krabs::secret_recipe); // Qualified lookup
   // The above fails, because namespaces `krabby_patty` and `mr_krabs` are not present
 
   std::print("Hello {}!", "World"); // Qualified lookup
@@ -64,11 +64,12 @@ Hello hello; // Unqualified lookup to Hello, which is found in global scope
   // foo(1, 2, 3); // Unqualified lookup, no scope resolution operator
   // The above fails, because `foo` is nowhere to be found
 
-  std::print(  "{}", hello.world()); // Qualified lookup to `std::print`, unqualified lookup to `hello`, which is found in upper scope
+  std::print("{}", hello.world()); // Qualified lookup to `std::print`, unqualified lookup to `hello`, which is found in upper scope
   // Unqualified searches starting from the current scope up
 
   print_me(my_ns::MyEnum::One);
   // Unqualified lookup to `print_me`, qualified lookup to my_ns::MyEnum::One
+  // This works.
   // But wait... print_me is not present in this scope, upper scope, nor global scope,
   // unqualified lookup didn't pick it up, so how does that work??
   // Is it a bug, magic, or maybe... ADL? :P
