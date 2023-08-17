@@ -1,18 +1,25 @@
 ---
-sidebar_label:		"1. Learn"
-description:		"Lesson: First program in C++ language"
-hide_title:			true
+title:        "First program"
+description:  "Lesson: First program in C++ language"
+hide_title:   true
 ---
 
+<!-- Components -->
+import Tabs             from '@theme/Tabs';
+import TabItem          from '@theme/TabItem';
 
-import Columns		from '@site-comps/Columns';
-import GoogleSlides	from '@site-comps/GoogleSlides';
-import Image		from '@site-comps/Image';
-import Tooltip		from '@site-comps/Tooltip';
-import NotFinished	from '@site/i18n/en/presets/NotFinished.mdx';
+import CustomCodeBlock  from '@site-comps/CustomCodeBlock';
+import Columns          from '@site-comps/Columns';
+import GoogleSlides     from '@site-comps/GoogleSlides';
+import Image            from '@site-comps/Image';
+import Tooltip          from '@site-comps/Tooltip';
 
-import Tabs			from '@theme/Tabs';
-import TabItem		from '@theme/TabItem';
+<!-- Presets -->
+import NotFinished  from '@site/i18n/en/presets/NotFinished.mdx';
+
+<!-- Inspections -->
+import CodeBlockContentInspection from "./_inspections/first-program/code-block-content.tsx";
+import InstructionOrderInspection from "./_inspections/first-program/instruction-order.tsx";
 
 # First program
 
@@ -26,7 +33,7 @@ We finished the previous lesson with the following code:
 <Columns spacing={40} columns={['7fr', '4fr']}>
 <div>
 
-```cpp title="main.cpp"
+```cpp showLineNumbers title="main.cpp"
 #include <iostream>
 
 int main()
@@ -53,41 +60,109 @@ It displays the "Hello, World" text in the console.
 
 ### The main function
 
-All C++ programs have a core function usually called *main*. There are a few variants, we will be using the simpler one that looks like this:
+Every C++ program contains a piece of code that we call *the main function*. It is the first[^1]
+code that is run on the program startup.
 
-```cpp title="Part of main.cpp"
+```cpp
 int main()
 {
 
 }
 ```
 
+The first line of the above code starts the **function definition**. It consists of a return type `int`, the name `main`, and its parameters
+inside the `()` (none in our case). While most of these terms aren't important now, all that you should pay attention to is
+the name `main`. Your program must always contain the `main` function specified in this format.
 
-The first line starts the **function definition**. It consists of a return type `int`, the name `main`, and its parameters inside the `()` (none in our case).
-While most of these terms aren't important now, all that you should pay attention to is the name `main`. It will always look like this,
-`int main()`. Your program must always contain the `main` function specified in this format.
+<details>
+<summary>There are more variants</summary>
+<div>
 
-The computer runs the program line by line. When the program is run the first line inside `main` is executed, then the second one and so on.
+There are a number of ways to write the `main` function, but for now, we will stick to the simplest one - the one we showed above.
+Sometimes you may see the `main` function that starts with either of the following:
+
+```cpp
+int main(int argc, char* argv[])
+```
+
+```cpp
+int main(int argc, char** argv)
+```
+
+```cpp
+auto main(int argc, char** argv) -> int
+```
+
+```cpp
+auto main() -> int
+```
+
+While there are even more variants possible, they all do the same thing - they define the entry point of the program.
+We'll cover the differences between them in the future.
+
+</div>
+</details>
+
+[^1]: In reality there is more code executed before the `main` function, that mostly deals with setting up the program
+      but this is not important for now.
+
+#### Blocks of code
 
 It’s important for the program to know where `main` starts and ends. We use code blocks for this.
 A **code block** in C++, is a set of instructions contained inside curly braces:
 
-```cpp
-Outside
+<CustomCodeBlock inspectionSetup={CodeBlockContentInspection}>
+
+```cpp showLineNumbers title="Content of the code block"
+outside
+int main()
 {
-	Inside
+  inside
 }
-Outside
+outside
 ```
 
+</CustomCodeBlock>
+
 Everything between the curly braces counts as inside the code block and everything else is outside of it.
-The `main` function has a block of code, and everything between its curly braces will be executed <u>top to bottom</u>.
+
+#### Order of execution
+
+The `main` function has a block of code that contains instructions provided by the programmer.
+The computer runs the instructions in order, or in simpler words - line by line, top to bottom.
+When the program is run the first line inside `main` is executed, then the second one and so on.
 
 :::important Remember
-The content of the `main` function **is always the first code run by the program.**
+The content of the `main` function the first code run by the program.
 :::
 
+In the following example, we put three instructions inside the `main` function to illustrate the order of execution.
+You'll learn more about the `std::cout` later in this lesson.
+
+<CustomCodeBlock inspectionSetup={InstructionOrderInspection}>
+
+```cpp showLineNumbers title="Preview of the execution order"
+#include <iostream>
+
+int main()
+{
+  std::cout << "This is an instruction that displays text.";
+  std::cout << "And this is another instruction that displays text.";
+  std::cout << "This is the third instruction that displays text.";
+}
+```
+
+</CustomCodeBlock>
+
 ### The `iostream` header file
+
+<Image center
+		maxheight={450}
+		alt="Illustration on header file inclusion"
+		src="/img/tutorials/course/basic/first-program/include-iostream-en.webp"
+		desc="What does the #include directive actually do :)"
+	/>
+<br/>
 
 At the very beginning of the code there is a line:
 
@@ -98,11 +173,9 @@ At the very beginning of the code there is a line:
 This allows us to use the standard input and output tools provided by C++. The name `iostream` is short for *input/output stream*.
 In practice this will let the us output text that the user can see and take input text to change what the program does.
 
-`iostream` is a **header file**, we will talk more about them and `#include` in near future.
-In most cases we put `#include <header_file>` at the beginning of the file.
-We'll tell more about `#include` itself in the future. Enough for the moment.
-
-`iostream` is a **header file** we will talk more about them and #include in the next chapter
+The name `iostream` refers to a **header file** on your disk that comes with the *C++ standard library*.
+We will explain more about them and `#include` in near future. For now, remember that in most cases we put
+`#include <header_file>` at the beginning of the file.
 
 ### The console
 
@@ -142,7 +215,7 @@ The name `cout` stands for a **c**haracter **out**put. It is used to send text t
 We will mention the `std::` prefix in a minute.
 
 <details>
-<summary>For those who are curious 😉</summary>
+<summary>For those who are curious</summary>
 <div>
 
 Strictly speaking, `cout` is a so-called character output stream that writes the content to a *standard output*, which in this case is your console,

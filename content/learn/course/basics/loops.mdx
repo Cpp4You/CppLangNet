@@ -22,6 +22,10 @@ import NotFinished      from '@site/i18n/en/presets/NotFinished.mdx';
 <!-- Code -->
 import FullCode_PrintNumbersRangeBasedFor from './_codes/loops/print-numbers-range-based-for-full.mdx';
 
+<!-- Inspections -->
+import TopExampleInspection from './_inspections/loops/top-example.tsx';
+import PrintVectorInspection from './_inspections/loops/print-vector-range-based-for.tsx';
+
 # Loops
 
 In this lesson, we'll make the program execute a certain code multiple times, that is, we'll use a loop.
@@ -44,7 +48,9 @@ sets of data. They significantly improve the flexibility and power of our progra
 
 In the previous lesson on vectors, we already demonstrated one loop that displayed all the elements of an array:
 
-<CustomCodeBlock fullCode={<FullCode_PrintNumbersRangeBasedFor />}>
+<CustomCodeBlock fullCode={<FullCode_PrintNumbersRangeBasedFor />}
+  inspectionSetup={undefined/*TopExampleInspection*/}
+>
 
 ```cpp showLineNumbers title="Print each number from an array"
 for (int n : numbers)
@@ -93,7 +99,10 @@ an array in C++ is also a range, so we can use this loop to iterate over it.
 
 Take a look at the example:
 
-<CustomCodeBlock fullCode={<FullCode_PrintNumbersRangeBasedFor />}>
+<CustomCodeBlock
+  fullCode={<FullCode_PrintNumbersRangeBasedFor />}
+  inspectionSetup={PrintVectorInspection}
+>
 
 ```cpp showLineNumbers title="Print each number from an array"
 std::vector<int> numbers = { 13, 42, -1, 0, -3, -5 };
