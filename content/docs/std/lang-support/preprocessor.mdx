@@ -1,0 +1,49 @@
+---
+title:              Preprocessor
+tags:               [Language, Preprocessor]
+hide_title:         true
+---
+
+import {Since, Until, Version}     from "@site-comps/Versions";
+
+# Preprocessor
+
+The preprocessor is executed at translation phase 4, before the compilation. The result of preprocessing is a single file which is then passed to the actual compiler.
+
+## Directives
+The preprocessing directives control the behavior of the preprocessor. Each directive occupies one line and has the following format:
+
+* the <code-d>#</code-d>.
+* a sequence of:
+    * a standard-defined directive name (listed [below](#capabilities)) followed by the corresponding arguments, or
+    * one or more <a href="./translation_phases#phase-3">preprocessing tokens</a> where the beginning token is not a standard-defined directive name, in this case the directive is conditionally-supported with implementation-defined semantics 
+    <Until v='cpp23'>(e.g. a common non-standard extension is the directive <code-d>#warning</code-d> which emits a user-defined message during compilation)</Until>, or
+    * nothing, in this case the directive has no effect.
+* a line break.
+
+<Since v='cpp20'><a href="./modules">The module and import directives</a> are also preprocessing directives.</Since><br/><br/>
+
+```cpp title='Preprocessing directives must not come from macro expansion.'
+#define EMPTY
+EMPTY   #   include <file.h> // not a preprocessing directive
+```
+
+## Capabilities
+The preprocessor has the source file translation capabilities:
+
+* <a href="./preprocessor/conditional">conditionally</a> compile parts of source file (controlled by directive <span class='col-d'>#if</span>, <span class='col-d'>#ifdef</span>, <span class='col-d'>#ifndef</span>, 
+<span class='col-d'>#else</span>, <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since> , and <span class='col-d'>#endif</span>).
+* <a href="./preprocessor/replace">replace</a> text macros while possibly concatenating or quoting identifiers (controlled by directives <span class='col-d'>#define</span> and <span class='col-d'>#undef</span>, and operators <code-d>#</code-d>, <code-d>##</code-d>). <a href="./preprocessor/include">include</a> other files (controlled by directive <span class='col-d'>#include</span> <Since v='cpp17'>and checked with <code>__has_include</code></Since>).
+* cause an <a href="./preprocessor/error">error</a> <Since v='cpp23'>or <a href="./preprocessor/error">warning</a></Since> (controlled by directive <span class='col-d'>#error</span> <Since v='cpp23'>or <span class='col-d'>#warning</span> respectively</Since>).
+
+The following aspects of the preprocessor can be controlled:
+* <a href="./preprocessor/impl">implementation-defined</a> behavior (controlled by directive <span class='col-d'>#pragma</span> <Since v='cpp11'>and operator <code>_Pragma</code></Since>). 
+    In addition, some compilers support (to varying degrees) the operator <code>__pragma</code> as a <i>non-standard</i> extension.
+* <a href="./preprocessor/line">file name and line information</a> available to the preprocessor (controlled by directive <span class='col-d'>#line</span>).
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| **DR**                                                       | **Applied to**                | **Behavior as published**                                           | **Correct behavior**         |
+|:------------------------------------------------------------:|:-----------------------------:|:-------------------------------------------------------------------:|:----------------------------:|
+| [CWG 2001](https://cplusplus.github.io/CWG/issues/2001.html) | <Version v='cpp98'></Version> | the behavior of using non-standard-defined directives was not clear | made conditionally-supported |
