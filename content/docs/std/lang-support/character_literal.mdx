@@ -1,0 +1,261 @@
+---
+title:              Character literal
+tags:               [Language, Literals]
+hite_title:         true
+---
+
+import {Since, Until, Version}                          from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import Columns                                          from "@site-comps/Columns";
+import styles                                           from "@site-comps/SyntaxTable.module.scss";
+
+# Character literal
+## Syntax
+
+<SyntaxTable>
+  <Syntax id ='1' directive={<></>} args={['c-char']}/>
+  <Syntax id ='2' directive={<>u8</>} args={['c-char',<Since v='cpp17'></Since>]}/>
+  <Syntax id ='3' directive={<>u</>} args={['c-char',<Since v='cpp11'></Since>]}/>
+  <Syntax id ='4' directive={<>U</>} args={['c-char']}/>
+  <Syntax id ='5' directive={<>L</>} args={['c-char']}/>
+  <Syntax id ='6' directive={<></>} args={['c-char-sequence']}/>
+  <Syntax id ='7' directive={<>L</>} args={['c-char-sequence',<Until v='cpp23'></Until>]}/>  
+</SyntaxTable>
+<SymbolTable noTraits>
+  <Symbol name={<i class='col-g'>c-char</i>} 
+        desc={<>either<br/>
+        <ul>
+            <li>a <i class='col-g'>basic-c-char</i>,</li>
+            <li>an escape sequence, as defined in <a href="./escape">escape sequences</a></li>
+            <li>a universal character name, as defined in <a href="./escape">escape sequences</a></li>
+        </ul></>}/>
+  <Symbol name={<i class='col-g'>basic-c-char</i>} 
+          desc={<>A character from the <Until v='cpp23'><a href="/docs/std/lang-support/charset#basic-source-character-set">basic source character set</a></Until> 
+          <Since v='cpp23'><a href="/docs/std/lang-support/charset#translation-character-set">translation character set</a></Since>, except the single-quote <code>'</code>, backslash <code>\</code>, or new-line character</>}/>
+  <Symbol name={<i class='col-g'>c-char-sequence</i>} 
+          desc={<>two or more <i class='col-g'>c-char</i>s</>}/>
+</SymbolTable>
+
+## Explanation
+
+1. Ordinary character literal, e.g. <code class='col-d'>'a'</code> or <code class='col-d'>'\n'</code> or <code class='col-d'>'\13'</code>. 
+    Such literal has type <code class='col-lb'>char</code> and the value equal to <Until v='cpp23'>the representation of <i class='col-g'>c-char</i> in the <a href='/docs/std/lang-support/charset#execution-character-set'>execution character set</a></Until> 
+    <Since v='cpp23'>the corresponding code point from <a href='/docs/std/lang-support/charset#code-unit-and-literal-encoding'>ordinary literal encoding</a></Since>.
+2. UTF-8 character literal, e.g. <code>u8<span class='col-d'>'a'</span></code>. Such literal has type <Until v='cpp20'><code class='col-lb'>char</code></Until><Since v='cpp20'><code class='col-lb'>char8_t</code></Since>. and the value equal to ISO/IEC 10646 code point value of <i class='col-g'>c-char</i>, provided that the code point value is representable with a single UTF-8 code unit (that is, <i class='col-g'>c-char</i> is in the range 0x0-0x7F, inclusive).
+3. UTF-16 character literal, e.g. <code>u<span class='col-d'>'猫'</span></code>, but not <code>u<span class='col-d'>'🍌'</span></code> (u'\U0001f34c'). Such literal has type <code class='col-lb'>char16_t</code> and the value equal to ISO/IEC 10646 code point value of <i class='col-g'>c-char</i>, provided that the code point value is representable with a single UTF-16 code unit (that is, <i class='col-g'>c-char</i> is in the range 0x0-0xFFFF, inclusive).
+4. UTF-32 character literal, e.g. <code>U<span class='col-d'>'猫'</span></code> or <code>U<span class='col-d'>'🍌'</span></code>. Such literal has type <code class='col-lb'>char32_t</code> and the value equal to ISO/IEC 10646 code point value of <i class='col-g'>c-char</i>.
+5. Wide character literal, e.g. <code>L<span class='col-d'>'β'</span></code> or <code>L<span class='col-d'>'猫'</span></code>. Such literal has type <code class='col-lb'>wchar_t</code> and the value equal to <Until v='cpp23'>the value of <i class='col-g'>c-char</i> in the execution wide character set</Until> <Since v='cpp23'>the corresponding code point from wide literal encoding</Since>.
+6. Ordinary multicharacter literal, e.g. <code class='col-d'>'AB'</code>, is conditionally-supported, <code class='col-lb'>int</code> and implementation-defined value.
+7. Wide multicharacter literal, e.g. <code>L<span class='col-d'>'AB'</span></code>, is conditionally-supported, has type <code class='col-lb'>wchar_t</code> and implementation-defined value.
+
+## Non-encodable character literals
+In <a href='#syntax'>(1-5)</a>, given that <i class='col-g'>c-char</i> is not a numeric escape sequence (see below):
+<ul>
+<li>In <a href='#syntax'>(1)</a>, if <i class='col-g'>c-char</i> is not representable in the <Until v='cpp23'><a href='/docs/std/lang-support/charset#execution-character-set'>execution character set</a></Until> 
+<Since v='cpp23'>as a single code unit in the <a href='/docs/std/lang-support/charset#code-unit-and-literal-encoding'>ordinary literal encoding</a> or cannot be encoded as a single code unit</Since>
+, e.g. <code class='col-d'>'猫'</code> or <code class='col-d'>'🍌'</code>, the character literal is conditionally-supported, has type <code class='col-lb'>int</code> and implementation-defined value.</li>
+<li>In <a href='#syntax'>(2-4)</a>, if <i class='col-g'>c-char</i> is not representable with a single UTF-8 (2)/UTF-16 (3)/UTF-32 (4) code unit, the character literal is ill-formed.</li>
+<li><Until block v='cpp23'>In <a href='#syntax'>(5)</a>, if <i class='col-g'>c-char</i> is not representable in the <a href="/docs/std/lang-support/charset#execution-character-set">execution wide-character set</a> (e.g. a non-BMP value on Windows where <code class='col-lb'>wchar_t</code> is 16-bit), 
+the character literal is conditionally-supported, the character literal has type <code class='col-lb'>wchar_t</code> and implementation-defined value.</Until></li>
+<li><Since block v='cpp23'>In <a href='#syntax'>(5)</a>, if <i class='col-g'>c-char</i> is not representable as a single code unit in the wide literal encoding or cannot be encoded as a single code unit 
+(e.g. a non-BMP value on Windows where <code class='col-lb'>wchar_t</code> is 16-bit), the character literal is ill-formed.</Since></li>
+</ul>
+
+## Numeric escape sequences
+Numeric (octal and hexadecimal) escape sequences can be used for specifying the value of the character.
+
+<Since v='cpp23'>
+
+If the character literal contains only one numeric escape sequence, and the value specified by the escape sequence is representable by the unsigned version of its type, 
+the character literal has the same value as the specified value (possibly after conversion to the character type).
+
+A UTF-*N* character literal can have any value representable by its type. If the value does not correspond to a valid Unicode code point, 
+or if the its corresponding code point is not representable as single code unit in UTF-*N*, it can still be specified by a numeric escape sequence with the value. 
+E.g. <code>u8<span class='col-d'>'\xff'</span></code> is well-formed and equal to <code>char8_t(<span class='col-lb'>0xFF</span>)</code>.
+
+</Since>
+<br/>
+
+<Until v='cpp23' block>
+
+If the value specified by a numeric escape sequence used in an ordinary or wide character literal is not representable by <code class='col-lb'>char</code> or <code class='col-lb'>wchar_t</code> respectively, 
+the value of the character literal is implementation-defined.
+
+</Until><Since v='cpp23' block>
+
+If the value specified by a numeric escape sequence used in an ordinary or wide character literal with one c-char is representable by the unsigned version 
+of the underlying type of <code class='col-lb'>char</code> or <code class='col-lb'>wchar_t</code> respectively, the value of the literal is the integer value of that unsigned integer type and the specified value converted to the type of the literal. 
+Otherwise, the program is ill-formed.
+
+</Since>
+<br/>
+
+<Since v='cpp11'>
+
+If the value specified by a numeric escape sequence used in a UTF-*N* character literal is not representable by the corresponding char*N*_t, 
+<Until v='cpp17'>the value of the character literal is implementation-defined</Until> <Since v='cpp17'>the program is ill-formed</Since>.
+
+</Since>
+
+## Notes
+Multicharacter literals were inherited by C from the B programming language. Although not specified by the C or C++ standard, most compilers (MSVC is a notable exception) implement multicharacter literals as specified in B: 
+the values of each char in the literal initialize successive bytes of the resulting integer, in big-endian zero-padded right-adjusted order,
+e.g. the value of <code class='col-d'>'\1'</code> is <code class='col-lb'>0x00000001</code> and the value of <code class='col-d'>'\1\2\3\4'</code> is <code class='col-lb'>0x01020304</code>.
+
+In C, character constants such as <code class='col-d'>'a'</code> or <code class='col-d'>'\n'</code> have type <code class='col-lb'>int</code>, rather than <code class='col-lb'>char</code>.
+
+## Example
+
+<Columns spacing='20px' columns={['6fr','4fr']}>
+<div>
+
+```cpp
+#include <cstdint>
+#include <iomanip>
+#include <iostream>
+#include <string_view>
+ 
+template<typename CharT>
+void dump(std::string_view s, const CharT c)
+{
+    const uint8_t* data{reinterpret_cast<const uint8_t*>(&c)};
+ 
+    std::cout << s << " \t" << std::hex
+              << std::uppercase << std::setfill('0');
+ 
+    for (auto i{0U}; i != sizeof(CharT); ++i)
+        std::cout << std::setw(2) << static_cast<unsigned>(data[i]) << ' ';
+ 
+    std::cout << '\n';
+}
+ 
+void print(std::string_view str = "") { std::cout << str << '\n'; }
+ 
+int main()
+{
+    print("Ordinary character literals:");
+    char c1 = 'a'; dump("'a'", c1);
+    char c2 = '\x2a'; dump("'*'", c2);
+ 
+    print("\n" "Ordinary multi-character literals:");
+    int mc1 = 'ab'; dump("'ab'", mc1);       // implementation-defined
+    int mc2 = 'abc'; dump("'abc'", mc2);     // implementation-defined
+ 
+    print("\n" "Non-encodable character literals:");
+    int ne1 = '¢'; dump("'¢'", ne1);         // implementation-defined
+    int ne2 = '猫'; dump("'猫'", ne2);       // implementation-defined
+    int ne3 = '🍌'; dump("'🍌'", ne3);       // implementation-defined
+ 
+    print("\n" "UTF-8 character literals:");
+    char8_t C1 = u8'a'; dump("u8'a'", C1);
+//  char8_t C2 = u8'¢'; dump("u8'¢'", C2);   // error: ¢ maps to two UTF-8 code units
+//  char8_t C3 = u8'猫'; dump("u8'猫'", C3); // error: 猫 maps to three UTF-8 code units
+//  char8_t C4 = u8'🍌'; dump("u8'🍌'", C4); // error: 🍌 maps to four UTF-8 code units
+ 
+    print("\n" "UTF-16 character literals:");
+    char16_t uc1 = u'a'; dump("u'a'", uc1);
+    char16_t uc2 = u'¢'; dump("u'¢'", uc2);
+    char16_t uc3 = u'猫'; dump("u'猫'", uc3);
+//  char16_t uc4 = u'🍌'; dump("u'🍌'", uc4); // error: 🍌 maps to two UTF-16 code units
+ 
+    print("\n" "UTF-32 character literals:");
+    char32_t Uc1 = U'a'; dump("U'a'", Uc1);
+    char32_t Uc2 = U'¢'; dump("U'¢'", Uc2);
+    char32_t Uc3 = U'猫'; dump("U'猫'", Uc3);
+    char32_t Uc4 = U'🍌'; dump("U'🍌'", Uc4);
+ 
+    print("\n" "Wide character literals:");
+    <code class='col-lb'>wchar_t</code> wc1 = L'a'; dump("L'a'", wc1);
+    <code class='col-lb'>wchar_t</code> wc2 = L'¢'; dump("L'¢'", wc2);
+    <code class='col-lb'>wchar_t</code> wc3 = L'猫'; dump("L'猫'", wc3);
+    <code class='col-lb'>wchar_t</code> wc4 = L'🍌'; dump("L'🍌'", wc4);  // unsupported on Windows since C++23
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Result"
+Ordinary character literals:
+'a' 	61 
+'*' 	2A 
+ 
+Ordinary multi-character literals:
+'ab' 	62 61 00 00 
+'abc' 	63 62 61 00 
+ 
+Non-encodable character literals:
+'¢' 	A2 C2 00 00 
+'猫' 	AB 8C E7 00 
+'🍌' 	8C 8D 9F F0 
+ 
+UTF-8 character literals:
+u8'a' 	61 
+ 
+UTF-16 character literals:
+u'a' 	61 00 
+u'¢' 	A2 00 
+u'猫' 	2B 73 
+ 
+UTF-32 character literals:
+U'a' 	61 00 00 00 
+U'¢' 	A2 00 00 00 
+U'猫' 	2B 73 00 00 
+U'🍌' 	4C F3 01 00 
+ 
+Wide character literals:
+L'a' 	61 00 00 00 
+L'¢' 	A2 00 00 00 
+L'猫' 	2B 73 00 00 
+L'🍌' 	4C F3 01 00
+```
+
+</div>
+</Columns>
+
+## Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>DR</th>
+        <th>Applied to</th>
+        <th>Behavior as published</th>
+        <th>Correct behavior</th>
+    </tr>
+    <tr>
+        <td><a href="https://cplusplus.github.io/CWG/issues/912.html">CWG 912</a></td>
+        <td><Version v='cpp98'></Version></td>
+        <td>non-encodable ordinary character literal was unspecified</td>
+        <td>specified as conditionally-supported</td>
+    </tr>
+    <tr>
+        <td><a href="https://cplusplus.github.io/CWG/issues/1024.html">CWG 1024</a></td>
+        <td><Version v='cpp98'></Version></td>
+        <td>multicharacter literal was required to be supported</td>
+        <td>made conditionally-supported</td>
+    </tr>
+    <tr>
+        <td><a href="https://cplusplus.github.io/CWG/issues/1656.html">CWG 1656</a></td>
+        <td><Version v='cpp98'></Version></td>
+        <td>the meaning of numeric escape sequence in a character literal was unclear</td>
+        <td>specified</td>
+    </tr>
+</table>
+
+## References
+* C++23 standard (ISO/IEC 14882:2023):
+  * 5.13.3 Character literals [lex.ccon]
+* C++20 standard (ISO/IEC 14882:2020):
+  * 5.13.3 Character literals [lex.ccon]
+* C++17 standard (ISO/IEC 14882:2017):
+  * 5.13.3 Character literals [lex.ccon]
+* C++14 standard (ISO/IEC 14882:2014):
+  * 2.14.3 Character literals [lex.ccon]
+* C++11 standard (ISO/IEC 14882:2011):
+  * 2.14.3 Character literals [lex.ccon]
+* C++03 standard (ISO/IEC 14882:2003):
+  * 2.13.2 Character literals [lex.ccon]
+* C++98 standard (ISO/IEC 14882:1998):
+  * 2.13.2 Character literals [lex.ccon]

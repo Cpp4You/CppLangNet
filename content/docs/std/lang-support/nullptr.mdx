@@ -1,0 +1,81 @@
+---
+title:              nullptr
+tags:               [Language, Literals]
+hite_title:         true
+---
+
+import {Since}                                          from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import Columns                                          from "@site-comps/Columns";
+
+# <Since v='cpp11'>nullptr, the pointer literal</Since> 
+## Syntax
+<SyntaxTable>
+  <Syntax directive={<>nullptr</>} args={[<Since v='cpp11'></Since>]}/>
+</SyntaxTable>
+
+## Explanation
+The keyword nullptr denotes the pointer literal. It is a [prvalue](/docs/std/lang-support/value_category) of type [std::nullptr_t](/docs/std/types/nullptr_t). 
+There exist implicit conversions from nullptr to null pointer value of any pointer type and any pointer to member type. 
+Similar conversions exist for any null pointer constant, which includes values of type [std::nullptr_t](/docs/std/types/nullptr_t) as well as the macro [NULL](/docs/std/types/NULL).
+
+## Keywords
+[**nullptr**](/docs/std/keyword/nullptr)
+
+## Example
+Demonstrates that nullptr retains the meaning of null pointer constant even if it is no longer a literal.
+
+<Columns spacing='20px' columns={['6fr','4fr']}>
+<div>
+
+```cpp
+#include <cstddef>
+#include <iostream>
+ 
+template<class T>
+constexpr T clone(const T& t)
+{
+    return t;
+}
+ 
+void g(int*)
+{
+    std::cout << "Function g called\n";
+}
+ 
+int main()
+{
+    g(nullptr);        // Fine
+    g(NULL);           // Fine
+    g(0);              // Fine
+ 
+    g(clone(nullptr)); // Fine
+//  g(clone(NULL));    // ERROR: non-literal zero cannot be a null pointer constant
+//  g(clone(0));       // ERROR: non-literal zero cannot be a null pointer constant
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+Function g called
+Function g called
+Function g called
+Function g called
+```
+
+</div>
+</Columns>
+
+## References
+* C++23 standard (ISO/IEC 14882:2023):
+    * 7.3.12 Pointer conversions [conv.ptr]
+* C++20 standard (ISO/IEC 14882:2020):
+    * 7.3.12 Pointer conversions [conv.ptr]
+* C++17 standard (ISO/IEC 14882:2017):
+    * 7.11 Pointer conversions [conv.ptr]
+* C++14 standard (ISO/IEC 14882:2014):
+    * 4.10 Pointer conversions [conv.ptr]
+* C++11 standard (ISO/IEC 14882:2011):
+    * 4.10 Pointer conversions [conv.ptr]

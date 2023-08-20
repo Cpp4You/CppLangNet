@@ -4,7 +4,7 @@ tags:               [Language, Literals]
 hite_title:         true
 ---
 
-import {Since, Until, Version, Deprecated, Removed}     from "@site-comps/Versions";
+import {Since, Until, Version}                          from "@site-comps/Versions";
 import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
 import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
 import Columns                                          from "@site-comps/Columns";
@@ -132,31 +132,34 @@ that is not the character following the `\` in any other escape sequence.
 
 <Until v='cpp11' block>
 
-
-If a universal character name corresponds to a code point that is not 0x24 ($), 0x40 (@), nor 0x60 (`) and less than 0xA0, the program is ill-formed. In other words, members of basic source character set and control characters (in ranges 0x0-0x1F and 0x7F-0x9F) cannot be expressed in universal character names.
+If a universal character name corresponds to a code point that is not 0x24 ($), 0x40 (@), nor 0x60 (`) and less than 0xA0, the program is ill-formed. 
+In other words, members of [basic source character set](/docs/std/lang-support/charset#basic-source-character-set) and control characters (in ranges 0x0-0x1F and 0x7F-0x9F) cannot be expressed in universal character names.
 
 </Until><br/>
 <Until v='cpp20' block><Since v='cpp11' block>
 
-If a universal character name corresponding to a code point of a member of basic source character set or control characters appear outside a character or string literal, the program is ill-formed.
+If a universal character name corresponding to a code point of a member of [basic source character set](/docs/std/lang-support/charset#basic-source-character-set) or 
+control characters appear outside a [character](./character_literal) or [string literal](./string_literal), the program is ill-formed.
 
 If a universal character name corresponds surrogate code point (the range 0xD800-0xDFFF, inclusive), the program is ill-formed.
 
-If a universal character name used in a UTF-16/32 string literal does not correspond to a code point in ISO/IEC 10646 (the range 0x0-0x10FFFF, inclusive), the program is ill-formed.
+If a universal character name used in a UTF-16/32 string literal does not correspond to a code point in [ISO/IEC 10646](https://www.iso.org/standard/76835.html) (the range 0x0-0x10FFFF, inclusive), the program is ill-formed.
 
 </Since></Until><br/>
 <Until v='cpp23' block><Since v='cpp20' block>
 
-If a universal character name corresponding to a code point of a member of basic source character set or control characters appear outside a character or string literal, the program is ill-formed.
+If a universal character name corresponding to a code point of a member of [basic source character set](/docs/std/lang-support/charset#basic-source-character-set) 
+or control characters appear outside a [character](./character_literal) or [string literal](./string_literal), the program is ill-formed.
 
 If a universal character name does not correspond to a code point in ISO/IEC 10646 (the range 0x0-0x10FFFF, inclusive) or corresponds to a surrogate code point (the range 0xD800-0xDFFF, inclusive), the program is ill-formed.
 
 </Since></Until><br/>
 <Since v='cpp23' block>
 
-If a universal character name corresponding to a scalar value of a character in the basic character set or a control character appear outside a character or string literal, the program is ill-formed.
+If a universal character name corresponding to a scalar value of a character in the [basic character set](/docs/std/lang-support/charset#basic-character-set) 
+or a control character appear outside a [character](./character_literal) or [string literal](./string_literal), the program is ill-formed.
 
-If a universal character name does not correspond to a scalar value of a character in the translation character set, the program is ill-formed.
+If a universal character name does not correspond to a scalar value of a character in the [translation character set](/docs/std/lang-support/charset#translation-character-set), the program is ill-formed.
 
 </Since>
 
@@ -169,30 +172,99 @@ If a universal character name does not correspond to a scalar value of a charact
 </SyntaxTable>
 <SymbolTable noTraits>
     <Symbol name={<i class='col-g'>n-char-sequence</i>} desc={<>one or more <i class='col-g'>n-char</i>s</>}/>
-    <Symbol name={<i class='col-g'>n-char</i>} desc={<>a character from the translation character set, except the right curly bracket <code>}</code> or new-line character</>}/>
+    <Symbol name={<i class='col-g'>n-char</i>} desc={<>a character from the <a href="/docs/std/lang-support/charset#translation-character-set">translation character set</a>, except the right curly bracket <code>}</code> or new-line character</>}/>
 </SymbolTable>
 
-A universal character name of the syntax above is a named universal character. It designates the corresponding character in the Unicode Standard (chapter 4.8 Name) if the n-char-sequence is equal to its character name or to one of its character name aliases of type “control”, “correction”, or “alternate”; otherwise, the program is ill-formed.
+A universal character name of the syntax above is a *named universal character*. It designates the corresponding character in the [Unicode Standard](https://www.unicode.org/versions/Unicode15.0.0/) 
+([chapter 4.8 Name](https://www.unicode.org/versions/Unicode15.0.0/ch04.pdf)) if the <span class="col-g">n-char-sequence</span> is equal to its character name or to one of its character name aliases of type “control”, “correction”, or “alternate”; otherwise, the program is ill-formed.
 
-These aliases are listed in the Unicode Character Database’s NameAliases.txt. None of these names or aliases have leading or trailing spaces.
+These aliases are listed in the [Unicode Character Database](https://www.unicode.org/reports/tr44/)’s [NameAliases.txt](https://www.unicode.org/Public/UCD/latest/ucd/NameAliases.txt). 
+None of these names or aliases have leading or trailing spaces.
 
-A valid n-char-sequence must contain only uppercase Latin letters A through Z, digits, space, and hyphen-minus. Other characters never occur in a Unicode character name, and thus their appearance in a n-char-sequence always renders the program ill-formed.
+A valid <span class="col-g">n-char-sequence</span> must contain only uppercase Latin letters A through Z, digits, space, and hyphen-minus.
+ Other characters never occur in a Unicode character name, and thus their appearance in a <span class="col-g">n-char-sequence</span> always renders the program ill-formed.
 
 </Since>
 
 ## Notes
-\0 is the most commonly used octal escape sequence, because it represents the terminating null character in null-terminated strings.
+`\0` is the most commonly used octal escape sequence, because it represents the terminating null character in [null-terminated strings](/docs/std/containers/strings#null-terminated_strings).
 
-The new-line character \n has special meaning when used in text mode I/O: it is converted to the OS-specific newline representation, usually a byte or byte sequence. Some systems mark their lines with length fields instead.
+The new-line character `\n` has special meaning when used in [text mode I/O](/docs/std/io/c): it is converted to the OS-specific newline representation, usually a byte or byte sequence. Some systems mark their lines with length fields instead.
 
 Octal escape sequences have a limit of three octal digits, but terminate at the first character that is not a valid octal digit if encountered sooner.
 
-Hexadecimal escape sequences have no length limit and terminate at the first character that is not a valid hexadecimal digit. If the value represented by a single hexadecimal escape sequence does not fit the range of values represented by the character type used in this string literal (char, char8_t, (since C++20)char16_t, char32_t, (since C++11)or wchar_t), the result is unspecified.
+Hexadecimal escape sequences have no length limit and terminate at the first character that is not a valid hexadecimal digit. 
+If the value represented by a single hexadecimal escape sequence does not fit the range of values represented by the character type used in 
+this string literal (<span class='col-lb'>char</span>, <Since v='cpp20'><span class='col-lb'>char8_t</span></Since>, <Since v='cpp11'><span class='col-lb'>char16_t, char32_t</span></Since>, or <span class='col-lb'>wchar_t</span>), the result is unspecified.
 
 <Since v='cpp11' block>
 
-A universal character name in a narrow string literal or a 16-bit string literal may map to more than one code unit, e.g. \U0001f34c is 4 char code units in UTF-8 (\xF0\x9F\x8D\x8C) and 2 char16_t code units in UTF-16 (\xD83C\xDF4C).
+A universal character name in a narrow string literal or a 16-bit string literal may map to more than one code unit, e.g. `\U0001f34c` is 4 <span class='col-lb'>char</span> code units in UTF-8 (`\xF0\x9F\x8D\x8C`) and 2 <span class='col-lb'>char16_t</span> code units in UTF-16 (`\xD83C\xDF4C`).
 
 </Since>
 
-The question mark escape sequence \? is used to prevent trigraphs from being interpreted inside string literals: a string such as "??/" is compiled as "\", but if the second question mark is escaped, as in "?\?/", it becomes "??/". As trigraphs have been removed from C++, the question mark escape sequence is no longer necessary. It is preserved for compatibility with C++14 (and former revisions) and C. (since C++17)
+The question mark escape sequence <code>\<span class='col-d'>?</span></code> is used to prevent [trigraphs](/docs/std/lang-support/operator_alternative) from being interpreted inside string literals: a string such as <code-d>"??/"</code-d> 
+is compiled as <code-d>"\"</code-d>, but if the second question mark is escaped, as in <code-d>"?\<b>?</b>/"</code-d>, it becomes <code-d>"??/"</code-d>. <Since v='cpp17'>As trigraphs have been removed from C++, the question mark escape sequence is no longer necessary. It is preserved for compatibility with C++14 (and former revisions) and C.</Since>
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>Feature-test macro</th>
+        <th>Value</th>
+        <th>Std</th>
+        <th>Comment</th>
+    </tr>
+    <tr>
+        <td><a href='docs/std/feature_test'>__cpp_named_character_escapes</a></td>
+        <td>202207L</td>
+        <td><Version v='cpp23'></Version></td>
+        <td>Named universal character escapes</td>
+    </tr>
+</table>
+
+## Example
+
+<Columns spacing='20px' columns={['6fr','4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+ 
+int main()
+{
+    std::cout << "This\nis\na\ntest\n\n";
+    std::cout << "She said, \"Sells she seashells on the seashore?\"\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+This
+is
+a
+test
+ 
+She said, "Sells she seashells on the seashore?"
+```
+
+</div>
+</Columns>
+
+## Defect Reports
+The following behavior-changing defect reports were applied retroactively to previously published
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>DR</th>
+        <th>Applied to</th>
+        <th>Behavior as published</th>
+        <th>Correct behavior</th>
+    </tr>
+    <tr>
+        <td><a href='https://cplusplus.github.io/CWG/issues/505.html'>CWG 505</a></td>
+        <td><Version v='cpp98'></Version></td>
+        <td>the behavior was undefined if the character following a backslash was not one of those specified in the table</td>
+        <td>made conditionally supported (semantic is implementation-defined)</td>
+    </tr>
+</table>
