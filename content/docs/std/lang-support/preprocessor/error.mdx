@@ -1,0 +1,74 @@
+---
+title:          Diagnostic directives
+tags:           [Language, Preprocessor]
+hide-title:     true
+---
+
+import { Since }                                        from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import Columns                                          from "@site-comps/Columns";
+
+# Diagnostic directives
+
+Shows the given error message and renders the program ill-formed, <Since v='cpp23'>or shows the given warning message without affecting the validity of the program. </Since>
+
+## Syntax
+
+<SyntaxTable>
+  <Syntax id='1' directive={<span class='col-d'>#error</span>}   args={['diagnostic-message']}/>
+  <Syntax id='2' directive={<span class='col-d'>#warning</span>} args={['diagnostic-message',<Since v='cpp23'></Since>]}/>
+</SyntaxTable>
+
+## Explanation
+1. After encountering the <span class='col-d'>#error</span> directive, an implementation displays the message <i class="col-g">diagnostic-message</i> and renders the program ill-formed (the compilation stops).
+2. Same as [(1)](#syntax), except the validity of the program is not affected and the compilation continues.<br/><i class="col-g">diagnostic-message</i> can consist of several words not necessarily in quotes.
+
+## Notes
+Before its standardization in C++23, <span class='col-d'>#warning</span> has been provided by many compilers in all modes as a conforming extension.
+
+## Example
+
+<Columns spacing = '20px' columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#if __STDC_HOSTED__ != 1
+#   error "Not a hosted implementation"
+#endif
+ 
+#if __cplusplus >= 202302L
+#   warning "Using #warning as a standard feature"
+#endif
+ 
+#include <iostream>
+ 
+int main() {
+    std::cout << "The implementation used is hosted\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+The implementation used is hosted
+```
+
+</div>
+</Columns>
+
+## References
+* C++23 standard (ISO/IEC 14882:2023):
+    * 15.8 Error directive [cpp.error]
+* C++20 standard (ISO/IEC 14882:2020):
+    * 15.8 Error directive [cpp.error]
+* C++17 standard (ISO/IEC 14882:2017):
+    * 19.5 Error directive [cpp.error]
+* C++14 standard (ISO/IEC 14882:2014):
+    * 16.5 Error directive [cpp.error]
+* C++11 standard (ISO/IEC 14882:2011):
+    * 16.5 Error directive [cpp.error]
+* C++03 standard (ISO/IEC 14882:2003):
+    * 16.5 Error directive [cpp.error]
+* C++98 standard (ISO/IEC 14882:1998):
+    * 16.5 Error directive [cpp.error]

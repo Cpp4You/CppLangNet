@@ -1,0 +1,19 @@
+```cpp
+// (1)
+constexpr move_result<I, O>
+    move( I first, S last, O result );
+
+// (2)
+constexpr move_result<ranges::borrowed_iterator_t<R>, O>
+    move( R&& r, O result );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `O` - `std::weakly_incrementable`
+- **(2)** - `R` - `std::ranges::input_range`
+
+Additionally, each overload has the following contraints:
+- **(1)** - `std::indirectly_movable<I, O>`
+- **(2)** - `std::indirectly_movable<ranges::iterator_t<R>, O>`

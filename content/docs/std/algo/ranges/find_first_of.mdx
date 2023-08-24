@@ -1,0 +1,182 @@
+---
+title:         ranges::find_first_of algorithm
+sidebar_label: ranges::find_first_of(  )
+description:   ranges::find_first_of algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, find, find_first_of, sequence, search, look]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/find_first_of
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/find_first_of/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/find_first_of/since-cpp20-simplified.mdx';
+
+# std::ranges::find_first_of() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Searches the range [`first1`; `last1`) for any of the elements in the range [`first2`; `last2`),
+  after projecting the ranges with `proj1` and `proj2` respectively.
+  The projected elements are compared using the binary predicate `pred`.
+
+- **(2)** Same as **(1)**, but uses `r1` as the first source range and `r2` as the second source range,
+  as if using `ranges::begin(r1)` as `first1`, `ranges::end(r1)` as `last1`, `ranges::begin(r2)` as `first2`
+  and `ranges::end(r2)` as `last2`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The range of elements to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>r1</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The range of elements to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Binary predicate to compare the elements with.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the elements in the first range.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the elements in the second range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+Iterator to the first element in the range [`first1`; `last1`) that is equal to an element from the range [`first2`; `last2`) after projection.
+If no such element is found, an iterator comparing equal to `last1` is returned.
+
+### Complexity
+
+Given:
+- **(1)** `S` as `ranges::distance(first2, last2)` and `N` as `ranges::distance(first1, last1)`
+- **(2)** `S` as `ranges::distance(r2)` and `N` as `ranges::distance(r1)`
+
+At most **S \* N** applications of the predicate and each projection.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>ranges::find_first_of(1) and ranges::find_first_of(2)</summary>
+
+```cpp
+struct find_first_of_fn
+{
+    template<std::input_iterator I1, std::sentinel_for<I1> S1,
+             std::forward_iterator I2, std::sentinel_for<I2> S2,
+             class Pred = ranges::equal_to,
+             class Proj1 = std::identity,
+             class Proj2 = std::identity>
+    requires std::indirectly_comparable<I1, I2, Pred, Proj1, Proj2>
+    constexpr I1 operator()(I1 first1, S1 last1, I2 first2, S2 last2, Pred pred = {},
+                            Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        for (; first1 != last1; ++first1)
+            for (auto i = first2; i != last2; ++i)
+                if (std::invoke(pred, std::invoke(proj1, *first1), std::invoke(proj2, *i)))
+                    return first1;
+        return first1;
+    }
+
+    template<ranges::input_range R1, ranges::forward_range R2,
+             class Pred = ranges::equal_to,
+             class Proj1 = std::identity,
+             class Proj2 = std::identity>
+    requires std::indirectly_comparable<ranges::iterator_t<R1>,
+                                        ranges::iterator_t<R2>,
+                                        Pred, Proj1, Proj2>
+    constexpr ranges::borrowed_iterator_t<R1>
+        operator()(R1&& r1, R2&& r2, Pred pred = {},
+                   Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        return (*this)(ranges::begin(r1), ranges::end(r1),
+                       ranges::begin(r2), ranges::end(r2),
+                       std::move(pred), std::move(proj1), std::move(proj2));
+    }
+;
+
+inline constexpr find_first_of_fn find_first_of {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+
+int main()
+{
+    namespace rng = std::ranges;
+
+    constexpr static auto haystack = {1, 2, 3, 4};
+    constexpr static auto needles  = {0, 3, 4, 3};
+
+    constexpr auto found1 = rng::find_first_of(haystack.begin(), haystack.end(),
+                                               needles.begin(), needles.end());
+    static_assert(std::distance(haystack.begin(), found1) == 2);
+
+    constexpr auto found2 = rng::find_first_of(haystack, needles);
+    static_assert(std::distance(haystack.begin(), found2) == 2);
+
+    constexpr static auto negatives = {-6, -3, -4, -3};
+    constexpr auto not_found = rng::find_first_of(haystack, negatives);
+    static_assert(not_found == haystack.end());
+
+    constexpr auto found3 = rng::find_first_of(haystack, negatives,
+        [](int x, int y) { return x == -y; }); // uses a binary comparator
+    static_assert(std::distance(haystack.begin(), found3) == 2);
+
+    struct P { int x, y; };
+    constexpr static auto p1 = { P{1, -1}, P{2, -2}, P{3, -3}, P{4, -4} };
+    constexpr static auto p2 = { P{5, -5}, P{6, -3}, P{7, -5}, P{8, -3} };
+
+    // Compare only P::y data members by projecting them:
+    const auto found4 = rng::find_first_of(p1, p2, {}, &P::y, &P::y);
+    std::cout << "First equivalent element {" << found4->x << ", " << found4->y
+              << "} was found at position " << std::distance(p1.begin(), found4)
+              << ".\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+First equivalent element {3, -3} was found at position 2.
+```
+
+</div>
+</Columns>

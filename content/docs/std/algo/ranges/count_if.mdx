@@ -1,21 +1,21 @@
 ---
-title:			ranges::count_if algorithm
-sidebar_label:	ranges::count_if(  )
-description:	ranges::count_if algorithm C++ documentation
-hide_title:		true
-tags:			[algorithm, count_if, number, predicate, quantity]
+title:         ranges::count_if algorithm
+sidebar_label: ranges::count_if(  )
+description:   ranges::count_if algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, count_if, number, predicate, quantity]
 
-cppreference_origin_rel: w/cpp/algorithm/ranges/count_if
+cppreference_origin_rel: w/cpp/algorithm/ranges/count
 ---
 
-import Columns			from "@site-comps/Columns";
-import SwitchView		from "@site-comps/SwitchView";
-import { Since, Until }	from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
-import Signature_SinceCpp20_Detailed 	from './_codes/count_if/since-cpp20-detailed.mdx';
-import Signature_SinceCpp20_Simplified	from './_codes/count_if/since-cpp20-simplified.mdx';
+import Signature_SinceCpp20_Detailed   from './_codes/count_if/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/count_if/since-cpp20-simplified.mdx';
 
 # std::ranges::count_if() algorithm
 
@@ -31,14 +31,26 @@ Returns the number of elements in the given range that satisfy specific criteria
 - **(1)** Counts elements for which predicate `p` returns `true`.
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
-The function-like entities described on this page are [**niebloids**](#).
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
 
 ### Parameters
 
-- `first`, `last` - the range of elements to examine
-- `r` - the range of elements to examine
-- `pred` - predicate to apply to the projected elements
-- `proj` - projection to apply to the elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

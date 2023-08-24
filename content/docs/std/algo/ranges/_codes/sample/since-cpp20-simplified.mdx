@@ -1,0 +1,31 @@
+```cpp
+// (1)
+O sample( I first, S last, O out, std::iter_difference_t<I> n, Gen&& gen );
+
+// (2)
+O sample( R&& r, O out, ranges::range_difference_t<R> n, Gen&& gen );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `O` - `std::weakly_incrementable`
+- `R` - `std::ranges::input_range`
+- `Gen` - **(none)**
+
+
+Additionally, each overload has the following constraints:
+- **(1)**:
+  ```cpp
+  (forward_iterator<I> || random_access_iterator<O>)
+  && indirectly_copyable<I, O>
+  && uniform_random_bit_generator<remove_reference_t<Gen>>
+  ```
+- **(2)**:
+  ```cpp
+  (ranges::forward_range<R> || random_access_iterator<O>)
+  && indirectly_copyable<ranges::iterator_t<R>, O>
+  && uniform_random_bit_generator<remove_reference_t<Gen>>
+  ```
+
+(The `std::` namespace was omitted for readability)

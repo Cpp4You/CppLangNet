@@ -1,0 +1,24 @@
+```cpp
+// (1)
+constexpr ranges::subrange<I>
+    stable_partition( I first, S last, Pred pred, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_subrange_t<R>
+    stable_partition( R&& r, Pred pred, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::bidirectional_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::bidirectional_range`
+- `Pred`:
+  - **(1)** - `std::indirect_unary_predicate<std::projected<I, Proj>>`
+  - **(2)** - `std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>>`
+- `Proj` - **(none)**
+
+The `Proj`  template argument has the following default type `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::permutable<I>`
+- **(2)** - `std::permutable<ranges::iterator_t<R>>`

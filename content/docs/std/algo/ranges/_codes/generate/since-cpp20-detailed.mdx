@@ -1,0 +1,18 @@
+```cpp
+// (1)
+template<
+  std::input_or_output_iterator O,
+  std::sentinel_for<O> S,
+  std::copy_constructible F
+>
+  requires std::invocable<F&> && std::indirectly_writable<O, std::invoke_result_t<F&>>
+constexpr O generate( O first, S last, F gen );
+
+// (2)
+template<
+  class R,
+  std::copy_constructible F
+>
+  requires std::invocable<F&> && ranges::output_range<R, std::invoke_result_t<F&>>
+constexpr ranges::borrowed_iterator_t<R> generate( R&& r, F gen );
+```

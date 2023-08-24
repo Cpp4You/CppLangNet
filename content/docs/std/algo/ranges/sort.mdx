@@ -1,21 +1,21 @@
 ---
-title:			ranges::sort algorithm
-sidebar_label:	ranges::sort(  )
-description:	ranges::sort algorithm C++ documentation
-hide_title:		true
-tags:			[ranges, algorithm, sort, ascending, order]
+title:         ranges::sort algorithm
+sidebar_label: ranges::sort(  )
+description:   ranges::sort algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, sort, ascending, order]
 
 cppreference_origin_rel: w/cpp/algorithm/ranges/sort
 ---
 
-import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
-import Tabs					from "@theme/Tabs";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
-import Signature_SinceCpp20_Detailed 	from './_codes/sort/since-cpp20-detailed.mdx';
-import Signature_SinceCpp20_Simplified	from './_codes/sort/since-cpp20-simplified.mdx';
+import Signature_SinceCpp20_Detailed   from './_codes/sort/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/sort/since-cpp20-simplified.mdx';
 
 # std::ranges::sort() algorithm
 
@@ -38,14 +38,26 @@ The order of equal elements is not guaranteed to be preserved.
 
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
-The function-like entities described on this page are [**niebloids**](#).
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
 
 ### Parameters
 
-- `first`, `last` - the first range of elements to sort (iterator, sentinel pair)
-- `r` - the first range of elements to sort (ranges)
-- `comp` - comparison object to apply to the projected elements
-- `proj` - projection to apply to the elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to sort.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to sort.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison object to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

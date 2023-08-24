@@ -1,0 +1,163 @@
+---
+title:         ranges::replace_if algorithm
+sidebar_label: ranges::replace_if(  )
+description:   ranges::replace_if algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, replace, replace_if]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/replace
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/replace_if/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/replace_if/since-cpp20-simplified.mdx';
+
+# std::ranges::replace_if() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Replaces all elements for which the predicate `pred` evaluates to `true`, where evaluating expression is `std::invoke(pred, std::invoke(proj, *i))`.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+Removing is done by shifting (by means of move assignment) the elements in the range in such a way that the elements that are not to be replaced appear in the beginning of the range.
+
+:::important
+Relative order of the elements that remain is preserved and the physical size of the container is unchanged.
+:::
+
+:::warning
+Iterators pointing to an element between the new *logical* end and the *physical* end of the range are still <a href="#">dereferenceable</a>, <Since v='cpp11'>but the elements themselves have unspecified values (as per <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> post-condition).</Since>
+:::
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>new_value</code> }>
+    The value to use as a replacement.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Unary predicate which returns <code>true</code> if the element value should be replaced.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An iterator equal to `last`.
+
+### Complexity
+
+Exactly `ranges::distance(first, last)` applications of the corresponding predicate `pred` and any projection `proj`.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>replace_if(1)</summary>
+
+```cpp
+struct replace_if_fn
+{
+    template<std::input_iterator I, std::sentinel_for<I> S, class T,
+             class Proj = std::identity, std::indirect_unary_predicate<
+                 std::projected<I, Proj>> Pred>
+    requires std::indirectly_writable<I, const T&>
+    constexpr I
+        operator()(I first, S last, Pred pred, const T& new_value, Proj proj = {}) const
+    {
+        for (; first != last; ++first)
+            if (!!std::invoke(pred, std::invoke(proj, *first)))
+                *first = new_value;
+        return std::move(first);
+    }
+
+    template<ranges::input_range R, class T, class Proj = std::identity,
+             std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>> Pred>
+    requires std::indirectly_writable<ranges::iterator_t<R>, const T&>
+    constexpr ranges::borrowed_iterator_t<R>
+        operator()(R&& r, Pred pred, const T& new_value, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::move(pred),
+                       new_value, std::move(proj));
+    }
+};
+
+inline constexpr replace_if_fn replace_if {};
+```
+
+</details>
+
+
+### Notes
+
+Because the algorithm takes `old_value` and `new_value` by reference, it may have unexpected behavior if either is a reference to an element of the range [`first`; `last`).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+
+int main()
+{
+    auto print = [](const auto& v)
+    {
+        for (const auto& e : v)
+            std::cout << e << ' ';
+        std::cout << '\n';
+    };
+
+    std::array p {1, 6, 1, 6, 1, 6};
+    print(p);
+    std::ranges::replace(p, 6, 9);
+    print(p);
+
+    std::array q {1, 2, 3, 6, 7, 8, 4, 5};
+    print(q);
+    std::ranges::replace_if(q, [](int x) { return 5 < x; }, 5);
+    print(q);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1 6 1 6 1 6
+1 9 1 9 1 9
+1 2 3 6 7 8 4 5
+1 2 3 5 5 5 4 5
+```
+
+</div>
+</Columns>

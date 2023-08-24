@@ -1,0 +1,12 @@
+```cpp
+// (1)
+I uninitialized_fill_n( I first, std::iter_difference_t<I> n, const T& x );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - [`no-throw-forward-range`](#)
+- `T` - **(none)**
+
+Additionally, each overload has the following constraints:
+- **(1)** `std::constructible_from<std::iter_value_t<I>, const T& >`
+

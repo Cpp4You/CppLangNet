@@ -1,0 +1,189 @@
+---
+title:         ranges::uninitialized_move_n algorithm
+sidebar_label: ranges::uninitialized_move_n(  )
+description:   ranges::uninitialized_move_n algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, uninitialized_move_n, move_n, uninitialized]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/uninitialized_move_n
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+import Tabs                    from "@theme/Tabs";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/uninitialized_move_n/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/uninitialized_move_n/since-cpp20-simplified.mdx';
+
+# std::ranges::uninitialized_move_n() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using uninitialized_move_n_result = ranges::in_out_result<I, O>;
+```
+
+Given `N` as `min(n, ranges::distance(ofirst, olast))`:
+
+Moves `N` elements from the input range beginning at `ifirst` to the uninitialized storage designated by the range [`ofirst`; `olast`)
+
+The function has the effect equal to:
+```cpp
+for (; n-- > 0 && ofirst != olast; ++ifirst, ++ofirst)
+  ::new (static_cast<void*>(std::addressof(*first)))
+      std::remove_reference_t<std::iter_reference_t<O>>(ranges::iter_move(ifirst));
+```
+
+:::caution
+If an exception is thrown during the initialization then the objects that already constructed in [`ofirst`; `olast`) are destroyed in an unspecified order.
+Also, the objects in the input range beginning at ifirst, that were already moved, are left in a valid but unspecified state.
+:::
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>ifirst</code> }>
+    The beginning of the input range to move elements from.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ofirst</code> <br/> <code>olast</code> </> }>
+    The destination range to initialize.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code> }>
+    The number of elements to move.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+```cpp
+{
+  ifirst + N,
+  ofirst + N
+}
+```
+
+### Complexity
+
+Linear in `N`.
+
+### Exceptions
+
+The exception thrown on construction of the elements in the destination range, if any.
+### Possible implementation
+
+
+<details>
+<summary>uninitialized_move_n(1)</summary>
+
+```cpp
+struct uninitialized_move_n_fn
+{
+    template<std::input_iterator I, no-throw-forward-iterator O,
+             no-throw-sentinel-for<O> S>
+    requires std::constructible_from<std::iter_value_t<O>,
+             std::iter_rvalue_reference_t<I>>
+    ranges::uninitialized_move_n_result<I, O>
+    operator()(I ifirst, std::iter_difference_t<I> n, O ofirst, S olast) const
+    {
+        O current{ofirst};
+        try
+        {
+            for (; n-- > 0 && current != olast; ++ifirst, ++current)
+                ::new (const_cast<void*>(static_cast<const volatile void*>
+                    (std::addressof(*current)))) std::remove_reference_t<
+                        std::iter_reference_t<O>>(ranges::iter_move_n(ifirst));
+            return {std::move_n(ifirst), std::move_n(current)};
+        }
+        catch (...) // rollback: destroy constructed elements
+        {
+            for (; ofirst != current; ++ofirst)
+                ranges::destroy_at(std::addressof(*ofirst));
+            throw;
+        }
+    }
+};
+
+inline constexpr uninitialized_move_n_fn uninitialized_move_n{};
+```
+
+</details>
+
+### Notes
+
+An implementation may improve the efficiency of [`ranges::uninitialized_move_n`](#) if the value type of the output range is [`TrivialType`](/docs/named_req/TrivialType).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <cstdlib>
+#include <iomanip>
+#include <iostream>
+#include <memory>
+#include <string>
+
+void print(auto rem, auto first, auto last)
+{
+    for (std::cout << rem; first != last; ++first)
+        std::cout << std::quoted(*first) << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    std::string in[]{ "No", "Diagnostic", "Required", };
+    print("initially, in: ", std::begin(in), std::end(in));
+
+    if (
+        constexpr auto sz = std::size(in);
+        void* out = std::aligned_alloc(alignof(std::string), sizeof(std::string) * sz)
+    )
+    {
+        try
+        {
+            auto first{static_cast<std::string*>(out)};
+            auto last{first + sz};
+            std::ranges::uninitialized_move_n(std::begin(in), sz, first, last);
+
+            print("after move_n, in: ", std::begin(in), std::end(in));
+            print("after move_n, out: ", first, last);
+
+            std::ranges::destroy(first, last);
+        }
+        catch (...)
+        {
+            std::cout << "Exception!\n";
+        }
+        std::free(out);
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+initially, in: "No" "Diagnostic" "Required"
+after move_n, in: "" "" ""
+after move_n, out: "No" "Diagnostic" "Required"
+```
+
+</div>
+</Columns>

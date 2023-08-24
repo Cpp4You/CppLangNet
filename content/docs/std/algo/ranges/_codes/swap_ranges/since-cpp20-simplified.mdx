@@ -1,0 +1,19 @@
+```cpp
+// (1)
+constexpr swap_ranges_result<I1, I2>
+    swap_ranges( I1 first1, S1 last1, I2 first2, S2 last2 );
+
+// (2)
+constexpr swap_ranges_result<ranges::borrowed_iterator_t<R1>,
+                             ranges::borrowed_iterator_t<R2>>
+    swap_ranges( R1&& r1, R2&& r2 );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I1`, `I2` - `std::input_iterator`
+- `S1`, `S2` - `std::sentinel_for<I1>`, `std::sentinel_for<I2>`
+- `R1`, `R2` - `std::ranges::input_range`
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::indirectly_swappable<I1, I2>`
+- **(2)** - `std::indirectly_swappable<ranges::iterator_t<R1>, ranges::iterator_t<R2>>`

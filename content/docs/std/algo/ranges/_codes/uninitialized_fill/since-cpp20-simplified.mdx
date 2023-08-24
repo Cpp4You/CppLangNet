@@ -1,0 +1,18 @@
+```cpp
+// (1)
+I uninitialized_fill( I first, S last, const T& x );
+
+// (2)
+ranges::borrowed_iterator_t<R> uninitialized_fill( R&& r, const T& x );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `no-throw-forward-iterator`
+- `S` - `no-throw-sentinel-for<I>`
+- `R` - [`no-throw-forward-range`](#)
+- `T` - **(none)**
+
+Additionally, each overload has the following constraints:
+- **(1)** `std::constructible_from<std::iter_value_t<I>, const T&>`
+- **(1)** `std::constructible_from<ranges::range_value_t<R>, const T&>`
+

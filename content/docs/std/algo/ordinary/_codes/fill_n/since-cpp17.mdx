@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class OutputIt, class Size, class T >
+OutputIt fill_n( OutputIt first, Size count, const T& value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class Size, class T >
+ForwardIt fill_n( ExecutionPolicy&& policy,
+                  ForwardIt first, Size count, const T& value );
+```

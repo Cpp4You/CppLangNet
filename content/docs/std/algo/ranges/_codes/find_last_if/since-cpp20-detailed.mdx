@@ -1,0 +1,20 @@
+```cpp
+// (1)
+template<
+  std::forward_iterator I,
+  std::sentinel_for<I> S,
+  class Proj = std::identity,
+  std::indirect_unary_predicate<std::projected<I, Proj>> Pred
+>
+constexpr ranges::subrange<I>
+    find_last_if( I first, S last, Pred pred, Proj proj = {} );
+
+// (2)
+template<
+  ranges::forward_range R,
+  class Proj = std::identity,
+  std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>> Pred
+>
+constexpr ranges::borrowed_subrange_t<R>
+    find_last_if( R&& r, Pred pred, Proj proj = {} );
+```

@@ -1,0 +1,11 @@
+```cpp
+// (1)
+template< class ForwardIt1, class ForwardIt2 >
+constexpr ForwardIt2 swap_ranges( ForwardIt1 first1, ForwardIt1 last1,
+                                  ForwardIt2 first2 );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2 >
+ForwardIt2 swap_ranges( ExecutionPolicy&& policy,
+                        ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2 );
+```

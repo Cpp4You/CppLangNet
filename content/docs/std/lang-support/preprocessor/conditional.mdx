@@ -1,0 +1,171 @@
+---
+title:              Conditional inclusion
+tags:               [Language, Preprocessor]
+hite_title:         true
+---
+
+import {Since, Version}                                 from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import Columns                                          from "@site-comps/Columns";
+
+# Conditional inclusion
+
+The preprocessor supports conditional compilation of parts of source file. 
+This behavior is controlled by <code-d>#if</code-d>, <code-d>#ifdef</code-d>, <code-d>#ifndef</code-d>, <code-d>#else</code-d>
+, <code-d>#elif</code-d>, <Since v='cpp23'><code-d>#elifdef</code-d>, <code-d>#elifndef</code-d></Since> , and <code-d>#endif</code-d> directives.
+
+## Syntax
+
+<SyntaxTable>
+  <Syntax id='1' directive={<span class='col-d'>#if</span>}       args={['expression']}/>
+  <Syntax id='2' directive={<span class='col-d'>#ifdef</span>}    args={['identifier']}/>
+  <Syntax id='3' directive={<span class='col-d'>#ifndef</span>}   args={['identifier']}/>
+  <Syntax id='4' directive={<span class='col-d'>#elif</span>}     args={['expression']}/>
+  <Syntax id='5' directive={<span class='col-d'>#elifdef</span>}  args={['identifier', <Since v='cpp23'></Since>]}/>
+  <Syntax id='6' directive={<span class='col-d'>#elifndef</span>} args={['identifier', <Since v='cpp23'></Since>]}/>
+  <Syntax id='7' directive={<span class='col-d'>#else</span>}     args={['']}/>
+  <Syntax id='8' directive={<span class='col-d'>#endif</span>}    args={['']}/>
+</SyntaxTable>
+
+## Explanation
+* The conditional preprocessing block starts with <span class='col-d'>#if</span>, <span class='col-d'>#defif</span> or <span class='col-d'>#ifndef</span> directive, 
+then optionally includes any number of <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, or <span class='col-d'>#elifndef</span></Since> directives, 
+then optionally includes at most one <span class='col-d'>#else</span> directive and is terminated with <span class='col-d'>#endif</span> directive. Any inner conditional preprocessing blocks are processed separately.
+
+* Each of <span class='col-d'>#if</span>, <span class='col-d'>#ifdef</span>, <span class='col-d'>#ifndef</span>, <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, and <span class='col-d'>#else</span> 
+directives control the code block until the first <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, <span class='col-d'>#else</span>, <span class='col-d'>#endif</span> 
+directive not belonging to any inner conditional preprocessing blocks.
+
+* <span class='col-d'>#if</span>, <span class='col-d'>#defif</span> and <span class='col-d'>#ifndef</span> directives test the specified condition (see below) and if it evaluates to true, compiles the controlled code block. In that case subsequent #else, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, 
+and <span class='col-d'>#elif</span> directives are ignored. 
+Otherwise, if the specified condition evaluates false, the controlled code block is skipped and the subsequent <span class='col-d'>#else</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, 
+or <span class='col-d'>#elif</span> directive (if any) is processed. If the subsequent directive is <span class='col-d'>#else</span>, the code block controlled by the <span class='col-d'>#else</span> directive is unconditionally compiled. 
+Otherwise, the <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since> directive acts as if it was <span class='col-d'>#if</span> directive: checks for condition, compiles or skips the controlled code block based on the result, 
+and in the latter case processes subsequent <span class='col-d'>#elif</span>, <Since v='cpp23'><span class='col-d'>#elifdef</span>, <span class='col-d'>#elifndef</span></Since>, and <span class='col-d'>#else</span> directives. The conditional preprocessing block is terminated by <span class='col-d'>#endif</span> directive.
+
+## Condition evaluation
+#### <code-d>#if</code-d>, <code-d>#elif</code-d>
+The expression may contain:
+* unary operators in form **defined** *identifier* or **defined** *(identifier)*. The result is `1` if the *identifier* was <a href="../replace">defined as a macro name</a>, 
+    otherwise the result is `0`. <Since v='cpp17'>  `__has_include` <Since v='cpp20'>and  `__has_cpp_attribute` </Since> are treated as if they were the names of defined macros in this context.</Since>
+* <Since v='cpp17'> <a href="../include">__has_include expressions</a>, which detects whether a header or source file exists</Since>.
+* <Since v='cpp20'> <a href="/docs/std/feature_test#attributes">__has_cpp_attribute</a> expressions, which detects whether a given attribute token is supported and its supported version.</Since>
+
+After all macro expansion and evaluation of defined, <Since v='cpp20'><Since v='cpp17'>`__has_include`</Since>, and `__has_cpp_attribute`</Since> expressions, 
+any identifier which is not a [boolean literal](/docs/std/lang-support/bool_literal) is replaced with the number `0` (this includes identifiers that are lexically keywords, but not alternative tokens like `and`).
+
+Then the expression is evaluated as an [integral constant expression](/docs/std/lang-support/constant_expression#integral-constant-expression).
+
+If the *expression* evaluates to nonzero value, the controlled code block is included and skipped otherwise.
+
+Note: Until the resolution of [CWG issue 1955](https://cplusplus.github.io/CWG/issues/1955.html), <code>#if cond1 ... #elif cond2</code> is **different** from <code>#if cond1 ... #else</code> followed by <code>#if cond2</code> 
+because if `cond1` is true, the second <span class='col-d'>#if</span> is skipped and `cond2` does not need to be well-formed, while <span class='col-d'>#elif</span>'s `cond2` must be a valid expression. 
+As of [CWG 1955](https://cplusplus.github.io/CWG/issues/1955.html), <span class='col-d'>#elif</span> that leads the skipped code block is also skipped.
+
+### Combined directives
+Checks if the identifier was defined as a macro name.
+* <code><span class="col-d">#ifdef</span> <i>identifier</i></code> is essentially equivalent to <code><span class="col-d">#if defined </span> <i>identifier</i></code>.
+* <code><span class="col-d">#ifndef</span> <i>identifier</i></code> is essentially equivalent to <code><span class="col-d">#if !defined</span> <i>identifier</i></code>.
+* <code><span class="col-d">#elifdef</span> <i>identifier</i></code> is essentially equivalent to <code><span class="col-d">#elif defined</span> <i>identifier</i></code>. <Since v='cpp23'></Since>
+* <code><span class="col-d">#elifndef</span> <i>identifier</i></code> is essentially equivalent to <code><span class="col-d">#elif !defined</span> <i>identifier</i></code>. <Since v='cpp23'></Since>
+
+## Notes
+While <code-d>#elifdef</code-d> and <code-d>#elifndef</code-d> directives target <Version v='cpp23'></Version>, implementations are encouraged to backport them to the older language modes as conforming extensions.
+
+## Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#define ABCD 2
+#include <iostream>
+ 
+int main()
+{
+ 
+#ifdef ABCD
+    std::cout << "1: yes\n";
+#else
+    std::cout << "1: no\n";
+#endif
+ 
+#ifndef ABCD
+    std::cout << "2: no1\n";
+#elif ABCD == 2
+    std::cout << "2: yes\n";
+#else
+    std::cout << "2: no2\n";
+#endif
+ 
+#if !defined(DCBA) && (ABCD < 2*4-3)
+    std::cout << "3: yes\n";
+#endif
+ 
+ 
+// Note that if a compiler does not support C++23's #elifdef/#elifndef
+// directives then the "unexpected" block (see below) will be selected.
+#ifdef CPU
+    std::cout << "4: no1\n";
+#elifdef GPU
+    std::cout << "4: no2\n";
+#elifndef RAM
+    std::cout << "4: yes\n"; // expected block
+#else
+    std::cout << "4: no!\n"; // unexpectedly selects this block by skipping
+                             // unknown directives and "jumping" directly
+                             // from "#ifdef CPU" to this "#else" block
+#endif
+ 
+// To fix the problem above we may conditionally define the
+// macro ELIFDEF_SUPPORTED only if the C++23 directives
+// #elifdef/#elifndef are supported.
+#if 0
+#elifndef UNDEFINED_MACRO
+#define ELIFDEF_SUPPORTED
+#else
+#endif
+ 
+#ifdef ELIFDEF_SUPPORTED
+    #ifdef CPU
+        std::cout << "4: no1\n";
+    #elifdef GPU
+        std::cout << "4: no2\n";
+    #elifndef RAM
+        std::cout << "4: yes\n"; // expected block
+    #else
+        std::cout << "4: no3\n";
+    #endif
+#else // when #elifdef unsupported use old verbose `#elif defined`
+    #ifdef CPU
+        std::cout << "4: no1\n";
+    #elif defined GPU
+        std::cout << "4: no2\n";
+    #elif !defined RAM
+        std::cout << "4: yes\n"; // expected block
+    #else
+        std::cout << "4: no3\n";
+    #endif
+#endif
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Result"
+1: yes
+2: yes
+3: yes
+4: no!
+4: yes
+```
+
+</div></Columns>
+
+## Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| **DR**                                                       | **Applied to**                | **Behavior as published**                                           | **Correct behavior**                     |
+|:------------------------------------------------------------:|:-----------------------------:|:-------------------------------------------------------------------:|:----------------------------------------:|
+| [CWG 1955](https://cplusplus.github.io/CWG/issues/1955.html) | <Version v='cpp98'></Version> | failed <span class='col-d'>#elif</span>'s expression was required to be valid | failed <span class='col-d'>#elif</span> is skipped |

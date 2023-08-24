@@ -1,0 +1,173 @@
+---
+title:         ranges::upper_bound algorithm
+sidebar_label: ranges::upper_bound(  )
+description:   ranges::upper_bound algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, upper_bound, bound, binary_search]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/upper_bound
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/upper_bound/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/upper_bound/since-cpp20-simplified.mdx';
+
+# std::ranges::upper_bound() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Returns an iterator pointing to the first element in the range [`first`; `last`) that is **greater** than `value`,
+  or `last` if no such element is found.
+
+  The range [`first`; `last`) must be partitioned with respect to the expression `!comp(value, element)`, i.e.,
+  all elements for which the expression is `true` must precede all elements for which the expression is `false`.
+
+  A fully-sorted range meets this criterion.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The partially-ordered range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The partially-ordered range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to compare the elements to.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+Iterator pointing to the first element that is **greater** than `value`, or `last` if no such element is found.
+
+### Complexity
+
+At most **log2(last - first) + O(1)** comparisons and applications of the projection.
+
+However, for an iterator that does not model [`random_access_iterator`](#), the number of iterator increments is **linear**.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>ranges::upper_bound</summary>
+
+```cpp
+struct upper_bound_fn
+{
+    template<std::forward_iterator I, std::sentinel_for<I> S,
+             class T, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                 const T*,
+                 std::projected<I, Proj>> Comp = ranges::less>
+    constexpr I operator()(I first, S last, const T& value,
+                           Comp comp = {}, Proj proj = {}) const
+    {
+        I it;
+        std::iter_difference_t<I> count, step;
+        count = ranges::distance(first, last);
+
+        while (count > 0)
+        {
+            it = first;
+            step = count / 2;
+            ranges::advance(it, step, last);
+            if (!comp(value, std::invoke(proj, *it)))
+            {
+                first = ++it;
+                count -= step + 1;
+            }
+            else
+                count = step;
+        }
+        return first;
+    }
+
+    template<ranges::forward_range R, class T, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                 const T*,
+                 std::projected<ranges::iterator_t<R>, Proj>> Comp = ranges::less>
+    constexpr ranges::borrowed_iterator_t<R>
+        operator()(R&& r, const T& value, Comp comp = {}, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), value,
+                       std::ref(comp), std::ref(proj));
+    }
+};
+
+inline constexpr upper_bound_fn upper_bound;
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+int main()
+{
+    namespace ranges = std::ranges;
+
+    std::vector<int> data {1, 1, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 6};
+
+    {
+        auto lower = ranges::lower_bound(data.begin(), data.end(), 4);
+        auto upper = ranges::upper_bound(data.begin(), data.end(), 4);
+
+        ranges::copy(lower, upper, std::ostream_iterator<int>(std::cout, " "));
+        std::cout << '\n';
+    }
+    {
+        auto lower = ranges::lower_bound(data, 3);
+        auto upper = ranges::upper_bound(data, 3);
+
+        ranges::copy(lower, upper, std::ostream_iterator<int>(std::cout, " "));
+        std::cout << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+4 4 4
+3 3 3 3
+```
+
+</div>
+</Columns>

@@ -1,0 +1,18 @@
+```cpp
+// (1)
+template< class InputIt, class OutputIt1,
+          class OutputIt2, class UnaryPredicate >
+std::pair<OutputIt1, OutputIt2>
+    partition_copy( InputIt first, InputIt last,
+                    OutputIt1 d_first_true, OutputIt2 d_first_false,
+                    UnaryPredicate p );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2,
+          class ForwardIt3, class UnaryPredicate >
+std::pair<ForwardIt2, ForwardIt3>
+    partition_copy( ExecutionPolicy&& policy,
+                    ForwardIt1 first, ForwardIt1 last,
+                    ForwardIt2 d_first_true, ForwardIt3 d_first_false,
+                    UnaryPredicate p );
+```

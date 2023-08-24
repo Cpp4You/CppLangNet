@@ -1,0 +1,17 @@
+```cpp
+// (1)
+template< class RandomIt >
+RandomIt is_heap_until( RandomIt first, RandomIt last );
+
+// (2)
+template< class RandomIt, class Compare >
+RandomIt is_heap_until( RandomIt first, RandomIt last, Compare comp );
+
+// (3)
+template< class ExecutionPolicy, class RandomIt >
+RandomIt is_heap_until( ExecutionPolicy&& policy, RandomIt first, RandomIt last );
+
+// (4)
+template< class ExecutionPolicy, class RandomIt, class Compare >
+RandomIt is_heap_until( ExecutionPolicy&& policy, RandomIt first, RandomIt last, Compare comp );
+```

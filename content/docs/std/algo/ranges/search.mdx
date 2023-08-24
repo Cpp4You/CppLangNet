@@ -1,0 +1,225 @@
+---
+title:         ranges::search algorithm
+sidebar_label: ranges::search(  )
+description:   ranges::search algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, find, search, search, look]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/search
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/search/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/search/since-cpp20-simplified.mdx';
+
+# std::ranges::search() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Searches for the first occurence of a range of elements inside another range.
+
+- **(1)** Searches for the first occurrence of the sequence of elements [`first2`; `last2`) in the range [`first1`; `last1`).
+  Elements are compared using binary predicate `pred` after being projected with `proj2` and `proj1`, respectively.
+
+- **(2)** Same as **(1)**, but uses `r1` as the first source range and `r2` as the second source range,
+  as if using `ranges::begin(r1)` as `first1`, `ranges::end(r1)` as `last1`, `ranges::begin(r2)` as `first2`, and `ranges::end(r2)` as `last2`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The range of elements to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>r1</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The range of elements to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Binary predicate to compare the elements with.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the elements in the first range.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the elements in the second range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+- **(1)** Value of type `ranges::subrange<I1>` initialized as follows:
+  ```cpp
+  {
+    i,
+    i + (i == last1 ? 0 : ranges::distance(first2, last2))
+  }
+  ```
+  that denotes the first occurrence of the sequence [`first2`; `last2`) (*aka needle*) in range [`first1`; `last1`) (*aka haystack*) (after projections with `proj1` and `proj2` and binary predicate `pred` after that).
+
+  If [`first2`; `last2`) is empty or if no such sequence is found, the return value is effectively initialized with `{ last1, last1 }`.
+
+- **(2)** Same as **(1)**, except that the return type is `ranges::borrowed_subrange_t<R1>`.
+
+### Complexity
+
+- **(1)** Given `S` as `ranges::distance(first2, last2)` and `N` as `ranges::distance(first1, last1)`
+- **(2)** Given `S` as `ranges::distance(r2)` and `N` as `ranges::distance(r1)`
+
+At most **S \* N** applications of predicate and each projection.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>search(1)</summary>
+
+```cpp
+struct search_fn
+{
+    template<std::forward_iterator I1, std::sentinel_for<I1> S1,
+             std::forward_iterator I2, std::sentinel_for<I2> S2,
+             class Pred = ranges::equal_to,
+             class Proj1 = std::identity,
+             class Proj2 = std::identity>
+    requires std::indirectly_comparable<I1, I2, Pred, Proj1, Proj2>
+    constexpr ranges::subrange<I1>
+        operator()(I1 first1, S1 last1, I2 first2, S2 last2, Pred pred = {},
+                   Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        for (;; ++first1)
+        {
+            I1 it1 = first1;
+            for (I2 it2 = first2;; ++it1, ++it2)
+            {
+                if (it2 == last2)
+                    return {first1, it1};
+                if (it1 == last1)
+                    return {it1, it1};
+                if (!std::invoke(pred, std::invoke(proj1, *it1), std::invoke(proj2, *it2)))
+                    break;
+            }
+        }
+    }
+
+    template<ranges::forward_range R1, ranges::forward_range R2,
+             class Pred = ranges::equal_to,
+             class Proj1 = std::identity,
+             class Proj2 = std::identity>
+    requires std::indirectly_comparable<ranges::iterator_t<R1>,
+                                        ranges::iterator_t<R2>, Pred, Proj1, Proj2>
+    constexpr ranges::borrowed_subrange_t<R1>
+        operator()(R1&& r1, R2&& r2, Pred pred = {},
+                   Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        return (*this)(ranges::begin(r1), ranges::end(r1),
+                       ranges::begin(r2), ranges::end(r2),
+                       std::move(pred), std::move(proj1), std::move(proj2));
+    }
+};
+
+inline constexpr search_fn search {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cctype>
+#include <iostream>
+#include <iterator>
+#include <string_view>
+
+using namespace std::literals;
+
+void print(int id, const auto& haystack, const auto& needle, const auto& found)
+{
+    std::cout << id << ") search(\"" << haystack << "\", \"" << needle << "\"); ";
+    const auto first = std::distance(haystack.begin(), found.begin());
+    const auto last = std::distance(haystack.begin(), found.end());
+    if (found.empty())
+        std::cout << "not found;";
+    else
+    {
+        std::cout << "found: \"";
+        for (const auto x : found)
+            std::cout << x;
+        std::cout << "\";";
+    }
+    std::cout << " subrange: {" << first << ", " << last << "}\n";
+}
+
+int main()
+{
+    constexpr auto haystack {"abcd abcd"sv};
+    constexpr auto needle {"bcd"sv};
+
+    // the search uses iterator pairs begin()/end():
+    constexpr auto found1 = std::ranges::search(
+        haystack.begin(), haystack.end(),
+        needle.begin(), needle.end());
+    print(1, haystack, needle, found1);
+
+    // the search uses ranges r1, r2:
+    constexpr auto found2 = std::ranges::search(haystack, needle);
+    print(2, haystack, needle, found2);
+
+    // 'needle' range is empty:
+    constexpr auto none {""sv};
+    constexpr auto found3 = std::ranges::search(haystack, none);
+    print(3, haystack, none, found3);
+
+    // 'needle' will not be found:
+    constexpr auto awl {"efg"sv};
+    constexpr auto found4 = std::ranges::search(haystack, awl);
+    print(4, haystack, awl, found4);
+
+    // the search uses custom comparator and projections:
+    constexpr auto bodkin {"234"sv};
+    auto found5 = std::ranges::search(haystack, bodkin,
+        [](const int x, const int y) { return x == y; }, // pred
+        [](const int x) { return std::toupper(x); }, // proj1
+        [](const int y) { return y + 'A' - '1'; }); // proj2
+    print(5, haystack, bodkin, found5);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1) search("abcd abcd", "bcd"); found: "bcd"; subrange: {1, 4}
+2) search("abcd abcd", "bcd"); found: "bcd"; subrange: {1, 4}
+3) search("abcd abcd", ""); not found; subrange: {0, 0}
+4) search("abcd abcd", "efg"); not found; subrange: {9, 9}
+5) search("abcd abcd", "234"); found: "bcd"; subrange: {1, 4}
+```
+
+</div>
+</Columns>

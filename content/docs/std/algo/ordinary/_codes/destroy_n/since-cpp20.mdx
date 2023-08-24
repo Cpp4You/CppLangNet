@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class ForwardIt, class Size >
+constexpr ForwardIt destroy_n( ForwardIt first, Size n );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class Size >
+ForwardIt destroy_n( ExecutionPolicy&& policy, ForwardIt first, Size n );
+```

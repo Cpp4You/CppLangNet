@@ -1,0 +1,12 @@
+```cpp
+// (1)
+template< class InputIt, class OutputIt, class T >
+constexpr OutputIt replace_copy( InputIt first, InputIt last, OutputIt d_first,
+                                 const T& old_value, const T& new_value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2, class T >
+ForwardIt2 replace_copy( ExecutionPolicy&& policy,
+                         ForwardIt1 first, ForwardIt1 last, ForwardIt2 d_first,
+                         const T& old_value, const T& new_value );
+```

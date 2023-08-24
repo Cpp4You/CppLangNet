@@ -1,0 +1,163 @@
+---
+title:         stable_partition algorithm
+sidebar_label: stable_partition(  )
+description:   stable_partition algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, stable_partition, partition]
+
+cppreference_origin_rel: w/cpp/algorithm/stable_partition
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/stable_partition/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/stable_partition/since-cpp17.mdx';
+import Signature_SinceCpp26 from './_codes/stable_partition/since-cpp26.mdx';
+
+# std::stable_partition() algorithm
+
+<SwitchView content={{
+  'since-cpp26': <Signature_SinceCpp26 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+- **(1)** Reorders the elements in the range [`first`; `last`) in such a way that all elements for which the predicate `p` returns `true` precede the elements for which predicate `p` returns `false`.
+
+  Relative order of the elements is preserved.
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to reorder.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Unary predicate which returns `true` for the required element.
+
+The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>BidirIt</code> }>
+    <a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a> <br/>
+    <a href="/docs/named_req/ValueSwappable">ValueSwappable</a>
+  </Symbol>
+  <Symbol none noLink name={ <> Dereferenced <code>BidirIt</code> </> }>
+    <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> <br/>
+    <a href="/docs/named_req/MoveConstructible">MoveConstructible</a> <br/>
+  </Symbol>
+  <Symbol none noLink name={ <code>UnaryPredicate</code> }>
+  <a href="/docs/named_req/Predicate">Predicate</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+Iterator to the first element of the second group.
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+**(1)** Exactly `N` applications of `p` and **O(N)** swaps if there is enough extra memory. If memory is insufficient, at most **N * log(N)** swaps.
+
+**(2)** **O(N \* log(N))** swaps and **O(N)** applications of `p`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>stable_partition (1)</summary>
+
+```cpp
+template<class ForwardIt, class UnaryPredicate>
+ForwardIt stable_partition(ForwardIt first, ForwardIt last, UnaryPredicate p)
+{
+    first = std::find_if_not(first, last, p);
+    if (first == last)
+        return first;
+
+    for (auto i = std::next(first); i != last; ++i)
+        if (p(*i))
+        {
+            std::iter_swap(i, first);
+            ++first;
+        }
+
+    return first;
+}
+```
+
+</details>
+
+### Notes
+
+This function attempts to allocate a temporary buffer. If the allocation fails, the less efficient algorithm is chosen.
+
+Implementations in [**libc++**](https://github.com/llvm/llvm-project/blob/eda14ebf6a43d9ada6a2be3d1b06b8b6036eb774/libcxx/include/__algorithm/stable_partition.h#L316)
+and [**libstdc++**](https://github.com/gcc-mirror/gcc/blob/d2a499a9881c7c079d2a722b57c7fcf022a864dd/libstdc%2B%2B-v3/include/bits/stl_algo.h#L1608)
+also accept ranges denoted by `LegacyForwardIterator`s as an extension.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v {0, 0, 3, -1, 2, 4, 5, 0, 7};
+    std::stable_partition(v.begin(), v.end(), [](int n) { return n > 0; });
+    for (int n : v)
+        std::cout << n << ' ';
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+3 2 4 5 7 0 0 -1 0
+```
+
+</div>
+</Columns>

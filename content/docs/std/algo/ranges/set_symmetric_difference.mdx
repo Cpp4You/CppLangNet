@@ -1,0 +1,223 @@
+---
+title:         ranges::set_symmetric_difference algorithm
+sidebar_label: ranges::set_symmetric_difference(  )
+description:   ranges::set_symmetric_difference algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, set_difference, set_symmetric_difference]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/set_symmetric_difference
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/set_symmetric_difference/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/set_symmetric_difference/since-cpp20-simplified.mdx';
+
+# std::ranges::set_symmetric_difference() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I1, class I2, class O >
+using set_symmetric_difference_result = ranges::in_in_out_result<I1, I2, O>;
+```
+
+Computes symmetric difference of two sorted ranges, the elements that are found in either of the ranges,
+but not in both of them are copied to the range beginning at `result`. The resulting range is also sorted.
+
+If some element is found `m` times in [`first1`; `last1`) and `n` times in [`first2`; `last2`),
+it will be copied to result exactly `std::abs(m - n)` times:
+ - If `m > n`, then the last `m - n` of those elements are copied from [`first1`; `last1`)
+ - Otherwise, the last `n - m` elements are copied from [`first2`; `last2`).
+  The resulting range cannot overlap with either of the input ranges.
+
+- **(1)** Elements are compared using the given binary comparison function `comp`.
+- **(2)** Same as **(1)**, but uses `r1` as the first range and `r2` as the second range, as if using `ranges::begin(r1)` as `first1`, `ranges::end(r1)` as `last1`, `ranges::begin(r2)` as `first2`, and `ranges::end(r2)` as `last2`.
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_UndefinedBehaviour / > }>behavior is undefined</Tooltip> if:
+ - The input ranges are not sorted with respect to `comp` and `proj1` or `proj2`, respectively
+ - Or the resulting range overlaps with either of the input ranges.
+:::
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The first sorted input range.
+  </Symbol>
+  <Symbol none noLink name={ <code>r1</code> }>
+    The first sorted input range.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The second sorted input range.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The second sorted input range.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparator to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the elements in the first range.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the elements in the second range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+A value of type `ranges::set_symmetric_difference_result` initialized as follows:
+```cpp
+{
+  last1,
+  last2,
+  result_last
+}
+```
+Where `result_last` is the end of the constructed range.
+
+### Complexity
+
+Given `N1` as `ranges::distance(first1, last1)` and `N2` as `ranges::distance(first2, last12)`:
+
+**2 \* (N1 + N2) − 1** comparisons and applications of each projection.
+
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>set_symmetric_difference(1) and set_symmetric_difference(2)</summary>
+
+```cpp
+struct set_symmetric_difference_fn
+{
+    template<std::input_iterator I1, std::sentinel_for<I1> S1,
+             std::input_iterator I2, std::sentinel_for<I2> S2,
+             std::weakly_incrementable O, class Comp = ranges::less,
+             class Proj1 = std::identity, class Proj2 = std::identity>
+    requires std::mergeable<I1, I2, O, Comp, Proj1, Proj2>
+    constexpr ranges::set_symmetric_difference_result<I1, I2, O>
+        operator()(I1 first1, S1 last1, I2 first2, S2 last2, O result, Comp comp = {},
+                   Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        while (!(first1 == last1 or first2 == last2))
+        {
+            if (std::invoke(comp, std::invoke(proj1, *first1), std::invoke(proj2, *first2)))
+            {
+                *result = *first1;
+                ++first1;
+                ++result;
+            }
+            else if (std::invoke(comp, std::invoke(proj2, *first2),
+                                       std::invoke(proj1, *first1)))
+            {
+                *result = *first2;
+                ++first2;
+                ++result;
+            }
+            else
+            {
+                ++first1;
+                ++first2;
+            }
+        }
+        auto res1 {ranges::copy(std::move(first1), std::move(last1), std::move(result))};
+        auto res2 {ranges::copy(std::move(first2), std::move(last2), std::move(res1.out))};
+        return {std::move(res1.in), std::move(res2.in), std::move(res2.out)};
+    }
+
+    template<ranges::input_range R1, ranges::input_range R2,
+             std::weakly_incrementable O, class Comp = ranges::less,
+             class Proj1 = std::identity, class Proj2 = std::identity>
+    requires std::mergeable<ranges::iterator_t<R1>, ranges::iterator_t<R2>,
+                            O, Comp, Proj1, Proj2>
+    constexpr ranges::set_symmetric_difference_result<
+        ranges::borrowed_iterator_t<R1>, ranges::borrowed_iterator_t<R2>, O>
+        operator()(R1&& r1, R2&& r2, O result, Comp comp = {},
+                   Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        return (*this)(ranges::begin(r1), ranges::end(r1),
+                       ranges::begin(r2), ranges::end(r2),
+                       std::move(result), std::move(comp),
+                       std::move(proj1), std::move(proj2));
+    }
+};
+
+inline constexpr set_symmetric_difference_fn set_symmetric_difference {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+void visualize_this(const auto& v, int min = 1, int max = 9)
+{
+    for (auto i {min}; i <= max; ++i)
+    {
+        std::ranges::binary_search(v, i) ? std::cout << i : std::cout << '.';
+        std::cout << ' ';
+    }
+    std::cout << '\n';
+}
+
+int main()
+{
+    const auto in1 = {1, 3, 4,    6, 7, 9};
+    const auto in2 = {1,    4, 5, 6,    9};
+
+    std::vector<int> out {};
+
+    std::ranges::set_symmetric_difference(in1, in2, std::back_inserter(out));
+
+    visualize_this(in1);
+    visualize_this(in2);
+    visualize_this(out);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1 . 3 4 . 6 7 . 9
+1 . . 4 5 6 . . 9
+. . 3 . 5 . 7 . .
+```
+
+</div>
+</Columns>

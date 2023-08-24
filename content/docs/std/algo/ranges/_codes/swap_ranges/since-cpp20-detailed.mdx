@@ -1,0 +1,22 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I1,
+  std::sentinel_for<I1> S1,
+  std::input_iterator I2,
+  std::sentinel_for<I2> S2
+>
+  requires std::indirectly_swappable<I1, I2>
+constexpr swap_ranges_result<I1, I2>
+    swap_ranges( I1 first1, S1 last1, I2 first2, S2 last2 );
+
+// (2)
+template<
+  ranges::input_range R1,
+  ranges::input_range R2
+>
+  requires std::indirectly_swappable<ranges::iterator_t<R1>, ranges::iterator_t<R2>>
+constexpr swap_ranges_result<ranges::borrowed_iterator_t<R1>,
+                             ranges::borrowed_iterator_t<R2>>
+    swap_ranges( R1&& r1, R2&& r2 );
+```

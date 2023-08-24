@@ -1,0 +1,12 @@
+```cpp
+// (1)
+template< class ForwardIt, class OutputIt >
+OutputIt rotate_copy( ForwardIt first, ForwardIt n_first,
+                      ForwardIt last, OutputIt d_first );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2 >
+ForwardIt2 rotate_copy( ExecutionPolicy&& policy,
+                        ForwardIt1 first, ForwardIt1 n_first,
+                        ForwardIt1 last, ForwardIt2 d_first );
+```

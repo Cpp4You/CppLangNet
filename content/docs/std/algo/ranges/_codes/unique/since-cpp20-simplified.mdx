@@ -1,0 +1,23 @@
+```cpp
+// (1)
+constexpr ranges::subrange<I>
+    unique( I first, S last, C comp = {}, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_subrange_t<R>
+    unique( R&& r, C comp = {}, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::permutable`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::forward_range`
+- `C`:
+  - **(1)** - `std::indirect_equivalence_relation<std::projected<I, Proj>>`
+  - **(2)** - `std::indirect_equivalence_relation<std::projected<ranges::iterator_t<R>, Proj>>`
+- `Proj` - **(none)**
+
+The `Proj` and `C` template argument have the following default types `std::identity`, `ranges::equal_to` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(2)** - `std::permutable<ranges::iterator_t<R>>`

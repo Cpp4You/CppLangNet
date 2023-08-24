@@ -1,0 +1,178 @@
+---
+title:         clamp algorithm
+sidebar_label: clamp(  )
+description:   clamp algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, clamp]
+
+cppreference_origin_rel: w/cpp/algorithm/clamp
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp17 from './_codes/clamp/since-cpp17.mdx';
+
+# std::clamp() algorithm
+
+<SwitchView content={{
+  'since-cpp17': <Signature_SinceCpp17 />,
+}} />
+
+- If `v` compares less than `lo`, returns `lo`.  
+- Otherwise, if `v` compares more than `hi`, returns `hi`.  
+- Otherwise returns `v`.
+
+- **(1)** Uses `operator<` to compare the values.
+
+- **(2)** Same as **(1)**, but uses `comp` to compare the values.
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_ImplementationDefined /> }>behavior is undefined</Tooltip> if the value of <code>lo</code> is greater than <code>hi</code>.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>v</code>  }>
+    The value to clamp.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>lo</code> <br/> <code>hi</code> </> }>
+    The boundaries to clamp <code>v</code> to.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare))
+which returns `true` if the first argument is less than the second.
+
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `T` can be implicitly converted to both of them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+- **(1)**
+  <SymbolTable>
+    <Symbol none noLink name={ <code>T</code> }>
+      <a href="/docs/named_req/LessThanComparable">LessThanComparable</a>
+    </Symbol>
+  </SymbolTable>
+
+  If `NaN` is avoided, `T` can be a floating-point type.
+
+### Return value
+
+
+Reference to `lo` if `v` is less than `lo`, reference to `hi` if `hi` is less than `v`, otherwise reference to `v`.
+
+### Complexity
+
+At most two comparisons.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>clamp (1)</summary>
+
+```cpp
+template<class T>
+constexpr const T& clamp(const T& v, const T& lo, const T& hi)
+{
+    return clamp(v, lo, hi, less{});
+}
+```
+
+</details>
+
+<details>
+<summary>clamp (2)</summary>
+
+```cpp
+template<class T, class Compare>
+constexpr const T& clamp(const T& v, const T& lo, const T& hi, Compare comp)
+{
+    return comp(v, lo) ? lo : comp(hi, v) ? hi : v;
+}
+```
+
+</details>
+
+### Notes
+
+:::danger Undefined Behaviour
+Capturing the result of [`std::clamp`](#) by reference produces a dangling reference if one of the parameters is a temporary and that parameter is returned:
+```cpp
+int n = -1;
+const int& r = std::clamp(n, 0, 255); // r is dangling
+```
+:::
+
+If `v` compares equivalent to either bound, returns a reference to `v`, not the bound.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cstdint>
+#include <iomanip>
+#include <iostream>
+
+int main()
+{
+    std::cout << " raw   clamped to int8_t   clamped to uint8_t\n";
+    for (const int v : {-129, -128, -1, 0, 42, 127, 128, 255, 256})
+    {
+        std::cout 
+            << std::setw(04) << v
+            << std::setw(20) << std::clamp(v, INT8_MIN, INT8_MAX)
+            << std::setw(21) << std::clamp(v, 0, UINT8_MAX) << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+ raw   clamped to int8_t   clamped to uint8_t
+-129                -128                    0
+-128                -128                    0
+  -1                  -1                    0
+   0                   0                    0
+  42                  42                   42
+ 127                 127                  127
+ 128                 127                  128
+ 255                 127                  255
+ 256                 127                  255
+```
+
+</div>
+</Columns>

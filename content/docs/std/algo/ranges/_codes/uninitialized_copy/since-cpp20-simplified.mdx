@@ -1,0 +1,22 @@
+```cpp
+// (1)
+uninitialized_copy_result<I, O>
+  uninitialized_copy( I ifirst, S1 ilast, O ofirst, S2 olast );
+
+// (2)
+uninitialized_copy_result< ranges::borrowed_iterator_t<IR>,
+                           ranges::borrowed_iterator_t<OR> >
+  uninitialized_copy( IR&& in_range, OR&& out_range );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `S1`, `S2` - `std::sentinel_for<I>`, `no-throw-sentinel-for<O>`
+- `O` - [`no-throw-forward-iterator`](#)
+- `IR` - `ranges::input_range`
+- `OR` - [`no-throw-forward-range`](#)
+
+Additionally, each overload has the following constraints:
+- **(1)** `std::constructible_from<std::iter_value_t<O>, std::iter_reference_t<I>>`
+- **(1)** `std::constructible_from<ranges::range_value_t<OR>, ranges::range_reference_t<IR>>`
+

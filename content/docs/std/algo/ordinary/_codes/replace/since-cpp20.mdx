@@ -1,0 +1,11 @@
+```cpp
+// (1)
+template< class ForwardIt, class T >
+constexpr void replace( ForwardIt first, ForwardIt last,
+                        const T& old_value, const T& new_value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class T >
+void replace( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last,
+              const T& old_value, const T& new_value );
+```

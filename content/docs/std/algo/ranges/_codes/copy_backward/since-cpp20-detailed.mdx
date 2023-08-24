@@ -1,0 +1,20 @@
+```cpp
+// (1)
+template<
+  std::bidirectional_iterator I1,
+  std::sentinel_for<I1> S1,
+  std::bidirectional_iterator I2
+>
+  requires std::indirectly_copyable<I1, I2>
+constexpr copy_backward_result<I1, I2>
+    copy_backward( I1 first, S1 last, I2 result );
+
+// (2)
+template<
+  ranges::bidirectional_range R,
+  std::bidirectional_iterator I
+>
+  requires std::indirectly_copyable<ranges::iterator_t<R>, I>
+constexpr copy_backward_result<ranges::borrowed_iterator_t<R>, I>
+    copy_backward( R&& r, I result );
+```

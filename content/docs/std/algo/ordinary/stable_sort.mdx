@@ -1,0 +1,170 @@
+---
+title:         stable_sort algorithm
+sidebar_label: stable_sort(  )
+description:   stable_sort algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, stable_sort, sort, ascending, order]
+
+cppreference_origin_rel: w/cpp/algorithm/stable_sort
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/stable_sort/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/stable_sort/since-cpp17.mdx';
+import Signature_SinceCpp26 from './_codes/stable_sort/since-cpp26.mdx';
+
+# std::stable_sort() algorithm
+
+<SwitchView content={{
+	'since-cpp26': <Signature_SinceCpp26 />,
+	'since-cpp17': <Signature_SinceCpp17 />,
+	'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+
+Sorts the elements in the range [`first`; `last`) in non-descending order.
+
+The order of equivalent elements is **guaranteed** to be preserved.
+
+A sequence is sorted with respect to a comparator `comp` if for any iterator `it` pointing to the sequence
+and any non-negative integer `n` such that `it + n` is a valid iterator pointing to an element of the sequence,
+`comp(*(it + n), *it) (or *(it + n) < *it)` evaluates to `false`.
+
+- **(1)** Elements are compared using `operator<`.
+
+- **(2)** Elements are compared using the given binary comparison function `comp`.
+
+- **(3, 4)** Same as **(1)** and **(2)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Until>
+	<Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Since>
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to sort.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>cmp</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>RandomIt</code> }>
+    <a href="/docs/named_req/ValueSwappable">ValueSwappable</a> <br/>
+    <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> Type of dereferenced <code>RandomIt</code> </> }>
+    <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> <br/>
+    <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>Compare</code> }>
+    <a href="/docs/named_req/Compare">Compare</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`
+
+**O(N \* pow(log(N), 2))** applications of `comp`.
+
+If additional memory is available, then the complexity is **O(N \* log(N))**.
+
+Regardless of implementation, guaranteed **O(N \* log(N))** comparisons, where **N** is `std::distance(first, last)`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Notes
+
+This function attempts to allocate a temporary buffer equal in size to the sequence to be sorted. If the allocation fails, the less efficient algorithm is chosen.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+
+struct Employee
+{
+    int age;
+    std::string name;  // Does not participate in comparisons
+};
+
+bool operator<(const Employee & lhs, const Employee & rhs)
+{
+    return lhs.age < rhs.age;
+}
+
+int main()
+{
+    std::vector<Employee> v
+    {
+        {108, "Zaphod"},
+        {32, "Arthur"},
+        {108, "Ford"},
+    };
+
+    std::stable_sort(v.begin(), v.end());
+
+    for (const Employee & e : v)
+        std::cout << e.age << ", " << e.name << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+32, Arthur
+108, Zaphod
+108, Ford
+```
+
+</div>
+</Columns>

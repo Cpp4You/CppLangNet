@@ -1,0 +1,25 @@
+```cpp
+// (1)
+template<
+  std::forward_iterator I,
+  std::sentinel_for<I> S,
+  class T,
+  class Proj = std::identity
+>
+requires std::indirect_binary_predicate<ranges::equal_to, std::projected<I, Proj>,
+                                        const T*>
+constexpr ranges::subrange<I>
+    find_last( I first, S last, const T& value, Proj proj = {} );
+
+// (2)
+template<
+  ranges::forward_range R,
+  class T,
+  class Proj = std::identity
+>
+requires std::indirect_binary_predicate<ranges::equal_to,
+                                        std::projected<ranges::iterator_t<R>, Proj>,
+                                        const T*>
+constexpr ranges::borrowed_subrange_t<R>
+    find_last( R&& r, const T& value, Proj proj = {} );
+```

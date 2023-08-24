@@ -1,0 +1,26 @@
+```cpp
+// (1)
+constexpr ranges::minmax_result<const T&>
+    minmax( const T& a, const T& b, Comp comp = {}, Proj proj = {} );
+
+// (2)
+constexpr ranges::minmax_result<T>
+    minmax( std::initializer_list<T> r, Comp comp = {}, Proj proj = {} );
+
+// (3)
+constexpr ranges::minmax_result<ranges::range_value_t<R>>
+    minmax( R&& r, Comp comp = {}, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `T` - **(none)**
+- `Proj` - **(none)**
+- `R` - `ranges::input_range`
+- `Comp`:
+  - **(1 - 2)** - `std::indirect_strict_weak_order<std::projected<const T*, Proj>>`
+  - **(3)** - `std::indirect_strict_weak_order<std::projected<ranges::iterator_t<R>, Proj>>`
+
+The `Proj` and `Comp` template arguments have, the following default types for all overloads: `std::identity`, `ranges::less`.
+
+Additionally, each overload has the following constraints:
+- **(3)** - `std::indirectly_copyable_storable<ranges::iterator_t<R>, ranges::range_value_t<R>*>`

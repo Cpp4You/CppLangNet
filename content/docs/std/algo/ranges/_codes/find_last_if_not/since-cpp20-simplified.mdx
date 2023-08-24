@@ -1,0 +1,20 @@
+```cpp
+// (1)
+constexpr ranges::subrange<I>
+    find_last_if_not( I first, S last, Pred pred, Proj proj = {} );
+
+// (2)
+constexpr ranges::borrowed_subrange_t<R>
+    find_last_if_not( R&& r, Pred pred, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::forward_iterator`
+- `S` - `std::sentinel_for<I>`
+- `Proj` - **(none)**
+- `Pred`:
+  - **(1)** - `std::indirect_unary_predicate<std::projected<I, Proj>>`
+  - **(2)** - `std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>>`
+- **(2)** - `R` - `std::ranges::input_range`
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.

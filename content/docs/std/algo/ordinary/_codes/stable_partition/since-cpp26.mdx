@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class BidirIt, class UnaryPredicate >
+constexpr BidirIt stable_partition( BidirIt first, BidirIt last, UnaryPredicate p );
+
+// (2)
+template< class ExecutionPolicy, class BidirIt, class UnaryPredicate >
+BidirIt stable_partition( ExecutionPolicy&& policy,
+                          BidirIt first, BidirIt last, UnaryPredicate p );
+```

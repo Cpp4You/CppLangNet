@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class ForwardIt, class Size, class T >
+ForwardIt search_n( ForwardIt first, ForwardIt last, Size count, const T& value );
+
+// (2)
+template< class ForwardIt, class Size, class T, class BinaryPredicate >
+ForwardIt search_n( ForwardIt first, ForwardIt last, Size count, const T& value, BinaryPredicate p );
+```

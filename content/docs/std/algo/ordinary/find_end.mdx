@@ -1,0 +1,219 @@
+---
+title:         find_end algorithm
+sidebar_label: find_end(  )
+description:   find_end algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, find, find_end, search, look, end, sequence]
+
+cppreference_origin_rel: w/cpp/algorithm/find_end
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/find_end/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/find_end/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/find_end/since-cpp20.mdx';
+
+# std::find_end() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+Searches for the last occurrence of the sequence [`s_first`; `s_last`) in the range [`first`; `last`).
+
+- **(1)** Compares elements with `operator==`.
+
+- **(2)** Compares elements with the given binary predicate `p`.
+
+- **(3 - 4)** Same as **(1 - 2)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>s_first</code> <br/> <code>s_last</code> </> }>
+    The range of elements to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Binary predicate which returns `true` if the elements should be treated as equal.
+
+The signature of the function should be equivalent to the following:
+```cpp
+bool fun(const Type1& a, const Type2& b);
+```
+- The signature does not need to have `const&`.
+- The types `Type1` and `Type2` must be such that an object of type `ForwardIt1` and `ForwardIt2` can be dereferenced and then implicitly converted to them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+Iterator to the beginning of last occurrence of the sequence [`s_first`; `s_last`) in range [`first`; `last`).
+
+<Since v='cpp11'> If [<code>s_first</code>; <code>s_last</code>) is empty or if no such sequence is found, <code>last</code> is returned. </Since>
+<br/>
+<Until v='cpp11'> If no such sequence is found, <code>last</code> is returned. </Until>
+
+### Complexity
+
+Given `S` as `std::distance(s_first, s_last)` and `N` as `std::distance(first, last)`:
+
+- **(1, 3)** - At most **S * (N − S + 1)** comparisons.
+- **(2, 4)** - At most **S * (N − S + 1)** applications of `p`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>find_end (1)</summary>
+
+```cpp
+template<class ForwardIt1, class ForwardIt2>
+ForwardIt1 find_end(ForwardIt1 first, ForwardIt1 last,
+                    ForwardIt2 s_first, ForwardIt2 s_last)
+{
+    if (s_first == s_last)
+        return last;
+    ForwardIt1 result = last;
+    while (true)
+    {
+        ForwardIt1 new_result = std::search(first, last, s_first, s_last);
+        if (new_result == last)
+            break;
+        else
+        {
+            result = new_result;
+            first = result;
+            ++first;
+        }
+    }
+    return result;
+}
+```
+
+</details>
+
+<details>
+<summary>find_end (2)</summary>
+
+```cpp
+template<class ForwardIt1, class ForwardIt2, class BinaryPredicate>
+ForwardIt1 find_end(ForwardIt1 first, ForwardIt1 last,
+                    ForwardIt2 s_first, ForwardIt2 s_last,
+                    BinaryPredicate p)
+{
+    if (s_first == s_last)
+        return last;
+    ForwardIt1 result = last;
+    while (true)
+    {
+        ForwardIt1 new_result = std::search(first, last, s_first, s_last, p);
+        if (new_result == last)
+            break;
+        else
+        {
+            result = new_result;
+            first = result;
+            ++first;
+        }
+    }
+    return result;
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <iostream>
+
+auto print_result = [](auto result, const auto& v)
+{
+    result == v.end()
+        ? std::cout << "Sequence not found\n"
+        : std::cout << "Last occurrence is at: " << std::distance(v.begin(), result)
+                    << '\n';
+};
+
+int main()
+{
+    const auto v = {1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4};
+
+    for (auto const& x : { std::array {1, 2, 3}, {4, 5, 6} })
+    {
+        auto iter = std::find_end(v.begin(), v.end(), x.begin(), x.end()); // overload (1)
+        print_result(iter, v);
+    }
+
+    for (auto const& x : { std::array {-1, -2, -3}, {-4, -5, -6} })
+    {
+        auto iter = std::find_end(v.begin(), v.end(), x.begin(), x.end(), // overload (3)
+                                  [](int x, int y)
+                                  {
+                                      return std::abs(x) == std::abs(y);
+                                  });
+        print_result(iter, v);
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Last occurrence is at: 8
+Sequence not found
+Last occurrence is at: 8
+Sequence not found
+```
+
+</div>
+</Columns>

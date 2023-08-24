@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class ForwardIt, class T >
+std::pair<ForwardIt, ForwardIt> equal_range( ForwardIt first, ForwardIt last, const T& value );
+
+// (2)
+template< class ForwardIt, class T, class Compare >
+std::pair<ForwardIt, ForwardIt> equal_range( ForwardIt first, ForwardIt last, const T& value, Compare comp );
+```

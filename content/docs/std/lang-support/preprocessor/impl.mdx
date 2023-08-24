@@ -1,0 +1,123 @@
+---
+title:          Implementation defined behavior control
+tags:           [Language, Preprocessor]
+hide-title:     true
+---
+
+import { Since }                                        from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import Columns                                          from "@site-comps/Columns";
+
+# Implementation defined behavior control
+
+Implementation defined behavior is controlled by <code-d>#pragma</code-d> directive.
+
+## Syntax
+
+<SyntaxTable>
+  <Syntax id='1' directive={<span class='col-d'>#pragma</span>} args={['pragma-params']}/>
+  <Syntax id='2' directive={<>_Pragma</>}                       args={['string-literal']}/>
+</SyntaxTable>
+
+1. Behaves in implementation-defined manner.
+2. Removes the L prefix (if any), the outer quotes, and leading/trailing whitespace from <i class="col-g">string-literal</i>, replaces each `\"` with `"` and each `\\` with `\`, 
+then tokenizes the result (as in [translation phase 3](/docs/std/lang-support/translation_phases#phase-3)), and then uses the result as if the input to <span class='col-d'>#pragma</span> in [(1)](#syntax).
+
+## Non-standard pragmas
+The ISO C++ language standard does not require the compilers to support any pragmas. However, several non-standard pragmas are supported by multiple implementations:
+
+### <span class='col-d'>#pragma STDC</span>
+ISO C language standard requires that C compilers support the following three pragmas, and some C++ compiler vendors support them, to varying degrees, in their C++ frontends:
+
+<SyntaxTable>
+  <Syntax id='1' directive={<span class='col-d'>#pragma</span>} args={['STDC', 'FENV_ACCESS', 'arg']}/>
+  <Syntax id='2' directive={<span class='col-d'>#pragma</span>} args={['STDC', 'FP_CONTRACT ', 'arg']}/>
+  <Syntax id='3' directive={<span class='col-d'>#pragma</span>} args={['STDC', 'CX_LIMITED_RANGE ', 'arg']}/>
+</SyntaxTable>
+
+where <span class='col-g'>arg</span> is either **ON**, **OFF**, or **DEFAULT**.
+
+1. If set to **ON**, informs the compiler that the program will access or modify [floating-point environment](/docs/std/numeric/fenv), which means that optimizations that could subvert flag tests and mode changes 
+(e.g., global common subexpression elimination, code motion, and constant folding) are prohibited. The default value is implementation-defined, usually **OFF**.
+2. Allows *contracting* of floating-point expressions, that is optimizations that omit rounding errors and floating-point exceptions that would be observed if the expression was evaluated exactly as written. 
+For example, allows the implementation of <code class='no-break'>(x * y) + z</code> with a single fused multiply-add CPU instruction. The default value is implementation-defined, usually **ON**.
+3. Informs the compiler that multiplication, division, and absolute value of complex numbers may use 
+simplified mathematical formulas <i><code class='no-break'>(x+iy)×(u+iv) = (xu-yv)+i(yu+xv)</code>, <code class='no-break'>(x+iy)/(u+iv) = [(xu+yv)+i(yu-xv)]/(u<sup>2</sup>+v<sup>2</sup>)</code>, 
+and <code class='no-break'>|x+iy| = √x<sup>2</sup>+y<sup>2</sup></code></i>
+, despite the possibility of intermediate overflow. In other words, the programmer guarantees that the range of the values that will be passed to those function is limited. The default value is **OFF**.
+
+### <span class='col-d'>#pragma once</span>
+
+<code-d>#pragma once</code-d> is a non-standard pragma that is supported by the [vast majority of modern compilers](https://en.wikipedia.org/wiki/Pragma_once#Portability). 
+If it appears in a header file, it indicates that it is only to be parsed once, even if it is (directly or indirectly) included multiple times in the same source file.
+
+Standard approach to preventing multiple inclusion of the same header is by using [include guards](https://en.wikipedia.org/wiki/Include_guard):
+
+```cpp
+#ifndef LIBRARY_FILENAME_H
+#define LIBRARY_FILENAME_H
+// contents of the header
+#endif /* LIBRARY_FILENAME_H */
+```
+
+So that all but the first inclusion of the header in any translation unit are excluded from compilation. 
+All modern compilers record the fact that a header file uses an include guard and do not re-parse the file if it is encountered again, as long as the guard is still defined (see e.g. [gcc](https://gcc.gnu.org/onlinedocs/cpp/Once-Only-Headers.html)).
+
+With <code-d>#pragma once</code-d>, the same header appears as
+
+```cpp
+#pragma once
+// contents of the header
+```
+
+Unlike header guards, this pragma makes it impossible to erroneously use the same macro name in more than one file. 
+On the other hand, since with <code-d>#pragma once</code-d> files are excluded based on their filesystem-level identity, this can't protect against including a header twice if it exists in more than one location in a project.
+
+### <span class='col-d'>#pragma pack</span>
+
+This family of pragmas control the maximum alignment for subsequently defined class and union members.
+
+<SyntaxTable>
+    <Syntax id='1' directive={<span class='col-d'>#pragma</span>} args={['pack ( arg )']}/>
+    <Syntax id='2' directive={<span class='col-d'>#pragma</span>} args={['pack ( )']}/>
+    <Syntax id='3' directive={<span class='col-d'>#pragma</span>} args={['pack ( push )']}/>
+    <Syntax id='4' directive={<span class='col-d'>#pragma</span>} args={['pack ( push, arg)']}/>
+    <Syntax id='5' directive={<span class='col-d'>#pragma</span>} args={['pack ( pop )']}/>
+</SyntaxTable>
+
+where <span class='col-g'>arg</span> is a small power of two and specifies the new alignment in bytes.
+
+1. Sets the current alignment to value <span class='col-g'>arg</span>.
+2. Sets the current alignment to the default value (specified by a command-line option).
+3. Pushes the value of the current alignment on an internal stack.
+4. Pushes the value of the current alignment on the internal stack and then sets the current alignment to value <span class='col-g'>arg</span>.
+5. Pops the top entry from the internal stack and then sets (restores) the current alignment to that value.
+
+<code-d>#pragma pack</code-d> may decrease the alignment of a class, however, it cannot make a class overaligned.
+
+See also specific details for [GCC](https://gcc.gnu.org/onlinedocs/gcc/Structure-Layout-Pragmas.html) and [MSVC](https://learn.microsoft.com/en-us/cpp/preprocessor/pack?view=msvc-170).
+
+:::important
+This section is incomplete
+Reason: Explain the effects of this pragmas on data members and also the pros and cons of using them. Sources for reference:
+* [Stack Overflow](https://stackoverflow.com/questions/3318410/pragma-pack-effect)
+:::
+
+:::important
+This section is incomplete
+Reason: no example
+:::
+
+## References
+* C++23 standard (ISO/IEC 14882:2023):
+    * 15.9 Pragma directive [cpp.pragma]
+* C++20 standard (ISO/IEC 14882:2020):
+    * 15.9 Pragma directive [cpp.pragma]
+* C++17 standard (ISO/IEC 14882:2017):
+    * 19.6 Pragma directive [cpp.pragma]
+* C++14 standard (ISO/IEC 14882:2014):
+    * 16.6 Pragma directive [cpp.pragma]
+* C++11 standard (ISO/IEC 14882:2011):
+    * 16.6 Pragma directive [cpp.pragma]
+* C++98 standard (ISO/IEC 14882:1998):
+    * 16.6 Pragma directive [cpp.pragma]

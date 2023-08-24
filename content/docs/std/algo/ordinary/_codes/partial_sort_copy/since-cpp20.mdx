@@ -1,0 +1,20 @@
+```cpp
+// (1)
+template< class InputIt, class RandomIt >
+constexpr RandomIt partial_sort_copy( InputIt first, InputIt last, RandomIt d_first, RandomIt d_last );
+
+// (2)
+template< class InputIt, class RandomIt, class Compare >
+constexpr RandomIt partial_sort_copy( InputIt first, InputIt last, RandomIt d_first, RandomIt d_last, Compare comp );
+
+// (3)
+template< class ExecutionPolicy, class ForwardIt, class RandomIt >
+RandomIt partial_sort_copy( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last,
+                            RandomIt d_first, RandomIt d_last );
+
+// (4)
+template< class ExecutionPolicy, class ForwardIt, class RandomIt, class Compare >
+RandomIt partial_sort_copy( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last,
+                            RandomIt d_first, RandomIt d_last,
+                            Compare comp );
+```

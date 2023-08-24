@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class OutputIt, class Size, class Generator >
+constexpr OutputIt generate_n( OutputIt first, Size count, Generator g );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class Size, class Generator >
+ForwardIt generate_n( ExecutionPolicy&& policy, ForwardIt first,
+                      Size count, Generator g );
+```

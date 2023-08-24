@@ -2,6 +2,10 @@ pre {
 	tab-size: 4;
 	font-family: "Jetbrains Mono", "Consolas", monospace;
 	font-variant-ligatures: none;
+
+	.token-line {
+		position: relative;
+	}
 }
 
 .code-block-error-line {

@@ -1,0 +1,55 @@
+@import "@site/src/css/Theme.scss";
+
+@mixin color-variant($variant, $color) {
+	&[data-variant="#{$variant}"] {
+		color: $color;
+	}
+}
+
+@mixin variant($variant) {
+	&[data-variant="#{$variant}"] {
+		@content;
+	}
+}
+
+.insp-code-arrow {
+	position: absolute;
+	font-size: 2rem;
+	margin: 0;
+	padding: 0;
+	line-height: 0;
+	transform: translate(calc(-100% - 2px), calc(-50% - 2px));
+	letter-spacing: 0;
+
+	// Light mode colors
+	@include color-variant("default", rgb(12, 103, 149));
+	@include color-variant("neutral", rgb(100, 100, 100));
+	@include color-variant("caution", rgb(171, 110, 6));
+	@include color-variant("error", rgb(255, 0, 0));
+}
+
+#{$IS_DARK_THEME}
+.insp-code-arrow
+{
+	// Dark mode colors
+	@include color-variant("default", rgb(10, 198, 255));
+	@include color-variant("neutral", rgb(176, 176, 176));
+	@include color-variant("caution", rgb(248, 207, 0));
+	@include color-variant("error", rgb(255, 0, 0));
+}
+
+.insp-block-highlight
+{
+	position: absolute;
+	border-radius: 4px;
+
+	@include variant("default") {
+		border: 1px solid rgba(10, 255, 255, 0.5);
+		background-color: rgba(10, 255, 255, 0.1);
+	}
+
+	@include variant("error") {
+		border: 1px solid rgba(255, 0, 0, 0.5);
+		background-color: rgba(255, 0, 0, 0.1);
+	}
+}

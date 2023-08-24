@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class ForwardIt, class UnaryPredicate >
+constexpr ForwardIt remove_if( ForwardIt first, ForwardIt last, UnaryPredicate p );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class UnaryPredicate >
+ForwardIt remove_if( ExecutionPolicy&& policy,
+                     ForwardIt first, ForwardIt last, UnaryPredicate p );
+```
