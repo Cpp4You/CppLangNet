@@ -1,0 +1,385 @@
+---
+title:              User-defined literals
+tags:               [Language, Literals]
+hite_title:         true
+---
+
+import {Since, Version}                                 from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import Columns                                          from "@site-comps/Columns";
+import styles                                           from "@site-comps/SyntaxTable.module.scss";
+
+# <Since v='cpp11'>User-defined literals</Since> 
+Allows integer, floating-point, character, and <a href='string_literals'>string literals</a> to produce objects of user-defined type by defining a user-defined suffix.
+## Syntax
+A user-defined literal is an expression of any of the following forms
+
+<SyntaxTable>
+  <Syntax id ='1' directive={<></>} args={['decimal-literal', 'ud-suffix']}/>
+  <Syntax id ='2' directive={<></>} args={['octal-literal', 'ud-suffix']}/>
+  <Syntax id ='3' directive={<></>} args={['hex-literal', 'ud-suffix']}/>
+  <Syntax id ='4' directive={<></>} args={['binary-literal', 'ud-suffix']}/>
+  <Syntax id ='5' directive={<></>} args={['fractional-constant', 'exponent-part', <small class='col-d'>(optional)</small>, 'ud-suffix']}/>
+  <Syntax id ='6' directive={<></>} args={['digit-sequence', 'exponent-part', 'ud-suffix']}/>
+  <Syntax id ='7' directive={<></>} args={['character-literal', 'ud-suffix']}/>
+  <Syntax id ='8' directive={<></>} args={['string-literal', 'ud-suffix']}/>
+</SyntaxTable>
+
+* [1-4)](#syntax) user-defined <a href='./integer_literal'>integer literal</a>s, such as `12_km`
+* [5-6)](#syntax) user-defined <a href='./floating_literal'>floating-point literal</a>s, such as `0.5_Pa`
+* [7)](#syntax) user-defined <a href='./character_literal'>character literal</a>, such as <code><span class='col-d'>'c'</span>_X</code>
+* [8)](#syntax) user-defined <a href='string_literal'>string literal</a>, such as <code><span class='col-d'>"abd"</span>_L</code> or <code>u<span class='col-d'>"xyz"</span>_M</code>
+
+<SymbolTable noTraits>
+  <Symbol name={<i class='col-g'>decimal-literal</i>}     desc={<>same as in <a href='./integer_literal'>integer literal</a>, a non-zero decimal digit followed by zero or more decimal digits</>}/>
+  <Symbol name={<i class='col-g'>octal-literal</i>}       desc={<>same as in <a href='./integer_literal'>integer literal</a>, a zero followed by zero or more octal digits</>}/>
+  <Symbol name={<i class='col-g'>hex-literal</i>}         desc={<>same as in <a href='./integer_literal'>integer literal</a>, 0x or 0X followed by one or more hexadecimal digits</>}/>
+  <Symbol name={<i class='col-g'>binary-literal</i>}      desc={<>same as in <a href='./integer_literal'>integer literal</a>, 0b or 0B followed by one or more binary digits</>}/>
+  <Symbol name={<i class='col-g'>digit-sequence</i>}      desc={<>same as in <a href='./floating_literal'>floating literal</a>, a sequence of decimal digits</>}/>
+  <Symbol name={<i class='col-g'>fractional-constant</i>} desc={<>same as in <a href='./floating_literal'>floating literal</a>, either a <i class='col-g'>digit-sequence</i> followed by a dot <code class='col-lb'>(123.)</code> or an optional <i class='col-g'>digit-sequence</i> followed by a dot and another <i class='col-g'>digit-sequence</i> <code>(<span class='col-lb'>1.0</span> or <span class='col-lb'>.12</span>)</code></>}/>
+  <Symbol name={<i class='col-g'>exponent-part</i>}       desc={<>same as in <a href='./floating_literal'>floating literal</a>, the letter e or the letter E followed by optional sign, followed by <i class='col-g'>digit-sequence</i></>}/>
+  <Symbol name={<i class='col-g'>character-literal</i>}   desc={<>same as in character literal</>}/>
+  <Symbol name={<i class='col-g'>string-literal</i>}      desc={<>same as in <a href='string_literal'>string literal</a>, including raw <a href='string_literals'>string literals</a></>}/>
+  <Symbol name={<i class='col-g'>ud-suffix</i>}           desc={<>an identifier, introduced by a <i>literal</i> operator or a <i>literal</i> operator template declaration <a href='#literal-operators'>(see below)</a></>}/>
+</SymbolTable>
+<Since v='cpp14'>In the <a href='./integer_literal'>integer</a> and <a href='./floating_literal'>floating-point digit</a> sequences, optional separators <code>'</code> are allowed between any two digits.</Since>
+
+If a token matches a user-defined literal syntax and a regular literal syntax, it is assumed to be a regular literal (that is, it's impossible to overload LL in `123LL`).
+
+When the compiler encounters a user-defined literal with <i class='col-g'>ud-suffix</i> X, it performs [unqualified name lookup](lookup#unqualified-name-lookup), looking for a function with the name operator<span class='col-d'>""</span>X. 
+If the lookup does not find a declaration, the program is ill-formed. Otherwise,
+
+1. For user-defined integer literals,
+    1. if the overload set includes a literal operator with the parameter type <code class='col-lb'>unsigned long long</code>, the user-defined literal expression is treated as a function call <code>operator <span class='col-d'>""</span>X(<i class='col-g'>n</i>ULL)</code>, 
+    where <i class='col-g'>n</i> is the literal without <i class='col-g'>ud-suffix</i>;
+    2. otherwise, the overload set must include either, but not both, a raw literal operator or a numeric literal operator template. If the overload set includes a raw literal operator, the user-defined literal expression is treated as a function call <code>operator <span class='col-d'>""</span>X(<i class='col-g'>"n"</i>)</code>;
+    3. otherwise, if the overload set includes a numeric literal operator template, the user-defined literal expression is treated as a function call <code class='no-break'>operator <span class='col-d'>""</span>X(<i class='col-g'>&gt;'c1', 'c2', 'c3'..., 'ck'&lt;()</i>)</code>, 
+    where <i class='col-g'>c1..ck</i> are the individual characters of <i class='col-g'>n</i> and all of them are from the <a href='/docs/std/lang-support/charset#basic-character-set'>basic character set</a>.
+2. For user-defined floating-point literals,
+    1. If the overload set includes a literal operator with the parameter type <code class='col-lb'>long double</code>, the user-defined literal expression is treated as a function call <code>operator <span class='col-d'>""</span>X(<i class='col-g'>f</i>L)</code>, where <i class='col-g'>f</i> is the literal without <i class='col-g'>ud-suffix</i>;
+    2. otherwise, the overload set must include either, but not both, a raw literal operator or a numeric literal operator template. If the overload set includes a raw literal operator, the user-defined literal expression is treated as a function call <code>operator <span class='col-d'>""</span>X(<i class='col-g'>"f"</i>)</code>;
+    3. otherwise, if the overload set includes a numeric literal operator template, the user-defined literal expression is treated as a function call<code class='no-break'>operator <span class='col-d'>""</span>X(<i class='col-g'>&gt;'c1', 'c2', 'c3'..., 'ck'&lt;()</i>)</code>, 
+    where <i class='col-g'>c1..ck</i> are the individual characters of <i class='col-g'>f</i> and all of them are from the <a href='/docs/std/lang-support/charset#basic-character-set'>basic character set</a>.
+3. For user-defined string literals, let str be the literal without ud-suffix:
+    1. <Since block v='cpp20'>If the overload set includes a string literal operator template with a non-type template parameter for which str is a well-formed template argument, then the user-defined literal expression is treated as a function call <code class='no-break'>operator <span class='col-d'>""</span>X&lt;str&gt;();</code></Since>
+    2. otherwise, the user-defined literal expression is treated as a function call <code class='no-break'>operator <span class='col-d'>""</span>X (str, len)</code>, where <code>len</code> is the length of the string literal, excluding the terminating null character.
+4. For user-defined character literals, the user-defined literal expression is treated as a function call <code class='no-break'>operator <span class='col-d'>""</span>X (ch)</code>, where <code>ch</code> is the literal without <i class='col-g'>ud-suffix</i>.
+
+```cpp
+long double operator ""_w(long double);
+std::string operator ""_w(const char16_t*, size_t);
+unsigned    operator ""_w(const char*);
+ 
+int main() {
+    1.2_w;    // calls operator ""_w(1.2L)
+    u"one"_w; // calls operator ""_w(u"one", 3)
+    12_w;     // calls operator ""_w("12")
+    "two"_w;  // error: no applicable literal operator
+}
+```
+When string literal concatenation takes place in [translation phase 6](/docs/std/lang-support/translation_phases#phase-6), user-defined string literals are concatenated as well, and their <i class='col-g'>ud-suffix</i>es are ignored for the purpose of concatenation, except that only one suffix may appear on all concatenated literals:
+
+```cpp
+int main() {
+    L"A" "B" "C"_x;  // OK: same as L"ABC"_x
+    "P"_x "Q" "R"_y; // error: two different ud-suffixes (_x and _y)
+}
+```
+
+## Literal operators
+The function called by a user-defined literal is known as *literal operator* (or, if it's a template, *literal operator template*). 
+It is declared just like any other [function](/docs/std/lang-support/function) or [function template](/docs/std/lang-support/function_template) at namespace scope (it may also be a friend function, an explicit instantiation or specialization of a function template, or introduced by a using-declaration), 
+except for the following restrictions:
+
+The name of this function can have one of the two forms:
+
+<SyntaxTable>
+  <Syntax id='1' directive={<b>operator&nbsp;""</b>} args={['identifier', <Deprecated v=''></Deprecated>]}/>
+  <Syntax id='2' directive={<b>operator</b>}    args={['user-defined-string-literal']}/>
+</SyntaxTable>
+<SymbolTable noTraits>
+  <Symbol name={<i class='col-g'>identifier</i>}                  desc={<>the <a href="/docs/std/lang-support/identifiers">identifier</a> to use as the <i class='col-g'>ud-suffix</i> for the user-defined literals that will call this function</>}/>
+  <Symbol name={<i class='col-g'>user-defined-string-literal</i>} desc={<>the character sequence <b>" "</b> followed, without a space, by the character sequence that becomes the <i class='col-g'>ud-suffix</i></>}/>
+</SymbolTable>
+
+1. Declares a literal operator.
+2. Declares a literal operator. This syntax makes it possible to use language [keywords](/docs/std/keyword) and reserved identifiers as <i class='col-g'>ud-suffix</i>es, 
+for example, operator <code><span class='col-g'>""</span><span class='col-lb'>if</span></code> from the header <a href=''>&lt;complex&gt;</a>.
+
+&nbsp;<br/><i class='col-g'>ud-suffix</i> must begin with the underscore _: the suffixes that do not begin with the underscore are reserved for the literal operators provided by the standard library. 
+It cannot contain double underscores __ as well: such suffixes are also reserved.
+
+If the literal operator is a template, it must have an empty parameter list and can have only one template parameter, which must be a non-type template parameter pack with element type <span class='col-lb'>char</span> 
+(in which case it is known as a *numeric literal operator template*):
+
+```cpp
+template<char...>
+double operator ""_x();
+```
+
+<Since v='cpp23'>
+
+or a non-type template parameter of class type (in which case it is known as a *string literal operator template*):
+```cpp
+struct A { constexpr A(const char*); };
+ 
+template<A a>
+A operator ""_a();
+```
+
+</Since>
+
+Only the following parameter lists are allowed on literal operators:
+
+<SyntaxTable>
+  <Syntax id='1'  directive={<></>} args={[<>(<span class='col-lb'> const char*  </span>)</>]}/>
+  <Syntax id='2'  directive={<></>} args={[<>(<span class='col-lb'> unsigned long long int </span>)</>]}/>
+  <Syntax id='3'  directive={<></>} args={[<>(<span class='col-lb'> long double </span>)</>]}/>
+  <Syntax id='4'  directive={<></>} args={[<>(<span class='col-lb'> char </span>)</>]}/>
+  <Syntax id='5'  directive={<></>} args={[<>(<span class='col-lb'> wchar_t  </span>)</>]}/>
+  <Syntax id='6'  directive={<></>} args={[<>(<span class='col-lb'> char8_t  </span>)</> , <Since v='cpp20'></Since>]}/>
+  <Syntax id='7'  directive={<></>} args={[<>(<span class='col-lb'> char16_t  </span>)</>]}/>
+  <Syntax id='8'  directive={<></>} args={[<>(<span class='col-lb'> char32_t  </span>)</>]}/>
+  <Syntax id='9'  directive={<></>} args={[<>(<span class='col-lb'> const char*, <a href=''>std::size_t</a> </span>)</>]}/>
+  <Syntax id='10' directive={<></>} args={[<>(<span class='col-lb'> const wchar_t*, <a href=''>std::size_t</a> </span>)</>]}/>
+  <Syntax id='11' directive={<></>} args={[<>(<span class='col-lb'> const char8_t*, <a href=''>std::size_t</a> </span>)</> , <Since v='cpp20'></Since>]}/>
+  <Syntax id='12' directive={<></>} args={[<>(<span class='col-lb'> const char16_t*, <a href=''>std::size_t</a> </span>)</>]}/>
+  <Syntax id='13' directive={<></>} args={[<>(<span class='col-lb'> const char32_t*, <a href=''>std::size_t</a> </span>)</>]}/>
+</SyntaxTable>
+
+* 1) Literal operators with this parameter list are the *raw literal* operators, used as fallbacks for integer and floating-point user-defined literals (see above)
+* 2) Literal operators with these parameter lists are the first-choice literal operator for user-defined integer literals
+* 3) Literal operators with these parameter lists are the first-choice literal operator for user-defined floating-point literals
+* 4-8) Literal operators with these parameter lists are called by user-defined character literals
+* 9-13) Literal operators with these parameter lists are called by user-defined string literals
+
+[Default arguments](./default_arguments) are not allowed.<br/>
+[C language linkage](./language_linkage) is not allowed.
+
+Other than the restrictions above, literal operators and literal operator templates are normal functions (and function templates), they can be declared inline or constexpr, they may have internal or external linkage, they can be called explicitly, their addresses can be taken, etc.
+
+```cpp
+#include <string>
+ 
+void        operator ""_km(long double); // OK, will be called for 1.0_km
+void        operator "" _km(long double); // same as above, deprecated
+std::string operator ""_i18n(const char*, std::size_t); // OK
+ 
+template<char...>
+double operator ""_π(); // OK
+float  operator ""_e(const char*); // OK
+ 
+// error: suffix must begin with underscore
+float operator ""Z(const char*);
+ 
+// error: all names that begin with underscore followed by uppercase
+// letter are reserved (NOTE: a space between "" and _).
+double operator"" _Z(long double);
+ 
+// OK. NOTE: no space between "" and _.
+double operator""_Z(long double);
+ 
+// OK: literal operators can be overloaded
+double operator ""_Z(const char* args);
+ 
+int main() {}
+```
+
+Since the introduction of user-defined literals, the code that uses [format macro constants for fixed-width integer types](/docs/std/types/integer) with no space after the preceding string literal became 
+invalid: <code><a href='/docs/std/io/c/fprintf'>std::printf</a>(<span class='col-d'>"%"</span><a href='/docs/std/types/integer'>PRId64</a><span class='col-d'>"\<b>n</b>"</span>,<a href='/docs/std/types/integer'>INT64_MIN</a>);</code> 
+has to be replaced by <code><a href='/docs/std/io/c/fprintf'>std::printf</a>(<span class='col-d'>"%"</span> <a href='/docs/std/types/integer'>PRId64</a><span class='col-d'>"\<b>n</b>"</span>,<a href='/docs/std/types/integer'>INT64_MIN</a>);</code>.
+
+Due to [maximal munch](/docs/std/lang-support/translation_phases#maximal-munch), user-defined integer and floating point literals ending in <Since v='cpp17'>p, P</Since>, e and E, when followed by the operators + or -, 
+must be separated from the operator with whitespace or parentheses in the source:
+
+```cpp
+long double operator""_E(long double);
+long double operator""_a(long double);
+int operator""_p(unsigned long long);
+ 
+auto x = 1.0_E+2.0;   // error
+auto y = 1.0_a+2.0;   // OK
+auto z = 1.0_E +2.0;  // OK
+auto q = (1.0_E)+2.0; // OK
+auto w = 1_p+2;       // error
+auto u = 1_p +2;      // OK
+```
+
+Same applies to dot operator following an integer or floating-point user-defined literal:
+
+```cpp
+#include <chrono>
+ 
+using namespace std::literals;
+ 
+auto a = 4s.count();   // Error
+auto b = 4s .count();  // OK
+auto c = (4s).count(); // OK
+```
+
+Otherwise, a single invalid preprocessing number token (e.g., <code class='col-lb'>1.0_E+2.0</code> or <code>4s.count</code>) is formed, which causes compilation to fail.
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>Feature-test macro</th>
+        <th>Value</th>
+        <th>Std</th>
+        <th>Comment</th>
+    </tr>
+    <tr>
+        <td><a href='docs/std/feature_test'>__cpp_user_defined_literals</a></td>
+        <td>200809L</td>
+        <td><Version v='cpp11'></Version></td>
+        <td>User-defined literals</td>
+    </tr>
+</table>
+
+## Example
+
+<Columns spacing='20px' columns={['6fr','4fr']}><div>
+
+```cpp
+#include <algorithm>
+#include <cstddef>
+#include <iostream>
+#include <numbers>
+#include <string>
+ 
+// used as conversion from degrees (input param) to radians (returned output)
+constexpr long double operator""_deg_to_rad(long double deg)
+{
+    long double radians = deg * std::numbers::pi_v<long double> / 180;
+    return radians;
+}
+ 
+// used with custom type
+struct mytype
+{
+    unsigned long long m;
+};
+ 
+constexpr mytype operator""_mytype(unsigned long long n)
+{
+    return mytype{n};
+}
+ 
+// used for side-effects
+void operator""_print(const char* str)
+{
+    std::cout << str << '\n';
+}
+ 
+#if __cpp_nontype_template_args < 201911
+ 
+std::string operator""_x2 (const char* str, std::size_t)
+{
+    return std::string{str} + str;
+}
+ 
+#else // C++20 string literal operator template
+ 
+template<std::size_t N>
+struct DoubleString
+{
+    char p[N + N - 1]{};
+ 
+    constexpr DoubleString(char const(&pp)[N])
+    {
+        std::ranges::copy(pp, p);
+        std::ranges::copy(pp, p + N - 1);
+    };
+};
+ 
+template<DoubleString A>
+constexpr auto operator""_x2()
+{
+    return A.p;
+}
+ 
+#endif // C++20
+ 
+int main()
+{
+    double x_rad = 90.0_deg_to_rad;
+    std::cout << std::fixed << x_rad << '\n';
+ 
+    mytype y = 123_mytype;
+    std::cout << y.m << '\n';
+ 
+    0x123ABC_print;
+    std::cout << "abc"_x2 << '\n';
+}
+```
+
+</div><div>
+
+
+```plaintext title="Result"
+1.570796
+123
+0x123ABC
+abcabc
+```
+
+</div></Columns>
+
+## Standard library
+The following literal operators are defined in the standard library:
+###### Defined in inline namespace std::literals::complex_literals
+
+<SymbolTable noTraits>
+  <Symbol name={<Since block v='cpp14'><a href='/docs/std/numeric/complex/operator""i'>operator""if<br/>operator""i<br/>operator""il</a></Since>} desc={<>a std::complex literal representing purely imaginary number</>}/>
+</SymbolTable>
+
+###### Defined in inline namespace std::literals::chrono_literals
+<SymbolTable noTraits>
+  <Symbol name={<Since block v='cpp14'><a href='/docs/std/chrono/operator""h'>operator""h</a></Since>}      desc={<>a <a href='docs/std/chrono/duration'>std::chrono::duration</a> literal representing hours</>}/>
+  <Symbol name={<Since block v='cpp14'><a href='/docs/std/chrono/operator""min'>operator""min</a></Since>}  desc={<>a <a href='docs/std/chrono/duration'>std::chrono::duration</a> literal representing minutes</>}/>
+  <Symbol name={<Since block v='cpp14'><a href='/docs/std/chrono/operator""s'>operator""s</a></Since>}      desc={<>a <a href='docs/std/chrono/duration'>std::chrono::duration</a> literal representing seconds</>}/>
+  <Symbol name={<Since block v='cpp14'><a href='/docs/std/chrono/operator""ms'>operator""ms</a></Since>}    desc={<>a <a href='docs/std/chrono/duration'>std::chrono::duration</a> literal representing miliseconds</>}/>
+  <Symbol name={<Since block v='cpp14'><a href='/docs/std/chrono/operator""us'>operator""us</a></Since>}    desc={<>a <a href='docs/std/chrono/duration'>std::chrono::duration</a> literal representing microseconds</>}/>
+  <Symbol name={<Since block v='cpp14'><a href='/docs/std/chrono/operator""ns'>operator""ns</a></Since>}    desc={<>a <a href='docs/std/chrono/duration'>std::chrono::duration</a> literal representing nanoseconds</>}/>
+  <Symbol name={<Since block v='cpp20'><a href='/docs/std/chrono/operator""y'>operator""y</a></Since>}      desc={<>a <a href='docs/std/chrono/year'>std::chrono::year</a> literal representing a particular year</>}/>
+  <Symbol name={<Since block v='cpp20'><a href='/docs/std/chrono/operator""d'>operator""d</a></Since>}      desc={<>a <a href='docs/std/chrono/day'>std::chrono::day</a> literal representing a day of the month</>}/>
+</SymbolTable>
+
+###### Defined in inline namespace std::literals::string_literals
+<SymbolTable noTraits>
+  <Symbol name={<Since block v='cpp14'><a href='/docs/std/containers/strings/string/operator""s'>operator""s</a></Since>} desc={<>converts a character array literal to basic_string</>}/>
+</SymbolTable>
+
+###### Defined in inline namespace std::literals::string_view_literals
+<SymbolTable noTraits>
+  <Symbol name={<Since block v='cpp17'><a href='/docs/std/containers/strings/string_view/operator""sv'>operator""sv</a></Since>} desc={<>creates a string view of a character array literal</>}/>
+</SymbolTable>
+
+## Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>DR</th>
+        <th>Applied to</th>
+        <th>Behavior as published</th>
+        <th>Correct behavior</th>
+    </tr>
+    <tr>
+        <td><a href='https://cplusplus.github.io/CWG/issues/1473.html'>CWG 1473</a></td>
+        <td><Version v='cpp11'></Version></td>
+        <td>whitespace between <span class='col-g'>" "</span> and <i class='col-g'>ud-suffix</i> was required in the declaration of literal operators</td>
+        <td>made optional</td>
+    </tr>
+    <tr>
+        <td><a href='https://cplusplus.github.io/CWG/issues/1479.html'>CWG 1479</a></td>
+        <td><Version v='cpp11'></Version></td>
+        <td>literal operators could have default arguments</td>
+        <td>prohibited</td>
+    </tr>
+    <tr>
+        <td><a href='https://cplusplus.github.io/CWG/issues/2521.html'>CWG 2521</a></td>
+        <td><Version v='cpp11'></Version></td>
+        <td>operator<span class='col-g'>" "</span> _Bq was ill-formed (no diagnostic required) because it uses the reserved identifier _Bq</td>
+        <td>deprecated the literal operator syntax with whitespace between <span class='col-g'>" "</span> and <i class='col-g'>ud-suffix</i></td>
+    </tr>
+</table>
