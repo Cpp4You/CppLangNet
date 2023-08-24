@@ -1,0 +1,43 @@
+---
+title:              String literal
+tags:               [Language, Literals]
+hite_title:         true
+---
+
+import {Since, Version}                                 from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import Columns                                          from "@site-comps/Columns";
+import styles                                           from "@site-comps/SyntaxTable.module.scss";
+
+# String literal
+## Syntax
+<SyntaxTable>
+  <Syntax id ='1' directive={<></>}     args={[<b>"</b>,'s-char-sequence', <small class='col-d'>(optional)</small>, <b>"</b>]}/>
+  <Syntax id ='2' directive={<b>L</b>}  args={[<b>"</b>,'s-char-sequence', <small class='col-d'>(optional)</small>, <b>"</b>]}/>
+  <Syntax id ='3' directive={<b>u8</b>} args={[<b>"</b>,'s-char-sequence', <small class='col-d'>(optional)</small>, <b>"</b>]}/>
+  <Syntax id ='4' directive={<b>u</b>}  args={[<b>"</b>,'s-char-sequence', <small class='col-d'>(optional)</small>, <b>"</b>]}/>
+  <Syntax id ='5' directive={<b>U</b>}  args={[<b>"</b>,'s-char-sequence', <small class='col-d'>(optional)</small>, <b>"</b>]}/>
+  <Syntax id ='6' directive={<></>}     
+  args={[<i class='col-g'>prefix<small class='col-d'>(optional)</small></i>, 
+  <b style={{color:"white"}}>R</b>, <b>"</b>,
+  'd-char-sequence', <small class='col-d'>(optional)</small>, 
+  <b>(</b>,
+  'r-char-sequence', <small class='col-d'>(optional)</small>, 
+  <b>)</b>,
+  'd-char-sequence', <small class='col-d'>(optional)</small>, 
+  <b>"</b>]}/>
+</SyntaxTable>
+
+## Explanation
+
+<SymbolTable noTraits>
+  <Symbol name={<i class='col-g'>s-char-sequence</i>} desc={<>A sequence of one or more <i class='col-g'>s-char</i>s</>}/>
+  <Symbol name={<i class='col-g'>s-char</i>}          desc={<>One of<ul><li>a <i class='col-g'>basic-s-char</i></li><li>an escape sequence, as defined in <a href='./escape'>escape sequences</a></li><li>a universal character name, as defined in <a href='./escape'>escape sequences</a></li></ul></>}/>
+  <Symbol name={<i class='col-g'>basic-s-char</i>}    desc={<>A character from the <a href='./docs/std/lang-support/charset#translation-character-set'>translation character set</a>, except the double-quote <code>"</code>, backslash <code>\</code>, or new-line character</>}/>
+  <Symbol name={<i class='col-g'>prefix</i>}          desc={<>One of <b>L, u8, u, U</b></>}/>
+  <Symbol name={<i class='col-g'>d-char-sequence</i>} desc={<>A sequence of one or more <i class='col-g'>d-char</i>s, at most 16 characters long</>}/>
+  <Symbol name={<i class='col-g'>d-char</i>}          desc={<>A character from the <a href='/docs/std/lang-support/charset#basic-character-set'>basic character set, except parentheses, backslash and <a href='/docs/std/containers/strings/other/isspace'>spaces</a></>}/>
+  <Symbol name={<i class='col-g'>r-char-sequence</i>} desc={<>A sequence of one or more <i class='col-g'>r-char</i>s, except that it must not contain the closing sequence)d-char-sequence"</>}/>
+  <Symbol name={<i class='col-g'>r-char</i>}          desc={<>A character from the <a href='./docs/std/lang-support/charset#translation-character-set'>translation character set</a></>}/>
+</SymbolTable>
