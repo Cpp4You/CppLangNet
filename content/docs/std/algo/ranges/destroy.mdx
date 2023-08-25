@@ -1,0 +1,150 @@
+---
+title:         ranges::destroy algorithm
+sidebar_label: ranges::destroy(  )
+description:   ranges::destroy algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, destroy]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/destroy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/destroy/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/destroy/since-cpp20-simplified.mdx';
+
+# std::ranges::destroy() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Destroys the objects in the range [`first`; `last`), as if by
+
+  ```cpp
+  for (; first != last; ++first)
+      std::ranges::destroy_at(std::addressof(*first));
+
+  return first;
+  ```
+
+  :::caution
+  If an exception is thrown during the initialization then the objects that already constructed in [`ofirst`; `olast`)
+  are destroyed in an unspecified order.
+  :::
+
+  Also, the objects in [`ifirst`; `ilast`) that were already moved, are left in a valid but unspecified state.
+
+- **(2)** Same as **(1)**, but uses `in_range` as the first range and `out_range` as the second range,
+  as if using `ranges::begin(in_range)` as `ifirst`, `ranges::end(in_range)` as `ilast`, `ranges::begin(out_range)` as `ofirst`,
+  and `ranges::end(out_range)` as `olast`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to destroy.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to destroy.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An iterator compares equal to `last`.
+
+### Complexity
+
+Linear in the distance between `first` and `last`.
+
+### Exceptions
+
+The exception thrown on construction of the elements in the destination range, if any.
+
+### Possible implementation
+
+<details>
+<summary>destroy(1) and destroy(2)</summary>
+
+```cpp
+struct destroy_fn
+{
+    template<no-throw-input-iterator I, no-throw-sentinel-for<I> S>
+        requires std::destructible<std::iter_value_t<I>>
+    constexpr I operator()(I first, S last) const noexcept
+    {
+        for (; first != last; ++first)
+            std::ranges::destroy_at(std::addressof(*first));
+        return first;
+    }
+
+    template<no-throw-input-range R>
+        requires std::destructible<std::ranges::range_value_t<R>>
+    constexpr std::ranges::borrowed_iterator_t<R> operator()(R&& r) const noexcept
+    {
+        return operator()(std::ranges::begin(r), std::ranges::end(r));
+    }
+};
+
+inline constexpr destroy_fn destroy{};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <memory>
+#include <new>
+
+struct Tracer
+{
+    int value;
+    ~Tracer() { std::cout << value << " destructed\n"; }
+};
+
+int main()
+{
+    alignas(Tracer) unsigned char buffer[sizeof(Tracer) * 8];
+
+    for (int i = 0; i < 8; ++i)
+        new(buffer + sizeof(Tracer) * i) Tracer{i}; //manually construct objects
+
+    auto ptr = std::launder(reinterpret_cast<Tracer*>(buffer));
+
+    std::ranges::destroy(ptr, ptr + 8);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+0 destructed
+1 destructed
+2 destructed
+3 destructed
+4 destructed
+5 destructed
+6 destructed
+7 destructed
+```
+
+</div>
+</Columns>

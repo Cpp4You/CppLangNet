@@ -1,0 +1,25 @@
+```cpp
+// (1)
+constexpr copy_if_result<I, O>
+    copy_if( I first, S last, O result, Pred pred, Proj proj = {} );
+
+// (2)
+constexpr copy_if_result<ranges::borrowed_iterator_t<R>, O>
+    copy_if( R&& r, O result, Pred pred, Proj proj = {} );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `O` - `std::weakly_incrementable`
+- `Proj` - **(none)**
+- `Pred`:
+  - **(1)** - `std::indirect_unary_predicate<std::projected<I, Proj>>`
+  - **(2)** - `std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>>`
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::indirectly_copyable<I, O>`
+- **(2)** - `std::indirectly_copyable<ranges::iterator_t<R>, O>`
+

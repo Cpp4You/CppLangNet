@@ -1,26 +1,21 @@
 ---
-title:			ranges::transform algorithm
-sidebar_label:	ranges::transform(  )
-description:	ranges::transform algorithm C++ documentation
-hide_title:		true
-tags:			[ranges, algorithm, transform, map]
+title:         ranges::transform algorithm
+sidebar_label: ranges::transform(  )
+description:   ranges::transform algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, transform, map]
 
 cppreference_origin_rel: w/cpp/algorithm/ranges/transform
 ---
 
-import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
-import Tooltip				from "@site-comps/Tooltip";
-import Tabs					from "@theme/Tabs";
-
-<!-- Terms -->
-import Term_ContAlias_ReverseIterator	from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
-import Term_UndefinedBehaviour			from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
-import Signature_SinceCpp20_Detailed 	from './_codes/transform/since-cpp20-detailed.mdx';
-import Signature_SinceCpp20_Simplified	from './_codes/transform/since-cpp20-simplified.mdx';
+import Signature_SinceCpp20_Detailed   from './_codes/transform/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/transform/since-cpp20-simplified.mdx';
 
 # std::ranges::transform() algorithm
 
@@ -47,33 +42,53 @@ Applies the given function to a range and stores the result in another range, be
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
 - **(3)** The binary operation `binary_op` is applied to pairs of elements from two ranges:
-	- one defined by **[ first1; last1 )**
-	- the other defined by **[ first2; last2 )** (after respectively projecting with the projections `proj1` and `proj2`).
+	- One defined by **[ first1; last1 )**.
+	- The other defined by **[ first2; last2 )** (after respectively projecting with the projections `proj1` and `proj2`).
 
 - **(4)** Same as **(3)**, but uses `r1` as the first source range, as if using `ranges::begin(r1)` as `first1` and `ranges::end(r1)` as `last1`, and similarly for `r2`.
 
-The function-like entities described on this page are [**niebloids**](#).
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
 
 ### Parameters
 
-- `first1`, `last1` - the first range of elements to transform (iterator, sentinel pair)
-- `r`, `r1` - the first range of elements to transform (ranges)
-- `first2`, `last2` - the second range of elements to transform (iterator, sentinel pair)
-- `r2` - the second range of elements to transform (range)
-- `result` - the beginning of the destination range, may be equal to `first1` or `first2`
-- `op`, `binary_op` - operation to apply to the projected element(s)
-- `proj1` - projection to apply to the elements in the first range
-- `proj2` - projection to apply to the elements in the second range
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The first range of elements to transform (iterator, sentinel pair).
+  </Symbol>
+  <Symbol none noLink name={ <> <code>r</code> <br/> <code>r1</code> </> }>
+    The first range of elements to transform (ranges).
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The second range of elements to transform (iterator, sentinel pair).
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The second range of elements to transform (range).
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range, may be equal to <code>first1</code> or <code>first2</code>.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>op</code> <br/> <code>binary_op</code> </> }>
+    Operation to apply to the projected element(s).
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the elements in the first range.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the elements in the second range.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 
-- **(1-2)** Returns a `unary_transform_result` which contains an input iterator equal to `last` and an output iterator to the element past the last element transformed.
-- **(3-4)** Returns a `binary_transform_result` contains input iterators to last transformed elements from ranges **[ first1; last1 )** and **[ first2; last2 )** as `in1` and `in2` respectively, and the output iterator to the element past the last element transformed as out.
+- **(1 - 2)** Returns a `unary_transform_result` which contains an input iterator equal to `last` and an output iterator to the element past the last element transformed.
+- **(3 - 4)** Returns a `binary_transform_result` contains input iterators to last transformed elements from ranges **[ first1; last1 )** and **[ first2; last2 )** as `in1` and `in2` respectively, and the output iterator to the element past the last element transformed as out.
 
 ### Complexity
 
-- **(1-2)** Exactly `ranges::distance(first1, last1)` applications of `op` and `proj`.
-- **(3-4)** Exactly `ranges::min(ranges::distance(first1, last1), ranges::distance(first2, last2))` applications of `binary_op` and projections.
+- **(1 - 2)** Exactly `ranges::distance(first1, last1)` applications of `op` and `proj`.
+- **(3 - 4)** Exactly `ranges::min(ranges::distance(first1, last1), ranges::distance(first2, last2))` applications of `binary_op` and projections.
 
 ### Exceptions
 
@@ -82,7 +97,7 @@ The function-like entities described on this page are [**niebloids**](#).
 ### Possible implementation
 
 <details>
-<summary>Click to expand</summary>
+<summary>transform(1) and transform(2)</summary>
 
 ```cpp
 struct transform_fn

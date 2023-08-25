@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class ForwardIt, class Size >
+ForwardIt uninitialized_value_construct_n( ForwardIt first, Size n );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class Size >
+ForwardIt uninitialized_value_construct_n( ExecutionPolicy&& policy, ForwardIt first, Size n );
+```

@@ -1,0 +1,27 @@
+```cpp
+// (1)
+template< class InputIt >
+constexpr typename std::iterator_traits<InputIt>::value_type
+    reduce( InputIt first, InputIt last );
+
+// (2)
+template< class InputIt, class T >
+constexpr T reduce( InputIt first, InputIt last, T init );
+
+// (3)
+template< class InputIt, class T, class BinaryOp >
+constexpr T reduce( InputIt first, InputIt last, T init, BinaryOp binary_op );
+
+// (4)
+template< class ExecutionPolicy, class ForwardIt >
+typename std::iterator_traits<ForwardIt>::value_type
+    reduce( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last );
+
+// (5)
+template< class ExecutionPolicy, class ForwardIt, class T >
+T reduce( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last, T init );
+
+// (6)
+template< class ExecutionPolicy, class ForwardIt, class T, class BinaryOp >
+T reduce( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last, T init, BinaryOp binary_op );
+```

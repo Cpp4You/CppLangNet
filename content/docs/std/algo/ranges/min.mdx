@@ -1,20 +1,21 @@
 ---
-title:			ranges::min algorithm
-sidebar_label:	ranges::min(  )
-description:	ranges::min algorithm C++ documentation
-hide_title:		true
-tags:			[ranges, algorithm, min, minimum, smallest, small]
+title:         ranges::min algorithm
+sidebar_label: ranges::min(  )
+description:   ranges::min algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, min, minimum, smallest, small]
 
 cppreference_origin_rel: w/cpp/algorithm/ranges/min
 ---
 
-import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
 
 <!----------------- Codes ---------------------->
 
-import Signature_SinceCpp20_Detailed 	from './_codes/min/since-cpp20-detailed.mdx';
-import Signature_SinceCpp20_Simplified	from './_codes/min/since-cpp20-simplified.mdx';
+import Signature_SinceCpp20_Detailed   from './_codes/min/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/min/since-cpp20-simplified.mdx';
 
 # std::ranges::min() algorithm
 
@@ -33,19 +34,31 @@ Returns the smaller of the given projected elements.
 
  - **(3)** Returns the first smallest value in the range `r`.
 
-The function-like entities described on this page are [**niebloids**](#).
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
 
 ### Parameters
 
-- `a`, `b` - the values to compare
-- `r` - the range of values to compare
-- `comp` - comparison to apply to the projected elements
-- `proj` - projection to apply to the elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> ><code>a</code> <br/> <code>b</code> </>}>
+    The values to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of values to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 
 - **(1)** The smaller of `a` and `b`, according to the projection. If they are equivalent, returns `a`.
-- **(3-4)** The smallest element in `r`, according to the projection.
+- **(3 - 4)** The smallest element in `r`, according to the projection.
 			If several values are equivalent to the smallest, returns the leftmost one.
 :::danger Undefined Behavior
 If the range is empty (as determined by `ranges::distance(r)`), the behavior is undefined.
@@ -54,7 +67,7 @@ If the range is empty (as determined by `ranges::distance(r)`), the behavior is 
 ### Complexity
 
 - **(1)** Exactly one comparison.
-- **(3-4)** Exactly `ranges::distance(r) - 1` comparisons.
+- **(3 - 4)** Exactly `ranges::distance(r) - 1` comparisons.
 
 ### Exceptions
 
@@ -63,7 +76,7 @@ If the range is empty (as determined by `ranges::distance(r)`), the behavior is 
 ### Possible implementation
 
 <details>
-<summary>Click to expand</summary>
+<summary>min(1) and min(2)</summary>
 
 ```cpp
 struct min_fn

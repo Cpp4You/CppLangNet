@@ -1,0 +1,19 @@
+```cpp
+// (1)
+constexpr O generate( O first, S last, F gen );
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R> generate( R&& r, F gen );
+```
+
+The type of arguments are generic and have following constraints:
+- `O` - `std::input_or_output_iterator`
+- `S` - `std::sentinel_for<O>`
+- `R` - **(none)**
+- `F` - `std::copy_constructible`
+
+Additionally, each overload has the following constraints:
+- **(1)** - `invocable<F&> && indirectly_writable<O, invoke_result_t<F&>>`
+- **(1)** - `invocable<F&> && ranges::output_range<R, invoke_result_t<F&>>`
+
+(The `std::` namespace was ommitted here for readability)

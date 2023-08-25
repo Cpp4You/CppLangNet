@@ -1,0 +1,17 @@
+```cpp
+// (1)
+constexpr ranges::subrange<I>
+    rotate( I first, I middle, S last );
+
+// (2)
+constexpr ranges::borrowed_subrange_t<R>
+    rotate( R&& r, ranges::iterator_t<R> middle );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::permutable`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::forward_range`
+
+Additionally, each overload has the following constraints:
+- **(2)** - `std::permutable<ranges::iterator_t<R>>`

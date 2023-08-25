@@ -1,0 +1,20 @@
+```cpp
+// (1)
+template<
+  std::permutable I,
+  std::sentinel_for<I> S,
+  class Proj = std::identity,
+  std::indirect_equivalence_relation<std::projected<I, Proj>> C = ranges::equal_to
+>
+constexpr ranges::subrange<I>
+    unique( I first, S last, C comp = {}, Proj proj = {} );
+
+// (2)
+template<
+  ranges::forward_range R,
+  class Proj = std::identity,
+  std::indirect_equivalence_relation<std::projected<ranges::iterator_t<R>, Proj>> C = ranges::equal_to >
+  requires std::permutable<ranges::iterator_t<R>>
+constexpr ranges::borrowed_subrange_t<R>
+    unique( R&& r, C comp = {}, Proj proj = {} );
+```

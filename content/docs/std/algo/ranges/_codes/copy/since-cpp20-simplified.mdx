@@ -1,0 +1,13 @@
+```cpp
+// (1)
+constexpr copy_result<I, O> copy( I first, S last, O result );
+
+// (2)
+constexpr copy_result<ranges::borrowed_iterator_t<R>, O> copy( R&& r, O result );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `O` - `std::weakly_incrementable`
+- **(2)** - `R` - `std::ranges::input_range`

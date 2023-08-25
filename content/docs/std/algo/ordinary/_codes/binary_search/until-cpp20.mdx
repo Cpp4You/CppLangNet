@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class ForwardIt, class T >
+bool binary_search( ForwardIt first, ForwardIt last, const T& value );
+
+// (2)
+template< class ForwardIt, class T, class Compare >
+bool binary_search( ForwardIt first, ForwardIt last, const T& value, Compare comp );
+```

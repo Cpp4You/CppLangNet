@@ -1,0 +1,22 @@
+```cpp
+// (1)
+template<
+  std::forward_iterator I,
+  std::sentinel_for<I> S,
+  class Proj = std::identity,
+  std::indirect_binary_predicate<
+  std::projected<I, Proj>,
+  std::projected<I, Proj>> Pred = ranges::equal_to
+>
+constexpr I adjacent_find( I first, S last, Pred pred = {}, Proj proj = {} );
+
+// (2)
+template<
+  ranges::forward_range R,
+  class Proj = std::identity,
+  std::indirect_binary_predicate<
+  std::projected<ranges::iterator_t<R>, Proj>,
+  std::projected<ranges::iterator_t<R>, Proj>> Pred = ranges::equal_to
+>
+constexpr ranges::borrowed_iterator_t<R> adjacent_find( R&& r, Pred pred = {}, Proj proj = {} );
+```

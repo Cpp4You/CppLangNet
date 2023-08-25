@@ -1,0 +1,21 @@
+```cpp
+// (1)
+constexpr for_each_result<I, Fun>
+    for_each( I first, S last, Fun f, Proj proj = {} );
+
+
+// (2)
+constexpr for_each_result<ranges::borrowed_iterator_t<R>, Fun>
+    for_each( R&& r, Fun f, Proj proj = {} );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::input_range`
+- `Fun`:
+	- **(1)** - `std::indirectly_unary_invocable<std::projected<I, Proj>>`
+	- **(2)** - `std::indirectly_unary_invocable<std::projected<ranges::iterator_t<R>, Proj>>`
+- `Proj` - **(none)**
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.

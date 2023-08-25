@@ -1,0 +1,155 @@
+---
+title:         pop_heap algorithm
+sidebar_label: pop_heap(  )
+description:   pop_heap algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, pop_heap]
+
+cppreference_origin_rel: w/cpp/algorithm/pop_heap
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp20 from './_codes/pop_heap/until-cpp20.mdx';
+import Signature_SinceCpp20 from './_codes/pop_heap/since-cpp20.mdx';
+
+# std::pop_heap() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'until-cpp20': <Signature_UntilCpp20 />,
+}} />
+
+Swaps the value in the position `first` and the value in the position `last - 1` and makes the subrange [`first`; `last - 1`) into a heap.  
+This has the effect of removing the first element from the heap defined by the range [`first`; `last`).
+
+- **(1)** Elements are compared using `operator<`.
+
+- **(2)** Elements are compared using the given binary comparison function `comp`.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to make a heap from.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>RandomIt</code> }>
+    <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> The type defereferenced <code>RandomIt</code> </> }>
+    <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> <br/>
+    <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+At most **2 \* log(N)** comparisons.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Notes
+
+A max heap is a range of elements [`f`; `l`) that has the following properties:
+
+ - Given `N` as `l - f`, for all `0 < i < N`, `f[(i - 1) / 2]` does not compare less than `f[i]`.
+ - A new element can be added using [`std::push_heap`](#), in **O(log(N))** time.
+ - The first element can be removed using [`std::pop_heap`](#), in **O(log(N))** time.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string_view>
+#include <type_traits>
+#include <vector>
+
+void println(std::string_view rem, auto const& v)
+{
+    std::cout << rem;
+    if constexpr (std::is_scalar_v<std::decay_t<decltype(v)>>)
+        std::cout << v;
+    else
+        for (int e : v)
+            std::cout << e << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    std::vector<int> v {3, 1, 4, 1, 5, 9};
+
+    std::make_heap(v.begin(), v.end());
+    println("after make_heap: ", v);
+
+    std::pop_heap(v.begin(), v.end()); // moves the largest to the end
+    println("after pop_heap:  ", v);
+
+    int largest = v.back();
+    println("largest element: ", largest);
+
+    v.pop_back(); // actually removes the largest element
+    println("after pop_back:  ", v);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+after make_heap: 9 5 4 1 1 3
+after pop_heap:  5 3 4 1 1 9
+largest element: 9
+after pop_back:  5 3 4 1 1
+```
+
+</div>
+</Columns>

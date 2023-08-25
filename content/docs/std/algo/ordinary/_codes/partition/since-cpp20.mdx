@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class ForwardIt, class UnaryPredicate >
+constexpr ForwardIt partition( ForwardIt first, ForwardIt last, UnaryPredicate p );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class UnaryPredicate >
+ForwardIt partition( ExecutionPolicy&& policy,
+                     ForwardIt first, ForwardIt last, UnaryPredicate p );
+```

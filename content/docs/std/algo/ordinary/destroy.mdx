@@ -1,0 +1,142 @@
+---
+title:         destroy algorithm
+sidebar_label: destroy(  )
+description:   destroy algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, destroy]
+
+cppreference_origin_rel: w/cpp/algorithm/destroy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp17 from './_codes/destroy/since-cpp17.mdx';
+
+# std::destroy() algorithm
+
+<SwitchView content={{
+  'since-cpp17': <Signature_SinceCpp17 />,
+}} />
+
+- **(1)** Destroys the objects in the range [`first`; `last`), as if by:
+  ```cpp
+  for (; first != last; ++first)
+      std::destroy_at(std::addressof(*first));
+  ```
+
+ - **(2)** Same as **(1)**, but executed according to `policy`.
+  :::important Overload Resolution
+  These overloads participate in overload resolution only if
+  <Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+  :::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to destroy.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> } >
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+No increment, assignment, comparison, or indirection through valid instances of `NoThrowForwardIt` may throw exceptions.
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Linear in the distance between `first` and `last`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For none other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>destroy(1)</summary>
+
+```cpp
+
+template<class ForwardIt>
+constexpr // since C++20
+void destroy(ForwardIt first, ForwardIt last)
+{
+    for (; first != last; ++first)
+        std::destroy_at(std::addressof(*first));
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <memory>
+#include <new>
+
+struct Tracer
+{
+    int value;
+    ~Tracer() { std::cout << value << " destructed\n"; }
+};
+
+int main()
+{
+    alignas(Tracer) unsigned char buffer[sizeof(Tracer) * 8];
+
+    for (int i = 0; i < 8; ++i)
+        new(buffer + sizeof(Tracer) * i) Tracer{i}; //manually construct objects
+
+    auto ptr = std::launder(reinterpret_cast<Tracer*>(buffer));
+
+    std::destroy(ptr, ptr + 8);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+0 destructed
+1 destructed
+2 destructed
+3 destructed
+4 destructed
+5 destructed
+6 destructed
+7 destructed
+```
+
+</div>
+</Columns>

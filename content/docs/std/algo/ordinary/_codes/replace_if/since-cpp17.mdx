@@ -1,0 +1,12 @@
+```cpp
+// (1)
+template< class ForwardIt, class UnaryPredicate, class T >
+void replace_if( ForwardIt first, ForwardIt last,
+                 UnaryPredicate p, const T& new_value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt,
+          class UnaryPredicate, class T >
+void replace_if( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last,
+                 UnaryPredicate p, const T& new_value );
+```

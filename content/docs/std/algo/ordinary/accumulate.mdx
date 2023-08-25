@@ -1,0 +1,193 @@
+---
+title:         accumulate algorithm
+sidebar_label: accumulate(  )
+description:   accumulate algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, accumulate, reduce, fold]
+
+cppreference_origin_rel: w/cpp/algorithm/accumulate
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20 from './_codes/accumulate/since-cpp20.mdx';
+import Signature_UntilCpp20 from './_codes/accumulate/until-cpp20.mdx';
+
+# std::accumulate() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'until-cpp20': <Signatue_UntilCpp20 />,
+}} />
+
+Computes the sum of the given value `init` and the elements in the ange [`first`; `last`).
+
+Initializes the accumulator `acc` (of type `T`) with the initial value `init` and then modifies it with:
+
+  - **(1)**
+    <Until v='cpp20'><code>acc = acc + *i</code></Until><Since v='cpp20'><code>acc = std::move(acc) + *i</code></Since>
+  - **(2)**
+    <Until v='cpp20'><code>acc = op(acc, *i)</code></Until><Since v='cpp20'><code>acc = op(std::move(acc), *i)</code></Since>
+
+for every iterator `i` in the range [`first`; `last`) in order.
+
+:::danger Undefined Behaviour
+If `op` invalidates any iterators (including the end iterators) or modifies any elements of the range involved, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to fold.
+  </Symbol>
+  <Symbol none noLink name={ <code>init</code> }>
+    Initial value of the fold.
+  </Symbol>
+  <Symbol none noLink name={ <code>op</code> }>
+
+Binary operation function object that will be applied.
+The signature of the function should be equivalent to the following:
+```cpp
+ Ret fun(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`.
+- The type `Type1` must be such that an object of type `T` can be implicitly converted to it.
+- The type `Type2` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to it.
+- The type `Ret` must be such that an object of type `T` can be assigned a value of it's type.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>T</code> }>
+    <a href="/docs/named_req/CopyAssignable">CopyAssignable</a> <br />
+    <a href="/docs/named_req/CopyConstructible">CopyConstructible</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+`acc` after all modifications.
+
+### Complexity
+
+Exactly `last - first` increments and assignments.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>accumulate(1)</summary>
+
+```cpp
+template<class InputIt, class T>
+constexpr // since C++20
+T accumulate(InputIt first, InputIt last, T init)
+{
+    for (; first != last; ++first)
+        init = std::move(init) + *first; // std::move since C++20
+
+    return init;
+}
+```
+
+</details>
+
+<details>
+<summary>accumulate(2)</summary>
+
+```cpp
+template<class InputIt, class T, class BinaryOperation>
+constexpr // since C++20
+T accumulate(InputIt first, InputIt last, T init, BinaryOperation op)
+{
+    for (; first != last; ++first)
+        init = op(std::move(init), *first); // std::move since C++20
+
+    return init;
+}
+```
+
+</details>
+
+### Notes
+
+[`std::accumulate`](#) performs a left fold. In order to perform a right fold, one must reverse the order of the arguments to the binary operator, and use reverse iterators.
+
+If left to type inference, `op` operates on values of the same type as `init` which can result in unwanted casting of the iterator elements.  
+For example, `std::accumulate(v.begin(), v.end(), 0)` likely does not give the result one wishes for when `v` is of type `std::vector<double>`.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <functional>
+#include <iostream>
+#include <numeric>
+#include <string>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+    int sum = std::accumulate(v.begin(), v.end(), 0);
+    int product = std::accumulate(v.begin(), v.end(), 1, std::multiplies<int>());
+
+    auto dash_fold = [](std::string a, int b)
+    {
+        return std::move(a) + '-' + std::to_string(b);
+    };
+
+    std::string s = std::accumulate(std::next(v.begin()), v.end(),
+                                    std::to_string(v[0]), // start with first element
+                                    dash_fold);
+
+    // Right fold using reverse iterators
+    std::string rs = std::accumulate(std::next(v.rbegin()), v.rend(),
+                                     std::to_string(v.back()), // start with last element
+                                     dash_fold);
+
+    std::cout << "sum: " << sum << '\n'
+              << "product: " << product << '\n'
+              << "dash-separated string: " << s << '\n'
+              << "dash-separated string (right-folded): " << rs << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+sum: 55
+product: 3628800
+dash-separated string: 1-2-3-4-5-6-7-8-9-10
+dash-separated string (right-folded): 10-9-8-7-6-5-4-3-2-1
+```
+
+</div>
+</Columns>

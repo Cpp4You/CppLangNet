@@ -1,0 +1,24 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I,
+  std::sentinel_for<I> S1,
+  no-throw-forward-iterator O,
+  no-throw-sentinel-for<O> S2
+>
+  requires std::constructible_from< std::iter_value_t<O>,
+                                    std::iter_rvalue_reference_t<I> >
+uninitialized_move_result<I, O>
+  uninitialized_move( I ifirst, S1 ilast, O ofirst, S2 olast );
+
+// (2)
+template<
+  ranges::input_range IR,
+  no-throw-forward-range OR
+>
+  requires std::constructible_from< ranges::range_value_t<OR>,
+                                    ranges::range_rvalue_reference_t<IR> >
+uninitialized_move_result< ranges::borrowed_iterator_t<IR>,
+                           ranges::borrowed_iterator_t<OR> >
+  uninitialized_move( IR&& in_range, OR&& out_range );
+```

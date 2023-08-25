@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class InputIt, class UnaryPredicate >
+constexpr bool is_partitioned( InputIt first, InputIt last, UnaryPredicate p );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class UnaryPredicate >
+bool is_partitioned( ExecutionPolicy&& policy,
+                     ForwardIt first, ForwardIt last, UnaryPredicate p );
+```

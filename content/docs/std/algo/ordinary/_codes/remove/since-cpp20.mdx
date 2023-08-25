@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class ForwardIt, class T >
+constexpr ForwardIt remove( ForwardIt first, ForwardIt last, const T& value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class T >
+ForwardIt remove( ExecutionPolicy&& policy,
+    ForwardIt first, ForwardIt last, const T& value );
+```

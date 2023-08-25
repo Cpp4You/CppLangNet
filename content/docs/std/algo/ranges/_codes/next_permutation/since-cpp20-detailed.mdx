@@ -1,0 +1,22 @@
+```cpp
+// (1)
+template<
+  std::bidirectional_iterator I,
+  std::sentinel_for<I> S,
+  class Comp = ranges::less,
+  class Proj = std::identity
+>
+  requires std::sortable<I, Comp, Proj>
+constexpr next_permutation_result<I>
+    next_permutation( I first, S last, Comp comp = {}, Proj proj = {} );
+
+// (2)
+template<
+  ranges::bidirectional_range R,
+  class Comp = ranges::less,
+  class Proj = std::identity
+>
+  requires std::sortable<ranges::iterator_t<R>, Comp, Proj>
+constexpr next_permutation_result<ranges::borrowed_iterator_t<R>>
+    next_permutation( R&& r, Comp comp = {}, Proj proj = {} );
+```

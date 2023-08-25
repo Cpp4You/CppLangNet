@@ -4,18 +4,17 @@ title: Summary
 slug: /std/algo/
 ---
 
-import SwitchView					from  "@site-comps/SwitchView";
-import SymbolTable, { Symbol }		from "@site-comps/SymbolTable";
-
-import { Since, Until, Removed }	from "@site-comps/Versions";
+import SwitchView                from  "@site-comps/SwitchView";
+import SymbolTable, { Symbol }   from "@site-comps/SymbolTable";
+import { Since, Until, Removed } from "@site-comps/Versions";
 
 <!----------------- Codes ---------------------->
-import Sorting_Example_Rangified			from "./_codes/main-page/sorting/rangified.mdx";
-import Sorting_Example_Ordinary				from "./_codes/main-page/sorting/ordinary.mdx";
+import Sorting_Example_Rangified         from "./_codes/main-page/sorting/rangified.mdx";
+import Sorting_Example_Ordinary          from "./_codes/main-page/sorting/ordinary.mdx";
 
-import Iterator_Example_Printing			from "./_codes/main-page/operations-with-iterators/printing-vector.mdx";
-import Iterator_Example_Printing_Reverse	from "./_codes/main-page/operations-with-iterators/printing-vector-in-reverse.mdx";
-import Iterator_Example_Zeroing				from "./_codes/main-page/operations-with-iterators/setting-all-numbers-to-0.mdx";
+import Iterator_Example_Printing         from "./_codes/main-page/operations-with-iterators/printing-vector.mdx";
+import Iterator_Example_Printing_Reverse from "./_codes/main-page/operations-with-iterators/printing-vector-in-reverse.mdx";
+import Iterator_Example_Zeroing          from "./_codes/main-page/operations-with-iterators/setting-all-numbers-to-0.mdx";
 
 # Algorithms
 
@@ -136,32 +135,269 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 # List of algorithms
 
-## Non-modifying
+## Searching
 
 <SymbolTable>
 
 	<SwitchView content={{
 		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/count" name={ <Since v='cpp20'>ranges::count</Since> }>
-				Returns the number of certain elements.
+			<Symbol linkName="./ranges/find" name={ <Since v='cpp20'>ranges::find</Since> }>
+				Finds the first element satisfying specific criteria.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/count" name="count">
-				Returns the number of certain elements.
+			<Symbol linkName="./ordinary/find" name="find">
+				Finds the first element satisfying specific criteria.
 			</Symbol>,
 	}}/>
-
 
 	<SwitchView content={{
 		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/count_if" name={ <Since v='cpp20'>ranges::count_if</Since> }>
+			<Symbol linkName="./ranges/find_if" name={ <Since v='cpp20'>ranges::find_if</Since> }>
+				Finds the first element satisfying specific predicate.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/find_if" name="find_if">
+				Finds the first element satisfying specific predicate.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/find_if_not" name={ <Since v='cpp20'>ranges::find_if_not</Since> }>
+				Finds the first element **not** satisfying specific predicate.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/find_if_not" name={ <Since v='cpp11'>find_if_not</Since> }>
+				Finds the first element **not** satisfying specific predicate.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/find_first_of" name={ <Since v='cpp20'>ranges::find_first_of</Since> }>
+        Searches for any of the elements from one range in another.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/find_first_of" name="find_first_of">
+        Searches for any of the elements from one range in another.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/find_end" name={ <Since v='cpp20'>ranges::find_end</Since> }>
+        Finds the last sequence of elements in a certain range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/find_end" name="find_end">
+        Finds the last sequence of elements in a certain range.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/find_last" name={ <Since v='cpp20'>ranges::find_last</Since> }>
+        Finds the last element equal to some value.
+			</Symbol>,
+	}}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/find_last_if" name={ <Since v='cpp20'>ranges::find_last_if</Since> }>
+        Finds the last element satisfying specific criteria.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/find_last_if_not" name={ <Since v='cpp20'>ranges::find_last_if_not</Since> }>
+        Finds the last element **not** satisfying specific criteria.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/adjacent_find" name={ <Since v='cpp20'>ranges::adjacent_find</Since> }>
+        Finds the first two adjacent items that satisfy a condition.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/adjacent_find" name="adjacent_find">
+        Finds the first two adjacent items that satisfy a condition.
+      </Symbol>,
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/search" name={ <Since v='cpp20'>ranges::search</Since> }>
+        Search for a range of elements.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/search" name="search">
+        Search for a range of elements.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/search_n" name={ <Since v='cpp20'>ranges::search_n</Since> }>
+        Searches a range for a consecutive sequence of an element.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/search_n" name="search_n">
+        Searches a range for a consecutive sequence of an element.
+			</Symbol>,
+	}}/>
+
+</SymbolTable>
+
+## Determining conditions
+
+<SymbolTable>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/all_of" name={ <Since v='cpp20'>ranges::all_of</Since> }>
+				Checks if all elements in a range hold a condition.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/all_of" name={ <Since v='cpp11'>all_of</Since> }>
+				Checks if all elements in a range hold a condition.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/any_of" name={ <Since v='cpp20'>ranges::any_of</Since> }>
+				Checks if any elements in a range hold a condition.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/any_of" name={ <Since v='cpp11'>any_of</Since> }>
+				Checks if any elements in a range hold a condition.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/none_of" name={ <Since v='cpp20'>ranges::none_of</Since> }>
+				Checks if no elements in a range hold a condition.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/none_of" name={ <Since v='cpp11'>none_of</Since> }>
+				Checks if no elements in a range hold a condition.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/count" name={ <Since v='cpp20'>ranges::count</Since> }>
+				Returns the number of certain elements.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/count" name="count">
+				Returns the number of certain elements.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/count_if" name={ <Since v='cpp20'>ranges::count_if</Since> }>
 				Returns the number of elements satisfying specific criteria.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/count_if" name="count_if">
+			<Symbol linkName="./ordinary/count_if" name="count_if">
 				Returns the number of elements satisfying specific criteria.
 			</Symbol>,
 	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/mismatch" name={ <Since v='cpp20'>ranges::mismatch</Since> }>
+        Finds the first position where two ranges differ.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/mismatch" name="mismatch">
+				Finds the first position where two ranges differ.
+			</Symbol>,
+	}}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/starts_with" name={ <Since v='cpp20'>ranges::starts_with</Since> }>
+        Checks whether a range starts with another range.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/ends_with" name={ <Since v='cpp20'>ranges::ends_with</Since> }>
+        Checks whether a range ends with another range.
+      </Symbol>,
+  }}/>
+
+</SymbolTable>
+
+## Other non-modifying
+
+<SymbolTable>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/for_each" name={ <Since v='cpp20'>ranges::for_each</Since> }>
+				Applies a function to a range of elements.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/for_each" name="for_each">
+				Applies a function to a range of elements.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/for_each_n" name={ <Since v='cpp20'>ranges::for_each_n</Since> }>
+				Applies a function to a range of elements consisting of an iterator and a size.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/for_each_n" name={ <Since v='cpp17'>for_each_n</Since> }>
+				Applies a function to a range of elements consisting of an iterator and a size.
+			</Symbol>,
+	}}/>
+
+</SymbolTable>
+
+## Random operations
+
+<SymbolTable>
+
+  <SwitchView content={{
+    'Ordinary':
+      <Symbol linkName="./ordinary/random_shuffle" name={ <Removed v='cpp17'>random_shuffle</Removed> }>
+        <span class="inline-danger">Deprecated in C++14 and removed in C++17, use <a href="/docs/std/algo/ordinary/shuffle"><code>std::shuffle</code></a> instead. </span> <br/>
+        Randomly re-orders elements in a range.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/shuffle" name={ <Since v='cpp20'>ranges::shuffle</Since> }>
+        Randomly re-orders elements in a range.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/shuffle" name={ <Since v='cpp11'>shuffle</Since> }>
+        Randomly re-orders elements in a range. <br/>
+        Preffered method over <a href="/docs/std/algo/ordinary/random_shuffle"><code>std::random_shuffle</code></a>.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/sample" name={ <Since v='cpp20'>ranges::sample</Since> }>
+        Selects <code>n</code> random elements from a sequence.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/sample" name={ <Since v='cpp17'>sample</Since> }>
+        Selects <code>n</code> random elements from a sequence.
+      </Symbol>,
+  }}/>
 
 </SymbolTable>
 
@@ -169,13 +405,86 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
+  <SwitchView content={{
+    'Ordinary':
+      <Symbol linkName="./ordinary/swap" name="swap">
+        Swaps the values of two objects.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/copy" name={ <Since v='cpp20'>ranges::copy</Since> }>
+        Copies a range of elements to a new location.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/copy" name="copy">
+        Copies a range of elements to a new location.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/copy_if" name={ <Since v='cpp20'>ranges::copy_if</Since> }>
+        Copies elements from a range that satisfy a condition to a new location.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/copy_if" name={ <Since v='cpp11'>copy_if</Since> }>
+        Copies elements from a range that satisfy a condition to a new location.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/copy_n" name={ <Since v='cpp20'>ranges::copy_n</Since> }>
+        Copies a number elements from a range to a new location.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/copy_n" name={ <Since v='cpp11'>copy_n</Since> }>
+        Copies a number elements from a range to a new location.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/copy_backward" name={ <Since v='cpp20'>ranges::copy_backward</Since> }>
+        Copies a range of elements in backwards order.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/copy_backward" name="copy_backward">
+        Copies a range of elements in backwards order.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/move" name={ <Since v='cpp20'>ranges::move</Since> }>
+        Moves a range of elements to a new location.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/move" name="move">
+        Moves a range of elements to a new location.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/move_backward" name={ <Since v='cpp20'>ranges::move_backward</Since> }>
+        Moves a range of elements to a new location in backwards order.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/move_backward" name="move_backward">
+        Moves a range of elements to a new location in backwards order.
+      </Symbol>,
+  }}/>
+
 	<SwitchView content={{
 		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/transform" name={ <Since v='cpp20'>ranges::transform</Since> }>
+			<Symbol linkName="./ranges/transform" name={ <Since v='cpp20'>ranges::transform</Since> }>
 				Applies a function to a range of elements.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/transform" name="transform">
+			<Symbol linkName="./ordinary/transform" name="transform">
 				Applies a function to a range of elements.
 			</Symbol>,
 	}}/>
@@ -183,18 +492,293 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 	<SwitchView content={{
 		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/reverse" name={ <Since v='cpp20'>ranges::reverse</Since> }>
+			<Symbol linkName="./ranges/reverse" name={ <Since v='cpp20'>ranges::reverse</Since> }>
 				Reverses the order of elements.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/reverse" name="reverse">
+			<Symbol linkName="./ordinary/reverse" name="reverse">
 				Reverses the order of elements.
 			</Symbol>,
 	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/reverse_copy" name={ <Since v='cpp20'>ranges::reverse_copy</Since> }>
+				Creates a reversed copy of a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/reverse_copy" name="reverse_copy">
+        Creates a reversed copy of a range.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/fill" name={ <Since v='cpp20'>ranges::fill</Since> }>
+        Copy-assigns the given value to every element in a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/fill" name="fill">
+				Copy-assigns the given value to every element in a range.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/fill_n" name={ <Since v='cpp20'>ranges::fill_n</Since> }>
+        Copy-assigns a value to a number of elements.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/fill_n" name="fill_n">
+				Copy-assigns a value to a number of elements.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/generate" name={ <Since v='cpp20'>ranges::generate</Since> }>
+        Assigns the results of successive function calls to every element in a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/generate" name="generate">
+				Assigns the results of successive function calls to every element in a range.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/remove" name={ <Since v='cpp20'>ranges::remove</Since> }>
+        Removes elements equal to <code>value</code>.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/remove" name="remove">
+        Removes elements equal to <code>value</code>.
+			</Symbol>,
+	}}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/remove_if" name={ <Since v='cpp20'>ranges::remove_if</Since> }>
+        Removes elements satisfying specific criteria.
+      </Symbol>,
+      'Ordinary':
+      <Symbol linkName="./ordinary/remove_if" name="remove_if">
+        Removes elements satisfying specific criteria.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/remove_copy" name={ <Since v='cpp20'>ranges::remove_copy</Since> }>
+        Copies a range of elements omitting those that are equal to <code>value</code>.
+    </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/remove_copy" name="remove_copy">
+        Copies a range of elements omitting those that are equal to <code>value</code>.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/remove_copy_if" name={ <Since v='cpp20'>ranges::remove_copy_if</Since> }>
+        Copies a range of elements omitting those that satisfy a predicate.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/remove_copy_if" name="remove_copy_if">
+        Copies a range of elements omitting those that satisfy a predicate.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/replace" name={ <Since v='cpp20'>ranges::replace</Since> }>
+        Replaces old values with new values.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/replace" name="replace">
+        Replaces old values with new values.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/replace_if" name={ <Since v='cpp20'>ranges::replace_if</Since> }>
+        Replaces values satisfying a predicate with new values.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/replace_if" name="replace_if">
+        Replaces values satisfying a predicate with new values.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/replace_copy" name={ <Since v='cpp20'>ranges::replace_copy</Since> }>
+        Copies a range, replacing elements equal to old value with new value.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/replace_copy" name="replace_copy">
+        Copies a range, replacing elements equal to old value with new value.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/replace_copy_if" name={ <Since v='cpp20'>ranges::replace_copy_if</Since> }>
+        Copies a range, replacing elements that satisfy a predicate with new value.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/replace_copy_if" name="replace_copy_if">
+        Copies a range, replacing elements that satisfy a predicate with new value.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/swap_ranges" name={ <Since v='cpp20'>ranges::swap_ranges</Since> }>
+        Swaps two ranges.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/swap_ranges" name="swap_ranges">
+        Swaps two ranges.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Ordinary':
+      <Symbol linkName="./ordinary/iter_swap" name="iter_swap">
+        Swaps the values of the elements the given iterators are pointing to.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/rotate" name={ <Since v='cpp20'>ranges::rotate</Since> }>
+        Rotates elements in a range.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/rotate" name="rotate">
+        Rotates elements in a range.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/rotate_copy" name={ <Since v='cpp20'>ranges::rotate_copy</Since> }>
+        Copies and rotates a range of elements.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/rotate_copy" name="rotate_copy">
+        Copies and rotates a range of elements.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/shift_left" name={ <Since v='cpp23'>ranges::shift_left</Since> }>
+        Shifts elements in a range left.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/shift_left" name={ <Since v='cpp20'>shift_left</Since> }>
+        Shifts elements in a range left.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/shift_right" name={ <Since v='cpp23'>ranges::shift_right</Since> }>
+        Shifts elements in a range right.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/shift_right" name={ <Since v='cpp20'>shift_right</Since> }>
+        Shifts elements in a range right.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/unique" name={ <Since v='cpp20'>ranges::unique</Since> }>
+        Removes consecutive duplicates of an element in a range.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/unique" name="unique">
+        Removes consecutive duplicates of an element in a range.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/unique_copy" name={ <Since v='cpp20'>ranges::unique_copy</Since> }>
+        Creates a copy of range with no consecutive duplicates.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/unique_copy" name="unique_copy">
+        Creates a copy of range with no consecutive duplicates.
+      </Symbol>,
+  }}/>
 
 </SymbolTable>
 
 ## Partitioning
+
+<SymbolTable>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/is_partitioned" name={ <Since v='cpp20'>ranges::is_partitioned</Since> }>
+        Determines if the range is partitioned by the given predicate.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/is_partitioned" name={ <Since v='cpp11'>is_partitioned</Since> }>
+        Determines if the range is partitioned by the given predicate.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/partition" name={ <Since v='cpp20'>ranges::partition</Since> }>
+        Divides a range of elements into two groups based on a predicate.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/partition" name={ <Since v='cpp11'>partition</Since> }>
+        Divides a range of elements into two groups based on a predicate.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/partition_copy" name={ <Since v='cpp20'>ranges::partition_copy</Since> }>
+        Copies a range dividing the elements into two groups.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/partition_copy" name={ <Since v='cpp11'>partition_copy</Since> }>
+        Copies a range dividing the elements into two groups.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/stable_partition" name={ <Since v='cpp20'>ranges::stable_partition</Since> }>
+        Divides elements into two groups while preserving their relative order.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/stable_partition" name="stable_partition">
+        Divides elements into two groups while preserving their relative order.
+			</Symbol>,
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/partition_point" name={ <Since v='cpp20'>ranges::partition_point</Since> }>
+        Locates the partition point of a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/partition_point" name={ <Since v='cpp11'>partition_point</Since> }>
+        Locates the partition point of a range.
+			</Symbol>,
+  }}/>
+
+</SymbolTable>
 
 ## Sorting
 
@@ -202,24 +786,293 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 	<SwitchView content={{
 		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/sort" name={ <Since v='cpp20'>ranges::sort</Since> }>
+			<Symbol linkName="./ranges/sort" name={ <Since v='cpp20'>ranges::sort</Since> }>
 				Sorts a range into (by default) ascending order.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/sort" name="sort">
+			<Symbol linkName="./ordinary/sort" name="sort">
 				Sorts a range into (by default) ascending order.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/stable_sort" name={ <Since v='cpp20'>ranges::stable_sort</Since> }>
+				Sorts a range into (by default) ascending order while preserving the order between equal elements.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/stable_sort" name="stable_sort">
+				Sorts a range into (by default) ascending order while preserving the order between equal elements.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/partial_sort" name={ <Since v='cpp20'>ranges::partial_sort</Since> }>
+				Sorts the first <b>N</b> elements of a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/partial_sort" name="partial_sort">
+        Sorts the first <b>N</b> elements of a range.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/partial_sort_copy" name={ <Since v='cpp20'>ranges::partial_sort_copy</Since> }>
+				Copies and partially sorts a range of elements.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/partial_sort_copy" name="partial_sort_copy">
+				Copies and partially sorts a range of elements.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/nth_element" name={ <Since v='cpp20'>ranges::stable_sort</Since> }>
+				Partially sorts the given range making sure that it is partitioned by the given element.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/nth_element" name="stable_sort">
+				Partially sorts the given range making sure that it is partitioned by the given element.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/is_sorted" name={ <Since v='cpp20'>ranges::is_sorted</Since> }>
+				Checks whether a range is sorted.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/is_sorted" name="is_sorted">
+				Checks whether a range is sorted.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/is_sorted_until" name={ <Since v='cpp20'>ranges::is_sorted_until</Since> }>
+				Finds the largest sorted subrange.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/is_sorted_until" name="is_sorted_until">
+				Finds the largest sorted subrange.
 			</Symbol>,
 	}}/>
 
 </SymbolTable>
 
-## Binary search
+## Binary search (on sorted ranges)
+
+<SymbolTable>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/binary_search" name={ <Since v='cpp20'>ranges::binary_search</Since> }>
+        Searches for an element in a partially-ordered range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/binary_search" name="binary_search">
+        Searches for an element in a partially-ordered range.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/lower_bound" name={ <Since v='cpp20'>ranges::lower_bound</Since> }>
+        Returns an iterator to the first element <em>not less</em> than the given value.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/lower_bound" name="lower_bound">
+        Returns an iterator to the first element <em>not less</em> than the given value.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/upper_bound" name={ <Since v='cpp20'>ranges::upper_bound</Since> }>
+        Returns an iterator to the first element <em>greater</em> than the given value.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/upper_bound" name="upper_bound">
+        Returns an iterator to the first element <em>greater</em> than the given value.
+			</Symbol>,
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/equal_range" name={ <Since v='cpp20'>ranges::equal_range</Since> }>
+        Returns range of elements matching a specific key.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/equal_range" name="equal_range">
+        Returns range of elements matching a specific key.
+			</Symbol>,
+	}}/>
+
+</SymbolTable>
+
+## Set (on sorted ranges)
+
+<SymbolTable>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/includes" name={ <Since v='cpp20'>ranges::includes</Since> }>
+        Returns <code>true</code> if a sequence is a subsequence of another.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/includes" name="includes">
+        Returns <code>true</code> if a sequence is a subsequence of another.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/set_difference" name={ <Since v='cpp20'>ranges::set_difference</Since> }>
+        Computes the difference between two sets.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/set_difference" name="set_difference">
+        Computes the difference between two sets.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/set_intersection" name={ <Since v='cpp20'>ranges::set_intersection</Since> }>
+        Computes the intersection between two sets.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/set_intersection" name="set_intersection">
+        Computes the intersection between two sets.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/set_symmetric_difference" name={ <Since v='cpp20'>ranges::set_symmetric_difference</Since> }>
+        Computes the symmetric difference between two sets.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/set_symmetric_difference" name="set_symmetric_difference">
+        Computes the symmetric difference between two sets.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/set_union" name={ <Since v='cpp20'>ranges::set_union</Since> }>
+        Computes the union between two sets.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/set_union" name="set_union">
+        Computes the union between two sets.
+      </Symbol>,
+  }}/>
+
+</SymbolTable>
 
 ## Other operations on sorted ranges
 
-## Set
+<SymbolTable>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/merge" name={ <Since v='cpp20'>ranges::merge</Since> }>
+        Merges two sorted ranges.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/merge" name="merge">
+        Merges two sorted ranges.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/inplace_merge" name={ <Since v='cpp20'>ranges::inplace_merge</Since> }>
+        Merges two sorted ranges in-place.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/inplace_merge" name="inplace_merge">
+        Merges two sorted ranges in-place.
+      </Symbol>,
+  }}/>
+
+</SymbolTable>
 
 ## Heap
+
+<SymbolTable>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/is_heap" name={ <Since v='cpp20'>ranges::is_heap</Since> }>
+        Checks if the given range is a max heap.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/is_heap" name="is_heap">
+        Checks if the given range is a max heap.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/is_heap_until" name={ <Since v='cpp20'>ranges::is_heap_until</Since> }>
+        Checks if the given range is a max heap.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/is_heap_until" name="is_heap_until">
+        Checks if the given range is a max heap.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/make_heap" name={ <Since v='cpp20'>ranges::make_heap</Since> }>
+        Creates a max heap out of a range of elements.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/make_heap" name="make_heap">
+        Creates a max heap out of a range of elements.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/push_heap" name={ <Since v='cpp20'>ranges::push_heap</Since> }>
+        Adds an element to a max heap.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/push_heap" name="push_heap">
+        Adds an element to a max heap.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/pop_heap" name={ <Since v='cpp20'>ranges::pop_heap</Since> }>
+        Adds an element to a max heap.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/pop_heap" name="pop_heap">
+        Adds an element to a max heap.
+      </Symbol>,
+  }}/>
+
+  <SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/sort_heap" name={ <Since v='cpp20'>ranges::sort_heap</Since> }>
+        Turns a max heap into a range of elements sorted in ascending order.
+      </Symbol>,
+    'Ordinary':
+      <Symbol linkName="./ordinary/sort_heap" name="sort_heap">
+        Turns a max heap into a range of elements sorted in ascending order.
+      </Symbol>,
+  }}/>
+
+</SymbolTable>
 
 ## Min/max
 
@@ -227,23 +1080,78 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 	<SwitchView content={{
 		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/min" name={ <Since v='cpp20'>ranges::min</Since> }>
+			<Symbol linkName="./ranges/min" name={ <Since v='cpp20'>ranges::min</Since> }>
 				Returns the smallest of the given values.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/min" name="min">
+			<Symbol linkName="./ordinary/min" name="min">
 				Returns the smallest of the given values.
 			</Symbol>,
 	}}/>
 
 	<SwitchView content={{
 		'Rangified':
-			<Symbol pub autoLink linkName="./ranges/max" name={ <Since v='cpp20'>ranges::max</Since> }>
+			<Symbol linkName="./ranges/max" name={ <Since v='cpp20'>ranges::max</Since> }>
 				Returns the greatest of the given values.
 			</Symbol>,
 		'Ordinary':
-			<Symbol pub autoLink linkName="./ordinary/max" name="max">
+			<Symbol linkName="./ordinary/max" name="max">
 				Returns the greatest of the given values.
+			</Symbol>
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/max_element" name={ <Since v='cpp20'>ranges::max_element</Since> }>
+				Returns the largest element in a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/max_element" name="max_element">
+        Returns the largest element in a range.
+			</Symbol>
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/min_element" name={ <Since v='cpp20'>ranges::min_element</Since> }>
+				Returns the smallest element in a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/min_element" name="min_element">
+        Returns the smallest element in a range.
+			</Symbol>
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/minmax" name={ <Since v='cpp20'>ranges::minmax</Since> }>
+				Returns the smallest and largest from the given values.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/minmax" name="minmax">
+				Returns the smallest and largest from the given values.
+			</Symbol>
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/minmax_element" name={ <Since v='cpp20'>ranges::minmax_element</Since> }>
+        Returns the smallest and the largest elements in a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/minmax_element" name="minmax_element">
+				Returns the smallest and the largest elements in a range.
+			</Symbol>
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/clamp" name={ <Since v='cpp20'>ranges::clamp</Since> }>
+        Clamps a value between a pair of boundary values.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/clamp" name="clamp">
+        Clamps a value between a pair of boundary values.
 			</Symbol>
 	}}/>
 
@@ -251,10 +1159,352 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 ## Comparison
 
+<SymbolTable>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/equal" name={ <Since v='cpp20'>ranges::equal</Since> }>
+        Determines if two sets of elements are the same.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/equal" name="equal">
+        Determines if two sets of elements are the same.
+			</Symbol>
+	}}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/lexicographical_compare" name={ <Since v='cpp20'>ranges::lexicographical_compare</Since> }>
+        Returns <code>true</code> if one range is lexicographically less than another.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/lexicographical_compare" name="lexicographical_compare">
+        Returns <code>true</code> if one range is lexicographically less than another.
+			</Symbol>
+	}}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/lexicographical_compare_three_way" name="lexicographical_compare_three_way">
+        Compares two ranges using three-way comparison.
+			</Symbol>
+	}}/>
+
+</SymbolTable>
+
 ## Permutation
+
+<SymbolTable>
+
+	<SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/is_permutation" name={ <Since v='cpp20'> ranges::is_permutation </Since> }>
+        Determines if a sequence is a permutation of another sequence.
+      </Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/is_permutation" name={ <Since v='cpp11'> is_permutation </Since> }>
+        Determines if a sequence is a permutation of another sequence.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/next_permutation" name={ <Since v='cpp20'> ranges::next_permutation </Since> }>
+        Generates the next greater lexicographic permutation of a range of elements.
+      </Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/next_permutation" name={ <Since v='cpp11'> next_permutation </Since> }>
+        Generates the next greater lexicographic permutation of a range of elements.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/prev_permutation" name={ <Since v='cpp20'> ranges::prev_permutation </Since> }>
+        Generates the prev smaller lexicographic permutation of a range of elements.
+      </Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/prev_permutation" name={ <Since v='cpp11'> prev_permutation </Since> }>
+        Generates the prev smaller lexicographic permutation of a range of elements.
+			</Symbol>
+  }}/>
+
+</SymbolTable>
 
 ## Numeric
 
+<SymbolTable>
+
+	<SwitchView content={{
+    'Rangified':
+      <Symbol linkName="./ranges/iota" name={ <Since v='cpp23'> ranges::iota </Since> }>
+        Fills a range with successive increments of the starting value.
+      </Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/iota" name={ <Since v='cpp11'> iota </Since> }>
+        Fills a range with successive increments of the starting value.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/accumulate" name="accumulate">
+        Sums up or <a href="https://en.wikipedia.org/wiki/Fold_(higher-order_function)"><b>folds/reduces</b></a> a range of elements.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/inner_product" name="inner_product">
+        Computes the inner product of two ranges of elements.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/adjacent_difference" name="adjacent_difference">
+        Computes the differences between adjacent elements in a range.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/partial_sum" name="partial_sum">
+        Computes the partial sum of a range of elements.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/reduce" name={ <Since v='cpp17'>reduce</Since> }>
+        Similar to <a href="/docs/std/algo/reduce">std::accumulate</a>, except out of order.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/exclusive_scan" name={ <Since v='cpp17'>exclusive_scan</Since> }>
+        Similar to <a href="/docs/std/algo/partial_sum">std::partial_sum</a>, excludes the ith input element from the ith sum.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/inclusive_scan" name={ <Since v='cpp17'>inclusive_scan</Since> }>
+        Similar to <a href="/docs/std/algo/partial_sum">std::partial_sum</a>, includes the ith input element from the ith sum.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/transform_reduce" name={ <Since v='cpp17'>transform_reduce</Since> }>
+        Applies an invocable, then reduces out of order.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/transform_exclusive_scan" name={ <Since v='cpp17'>transform_exclusive_scan</Since> }>
+        Applies an invocable, then calculates exclusive scan.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/transform_inclusive_scan" name={ <Since v='cpp17'>transform_inclusive_scan</Since> }>
+        Applies an invocable, then calculates inclusive scan.
+			</Symbol>
+  }}/>
+
+</SymbolTable>
+
 ## Operations on uninitialized memory
 
+<SymbolTable>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_copy" name="uninitialized_copy">
+        Copies a range of objects to an uninitialized area of memory.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_copy" name="uninitialized_copy">
+        Copies a range of objects to an uninitialized area of memory.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_copy_n" name="uninitialized_copy_n">
+        Copies an amount of elements from a range to an uninitialized area of memory.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_copy_n" name="uninitialized_copy_n">
+        Copies an amount of elements from a range to an uninitialized area of memory.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_fill" name="uninitialized_fill">
+        Fills an uninitialized range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_fill" name="uninitialized_fill">
+        Fills an uninitialized range.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_fill_n" name="uninitialized_fill_n">
+        Fills an uninitialized range defined by start and count.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_fill_n" name="uninitialized_fill_n">
+        Fills an uninitialized range defined by start and count.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_fill_n" name="uninitialized_fill_n">
+        Fills an uninitialized range defined by start and count.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_fill_n" name="uninitialized_fill_n">
+        Fills an uninitialized range defined by start and count.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_move" name={ <Since v='cpp17'>uninitialized_move</Since> }>
+        Moves a number of objects to an uninitialized area of memory.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_move" name="uninitialized_move">
+        Moves a number of objects to an uninitialized area of memory.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_move_n" name={ <Since v='cpp17'>uninitialized_move_n</Since> }>
+        Moves a number of objects to an uninitialized area of memory.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_move_n" name="uninitialized_move_n">
+        Moves a number of objects to an uninitialized area of memory.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_default_construct" name={ <Since v='cpp17'>uninitialized_default_construct</Since> }>
+        Constructs objects by <a href="#">default-initialization</a> in an uninitialized area of memory, defined by a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_default_construct" name="uninitialized_default_construct">
+        Moves a number of objects to an uninitialized area of memory.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_default_construct_n" name={ <Since v='cpp17'>uninitialized_default_construct_n</Since> }>
+        Constructs objects by default-initialization in an uninitialized area of memory, defined by a start and a count.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_default_construct_n" name="uninitialized_default_construct_n">
+        Constructs objects by default-initialization in an uninitialized area of memory, defined by a start and a count.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_value_construct" name={ <Since v='cpp17'>uninitialized_value_construct</Since> }>
+        Constructs objects by value-initialization in an uninitialized area of memory, defined by a range.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_value_construct" name="uninitialized_value_construct">
+        Constructs objects by value-initialization in an uninitialized area of memory, defined by a range.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/uninitialized_value_construct_n" name={ <Since v='cpp17'>uninitialized_value_construct_n</Since> }>
+        Constructs objects by value-initialization in an uninitialized area of memory, defined by a start and size.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/uninitialized_value_construct_n" name="uninitialized_value_construct_n">
+        Constructs objects by value-initialization in an uninitialized area of memory, defined by a start and size.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/destroy" name={ <Since v='cpp17'>destroy</Since> }>
+        Destroys a range of objects.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/destroy" name="destroy">
+        Destroys a range of objects.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/destroy_n" name={ <Since v='cpp17'>destroy_n</Since> }>
+        Destroys a number of objects.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/destroy_n" name="destroy_n">
+        Destroys a number of objects.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/destroy_at" name={ <Since v='cpp17'>destroy_at</Since> }>
+        Destroys an object at a given address.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/destroy_at" name="destroy_at">
+        Destroys an object at a given address.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Rangified':
+			<Symbol linkName="./ranges/construct_at" name={ <Since v='cpp17'>construct_at</Since> }>
+        Creates an object at a given address.
+			</Symbol>,
+		'Ordinary':
+			<Symbol linkName="./ordinary/construct_at" name="construct_at">
+        Creates an object at a given address.
+			</Symbol>
+  }}/>
+
+</SymbolTable>
+
 ## C algorithms
+
+<SymbolTable>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/qsort" name="qsort">
+        Sorts a range of elements with unspecified type.
+			</Symbol>
+  }}/>
+
+	<SwitchView content={{
+		'Ordinary':
+			<Symbol linkName="./ordinary/bsearch" name="bsearch">
+        Searches an array for an element of unspecified type.
+			</Symbol>
+  }}/>
+
+</SymbolTable>

@@ -1,0 +1,13 @@
+```cpp
+// (1)
+template< class ForwardIt >
+constexpr ForwardIt
+    shift_right( ForwardIt first, ForwardIt last,
+                typename std::iterator_traits<ForwardIt>::difference_type n );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt >
+ForwardIt
+    shift_right( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last,
+                typename std::iterator_traits<ForwardIt>::difference_type n );
+```

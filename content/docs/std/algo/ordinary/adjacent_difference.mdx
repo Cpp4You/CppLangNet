@@ -1,0 +1,299 @@
+---
+title:         adjacent_difference algorithm
+sidebar_label: adjacent_difference(  )
+description:   adjacent_difference algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, adjacent_difference, adjacent, difference]
+
+cppreference_origin_rel: w/cpp/algorithm/adjacent_difference
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20 from './_codes/adjacent_difference/since-cpp20.mdx';
+import Signature_SinceCpp17 from './_codes/adjacent_difference/since-cpp17.mdx';
+import Signature_UntilCpp17 from './_codes/adjacent_difference/until-cpp17.mdx';
+
+# std::adjacent_difference() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />,
+}} />
+
+If [`first`; `last`) is not empty, computes the differences between the second and the first of each adjacent pair of its elements and writes the differences to the range beginning at `d_first + 1`.  
+An unmodified copy of `*first` is written to `*d_first`.
+
+- **(1, 3)** Uses `operator-` to calculate the differences.
+- **(2, 4)** Use the given binary function `op`<Since v='cpp11'>, all applying <a href="#"><code>std::move</code></a> to their operands on the right hand side</Since>.
+
+Equivalent operation for overload **(1)**, if [`first`; `last`) is not empty, uses the accumulator acc to store the value to be subtracted:
+```cpp
+std::iterator_traits<InputIt>::value_type acc = *first;
+*d_first = acc;
+
+std::iterator_traits<InputIt>::value_type val1 = *(first + 1);
+*(d_first + 1) = val1 - std::move(acc);
+// or *(d_first + 1) = op(val1, std::move(acc)); for overload (2)
+acc = std::move(val1);
+
+std::iterator_traits<InputIt>::value_type val2 = *(first + 2);
+*(d_first + 2) = val2 - std::move(acc);
+acc = std::move(val2);
+
+std::iterator_traits<InputIt>::value_type val3 = *(first + 3);
+*(d_first + 3) = val3 - std::move(acc);
+acc = std::move(val3);
+// ...
+```
+
+Equivalent operation for overload **(2)**, if [`first`; `last`) is not empty:
+```cpp
+// performed first
+*d_first = *first;
+
+// performed after the initial assignment, might not be sequenced
+*(d_first + 1) = *(first + 1) - *(first);
+// or *(d_first + 1) = op(*(first + 1), *(first)); for overload (4)
+*(d_first + 2) = *(first + 2) - *(first + 1);
+*(d_first + 3) = *(first + 3) - *(first + 2);
+...
+```
+
+:::danger Undefined Behaviour
+If `op` invalidates any iterator (including any of the end iterators) or modify any elements of the ranges involved, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+:::
+
+:::danger Undefined Behaviour
+For overloads <b>(1 - 2)</b>, if <code>std::iterator_traits&lt;InputIt&gt;::value_type</code> is not
+<Until v='cpp11'><a href="/docs/named_req/CopyAssignable">CopyAssignable</a></Until><Since v='cpp11'><a href="/docs/named_req/CopyAssignable">MoveAssignable</a></Since>
+, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip>.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>op</code> }>
+
+Binary operation function object that will be applied.
+The signature of the function should be equivalent to the following:
+```cpp
+ Ret fun(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`.
+- The types `Type1` and `Type2` must be such that an object of type `iterator_traits<InputIt>::value_type` can be implicitly converted to both of them.
+- The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+InputIt must meet the requirements of LegacyInputIterator.
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>T</code> }>
+    <a href="/docs/named_req/CopyAssignable">CopyAssignable</a> <br />
+    <a href="/docs/named_req/CopyConstructible">CopyConstructible</a>
+  </Symbol>
+</SymbolTable>
+
+- For overloads **(1 - 2)**, value type of `InputIt` must be constructible from `*first`.
+
+- `acc` and the result of:
+  - **(1)** <Until v='cpp11'><code>val - acc</code></Until><Since v='cpp11'>val - std::move(acc)</Since>
+  - **(2)** <Until v='cpp11'><code>op(val, acc)</code></Until><Since v='cpp11'><code>op(val, std::move(acc)</code></Since>
+
+  must be [writable](#) to `d_first`.
+
+- The result of `*first` and the result of:
+  - **(3)** `*first - *first`
+  - **(4)** `op(*first, *first)`
+
+  must be [writable](#) to `d_first`.
+
+### Return value
+
+Iterator to the element past the last element written, or `d_first` if [`first`; `last`) is empty.
+
+### Complexity
+
+Given `N` as `std::distance(first, last) - 1`:
+
+- **(1, 3)** Exactly `N` applications of `operator-`.
+- **(2 ,4)** Exactly `N` applications of the binary function `op`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>adjacent_difference(1)</summary>
+
+```cpp
+template<class InputIt, class OutputIt>
+constexpr // since C++20
+OutputIt adjacent_difference(InputIt first, InputIt last, OutputIt d_first)
+{
+    if (first == last)
+        return d_first;
+
+    typedef typename std::iterator_traits<InputIt>::value_type value_t;
+    value_t acc = *first;
+    *d_first = acc;
+
+    while (++first != last)
+    {
+        value_t val = *first;
+        *++d_first = val - std::move(acc); // std::move since C++11
+        acc = std::move(val);
+    }
+
+    return ++d_first;
+}
+```
+
+</details>
+
+<details>
+<summary>adjacent_difference(2)</summary>
+
+```cpp
+template<class InputIt, class OutputIt, class BinaryOperation>
+constexpr // since C++20
+OutputIt adjacent_difference(InputIt first, InputIt last, OutputIt d_first, BinaryOperation op)
+{
+    if (first == last)
+        return d_first;
+
+    typedef typename std::iterator_traits<InputIt>::value_type value_t;
+    value_t acc = *first;
+    *d_first = acc;
+
+    while (++first != last)
+    {
+        value_t val = *first;
+        *++d_first = op(val, std::move(acc)); // std::move since C++11
+        acc = std::move(val);
+    }
+
+    return ++d_first;
+}
+```
+
+</details>
+
+### Notes
+
+`acc` was introduced because of the resolution of [LWG issue 539](https://cplusplus.github.io/LWG/issue539).
+
+The reason of using `acc` rather than directly calculating the differences is because the semantic of the latter is confusing if the following types mismatch:
+- The value type of `InputIt`
+- The writable type(s) of `OutputIt`
+- The types of the parameters of `operator-` or `op`
+- The return type of `operator-` or `op`
+
+`acc` serves as the intermediate object to cache values of the iterated elements:
+- Its type is the value type of `InputIt`
+- The value written to `d_first` (which is the return value of `operator-` or `op`) is assigned to it
+- Its value is passed to `operator-` or `op`
+
+```cpp
+char i_array[4] = {100, 100, 100, 100};
+int  o_array[4];
+
+// OK: performs conversions when needed
+// 1. creates `acc` of type char (the value type)
+// 2. `acc` is assigned to the first element of `o_array`
+// 3. the char arguments are used for long multiplication (char -> long)
+// 4. the long product is assigned to the output range (long -> int)
+// 5. the next value of `i_array` is assigned to `acc`
+// 6. go back to step 3 to process the remaining elements in the input range
+std::adjacent_difference(i_array, i_array + 4, o_array, std::multiplies<long>{});
+```
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <array>
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <numeric>
+#include <vector>
+
+auto print = [](auto comment, auto const& sequence)
+{
+    std::cout << comment;
+    for (const auto& n : sequence)
+        std::cout << n << ' ';
+    std::cout << '\n';
+};
+
+int main()
+{
+    // Default implementation - the difference b/w two adjacent items
+    std::vector v {4, 6, 9, 13, 18, 19, 19, 15, 10};
+    print("Initially, v = ", v);
+    std::adjacent_difference(v.begin(), v.end(), v.begin());
+    print("Modified v = ", v);
+
+    // Fibonacci
+    std::array<int, 10> a {1};
+    std::adjacent_difference(std::begin(a), std::prev(std::end(a)),
+                             std::next(std::begin(a)), std::plus<>{});
+    print("Fibonacci, a = ", a);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Initially, v = 4 6 9 13 18 19 19 15 10 
+Modified v = 4 2 3 4 5 1 0 -4 -5 
+Fibonacci, a = 1 1 2 3 5 8 13 21 34 55
+```
+
+</div>
+</Columns>

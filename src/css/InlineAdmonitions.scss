@@ -18,6 +18,16 @@
 	}
 }
 
+.inline-important {
+	background-color: deepskyblue;
+	padding: 2px 3px;
+	padding-bottom: 5px;
+	border-bottom: 1px solid skyblue;
+	code {
+		background-color: dodgerblue;
+	}
+}
+
 .inline-note {
 	background-color: rgba(187, 187, 187, 0.15);
 	padding: 2px 3px;
@@ -39,6 +49,13 @@ html[data-theme="dark"] {
 .inline-caution {
 	code {
 		background-color: rgb(53, 22, 8);
+	}
+}
+
+.inline-important {
+    background-color: royalblue;
+	code {
+		background-color: mediumblue;
 	}
 }
 

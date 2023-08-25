@@ -1,0 +1,170 @@
+---
+title:         ranges::copy_backward algorithm
+sidebar_label: ranges::copy_backward(  )
+description:   ranges::copy_backward algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, copy_backward, copy, clone]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/copy_backward
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/copy_backward/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/copy_backward/since-cpp20-simplified.mdx';
+
+# std::ranges::copy_backward() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I1, class I2 >
+using copy_backward_result = ranges::in_out_result<I1, I2>;
+```
+
+- **(1)** Copies the elements from the range, defined by [`first`; `last`), to another range [`result - N`; `result`), where `N = ranges::distance(first, last)`.  
+  The elements are copied in **reverse order** (the last element is copied first), but their relative order is preserved.
+
+  :::danger Undefined Behaviour
+  The behavior is undefined if `result` is within the range [`first`; `last`). In this case, [`ranges::copy_`](/docs/std/algo/ranges/copy_backward) may be used instead.
+  :::
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The destination range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+A value of type `ranges::copy_backward_result` initialized as follows:
+```cpp
+{
+  last,
+  result - N
+}
+```
+
+### Complexity
+
+Exactly `N` assignments.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>copy_backward(1) and copy_backward(2)</summary>
+
+```cpp
+struct copy_backward_fn
+{
+    template<std::bidirectional_iterator I1, std::sentinel_for<I1> S1,
+             std::bidirectional_iterator I2>
+    requires std::indirectly_copyable<I1, I2>
+    constexpr ranges::copy_backward_result<I1, I2>
+        operator()(I1 first, S1 last, I2 result) const
+    {
+        I1 last1 {ranges::next(first, std::move(last))};
+        for (I1 i {last1}; i != first;)
+            *--result = *--i;
+        return {std::move(last1), std::move(result)};
+    }
+
+    template<ranges::bidirectional_range R, std::bidirectional_iterator I>
+    requires std::indirectly_copyable<ranges::iterator_t<R>, I>
+    constexpr ranges::copy_backward_result<ranges::borrowed_iterator_t<R>, I>
+        operator()(R&& r, I result) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::move(result));
+    }
+};
+
+inline constexpr copy_backward_fn copy_backward{};
+```
+
+</details>
+
+### Notes
+
+When copying overlapping ranges, [`ranges::copy`](/docs/std/algo/ranges/copy) is appropriate when copying to the left (**beginning of the destination range is outside the source range**),  
+while [`ranges::copy_backward`](#) is appropriate when copying to the right (**end of the destination range is outside the source range**).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <ranges>
+#include <string_view>
+#include <vector>
+
+void print(std::string_view rem, std::ranges::forward_range auto const& r)
+{
+    for (std::cout << rem << ": "; auto const& elem : r)
+        std::cout << elem << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    const auto src = {1, 2, 3, 4};
+    print("src", src);
+
+    std::vector<int> dst(src.size() + 2);
+    std::ranges::copy_backward(src, dst.end());
+    print("dst", dst);
+
+    std::ranges::fill(dst, 0);
+    const auto [in, out] =
+        std::ranges::copy_backward(src.begin(), src.end() - 2, dst.end());
+    print("dst", dst);
+
+    std::cout
+        << "(in - src.begin) == " << std::distance(src.begin(), in) << '\n'
+        << "(out - dst.begin) == " << std::distance(dst.begin(), out) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+src: 1 2 3 4
+dst: 0 0 1 2 3 4
+dst: 0 0 0 0 1 2
+(in - src.begin) == 2
+(out - dst.begin) == 4
+```
+
+</div>
+</Columns>

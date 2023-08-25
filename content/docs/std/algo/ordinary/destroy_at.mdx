@@ -1,0 +1,132 @@
+---
+title:         destroy_at algorithm
+sidebar_label: destroy_at(  )
+description:   destroy_at algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, destroy_at]
+
+cppreference_origin_rel: w/cpp/algorithm/destroy_at
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp17 from './_codes/destroy_at/since-cpp17.mdx';
+
+# std::destroy_at() algorithm
+
+<SwitchView content={{
+  'since-cpp17': <Signature_SinceCpp17 />,
+}} />
+
+If `T` is not an array type, calls the destructor of the object pointed to by `p`, as if by `p->~T()`.
+<> If <code>T</code> is an array type, <Until v='cpp20'>the program is ill-formed</Until> <Since v='cpp20'>recursively destroys elements of <code>*p</code> in order, as if by calling <code>std::destroy(std::begin(*p), std::end(*p))</code></Since>. </>
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>p</code> }>
+    A pointer to the object to be destroyed.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+**O(1)**
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>destroy_at(1)</summary>
+
+```cpp
+template<class T>
+constexpr void destroy_at(T* p)
+{
+    if constexpr (std::is_array_v<T>)
+        for (auto &elem : *p)
+            (destroy_at)(std::addressof(elem));
+    else
+        p->~T();
+}
+// C++17 version:
+// template<class T> void destroy_at(T* p) { p->~T(); }
+```
+
+</details>
+
+### Notes
+
+[`destroy_at`](#) deduces the type of object to be destroyed and hence avoids writing it explicitly in the destructor call.
+
+<SwitchView content={{
+  'since-cpp20': <>
+    When <code>destroy_at</code> is called in the evaluation of some <a href="#">constant expression</a> <code>e</code>,
+    the argument <code>p</code> must point to an object whose lifetime began within the evaluation of <code>e</code>.
+  </>
+}} />
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <iostream>
+#include <memory>
+#include <new>
+
+struct Tracer
+{
+    int value;
+    ~Tracer() { std::cout << value << " destructed\n"; }
+};
+
+int main()
+{
+    alignas(Tracer) unsigned char buffer[sizeof(Tracer) * 8];
+
+    for (int i = 0; i < 8; ++i)
+        new(buffer + sizeof(Tracer) * i) Tracer{i}; //manually construct objects
+
+    auto ptr = std::launder(reinterpret_cast<Tracer*>(buffer));
+
+    for (int i = 0; i < 8; ++i)
+        std::destroy_at(ptr + i);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+0 destructed
+1 destructed
+2 destructed
+3 destructed
+4 destructed
+5 destructed
+6 destructed
+7 destructed
+```
+
+</div>
+</Columns>

@@ -1,0 +1,154 @@
+---
+title:         bsearch algorithm
+sidebar_label: bsearch(  )
+description:   bsearch algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, bsearch, search, binary]
+
+cppreference_origin_rel: w/cpp/algorithm/bsearch
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp98 from './_codes/bsearch/since-cpp98.mdx';
+
+# std::bsearch() algorithm
+
+<SwitchView content={{
+  'since-cpp98': <Signature_SinceCpp98 />,
+}} />
+
+With the exposition-only types defined as follows:
+```cpp
+extern "C++" using cpp_compare_pred = int(const void*, const void*);
+extern "C" using c_compare_pred = int(const void*, const void*);
+```
+
+Finds an element equal to element pointed to by `key` in an array pointed to by `ptr`.
+
+The array contains `count` elements of `size` bytes each and must be partitioned with respect to the object pointed to by `key`,
+that is, all the elements that compare less than must appear before all the elements that compare equal to, and those must appear before all the elements that compare greater than the key object.
+
+A fully sorted array satisfies these requirements. The elements are compared using function pointed to by `comp`.
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if the array is not already partitioned in ascending order with respect to `key`, according to the same criterion that `comp` uses.
+:::
+
+If the array contains several elements that `comp` would indicate as equal to the element searched for, then it is unspecified which element the function will return as the result.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>key</code> }>
+    Pointer to the element to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>ptr</code> }>
+    Pointer to the array to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>count</code> }>
+    The number of elements in the array.
+  </Symbol>
+  <Symbol none noLink name={ <code>size</code> }>
+    The size of each element of the array in bytes.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+
+Comparison function which returns:
+- **A negative** integer value if the first argument is less than the second.
+- **A positive** integer value if the first argument is greater than the second.
+- **Zero** if the arguments are equivalent.
+
+The signature of the comparison function should be equivalent to the following:
+```cpp
+int cmp(const void *a, const void *b);
+```
+
+- The function must not modify the objects passed to it
+- Must return consistent results when called for the same objects, regardless of their positions in the array
+
+
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+Pointer to the found element or null pointer if the element has not been found.
+
+### Complexity
+
+Not specified.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+Despite the name, neither C nor POSIX standards require this function to be implemented using binary search or make any complexity guarantees.
+
+The two overloads provided by the C++ standard library are distinct because the types of the parameter `comp` are distinct (language linkage is part of its type).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <array>
+#include <cstdlib>
+#include <iostream>
+
+template<typename T>
+int compare(const void *a, const void *b)
+{
+    const auto &arg1 = *(static_cast<const T*>(a));
+    const auto &arg2 = *(static_cast<const T*>(b));
+    const auto cmp = arg1 <=> arg2;
+    return cmp < 0 ? -1
+        :  cmp > 0 ? +1
+        :  0;
+}
+
+int main()
+{
+    std::array arr {1, 2, 3, 4, 5, 6, 7, 8};
+
+    for (const int key : {4, 8, 9})
+    {
+        const int* p = static_cast<int*>(
+            std::bsearch(&key,
+                arr.data(),
+                arr.size(),
+                sizeof(decltype(arr)::value_type),
+                compare<int>));
+
+        std::cout << "value " << key;
+        (p) ? std::cout << " found at position " << (p - arr.data()) << '\n'
+            : std::cout << " not found\n";
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+value 4 found at position 3
+value 8 found at position 7
+value 9 not found
+```
+
+</div>
+</Columns>

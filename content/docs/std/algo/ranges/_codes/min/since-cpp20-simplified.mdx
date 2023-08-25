@@ -18,7 +18,7 @@ The type of arguments are generic and have the following constraints:
 
 The `Proj` and `Comp` template arguments have, the following default types for all overloads: `std::identity`, `ranges::less`.
 
-Additionaly, each overload has the following constraints:
+Additionally, each overload has the following constraints:
 - **(1)** - `indirect_strict_weak_order<Comp, projected<const T*, Proj>>`
 - **(2)** - `indirect_strict_weak_order<Comp, projected<const T*, Proj>>`
 - **(3)** - `indirectly_copyable_storable<ranges::iterator_t<R>, ranges::range_value_t<R>*> && indirect_strict_weak_order<Comp, projected<ranges::iterator_t<R>, Proj>>`

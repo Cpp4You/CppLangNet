@@ -1,0 +1,19 @@
+```cpp
+// (1)
+constexpr reverse_copy_result<I, O>
+    reverse_copy( I first, S last, O result );
+
+// (2)
+constexpr reverse_copy_result<ranges::borrowed_iterator_t<R>, O>
+    reverse_copy( R&& r, O result );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::bidirectional_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `ranges::bidirectional_range`
+- `O` - `std::weakly_incrementable`
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::indirectly_copyable<I, O>`
+- **(2)** - `std::indirectly_copyable<ranges::iterator_t<R>, O>`

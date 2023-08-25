@@ -1,0 +1,234 @@
+---
+title:         transform_reduce algorithm
+sidebar_label: transform_reduce(  )
+description:   transform_reduce algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, transform_reduce, transform, reduce, fold]
+
+cppreference_origin_rel: w/cpp/algorithm/transform_reduce
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20 from './_codes/transform_reduce/since-cpp20.mdx';
+import Signature_SinceCpp17 from './_codes/transform_reduce/since-cpp17.mdx';
+
+# std::transform_reduce() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+}} />
+
+- **(1)** Equivalent to `std::transform_reduce(first1, last1, first2, init, std::plus<>(), std::multiplies<>())`,
+  effectively parallelized version of the default [`std::inner_product`](/docs/std/algo/ordinary/inner_product).
+
+
+- **(2)** Applies transform to each pair of elements from the ranges [`first`; `last`) and the range starting at `first2`
+  and reduces the results (possibly permuted and aggregated in unspecified manner) along with the initial value `init` over reduce.
+
+- **(3)** Applies transform to each element in the range [`first`; `last`) and reduces the results
+  (possibly permuted and aggregated in unspecified manner) along with the initial value `init` over reduce
+
+- **(4 - 6)** Same as **(1 - 3)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Until>
+	<Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Since>
+	:::
+
+The behavior is non-deterministic if `reduce` is not associative or not commutative.
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if <code>reduce</code> or <code>transform</code> modifies any element or invalidates any iterator in the input ranges,
+including their end iterators.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to apply the algorithm to.
+  </Symbol>
+  <Symbol none noLink name={ <code>init</code> }>
+    The initial value of the generalized sum.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>reduce</code> }>
+    Binary <a href="/docs/named_req/FunctionObject">FunctionObject</a> that will be applied in unspecified order to the
+    result of <code>transform</code>, the results of other <code>reduce</code> and <code>init</code>.
+  </Symbol>
+  <Symbol none noLink name={ <code>transform</code> }>
+    Binary <a href="/docs/named_req/FunctionObject">FunctionObject</a> that will be applied to each element in the
+    input range(s).
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+- **(3, 6)**:
+  <SymbolTable>
+    <Symbol none noLink name={ <code>T</code> }>
+      <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+    </Symbol>
+  </SymbolTable>
+
+  The following expressions have to be convertible to `T`:
+  - `reduce(init, transform(*first))`
+  - `reduce(transform(*first), init)`
+  - `reduce(init, init)`
+  - `reduce(transform(*first), transform(*first))`
+
+- **(2, 5)**:
+  <SymbolTable>
+    <Symbol none noLink name={ <code>T</code> }>
+      <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+    </Symbol>
+  </SymbolTable>
+
+  The following expressions have to be convertible to `T`:
+  - `reduce(init, transform(*first1, *first2))`
+  - `reduce(transform(*first1, *first2), init)`
+  - `reduce(init, init)`
+  - `reduce(transform(*first1, *first2)`
+  - `transform(*first1, *first2))`
+
+### Return value
+
+- **(2)** Generalized sum of `init` and `transform(*first, *first2)`, `transform(*(first + 1), *(first2 + 1))`, ..., over `reduce`.
+- **(3)** Generalized sum of `init` and `transform(*first)`, `transform(*(first + 1))`, ... `transform(*(last - 1))` over `reduce`.
+
+The results of `transform` or of `reduce` may be grouped and arranged in arbitrary order.
+
+Formallly, the generalized sum `GSUM(op, a1, ..., aN)` is defined as follows:
+- If `N = 1`, `a1`
+- If `N > 1`, `op(GSUM(op, b 1, ..., b K), GSUM(op, b M, ..., b N))` where
+  - `b1`, ..., `bN` may be any permutation of `a1`, ..., `aN`
+  - and `1 < K + 1 = M ≤ N`
+
+:::important
+If `first == last` or `first1 == last1`, `init` is returned, unmodified.
+:::
+
+### Complexity
+
+- **(1, 2, 4, 5)** **O(last1 - first1)** applications each of reduce and transform.
+- **(3, 6)** **O(last - first)** applications each of transform and reduce.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Notes
+
+In the unary-binary overload **(3, 6)**, `transform` is not applied to `init`.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#if PARALLEL
+#include <execution>
+#define PAR std::execution::par,
+#else
+#define PAR
+#endif
+
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <locale>
+#include <numeric>
+#include <vector>
+
+// to parallelize non-associate accumulative operation, you'd better choose
+// transform_reduce instead of reduce; e.g., a + b * b != b + a * a
+void print_sum_squared(long const num)
+{
+    std::cout.imbue(std::locale{"en_US.UTF8"});
+    std::cout << "num = " << num << '\n';
+
+    // create an immutable vector filled with pattern: 1,2,3,4, 1,2,3,4 ...
+    const std::vector<long> v { [n = num * 4] {
+        std::vector<long> v;
+        v.reserve(n);
+        std::generate_n(std::back_inserter(v), n,
+            [i = 0]() mutable { return 1 + i++ % 4; });
+        return v;
+    }()};
+
+    auto squared_sum = [](auto sum, auto val) { return sum + val * val; };
+
+    auto sum1 = std::accumulate(v.cbegin(), v.cend(), 0L, squared_sum);
+    std::cout << "accumulate(): " << sum1 << '\n';
+
+    auto sum2 = std::reduce(PAR v.cbegin(), v.cend(), 0L, squared_sum);
+    std::cout << "reduce(): " << sum2 << '\n';
+
+    auto sum3 = std::transform_reduce(PAR v.cbegin(), v.cend(), 0L, std::plus{},
+                                      [](auto val) { return val * val; });
+    std::cout << "transform_reduce(): " << sum3 << "\n\n";
+}
+
+int main()
+{
+    print_sum_squared(1);
+    print_sum_squared(1'000);
+    print_sum_squared(1'000'000);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+num = 1
+accumulate(): 30
+reduce(): 30
+transform_reduce(): 30
+
+num = 1,000
+accumulate(): 30,000
+reduce(): -7,025,681,278,312,630,348
+transform_reduce(): 30,000
+
+num = 1,000,000
+accumulate(): 30,000,000
+reduce(): -5,314,886,882,370,003,032
+transform_reduce(): 30,000,000
+
+// Compile-options for parallel execution on POSIX:
+// g++ -O2 -std=c++17 -Wall -Wextra -pedantic -DPARALLEL ./example.cpp -ltbb -o tr; ./tr
+```
+
+</div>
+</Columns>

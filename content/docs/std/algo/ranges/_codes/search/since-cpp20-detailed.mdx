@@ -1,0 +1,29 @@
+```cpp
+// (1)
+template<
+  std::forward_iterator I1,
+  std::sentinel_for<I1> S1,
+  std::forward_iterator I2,
+  std::sentinel_for<I2> S2,
+  class Pred = ranges::equal_to,
+  class Proj1 = std::identity,
+  class Proj2 = std::identity
+>
+  requires std::indirectly_comparable<I1, I2, Pred, Proj1, Proj2>
+constexpr ranges::subrange<I1>
+    search( I1 first1, S1 last1, I2 first2, S2 last2, Pred pred = {},
+            Proj1 proj1 = {}, Proj2 proj2 = {} );
+
+// (2)
+template<
+  ranges::forward_range R1,
+  ranges::forward_range R2,
+  class Pred = ranges::equal_to,
+  class Proj1 = std::identity,
+  class Proj2 = std::identity
+>
+requires std::indirectly_comparable<ranges::iterator_t<R1>, ranges::iterator_t<R2>, Pred, Proj1, Proj2>
+constexpr ranges::borrowed_subrange_t<R1>
+    search( R1&& r1, R2&& r2, Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );
+```
+

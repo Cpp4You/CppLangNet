@@ -1,21 +1,22 @@
 ---
-title:			ranges::count algorithm
-sidebar_label:	ranges::count(  )
-description:	ranges::count algorithm C++ documentation
-hide_title:		true
-tags:			[algorithm, count, number, quantity]
+title:         ranges::count algorithm
+sidebar_label: ranges::count(  )
+description:   ranges::count algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, count, number, quantity]
 
 cppreference_origin_rel: w/cpp/algorithm/ranges/count
 ---
 
-import Columns			from "@site-comps/Columns";
-import SwitchView		from "@site-comps/SwitchView";
-import { Since, Until }	from "@site-comps/Versions";
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import { Since }        from "@site-comps/Versions";
 
 <!----------------- Codes ---------------------->
 
-import Signature_SinceCpp20_Detailed 	from './_codes/count/since-cpp20-detailed.mdx';
-import Signature_SinceCpp20_Simplified	from './_codes/count/since-cpp20-simplified.mdx';
+import Signature_SinceCpp20_Detailed   from './_codes/count/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/count/since-cpp20-simplified.mdx';
 
 # std::ranges::count() algorithm
 
@@ -31,14 +32,26 @@ Returns the number of elements equal to `value` in the given range.
 - **(1)** Counts the elements that are equal to `value` (using `operator==`).
 - **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
-The function-like entities described on this page are [**niebloids**](#).
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
 
 ### Parameters
 
-- `first`, `last` - the range of elements to examine
-- `r` - the range of elements to examine
-- `value` - the value to search for
-- `proj` - projection to apply to the elements
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
 
 ### Return value
 

@@ -1,0 +1,186 @@
+---
+title:         ranges::replace_copy algorithm
+sidebar_label: ranges::replace_copy(  )
+description:   ranges::replace_copy algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, replace_copy, replace]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/replace_copy
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!-- Terms -->
+import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/replace_copy/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/replace_copy/since-cpp20-simplified.mdx';
+
+# std::ranges::replace_copy() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using replace_copy_result = ranges::in_out_result<I, O>;
+```
+
+- **(1)** Copies the elements from the source range [`first`; `last`) to the destination range beginning at `result`, replacing all elements that are equal to `old_value` with `new_value`.
+
+  Uses `std::invoke(proj, *(first + (i - result)))` to compare.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_UndefinedBehaviour/> }>behavior is undefined</Tooltip> if the source and destination ranges overlap.
+:::
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>old_value</code> }>
+    The value of elements to replace.
+  </Symbol>
+  <Symbol none noLink name={ <code>new_value</code> }>
+    The value to use as a replacement.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    The projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+```cpp
+{
+  last,
+  result + N
+}
+```
+Where N is the size of the source range.
+
+### Complexity
+
+Given N as:
+ - **(1)** - `ranges::distance(first, last)`
+ - **(2)** - `ranges::distance(r)`
+
+Exactly N comparisons after projecting with `proj`.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>replace_copy(1) and replace_copy(2)</summary>
+
+```cpp
+struct replace_copy_fn
+{
+    template<std::input_iterator I, std::sentinel_for<I> S, class T1, class T2,
+             std::output_iterator<const T2&> O, class Proj = std::identity>
+    requires std::indirectly_copyable<I, O> &&
+             std::indirect_binary_predicate<ranges::equal_to,
+                 std::projected<I, Proj>, const T1*>
+    constexpr ranges::replace_copy_result<I, O>
+        operator()(I first, S last, O result, const T1& old_value, const T2& new_value,
+                   Proj proj = {}) const
+    {
+        for (; first != last; ++first, ++result)
+            *result = (std::invoke(proj, *first) == old_value) ? new_value : *first;
+        return {std::move(first), std::move(result)};
+    }
+
+    template<ranges::input_range R, class T1, class T2,
+             std::output_iterator<const T2&> O, class Proj = std::identity>
+    requires std::indirectly_copyable<ranges::iterator_t<R>, O> &&
+             std::indirect_binary_predicate<ranges::equal_to,
+                 std::projected<ranges::iterator_t<R>, Proj>, const T1*>
+    constexpr ranges::replace_copy_result<ranges::borrowed_iterator_t<R>, O>
+        operator()(R&& r, O result, const T1& old_value, const T2& new_value,
+                   Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r), std::move(result),
+                       old_value, new_value, std::move(proj));
+    }
+};
+
+inline constexpr replace_copy_fn replace_copy {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    auto print = [](const auto rem, const auto& v)
+    {
+        for (std::cout << rem << ": "; const auto& e : v)
+            std::cout << e << ' ';
+        std::cout << '\n';
+    };
+
+    std::vector<int> o;
+
+    std::array p {1, 6, 1, 6, 1, 6};
+    o.resize(p.size());
+    print("p", p);
+    std::ranges::replace_copy(p, o.begin(), 6, 9);
+    print("o", o);
+
+    std::array q {1, 2, 3, 6, 7, 8, 4, 5};
+    o.resize(q.size());
+    print("q", q);
+    std::ranges::replace_copy_if(q, o.begin(), [](int x) { return 5 < x; }, 5);
+    print("o", o);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+
+p: 1 6 1 6 1 6 
+o: 1 9 1 9 1 9 
+q: 1 2 3 6 7 8 4 5 
+o: 1 2 3 5 5 5 4 5
+```
+
+</div>
+</Columns>

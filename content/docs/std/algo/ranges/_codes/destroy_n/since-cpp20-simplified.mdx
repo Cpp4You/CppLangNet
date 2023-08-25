@@ -1,0 +1,10 @@
+```cpp
+// (1)
+constexpr I destroy_n( I first, std::iter_difference_t<I> n ) noexcept;
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `no-throw-input-iterator`
+
+Additionally, each overload has the following constraints:
+- **(1)** `std::destructible<std::iter_value_t<I>>`

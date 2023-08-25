@@ -1,0 +1,6 @@
+```cpp
+// (1)
+template< no-throw-input-iterator I >
+    requires std::destructible<std::iter_value_t<I>>
+constexpr I destroy_n( I first, std::iter_difference_t<I> n ) noexcept;
+```

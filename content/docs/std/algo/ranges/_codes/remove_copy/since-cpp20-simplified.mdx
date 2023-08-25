@@ -1,0 +1,33 @@
+```cpp
+// (1)
+requires constexpr remove_copy_result<I, O>
+    remove_copy( I first, S last, O result, const T& value, Proj proj = {} );
+
+// (2)
+requires constexpr remove_copy_result<ranges::borrowed_iterator_t<R>, O>
+    remove_copy( R&& r, O result, const T& value, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `O` - `std::weakly_incrementable`
+- `R` - `std::input_range`
+- `T` - **(none)**
+- `Proj` - **(none)**
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)**:
+  ```cpp
+  indirectly_copyable<I, O>
+  && indirect_binary_predicate<ranges::equal_to, projected<I, Proj>, const T*>
+  ```
+- **(2)**:
+  ```cpp
+  indirectly_copyable<ranges::iterator_t<R>, O>
+  && indirect_binary_predicate<ranges::equal_to, projected<ranges::iterator_t<R>, Proj>, const T*>
+  ```
+
+(The `std::` namespace was ommitted here for readability)

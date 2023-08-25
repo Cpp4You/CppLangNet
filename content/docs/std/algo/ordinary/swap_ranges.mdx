@@ -1,0 +1,157 @@
+---
+title:         swap_ranges algorithm
+sidebar_label: swap_ranges(  )
+description:   swap_ranges algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, swap_ranges, swap, ranges]
+
+cppreference_origin_rel: w/cpp/algorithm/swap_ranges
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/swap_ranges/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/swap_ranges/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/swap_ranges/since-cpp20.mdx';
+
+# std::swap_ranges() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+- **(1)** Exchanges elements between range [`first1`; `last1`) and another range starting at `first2`.
+
+  Precondition: the two ranges [`first1`; `last1`) and [`first2`; `last2`) do not overlap, where `last2` = `std::next(first2, std::distance(first1, last1))`.
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+  :::important Overload Resolution
+  These overloads participate in overload resolution only if
+  <Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+  :::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The first range to swap.
+  </Symbol>
+  <Symbol none noLink name={ <code>first2</code> }>
+    The beginning of the second range to swap.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+The types of dereferenced `ForwardIt1` and `ForwardIt2` must meet the requirements of [Swappabler](/docs/named_req/Swappable).
+
+### Return value
+
+Iterator to the element past the last element exchanged in the range beginning with `first2`.
+
+### Complexity
+
+Linear in the distance between `first1` and `last1`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>swap_ranges (1)</summary>
+
+```cpp
+
+template<class ForwardIt1, class ForwardIt2>
+constexpr ForwardIt2 swap_ranges(ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2)
+{
+    for (; first1 != last1; ++first1, ++first2)
+        std::iter_swap(first1, first2);
+
+    return first2;
+}
+```
+
+</details>
+
+### Notes
+
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable vectorization w
+hen the iterator type satisfies [LegacyContiguousIterator](/docs/named_req/LegacyContiguousIterator) and swapping its value type calls neither non-trivial special member function nor [ADL](#)-found swap.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <list>
+#include <vector>
+
+auto print = [](auto comment, auto const& seq)
+{
+    std::cout << comment;
+    for (const auto& e : seq)
+        std::cout << e << ' ';
+    std::cout << '\n';
+};
+
+int main()
+{
+    std::vector<char> v {'a', 'b', 'c', 'd', 'e'};
+    std::list<char> l {'1', '2', '3', '4', '5'};
+
+    print("Before swap_ranges:\n" "v: ", v);
+    print("l: ", l);
+
+    std::swap_ranges(v.begin(), v.begin() + 3, l.begin());
+
+    print("After swap_ranges:\n" "v: ", v);
+    print("l: ", l);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+Before swap_ranges:
+v: a b c d e
+l: 1 2 3 4 5
+After swap_ranges:
+v: 1 2 3 d e
+l: a b c 4 5
+```
+
+</div>
+</Columns>

@@ -1,0 +1,7 @@
+```cpp
+// (1)
+template< std::input_iterator I, no-throw-input-iterator O, no-throw-sentinel-for<O> S >
+  requires std::constructible_from<std::iter_value_t<O>, std::iter_reference_t<I>>
+uninitialized_copy_n_result<I, O>
+  uninitialized_copy_n( I ifirst, std::iter_difference_t<I> count, O ofirst, S olast );
+```

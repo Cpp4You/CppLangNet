@@ -1,0 +1,29 @@
+```cpp
+// (1)
+constexpr partition_copy_result<I, O1, O2>
+    partition_copy( I first, S last, O1 out_true, O2 out_false,
+                    Pred pred, Proj proj = {} );
+
+// (2)
+constexpr partition_copy_result<ranges::borrowed_iterator_t<R>, O1, O2>
+    partition_copy( R&& r, O1 out_true, O2 out_false,
+                    Pred pred, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `O1`, `O2` - `std::weakly_incrementable`
+- `R` - `std::ranges::forward_range`
+- `Pred`:
+  - **(1)** - `std::indirect_unary_predicate<std::projected<I, Proj>>`
+  - **(2)** - `std::indirect_unary_predicate<std::projected<ranges::iterator_t<R>, Proj>>`
+- `Proj` - **(none)**
+
+The `Proj`  template argument has the following default type `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)** - `indirectly_copyable<I, O1> && indirectly_copyable<I, O2>`
+- **(2)** - `indirectly_copyable<ranges::iterator_t<R>, O1> && indirectly_copyable<ranges::iterator_t<R>, O2>`
+
+(The `std::` namespace was omitted here for readability)

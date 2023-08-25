@@ -1,0 +1,12 @@
+```cpp
+// (1)
+constexpr for_each_n_result<I, Fun>
+    for_each_n( I first, std::iter_difference_t<I> n, Fun f, Proj proj = {});
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::input_iterator`
+- `Fun` - `std::indirectly_unary_invocable<std::projected<I, Proj>>`
+- `Proj` - **(none)**
+
+The `Proj` template argument has a default type of `std::identity`.

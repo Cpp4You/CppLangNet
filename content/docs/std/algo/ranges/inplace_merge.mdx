@@ -1,0 +1,240 @@
+---
+title:         ranges::inplace_merge algorithm
+sidebar_label: ranges::inplace_merge(  )
+description:   ranges::inplace_merge algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, merge, inplace_merge]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/inplace_merge
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/inplace_merge/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/inplace_merge/since-cpp20-simplified.mdx';
+
+# std::ranges::inplace_merge() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Merges two consecutive sorted ranges [`first`; `middle`) and [`middle`; `last`) into one sorted range [`first`; `last`).
+
+A sequence is said to be sorted with respect to the comparator `comp` if for any iterator `it` pointing to the sequence
+and any non-negative integer `n` such that `it + n` is a valid iterator pointing to an element of the sequence,
+`std::invoke(comp, std::invoke(proj2, *(it + n)), std::invoke(proj1, *it)))` evaluates to `false`.
+
+- **(1)** Elements are compared using the given binary comparison function `comp`.
+- **(2)** Same as **(1)**, but uses `r1` as the first range and `r2` as the second range, as if using `ranges::begin(r1)` as `first1`, `ranges::end(r1)` as `last1`, `ranges::begin(r2)` as `first2`, and `ranges::end(r2)` as `last2`.
+
+This function is **stable**, which means that for equivalent elements in the original two ranges,
+the elements from the first range  precede the elements from the second range, preserving their original order.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>first</code> }>
+    The beginning of the first sorted range.
+  </Symbol>
+  <Symbol none noLink name={ <code>middle</code> }>
+    The end of the first sorted range and the beginning of the second range.
+  </Symbol>
+  <Symbol none noLink name={ <code>last</code> }>
+    The end of the second sorted range.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to merge in-place.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements in the range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An iterator equal to `last`.
+
+### Complexity
+
+Given `N` as `ranges::distance(first, last)`
+
+Exactly `N − 1` comparisons and twice as many projections, if additional memory buffer is available.  
+Otherwise, **O(N \* log(N))** comparisons and twice as many projection.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+**Vendor implementations:**
+[Visual Studio (MS STL)](https://github.com/microsoft/STL/blob/e745bad3b1d05b5b19ec652d68abb37865ffa454/stl/inc/algorithm#L7131-L7235)
+⏺
+[GCC (libstdc++)](https://github.com/gcc-mirror/gcc/blob/54258e22b0846aaa6bd3265f592feb161eecda75/libstdc%2B%2B-v3/include/bits/ranges_algo.h#L2573-L2602)
+
+This implementation only shows the slower algorithm used when no additional memory is available.
+
+<details>
+<summary>inplace_merge(1) and merge(2)</summary>
+
+```cpp
+struct inplace_merge_fn
+{
+    template<std::bidirectional_iterator I, std::sentinel_for<I> S,
+             class Comp = ranges::less, class Proj = std::identity>
+    requires std::sortable<I, Comp, Proj>
+    constexpr I operator()(I first, I middle, S last, Comp comp = {}, Proj proj = {}) const
+    {
+        I last_it = ranges::next(middle, last);
+        inplace_merge_slow(first, middle, last_it,
+                           ranges::distance(first, middle),
+                           ranges::distance(middle, last_it),
+                           std::ref(comp), std::ref(proj));
+        return last_it;
+    }
+
+    template<ranges::bidirectional_range R, class Comp = ranges::less,
+             class Proj = std::identity>
+    requires std::sortable<ranges::iterator_t<R>, Comp, Proj>
+    constexpr ranges::borrowed_iterator_t<R>
+        operator()(R&& r, ranges::iterator_t<R> middle,
+                   Comp comp = {}, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), std::move(middle), ranges::end(r),
+                       std::move(comp), std::move(proj));
+    }
+
+private:
+    template<class I, class Comp, class Proj>
+    static constexpr void inplace_merge_slow(I first, I middle, I last,
+                                             std::iter_difference_t<I> n1,
+                                             std::iter_difference_t<I> n2,
+                                             Comp comp, Proj proj)
+    {
+        if (n1 == 0 || n2 == 0)
+            return;
+        if (n1 + n2 == 2 && comp(proj(*middle), proj(*first)))
+        {
+            ranges::iter_swap(first, middle);
+            return;
+        }
+
+        I cut1 = first, cut2 = middle;
+        std::iter_difference_t<I> d1 {}, d2 {};
+
+        if (n1 > n2)
+        {
+            d1 = n1 / 2;
+            ranges::advance(cut1, d1);
+            cut2 = ranges::lower_bound(middle, last, *cut1,
+                                       std::ref(comp), std::ref(proj));
+            d2 = ranges::distance(middle, cut2);
+        }
+        else
+        {
+            d2 = n2 / 2;
+            ranges::advance(cut2, d2);
+            cut1 = ranges::upper_bound(first, middle, *cut2,
+                                       std::ref(comp), std::ref(proj));
+            d1 = ranges::distance(first, cut1);
+        }
+
+        I new_middle = ranges::rotate(cut1, middle, cut2);
+        inplace_merge_slow(first, cut1, new_middle, d1, d2,
+                           std::ref(comp), std::ref(proj));
+        inplace_merge_slow(new_middle, cut2, last, n1 - d1, n2 - d2,
+                           std::ref(comp), std::ref(proj));
+    }
+};
+
+inline constexpr inplace_merge_fn inplace_merge {};
+```
+
+</details>
+
+### Notes
+
+This function attempts to allocate a temporary buffer. If the allocation fails, the less efficient algorithm is chosen.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <complex>
+#include <functional>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+void print(auto const& v, auto const& rem, int middle = -1)
+{
+    for (int i {}; auto n : v)
+        std::cout << (i++ == middle ? "│ " : "") << n << ' ';
+    std::cout << rem << '\n';
+}
+
+template<std::random_access_iterator I, std::sentinel_for<I> S>
+requires std::sortable<I>
+void merge_sort(I first, S last)
+{
+    if (last - first > 1)
+    {
+        I middle {first + (last - first) / 2};
+        merge_sort(first, middle);
+        merge_sort(middle, last);
+        std::ranges::inplace_merge(first, middle, last);
+    }
+}
+
+int main()
+{
+    // custom merge-sort demo
+    std::vector v {8, 2, 0, 4, 9, 8, 1, 7, 3};
+    print(v, ": before sort");
+    merge_sort(v.begin(), v.end());
+    print(v, ": after sort\n");
+
+    // merging with comparison function object and projection
+    using CI = std::complex<int>;
+    std::vector<CI> r { {0,1}, {0,2}, {0,3}, {1,1}, {1,2} };
+    const auto middle { std::ranges::next(r.begin(), 3) };
+    auto comp { std::ranges::less {} };
+    auto proj { [](CI z) { return z.imag(); } };
+
+    print(r, ": before merge", middle - r.begin());
+    std::ranges::inplace_merge(r, middle, comp, proj);
+    print(r, ": after merge");
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+8 2 0 4 9 8 1 7 3 : before sort
+0 1 2 3 4 7 8 8 9 : after sort
+
+(0,1) (0,2) (0,3) │ (1,1) (1,2) : before merge
+(0,1) (1,1) (0,2) (1,2) (0,3) : after merge
+```
+
+</div>
+</Columns>

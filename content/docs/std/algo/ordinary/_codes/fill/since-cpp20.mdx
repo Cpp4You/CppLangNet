@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class ForwardIt, class T >
+constexpr void fill( ForwardIt first, ForwardIt last, const T& value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class T >
+void fill( ExecutionPolicy&& policy,
+    ForwardIt first, ForwardIt last, const T& value );
+```
