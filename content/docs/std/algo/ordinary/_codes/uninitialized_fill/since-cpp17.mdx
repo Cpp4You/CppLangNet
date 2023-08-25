@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class ForwardIt, class T >
+void uninitialized_fill( ForwardIt first, ForwardIt last, const T& value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class T >
+void uninitialized_fill( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last, const T& value );
+```

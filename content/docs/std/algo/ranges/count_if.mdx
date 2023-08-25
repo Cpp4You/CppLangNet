@@ -1,0 +1,155 @@
+---
+title:         ranges::count_if algorithm
+sidebar_label: ranges::count_if(  )
+description:   ranges::count_if algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, count_if, number, predicate, quantity]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/count
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/count_if/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/count_if/since-cpp20-simplified.mdx';
+
+# std::ranges::count_if() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Returns the number of elements in the given range that satisfy specific criteria.
+
+- **(1)** Counts elements for which predicate `p` returns `true`.
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+- **(1 - 2)** The number of elements for which the predicate `p` holds `true`.
+
+### Complexity
+
+Given `N` as `ranges::distance(first, last)`:
+
+- **(1 - 2)** exactly `N` calls to `p` and projections.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>ranges::count_if</summary>
+
+```cpp
+struct count_if_fn
+{
+    template<std::input_iterator I, std::sentinel_for<I> S,
+             class Proj = std::identity,
+             std::indirect_unary_predicate<std::projected<I, Proj>> Pred>
+    constexpr std::iter_difference_t<I>
+        operator()(I first, S last, Pred pred, Proj proj = {}) const
+    {
+        std::iter_difference_t<I> counter = 0;
+        for (; first != last; ++first)
+            if (std::invoke(pred, std::invoke(proj, *first)))
+                ++counter;
+        return counter;
+    }
+
+    template<ranges::input_range R, class Proj = std::identity,
+             std::indirect_unary_predicate<
+                 std::projected<ranges::iterator_t<R>, Proj>> Pred>
+    constexpr ranges::range_difference_t<R>
+        operator()(R&& r, Pred pred, Proj proj = {}) const
+    {
+        return (*this)(ranges::begin(r), ranges::end(r),
+                       std::ref(pred), std::ref(proj));
+    }
+};
+
+inline constexpr count_if_fn count_if;
+```
+
+</details>
+
+### Notes
+
+If you want to obtain the number of elements in range [`first`; `last`) or `r`, without any additional criteria, use [`ranges::distance`](#).
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v {1, 2, 3, 4, 4, 3, 7, 8, 9, 10};
+
+    namespace ranges = std::ranges;
+
+    // determine how many integers in a std::vector match a target value.
+    int target1 = 3;
+    int target2 = 5;
+    int num_items1 = ranges::count_if(v.begin(), v.end(), target1);
+    int num_items2 = ranges::count_if(v, target2);
+    std::cout << "number: " << target1 << " count_if: " << num_items1 << '\n';
+    std::cout << "number: " << target2 << " count_if: " << num_items2 << '\n';
+
+    // use a lambda expression to count_if elements divisible by 3.
+    int num_items3 = ranges::count_if_if(v.begin(), v.end(), [](int i) {return i % 3 == 0;});
+    std::cout << "number divisible by three: " << num_items3 << '\n';
+
+    // use a lambda expression to count_if elements divisible by 11.
+    int num_items11 = ranges::count_if_if(v, [](int i) {return i % 11 == 0;});
+    std::cout << "number divisible by eleven: " << num_items11 << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+number: 3 count_if: 2
+number: 5 count_if: 0
+number divisible by three: 3
+number divisible by eleven: 0
+```
+
+</div>
+</Columns>

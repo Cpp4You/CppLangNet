@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class ForwardIt >
+void destroy( ForwardIt first, ForwardIt last );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt >
+void destroy( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last );
+```

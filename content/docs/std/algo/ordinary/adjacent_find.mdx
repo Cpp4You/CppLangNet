@@ -1,0 +1,191 @@
+---
+title:         adjacent_find algorithm
+sidebar_label: adjacent_find(  )
+description:   adjacent_find algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, adjacent_find, find, search, look, predicate, condition]
+
+cppreference_origin_rel: w/cpp/algorithm/adjacent_find
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/adjacent_find/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/adjacent_find/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/adjacent_find/since-cpp20.mdx';
+
+# std::adjacent_find() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+
+Searches the range [`first`; `last`) for two consecutive equal elements.
+
+- **(1)** Elements are compared using `operator==`.
+
+- **(2)** Elements are compared using the given binary predicate `p`.
+
+- **(3 - 4)** Same as **(1 - 2)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Binary predicate which returns `true` if the elements should be treated as equal.
+
+The signature of the function should be equivalent to the following:
+```cpp
+bool fun(const Type1& a, const Type2& b);
+```
+- The signature does not need to have `const&`.
+- The function **must not** modify the objects passed to it.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `ForwardIt` can be dereferenced and then implicitly converted to them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+An iterator to the first of the first pair of identical elements, that is, the first iterator `it` such that `*it == *(it + 1)` for **(1, 3)** or `p(*it, *(it + 1)) != false` for **(2, 4)**.
+
+If no such elements are found, `last` is returned.
+
+### Complexity
+
+- **(1, 3)** Exactly `std::min((result - first) + 1, (last - first) - 1)` applications of the predicate where result is the return value.
+- **(2, 4)** **O(last - first)** applications of the corresponding predicate.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>adjacent_find (1)</summary>
+
+```cpp
+template<class ForwardIt>
+ForwardIt adjacent_find(ForwardIt first, ForwardIt last)
+{
+    if (first == last)
+        return last;
+
+    ForwardIt next = first;
+    ++next;
+
+    for (; next != last; ++next, ++first)
+        if (*first == *next)
+            return first;
+
+    return last;
+}
+```
+
+</details>
+
+<details>
+<summary>adjacent_find (2)</summary>
+
+```cpp
+template<class ForwardIt, class BinaryPredicate>
+ForwardIt adjacent_find(ForwardIt first, ForwardIt last, BinaryPredicate p)
+{
+    if (first == last)
+        return last;
+
+    ForwardIt next = first;
+    ++next;
+
+    for (; next != last; ++next, ++first)
+        if (p(*first, *next))
+            return first;
+
+    return last;
+}
+```
+
+</details>
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <functional>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v1 {0, 1, 2, 3, 40, 40, 41, 41, 5};
+
+    auto i1 = std::adjacent_find(v1.begin(), v1.end());
+
+    if (i1 == v1.end())
+        std::cout << "No matching adjacent elements\n";
+    else
+        std::cout << "The first adjacent pair of equal elements is at "
+                  << std::distance(v1.begin(), i1) << ", *i1 = "
+                  << *i1 << '\n';
+
+    auto i2 = std::adjacent_find(v1.begin(), v1.end(), std::greater<int>());
+    if (i2 == v1.end())
+        std::cout << "The entire vector is sorted in ascending order\n";
+    else
+        std::cout << "The last element in the non-decreasing subsequence is at "
+                  << std::distance(v1.begin(), i2) << ", *i2 = " << *i2 << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+The first adjacent pair of equal elements is at 4, *i1 = 40
+The last element in the non-decreasing subsequence is at 7, *i2 = 41
+```
+
+</div>
+</Columns>

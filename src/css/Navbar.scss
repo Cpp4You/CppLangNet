@@ -69,38 +69,42 @@ html
 			}
 		}
 
+		// LEGACY:
+		// Forces dark mode on certain navbar elements if the site is scrolled to the top.
+		//
 		// Is at top?
-		&[data-scroll="0"]
-		{
-			// Not within sidebar navigation (mobile)
-			.navbar:not([class*=#{$sidebarNavigationClass}])
-			{
-				// At this point each navbar element should work like in the dark mode
-				// because the background is dark blue. In this mode navbar background
-				// isn't visible so we have to manually adjust the colors.
+		// &[data-scrolled-to-top="true"]
+		// {
+		// 	// Not within sidebar navigation (mobile)
+		// 	.navbar:not([class*=#{$sidebarNavigationClass}])
+		// 	{
+		// 		// At this point each navbar element should work like in the dark mode
+		// 		// because the background is dark blue. In this mode navbar background
+		// 		// isn't visible so we have to manually adjust the colors.
 
-				// Theme Switch Button
-				div[class*=#{$themeSwitchButtonClass}]
-				{
-					button:hover { background-color: var(--dark-theme-navbar-button-bgc); }
-					path { fill: white; } // SVG icon color
-				}
+		// 		// Theme Switch Button
+		// 		div[class*=#{$themeSwitchButtonClass}]
+		// 		{
+		// 			button:hover { background-color: var(--dark-theme-navbar-button-bgc); }
+		// 			path { fill: white; } // SVG icon color
+		// 		}
 	
-				// Each link within the navbar
-				.navbar__link {
-					color: var(--dark-theme-link-color);
-					&:hover { color: var(--dark-theme-hovered-link-color); }
-				}
+		// 		// Each link within the navbar
+		// 		.navbar__link {
+		// 			color: var(--dark-theme-link-color);
+		// 			&:hover { color: var(--dark-theme-hovered-link-color); }
+		// 		}
 		
-				// Fade out animation
-				&.scrolled {
-					animation: navbarBackgroundFadeOut 0.2s forwards;
-					.navbar__items:not(.navbar__items--right) { animation: navbarContentFadeOut 0.2s forwards; }
-				}
-			}
-		}
+		// 		// Fade out animation
+		// 		&.scrolled {
+		// 			animation: navbarBackgroundFadeOut 0.2s forwards;
+		// 			.navbar__items:not(.navbar__items--right) { animation: navbarContentFadeOut 0.2s forwards; }
+		// 		}
+		// 	}
+		// }
+
 		// ELSE: Not at the top?
-		&:not([data-scroll="0"])
+		&:not([data-scrolled-to-top="true"])
 		{
 			// ONLY if already scrolled
 			.navbar.scrolled {

@@ -1,0 +1,182 @@
+---
+title:         ranges::swap_ranges algorithm
+sidebar_label: ranges::swap_ranges(  )
+description:   ranges::swap_ranges algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, swap, swap_ranges]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/swap_ranges
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/swap_ranges/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/swap_ranges/since-cpp20-simplified.mdx';
+
+# std::ranges::swap_ranges() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I1, class I2 >
+using swap_ranges_result = ranges::in_in_result<I1, I2>;
+```
+
+- **(1)** Given **M** as `ranges::min(ranges::distance(first1, last1), ranges::distance(first2, last2))`:
+
+  Exchanges elements between first range [`first1`; `first1 + M`) and second range [`first2`; `first2 + M`) via `ranges::iter_swap(first1 + i, first2 + i)`.
+
+  The ranges [`first1`; `last1`) and [`first2`; `last2`) **must not** overlap.
+
+- **(2)** Same as **(1)**, but uses `r1` as the first range, as if using `ranges::begin(r1)` as `first1` and `ranges::end(r1)` as `last1`, and similarly for `r2`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The first range of elements to swap.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The second range of elements to swap.
+  </Symbol>
+  <Symbol none noLink name={ <code>r1</code> }>
+    The first range of elements to swap.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The second range of elements to swap.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An value of type `ranges::swap_ranges_result` initialized as follows:
+```cpp
+{
+  first1 + M,
+  first2 + M
+}
+```
+Where M is the smaller size out of both ranges (`ranges::min(ranges::distance(first1, last1), ranges::distance(first2, last2))`).
+
+### Complexity
+
+Exactly M swaps.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>swap_ranges(1)</summary>
+
+```cpp
+struct swap_ranges_fn
+{
+    template<std::input_iterator I1, std::sentinel_for<I1> S1,
+             std::input_iterator I2, std::sentinel_for<I2> S2>
+    requires std::indirectly_swappable<I1, I2>
+    constexpr ranges::swap_ranges_result<I1, I2>
+        operator()(I1 first1, S1 last1, I2 first2, S2 last2) const
+    {
+        for (; !(first1 == last1 or first2 == last2); ++first1, ++first2)
+            ranges::iter_swap(first1, first2);
+        return {std::move(first1), std::move(first2)};
+    }
+
+    template<ranges::input_range R1, ranges::input_range R2>
+    requires std::indirectly_swappable<ranges::iterator_t<R1>, ranges::iterator_t<R2>>
+    constexpr ranges::swap_ranges_result<ranges::borrowed_iterator_t<R1>,
+                                         ranges::borrowed_iterator_t<R2>>
+        operator()(R1&& r1, R2&& r2) const
+    {
+        return (*this)(ranges::begin(r1), ranges::end(r1),
+                       ranges::begin(r2), ranges::end(r2));
+    }
+};
+
+inline constexpr swap_ranges_fn swap_ranges {};
+```
+
+</details>
+
+
+### Notes
+
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable vectorization when the iterator type models [`contiguous_iterator`](#) and swapping its value type calls neither non-trivial special member function nor ADL-found swap.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <list>
+#include <string_view>
+#include <vector>
+
+auto print(std::string_view name, auto const& seq, std::string_view term = "\n")
+{
+    std::cout << name << " : ";
+    for (const auto& elem : seq)
+        std::cout << elem << ' ';
+    std::cout << term;
+}
+
+int main()
+{
+    std::vector<char> p {'A', 'B', 'C', 'D', 'E'};
+    std::list<char> q {'1', '2', '3', '4', '5', '6'};
+
+    print("p", p);
+    print("q", q, "\n\n");
+
+    // swap p[0, 2) and q[1, 3):
+    std::ranges::swap_ranges(p.begin(),
+                             p.begin() + 4,
+                             std::ranges::next(q.begin(), 1),
+                             std::ranges::next(q.begin(), 3));
+    print("p", p);
+    print("q", q, "\n\n");
+
+    // swap p[0, 5) and q[0, 5):
+    std::ranges::swap_ranges(p, q);
+
+    print("p", p);
+    print("q", q);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+p : A B C D E
+q : 1 2 3 4 5 6
+
+p : 2 3 C D E
+q : 1 A B 4 5 6
+
+p : 1 A B 4 5
+q : 2 3 C D E 6
+```
+
+</div>
+</Columns>

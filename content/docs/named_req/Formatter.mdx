@@ -1,0 +1,36 @@
+---
+title:                  C++ named requirements:Formatter 
+tags:                   [named_req,Formatter]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp20'><small>C++ named requirements:</small> *Formatter*</Since>
+
+***Formatter*** is a type that abstracts formatting operations for a given formatting argument type and character type. 
+Specializations of [std::formatter](/docs/std/utility/format/formatter) provided by the standard library are required to meet the requirements of *Formatter* except as noted otherwise.
+
+A *Formatter* is able to format both const and non-const arguments, typically by providing a format member function that takes a const reference.
+
+### Requirements
+A type satisfies *Formatter* if it satisfies [*BasicFormatter*](/docs/std/named_req/BasicFormatter) and given
+
+* `Arg`, a formatting argument type
+* `CharT`, a character type
+* `Formatter`, a *Formatter* type for types **Arg** and **CharT**
+* `OutputIt`, a [*LegacyOutputIterator*](/docs/named_req/LegacyOutputIterator) type
+* `f`, a value of type (possibly const) *Formatter*
+* `g`, a value of type *Formatter*
+* `arg`, an lvalue of type **Arg**
+* `t`, a value of type convertible to (possibly const) **Arg**
+* `ParseContext`, an alias of `std::basic_format_parse_context<CharT>`
+* `FormatContext`, an alias of `std::basic_format_context<OutputIt, CharT>`
+* `parse_ctx`, an lvalue of type **ParseContext**
+* `format_ctx`, an lvalue of type **FormatContext**
+
+| **Expression**              | **Return type**           | **Semantics**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+|:---------------------------:|:-------------------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `f.format(t, format_ctx)`   | `FormatContext::iterator` | \* Formats `t` according to the specifiers stored in `f`, writes the output to `format_ctx.out()` and returns an end iterator of the output range.<br/> \* The output shall only depend on <br/> &emsp;&emsp;\* `t`,<br/> &emsp;&emsp;\* `format_ctx.locale()`, <br/> &emsp;&emsp;\* the range `[parse_ctx.begin(), parse_ctx.end())` from the last call to <br/>&emsp;&emsp;&emsp;`f.parse(parse_ctx)`, and <br/> &emsp;&emsp;\* `format_ctx.arg(n)` for any value `n` of type [std::size_t](/docs/std/types/size_t). |
+| `f.format(arg, format_ctx)` | `FormatContext::iterator` | As above, but does not modify `arg`.                                                                                                                                                                                                                                                                                                                                                                                                                                                            |

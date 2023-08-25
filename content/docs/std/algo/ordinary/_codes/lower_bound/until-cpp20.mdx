@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class ForwardIt, class T >
+ForwardIt lower_bound( ForwardIt first, ForwardIt last, const T& value );
+
+// (2)
+template< class ForwardIt, class T, class Compare >
+ForwardIt lower_bound( ForwardIt first, ForwardIt last, const T& value, Compare comp );
+```

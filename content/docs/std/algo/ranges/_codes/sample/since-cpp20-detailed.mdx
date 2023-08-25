@@ -1,0 +1,24 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I,
+  std::sentinel_for<I> S,
+  std::weakly_incrementable O,
+  class Gen
+>
+  requires (std::forward_iterator<I> || std::random_access_iterator<O>) &&
+            std::indirectly_copyable<I, O> &&
+            std::uniform_random_bit_generator<std::remove_reference_t<Gen>>
+O sample( I first, S last, O out, std::iter_difference_t<I> n, Gen&& gen );
+
+// (2)
+template<
+  ranges::input_range R,
+  std::weakly_incrementable O,
+  class Gen
+>
+  requires (ranges::forward_range<R> || std::random_access_iterator<O>) &&
+            std::indirectly_copyable<ranges::iterator_t<R>, O> &&
+            std::uniform_random_bit_generator<std::remove_reference_t<Gen>>
+O sample( R&& r, O out, ranges::range_difference_t<R> n, Gen&& gen );
+```

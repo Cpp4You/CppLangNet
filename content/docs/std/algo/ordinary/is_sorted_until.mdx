@@ -1,0 +1,202 @@
+---
+title:         is_sorted_until algorithm
+sidebar_label: is_sorted_until(  )
+description:   is_sorted_until algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, is_sorted, is_sorted_until, sort, sorted]
+
+cppreference_origin_rel: w/cpp/algorithm/is_sorted_until
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import Tooltip                 from '@site-comps/Tooltip';
+import SwitchView              from "@site-comps/SwitchView";
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11 from './_codes/is_sorted_until/since-cpp11.mdx';
+import Signature_SinceCpp17 from './_codes/is_sorted_until/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/is_sorted_until/since-cpp20.mdx';
+
+# std::is_sorted_until() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'since-cpp11': <Signature_SinceCpp11 />
+}} />
+
+Examines the range [`first`; `last`) and finds the largest range beginning at `first` in which the elements are sorted in non-descending order.
+
+A sequence is sorted with respect to a comparator `comp` if for any iterator `it` pointing to the sequence
+and any non-negative integer `n` such that `it + n` is a valid iterator pointing to an element of the sequence,
+`comp(*(it + n), *it)` evaluates to `false`.
+
+- **(1)** Elements are compared using `operator<`.
+
+- **(2)** Elements are compared using the given binary comparison function `comp`.
+
+- **(3 - 4 )** Same as **(1 - 2)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::is_sorted_until_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)),
+which returns `true` if the first argument is *less* than the second.
+
+The signature of the comparison function should be equivalent to the following:
+```cpp
+bool cmp(const Type1 &a, const Type2 &b);
+```
+- The signature does not need to have `const&`, but must not modify arguments.
+- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+The upper bound of the largest range beginning at `first` in which the elements are sorted in ascending order. That is, the last iterator it for which range [`first`; `it`) is sorted.
+
+Returns `last` for empty ranges and ranges of length one.
+
+### Complexity
+
+Linear in the distance between `first` and `last`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>is_sorted_until (1)</summary>
+
+```cpp
+template<class ForwardIt>
+constexpr //< since C++20
+ForwardIt is_sorted_until(ForwardIt first, ForwardIt last)
+{
+    return std::is_sorted_until(first, last, std::less<>());
+}
+```
+
+</details>
+
+<details>
+<summary>is_sorted_until (2)</summary>
+
+```cpp
+template<class ForwardIt, class Compare>
+constexpr //< since C++20
+ForwardIt is_sorted_until(ForwardIt first, ForwardIt last, Compare comp)
+{
+    if (first != last)
+    {
+        ForwardIt next = first;
+        while (++next != last)
+        {
+            if (comp(*next, *first))
+                return next;
+            first = next;
+        }
+    }
+    return last;
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <iterator>
+#include <random>
+#include <string>
+
+int main()
+{
+    std::random_device rd;
+    std::mt19937 g(rd());
+    const int N = 6;
+    int nums[N] = {3, 1, 4, 1, 5, 9};
+
+    const int min_sorted_size = 4;
+
+    for (int sorted_size = 0; sorted_size < min_sorted_size;)
+    {
+        std::shuffle(nums, nums + N, g);
+        int *const sorted_end = std::is_sorted_until(nums, nums + N);
+        sorted_size = std::distance(nums, sorted_end);
+        assert(sorted_size >= 1);
+
+        for (auto i : nums)
+            std::cout << i << ' ';
+        std::cout << " : " << sorted_size << " initial sorted elements\n"
+                  << std::string(sorted_size * 2 - 1, '^') << '\n';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible output"
+4 1 9 5 1 3  : 1 initial sorted elements
+^
+4 5 9 3 1 1  : 3 initial sorted elements
+^^^^^
+9 3 1 4 5 1  : 1 initial sorted elements
+^
+1 3 5 4 1 9  : 3 initial sorted elements
+^^^^^
+5 9 1 1 3 4  : 2 initial sorted elements
+^^^
+4 9 1 5 1 3  : 2 initial sorted elements
+^^^
+1 1 4 9 5 3  : 4 initial sorted elements
+^^^^^^^
+```
+
+</div>
+</Columns>

@@ -1,0 +1,131 @@
+---
+title:         shuffle algorithm
+sidebar_label: shuffle(  )
+description:   shuffle algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, random, shuffle]
+
+cppreference_origin_rel: w/cpp/algorithm/random_shuffle
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11 from './_codes/shuffle/since-cpp11.mdx';
+
+# std::shuffle() algorithm
+
+<SwitchView content={{
+  'since-cpp11': <Signature_SinceCpp11 />,
+}} />
+
+Reorders the elements in the given range [`first`; `last`) such that each possible permutation of those elements has equal probability of appearance.
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to shuffle.
+  </Symbol>
+  <Symbol none noLink name={ <code>g</code> }>
+    A <a href="/docs/named_req/UniformRandomBitGenerator">UniformRandomBitGenerator</a> whose result type is convertible to <code>std::iterator_traits&lt;RandomIt&gt;::difference_type</code>.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>RandomIt</code> }>
+    <a href="/docs/named_req/LegacyRandomAccessIterator">LegacyRandomAccessIterator</a> <br/>
+    <a href="/docs/named_req/ValueSwappable">ValueSwappable</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>std::remove_reference_t&lt;URBG&gt;</code> }>
+    <a href="/docs/named_req/UniformRandomBitGenerator">UniformRandomBitGenerator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Linear in `std::distance(first, last)`;
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>shuffle (1)</summary>
+
+```cpp
+template<class RandomIt>
+template<class RandomIt, class URBG>
+void shuffle(RandomIt first, RandomIt last, URBG&& g)
+{
+    using diff_t = typename std::iterator_traits<RandomIt>::difference_type;
+    using distr_t = std::uniform_int_distribution<diff_t>;
+    using param_t = typename distr_t::param_type;
+
+    distr_t D;
+    for (diff_t i = last - first - 1; i > 0; --i)
+    {
+        using std::swap;
+        swap(first[i], first[D(g, param_t(0, i))]);
+    }
+}
+```
+
+</details>
+
+### Notes
+
+Note that the implementation is not dictated by the standard, so even if you use exactly the same or `URBG` (Uniform Random Number Generator) you may get different results with different standard library implementations.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <random>
+#include <vector>
+
+int main()
+{
+    std::vector<int> v {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+
+    std::random_device rd;
+    std::mt19937 g(rd());
+
+    std::shuffle(v.begin(), v.end(), g);
+
+    std::copy(v.begin(), v.end(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+5 2 1 4 6 3 7 10 9 8
+```
+
+</div>
+</Columns>

@@ -1,0 +1,49 @@
+---
+title:                  std::allocation_result
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	            from "@site-comps/SymbolTable";
+import ClassSummary				      from "@site-comps/ClassSummary";
+import { Since, Until, Removed, Version }       from "@site-comps/Versions";
+
+<ClassSummary name="allocation_result" namespaces="std" folder="memory" headerName="memory"/>
+
+```cpp title='Since C++23'
+template< class Pointer, class SizeType = std::size_t >
+struct allocation_result {
+    Pointer ptr;
+    SizeType count;
+};
+```
+
+allocation_result specializations are returned from the allocate_at_least member function of appropriate [Allocator](/docs/std/named_req/Allocator) 
+types (e.g. [std::allocator::allocate_at_least](/docs/std/memory/_allocator/allocate_at_least)) and [std::allocator_traits::allocate_at_least](/docs/std/memory/_allocator_traits/allocate_at_least).
+
+Every specialization of allocation_result has no base classes or declared members other than ptr and count, thus it is suitable for 
+[aggregate initialization](/) and [structured binding](/).
+
+### Template parameters
+
+`Pointer`	-	typically std::allocator_traits&lt;Alloc>::pointer, where Alloc is an [Allocator](/docs/std/named_req/Allocator) type <br/>
+`SizeType`	-	typically std::allocator_traits&lt;Alloc>::size_type, where Alloc is an [Allocator](/docs/std/named_req/Allocator) type
+
+### Member objects
+
+<SymbolTable>
+    <Symbol pub name={<>ptr<Version v='cpp23'></Version></>}   desc={<>typically used for the address of the first element in the storage allocated by allocate_at_least</>}/>
+    <Symbol pub name={<>count<Version v='cpp23'></Version></>} desc={<>typically used for the actual number of elements in the storage allocated by allocate_at_least</>}/>
+</SymbolTable>
+
+### Notes
+`Pointer` and `SizeType` are a pointer to an object type and [std::make_unsigned_t](/docs/std/types/make_unsigned)&lt;[std::ptrdiff_t](/docs/std/types/ptrdiff_t)&gt; 
+(which is almost always same as [std::size_t](/docs/std/types/size_t)) by default. 
+
+|      Feature-test macro     |  Value  |   Std   |
+|:---------------------------:|:-------:|:-------:|
+| __cpp_lib_allocate_at_least | 202302L | (C++23) |
+
+### Example
+#### This section is incomplete

@@ -1,0 +1,20 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I,
+  std::sentinel_for<I> S,
+  std::weakly_incrementable O
+>
+  requires std::indirectly_movable<I, O>
+constexpr move_result<I, O>
+    move( I first, S last, O result );
+
+// (2)
+template<
+  ranges::input_range R,
+  std::weakly_incrementable O
+>
+  requires std::indirectly_movable<ranges::iterator_t<R>, O>
+constexpr move_result<ranges::borrowed_iterator_t<R>, O>
+    move( R&& r, O result );
+```

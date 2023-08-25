@@ -16,21 +16,34 @@
 	}
 }
 
+$IS_DARK_THEME: ":root[data-theme='dark']";
+
 .features {
-	display: flex;
-	align-items: center;
+	--page-card-border-color: #1B1B1B;
+	--page-card-bgc: #E2ECFF;
+	--page-card-hover-bgc: #f0f5ff;
+}
+
+#{$IS_DARK_THEME}
+.features {
+	--page-card-border-color: black;
+	--page-card-bgc: #00050F;
+	--page-card-hover-bgc: #00253a;
+}
+
+.features {
 	width: 100%;
-	margin-bottom: 100px;
-}
-
-.featuresContainer {
+	margin-top: 50px;
+	margin-bottom: 40px;
 	display: flex;
-	justify-content: center;
-	width: 80%;
-	margin: 0 auto;
+	flex: 0 0 1fr;
+	justify-content: space-between;
+	max-width: 680px;
+	flex-direction: row;
+	flex-wrap: wrap;
 }
 
-$iconSize: 50px;
+$iconSize: 48px;
 .pageCardSvg>img {
 	height:	$iconSize;
 	width:	$iconSize;
@@ -43,6 +56,9 @@ $iconSize: 50px;
 .pageCard {
 
 	display: flex;
+	margin-bottom: 20px;
+	height: 100px;
+
 
 	// Variables set up
 	&:nth-child(1)>.pageCardInner {
@@ -67,7 +83,7 @@ $iconSize: 50px;
 
 	&:not(:last-child)
 	{
-		margin-right: 60px;
+		// margin-right: 20px;
 	}
 
 	&:not(:hover) .pageCardSvg {
@@ -80,51 +96,33 @@ $iconSize: 50px;
 		}
 	}
 
-	// &:hover .pageCardSvg {
-	// 	.normalIcon {
-	// 		display: none;
-	// 	}
-	// 	.hoverIcon {
-	// 		display: inline;
-	// 	}
-	// }
-
 	&:hover>.pageCardInner {
-		text-decoration: none;
-		transform: translate(-4px, -4px);
-		filter: brightness(1.2) saturate(1.5);
-
-		background: radial-gradient(circle, var(--bg-gradient-color-inner) 30%, var(--bg-gradient-color-outer) 100%);
+		background-color: var(--page-card-hover-bgc);
 	}
 }
 
 .pageCardInner
 {
-	// Variables set up
-	--border-color: rgba(36, 36, 36, 0.4);
-	--bg-default-gradient-color-inner: rgba(255, 255, 255, 0.9);
-	--bg-default-gradient-color-outer: rgba(255, 255, 255, 0.8);
+	// Sizing
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 
-	padding: 15px 40px;
-	min-width: calc(min(200px,25vw));
+	padding: 0px 40px;
+	min-width: calc(min(150px,25vw));
 	width: 100%;
 	height: 100%;
+	position: relative;
 
-	border-radius: 20px;
-	border-bottom: 6px solid var(--border-color);
-	border-right: 3px solid var(--border-color);
+	// Colors
+	background-color: var(--page-card-bgc);
+	border-radius: 10px;
+	border: 1px solid var(--page-card-border-color);
 
-	box-shadow: 8px 11px 20px 2px rgba(12, 24, 29, 0.6);
-	backdrop-filter: contrast(120%) opacity(40%);
-
-	background: radial-gradient(circle, var(--bg-default-gradient-color-inner) 30%, var(--bg-default-gradient-color-outer) 100%);
-	// padding: 60px 65px;
-
-	
 
 	.pageCardSvg {
 		text-align: center;
-		margin-bottom: 10px;
+		// margin-bottom: 10px;
 	}
 	
 	.pageCardSvg .hoverIcon {
@@ -136,7 +134,7 @@ $iconSize: 50px;
 		text-align: center;
 		// font-family: var(--font-inter);
 		font-weight: normal;
-		font-size: 1.4em;
+		font-size: 18px;
 		>p {
 			margin: 0;
 			padding: 0;
@@ -144,21 +142,22 @@ $iconSize: 50px;
 		}
 	}
 
-	transition: background-color 0.5s, transform 0.1s;
+	transition: background-color 0.1s, transform 0.1s;
 
 	box-sizing: border-box;
 }
 
-@media (max-width: 1100px) {
 
-.featuresContainer {
-	width: 100%;
-	justify-content: space-evenly;
-}
+@media (max-width: 800px) {
 
-.pageCard:not(:last-child) {
-	margin-right: 0;
-}
+// .featuresContainer {
+// 	justify-content: space-evenly;
+// 	width: 100%;
+// }
+
+// .pageCard:not(:last-child) {
+// 	margin-right: 0;
+// }
 
 }
 
@@ -198,41 +197,42 @@ $iconSize: 50px;
 html[data-theme='dark']
 {
 
-.features {
-	// background-color: rgba(0, 0, 0, 0.8);
-	// backdrop-filter: contrast(100%) blur(8px);
-
-	// -webkit-clip-path: polygon(25% 0, 75% 0%, 100% 10%, 100% 100%, 0% 100%, 0% 10%);
-	// clip-path: polygon(0% 20%, 3% 0, 97% 0%, 100% 20%, 100% 100%, 0% 100%, 0% 80%);
-}
-
 .pageCard {
 	&:nth-child(1)>.pageCardInner {
-		--bg-gradient-color-inner: rgba(4, 133, 4, 0.6);
-		--bg-gradient-color-outer: rgba(8, 139, 30, 0.5);
-	}
+		// --outline-color-primary: rgba(9, 75, 129, 0.8);
+		// --outline-color-secondary: rgba(20, 35, 68, 0.7);
 
+		--outline-color-hover-primary: rgb(0, 123, 255);
+		--outline-color-hover-secondary: rgb(7, 11, 123);
+	}
+	
 	&:nth-child(2)>.pageCardInner {
-		--bg-gradient-color-inner: rgba(109, 23, 83, 0.6);
-		--bg-gradient-color-outer: rgba(136, 20, 97, 0.5);
-	}
+		// --outline-color-primary: rgba(4, 133, 4, 0.6);
+		// --outline-color-secondary: rgba(8, 139, 30, 0.5);
 
+		--outline-color-hover-primary: rgb(30, 184, 30);
+		--outline-color-hover-secondary: rgb(3, 116, 22);
+	}
+	
 	&:nth-child(3)>.pageCardInner {
-		--bg-gradient-color-inner: rgba(80, 52, 26, 0.8);
-		--bg-gradient-color-outer: rgba(95, 62, 34, 0.7);
+		// --outline-color-primary: rgba(109, 23, 83, 0.6);
+		// --outline-color-secondary: rgba(136, 20, 97, 0.5);
+
+		--outline-color-hover-primary: rgb(196, 63, 156);
+		--outline-color-hover-secondary: rgb(121, 3, 82);
 	}
 	
 	&:nth-child(4)>.pageCardInner {
-		--bg-gradient-color-inner: rgba(9, 75, 129, 0.8);
-		--bg-gradient-color-outer: rgba(20, 35, 68, 0.7);
+		// --outline-color-primary: rgba(80, 52, 26, 0.8);
+		// --outline-color-secondary: rgba(95, 62, 34, 0.7);
+
+		--outline-color-hover-primary: rgb(156, 105, 58);
+		--outline-color-hover-secondary: rgb(91, 43, 1);
 	}
 }
 
 .pageCardInner {
 	--border-color: rgba(200, 200, 200, 0.2);
-
-	--bg-default-gradient-color-inner: rgba(0,0,0, 0.8);
-	--bg-default-gradient-color-outer: rgba(0,0,0, 0.75);
 
 	.pageCardText {
 		color: rgb(244, 244, 244);
@@ -249,13 +249,14 @@ html[data-theme='dark']
 	background-color: rgba(black, 0.80);
 	border-top: none;
 	backdrop-filter: contrast(150%) blur(8px);
+	margin-top: 100px;
 
-	&:nth-child(3) {
+	&:nth-child(4) {
 		border-top: none;
-		background: rgb(0,0,0);
-		background: linear-gradient(180deg, rgba(0,0,0, 0.92) 24%, rgba(0,0,0, 0.8) 92%);
+		
+		background-color: rgb(22, 22, 32);
 	}
-	&:nth-child(even) {
+	&:nth-child(odd) {
 		backdrop-filter: contrast(100%) blur(20px);
 		background-color: rgba(0,0,0, 0.20);
 	}
@@ -264,10 +265,10 @@ html[data-theme='dark']
 }
 
 .overview {
-	backdrop-filter: blur(16px) opacity(95%);
+	// backdrop-filter: blur(16px) opacity(95%);
 
-	background: linear-gradient(180deg, rgb(243, 243, 243) 10%, white 30%);
-	background-color: rgb(243, 243, 243);
+	// background: linear-gradient(180deg, rgb(243, 243, 243) 10%, white 30%);
+	// background-color: rgb(243, 243, 243);
 	border-top: 1px solid gray;
 	&:nth-child(3) {
 		border-top: none;

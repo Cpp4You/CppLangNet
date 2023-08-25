@@ -1,0 +1,67 @@
+---
+title:                  std::allocator<T>::allocate
+description:            Allocator Member Function
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+import { Since, Until, Removed }                from "@site-comps/Versions";
+
+# std::allocator&lt;T>::allocate
+
+```cpp title="Since C++20"
+// 2)
+[[nodiscard]] constexpr T* allocate( std::size_t n );
+```
+```cpp title="Since C++17, Removed in C++20"
+// 1)
+T* allocate( std::size_t n, const void* hint );
+// 2)
+T* allocate( std::size_t n );
+```
+```cpp title="Until C++17"
+// 1)
+pointer allocate( size_type n, const void* hint = 0 );
+```
+
+
+
+Allocates `n * sizeof(T)` bytes of uninitialized storage by calling `::operator new(std::size_t)` or <Since v='cpp17'>`::operator new(std::size_t, std::align_val_t)`</Since>
+but it is unspecified when and how this function is called. The pointer hint may be used to provide locality of reference: the allocator, 
+if supported by the implementation, will attempt to allocate the new memory block as close as possible to hint.
+
+Then, this function creates an array of type `T[n]` in the storage and starts its lifetime, but does not start lifetime of any of its elements.
+
+Use of this function is ill-formed if `T` is an [incomplete type](/docs/std/language/type).
+
+<Since v='cpp20'>In order to use this function in a constant expression, the allocated storage must be deallocated within the evaluation of the same expression.</Since>
+
+### Parameters
+`n`	-	the number of objects to allocate storage for
+`hint`	-	pointer to a nearby memory location
+
+### Return value
+Pointer to the first element of an array of `n` objects of type `T` whose elements have not been constructed yet.
+
+### Exceptions
+
+&nbsp;<Since v='cpp11'>Throws [std::bad_array_new_length](/docs/std/memory/new/bad_array_new_length) if `std::numeric_limits<std::size_t>::max() / sizeof(T) < n`.</Since>
+
+Throws [std::bad_alloc](/docs/std/memory/new/bad_alloc) if allocation fails.
+
+### Notes
+The "unspecified when and how" wording makes it possible to combine or optimize away heap allocations made by the standard library containers, 
+even though such optimizations are disallowed for direct calls to `::operator new`. For example, this is implemented by libc++ 
+([[1]](https://github.com/llvm-mirror/libcxx/blob/master@%7B2017-02-09%7D/include/memory#L1766-L1772) and 
+[[2]](https://github.com/llvm-mirror/libcxx/blob/master@%7B2017-02-09%7D/include/new#L211-L217)).
+
+After calling `allocate()` and before construction of elements, pointer arithmetic of `T*` is well-defined within the allocated array, 
+but the behavior is undefined if elements are accessed.
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                                                 Behavior as published                                                |             Correct behavior             |
+|:--------:|:----------:|:--------------------------------------------------------------------------------------------------------------------:|:----------------------------------------:|
+| LWG 578  | C++98      | hint was required to be either 0 or a pointer previously returned from allocate() and not yet passed to deallocate() | not required                             |
+| LWG 3190 | C++11      | allocate() might allocate storage of wrong size                                                                      | throws std::bad_array_new_length instead |

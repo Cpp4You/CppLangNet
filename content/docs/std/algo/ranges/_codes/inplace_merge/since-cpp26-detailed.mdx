@@ -1,0 +1,20 @@
+```cpp
+// (1)
+template<
+  std::bidirectional_iterator I,
+  std::sentinel_for<I> S,
+  class Comp = ranges::less, class Proj = std::identity
+>
+  requires std::sortable<I, Comp, Proj>
+constexpr I inplace_merge( I first, I middle, S last, Comp comp = {}, Proj proj = {} );
+
+// (2)
+template<
+  ranges::bidirectional_range R,
+  class Comp = ranges::less,
+  class Proj = std::identity
+>
+  requires std::sortable<ranges::iterator_t<R>, Comp, Proj>
+constexpr ranges::borrowed_iterator_t<R>
+    inplace_merge( R&& r, ranges::iterator_t<R> middle, Comp comp = {}, Proj proj = {} );
+```

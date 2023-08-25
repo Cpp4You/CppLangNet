@@ -1,0 +1,164 @@
+---
+title:         copy_n algorithm
+sidebar_label: copy_n(  )
+description:   copy_n algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, copy_n, copy, clone]
+
+cppreference_origin_rel: w/cpp/algorithm/copy_n
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11 from './_codes/copy_n/since-cpp11.mdx';
+import Signature_SinceCpp17 from './_codes/copy_n/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/copy_n/since-cpp20.mdx';
+
+# std::copy_n() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'since-cpp11': <Signature_SinceCpp11 />
+}} />
+
+Copies `count` elements from a range to a new location.
+
+- **(1)** Copies exactly `count` values from the range beginning at `first` to the range beginning at `result`.
+  Formally, for each integer `0 ≤ i < count`, performs `*(result + i) = *(first + i)`.
+
+  :::warning
+  Overlap of ranges is formally permitted, but leads to unpredictable ordering of the results.
+  :::
+
+- **(2)** Same as **(1)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>first</code> }>
+    The beginning of the range to copy from.
+  </Symbol>
+  <Symbol none noLink name={ <code>count</code> }>
+    Number of elements to copy.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+Iterator in the destination range, pointing past the last element copied if `count > 0` or `result` otherwise.
+
+### Complexity
+
+- if `count < 0` - zero assignments
+- `count` assignments otherwise.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>copy_n (1)</summary>
+
+```cpp
+
+template<class InputIt, class Size, class OutputIt>
+constexpr //< since C++20
+OutputIt copy_n(InputIt first, Size count, OutputIt result)
+{
+    if (count > 0)
+    {
+        *result = *first;
+        ++result;
+        for (Size i = 1; i != count; ++i, ++result)
+            *result = *++first;
+    }
+
+    return result;
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <numeric>
+#include <string>
+#include <vector>
+
+int main()
+{
+    std::string in {"1234567890"};
+    std::string out;
+
+    std::copy_n(in.begin(), 4, std::back_inserter(out));
+    std::cout << out << '\n';
+
+    std::vector<int> v_in(128);
+    std::iota(v_in.begin(), v_in.end(), 1);
+    std::vector<int> v_out(v_in.size());
+
+    std::copy_n(v_in.cbegin(), 100, v_out.begin());
+    std::cout << std::accumulate(v_out.begin(), v_out.end(), 0) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+1234
+5050
+```
+
+</div>
+</Columns>

@@ -1,0 +1,72 @@
+---
+title:              Filename and line information
+tags:               [Language, Preprocessor]
+hite_title:         true
+---
+
+import {Since, Version, Until}                                 from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import Columns                                          from "@site-comps/Columns";
+
+# Filename and line information
+Changes the source code's line number and, optionally, the current file name, in the preprocessor.
+
+## Syntax
+
+<SyntaxTable>
+  <Syntax id='1' directive={<span class='col-d'>#line</span>} args={['lineno']}/>
+  <Syntax id='2' directive={<span class='col-d'>#line</span>} args={['lineno', '"filename"']}/>
+</SyntaxTable>
+
+## Explanation
+1. Changes the current preprocessor line number to <span class='col-g'>lineno</span>. 
+Expansions of the macro &#95;&#95;LINE&#95;&#95; beyond this point will expand to <span class='col-g'>lineno</span> plus the number of actual source code lines encountered since.
+2. Also changes the current preprocessor file name to <span class='col-g'>filename</span>. Expansions of the macro &#95;&#95;FILE&#95;&#95; from this point will produce <span class='col-g'>filename</span>.
+
+Any preprocessing tokens (macro constants or expressions) are permitted as arguments to <code-d>#line</code-d> as long as they expand to a valid decimal integer optionally following a 
+valid character string. <span class='col-g'>lineno</span> must be a sequence of at least one decimal digit (the program is ill-formed, otherwise) and is always interpreted as decimal (even if it starts with 0).
+
+If <span class='col-g'>lineno</span> is 0 or greater than <Until v='cpp11'>32767</Until> <Since v='cpp11'>2147483647</Since>, the behavior is undefined.
+
+## Notes
+This directive is used by some automatic code generation tools which produce C++ source files from a file written in another language. 
+In that case, <code-d>#line</code-d> directives may be inserted in the generated C++ file referencing line numbers and the file name of the original (human-editable) source file.
+
+## Example
+
+<Columns spacing='20px' columns={['6fr','4fr']}>
+<div>
+
+```cpp
+#include <cassert>
+#define FNAME "test.cc"
+int main()
+{
+#line 777 FNAME
+        assert(2+2 == 5);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Result"
+test: test.cc:777: int main(): Assertion `2+2 == 5' failed.
+```
+
+</div>
+</Columns>
+
+## References
+* C++23 standard (ISO/IEC 14882:2023):
+    * 15.7 Line control [cpp.line]
+* C++20 standard (ISO/IEC 14882:2020):
+    * 15.7 Line control [cpp.line]
+* C++17 standard (ISO/IEC 14882:2017):
+    * 19.4 Line control [cpp.line]
+* C++14 standard (ISO/IEC 14882:2014):
+    * 16.4 Line control [cpp.line]
+* C++11 standard (ISO/IEC 14882:2011):
+    * 16.4 Line control [cpp.line]
+* C++98 standard (ISO/IEC 14882:1998):
+    * 16.4 Line control [cpp.line]

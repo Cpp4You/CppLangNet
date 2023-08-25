@@ -1,0 +1,118 @@
+@import "@site/src/css/Theme.scss";
+
+.homepage-slider-container {
+	display: flex;
+	flex-wrap: nowrap;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+
+	// border: 1px solid red;
+	box-sizing: border-box;
+
+	>p, >figure {
+		margin: 0;
+		padding: 0;
+	}
+
+	>figure {
+		margin: 20px 0;
+		// background-color: rgba(0,0,0, 0.25);
+		img {
+			border-radius: 30%;
+			max-height: 220px;
+			aspect-ratio: 1;
+			width: auto;
+			height: 100%;
+			object-fit: contain;
+		}
+	}
+
+	p {
+		max-width: 500px;
+		font-size: 1.2rem;
+		height: 3.5rem;
+		text-align: center;
+		margin-bottom: 20px;
+		color: rgb(58, 58, 58);
+
+		a {
+			font-weight: bold;
+		}
+	}
+}
+
+#{$IS_DARK_THEME} {
+	.homepage-slider-container {
+		p {
+			color: white;
+		}
+	}
+}
+
+.homepage-slider-controls {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+	border: 1px solid gray;
+	background-color: rgba(0,0,0, 0.25);
+	color: white;
+	font-size: 1.5rem;
+	border-radius: 20px;
+
+	&>*:not(:first-child) {
+		margin-left: 20px;
+	}
+
+	.slider-feature-name {
+		min-width: 200px;
+		text-align: center;
+	}
+
+	button {
+		background-color: transparent;
+		
+		width: 40px;
+		font-size: 1.5rem;
+		border: none;
+		color: white;
+		
+		cursor: pointer;
+		transition: color 0.2s ease-in-out;
+
+		&:hover {
+			background-color: rgba(0,0,0, 0.5);
+
+			&:first-child {
+				border-top-left-radius: 20px;
+				border-bottom-left-radius: 20px;
+			}
+			&:last-child {
+				border-top-right-radius: 20px;
+				border-bottom-right-radius: 20px;
+			}
+		}
+	}
+}
+
+.homepage-slider-dots {
+	display: flex;
+	justify-content: center;
+
+	span {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background-color: gray;
+
+		&[data-active="true"] {
+			background-color: white;
+		}
+
+		&:not(:first-child) {
+			margin-left: 10px;
+		}
+	}
+}

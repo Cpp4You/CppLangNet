@@ -1,0 +1,207 @@
+---
+title:                  Node handle
+tags:                   []
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}     from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# Node handle <Version v='cpp17'></Version>
+
+```cpp title="Since C++17"
+template</* unspecified */>
+class /* node-handle */;
+```
+
+Associative containers 
+[std::set](/docs/std/containers/sets/set), [std::map](/docs/std/containers/maps/map), 
+[std::multiset](/docs/std/containers/sets/multiset), [std::multimap](/docs/std/containers/maps/multimap), 
+[std::unordered_set](/docs/std/containers/sets/unordered_set), [std::unordered_map](/docs/std/containers/maps/unordered_map),
+[std::unordered_multiset](/docs/std/containers/sets/unordered_multiset), [std::unordered_multimap](/docs/std/containers/maps/unordered_multimap), 
+are node-based data structures, and their nodes can be extracted as an object of unspecified type known as node handle.
+
+Node handle is a move-only type that owns and provides access to the element (the value_type) stored in the node, 
+and provides non-const access to the key part of the element (the key_type) and the mapped part of the element (the mapped_type). 
+If the node handle destructs while holding the node, the node is properly destructed using the appropriate allocator for the container. 
+The node handle contains a copy of the container’s allocator. This is necessary so that the node handle can outlive the container.
+
+The exact type of node handle (shown here as */\* node-handle \*/*) is unspecified, 
+but each container exposes its node handle type as the member node_type.
+
+Node handles can be used to transfer ownership of an element between two associative containers with the same key, value, and allocator type 
+(ignoring comparison or hash/equality), 
+without invoking any copy/move operations on the container element (this kind of operation is known as "splicing"). 
+Transfer between unique and non-unique containers is also permitted: 
+a node handle from a [std::map](/docs/std/containers/maps/map) can be inserted into an [std::multimap](/docs/std/containers/maps/multimap), 
+but not into [std::unordered_map](/docs/std/containers/maps/unordered_map) or [std::set](/docs/std/containers/sets/set).
+
+A node handle may be empty, in which case it holds no element and no allocator. 
+The default-constructed and moved-from node handle is empty. 
+In addition, an empty node handle can be produced by a failed call to container member function extract.
+
+Pointers and references to an element that are obtained while it is owned by a node handle are invalidated if the element is successfully inserted into a container.
+
+For all map containers ([std::map](/docs/std/containers/maps/map), [std::multimap](/docs/std/containers/maps/multimap), 
+[std::unordered_map](/docs/std/containers/maps/unordered_map), and [std::unordered_multimap](/docs/std/containers/maps/unordered_multimap)) 
+whose key_type is K and mapped_type is T, 
+the behavior of operations involving node handles is undefined if a user-defined specialization of [std::pair](/docs/std/utility/pair) exists for 
+[std::pair](/docs/std/utility/pair)&lt;K, T&gt; or [std::pair](/docs/std/utility/pair)&lt;const K, T&gt;.
+
+### Member types
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Member type</b>}                                           desc={<b>Definition</b>}/>
+    <Symbol name={<>key_type<br/><small>(map containers only)</small></>}       desc={<>the key stored in the node</>}/>
+    <Symbol name={<>mapped_type<br/><small>(map containers only)</small></>}    desc={<>the mapped part of the element stored in the node</>}/>
+    <Symbol name={<>value_type<br/><small>(set containers only)</small></>}     desc={<>the element stored in the node</>}/>
+    <Symbol name={<>allocator_type</>}                                          desc={<>the allocator to be used when destroying the element</>}/>
+</SymbolTable>
+
+### Member functions
+
+---
+#### <big><big>constructors</big></big>
+```cpp
+// 1)
+constexpr /* node-handle */() noexcept;
+// 2)
+/* node-handle */ (/* node-handle */&& nh) noexcept;
+```
+1) The default constructor initializes the node handle to the empty state. <br/>
+2) The move constructor takes ownership of the container element from `nh`, 
+move-constructs the member allocator, and leaves `nh` in the empty state.
+
+#### Parameters
+`nh`	-	a node handle with the same type (not necessarily the same container)
+#### Notes
+Node handles are move-only, the copy constructor is not defined.
+
+---
+#### <big><big>operator=</big></big>
+```cpp
+/* node-handle */& operator=(/* node-handle */&& nh);
+```
+* If the node handle is not empty,
+    * destroys the value_type subobject in the container element object managed by this node handle by 
+    calling `std::allocator_traits<allocator_type>::destroy;`
+    * deallocates the container element by calling `std::allocator_traits<allocator_type>::rebind_traits</* container-node-type */>::deallocate;`
+* Acquires ownership of the container element from `nh`;
+* If node handle was empty (and so did not contain an allocator) or if `std::allocator_traits<allocator_type>::propagate_on_container_move_assignment` is true, 
+move-assigns the allocator from `nh`;
+* sets `nh` to the empty state.
+
+The behavior is undefined if the node is not empty and `std::allocator_traits<allocator_type>::propagate_on_container_move_assignment` is false 
+and the allocators do not compare equal.
+#### Parameters
+`nh`	-	node handle with the same type (not necessarily the same container)
+#### Return
+`*this`
+#### Exceptions
+Throws nothing.
+#### Notes
+Node handles are move-only, the copy assignment is not defined.
+
+---
+#### <big><big>destructor</big></big>
+```cpp
+~/* node-handle */();
+```
+* If the node handle is not empty,
+    * destroys the value_type subobject in the container element object managed by this node handle by calling 
+    `std::allocator_traits<allocator_type>::destroy;`
+    * deallocates the container element by calling `std::allocator_traits<allocator_type>::rebind_traits</* container-node-type */>::deallocate`.
+
+---
+#### <big><big>empty</big></big>
+```cpp title="Until C++20"
+bool empty() const noexcept;
+```
+```cpp title="Since C++20"
+[[nodiscard]] bool empty() const noexcept;
+```
+Returns `true` if the node handle is empty, `false` otherwise.
+
+---
+#### <big><big>operator bool</big></big>
+```cpp
+explicit operator bool() const noexcept;
+```
+Converts to `false` if the node handle is empty, `true` otherwise.
+
+---
+#### <big><big>get_allocator</big></big>
+```cpp
+allocator_type get_allocator() const;
+```
+Returns a copy of the stored allocator (which is a copy of the allocator of the source container). 
+The behavior is undefined if the node handle is empty.
+#### Exceptions
+Throws nothing.
+
+---
+#### <big><big>value</big></big>
+```cpp title="set containers only"
+value_type& value() const;
+```
+Returns a reference to the value_type subobject in the container element object managed by this node handle. 
+The behavior is undefined if the node handle is empty.
+#### Exceptions
+Throws nothing.
+
+---
+#### <big><big>key</big></big>
+```cpp title="map containers only"
+key_type& key() const;
+```
+Returns a non-const reference to the key_type member of the value_type subobject in the container element object managed by this node handle. 
+The behavior is undefined if the node handle is empty.
+#### Exceptions
+Throws nothing.
+#### Notes
+This function makes it possible to modify the key of a node extracted from a map, and then re-insert it into the map, 
+without ever copying or moving the element.
+
+---
+#### <big><big>mapped</big></big>
+```cpp title="map containers only"
+mapped_type& mapped() const;
+```
+Returns a reference to the mapped_type member of the value_type subobject in the container element object managed by this node handle. The behavior is undefined if the node handle is empty.
+#### Exceptions
+Throws nothing.
+
+---
+#### <big><big>swap</big></big>
+```cpp
+void swap(/* node-handle */& nh) noexcept(/* see below */);
+```
+* swaps ownership of container nodes;
+* if one node is empty or if both nodes are non-empty and `std::allocator_traits<allocator_type>::propagate_on_container_swap` is true, 
+swaps the allocators as well.
+
+The behavior is undefined if both nodes are not empty and `std::allocator_traits<allocator_type>::propagate_on_container_swap` is false 
+and the allocators do not compare equal.
+#### Exceptions
+noexcept specification: 
+```cpp 
+noexcept(std::allocator_traits<allocator_type>::propagate_on_container_swap::value ||
+         std::allocator_traits<allocator_type>::is_always_equal::value)
+```
+
+---
+
+### Non-member functions
+
+---
+#### <big><big>swap</big></big>
+```cpp
+friend void swap(/* node-handle */& x, /* node-handle */& y) noexcept(noexcept(x.swap(y)));
+```
+Effectively executes `x.swap(y)`.
+
+This function is not visible to ordinary unqualified or qualified lookup,
+and can only be found by argument-dependent lookup when node-handle is an associated class of the arguments.
+
+---

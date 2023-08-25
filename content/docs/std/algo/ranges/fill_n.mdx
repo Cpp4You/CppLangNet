@@ -1,0 +1,122 @@
+---
+title:         ranges::fill_n algorithm
+sidebar_label: ranges::fill_n(  )
+description:   ranges::fill_n algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, fill, fill_n]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/fill_n
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/fill_n/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/fill_n/since-cpp20-simplified.mdx';
+
+# std::ranges::fill_n() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Assigns the given value to all elements in the range [`first`; `first + n`).
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>first</code> }>
+    The beginning of the range of elements to modify.
+  </Symbol>
+  <Symbol none noLink name={ <code>n</code> }>
+    Number of elements to modify.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to assign.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An output iterator that compares equal to `first + n`.
+
+### Complexity
+
+Exactly `n` assignments.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>ranges::fill_n</summary>
+
+```cpp
+struct fill_n_fn
+{
+    template<class T, std::output_iterator<const T&> O>
+    constexpr O operator()(O first, std::iter_difference_t<O> n, const T& value) const
+    {
+        for (std::iter_difference_t<O> i {}; i != n; ++first, ++i)
+            *first = value;
+        return first;
+    }
+};
+
+inline constexpr fill_n_fn fill_n {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+
+void println(const auto& v)
+{
+    for (const auto& elem : v)
+        std::cout << ' ' << elem;
+    std::cout << '\n';
+}
+
+int main()
+{
+    constexpr auto n {010};
+
+    std::vector<std::string> v(n, "▓▓░░");
+    println(v);
+
+    std::ranges::fill_n(v.begin(), n, "░░▓▓");
+    println(v);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+ ▓▓░░ ▓▓░░ ▓▓░░ ▓▓░░ ▓▓░░ ▓▓░░ ▓▓░░ ▓▓░░
+ ░░▓▓ ░░▓▓ ░░▓▓ ░░▓▓ ░░▓▓ ░░▓▓ ░░▓▓ ░░▓▓
+```
+
+</div>
+</Columns>

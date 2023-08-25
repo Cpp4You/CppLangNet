@@ -1,0 +1,6 @@
+```cpp
+// (1)
+template< no-throw-forward-range I, class T >
+  requires std::constructible_from<std::iter_value_t<I>, const T&>
+I uninitialized_fill_n( I first, std::iter_difference_t<I> n, const T& x );
+```

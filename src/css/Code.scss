@@ -1,10 +1,20 @@
+pre {
+	tab-size: 4;
+	font-family: "Jetbrains Mono", "Consolas", monospace;
+	font-variant-ligatures: none;
+
+	.token-line {
+		position: relative;
+	}
+}
+
 .code-block-error-line {
 	display: block;
 	margin: 0 calc(-1 * var(--ifm-pre-padding));
 	padding: 0 var(--ifm-pre-padding);
 	background-color: #ff000020;
 	border-left: 3px solid #ff000080;
-	
+
 	>.token:first-child {
 		display: inline-block;
 		margin-left: -3px;
@@ -17,6 +27,7 @@
 	padding: 0 var(--ifm-pre-padding);
 	background-color: #a6fff34d;
 	border-left: 3px solid #7cffee;
+
 	>.token:first-child {
 		display: inline-block;
 		margin-left: -3px;
@@ -29,6 +40,7 @@
 	padding: 0 var(--ifm-pre-padding);
 	background-color: #fff8e6FF;
 	border-left: 3px solid #e6a700;
+
 	>.token:first-child {
 		display: inline-block;
 		margin-left: -3px;
@@ -36,23 +48,22 @@
 }
 
 
-html[data-theme='dark']
-{
+html[data-theme='dark'] {
 
-.code-block-error-line {
-	background-color: #ff000020;
-	border-left-color: #ff000080;
-}
+	.code-block-error-line {
+		background-color: #ff000020;
+		border-left-color: #ff000080;
+	}
 
-.code-block-highlighted-line {
-	background-color: #a6fff31a;
-	border-left-color: #6fffec80;
-}
+	.code-block-highlighted-line {
+		background-color: #a6fff31a;
+		border-left-color: #6fffec80;
+	}
 
-.code-block-warning-line {
-	background-color: #4d38004d;
-	border-left-color: #e6a700;
-}
+	.code-block-warning-line {
+		background-color: #4d38004d;
+		border-left-color: #e6a700;
+	}
 
 }
 
@@ -70,8 +81,7 @@ html[data-theme='dark']
 }
 
 
-html[data-theme="dark"]
-{
+html[data-theme="dark"] {
 	--codeblock-title-bg: rgb(24, 24, 24);
 	--codeblock-title-bg-gradient: radial-gradient(circle, rgb(27, 35, 37) 0%, rgb(28, 32, 41) 40%, rgb(18, 25, 44) 70%);
 
@@ -84,6 +94,7 @@ html[data-theme="dark"]
 
 .theme-code-block {
 	border: 2px solid var(--codeblock-border-color);
+
 	>div[class*='codeBlockTitle'] {
 		// font-size: 90%;
 		padding: 0.25em 0.8em;
@@ -95,6 +106,29 @@ html[data-theme="dark"]
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
 	}
+	
 }
 
+pre.prism-code+div button{
+	opacity: 0.6 !important;
+}
 
+code-d {
+	color: #339900;
+	background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    display: inline-block;
+}
+
+// This is a bodge for <code> tags displaying equasions, until KaTeX is implemented
+.no-break{
+	display: inline-block;
+}
+
+.col-d {
+	color: #339900;
+}
+
+.col-g {
+	color: gray;
+}

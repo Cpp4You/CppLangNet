@@ -1,0 +1,73 @@
+---
+title:                  C++ named requirements:LegacyBidirectionalIterator
+tags:                   [named_req,LegacyBidirectionalIterator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *LegacyBidirectionalIterator*
+
+A ***LegacyBidirectionalIterator*** is a [*LegacyForwardIterator*](/docs/named_req/LegacyForwardIterator) 
+that can be moved in both directions (i.e. incremented and decremented).
+
+If a *LegacyBidirectionalIterator* `it` originates from a [*Container*](/docs/named_req/Container), 
+then `it`'s `value_type` is the same as the container's, so dereferencing (`*it`) obtains the container's `value_type`.
+
+### Requirements
+The type **It** satisfies *LegacyBidirectionalIterator* if
+
+* The type **It** satisfies [*LegacyForwardIterator*](/docs/named_req/LegacyForwardIterator) 
+
+And, given
+
+* `a` and `b`, lvalues of type **It**
+* `reference`, the type denoted by <code><a href="/docs/std/iterator/iterator_traits">std::iterator_traits</a>&lt;It&gt;::reference</code>
+
+The following expressions must be valid and have their specified effects:
+
+| **Expression** | **Return**                   | **Equivalent expression**         | **Notes**                                                                                                                                                                                                                       |
+|:--------------:|:----------------------------:|:---------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| `--a`          | **It&**                      |                                   | Preconditions: `a` is decrementable (there exists such `b` that `a == ++b`) <br/>Postconditions: `a` is dereferenceable `--(++a) == a` <br/>If `--a == --b` then `a == b` <br/>`a` and `--a` designate the same iterator object |
+| `a--`          | convertible to **const It&** | `It temp = a;  --a; return temp;` |                                                                                                                                                                                                                                 |
+| `*a--`         | `reference`                  |                                   |                                                                                                                                                                                                                                 |
+
+A mutable *LegacyBidirectionalIterator* is a *LegacyBidirectionalIterator* that additionally satisfies 
+the [*LegacyOutputIterator*](/docs/named_req/LegacyOutputIterator) requirements.
+
+### Notes
+The begin iterator is not decrementable and the behavior is undefined if `--container.begin()` is evaluated.
+
+A bidirectional iterator does not have to be dereferenceable to be decrementable 
+(in particular, the end iterator is not dereferenceable but is decrementable).
+
+### <Since v='cpp20'>Concept</Since>
+
+<details>
+<summary>Click to expand</summary>
+<div>
+
+For the definition of std::iterator_traits, the following exposition-only concept is defined.
+```cpp
+template<class I>
+concept __LegacyBidirectionalIterator =
+    __LegacyForwardIterator<I> && requires(I i)
+    {
+        {  --i } -> std::same_as<I&>;
+        {  i-- } -> std::convertible_to<const I&>;
+        { *i-- } -> std::same_as<std::iter_reference_t<I>>;
+    };
+```
+where the exposition-only concept `__LegacyIterator` is described in [LegacyIterator#Concept](/docs/named_req/LegacyIterator#concept).
+
+</div>
+</details>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|        DR       | Applied to |                    Behavior as published                    |               Correct behavior              |
+|:---------------:|:----------:|:-----------------------------------------------------------:|:-------------------------------------------:|
+| LWG 299 (N3066) | C++98      | the return type of `*a--` was required to be convertible to **T** | the return type is required to be reference |
+| LWG 383         | C++98      | b was required to be dereferenceable after `--a`              | `a` is required to be dereferenceable instead |

@@ -1,0 +1,146 @@
+---
+title:                  std::uses_allocator_construction_args
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+import ClassSummary				            from "@site-comps/ClassSummary";
+import SwitchView                           from "@site-comps/SwitchView";
+import { Since, Until, Removed, Version }   from "@site-comps/Versions";
+import { Static }                           from "@site-comps/StaticTag";
+import SymbolTable, { Symbol }              from "@site-comps/SymbolTable";
+
+import T_Is_Pair                            from "./_uses_allocator_construction_args/tispair.mdx";
+import T_Not_Pair                           from "./_uses_allocator_construction_args/tnotpair.mdx";
+
+<ClassSummary name="uses_allocator_construction_args" namespaces="std" folder="memory" headerName="memory"/>
+
+<SwitchView content={{
+    "T is not a specialization of std::pair" : <T_Not_Pair />,
+    "T is a specialization of std::pair": <T_Is_Pair />,
+}}/>
+
+Prepares the argument list needed to create an object of the given type T by means of [uses-allocator](../uses_allocator) construction.
+    1) This overload participates in overload resolution only if T is not a specialization of [std::pair](/docs/std/utility/pair). 
+    Returns [std::tuple](/docs/std/utility/tuple) determined as follows:
+        * If `std::uses_allocator_v<T, Alloc>` is false and `std::is_constructible_v<T, Args...> `is true, returns `std::forward_as_tuple(std::forward<Args>(args)...)`
+        * Otherwise, if `std::uses_allocator_v<T, Alloc>` is true and `std::is_constructible_v<T, std::allocator_arg_t, const Alloc&, Args...>` is true, 
+        returns `std::tuple<std::allocator_arg_t, const Alloc&, Args&&...>(std::allocator_arg, alloc, std::forward<Args>(args)...)`
+        * Otherwise, if `std::uses_allocator_v<T, Alloc>` is true and `std::is_constructible_v<T, Args..., const Alloc&>` is true, 
+        returns `std::forward_as_tuple(std::forward<Args>(args)..., alloc)`
+        * Otherwise, the program is ill-formed
+      
+    2) This overload participates in overload resolution only if T is a specialization of [std::pair](/docs/std/utility/pair). 
+    For T that is std::pair&lt;T1, T2&gt;, equivalent to
+
+    ```cpp
+    return std::make_tuple( std::piecewise_construct,
+    std::apply( [&alloc](auto&&... args1) {
+            return std::uses_allocator_construction_args<T1>( alloc,
+                       std::forward<decltype(args1)>(args1)...);
+        }, std::forward<Tuple1>(x)),
+    std::apply( [&alloc](auto&&... args2) {
+            return std::uses_allocator_construction_args<T2>( alloc,
+                    std::forward<decltype(args2)>(args2)...);
+        }, std::forward<Tuple2>(y))
+    );
+    ```
+
+    3) This overload participates in overload resolution only if T is a specialization of [std::pair](/docs/std/utility/pair). Equivalent to
+
+    ```cpp
+    return std::uses_allocator_construction_args<T>(alloc,
+    std::piecewise_construct, std::tuple<>{}, std::tuple<>{}
+    );
+    ```
+    
+    4) This overload participates in overload resolution only if T is a specialization of [std::pair](/docs/std/utility/pair). Equivalent to
+
+    ```cpp
+    return std::uses_allocator_construction_args<T>( alloc,
+    std::piecewise_construct,
+    std::forward_as_tuple(std::forward<U>(u)),
+    std::forward_as_tuple(std::forward<V>(v))
+    );
+    ```
+    5-6) This overload participates in overload resolution only if T is a specialization of [std::pair](/docs/std/utility/pair). Equivalent to
+
+    ```cpp
+    return std::uses_allocator_construction_args<T>( alloc,
+    std::piecewise_construct,
+    std::forward_as_tuple(pr.first),
+    std::forward_as_tuple(pr.second)
+    );
+    ```
+    7-8) This overload participates in overload resolution only if T is a specialization of [std::pair](/docs/std/utility/pair). Equivalent to
+
+    ```cpp
+    return std::uses_allocator_construction_args<T>( alloc,
+    std::piecewise_construct,
+    std::forward_as_tuple(std::get<0>(std::move(pr))),
+    std::forward_as_tuple(std::get<1>(std::move(pr))));
+    ```
+    9) This overload participates in overload resolution only if T is a specialization of [std::pair](/docs/std/utility/pair). and given the exposition-only function template
+
+    ```cpp
+    template< class A, class B >
+    void /*deduce-as-pair*/( const std::pair<A, B>& );
+    ```
+    , `/*deduce-as-pair*/(non_pair)` is ill-formed when considered as an unevaluated operand.
+    Let the exposition-only class *pair-constructor* be defined as
+
+    ```cpp
+    class /*pair-constructor*/ {
+    const Alloc& alloc_; // exposition only
+    NonPair&     u_;     // exposition only
+ 
+    constexpr reconstruct(const std::remove_cv<T>& p) const // exposition only
+    {
+        return std::make_obj_using_allocator<std::remove_cv<T>>(alloc_, p);
+    }
+ 
+    constexpr reconstruct(std::remove_cv<T>&& p) const // exposition only
+    {
+        return std::make_obj_using_allocator<std::remove_cv<T>>(alloc_, std::move(p));
+    }
+ 
+    public:
+        constexpr operator std::remove_cv<T>() const
+        {
+            return reconstruct(std::forward<NonPair>(u_));
+        }
+    };
+    ```
+    This overload is equivalent to `return std::make_tuple(pair_construction);`, 
+    where pair_construction is a value of type *pair-constructor* whose *alloc_* and *u_* members are `alloc` and `non_pair` respectively.
+
+### Parameters
+`alloc`	-	the allocator to use. <br/>
+`args`	-	the arguments to pass to T's constructor <br/>
+`x`	-	tuple of arguments to pass to the constructors of T's first data member <br/>
+`y`	-	tuple of arguments to pass to the constructors of T's second data member <br/>
+`u`	-	single argument to pass to the constructor of T's first data member <br/>
+`v`	-	single argument to pass to the constructor of T's second data member <br/>
+`pr`	-	a pair whose first data member will be passed to the constructor of T's first data member and second data member will be passed to the constructor of T's second data member <br/>
+`non_pair`	-	single argument to convert to a std::pair for further construction <br/>
+
+### Return value
+[std::tuple](docs/std/utility/tuple) of arguments suitable for passing to the constructor of T.
+
+### Example
+#### This section is incomplete
+
+### Notes
+The overloads (2-9) provide allocator propagation into [std::pair](docs/std/utility/pair), which supports neither leading-allocator nor trailing-allocator calling conventions 
+(unlike, e.g. [std::tuple](docs/std/utility/tuple), which uses leading-allocator convention).
+
+When used in uses-allocator construction, the conversion function of pair-constructor converts the provided argument to [std::pair](docs/std/utility/pair) at first,
+and then constructs the result from that [std::pair](docs/std/utility/pair) by uses-allocator construction.
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                    Behavior as published                    |        Correct behavior       |
+|:--------:|:----------:|:-----------------------------------------------------------:|:-----------------------------:|
+| LWG 3525 | C++20      | no overload could handle non-pair types convertible to pair | reconstructing overload added |

@@ -1,0 +1,142 @@
+---
+title:         ranges::pop_heap algorithm
+sidebar_label: ranges::pop_heap(  )
+description:   ranges::pop_heap algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, heap, pop_heap]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/pop_heap
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+
+<!-- Terms -->
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/pop_heap/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/pop_heap/since-cpp20-simplified.mdx';
+
+# std::ranges::pop_heap() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Swaps the value in the position first and the value in the position `last - 1` and makes the subrange [`first`; `last - 1`) into a max heap.  
+This has the effect of removing the first element from the heap defined by the range [`first`; `last`).
+
+- **(1)** Elements are compared using the given binary comparison function `comp` and projection object `proj`.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements defining the valid nonempty heap to modify.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements defining the valid nonempty heap to modify.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    The projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+An iterator equal to `last`.
+
+### Complexity
+
+Given `N` `ranges::distance(first, last)`:
+
+At most **2  \* log(N)** comparisons and **4 \* log(N)** projections.
+
+### Exceptions
+
+**(none)**
+
+### Notes
+
+A max heap is a range of elements [`f`; `l`), arranged with respect to comparator `comp` and projection `proj`, that has the following properties:
+ - Given `N` as `l - f`, `p = f[(i - 1) / 2]`, and `q = f[i]`, for all `0 < i < N`, the expression `std::invoke(comp, std::invoke(proj, p), std::invoke(proj, q))` evaluates to `false`.
+ - A new element can be added using [`ranges::push_heap`](#), in **O(log(N))** time.
+ - The first element can be removed using [`ranges::pop_heap`](#), in **O(log(N))** time.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <iterator>
+#include <string_view>
+
+template<class I = int*>
+void print(std::string_view rem, I first = {}, I last = {},
+           std::string_view term = "\n")
+{
+    for (std::cout << rem; first != last; ++first)
+        std::cout << *first << ' ';
+    std::cout << term;
+}
+
+int main()
+{
+    std::array v {3, 1, 4, 1, 5, 9, 2, 6, 5, 3};
+    print("initially, v: ", v.cbegin(), v.cend());
+
+    std::ranges::make_heap(v);
+    print("make_heap, v: ", v.cbegin(), v.cend());
+
+    print("convert heap into sorted array:");
+    for (auto n {std::ssize(v)}; n >= 0; --n)
+    {
+        std::ranges::pop_heap(v.begin(), v.begin() + n);
+        print("[ ", v.cbegin(), v.cbegin() + n, "]  ");
+        print("[ ", v.cbegin() + n, v.cend(), "]\n");
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+initially, v: 3 1 4 1 5 9 2 6 5 3
+make_heap, v: 9 6 4 5 5 3 2 1 1 3
+convert heap into sorted array:
+[ 6 5 4 3 5 3 2 1 1 9 ]  [ ]
+[ 5 5 4 3 1 3 2 1 6 ]  [ 9 ]
+[ 5 3 4 1 1 3 2 5 ]  [ 6 9 ]
+[ 4 3 3 1 1 2 5 ]  [ 5 6 9 ]
+[ 3 2 3 1 1 4 ]  [ 5 5 6 9 ]
+[ 3 2 1 1 3 ]  [ 4 5 5 6 9 ]
+[ 2 1 1 3 ]  [ 3 4 5 5 6 9 ]
+[ 1 1 2 ]  [ 3 3 4 5 5 6 9 ]
+[ 1 1 ]  [ 2 3 3 4 5 5 6 9 ]
+[ 1 ]  [ 1 2 3 3 4 5 5 6 9 ]
+[ ]  [ 1 1 2 3 3 4 5 5 6 9 ]
+```
+
+</div>
+</Columns>

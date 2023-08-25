@@ -1,0 +1,39 @@
+---
+title:                  C++ named requirements:CopyConstructible 
+tags:                   [named_req,CopyConstructible]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Until, Since, Version}             from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *CopyConstructible*
+Specifies that an instance of the type can be copy-constructed from an [lvalue expression](/docs/std/language/value_category).
+
+### Requirements
+The type T satisfies *CopyConstructible* if
+* The type T satisfies *MoveConstructible*, and
+
+Given
+* `v`, an [lvalue](/docs/std/language/value_category#lvalue) expression of type T or const T or an [rvalue](/docs/std/language/value_category#rvalue) 
+expression of type const T
+* `u`, an arbitrary identifier
+
+The following expressions must be valid and have their specified effects
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Expression</b>}     desc={<b>Post-conditions</b>}/>
+    <Symbol name={<code>T u = v;</code>} desc={<>The value of u is equivalent to the value of v.<br/>The value of v is unchanged.</>}/>
+    <Symbol name={<code>T(v)</code>}     desc={<>The value of T(v) is equivalent to the value of v.<br/>The value of v is unchanged.</>}/>
+</SymbolTable>
+
+&emsp;<Until v='cpp11'>The expression `v.~T()` also must be valid, and, for [lvalue](/docs/std/language/value_category#lvalue) `v`, 
+the expression `&v` must have the type `T*` or `const T*` and must evaluate to the address of `v`.</Until>
+
+
+### Notes
+
+&emsp;<br/><Until v='cpp11'>classes that overloaded operator& were not *CopyConstructible* and thus were not usable in the 
+[standard library containers](/docs/std/container). This is a design decision in C++98 
+(instead of a defect, see [LWG issue 390](https://cplusplus.github.io/LWG/issue390)).</Until>
+&emsp;<br/><Since v='cpp11'>the standard library uses [std::addressof](/docs/std/memory/addressof) whenever the address of an object is needed.</Since>

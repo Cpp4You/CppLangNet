@@ -1,0 +1,29 @@
+---
+title:                  C++ named requirements:SharedTimedLockable     
+tags:                   [named_req,SharedTimedLockable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp14'><small>C++ named requirements:</small> *SharedTimedLockable*</Since>
+
+The ***SharedTimedLockable*** requirements describe the characteristics of types that provide timed shared blocking semantics for execution agents (threads, processes, tasks).
+
+### Requirements
+* [*SharedLockable*](/docs/named_req/SharedLockable)
+
+For type `L` to be *SharedTimedLockable*, given
+* `rel_time`, a value of a specialization of [std::chrono::duration](/docs/std/chrono/duration), and
+* `abs_time`, a value of a specialization of [std::chrono::time_point](/docs/std/chrono/time_point),
+
+the following conditions have to be satisfied for an object `m` of type **L**:
+
+| **Expression**                      | **Requires**                                                                             | **Return value**                                    |
+|:-----------------------------------:|:----------------------------------------------------------------------------------------:|:---------------------------------------------------:|
+| `m.try_lock_shared_for(rel_time)`   | Blocks for the provided duration `rel_time` or until a lock on `m` is acquired.          | <a>true</a> if the lock was acquired, <a>false</a> otherwise. |
+| `m.try_lock_shared_until(abs_time)` | Blocks until the provided time point `abs_time` is reached or a lock on `m` is acquired. | <a>true</a> if the lock was acquired, <a>false</a> otherwise. |
+
+### Notes
+The try_lock_shared_for and try_lock_shared_until member functions obtain a shared lock on `m` on succcess.

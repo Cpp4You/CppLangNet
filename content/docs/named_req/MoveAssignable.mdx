@@ -1,0 +1,31 @@
+---
+title:                  C++ named requirements:MoveAssignable  
+tags:                   [named_req,MoveAssignable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Version}             from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *MoveAssignable *</Since>
+Specifies that an instance of the type can be assigned from an [rvalue](/docs/std/language/value_category) argument.
+
+### Requirements
+The type T satisfies *MoveAssignable * if <br/>
+Given
+* `t`, a modifiable [lvalue expression](/docs/std/language/value_category) of type T
+* `rv`, an [rvalue](/docs/std/language/value_category) expression of T
+
+The following expressions must be valid and have their specified effects
+
+| **Expression** | **Return** type | **Return value** |  **Post-conditions**  |
+|:---:|:---:|:---:|:---:|
+| `t = rv` | T& | t | If t and rv do not refer to the same object , the value of t is equivalent to the value of rv before the assignment. The new value of rv is unspecified |
+
+### Notes
+
+The type does not have to implement [move assignment](/docs/std/language/move_assignment) operator in order to satisfy this type requirement: 
+a [copy assignment](/docs/std/language/copy_assignment) operator that takes its parameter by value or as a `const Type&`, will bind to [rvalue](/docs/std/language/value_category) argument.
+
+If a *MoveAssignable* class implements a [move assignment](/docs/std/language/move_assignment) operator, 
+it may also implement [move semantics](/docs/std/utility/move) to take advantage of the fact that the value of `rv` after assignment is unspecified.

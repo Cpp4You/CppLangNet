@@ -1,0 +1,101 @@
+---
+title:                  C++ named requirements:UnorderedAssociativeContainer 
+tags:                   [named_req,UnorderedAssociativeContainer]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}     from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *UnorderedAssociativeContainer*</Since>
+
+Unordered associative containers are [Container](/docs/named_req/Container)s that provide fast lookup of objects based on keys.
+Worst case complexity is linear but on average much faster for most of the operations.
+
+Unordered associative containers are parametrized by **Key**; **Hash**, a [Hash](/docs/named_req/Hash) function object which acts as hash function on **Key**; 
+and **Pred**, a [*BinaryPredicate*](/docs/named_req/BinaryPredicate) evaluating equivalence between **Keys**.
+[std::unordered_map](/docs/std/containers/maps/unordered_map) and [std::unordered_multimap](/docs/std/containers/maps/unordered_multimap) 
+also have a mapped type **T** associated with the **Key**.
+
+If two **Keys** are equal according to **Pred**, **Hash** must return the same value for both keys.
+
+&emsp; <br/><Since block v='cpp20'> If both <code>Hash::is_transparent</code> and <code>Pred::is_transparent</code> exist and each names a type, 
+member functions find, contains, count, and equal_range accept arguments of types other than <b>Key</b> and expect that <b>Hash</b> is callable with values of those types,
+and that <b>Pred</b> is a transparent comparison function such as std::equal_to&lt;&gt;.</Since> &emsp; <br/>
+
+[std::unordered_map](/docs/std/containers/maps/unordered_map) and [std::unordered_set](/docs/std/containers/sets/unordered_set) can contain at most one element with a given key, 
+[std::unordered_multiset](/docs/std/containers/sets/unordered_multiset) and [std::unordered_multimap](/docs/std/containers/maps/unordered_multimap) 
+instead can have multiple elements with the same key (which must always be adjacent on iterations).
+
+For [std::unordered_set](/docs/std/containers/sets/unordered_set) and [std::unordered_multiset](/docs/std/containers/sets/unordered_multiset) 
+the value type is the same as the key type and both iterator and const_iterator are constant iterators. 
+For [std::unordered_map](/docs/std/containers/maps/unordered_map) and [std::unordered_multimap](/docs/std/containers/maps/unordered_multimap) 
+the value type is [std::pair](/docs/std/utility/pair)&lt;const Key, T&gt;.
+
+Elements in an unordered associative container are organized into buckets, keys with the same hash will end up in the same bucket. 
+The number of buckets is increased when the size of the container increases to keep the average number of elements in each bucket under a certain value.
+
+Rehashing invalidates iterator and might cause the elements to be re-arranged in different buckets but it doesn't invalidate references to the elements.
+
+Unordered associative containers meet the requirements of [*AllocatorAwareContainer*](/docs/named_req/AllocatorAwareContainer). 
+For [std::unordered_map](/docs/std/containers/maps/unordered_map) and [std::unordered_multimap](/docs/std/containers/maps/unordered_multimap) 
+the requirements of value_type in [*AllocatorAwareContainer*](/docs/named_req/AllocatorAwareContainer) apply to key_type and mapped_type (not to value_type).
+
+### Requirements
+#### Legend
+`X`	      Container type                                                                                                      <br/>
+`a`	      Object of type **X**                                                                                                <br/>
+`b`	      const Object of type **X**                                                                                          <br/>
+`a_uniq`  Object in **X** when **X** supports unique keys                                                                     <br/>
+`a_eq`	  Object in **X** when **X** supports multiple equivalent keys                                                        <br/>
+`i`, `j`  [*LegacyInputIterators*](/docs/named_req/LegacyInputIterators) denoting a valid range                               <br/>
+`p`, `q2` valid const_iterator to a                                                                                           <br/>
+`q`, `q1` dereferenceable const_iterator to a denoting a valid range                                                          <br/>
+`il`	  Object of <code><a href="/docs/std/utility/initializer_list">std::initializer_list</a>&lt;X::value_type&gt;</code>  <br/>
+`t`	      Object of type **X::value_type**                                                                                    <br/>
+`k`	      Object of type **X::key_type**                                                                                      <br/>
+`hf`	  const Object of type **X::hasher**                                                                                  <br/>
+`e`q	  const Object of type **X::key_equal**                                                                               <br/>
+`n`	      Value of type **X::size_type**                                                                                      <br/>
+`z`	      Value of type float
+
+| **Expression**            | **Return type**                                                                 | **Pre/Requirements**                                                                                                                                                                            | **Post/Effects**                                                                                                                                            | **Complexity**                                                        |
+|:-------------------------:|:-------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------------------------------------------------------------:|
+| `X::key_type`             | **Key**                                                                         |                                                                                                                                                                                                 |                                                                                                                                                             | compile time                                                          |
+| `X::mapped_type`          | **T**                                                                           | [std::unordered_map](/docs/std/containers/maps/unordered_map) and [std::unordered_multimap](/docs/std/containers/maps/unordered_multimap) only                                                  |                                                                                                                                                             | compile time                                                          |
+| `X::value_type`           | **Key**                                                                         | [std::unordered_set](/docs/std/containers/sets/unordered_set) and [std::unordered_multiset](/docs/std/containers/sets/unordered_multiset) only. [*Erasable*](/docs/named_req/Erasable) in **X** |                                                                                                                                                             | compile time                                                          |
+| `X::value_type`           | <code><a href="/docs/std/utility/pair">std::pair</a>&lt;const Key, T&gt;</code> | [std::unordered_map](/docs/std/containers/maps/unordered_map) and [std::unordered_multimap](/docs/std/containers/maps/unordered_multimap) only. [*Erasable*](/docs/named_req/Erasable) in **X** |                                                                                                                                                             | compile time                                                          |
+| `X::hasher`               | **Hash**                                                                        | **Hash**                                                                                                                                                                                        |                                                                                                                                                             | compile time                                                          |
+| `X::key_equal`            | **Pred**                                                                        | [*BinaryPredicate*](/docs/named_req/BinaryPredicate) taking two arguments of type **Key** and expressing an equivalence relation.                                                               |                                                                                                                                                             | compile time                                                          |
+| `X::local_iterator`       | An LegacyIterator whose category and types are the same as X::iterator          |                                                                                                                                                                                                 | Can be used to iterate through a single bucket                                                                                                              | compile time                                                          |
+| `X::const_local_iterator` | An LegacyIterator whose category and types are the same as X::const_iterator    |                                                                                                                                                                                                 | Can be used to iterate through a single bucket                                                                                                              | compile time                                                          |
+| `X(n,hf,eq)`              | **X**                                                                           | **hasher** and **key_equal** [*CopyConstructible*](/docs/named_req/CopyConstructible)                                                                                                           | Constructs an empty container with at least **n** buckets, using the given hash function and equality predicate                                             | linear in **n**                                                       |             
+| `X(n,hf)`                 | **X**                                                                           | **hasher** [*CopyConstructible*](/docs/named_req/CopyConstructible) , **key_equal** [*DefaultConstructible*](/docs/named_req/DefaultConstructible)                                              | Constructs an empty container with at least **n** buckets, using the given hash function and **key_equal()** as equality predicate                          | linear in **n**                                                       |
+| `X(n)`                    | **X**                                                                           | **hasher** and **key_equal** [*DefaultConstructible*](/docs/named_req/DefaultConstructible)                                                                                                     | Constructs an empty container with at least **n** buckets, using **hasher()** as hash function and **key_equal()** as equality predicate                    | linear in **n**                                                       |
+| `X()`                     | **X**                                                                           | **hasher** and **key_equal** [*DefaultConstructible*](/docs/named_req/DefaultConstructible)                                                                                                     | Constructs an empty container with an unspecified number of buckets, using **hasher()** as hash function and **key_equal()** as equality predicate          | constant                                                              |
+| `X(i,j,n,hf,eq)`          | **X**                                                                           | **hasher** and **key_equal** [*CopyConstructible*](/docs/named_req/CopyConstructible), value_type [*EmplaceConstructible*](/docs/named_req/EmplaceConstructible)  into **X** from `*i`          | Constructs an empty container with at least **n** buckets, using the given hash function and equality predicate, and inserts elements from `[i,j)` into it. | average linear, worst quadratin (on the distance between `i` and `j`) |
+| `X(i,j,n,hf)`             | **X**                                                                           | **key_equal** [*DefaultConstructible*](/docs/named_req/DefaultConstructible)                                                                                                                    | As above, with `eq=key_equal()`                                                                                                                             | see above                                                             |
+| `X(i,j,n)`                | **X**                                                                           | **hasher** [*DefaultConstructible*](/docs/named_req/DefaultConstructible)                                                                                                                       | As above, with `hf=hasher()`                                                                                                                                | see above                                                             |
+| `X(i,j)`                  | **X**                                                                           |                                                                                                                                                                                                 | As above, with an unspecified number of buckets                                                                                                             | see above                                                             |
+| `X(il)`                   | **X**                                                                           |                                                                                                                                                                                                 | `X(il.begin(),il.end()`                                                                                                                                     | see above                                                             |
+| `X(il,n)`                 | **X**                                                                           |                                                                                                                                                                                                 | `X(il.begin(),il.end(),n`                                                                                                                                   | see above                                                             |
+| `X(il,n,hf)`              | **X**                                                                           |                                                                                                                                                                                                 | `X(il.begin(),il.end(),n,hf`                                                                                                                                | see above                                                             |
+| `X(il,n,hf,eq)`           | **X**                                                                           |                                                                                                                                                                                                 | `X(il.begin(),il.end(),n,hf,eq`                                                                                                                             | see above                                                             |
+| `X(b)`                    | **X**                                                                           |                                                                                                                                                                                                 | Copy constructors, also copies the hash function, predicate and maximum load factor                                                                         | average linear, worst quadratic (in `b.size()`)                       |
+| `a = b`                   | **X&**                                                                          |                                                                                                                                                                                                 | Copy assignment, also copies the hash function, predicate and maximum load factor                                                                           | average linear, worst quadratic (in `b.size()`)                       |
+| `a = il`                  | **X&**                                                                          | value_type [*CopyAssignable*](/docs/named_req/CopyAssignable) and[*CopyInsertable*](/docs/named_req/CopyInsertable) into **X**                                                                  | a = X(il)                                                                                                                                                   | see above                                                             |
+
+:::caution
+This section is incomplete <br/>
+Reason: Unfinished requirements regarding member functions
+:::
+
+### Unordered associative containers in the standard library
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/containers/sets/unordered_set"      name={<>std::unordered_set<Version v='cpp11'></Version></>}      desc="collection of unique keys, hashed by keys"/>
+    <Symbol autoLink linkName="/docs/std/containers/sets/unordered_multiset" name={<>std::unordered_multiset<Version v='cpp11'></Version></>} desc="collection of keys, hashed by keys"/>
+    <Symbol autoLink linkName="/docs/std/containers/maps/unordered_map"      name={<>std::unordered_map<Version v='cpp11'></Version></>}      desc="collection of key-value pairs, hashed by keys, keys are unique"/>
+    <Symbol autoLink linkName="/docs/std/containers/maps/unordered_multimap" name={<>std::unordered_multimap<Version v='cpp11'></Version></>} desc="collection of key-value pairs, hashed by keys"/>
+</SymbolTable>

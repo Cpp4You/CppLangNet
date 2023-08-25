@@ -1,0 +1,157 @@
+---
+title:         is_partitioned algorithm
+sidebar_label: is_partitioned(  )
+description:   is_partitioned algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, is_partitioned, partition, partitioned]
+
+cppreference_origin_rel: w/cpp/algorithm/is_partitioned
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import Tooltip                 from '@site-comps/Tooltip';
+import SwitchView              from "@site-comps/SwitchView";
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11 from './_codes/is_partitioned/since-cpp11.mdx';
+import Signature_SinceCpp17 from './_codes/is_partitioned/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/is_partitioned/since-cpp20.mdx';
+
+# std::is_partitioned() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'since-cpp11': <Signature_SinceCpp11 />
+}} />
+
+
+- **(1)** Returns `true` if all elements in the range [`first`; `last`) that satisfy the predicate `p` appear before all elements that don't.
+
+  Also returns `true` if [`first`; `last`) is empty.
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::is_partitioned_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to check.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Unary predicate which returns `true` if the element value should be replaced.
+
+The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>UnaryPredicate</code> }>
+    <a href="/docs/named_req/Predicate">Predicate</a>
+  </Symbol>
+</SymbolTable>
+
+`ForwardIt::value_type` must be [convertible](#) to `UnaryPredicate`'s argument type.
+
+
+### Return value
+
+If the range is empty or partitioned by `p` - `true`.  
+Otherwise, `false`.
+
+### Complexity
+
+At most `std::distance(first, last)` applications of `p`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>is_partitioned (1)</summary>
+
+```cpp
+
+template<class InputIt, class UnaryPredicate>
+bool is_partitioned(InputIt first, InputIt last, UnaryPredicate p)
+{
+    for (; first != last; ++first)
+        if (!p(*first))
+            break;
+    for (; first != last; ++first)
+        if (p(*first))
+            return false;
+    return true;
+}
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+
+int main()
+{
+    std::array<int, 9> v {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    auto is_even = [](int i) { return i % 2 == 0; };
+    std::cout.setf(std::ios_base::boolalpha);
+    std::cout << std::is_partitioned(v.begin(), v.end(), is_even) << ' ';
+
+    std::partition(v.begin(), v.end(), is_even);
+    std::cout << std::is_partitioned(v.begin(), v.end(), is_even) << ' ';
+
+    std::reverse(v.begin(), v.end());
+    std::cout << std::is_partitioned(v.cbegin(), v.cend(), is_even) << ' ';
+    std::cout << std::is_partitioned(v.crbegin(), v.crend(), is_even) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+false true false true
+```
+
+</div>
+</Columns>

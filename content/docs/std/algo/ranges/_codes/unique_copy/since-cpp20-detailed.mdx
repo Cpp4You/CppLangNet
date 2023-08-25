@@ -1,0 +1,30 @@
+```cpp
+// (1)
+template<
+  std::input_iterator I,
+  std::sentinel_for<I> S,
+  std::weakly_incrementable O,
+  class Proj = std::identity,
+  std::indirect_equivalence_relation<std::projected<I, Proj>> C = ranges::equal_to
+>
+  requires std::indirectly_copyable<I, O>
+           && (std::forward_iterator<I>
+              || (std::input_iterator<O> && std::same_as<std::iter_value_t<I>, std::iter_value_t<O>>)
+              || std::indirectly_copyable_storable<I, O>)
+constexpr unique_copy_result<I, O>
+    unique_copy( I first, S last, O result, C comp = {}, Proj proj = {} );
+
+// (2)
+template<
+  ranges::input_range R,
+  std::weakly_incrementable O,
+  class Proj = std::identity,
+  std::indirect_equivalence_relation<std::projected<ranges::iterator_t<R>, Proj>> C = ranges::equal_to
+>
+  requires std::indirectly_copyable<ranges::iterator_t<R>, O>
+           && (std::forward_iterator<ranges::iterator_t<R>>
+              || (std::input_iterator<O> && std::same_as<ranges::range_value_t<R>, std::iter_value_t<O>>)
+              || std::indirectly_copyable_storable<ranges::iterator_t<R>, O>)
+constexpr unique_copy_result<ranges::borrowed_iterator_t<R>, O>
+    unique_copy( R&& r, O result, C comp = {}, Proj proj = {} );
+```

@@ -1,0 +1,29 @@
+```cpp
+// (1)
+template<
+  class T,
+  class Proj = std::identity,
+  std::indirect_strict_weak_order<std::projected<const T*, Proj>> Comp = ranges::less
+>
+constexpr ranges::minmax_result<const T&>
+    minmax( const T& a, const T& b, Comp comp = {}, Proj proj = {} );
+
+// (2)
+template<
+  std::copyable T,
+  class Proj = std::identity,
+  std::indirect_strict_weak_order<std::projected<const T*, Proj>> Comp = ranges::less
+>
+constexpr ranges::minmax_result<T>
+    minmax( std::initializer_list<T> r, Comp comp = {}, Proj proj = {} );
+
+// (3)
+template<
+  ranges::input_range R,
+  class Proj = std::identity,
+  std::indirect_strict_weak_order<std::projected<ranges::iterator_t<R>, Proj>> Comp = ranges::less
+>
+  requires std::indirectly_copyable_storable<ranges::iterator_t<R>, ranges::range_value_t<R>*>
+constexpr ranges::minmax_result<ranges::range_value_t<R>>
+    minmax( R&& r, Comp comp = {}, Proj proj = {} );
+```

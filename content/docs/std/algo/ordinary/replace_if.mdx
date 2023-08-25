@@ -1,0 +1,167 @@
+---
+title:         replace_if algorithm
+sidebar_label: replace_if(  )
+description:   replace_if algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, replace_if, condition, predicate]
+
+cppreference_origin_rel: w/cpp/algorithm/replace
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/replace_if/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/replace_if/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/replace_if/since-cpp20.mdx';
+
+# std::replace_if() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+- **(1)** Replaces all elements for which predicate `p` returns `true` with `new_value` in the range [`first`; `last`).
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::replace_if_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to process.
+  </Symbol>
+  <Symbol none noLink name={ <code>new_value</code> }>
+    The value to use as a replace_ifment.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Unary predicate which returns `true` if the element value should be replaced.
+
+The expression `p(v)` must be convertible to `bool` for every argument `v` of type (possibly const) `VT`, where `VT` is the value type of `InputIt`, regardless of value category, and must not modify `v`. Thus, a parameter type of `VT&` is not allowed <Since v='cpp11'>, nor is <code>VT</code> unless for <code>VT</code> a move is equivalent to a copy.</Since>.
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>UnaryPredicate</code> }>
+    <a href="/docs/named_req/Predicate">Predicate</a>
+  </Symbol>
+</SymbolTable>
+
+<SwitchView content={{
+  'since-cpp20': <SymbolTable>
+    <Symbol none noLink name={ <code>*first</code> }>
+      Must be <a href="#">writable</a> to <code>d_first</code>.
+    </Symbol>
+  </SymbolTable>,
+  'until-cpp20': <>
+    The expression <code>*first = new_value</code> must be valid.
+  </>,
+}} />
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+Exactly N applications of predicate `p`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={ <Term_ImplementationDefined/> }>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>replace_if (1)</summary>
+
+```cpp
+template<class ForwardIt, class UnaryPredicate, class T>
+void replace_if(ForwardIt first, ForwardIt last,
+                UnaryPredicate p, const T& new_value)
+{
+    for (; first != last; ++first)
+        if (p(*first))
+            *first = new_value;
+}
+```
+
+</details>
+
+### Notes
+
+Because the algorithm takes `old_value` and `new_value` by reference, it can have unexpected behavior if either is a reference to an element of the range [`first`; `last`).
+
+### Examples
+
+The following code at first replaces all occurrences of `8` with `88` in a vector of integers. Then it replaces all values less than `5` with `55`.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <functional>
+#include <iostream>
+
+int main()
+{
+    std::array<int, 10> s {5, 7, 4, 2, 8, 6, 1, 9, 0, 3};
+
+    std::replace(s.begin(), s.end(), 8, 88);
+
+    for (int a : s)
+        std::cout << a << ' ';
+    std::cout << '\n';
+
+    std::replace_if(s.begin(), s.end(), std::bind(std::less<int>(), std::placeholders::_1, 5), 55);
+
+    for (int a : s)
+        std::cout << a << ' ';
+    std::cout << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+5 7 4 2 88 6 1 9 0 3
+5 7 55 55 88 6 55 9 55 55
+```
+
+</div>
+</Columns>

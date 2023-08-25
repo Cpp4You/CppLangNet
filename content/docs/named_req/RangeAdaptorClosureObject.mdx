@@ -1,0 +1,43 @@
+---
+title:                  C++ named requirements:RangeAdaptorClosureObject
+tags:                   [named_req,RangeAdaptorClosureObject]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp20'><small>C++ named requirements:</small><br/>*RangeAdaptorClosureObject*</Since>
+
+Range adaptor closure objects are [*FunctionObjects*](/docs/named_req/FunctionObject) that are callable via the pipe operator: 
+if `C` is a [range](/docs/std/ranges/range) adaptor closure object and `R` is a range, these two expressions are [equivalent](/docs/std/language/expressions#Expression-equivalence):
+
+```cpp
+C(R)
+R | C
+```
+
+Two range adaptor closure objects can be chained by `operator|` to produce another range adaptor closure object: 
+if `C` and `D` are range adaptor closure objects, then `C | D` produces a range adaptor closure object `E` with the following properties:
+
+* `E` stores a copy of `C` and `D`, direct-non-list-initialized from <code><a href="/docs/std/utility/forward">std::forward</a>&lt;decltype((C))&gt;(C)</code> 
+and <code><a href="/docs/std/utility/forward">std::forward</a>&lt;decltype((D))&gt;(D)</code> respectively. 
+  If such initialization is invalid, `C | D` is also invalid.
+* Let `c` and `d` be the stored copies (with the same constness and value category as `E`), and `R` be a [range](/docs/std/ranges/range) object, 
+  the following expressions are [equivalent](/docs/std/language/expressions#Expression-equivalence):
+
+```cpp
+d(c(R))
+R | c | d
+E(R)
+R | E // R | (C | D)
+```
+
+### Notes 
+`operator()` is unsupported for volatile-qualified or const-volatile-qualified version of range adaptor object closure types.
+
+Objects whose type is the same as one of the following objects (ignoring cv-qualification) are range adaptor closure objects:
+* unary range adaptor objects,
+* <Since v='cpp23'>objects of user-defined types that meet <a href="ranges/range_adaptor_closure">the requirements of implementing a range adaptor closure object</a></Since>,
+* the results of binding trailing arguments by range adaptor objects, and
+* the results of chaining two range adaptor closure objects by `operator|`.

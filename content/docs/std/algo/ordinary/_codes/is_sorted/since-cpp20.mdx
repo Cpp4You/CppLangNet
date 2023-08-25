@@ -1,0 +1,18 @@
+```cpp
+// (1)
+template< class ForwardIt >
+constexpr bool is_sorted( ForwardIt first, ForwardIt last );
+
+// (2)
+template< class ForwardIt, class Compare >
+constexpr bool is_sorted( ForwardIt first, ForwardIt last, Compare comp );
+
+// (3)
+template< class ExecutionPolicy, class ForwardIt >
+bool is_sorted( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last );
+
+// (4)
+template< class ExecutionPolicy, class ForwardIt, class Compare >
+bool is_sorted( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last,
+                Compare comp );
+```

@@ -1,0 +1,47 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::new_object
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::new_object
+
+```cpp title='Since C++20'
+template< class U, class... CtorArgs >
+[[nodiscard]] U* new_object( CtorArgs&&... ctor_args );
+```
+Allocates and constructs an object of type U.
+
+Given alloc is a `std::pmr::polymorphic_allocator<T>`:
+```cpp
+U* p = alloc.new_object<U>(std::forward<CtorArgs>(ctor_args)...);
+```
+is equivalent to
+```cpp
+U* p = alloc.allocate_object<U>();
+try {
+  alloc.construct(p, std::forward<CtorArgs>(ctor_args)...);
+} catch (...) {
+  alloc.deallocate_object(p);
+  throw;
+}
+```
+
+### Parameters
+`ctor_args`	-	the arguments to forward to the constructor of U
+
+### Return value
+A pointer to the allocated and constructed object.
+
+### Notes
+This function was introduced for use with the fully-specialized allocator <code>[std::pmr::polymorphic_allocator&lt;&gt;](../polymorphic_allocator)</code>, 
+but it may be useful in any specialization as a shortcut to avoid having to rebind 
+from <code>[std::pmr::polymorphic_allocator&lt;T&gt;](../polymorphic_allocator)</code>
+to <code>[std::pmr::polymorphic_allocator&lt;U&gt;](../polymorphic_allocator)</code>, 
+and having to call allocate, construct, and deallocate individually.
+
+Since U is not deduced, it must be provided as a template argument when calling this function.
+
+### Exceptions
+May throw any exceptions thrown by the call to `allocate_object` or the constructor of U.

@@ -1,0 +1,73 @@
+---
+title:                  C++ named requirements:NullablePointer
+tags:                   [named_req,NullablePointer]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until}             from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *NullablePointer*</Since>
+Specifies that the type is a pointer-like object which can be compared to [std::nullptr_t](/docs/std/types/nullptr_t) objects.
+
+### Requirements
+The type must meet all of the following requirements:
+* [EqualityComparable](/docs/named_req/EqualityComparable)
+* [DefaultConstructible](/docs/named_req/DefaultConstructible)
+* [CopyConstructible](/docs/named_req/CopyConstructible)
+* [CopyAssignable](/docs/named_req/CopyAssignable)
+* <Until v='cpp23'>lvalues of the type are <a href="/docs/named_req/Swappable">Swappable</a></Until>
+* <Since v='cpp23'><a href="/docs/named_req/Swappable">Swappable</a></Since>
+* [Destructible](/docs/named_req/Destructible)
+
+In addition, a value-initialized object of the type must produce a null value of that type. 
+This null value shall only be equivalent to itself. Default initialization of the type may have an indeterminate value.
+
+An object of the type must be [contextually convertible](/docs/std/language/implicit_conversion#Contextual_conversions) to `bool`. 
+The effect of this conversion returns `false` if the value is equivalent to its null value and <a>true</a> otherwise.
+
+None of the operations that this type performs may throw exceptions.
+
+The type must satisfy the following additional expressions, given two values `p` and `q` that are of the type, 
+and that `np` is a value of [std::nullptr_t](/docs/std/types/nullptr_t) type (possibly `const` qualified):
+
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Expression</b>}                                           desc={<b>Effects</b>} />
+    <Symbol name={<><code>Type p(np);</code><br/><code>Type p = np;</code></>} desc={<>Afterwards, <code>p</code> is equivalent to <code>nullptr</code></>} />
+    <Symbol name={<><code>Type(np)</code></>}                                  desc={<>a temporary object that is equivalent to <code>nullptr</code></>}    />
+    <Symbol name={<><code>p = np</code></>}                                    desc={<>Must return a <code>Type&</code>, and afterwards, <code>p</code> is equivalent to <code>nullptr</code></>} />
+    <Symbol name={<><code>p != q</code></>}                                    desc={<><Until v='cpp23'>Must return a value that is <a href="/docs/std/language/implicit_conversion#Contextual_conversions">contextually convertible</a> to <code>bool</code></Until>
+                                                                                     <br/><Since v='cpp23'><code>decltype(p != q)</code> models <a href = "/docs/std/concepts/boolean-testable">boolean-testable</a></Since>
+                                                                                     <br/>The effect is <code>!(p == q)</code></>}      />
+    <Symbol name={<><code>p == np</code><br/><code>np == p</code></>}          desc={<><Until v='cpp23'>Must return a value that is <a href="/docs/std/language/implicit_conversion#Contextual_conversions">contextually convertible</a> to <code>bool</code></Until>
+                                                                                     <br/><Since v='cpp23'><code>decltype(p == np)</code> and <code>decltype(np == n)</code> each model <a href = "/docs/std/concepts/boolean-testable">boolean-testable</a></Since>
+                                                                                     <br/>The effect is <code>(p == Type())</code></>}  />
+    <Symbol name={<><code>p != np</code><br/><code>np != p</code></>}          desc={<><Until v='cpp23'>Must return a value that is <a href="/docs/std/language/implicit_conversion#Contextual_conversions">contextually convertible</a> to <code>bool</code></Until>
+                                                                                     <br/><Since v='cpp23'><code>decltype(p != np)</code> and <code>decltype(np != n)</code> each model <a href = "/docs/std/concepts/boolean-testable">boolean-testable</a></Since>
+                                                                                     <br/>The effect is <code>!(p == np)</code></>}     />
+</SymbolTable>
+
+### Notes
+Note that dereferencing (`operator*` or `operator->`) is not required of a *NullablePointer* type. 
+A minimalistic type that satisfies these requirements is
+
+```cpp
+class handle
+{
+    int id = 0;
+public:
+    handle() = default;
+    handle(std::nullptr_t) { }
+    explicit operator bool() const { return id != 0; }
+    friend bool operator==(handle l, handle r) { return l.id == r.id; }
+    friend bool operator!=(handle l, handle r) { return !(l == r); }
+    // or only a defaulted operator== (since C++20)
+};
+```
+
+### Standard library
+The following types must satisfy *NullablePointer*:
+* The member types `X::pointer`, `X::const_pointer`, `X::void_pointer` and `X::const_void_pointer` of every [Allocator](/docs/named_req/Allocator) type `X`.
+* The member type `X::pointer` of [std::unique_ptr](/docs/std/memory/unique_ptr).
+* The type [std::exception_ptr](/docs/std/error/exception_ptr).

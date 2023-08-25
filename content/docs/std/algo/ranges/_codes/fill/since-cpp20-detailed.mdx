@@ -1,0 +1,16 @@
+```cpp
+// (1)
+template<
+  class T,
+  std::output_iterator<const T&> O,
+  std::sentinel_for<O> S
+>
+constexpr O fill( O first, S last, const T& value );
+
+// (2)
+template<
+  class T,
+  ranges::output_range<const T&> R
+>
+constexpr ranges::borrowed_iterator_t<R> fill( R&& r, const T& value );
+```

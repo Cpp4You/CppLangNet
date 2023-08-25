@@ -8,8 +8,30 @@
 @import url('https://fonts.googleapis.com/css?family=Barlow');
 @import url('https://fonts.googleapis.com/css?family=JetBrains+Mono');
 
- /* You can override the default Infima variables here. */
+@import "./Theme.scss";
+
+
+/// Sets the background color (using Infima's variable) of the page's root to transparent
+/// in following cases:
+/// - docs
+/// - other docs-related
+/// - blog
+/// @note This is important because customized pages (e.g. homepage)
+/// set their own background color.
+@mixin remove-bgc-on-doc-pages
+{
+	&[class*="docs-version-"],
+	&[class*="plugin-blog"],
+	&[class*="plugin-docs"] {
+		--ifm-background-color: transparent;
+	}
+}
+
+/* You can override the default Infima variables here. */
 :root {
+	@include light-theme;
+	@include remove-bgc-on-doc-pages;
+
 	--ifm-color-primary:			#003082;
 	--ifm-color-primary-dark:		#002b75;
 	--ifm-color-primary-darker:		#00296e;
@@ -21,16 +43,25 @@
 	--ifm-table-cell-padding: 0.25rem 0.75rem;
 
 	--ifm-code-font-size: 95%;
-	font-variant-ligatures: none;
 	--font-inter: "Inter", "Segoe UI", "Open Sans", "Helvetica Neue", system-ui, -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+	
+	font-variant-ligatures: none;
 }
 
-footer.footer--dark a {
-	--ifm-link-color: #00d0f6;
-}
-
-html[data-theme='dark']
+footer.footer--dark
 {
+	--ifm-footer-background-color:	#040404;
+
+	a {
+		--ifm-link-color: #00d0f6;
+	}
+}
+
+#{$IS_DARK_THEME}
+{
+	@include dark-theme;
+	@include remove-bgc-on-doc-pages;
+
 	--ifm-color-primary:			#12dbff;
 	--ifm-color-primary-dark:		#00d0f6;
 	--ifm-color-primary-darker:		#00c5e8;
@@ -39,6 +70,10 @@ html[data-theme='dark']
 	--ifm-color-primary-lighter:	#3be1ff;
 	--ifm-color-primary-lightest:	#64e7ff;
 }
+
+// html {
+// 	background-color: var(--ifm-background-color);
+// }
 
 table {
 	display: table;
@@ -51,6 +86,28 @@ table {
     border-collapse:separate;
     border-radius:6px;
 	border: 2px solid rgba(gray, 0.4);
+}
+
+.theme-doc-markdown details
+{
+	--docusaurus-details-decoration-color: rgba(76, 179, 212, 0.4);
+	border-color: rgba(76, 179, 212, 0.4);
+	>summary {
+		display: flex;
+		align-items: center;
+		&::before {
+			top: unset !important;
+		}
+	}
+	&[data-size="small"]>summary {
+		padding-top: 4px;
+		padding-bottom: 4px;
+	}
+
+	&[data-size="normal"]>summary {
+		padding-top: 6px;
+		padding-bottom: 6px;
+	}
 }
 
 @import './Code.scss';

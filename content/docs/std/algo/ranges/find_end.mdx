@@ -1,0 +1,227 @@
+---
+title:         ranges::find_end algorithm
+sidebar_label: ranges::find_end(  )
+description:   ranges::find_end algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, find, find_end, sequence, search, look]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/find_end
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/find_end/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/find_end/since-cpp20-simplified.mdx';
+
+# std::ranges::find_end() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Searches for the last occurrence of a sequence in a range.
+
+- **(1)** Searches for the **last** occurrence of the sequence [`first2`; `last2`) in the range [`first1`; `last1`),
+  after projection with `proj1` and `proj2` respectively. The projected elements are compared using the binary predicate `pred`.
+
+- **(2)** Same as **(1)**, but uses `r1` as the first source range and `r2` as the second source range,
+  as if using `ranges::begin(r1)` as `first1`, `ranges::end(r1)` as `last1`, `ranges::begin(r2)` as `first2`, and `ranges::end(r2)` as `last2`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The range of elements to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>r1</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The range of elements to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Binary predicate to compare the elements with.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the elements in the first range.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the elements in the second range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+- **(1)** Value of type `ranges::subrange<I1>` initialized as follows:
+  ```cpp
+  {
+    i,
+    i + (i == last1 ? 0 : ranges::distance(first2, last2))
+  }
+  ```
+  that denotes the last occurrence of the sequence [`first2`; `last2`) in range [`first1`; `last1`) (after projections with `proj1` and `proj2`).
+
+  If [`first2`; `last2`) is empty or if no such sequence is found, the return value is effectively initialized with `{ last1, last1 }`.
+
+- **(2)** Same as **(1)**, except that the return type is `ranges::borrowed_subrange_t<R1>`.
+
+### Complexity
+
+- **(1)** Given `S` as `ranges::distance(first2, last2)` and `N` as `ranges::distance(first1, last1)`
+- **(2)** Given `S` as `ranges::distance(r2)` and `N` as `ranges::distance(r1)`
+
+At most **S \* (N - S + 1)** applications of predicate and each projection.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>find_end(1)</summary>
+
+```cpp
+struct find_end_fn
+{
+    template<std::forward_iterator I1, std::sentinel_for<I1> S1,
+             std::forward_iterator I2, std::sentinel_for<I2> S2,
+             class Pred = ranges::equal_to,
+             class Proj1 = std::identity, class Proj2 = std::identity>
+    requires std::indirectly_comparable<I1, I2, Pred, Proj1, Proj2>
+    constexpr ranges::subrange<I1>
+        operator()(I1 first1, S1 last1,
+                   I2 first2, S2 last2, Pred pred = {},
+                   Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        if (first2 == last2)
+        {
+            auto last_it = ranges::next(first1, last1);
+            return {last_it, last_it};
+        }
+        auto result = ranges::search(
+            std::move(first1), last1, first2, last2, pred, proj1, proj2);
+
+        if (result.empty()) return result;
+
+        for (;;)
+        {
+            auto new_result = ranges::search(
+                std::next(result.begin()), last1, first2, last2, pred, proj1, proj2);
+            if (new_result.empty())
+                return result;
+            else
+                result = std::move(new_result);
+        }
+    }
+
+    template<ranges::forward_range R1, ranges::forward_range R2,
+             class Pred = ranges::equal_to,
+             class Proj1 = std::identity,
+             class Proj2 = std::identity>
+    requires std::indirectly_comparable<ranges::iterator_t<R1>,
+                                        ranges::iterator_t<R2>,
+                                        Pred, Proj1, Proj2>
+    constexpr ranges::borrowed_subrange_t<R1>
+        operator()(R1&& r1, R2&& r2, Pred pred = {},
+                   Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        return (*this)(ranges::begin(r1), ranges::end(r1),
+                       ranges::begin(r2), ranges::end(r2),
+                       std::move(pred),
+                       std::move(proj1), std::move(proj2));
+    }
+};
+
+inline constexpr find_end_fn find_end {};
+```
+
+</details>
+
+### Notes
+
+An implementation can improve efficiency of the search if the input iterators model [`std::bidirectional_iterator`](#) by searching from the end towards the begin.
+Modelling the [`std::random_access_iterator`](#) may improve the comparison speed.  
+**All this however does not change the theoretical complexity of the worst case.**
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <cctype>
+#include <iostream>
+#include <ranges>
+#include <string_view>
+
+void print(const auto haystack, const auto needle)
+{
+    const auto pos = std::distance(haystack.begin(), needle.begin());
+    std::cout << "In \"";
+    for (const auto c : haystack) { std::cout << c; }
+    std::cout << "\" found \"";
+    for (const auto c : needle) { std::cout << c; }
+    std::cout << "\" at position [" << pos << ".." << pos + needle.size() << ")\n"
+        << std::string(4 + pos, ' ') << std::string(needle.size(), '^') << '\n';
+}
+
+int main()
+{
+    using namespace std::literals;
+    constexpr auto secret{"password password word..."sv};
+    constexpr auto wanted{"password"sv};
+
+    constexpr auto found1 = std::ranges::find_end(
+        secret.cbegin(), secret.cend(), wanted.cbegin(), wanted.cend());
+    print(secret, found1);
+
+    constexpr auto found2 = std::ranges::find_end(secret, "word"sv);
+    print(secret, found2);
+
+    const auto found3 = std::ranges::find_end(secret, "ORD"sv,
+        [](const char x, const char y) { // uses a binary predicate
+            return std::tolower(x) == std::tolower(y);
+        });
+    print(secret, found3);
+
+    const auto found4 = std::ranges::find_end(secret, "SWORD"sv, {}, {},
+        [](char c) { return std::tolower(c); }); // projects the 2nd range
+    print(secret, found4);
+
+    static_assert(std::ranges::find_end(secret, "PASS"sv).empty()); // => not found
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+In "password password word..." found "password" at position [9..17)
+             ^^^^^^^^
+In "password password word..." found "word" at position [18..22)
+                      ^^^^
+In "password password word..." found "ord" at position [19..22)
+                       ^^^
+In "password password word..." found "sword" at position [12..17)
+                ^^^^^
+```
+
+</div>
+</Columns>

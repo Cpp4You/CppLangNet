@@ -1,0 +1,348 @@
+---
+title:          Replacing text macros
+tags:           [Language, Preprocessor]
+hide-title:     true
+---
+
+import {Since, Until, Version, Removed}                 from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import Columns                                          from "@site-comps/Columns";
+
+# Replacing text macros
+The preprocessor supports text macro replacement. Function-like text macro replacement is also supported.
+
+## Syntax
+
+<SyntaxTable noTraits>
+  <Syntax id='1' directive={<span class='col-d'>#define</span>} args={['identifier', 'replacement-list', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id='2' directive={<span class='col-d'>#define</span>} args={['identifier', '(parameters)', 'replacement-list', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id='3' directive={<span class='col-d'>#define</span>} args={['identifier', '(parameters, ...)', 'replacement-list', <small class="col-d"> (optional)</small>, <Since v='cpp11'></Since>]}/>
+  <Syntax id='4' directive={<span class='col-d'>#define</span>} args={['identifier', '(...)', 'replacement-list', <small class="col-d"> (optional)</small>, <Since v='cpp11'></Since>]}/>
+  <Syntax id='5' directive={<span class='col-d'>#undef</span>}  args={['identifier']}/>
+</SyntaxTable>
+
+## Explanation
+### <span class="col-d">#define</span> directives
+
+The <code-d>#define</code-d> directives define the <i class="col-g">identifier</i> as macro, that is instruct the compiler to replace most successive occurrences of <i class="col-g">identifier</i> with <i class="col-g">replacement-list</i>, 
+which will be additionally processed. Exceptions arise from the rules of [scanning and replacement](#scanning-and-replacement). If the <i class="col-g">identifier</i> is already defined as any type of macro, the program is ill-formed unless the definitions are identical.
+
+### Object-like macros
+
+Object-like macros replace every occurrence of defined <i class="col-g">identifier</i> with <i class="col-g">replacement-list</i>. Version [(1)](#syntax) of the <code-d>#define</code-d> directive behaves exactly like that.
+
+### Function-like macros
+
+Function-like macros replace each occurrence of defined <i class="col-g">identifier</i> with <i class="col-g">replacement-list</i>, additionally taking a number of arguments, which then replace corresponding occurrences of any of the <i class="col-g">parameters</i> in the <i class="col-g">replacement-list</i>.
+
+The syntax of a function-like macro invocation is similar to the syntax of a function call: each instance of the macro name followed by a `(` as the next preprocessing token introduces the sequence of tokens that is replaced by the <i class="col-g">replacement-list</i>. 
+The sequence is terminated by the matching `)` token, skipping intervening matched pairs of left and right parentheses.
+
+For version [(2)](#syntax), the number of arguments must be the same as the number of parameters in macro definition. For versions [(3,4)](#syntax), the number of arguments must not be less than the number of parameters (<Since v='cpp20'>not</Since> counting ...). 
+Otherwise the program is ill-formed. If the identifier is not in functional-notation, i.e. does not have parentheses after itself, it is not replaced at all.
+
+Version [(2)](#syntax) of the <code-d>#define</code-d> directive defines a simple function-like macro.
+
+Version [(3)](#syntax) of the <code-d>#define</code-d> directive defines a function-like macro with variable number of arguments. 
+The additional arguments (called *variable arguments*) can be accessed using &#95;_VA_ARGS__ identifier, which is then replaced with arguments, supplied with the identifier to be replaced.
+
+Version [(4)](#syntax) of the <code-d>#define</code-d> directive defines a function-like macro with variable number of arguments, but no regular arguments. 
+The arguments (called *variable arguments*) can be accessed only with &#95;_VA_ARGS__ identifier, which is then replaced with arguments, supplied with the identifier to be replaced.
+
+<Since v='cpp20' block>
+
+For versions <a href='#syntax'>(3,4)</a>, <i class="col-g">replacement-list</i> may contain the token sequence `__VA_OPT__`(<i class="col-g">content</i>), which is replaced by <i class="col-g">content</i> if &#95;_VA_ARGS__ is non-empty, and expands to nothing otherwise.
+
+```cpp
+#define F(...) f(0 __VA_OPT__(,) __VA_ARGS__)
+F(a, b, c) // replaced by f(0, a, b, c)
+F()        // replaced by f(0)
+ 
+#define G(X, ...) f(0, X __VA_OPT__(,) __VA_ARGS__)
+G(a, b, c) // replaced by f(0, a, b, c)
+G(a, )     // replaced by f(0, a)
+G(a)       // replaced by f(0, a)
+ 
+#define SDEF(sname, ...) S sname __VA_OPT__(= { __VA_ARGS__ })
+SDEF(foo);       // replaced by S foo;
+SDEF(bar, 1, 2); // replaced by S bar = { 1, 2 };
+```
+
+</Since>
+
+Note: if an argument of a function-like macro includes commas that are not protected by matched pairs of left and right parentheses (most commonly found in template argument lists, 
+as in <code><a href="/docs/std/error/assert">assert</a>(<a href="/docs/std/types/is_same">std::is_same_v</a>&lt;<a>int</a>, <a>int</a>>);</code> or <code>BOOST_FOREACH(<a href="/docs/std/utility/pair">std::pair</a>&lt;<a>int</a>, <a>int</a>&gt; p, m))</code>, 
+the comma is interpreted as macro argument separator, causing a compilation failure due to argument count mismatch.
+
+### Scanning and Replacement
+
+* Scanning keeps track of macros they replaced. If scan finds text matching such macro, it marks it "to be ignored" (all scans will ignore it). This prevents recursion.
+* If scanning found function-like macro, arguments are scanned before put inside <i class="col-g">replacement-list</i>. Except <code-d>#</code-d> and <code-d>##</code-d> operators take argument without scan.
+* After macro was replaced, result text is scanned.
+
+Note, it is possible to define pseudo recursive macro:
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#define EMPTY
+#define SCAN(x)     x
+#define EXAMPLE_()  EXAMPLE
+#define EXAMPLE(n)  EXAMPLE_ EMPTY()(n-1) (n)
+EXAMPLE(5)
+SCAN(EXAMPLE(5))
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+EXAMPLE_ ()(5 -1) (5)
+EXAMPLE_ ()(5 -1 -1) (5 -1) (5)
+```
+
+</div>
+</Columns>
+
+### Reserved macro names
+
+A translation unit that [includes a standard library header](/docs/standard_library/#including_headers) may not <span class="col-d">#define</span> or <span class="col-d">#undef</span> names declared in any [standard library header](/docs/std/header).
+
+A translation unit that uses any part of the standard library is not allowed to <span class="col-d">#define</span> or <span class="col-d">#undef</span> names lexically identical to:
+
+* [keywords](/docs/keyword)
+
+<Since v='cpp11' block>
+
+* <a href="/docs/keyword">identifiers with special meaning</a>
+* <a href="/docs/std/lang-support/attributes#standard-attributes">any standard attribute token</a>, <Since v='cpp20'>except that <a href="/docs/std/lang-support/attributes/likely">likely</a> and <a href="/docs/std/lang-support/attributes/likely">unlikely</a> may be defined as function-like macros</Since>
+
+</Since>
+
+Otherwise, the behavior is undefined.
+
+### <span class="col-d">#</span> and <span class="col-d">##</span> operators
+
+In function-like macros, a <span class="col-d">#</span> operator before an identifier in the <i class="col-g">replacement-list</i> runs the identifier through parameter replacement and encloses the result in quotes, 
+effectively creating a string literal. In addition, the preprocessor adds backslashes to escape the quotes surrounding embedded string literals, if any, and doubles the backslashes within the string as necessary. 
+All leading and trailing whitespace is removed, and any sequence of whitespace in the middle of the text (but not inside embedded string literals) is collapsed to a single space. This operation is called "stringification". 
+If the result of stringification is not a valid string literal, the behavior is undefined.
+
+<Since v='cpp11' block>
+
+
+When <span class="col-d">#</span> appears before &#95;_VA_ARGS__, the entire expanded &#95;_VA_ARGS__ is enclosed in quotes:
+```cpp
+#define showlist(...) puts(#__VA_ARGS__)
+showlist();            // expands to puts("")
+showlist(1, "x", int); // expands to puts("1, \"x\", int")
+```
+
+</Since>
+
+A <span class="col-d">##</span> operator between any two successive identifiers in the <i class="col-g">replacement-list</i> runs parameter replacement on the two identifiers (which are not macro-expanded first) and then concatenates the result. 
+This operation is called "concatenation" or "token pasting". Only tokens that form a valid token together may be pasted: identifiers that form a longer identifier, digits that form a number, or operators + and = that form a +=. 
+A comment cannot be created by pasting / and * because comments are removed from text before macro substitution is considered. <Since v='cpp23'>If the result begins with a sequence matching the syntax 
+of <a href="/docs/std/lang-support/escape">universal character name</a>, the behavior is undefined. This determination does not consider the replacement of universal character names in <a href="/docs/std/lang-support/translation_phases#phase-3">translation phase 3</a>.</Since> 
+If the result of concatenation is not a valid token, the behavior is undefined.
+
+Note: some compilers offer an extension that allows <span class="col-d">##</span> to appear after a comma and before &#95;&#95;VA_ARGS&#95;&#95;, in which case the <span class="col-d">##</span> does nothing when the variable arguments are present, 
+but removes the comma when the variable arguments are not present: this makes it possible to define macros such as <code>fprintf (<a>stderr</a>, format, <span class="col-d">##&#95;&#95;VA_ARGS&#95;&#95;</span>)</code>. 
+<Since v='cpp20'>This can also be achieved in a standard manner using &#95;_VA_OPT_&#95;, such as fprintf (<a>stderr</a>, format &#95;_VA_OPT_&#95;<span class="col-d">(, )</span> &#95;&#95;VA_ARGS&#95;&#95;). </Since>
+
+### <span class="col-d">#undef</span> directive
+
+The <code-d>#undef</code-d> directive undefines the <i class="col-g">identifier</i>, that is cancels previous definition of the <i class="col-g">identifier</i> by <code-d>#define</code-d> directive. If the identifier does not have associated macro, the directive is ignored.
+
+## Predefined macros
+
+The following macro names are predefined in every translation unit:
+
+<SymbolTable noTraits>
+  <Symbol name={<>__cplusplus</>}                       
+          desc={<>
+      denotes the version of C++ standard that is being used, expands to value
+      <ul>
+        <li>199711L<Until v='cpp11'></Until>, </li>
+        <li>201103L<Version v='cpp11'></Version>,</li>
+        <li>01402L<Version v='cpp14'></Version>,</li>
+        <li>201703L<Version v='cpp17'></Version>,</li>
+        <li>202002L<Version v='cpp20'></Version>, or</li>
+        <li>202302L<Version v='cpp23'></Version></li>
+      </ul>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__STDC_HOSTED__<Version v='cpp11'></Version></>}                   
+          desc={<>
+      expands to the integer constant <code>1</code> if the implementation is hosted (runs under an OS), <code>0</code> if freestanding (runs without an OS) <br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__FILE__</>}                          
+          desc={<>
+      expands to the name of the current file, as a character string literal, can be changed by the <a href="../line" class="col-d"><u>#line</u></a> directive <br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__LINE__</>}                          
+          desc={<>
+      	expands to the source file line number, an integer constant, can be changed by the <a href="../line" class="col-d"><u>#line</u></a> directive <br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__DATE__</>}                          
+          desc={<>
+      expands to the date of translation, a character string literal of the form <code class="col-d">"Mmm dd yyyy"</code>. The first character of <code class="col-d">"dd"</code> is a space if the day of the month is less than 10. 
+      The name of the month is as if generated by <a href="/docs/std/chrono/c/asctime"><code>std::asctime()</code></a><br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__TIME__</>}                          
+          desc={<>
+      expands to the time of translation, a character string literal of the form <code class="col-d">"hh:mm:ss"</code> <br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__STDCPP_DEFAULT_NEW_ALIGNMENT__<Version v='cpp17'></Version></>}  
+          desc={<>
+      expands to an <a href="/docs/std/types/size_t">std::size_t</a> literal whose value is the alignment guaranteed by a call to alignment-unaware 
+      <a href="/docs/std/memory/new/operator_new">operator new</a> (larger alignments will be passed to alignment-aware overload, 
+      such as <code><a href="/docs/std/memory/new/operator_new">operator new</a>(<a href="/docs/std/types/size_t">std::size_t</a>, <a href="/docs/std/memory/new/align_val_t">std::align_val_t</a>)</code><br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>
+      __STDCPP_­BFLOAT16_­T__ <br/>
+      __STDCPP_­FLOAT16_­T__ <br/>
+      __STDCPP_FLOAT32_T__ <Version v='cpp23'></Version> <br/>
+      __STDCPP_FLOAT64_T__ <br/>
+      __STDCPP_FLOAT128_T__
+            </>}                                        
+          desc={<>
+      expands to <code>1</code> if and only if the implementation supports corresponding <a href="docs/std/types/floating-point">extended floating-point type</a> <br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+</SymbolTable>
+
+The following additional macro names may be predefined by the implementations:
+
+<SymbolTable noTraits>
+  <Symbol name={<>__STDC__</>}
+          desc={<>
+      implementation-defined value, if present, typically used to indicate C conformance <br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__STDC_VERSION__<Version v='cpp11'></Version></>}                                               
+          desc={<>
+      implementation-defined value, if present <br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__STDC_ISO_10646__<Version v='cpp11'></Version></>}                                             
+          desc={<>
+      <Until v='cpp23' block>expands to an integer constant of the form <code>yyyymmL</code>, if <a>wchar_t</a> uses Unicode, the date indicates the latest revision of Unicode supported</Until><br/>
+      <Since v='cpp23'>implementation-defined value, if present</Since><br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__STDC_MB_MIGHT_NEQ_WC__<Version v='cpp11'></Version></>}                                       
+          desc={<>
+      expands to <code>1</code> if <code><span class='col-d'>'x'</span> == L<span class='col-d'>'x'</span></code> might be false for a member of the basic character set, such as on EBCDIC-based systems that use Unicode for <a>wchar_t</a>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__STDCPP_THREADS__<Version v='cpp11'></Version></>}                                             
+          desc={<>
+      expands to <code>1</code> if the program can have more than one thread of execution <br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+
+  <Symbol name={<>__STDCPP_STRICT_POINTER_SAFETY__<Version v='cpp11'></Version><Removed v='cpp23'></Removed></>}  
+          desc={<>
+      expands to <code>1</code> if the implementation has strict <a href="/docs/std/memory/gc/pointer_safety">std::pointer_safety</a><br/>
+      <small class="col-d">(macro constant)</small>
+          </>}/>
+</SymbolTable>
+
+The values of these macros (except for &#95;&#95;FILE&#95;&#95; and &#95;&#95;LINE&#95;&#95;) remain constant throughout the translation unit. Attempts to redefine or undefine these macros result in undefined behavior.
+
+<Since v='cpp11' block>
+
+Note: in the scope of every function body, there is a special function-local predefined variable named `__func__`, defined as a static character array holding the name of the function in implementation-defined format. 
+It is not a preprocessor macro, but it is used together with &#95;&#95;FILE&#95;&#95; and &#95;&#95;LINE&#95;&#95;, e.g. by [assert](/docs/std/error/assert).
+
+</Since>
+
+### <Since v='cpp20' block> Language feature-testing macros</Since>
+
+The standard defines a set of preprocessor macros corresponding to C++ language features introduced in <Version v='cpp11'></Version> or later. They are intended as a simple and portable way to detect the presence of said features.
+
+See [Feature testing](/docs/std/feature_test) for details.
+
+
+
+## Example
+
+<Columns spacing = "20px" columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+ 
+// Make function factory and use it
+#define FUNCTION(name, a) int fun_##name() { return a; }
+ 
+FUNCTION(abcd, 12)
+FUNCTION(fff, 2)
+FUNCTION(qqq, 23)
+ 
+#undef FUNCTION
+#define FUNCTION 34
+#define OUTPUT(a) std::cout << "output: " #a << '\n'
+ 
+// Using a macro in the definition of a later macro
+#define WORD "Hello "
+#define OUTER(...) WORD #__VA_ARGS__
+ 
+int main()
+{
+    std::cout << "abcd: " << fun_abcd() << '\n';
+    std::cout << "fff: " << fun_fff() << '\n';
+    std::cout << "qqq: " << fun_qqq() << '\n';
+ 
+    std::cout << FUNCTION << '\n';
+    OUTPUT(million); //note the lack of quotes
+ 
+    std::cout << OUTER(World) << '\n';
+    std::cout << OUTER(WORD World) << '\n';
+}
+SCAN(EXAMPLE(5))
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+abcd: 12
+fff: 2
+qqq: 23
+34
+output: million
+Hello World
+Hello WORD World
+```
+
+</div>
+</Columns>
+
+## Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| **DR**                                              | **Applied to**                | **Behavior as published**                                                                                                                          | **Correct behavior** |
+|:---------------------------------------------------:|:-----------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------:|
+| [LWG 294](https://cplusplus.github.io/LWG/issue294) | <Version v='cpp98'></Version> | a translation unit that includes a standard library header could contain <br/> macros that define names declared in other standard library headers | prohibited           |

@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class InputIt, class Size, class UnaryFunction >
+constexpr InputIt for_each_n( InputIt first, Size n, UnaryFunction f );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt, class Size, class UnaryFunction2 >
+ForwardIt for_each_n( ExecutionPolicy&& policy,
+                      ForwardIt first, Size n, UnaryFunction2 f );
+```

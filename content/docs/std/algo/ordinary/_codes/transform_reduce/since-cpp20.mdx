@@ -1,0 +1,35 @@
+```cpp
+// (1)
+template< class InputIt1, class InputIt2, class T >
+constexpr T transform_reduce( InputIt1 first1, InputIt1 last1, InputIt2 first2, T init );
+
+// (2)
+template< class InputIt1, class InputIt2, class T, class BinaryReductionOp, class BinaryTransformOp >
+constexpr T transform_reduce( InputIt1 first1, InputIt1 last1, InputIt2 first2, T init,
+                              BinaryReductionOp reduce, BinaryTransformOp transform );
+
+// (3)
+template< class InputIt, class T, class BinaryReductionOp, class UnaryTransformOp >
+constexpr T transform_reduce( InputIt first, InputIt last, T init, BinaryReductionOp reduce,
+                              UnaryTransformOp transform );
+
+// (4)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2, class T >
+constexpr T transform_reduce( ExecutionPolicy&& policy, ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2,
+                              T init );
+
+// (5)
+template< class ExecutionPolicy,
+          class ForwardIt1,
+          class ForwardIt2,
+          class T,
+          class BinaryReductionOp,
+          class BinaryTransformOp >
+T transform_reduce( ExecutionPolicy&& policy, ForwardIt1 first1, ForwardIt1 last1, ForwardIt2 first2, T init,
+                    BinaryReductionOp reduce, BinaryTransformOp transform );
+
+// (6)
+template< class ExecutionPolicy, class ForwardIt, class T, class BinaryReductionOp, class UnaryTransformOp >
+T transform_reduce( ExecutionPolicy&& policy, ForwardIt first, ForwardIt last, T init,
+                    BinaryReductionOp reduce, UnaryTransformOp transform );
+```

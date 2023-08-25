@@ -1,0 +1,107 @@
+---
+title:                  std::uses_allocator
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+import ClassSummary				           from "@site-comps/ClassSummary";
+import { Since, Until, Removed, Version }  from "@site-comps/Versions";
+import { Static }                          from "@site-comps/StaticTag";
+import SymbolTable, { Symbol }             from "@site-comps/SymbolTable";
+
+<ClassSummary name="uses_allocator" namespaces="std" folder="memory" headerName="memory"/>
+
+``` cpp title='Since C++11'
+template< class T, class Alloc > struct uses_allocator;
+```
+
+If T has a member typedef allocator_type which is convertible from Alloc <br/>
+***or is an alias of [std::experimental::erased_type](/docs/std/experimental/erased_type) ***(library fundamentals TS), <br/>
+the member constant value is `true`. Otherwise value is `false`.
+
+### Helper variable template
+
+```cpp title='Since C++17' 
+template< class T, class Alloc >
+inline constexpr bool uses_allocator_v = uses_allocator<T, Alloc>::value;
+```
+
+<details>
+<summary>Inherited from std::integral_constant</summary>
+<div>
+
+### Member constants
+<SymbolTable >
+			<Symbol pub name={<>value<Static></Static></>} desc={<>true if T uses allocator Alloc, false otherwise</>}/>
+</SymbolTable>
+
+### Member functions
+<SymbolTable >
+			<Symbol pub name={<>operator bool</>}                           desc={<>converts the object to bool, returns value</>}/>
+            <Symbol pub name={<>operator()<Version v='cpp14'></Version></>} desc={<>returns value</>}/>
+</SymbolTable>
+
+### Member types
+<SymbolTable noTraits>
+			<Symbol name={<b>Type</b>}     desc={<b>Definition</b>}/>
+            <Symbol name={<>value_type</>} desc={<>bool</>}/>
+            <Symbol name={<>type</>}       desc={<a href = "/docs/std/types/integral_constant">std::integral_constant&lt;bool, value&gt;</a>}/>
+</SymbolTable>
+</div>
+</details>
+
+### Uses-allocator construction
+
+There are three conventions of passing an allocator alloc to a constructor of some type T:
+
+* if T does not use a compatible allocator (`std::uses_allocator_v<T, Alloc>` is false), then alloc is ignored.
+* otherwise, `std::uses_allocator_v<T, Alloc> `is true, and
+    * if T uses the leading-allocator convention (is invocable as `T(std::allocator_arg, alloc, args...)`), 
+     then uses-allocator construction uses this form
+    * if T uses the trailing-allocator convention (is invocable as `T(args..., alloc)`),
+     then uses-allocator construction uses this form
+    * otherwise, the program is ill-formed (this means `std::uses_allocator_v<T, Alloc>` is true, but the type does not follow either of the two allowed conventions)
+* As a special case, [std::pair](/docs/std/utility/pair) is treated as a uses-allocator type even though std::uses_allocator is false for pairs 
+ (unlike e.g. [std::tuple](/docs/std/utility/tuple)): see pair-specific overloads 
+ of <Until v='cpp20'>[std::pmr::polymorphic_allocator::construct](/docs/std/memory/polymorphic_allocator/construct) 
+ and [std::scoped_allocator_adaptor::construct](/docs/std/memory/scoped_allocator_adaptor/construct) </Until> <Since v='cpp20'> 
+ [std::uses_allocator_construction_args](/docs/std/memory/uses_allocator_construction_args) </Since>
+&ensp; <br/> <br/> <Since v='cpp20'> 
+ The utility functions [std::make_obj_using_allocator](/docs/std/memory/make_obj_using_allocator), 
+ and [std::uninitialized_construct_using_allocator](/docs/std/memory/uninitialized_construct_using_allocator) may be used to explicitly create an 
+ object following the above protocol, and [std::uses_allocator_construction_args](/docs/std/memory/uninitialized_construct_using_allocator) can be used to 
+ prepare the argument list that matches the flavor of uses-allocator construction expected by the type. </Since>
+
+### Specializations
+
+Custom specializations of the type trait **std::uses_allocator** are allowed for types that do not have the member typedef allocator_type 
+but satisfy one of the following two requirements:
+
+    1) T has a constructor which takes [std::allocator_arg_t](../allocator_arg) as the first argument, and Alloc as the second argument. <br/>
+    2) T has a constructor which takes Alloc as the last argument.
+
+In the above, Alloc is a type that satisfies [Allocator](/docs/std/named_req/Allocator) <br/>
+***or is a pointer type convertible to `std::experimental::pmr::memory_resource*`*** (library fundamentals TS).
+
+The following specializations are already provided by the standard library:
+
+<SymbolTable noTraits>
+			<Symbol autoLink linkName="/docs/std/utility/tuple/uses_allocator"               name={<>std::uses_allocator<small>&lt;std::tuple&gt;</small>                        <Version v='cpp11'></Version></>}      desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/container/queue/uses_allocator"             name={<>std::uses_allocator<small>&lt;std::queue&gt;</small>                        <Version v='cpp11'></Version></>}      desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/container/priority_queue/uses_allocator"    name={<>std::uses_allocator<small>&lt;std::priority_queue&gt;</small>               <Version v='cpp11'></Version></>}      desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/container/stack/uses_allocator"             name={<>std::uses_allocator<small>&lt;std::stack&gt;</small>                        <Version v='cpp11'></Version></>}      desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/header/flat_map/uses_allocator"             name={<>std::uses_allocator<small>&lt;std::flat_map&gt;</small>                     <Version v='cpp23'></Version></>}      desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/header/flat_set/uses_allocator"             name={<>std::uses_allocator<small>&lt;std::flat_set&gt;</small>                     <Version v='cpp23'></Version></>}      desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/container/flat_multimap/uses_allocator"     name={<>std::uses_allocator<small>&lt;std::flat_multimap&gt;</small>                <Version v='cpp23'></Version></>}      desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/container/flat_multiset/uses_allocator"     name={<>std::uses_allocator<small>&lt;std::flat_multiset&gt;</small>                <Version v='cpp23'></Version></>}      desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/utility/functional/function/uses_allocator" name={<Until v='cpp17'>std::uses_allocator<small>&lt;std::function&gt;</small>      <Version v='cpp11'></Version></Until>} desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/thread/promise/uses_allocator"              name={<>std::uses_allocator<small>&lt;std::promise&gt;</small>                      <Version v='cpp11'></Version></>}      desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+            <Symbol autoLink linkName="/docs/std/thread/packaged_task/uses_allocator"        name={<Until v='cpp17'>std::uses_allocator<small>&lt;std::packaged_task&gt;</small> <Version v='cpp11'></Version></Until>} desc={<>specializes the <b>std::uses_allocator</b> type trait</>}/>
+</SymbolTable>
+
+### Notes
+This type trait is used by [std::tuple](/docs/std/utility/tuple), [std::scoped_allocator_adaptor](/docs/std/memory/scoped_allocator_adaptor), and 
+[std::pmr::polymorphic_allocator](/docs/std/memory/polymorphic_allocator). 
+It may also be used by custom allocators or wrapper types to determine whether the object or member being constructed is itself capable of using an allocator
+(e.g. is a container), in which case an allocator should be passed to its constructor.

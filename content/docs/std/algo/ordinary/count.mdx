@@ -1,0 +1,162 @@
+---
+title:         count algorithm
+sidebar_label: count(  )
+description:   count algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, count, number, quantity]
+
+cppreference_origin_rel: w/cpp/algorithm/count
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/count/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/count/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/count/since-cpp20.mdx';
+
+# std::count() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+Returns the number of elements equal to `value` in the range [`first1`; `last1`).
+
+- **(1)** Counts the elements that are equal to value (using `operator==`).
+- **(2)** Same as **(1)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>value</code> }>
+    The value to search for.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>InputIt</code> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+- **(1 - 2)** The number of elements that are equal to `value`.
+
+### Complexity
+
+Given `N` as `std::distance(first, last)`:
+
+- **(1 - 2)** exactly N comparisons with `value` using `operator==`
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>count (1)</summary>
+
+```cpp
+template<class InputIt, class T>
+typename iterator_traits<InputIt>::difference_type
+    count(InputIt first, InputIt last, const T& value)
+{
+    typename iterator_traits<InputIt>::difference_type ret = 0;
+    for (; first != last; ++first)
+        if (*first == value)
+            ++ret;
+    return ret;
+}
+```
+
+</details>
+
+### Notes
+
+If you want to obtain the number of elements in range [`first`; `last`) without any additional criteria, use [`std::distance`](#)
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <iterator>
+
+int main()
+{
+    constexpr std::array v {1, 2, 3, 4, 4, 3, 7, 8, 9, 10};
+    std::cout << "v: ";
+    std::copy(v.cbegin(), v.cend(), std::ostream_iterator<int>(std::cout, " "));
+    std::cout << '\n';
+
+    // determine how many integers match a target value.
+    for (const int target: {3, 4, 5})
+    {
+        const int num_items = std::count(v.cbegin(), v.cend(), target);
+        std::cout << "number: " << target << ", count: " << num_items << '\n';
+    }
+
+    // use a lambda expression to count elements divisible by 4.
+    int count_div4 = std::count_if(v.begin(), v.end(), [](int i) { return i % 4 == 0; });
+    std::cout << "numbers divisible by four: " << count_div4 << '\n';
+
+    // A simplified version of `distance` with O(N) complexity:
+    auto distance = [](auto first, auto last)
+    {
+        return std::count_if(first, last, [](auto) { return true; });
+    };
+    static_assert(distance(v.begin(), v.end()) == 10);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+v: 1 2 3 4 4 3 7 8 9 10
+number: 3, count: 2
+number: 4, count: 2
+number: 5, count: 0
+numbers divisible by four: 3
+```
+
+</div>
+</Columns>

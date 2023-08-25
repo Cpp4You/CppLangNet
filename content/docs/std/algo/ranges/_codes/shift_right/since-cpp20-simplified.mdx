@@ -1,0 +1,19 @@
+```cpp
+// (1)
+constexpr ranges::subrange<I>
+    shift_right( I first, S last, std::iter_difference_t<I> n );
+
+// (2)
+constexpr ranges::borrowed_subrange_t<R>
+    shift_right( R&& r, ranges::range_difference_t<R> n );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::permutable`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::forward_range`
+
+Additionally, each overload has the following constraints:
+- **(2)** - `std::permutable<ranges::iterator_t<R>>`
+
+(The `std::` namespace was ommitted here for readability)

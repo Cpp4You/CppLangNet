@@ -1,0 +1,22 @@
+---
+title:                  C++ named requirements:ScalarType
+tags:                   [named_req,ScalarType]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Version}             from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *ScalarType*
+Note: the standard doesn't define a named requirement with this name. This is a type category defined by the core language. 
+It is included here as a named requirement only for consistency.
+
+### Requirements
+The following types are collectively called scalar types:
+
+* [arithmetic types](/docs/std/language/type)
+* [enumeration types](/docs/std/language/enum)
+* [pointer types](/docs/std/language/pointer)
+* [pointer-to-member types](/docs/std/language/pointer#Pointers_to_members)
+* <Since v='cpp11'><a href = "/docs/std/types/nullptr_t">std::nullptr_t</a></Since>
+* cv-qualified versions of these types

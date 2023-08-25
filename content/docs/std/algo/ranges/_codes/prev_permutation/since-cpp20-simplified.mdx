@@ -1,0 +1,20 @@
+```cpp
+// (1)
+constexpr prev_permutation_result<I>
+    prev_permutation( I first, S last, Comp comp = {}, Proj proj = {} );
+
+// (2)
+constexpr prev_permutation_result<ranges::borrowed_iterator_t<R>>
+    prev_permutation( R&& r, Comp comp = {}, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::bidirectional_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::bidirectional_range`
+- `Comp`:
+  - **(1)** - `std::sortable<I, Comp, Proj>`
+  - **(2)** - `std::sortable<ranges::iterator_t<R>, Comp, Proj>`
+- `Proj` - **(none)**
+
+The `Proj` and `Comp` template arguments have default types of `std::identity` and `ranges::less` for all overloads.

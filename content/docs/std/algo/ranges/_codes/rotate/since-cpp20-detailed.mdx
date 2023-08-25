@@ -1,0 +1,12 @@
+```cpp
+// (1)
+template< std::permutable I, std::sentinel_for<I> S >
+constexpr ranges::subrange<I>
+    rotate( I first, I middle, S last );
+
+// (2)
+template< ranges::forward_range R >
+requires std::permutable<ranges::iterator_t<R>>
+constexpr ranges::borrowed_subrange_t<R>
+    rotate( R&& r, ranges::iterator_t<R> middle );
+```

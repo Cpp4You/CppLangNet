@@ -1,0 +1,9 @@
+```cpp
+// (1)
+template< class InputIt, class T >
+T accumulate( InputIt first, InputIt last, T init );
+
+// (2)
+template< class InputIt, class T, class BinaryOperation >
+T accumulate( InputIt first, InputIt last, T init, BinaryOperation op );
+```

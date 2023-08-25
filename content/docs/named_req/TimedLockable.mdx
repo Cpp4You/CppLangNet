@@ -1,0 +1,29 @@
+---
+title:                  C++ named requirements:TimedLockable    
+tags:                   [named_req,TimedLockable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *TimedLockable*</Since>
+
+The ***TimedLockable*** requirements describe the characteristics of types that provide timed exclusive blocking semantics for execution agents
+(threads, processes, tasks).
+
+### Requirements
+* [*Lockable*](/docs/named_req/Lockable)
+
+For type L to be TimedLockable, given
+* `rel_time`, a value of a specialization of [std::chrono::duration](/docs/std/chrono/duration), and
+* `abs_time`, a value of a specialization of [std::chrono::time_point](/docs/std/chrono/time_point),
+the following conditions have to be satisfied for an object `m` of type **L**:
+
+| **Expression**               | **Effects**                                                                              | **Return value**                                    |
+|:----------------------------:|:----------------------------------------------------------------------------------------:|:---------------------------------------------------:|
+| `m.try_lock_for(rel_time)`   | Blocks for the provided duration `rel_time` or until a lock on `m` is acquired.          | <a>true</a> if the lock was acquired, <a>false</a> otherwise. |
+| `m.try_lock_until(abs_time)` | Blocks until the provided time point `abs_time` is reached or a lock on `m` is acquired. | <a>true</a> if the lock was acquired, <a>false</a> otherwise. |
+
+### Notes
+The try_lock_for and try_lock_until member functions obtain a non-shared lock on m on succcess.

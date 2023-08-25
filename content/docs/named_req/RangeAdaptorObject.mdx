@@ -1,0 +1,48 @@
+---
+title:                  C++ named requirements:RangeAdaptorObject
+tags:                   [named_req,RangeAdaptorObject]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp20'><small>C++ named requirements:</small> *RangeAdaptorObject*</Since>
+
+Range adaptor objects are customization point objects that accept [viewable_range](/docs/std/ranges/viewable_range) as their first arguments and return a view. 
+Some range adaptor objects are unary, i.e. they take one [viewable_range](/docs/std/ranges/viewable_range) as their only argument. 
+Other range adaptor objects take a [viewable_range](/docs/std/ranges/viewable_range) and other trailing arguments.
+
+If a range adaptor object takes only one argument, it is also a [*RangeAdaptorClosureObject*](/docs/named_req/RangeAdaptorClosureObject).
+
+If a range adaptor object takes more than one argument, it also supports partial application: let
+* `a` be such a range adaptor object, and
+* `args...` be arguments (generally suitable for trailing arguments),
+* expression `a(args...)` has following properties:
+    * it is valid if and only if for every argument `e` in `args...` such that **E** is `decltype((e))`
+      , <code><a href="/docs/std/types/is_constructible">std::is_constructible_v</a>&lt;<a href="/docs/std/types/decay">std::decay_t</a>&lt;E&gt;, E&gt;</code> is <a>true</a>,
+    * when the call is valid, its result object stores a subobject of type <code><a href="/docs/std/types/decay">std::decay_t</a></code> 
+      direct-non-list-initialized with <code><a href="/docs/std/utility/forward">std::forward</a>&lt;E&gt;(e)</code>, for every argument `e` in `args...` 
+      (in other words, range adaptor objects bind arguments by value),
+    * the result object is a [*RangeAdaptorClosureObject*](/docs/named_req/RangeAdaptorClosureObject),
+    * calling the [*RangeAdaptorClosureObject*](/docs/named_req/RangeAdaptorClosureObject) forwards the bound arguments (if any) to the associated range adaptor object. 
+      The bound arguments (if any) are considered to have the value category and cv-qualification of the [*RangeAdaptorClosureObject*](/docs/named_req/RangeAdaptorClosureObject). 
+      <Since v='cpp23'>In other words, <code>a(args...)(r)</code> is equivalent to <code>std::bind_back(a, args...)(r)</code> (but the former also supports the pipe syntax)</Since>
+    
+Like other customization point objects, let
+* `a` be an object of the cv-unqualified version of the type of any range adaptor objects,
+* `args...` be any group of arguments that satisfies the constraints of the `operator()` of the type of `a`,
+
+calls to
+* `a(args...)`,
+* <code>std::<a href="">as_const</a>(a)(args...)</code>,
+* `std::move(a)(args...)`, and
+* <code>std::move(std::<a href="">as_const</a>(a))(args...)</code>
+
+are all equivalent.
+
+The result object of each of these expressions is either a [view](/docs/std/ranges/view) object or a [*RangeAdaptorClosureObject*](/docs/named_req/RangeAdaptorClosureObject).
+
+### Notes
+`operator()` is unsupported for volatile-qualified or const-volatile-qualified version of range adaptor object types. 
+Arrays and functions are converted to pointers while binding.

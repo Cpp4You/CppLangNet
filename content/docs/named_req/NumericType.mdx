@@ -1,0 +1,18 @@
+---
+title:                  C++ named requirements:NumericType
+tags:                   [named_req,NumericType]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small>*NumericType*
+
+Specifies that the type can be used as the template argument of std::valarray
+
+### Requirements
+for a type `T` to be a *NumericType*, it must be a cv-unqualified object type that:
+* meets the [*DefaultConstructible*](/docs/named_req/DefaultConstructible), [*CopyConstructible*](/docs/named_req/CopyConstructible), 
+[*CopyAssignable*](/docs/named_req/CopyAssignable) and [*Destructible*](/docs/named_req/Destructible) requirements.
+* No operation on **T** may throw exceptions

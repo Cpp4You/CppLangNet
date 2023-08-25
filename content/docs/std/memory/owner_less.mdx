@@ -1,0 +1,143 @@
+---
+title:                  std::owner_less
+description:            Smart Pointer Helper Class
+tags:                   [memory,owner_less]
+hide_title:             true
+---
+
+import Columns      from "@site-comps/Columns";
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Tabs						                from "@theme/Tabs";
+import TabItem					                from "@theme/TabItem";
+
+import CPP11        from "./_owner_less/_codes/owner_less/cpp11.mdx"
+import CPP17        from "./_owner_less/_codes/owner_less/cpp17.mdx"
+
+# std::owner_less
+
+Defined in header `<memory>`.
+
+<Tabs>
+<TabItem value="cpp11" label="C++11" default>
+    <CPP11/>
+</TabItem>
+<TabItem value="cpp17" label="C++17">
+    <CPP17/>
+</TabItem>
+</Tabs>
+
+This function object provides owner-based (as opposed to value-based) mixed-type ordering of both [std::weak_ptr](../weak_ptr) and [std::shared_ptr](../shared_ptr). 
+The order is such that two smart pointers compare equivalent only if they are both empty or if they share ownership, 
+even if the values of the raw pointers obtained by get() are different (e.g. because they point at different subobjects within the same object).
+
+This class template is the preferred comparison predicate when building associative containers with [std::shared_ptr](../shared_ptr) or [std::weak_ptr](../weak_ptr) as keys, that is,
+
+`std::map<std::shared_ptr<T>, U, std::owner_less<std::shared_ptr<T>>>`
+
+or
+
+`std::map<std::weak_ptr<T>, U, std::owner_less<std::weak_ptr<T>>>`.
+
+The default `operator<` is not defined for weak pointers, and may wrongly consider two shared pointers for the same object non-equivalent 
+(see [shared_ptr::owner_before](../_shared_ptr/owner_before)).
+
+### Specializations
+
+The standard library provides a specialization of std::owner_less when `T` is not specified. In this case, the parameter 
+types are deduced from the arguments (each of which must still be either a [std::shared_ptr](../shared_ptr) or a [std::weak_ptr](../weak_ptr)).
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/memory/owner_less_void" 
+                name={<>
+                owner_less<small>&lt;void></small>
+			    </>}               
+                desc={<>
+                function object providing mixed-type owner-based ordering of shared and weak pointers, regardless of the type of the pointee<br/>
+                <small>(class template specialization)</small> <small>(since C++17)</small>
+                </>}
+                />
+</SymbolTable>
+
+### Member types
+`(until C++20)`
+<SymbolTable noTraits>
+    <Symbol     name={<>
+                <b>Member type</b>
+			    </>}               
+                desc={<>
+                <b>Definition</b>
+                </>}
+                />
+    <Symbol     name={<>
+                result_type <small> (deprecated in c++17) </small>
+			    </>}               
+                desc={<>
+                2-3) bool
+                </>}
+                />
+    <Symbol     name={<>
+                first_argument_type <small> (deprecated in c++17) </small>
+			    </>}               
+                desc={<>
+                2) std::shared_ptr&lt;T> <br/>
+                3) std::weak_ptr&lt;T>
+                </>}
+                />
+    <Symbol     name={<>
+                second_argument_type <small> (deprecated in c++17) </small>
+			    </>}               
+                desc={<>
+                2) std::shared_ptr&lt;T> <br/>
+                3) std::weak_ptr&lt;T>
+                </>}
+                />
+</SymbolTable>
+
+
+### Member functions
+
+---
+
+std::owner_less::**operator()**
+
+`member only of owner_less<shared_ptr<T>> template specialization`
+```cpp
+bool operator()( const std::shared_ptr<T>& lhs,
+                 const std::shared_ptr<T>& rhs ) const noexcept;    // (since C++11)
+```
+`member only of owner_less<weak_ptr<T>> template specialization`
+```cpp
+bool operator()( const std::weak_ptr<T>& lhs,
+                 const std::weak_ptr<T>& rhs ) const noexcept;      // (since C++11)
+```
+`member of both template specializations`
+```cpp
+bool operator()( const std::shared_ptr<T>& lhs,
+                 const std::weak_ptr<T>& rhs ) const noexcept;      // (since C++11)
+bool operator()( const std::weak_ptr<T>& lhs,
+                 const std::shared_ptr<T>& rhs ) const noexcept;    // (since C++11)
+```
+
+Compares `lhs` and `rhs` using owner-based semantics. Effectively calls lhs`.owner_before(rhs)`.
+
+The ordering is strict weak ordering relation.
+
+`lhs` and `rhs` are equivalent only if they are both empty or share ownership.
+
+#### Parameters
+
+`lhs`, `rhs`	-	shared-ownership pointers to compare
+
+#### Return value
+
+`true` if `lhs` is less than `rhs` as determined by the owner-based ordering.
+
+---
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+| DR       | Applied to |              Behavior as published              |  Correct behavior |
+|----------|------------|:-----------------------------------------------:|:-----------------:|
+| LWG 2873 | C++11      | the operator()'s might not be declared noexcept | declared noexcept |
+

@@ -1,0 +1,117 @@
+---
+title:                  C++ named requirements:CharTraits
+tags:                   [named_req,CharTraits]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small>*CharTraits*
+
+***CharTraits*** is a traits class that abstracts basic character and string operations for a given character type. 
+Most standard library string and input/output classes require a *CharTraits* template type parameter alongside a corresponding character template type parameter.
+
+### Requirements
+No operation listed below on *CharTraits* may throw an exception.
+
+Given
+
+* `CharT`, a character type
+* `X`, a *CharTraits* type for type **CharT**
+* `c`, `d`, values of type **CharT**
+* `p`, `q`, values of type <a>const</a> **CharT\***
+* `s`, a value of type **CharT\***
+* `n`, `i`, `j`, values of type [std::size_t](/docs/std/types/size_t)
+* `e`, `f`, values of type `X::int_type`
+* `pos`, a value of type `X::pos_type`
+* `state`, a value of type `X::state_type`
+* `r`, an lvalue of type **CharT**
+
+| **Expression**         | **Return type**                       | **Semantics**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | **Complexity** |
+|:-----------------------|:--------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------|
+| `X::char_type`         | **CharT**                             | Used to refer to the character type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Compile-time   |
+| `X::int_type`          |                                       | A type that can hold all valid values of `X::char_type` plus `X::eof()`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | Compile-time   |
+| `X::off_type`          |                                       | Invokes implementation-defined behavior if not [std::streamoff](/docs/std/io/streamoff) when **X** is used as the traits template parameter in input/output classes.                                                                                                                                                                                                                                                                                                                                                                                                               | Compile-time   |
+| `X::pos_type`          |                                       | \* Functions in input/output classes returning this type use `X::pos_type(X::off_type(-1))` as an invalid value to signal an error <br/> \* Use of this invalid value as an argument to any [std::istream](/docs/std/io/basic_istream), [std::ostream](/docs/std/io/basic_ostream) or [std::streambuf](/docs/std/io/basic_streambuf) member taking a value of this type is undefined behavior <br/> \* Invokes implementation-defined behavior if this type is not [std::streampos](/docs/std/io/fpos) when **X** is used as the traits template parameter in input/output classes | Compile-time   |
+| `X::state_type`        |                                       | [*Destructible*](/docs/named_req/Destructible), [*CopyAssignable*](/docs/named_req/CopyAssignable), [*CopyConstructible*](/docs/named_req/CopyConstructible), [*DefaultConstructible*](/docs/named_req/DefaultConstructible)                                                                                                                                                                                                                                                                                                                                                       | Compile-time   |
+| `X::eq(c, d)`          | <a>bool</a>                           | Returns: whether `c` is to be treated as equal to `d`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Constant       |
+| `X::lt(c, d)`          | <a>bool</a>                           | Returns: whether `c` is to be treated as less than `d`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Constant       |
+| `X::compare(p, q, n)`  | `int`                                 | Returns: <br/> \* 0 if for each `i` in [`0`, `n`), `X::eq(p[i], q[i])` is <a>true</a> <br/> \* Else, a negative value if <br/> &emsp;\*  For some `j` in [`0`, `n`), `X::lt(p[j], q[j])` is <a>true</a> and <br/> &emsp;\*  For each `i` in [`0`, `j`), `X::eq(p[i], q[i])` is <a>true</a><br/> \* Else a positive value                                                                                                                                                                                                                                                           | Linear         |
+| `X::length(p)`         | [std::size_t](/docs/std/types/size_t) | Returns: the smallest `i` such that `X::eq(p[i], CharT())` is <a>true</a>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Linear         |
+| `X::find(p, n, c)`     | <a>const</a> `X::char_type*`          | Returns: <br/> \* The smallest `q` in [`p`, `p + n`) such that `X::eq(*q, c)` is <a>true</a> <br/> \* `0` otherwise                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Linear         |
+| `X::move(s, p, n)`     | `X::char_type*`                       | \* For each `i` in [`0`, `n`), performs `X::assign(s[i], p[i])` <br/> \* Copies correctly even where the ranges [`p`, `p + n`) and [`s`, `s + n`) overlap <br/> \* Returns: `s`                                                                                                                                                                                                                                                                                                                                                                                                    | Linear         |
+| `X::copy(s, p, n)`     | `X::char_type*`                       | \* Requires: [`p`, `p + n`) and [`s`, `s + n`) do not overlap <br/> \* Returns: `s` <br/> \* For each `i` in [`0`, `n`), performs `X::assign(s[i], p[i])`                                                                                                                                                                                                                                                                                                                                                                                                                          | Linear         |
+| `X::assign(r, d)`      | (Not used)                            | Assigns `r = d`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | Constant       |
+| `X::assign(s, n, c)`   | `X::char_type*`                       | \* For each `i` in [`0`, `n`), performs `X::assign(s[i], c)`.<br/> \* Returns: `s`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Linear         |
+| `X::not_eof(e)`        | `X::int_type`                         | \* Returns: `e` if `X::eq_int_type(e, X::eof())` is <a>false</a> <br/> \* Otherwise a value `f` such that `X::eq_int_type(f, X::eof())` is <a>false</a>                                                                                                                                                                                                                                                                                                                                                                                                                            | Constant       |
+| `X::to_char_type(e)`   | `X::char_type`                        | \* Returns: If for some `c`, `X::eq_int_type(e, X::to_int_type(c))` is <a>true</a>, `c` <br/> \* Else some unspecified value                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Constant       |
+| `X::to_int_type(c)`    | `X::int_type`                         | Returns: some value `e`, constrained by the definitions of `X::to_char_type` and `X::eq_int_type`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | Constant       |
+| `X::eq_int_type(e, f)` | <a>bool</a>                           | \* For all `c` and `d`, `X::eq(c, d)` is equal to `X::eq_int_type(X::to_int_type(c), X::to_int_type(d))` <br/> \* Returns: <br/> &emsp;\* Yields `X::eq(c, d)` if for some `c` and `d`, `e == X::to_int_type(c)` and <br/>&emsp;&emsp;`f == X::to_int_type(d)` <br/> &emsp;\* Otherwise, yields <a>true</a> if `e` and `f` are both copies of `X::eof()` <br/> &emsp;\* Otherwise, yields <a>false</a> if one of `e` and `f` is a copy of `X::eof()`<br/>&emsp;&emsp; and the other is not <br/> &emsp;\* Otherwise the value is unspecified                                       | Constant       |
+| `X::eof()`             | `X::int_type`                         | Returns: a value `e` such that `X::eq_int_type(e, X::to_int_type(c))` is <a>false</a> for all values `c`                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | Constant       |
+
+### Standard library
+*CharTraits* is required by the following standard library class templates as a template type parameter:
+#### Strings
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/containers/strings/string"      name={<>basic_string</>}                                   desc={<>stores and manipulates sequences of characters</>}/>
+    <Symbol autoLink linkName="/docs/std/containers/strings/string_view" name={<>basic_string_view<Version v='cpp17'></Version></>} desc={<>read-only string view</>}/>
+</SymbolTable>
+
+#### Streams
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/io/basic_ios"           name={<>basic_ios</>}                                      desc={<>manages an arbitrary stream buffer</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_istream"       name={<>basic_istream</>}                                  desc={<>wraps a given abstract device (<a href="/docs/std/io/basic_streambuf">std::basic_streambuf</a>)and provides high-level input interface</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_ifstream"      name={<>basic_ifstream</>}                                 desc={<>implements high-level file stream input operations</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_istringstream" name={<>basic_istringstream</>}                            desc={<>implements high-level string stream input operations</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_ispanstream"   name={<>basic_ispanstream<Version v='cpp23'></Version></>} desc={<>implements fixed character buffer input operations</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_ostream"       name={<>basic_ostream</>}                                  desc={<>wraps a given abstract device (<a href="/docs/std/io/basic_streambuf">std::basic_streambuf</a>)and provides high-level output interface</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_ofstream"      name={<>basic_ofstream</>}                                 desc={<>implements high-level file stream output operations</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_ostringstream" name={<>basic_ostringstream</>}                            desc={<>implements high-level string stream output operations</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_osyncstream"   name={<>basic_osyncstream<Version v='cpp20'></Version></>} desc={<>synchronized output stream wrapper</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_ospanstream"   name={<>basic_ospanstream<Version v='cpp23'></Version></>} desc={<>implements fixed character buffer output operations</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_iostream"      name={<>basic_iostream</>}                                 desc={<>wraps a given abstract device (<a href="/docs/std/io/basic_streambuf">std::basic_streambuf</a>)and provides high-level input/output interface</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_fstream"       name={<>basic_fstream</>}                                  desc={<>implements high-level file stream input/output operations</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_stringstream"  name={<>basic_stringstream</>}                             desc={<>implements high-level string stream input/output operations</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_spanstream"    name={<>basic_spanstream<Version v='cpp23'></Version></>}  desc={<>implements fixed character buffer input/output operations</>}/>
+</SymbolTable>
+
+#### Stream iterators
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/iterator/istream_iterator" name={<>istream_iterator</>} desc={<>input iterator that reads from <a href="">std::basic_istream</a></>}/>
+    <Symbol autoLink linkName="/docs/std/iterator/ostream_iterator" name={<>ostream_iterator</>} desc={<>output iterator that writes to <a href="">std::basic_ostream</a></>}/>
+</SymbolTable>
+
+#### Stream buffers
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/io/basic_streambuf" name={<>basic_streambuf</>}                            desc={<>abstracts a raw device</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_filebuf"   name={<>basic_filebuf</>}                              desc={<>implements raw file device</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_stringbuf" name={<>basic_stringbuf</>}                            desc={<>implements raw string device</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_syncbuf"   name={<>basic_syncbuf<Version v='cpp20'></Version></>} desc={<>synchronized output device wrapper</>}/>
+    <Symbol autoLink linkName="/docs/std/io/basic_spanbuf"   name={<>basic_spanbuf<Version v='cpp23'></Version></>} desc={<>implements raw fixed character buffer device</>}/>
+</SymbolTable>
+
+#### Stream buffer iterators
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/iterator/istreambuf_iterator" name={<>istreambuf_iterator</>} desc={<>input iterator that reads from <a href="/docs/std/io/basic_streambuf">std::basic_streambuf</a></>}/>
+    <Symbol autoLink linkName="/docs/std/iterator/ostreambuf_iterator" name={<>ostreambuf_iterator</>} desc={<>output iterator that writes to <a href="/docs/std/io/basic_streambuf">std::basic_streambuf</a></>}/>
+</SymbolTable>
+
+CharTraits is satisfied by the following standard library classes:
+
+* <a>template&lt;&gt; class</a> char_traits&lt;<a>char</a>&gt;;
+* <a>template&lt;&gt; class</a> char_traits&lt;<a>wchar_t</a>&gt;;
+* <Since v='cpp20'><a>template&lt;&gt; class</a> char_traits&lt;<a>char8_t</a>&gt;;</Since>
+* <Since v='cpp11'><a>template&lt;&gt; class</a> char_traits&lt;<a>char16_t</a>&gt;;</Since>
+* <Since v='cpp11'><a>template&lt;&gt; class</a> char_traits&lt;<a>char32_t</a>&gt;;</Since>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                                   Behavior as published                                  |                          Correct behavior                         |
+|:--------:|:----------:|:----------------------------------------------------------------------------------------:|:-----------------------------------------------------------------:|
+| LWG 335  | C++98      | the requirements on the binary overload of assign did not prevent assignments to rvalues | its first argument can only be an lvalue                          |
+| LWG 352  | C++98      | X::state_type was only required to be [*CopyConstructible*](/docs/named_req/CopyConstructible) | it is also required to be [*CopyAssignable*](/docs/named_req/CopyAssignable) and [*DefaultConstructible*](/docs/named_req/DefaultConstructible) |
+| LWG 3085 | C++98      | X::copy only required p not in `[s, s + n)`, which is too weak <sup>[1]</sup>                  | requires `[p, p + n)` and `[s, s + n)` not to overlap                 |
+
+[1]  `[p, p + n)` and `[s, s + n)` can overlap, using [std::memcpy](/docs/std/containers/strings/memcpy) to implement `X::copy` results in undefined behavior in this case.

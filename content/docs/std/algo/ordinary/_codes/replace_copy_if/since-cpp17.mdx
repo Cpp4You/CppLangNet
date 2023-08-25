@@ -1,0 +1,14 @@
+```cpp
+// (1)
+template< class InputIt, class OutputIt, class UnaryPredicate, class T >
+OutputIt replace_copy_if( InputIt first, InputIt last, OutputIt d_first,
+                          UnaryPredicate p, const T& new_value );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt1, class ForwardIt2,
+          class UnaryPredicate, class T >
+ForwardIt2 replace_copy_if( ExecutionPolicy&& policy,
+                            ForwardIt1 first, ForwardIt1 last,
+                            ForwardIt2 d_first,
+                            UnaryPredicate p, const T& new_value );
+```

@@ -1,0 +1,157 @@
+---
+title:         reverse algorithm
+sidebar_label: reverse(  )
+description:   reverse algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, reverse, order, backwards]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/reverse
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/transform/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/transform/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/transform/since-cpp20.mdx';
+
+# std::reverse() algorithm
+
+<SwitchView content={{
+	'since-cpp20': <Signature_SinceCpp20 />,
+	'since-cpp17': <Signature_SinceCpp17 />,
+	'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+Reverses the order of elements.
+
+- **(1)** Reverses the order of the elements in the range [`first`; `last`).  
+	Behaves as if applying [`ranges::iter_swap`](#) to every pair of iterators `first + i, last - i - 1` for each integer `i`, where `0 ≤ i < (last - first) / 2`.
+
+- **(3, 4)** Same as **(1)** and **(2)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Until>
+	<Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Since>
+	:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>second</code> </> }>
+    The range of elements to reverse (iterator, sentinel pair).
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>BidirIt</code> }>
+    <a href="/docs/named_req/ValueSwappable">ValueSwappable</a> <br/>
+    <a href="/docs/named_req/LegacyBidirectionalIterator">LegacyBidirectionalIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+**(none)**
+
+### Complexity
+
+Exactly `(last - first) / 2` swaps.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>reverse(1)</summary>
+
+```cpp
+template<class BidirIt>
+constexpr // since C++20
+void reverse(BidirIt first, BidirIt last)
+{
+    using iter_cat = typename std::iterator_traits<BidirIt>::iterator_category;
+
+    // Tag dispatch, e.g. calling reverse_impl(first, last, iter_cat()),
+    // can be used in C++14 and earlier modes.
+    if constexpr (std::is_base_of_v<std::random_access_iterator_tag, iter_cat>)
+    {
+        if (first == last)
+            return;
+
+        for (--last; first < last; (void)++first, --last)
+            std::iter_swap(first, last);
+    }
+    else
+        while (first != last && first != --last)
+            std::iter_swap(first++, last);
+}
+```
+
+</details>
+
+### Notes
+
+Implementations (e.g. **MSVC STL**) may enable vectorization when the iterator type models [`contiguous_iterator`](#) and swapping its value type calls neither non-trivial special member function nor ADL-found swap.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <iterator>
+#include <vector>
+
+void println(auto rem, auto const& v)
+{
+    for (std::cout << rem; auto e : v)
+        std::cout << e << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    std::vector<int> v {1, 2, 3};
+    std::reverse(v.begin(), v.end());
+    println("after reverse, v = ", v);
+
+    int a[] = {4, 5, 6, 7};
+    std::reverse(std::begin(a), std::end(a));
+    println("after reverse, a = ", a);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+after reverse, v = 3 2 1
+after reverse, a = 7 6 5 4
+```
+
+</div>
+</Columns>

@@ -1,0 +1,6 @@
+```cpp
+// (1)
+template< no-throw-forward-iterator I >
+  requires std::default_initializable<std::iter_value_t<I>>
+I uninitialized_value_construct_n( I first, std::iter_difference_t<I> n );
+```

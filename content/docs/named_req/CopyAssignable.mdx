@@ -1,0 +1,25 @@
+---
+title:                  C++ named requirements:CopyAssignable  
+tags:                   [named_req,CopyAssignable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	    from "@site-comps/SymbolTable";
+import {Since, Version}             from "@site-comps/Versions";
+
+# <small>C++ named requirements:</small> *CopyAssignable *
+Specifies that an instance of the type can be copy-assigned from an [lvalue expression](/docs/std/language/value_category).
+
+### Requirements
+The type T satisfies *CopyAssignable * if 
+* The type T satisfies [MoveAssignable](/docs/named_req/MoveAssignable), and
+
+Given
+* `t`, a modifiable [lvalue expression](/docs/std/language/value_category) of type T
+* `v`, an [lvalue expression](/docs/std/language/value_category) of type `T` or `const T` or an [rvalue]((/docs/std/language/value_category)) expression of type `const T`
+
+The following expressions must be valid and have their specified effects
+
+| **Expression** | **Return type** | **Return value** |              **Post-conditions**            |
+|:----------:|:-----------:|:------------:|:----------------------------------------------------------------------------:|
+| `t = v`      | T&          | t            | The value of t is equivalent to the value of v. The value of v is unchanged. |

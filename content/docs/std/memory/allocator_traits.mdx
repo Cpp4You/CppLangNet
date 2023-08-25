@@ -1,0 +1,72 @@
+---
+title:                  std::allocator_traits
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	            from "@site-comps/SymbolTable";
+import Columns                              from "@site-comps/Columns";
+import { Since, Until, Removed, Version}    from "@site-comps/Versions";
+import { Static }                           from "@site-comps/StaticTag";
+import ClassSummary				            from "@site-comps/ClassSummary";
+
+<ClassSummary name="allocator_traits" namespaces="std" folder="memory" headerName="memory"/>
+
+```cpp title="Since C++11"
+template< class Alloc >
+struct allocator_traits;
+```
+
+The allocator_traits class template provides the standardized way to access various properties of Allocators. The standard containers and other standard library components access allocators through this template, which makes it possible to use any class type as an allocator, as long as the user-provided specialization of std::allocator_traits implements all required functionality.
+
+<Since v='cpp23'>
+A program that declares an explicit or partial specialization of std::allocator_traits is ill-formed, no diagnostic required.</Since>
+
+The default, non-specialized, std::allocator_traits contains the following members:
+
+### Member types
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Type</b>}                                 desc={<b>Definition</b>}/>
+    <Symbol name={<>allocator_type</>}                         desc={<>Alloc                                                               </>}/>
+    <Symbol name={<>value_type</>}                             desc={<>Alloc::value_type                                                   </>}/>
+    <Symbol name={<>pointer</>}                                desc={<>Alloc::pointer if present, otherwise value_type*                    </>}/>
+    <Symbol name={<>const_pointer</>}                          desc={<>Alloc::const_pointer if present, otherwise                          <br/><a href="../pointer_traits">std::pointer_traits</a>             &lt;pointer&gt;::rebind&lt;const value_type&gt;</>}/>
+    <Symbol name={<>void_pointer</>}                           desc={<>Alloc::void_pointer if present, otherwise                           <br/><a href="../pointer_traits">std::pointer_traits</a>              &lt;pointer&gt;::rebind&lt;void&gt;</>}/>
+    <Symbol name={<>const_void_pointer</>}                     desc={<>Alloc::const_void_pointer if present, otherwise                     <br/><a href="../pointer_traits">std::pointer_traits</a>              &lt;pointer&gt;::rebind&lt;const_void&gt;</>}/>
+    <Symbol name={<>difference_type</>}                        desc={<>Alloc::difference_type if present, otherwise                        <br/><a href="../pointer_traits">std::pointer_traits</a>              &lt;pointer&gt;::difference_type</>}/>
+    <Symbol name={<>size_type</>}                              desc={<>Alloc::size_type if present, otherwise                              <br/><a href="/docs/std/types/make_unsigned">std::make_unsigned</a>  &lt;difference_type&gt;::type</>}/>
+    <Symbol name={<>propagate_on_container_copy_assignment</>} desc={<>Alloc::propagate_on_container_copy_assignment if present, otherwise <br/><a href="/docs/std/types/integral_constant">std::false_type</a> </>}/>
+    <Symbol name={<>propagate_on_container_move_assignment</>} desc={<>Alloc::propagate_on_container_move_assignment if present, otherwise <br/><a href="/docs/std/types/integral_constant">std::false_type</a> </>}/>
+    <Symbol name={<>propagate_on_container_swap</>}            desc={<>Alloc::propagate_on_container_swap if present, otherwise            <br/><a href="/docs/std/types/integral_constant">std::false_type</a> </>}/>
+    <Symbol name={<>is_always_equal</>}                        desc={<>Alloc::is_always_equal if present, otherwise                        <br/><a href="/docs/std/types/is_empty">std::is_empty</a>            &lt;Alloc&gt;::type</>}/> 
+
+</SymbolTable>
+
+### Member alias templates
+
+<SymbolTable noTraits>
+    <Symbol name={<b>Type</b>}                 desc={<b>Definition</b>}/>
+    <Symbol name={<>rebind_alloc&lt;T&gt;</>}  desc={<>Alloc::rebind&lt;T&gt;::other if present, otherwise Alloc&lt;T, Args&gt; if this Alloc is Alloc&lt;U, Args&gt;</>}/>
+    <Symbol name={<>rebind_traits&lt;T&gt;</>} desc={<>std::allocator_traits&lt;rebind_alloc&lt;T&gt;&gt;</>}/>
+</SymbolTable>
+
+### Member functions
+
+<SymbolTable>
+    <Symbol pub autoLink linkName="../_allocator_traits/allocate"                              name={<>allocate<Static></Static></>}                                       desc={<>allocates uninitialized storage using the allocator</>}/>
+    <Symbol pub autoLink linkName="../_allocator_traits/allocate_at_least"                     name={<>allocate_at_least<Version v='cpp23'></Version><Static></Static></>} desc={<>allocates uninitialized storage using the allocator</>}/>
+    <Symbol pub autoLink linkName="../_allocator_traits/deallocate"                            name={<>deallocate<Static></Static></>}                                     desc={<>deallocates storage using the allocator</>}/>
+    <Symbol pub autoLink linkName="../_allocator_traits/construct"                             name={<>construct<Static></Static></>}                                      desc={<>constructs an object in the allocated storage</>}/>
+    <Symbol pub autoLink linkName="../_allocator_traits/destroy"                               name={<>destroy<Static></Static></>}                                        desc={<>destructs an object stored in the allocated storage</>}/>    
+    <Symbol pub autoLink linkName="../_allocator_traits/max_size"                              name={<>max_size<Static></Static></>}                                       desc={<>returns the maximum object size supported by the allocator</>}/>    
+    <Symbol pub autoLink linkName="../_allocator_traits/select_on_container_copy_construction" name={<>select_on_container_copy_construction<Static></Static></>}          desc={<>obtains the allocator to use after copying a standard container</>}/>    
+</SymbolTable>
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                Behavior as published               |     Correct behavior     |
+|:--------:|:----------:|:--------------------------------------------------:|:------------------------:|
+| LWG 2108 | C++11      | there was no way to show an allocator is stateless | is_always_equal provided |

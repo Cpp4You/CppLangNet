@@ -1,0 +1,23 @@
+```cpp
+// (1)
+constexpr bool equal( I1 first1, S1 last1, I2 first2, S2 last2,
+                      Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );
+
+// (2)
+constexpr bool equal( R1&& r1, R2&& r2, Pred pred = {},
+                      Proj1 proj1 = {}, Proj2 proj2 = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I1`, `I2` - `std::input_iterator`
+- `S1`, `S2` - `std::sentinel_for<I1>`, `std::sentinel_for<I2>`
+- `R1`, `R2` - `std::ranges::input_range`
+- `Pred` - **(none)**
+- `Proj1`, `Proj2` - **(none)**
+
+
+The `Proj1`, `Proj2` and `Pred` template arguments have the following default types: `std::identity`, `ranges::less` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::indirectly_comparable<I1, I2, Pred, Proj1, Proj2>`
+- **(2)** - `std::indirectly_comparable<ranges::iterator_t<R1>, ranges::iterator_t<R2>, Pred, Proj1, Proj2>`

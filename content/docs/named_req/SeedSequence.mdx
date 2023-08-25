@@ -1,0 +1,32 @@
+---
+title:                  C++ named requirements:SeedSequence  
+tags:                   [named_req,SeedSequence]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *SeedSequence*</Since>
+
+A SeedSequence is an object that produces unsigned integer values `i` in the range <i>0 ≤ <code>i</code> < 2<sup>32</sup></i> based on a consumed range of integer data.
+
+### Requirements
+* `S` is a *SeedSequence* type.
+* `q` is an object of **S** and `r` is a potentially constant object of **S**.
+* `T` is the result_type.
+* `ib`,ie are LegacyInputIterators with a value_type of unsigned integer values of at least 32 bits.
+* `il` is an <code><a href="/docs/std/utility/initializer_list">std::initializer_list&lt;T&gt;</a></code>.
+* `rb`,re are [mutable](/docs/named_req/LegacyOutputIterator) [*LegacyRandomAccessIterators*](/docs/named_req/LegacyRandomAccessIterators) 
+with a value_type of unsigned integer values of at least 32 bits.
+* `ob` is an [LegacyOutputIterator](/docs/named_req/LegacyOutputIterator).
+
+| **Expression**      | **Type**    | **Notes**                                                                                                                                                 | **Complexity**  |
+|:-------------------:|:-----------:|:---------------------------------------------------------------------------------------------------------------------------------------------------------:|:---------------:|
+| `S::result_type`    | **T**       | Unsigned integer of at least 32 bits                                                                                                                      | compile-time    |
+| `S()`               |             | Creates a seed sequence with the same initial state as other default-constructed seed sequences of type **S**                                             | constant        |
+| `S(ib,ie)`          |             | Creates a seed sequence with internal state depending on some or all supplied input bits by `[ib,ie)`                                                     | O(`ie-ib`)      |
+| `S(il)`             |             | The same as `S(il.begin(), il.end())`                                                                                                                     |                 |
+| `q.generate(rb,re)` | `void`      | Fills `[rb,re)` with 32-bit quantities depending on the initial supplied values and potential previous calls to generate. If `rb == re`, it does nothing. | O(`re-rb`)      |
+| `r.size()`          | `size_t`    | The amount of 32-bit integers copied by param.                                                                                                            | constant        |
+| `r.param(ob)`       | `void`      | Copies 32-bit values to ob that would reproduce the current state of the object if passed to a constructor of **S**.                                      | O(`r.size()`)   |

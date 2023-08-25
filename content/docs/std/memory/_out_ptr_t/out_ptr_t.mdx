@@ -1,0 +1,45 @@
+---
+title:                  std::out_ptr_t<Smart,Pointer,Args...>::out_ptr_t
+description:            Smart Pointer Adaptor Constructor
+tags:                   [memory,out_ptr_t, out_ptr]
+hide_title:             true
+---
+
+# std::out_ptr_t&lt;Smart,Pointer,Args...>::out_ptr_t
+
+
+```cpp title="Since C++23"
+// 1)
+explicit out_ptr_t( Smart &sp, Args... args );
+// 2)
+out_ptr_t( const out_ptr_t& ) = delete;
+```
+
+1) <br/>
+Creates an [out_ptr_t](../out_ptr_t). Adapts `sp` as if binds it to the Smart& member, captures every argument `t` in `args...` 
+as if initializes the corresponding member of type `T` in `Args..`. with std::forward&lt;T>(t), then value-initializes the stored Pointer.
+
+2) <br/>
+Copy constructor is explicitly deleted. out_ptr_t is neither copyable nor movable.
+
+### Parameters
+`sp`	-	the object (typically a smart pointer) to adapt <br/>
+`args...`	-	the arguments used for resetting to capture
+
+### Return value
+(none)
+
+### Exceptions
+May throw implementation-defined exceptions.
+
+### Notes
+After construction, the Pointer or void* object pointed by the return value of either conversion function is equal to `nullptr`.
+
+Every argument in `args...` is moved into the created [out_ptr_t](../out_ptr_t) if it is of an object type, or transferred into the created 
+[out_ptr_t](../out_ptr_t) as-is if it is of a reference type.
+
+The constructor of [out_ptr_t](../out_ptr_t) is allowed to throw exceptions. For example, when `sp` is a [std::shared_ptr](../shared_ptr), 
+the allocation for the new control block may be performed within the constructor rather than the destructor.
+
+### Example
+#### This section is incomplete

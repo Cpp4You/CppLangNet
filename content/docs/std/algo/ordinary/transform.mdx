@@ -1,0 +1,240 @@
+---
+title:         transform algorithm
+sidebar_label: transform(  )
+description:   transform algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, transform, map]
+
+cppreference_origin_rel: w/cpp/algorithm/transform
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/transform/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/transform/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/transform/since-cpp20.mdx';
+
+# std::transform() algorithm
+
+<SwitchView content={{
+	'since-cpp20': <Signature_SinceCpp20 />,
+	'since-cpp17': <Signature_SinceCpp17 />,
+	'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+Applies the given function to a range and stores the result in another range, keeping the original elements order and beginning at `d_first`.
+
+- **(1)** The unary operation `unary_op` is applied to the range defined by **[ first1; last1 )**.
+
+- **(2)** The binary operation `binary_op` is applied to pairs of elements from two ranges:
+	- one defined by [`first1`; `last1`)
+	- other beginning at `first2`.
+
+- **(3, 4)** Same as **(1)** and **(2)**, but executed according to policy.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Until>
+	<Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> is <code>true</code>. </Since>
+	:::
+
+:::danger
+`unary_op` and `binary_op` **must not** invalidate any iterators, including the end iterators, or modify any elements of the ranges involved.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last</code> </> }>
+    The first range of elements to transform.
+  </Symbol>
+  <Symbol none noLink name={ <code>first2</code> }>
+    The beginning of the second range of elements to transform.
+  </Symbol>
+  <Symbol none noLink name={ <code>d_first</code> }>
+    The beginning of the destination range, may be equal to <code>first1</code> or <code>first2</code>.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See execution policy for details.
+  </Symbol>
+  <Symbol none noLink name={ <code>unary_op</code> }>
+
+Unary operation function object that will be applied.
+
+The signature of the function should be equivalent to the following:
+```cpp
+Ret fun(const Type& a);
+```
+- The signature does not need to have `const&`.
+- The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
+- The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`.
+
+
+  </Symbol>
+  <Symbol none noLink name={ <code>unary_op</code> }>
+
+Binary operation function object that will be applied.
+
+The signature of the function should be equivalent to the following:
+```cpp
+Ret fun(const Type1& a, const Type2& b);
+```
+- The signature does not need to have `const&`.
+- The types `Type1` and `Type2` must be such that an object of type `InputIt` and `Input2` can be dereferenced and then implicitly converted to them.
+- The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>InputIt</code> <br/> <code>InputIt1</code> <code>InputIt2</code> </> }>
+    <a href="/docs/named_req/LegacyInputIterator">LegacyInputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <code>OutputIt</code> }>
+    <a href="/docs/named_req/LegacyOutputIterator">LegacyOutputIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> <code>ForwardIt3</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+Output iterator to the element that follows the last element transformed.
+
+### Complexity
+
+- **(1, 3)** Exactly `std::distance(first1, last1)` applications of `unary_op`.
+- **(2, 4)** Exactly `std::distance(first1, last1)` applications of `unary_op`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>transform (1)</summary>
+
+```cpp
+template< class InputIt, class OutputIt, class UnaryOperation >
+OutputIt transform( InputIt first1, InputIt last1, OutputIt d_first, UnaryOperation unary_op )
+{
+	while (first1 != last1)
+		*d_first++ = unary_op(*first1++);
+
+	return d_first;
+}
+```
+
+</details>
+
+<details>
+<summary>transform (2)</summary>
+
+```cpp
+template< class InputIt1, class InputIt2, class OutputIt, class BinaryOperation >
+OutputIt transform(InputIt1 first1, InputIt1 last1,
+		InputIt2 first2, OutputIt d_first,
+		BinaryOperation binary_op)
+{
+	while (first1 != last1)
+		*d_first++ = binary_op(*first1++, *first2++);
+
+	return d_first;
+}
+```
+
+</details>
+
+### Notes
+
+`std::transform` does not guarantee in-order application of `unary_op` or `binary_op`.
+
+To apply a function to a sequence in-order or to apply a function that modifies the elements of a sequence, use `std::for_each`.
+
+### Examples
+
+The following code uses `transform` to convert a string in place to uppercase using the `std::toupper` function and then transforms each char to its ordinal value.
+
+Then `transform` with a projection is used to transform elements of `std::vector<Foo>` into chars to fill a `std::string`.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+The following code uses transform to convert a string in place to uppercase using the `std::toupper` function and then transforms each char to its ordinal value:
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cctype>
+#include <iomanip>
+#include <iostream>
+#include <string>
+#include <vector>
+
+void print_ordinals(std::vector<std::size_t> const& ordinals)
+{
+    std::cout << "ordinals: ";
+    for (std::size_t ord : ordinals)
+        std::cout << std::setw(3) << ord << ' ';
+    std::cout << '\n';
+}
+
+int main()
+{
+    std::string s {"hello"};
+    std::transform(s.cbegin(), s.cend(),
+                   s.begin(), // write to the same location
+                   [](unsigned char c) { return std::toupper(c); });
+    std::cout << "s = " << std::quoted(s) << '\n';
+
+    // achieving the same with std::for_each (see Notes above)
+    std::string g {"hello"};
+    std::for_each(g.begin(), g.end(), [](char& c) // modify in-place
+    {
+        c = std::toupper(static_cast<unsigned char>(c));
+    });
+    std::cout << "g = " << std::quoted(g) << '\n';
+
+    std::vector<std::size_t> ordinals;
+    std::transform(s.cbegin(), s.cend(), std::back_inserter(ordinals),
+                   [](unsigned char c) { return c; });
+
+    print_ordinals(ordinals);
+
+    std::transform(ordinals.cbegin(), ordinals.cend(), ordinals.cbegin(),
+                   ordinals.begin(), std::plus<>{});
+
+    print_ordinals(ordinals);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+s = "HELLO"
+g = "HELLO"
+ordinals:  72  69  76  76  79 
+ordinals: 144 138 152 152 158
+```
+
+</div>
+</Columns>

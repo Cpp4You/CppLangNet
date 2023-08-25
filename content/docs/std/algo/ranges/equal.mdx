@@ -1,0 +1,177 @@
+---
+title:         ranges::equal algorithm
+sidebar_label: ranges::equal(  )
+description:   ranges::equal algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, equal]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/equal
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import { Since }        from "@site-comps/Versions";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/equal/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/equal/since-cpp20-simplified.mdx';
+
+# std::ranges::equal() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+- **(1)** Returns `true` if the projected values of the range [`first1`; `last1`) are equal to the projected values of the range [`first2`; `last2`), and `false` otherwise.
+
+- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as first and `ranges::end(r)` as `last`.
+
+Two ranges are considered equal if they have the same number of elements and every pair of corresponding projected elements satisfies `pred`. That is, `std::invoke(pred, std::invoke(proj1, *first1), std::invoke(proj2, *first2))` returns `true` for all pairs of corresponding elements in both ranges.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The first range of elements to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>r1</code> }>
+    The first range of elements to compare.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The second range of elements to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The first range of elements to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    Predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the elements of the first range.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the elements of the first range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+If the length of the range [`first1`; `last1`) does not equal the length of the range [`first2`; `last2`), returns `false`.
+
+If the elements in the two ranges are equal after projection, returns `true`.
+
+Otherwise, returns `false`.
+
+### Complexity
+
+At most `min(last1 - first1, last2 - first2)` applications of the predicate and corresponding projections.
+
+However, if `S1` and `S2` both model [`std::sized_sentinel_for`](#) their respective iterators,
+and `last1 - first1 != last2 - first2` then no applications of the predicate are made (size mismatch is detected without looking at any elements).
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>ranges::equal</summary>
+
+```cpp
+struct equal_fn
+{
+  template<std::input_iterator I1, std::sentinel_for<I1> S1,
+           std::input_iterator I2, std::sentinel_for<I2> S2,
+           class Pred = ranges::equal_to,
+           class Proj1 = std::identity, class Proj2 = std::identity>
+  requires std::indirectly_comparable<I1, I2, Pred, Proj1, Proj2>
+  constexpr bool
+      operator()(I1 first1, S1 last1, I2 first2, S2 last2,
+                 Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {}) const
+  {
+      if constexpr (std::sized_sentinel_for<S1, I1> and std::sized_sentinel_for<S2, I2>)
+          if (std::ranges::distance(first1, last1) != std::ranges::distance(first2, last2))
+              return false;
+
+      for (; first1 != last1; ++first1, (void)++first2)
+          if (!std::invoke(pred, std::invoke(proj1, *first1), std::invoke(proj2, *first2)))
+              return false;
+      return true;
+  }
+
+  template<ranges::input_range R1, ranges::input_range R2,
+           class Pred = ranges::equal_to,
+           class Proj1 = std::identity, class Proj2 = std::identity>
+  requires std::indirectly_comparable<ranges::iterator_t<R1>, ranges::iterator_t<R2>,
+                                      Pred, Proj1, Proj2>
+  constexpr bool
+      operator()(R1&& r1, R2&& r2, Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {}) const
+  {
+      return (*this)(ranges::begin(r1), ranges::end(r1),
+                     ranges::begin(r2), ranges::end(r2),
+                     std::ref(pred), std::ref(proj1), std::ref(proj2));
+  }
+};
+
+inline constexpr equal_fn equal;
+```
+
+</details>
+
+### Examples
+
+The following code uses [`ranges::equal`](#) to test if a string is a palindrome.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iomanip>
+#include <iostream>
+#include <ranges>
+#include <string_view>
+
+constexpr bool is_palindrome(const std::string_view s)
+{
+    namespace views = std::views;
+    auto forward = s | views::take(s.size() / 2);
+    auto backward = s | views::reverse | views::take(s.size() / 2);
+    return std::ranges::equal(forward, backward);
+}
+
+void test(const std::string_view s)
+{
+    std::cout << quoted(s) << " is "
+              << (is_palindrome(s) ? "" : "not ")
+              << "a palindrome\n";
+}
+
+int main()
+{
+    test("radar");
+    test("hello");
+    static_assert(is_palindrome("ABBA") and not is_palindrome("AC/DC"));
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+"radar" is a palindrome
+"hello" is not a palindrome
+```
+
+</div>
+</Columns>

@@ -1,0 +1,8 @@
+[noexcept](#) specification:
+```cpp
+noexcept(
+  noexcept(swap(*a, *b))
+)
+```
+
+The lookup for the identifier swap in the exception specification finds this function template in addition to anything found by the usual lookup rules, making the exception specification equivalent to C++17 [`std::is_nothrow_swappable`](#).

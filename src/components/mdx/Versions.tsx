@@ -13,7 +13,7 @@ LanguageVersions.set("cpp17", "C++17");
 LanguageVersions.set("cpp20", "C++20");
 LanguageVersions.set("cpp23", "C++23");
 
-LanguageVersions.set("deprecated-",		 <Translate>deprecated</Translate>)
+LanguageVersions.set("deprecated-",		 <Translate>deprecated</Translate>);
 LanguageVersions.set("deprecated-cpp98", <Translate>deprecated in C++98</Translate>);
 LanguageVersions.set("deprecated-cpp03", <Translate>deprecated in C++03</Translate>);
 LanguageVersions.set("deprecated-cpp11", <Translate>deprecated in C++11</Translate>);

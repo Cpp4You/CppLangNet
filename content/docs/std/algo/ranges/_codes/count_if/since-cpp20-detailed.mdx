@@ -1,0 +1,21 @@
+```cpp
+// (1)
+template<
+	std::input_iterator I,
+	std::sentinel_for<I> S,
+	std::indirect_unary_predicate<std::projected<I, Proj>> Pred
+	class Proj = std::identity
+>
+constexpr std::iter_difference_t<I>
+    count_if( I first, S last, Pred pred, Proj proj = {} );
+
+// (2)
+template<
+	ranges::input_range R,
+	std::indirect_unary_predicate<std::projected<I, Proj>> Pred
+	class Proj = std::identity
+>
+constexpr ranges::range_difference_t<R>
+    count_if( R&& r, Pred pred, Proj proj = {} );
+```
+

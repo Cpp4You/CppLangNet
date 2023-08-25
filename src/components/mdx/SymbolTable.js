@@ -34,11 +34,12 @@ export const Access = {
 };
 
 const readAccess = (props) => {
+  if (props.none) return Access.None;
 	if (props.pub	|| props.public)		return Access.Public;
 	if (props.prot	|| props.protected)		return Access.Protected;
 	if (props.priv	|| props.private)		return Access.Private;
 	else
-		return Access.None;
+		return Access.Public;
 };
 
 
@@ -60,7 +61,7 @@ export default function SymbolTable(props)
 		);
 	}
 
-	return (	
+	return (
 		displayArray(childrenArray)
 	);
 }
@@ -69,7 +70,7 @@ export default function SymbolTable(props)
 export function Symbol(props) {
 
 	const ctx = React.useContext(ClassContext);
-	
+
 	let nameElem = transformEmptyTagElem(props.name);
 
 	let desc = null;
@@ -77,14 +78,18 @@ export function Symbol(props) {
 		desc = props.desc;
 	else if (props.children)
 		desc = props.children;
-		
-	if (props.link || props.autoLink)
+
+  const hasLink = props.linkName || props.autoLink;
+  const canBeLinked = ! props.noLink && hasLink;
+
+  if (canBeLinked)
 		nameElem = <a href={props.link || `${(props.linkName || props.name)}`}>{nameElem}</a>;
 
 	const mapAccess = props => {
 		const a = readAccess(props);
 		return (<span className={a.Style}>{a.ShortName}</span>);
 	}
+
 	const mapModifier = (testValue, style, content) => {
 		switch (testValue) {
 			case true:	return <span className={styles[style]}>{content}</span>;
@@ -92,18 +97,18 @@ export function Symbol(props) {
 		}
 	}
 
-	const arr = [1, 10, 13, 15];
-
 	return (
 		<tr>
-			<td className={styles.symbolProp}>
-				{mapAccess(props)}
-				{mapModifier(props.static,		"modStatic",	"static")}
-				{mapModifier(props.constexpr,	"modConstexpr",	"constexpr")}
-				{mapModifier(props.const,		"modConst",		"const")}
-				{mapModifier(props.volatile,	"modVolatile",	"volatile")}
-				{mapModifier(props.virtual,		"modVirtual",	"virtual")}
-			</td>
+    {! props.none && (
+      <td className={styles.symbolProp}>
+        {mapAccess(props)}
+        {mapModifier(props.static,		"modStatic",	"static")}
+        {mapModifier(props.constexpr,	"modConstexpr",	"constexpr")}
+        {mapModifier(props.const,		"modConst",		"const")}
+        {mapModifier(props.volatile,	"modVolatile",	"volatile")}
+        {mapModifier(props.virtual,		"modVirtual",	"virtual")}
+      </td>
+    )}
 			<td className={styles.symbolName}>
 				{nameElem}
 			</td>

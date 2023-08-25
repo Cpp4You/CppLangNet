@@ -1,0 +1,6 @@
+```cpp title='Since C++20'
+// 1)
+template< class T, class Alloc, class... Args >
+constexpr auto uses_allocator_construction_args( const Alloc& alloc,
+    Args&&... args) noexcept;
+```

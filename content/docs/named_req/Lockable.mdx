@@ -1,0 +1,24 @@
+---
+title:                  C++ named requirements:BasicLockable   
+tags:                   [named_req,BasicLockable]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *BasicLockable*</Since>
+
+The ***Lockable*** requirements extends the [*BasicLockable*](/docs/named_req/BasicLockable) requirements to include attempted locking.
+
+### Requirements
+* [*BasicLockable*](/docs/naamed_req/BasicLockable)
+
+For type **L** to be *Lockable*, it must meet the above condition as well as the following:
+
+|  **Expression**  | **Effects**                                                                                                                                            | **Return value**                                   |
+|:----------------:|:------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------:|
+| `m.try_lock()`   | Attempts to acquire the lock for the current execution agent (thread, process, task) without blocking. If an exception is thrown, no lock is obtained. | <a>true</a> if the lock was acquired, <a>false</a> otherwise |
+
+### Notes
+The try_lock member functions obtains a non-shared lock on `m` on succcess.

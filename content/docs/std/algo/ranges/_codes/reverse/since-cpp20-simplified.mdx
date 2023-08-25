@@ -1,0 +1,16 @@
+```cpp
+// (1)
+constexpr I reverse( I first, S last );
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R> reverse( R&& r );
+```
+
+The type of arguments are generic and have following constraints:
+- `I` - `std::bidirectional_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `ranges::bidirectional_range`
+
+Additionally, each overload has the following constraints:
+- **(1)** - `std::permutable<I>`
+- **(2)** - `std::permutable<ranges::iterator_t<R>>`

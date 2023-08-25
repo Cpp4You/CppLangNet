@@ -1,0 +1,196 @@
+---
+title:         rotate algorithm
+sidebar_label: rotate(  )
+description:   rotate algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, rotate, erase, delete]
+
+cppreference_origin_rel: w/cpp/algorithm/rotate
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from '@site-comps/Tooltip';
+import { Since, Until }        from "@site-comps/Versions";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_UntilCpp17 from './_codes/rotate/until-cpp17.mdx';
+import Signature_SinceCpp17 from './_codes/rotate/since-cpp17.mdx';
+import Signature_SinceCpp20 from './_codes/rotate/since-cpp20.mdx';
+
+# std::rotate() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp17': <Signature_SinceCpp17 />,
+  'until-cpp17': <Signature_UntilCpp17 />
+}} />
+
+
+- **(1)** Performs a left rotation on a range of elements.
+
+  Specifically, swaps the elements in the range [`first`; `last`) in such a way that the elements in [`first`; `middle`) are placed after the elements in [`middle`; `last`) while the orders of the elements in both ranges are preserved.
+
+- **(2)** Same as **(1)**, but executed according to `policy`.
+	:::important Overload Resolution
+	These overloads participate in overload resolution only if
+	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::rotate_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
+	:::
+
+:::danger Undefined Behaviour
+If [`first`; `middle`) or [`middle`; `last`) is not a valid range, the <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined.</Tooltip>
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <code>first</code> }>
+    The beginning of the original range.
+  </Symbol>
+  <Symbol none noLink name={ <code>middle</code> }>
+    Iterator to the element that should appear at the beginning of the rotated range.
+  </Symbol>
+  <Symbol none noLink name={ <code>last</code> }>
+    The end of the original range.
+  </Symbol>
+  <Symbol none noLink name={ <code>policy</code> }>
+    The execution policy to use. See <a href="#">execution policy</a> for details.
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <code>ForwardIt</code> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a> <br/>
+    <a href="/docs/named_req/ValueSwappable">ValueSwappable</a> <br/>
+  </Symbol>
+  <Symbol none noLink name={ <> ><code>*first</code> <br/> <code>*middle</code> <br/> <code>last</code> </> }>
+    <a href="/docs/named_req/MoveAssignable">MoveAssignable</a> <br/>
+    <a href="/docs/named_req/MoveConstructible">MoveConstructible</a>
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+An iterator that is equal to:
+
+- `last`, if `first == middle`
+- `first`, if `middle == last`
+- `first + (last - middle)` otherwise (the new location of the element pointed by `first`)  
+  (the + and - operations are not required to be supported, they are only used to represent to position of the returned iterator).
+
+### Complexity
+
+Linear in the distance between `first` and `last`.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>rotate (1)</summary>
+
+```cpp
+template<class ForwardIt>
+constexpr // since C++20
+ForwardIt rotate(ForwardIt first, ForwardIt middle, ForwardIt last)
+{
+    if (first == middle)
+        return last;
+
+    if (middle == last)
+        return first;
+
+    ForwardIt write = first;
+    ForwardIt next_read = first; // read position for when "read" hits "last"
+
+    for (ForwardIt read = middle; read != last; ++write, ++read)
+    {
+        if (write == next_read)
+            next_read = read; // track where "first" went
+        std::iter_swap(write, read);
+    }
+
+    // rotate the remaining sequence into place
+    rotate(write, next_read, last);
+    return write;
+}
+```
+
+</details>
+
+### Notes
+
+[`std::rotate`](#) has better efficiency on common implementations if
+`ForwardIt` satisfies [LegacyBidirectionalIterator](/docs/named_req/LegacyBidirectionalIterator) or (better) [LegacyRandomAccessIterator](/docs/named_req/LegacyRandomAccessIterator).
+
+Implementations (e.g. [**MSVC STL**](https://github.com/microsoft/STL/blob/main/stl/src/vector_algorithms.cpp)) may enable vectorization w
+hen the iterator type satisfies [LegacyContiguousIterator](/docs/named_req/LegacyContiguousIterator) and swapping its value type calls neither non-trivial special member function nor [ADL](#)-found swap.
+
+### Examples
+
+[`std::rotate`](#) is a common building block in many algorithms. This example demonstrates insertion sort.
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+auto print = [](auto const remark, auto const& v)
+{
+    std::cout << remark;
+    for (auto n : v)
+        std::cout << n << ' ';
+    std::cout << '\n';
+};
+
+int main()
+{
+    std::vector<int> v {2, 4, 2, 0, 5, 10, 7, 3, 7, 1};
+    print("before sort:\t\t", v);
+
+    // insertion sort
+    for (auto i = v.begin(); i != v.end(); ++i)
+        std::rotate(std::upper_bound(v.begin(), i, *i), i, i + 1);
+    print("after sort:\t\t", v);
+
+    // simple rotation to the left
+    std::rotate(v.begin(), v.begin() + 1, v.end());
+    print("simple rotate left:\t", v);
+
+    // simple rotation to the right
+    std::rotate(v.rbegin(), v.rbegin() + 1, v.rend());
+    print("simple rotate right:\t", v);
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+before sort:		2 4 2 0 5 10 7 3 7 1
+after sort:		0 1 2 2 3 4 5 7 7 10
+simple rotate left:	1 2 2 3 4 5 7 7 10 0
+simple rotate right:	0 1 2 2 3 4 5 7 7 10
+```
+
+</div>
+</Columns>

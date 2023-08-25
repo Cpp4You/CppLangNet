@@ -1,0 +1,63 @@
+---
+title:                  C++ named requirements:RandomNumberEngine  
+tags:                   [named_req,RandomNumberEngine]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *RandomNumberEngine*</Since>
+
+A random number engine is a function object returning unsigned integer values such that each value in the range of possible results has (ideally) equal probability.
+
+Any random number engine is also a [*UniformRandomBitGenerator*](/docs/named_req/UniformRandomBitGenerator), 
+and therefore may be plugged into any [random number distribution](/docs/std/numeric/random) in order to obtain a random number (formally, a random variate).
+
+### Requirements
+A type `E` satisfying [*UniformRandomBitGenerator*](/docs/named_req/UniformRandomBitGenerator) will additionally satisfy *RandomNumberEngine* if, given
+
+* `T`, the type named by `E::result_type`
+* `s`, a value of type **T**
+* `e`, a non-const value of type **E**
+* `v`, an lvalue of type **E**
+* `x` and `y`, possibly const values of type **E**
+* `q`, an lvalue of some type satisfying [*SeedSequence*](/docs/named_req/SeedSequence)
+* `z`, a value of type unsigned long long
+* `os`, an output stream
+* `is`, an input stream
+the following expressions are valid and have their specified effects:
+
+| **Expression** | **Return type**   | **Requirements**                                                                                                                                                                                                                                              |
+|:--------------:|:-----------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `E()`          |                   | Creates an engine with the same state as all other default-constructed engines of type **E**.                                                                                                                                                                 |
+| `E(x)`         |                   | Creates an engine with the same state as `x`.                                                                                                                                                                                                                 |
+| `E(s)`         |                   | Creates an engine whose initial state is determined by the integer `s`.                                                                                                                                                                                       |
+| `E(q)`         |                   | Creates an engine whose initial state is determined by a single call to `q.generate`.                                                                                                                                                                         |
+| `e.seed()`     | void              | Sets `e == E()`.                                                                                                                                                                                                                                              |
+| `e.seed(s)`    | void              | Sets `e == E(s)`.                                                                                                                                                                                                                                             |
+| `e.seed(q)`    | void              | Sets `e == E(q)`.                                                                                                                                                                                                                                             |
+| `e()`          | **T**             | Returns a value in the closed interval `[E::min(), E::max()]`. Has amortized constant complexity.                                                                                                                                                             |
+| `e.discard(z)` | void              | Advances `e`'s state as if by `z` consecutive calls to `e()`.                                                                                                                                                                                                 |
+| `x == y`       | bool              | `true` if `x` and `y` are in the same state (such that repeated future calls to `x()` and `y()` will produce identical sequences). Otherwise, `false`.                                                                                                        |
+| `x != y`       | bool              | `!(x == y)`                                                                                                                                                                                                                                                   |
+| `os << x`      | `decltype(os)&`   | Writes to `os` the textual representation of `x`'s current state. In the output, adjacent numbers are separated by one or more space characters. If `os`'s fmtflags are not set to <code>ios_base::dec\|ios_base::left</code>, the behavior may be undefined. |
+| `is >> v`      | `decltype(is)&`   | Reads from is the textual representation of `v`'s current state, such that if that state was previously written via `os << x`, then `x == v`. If `is`'s fmtflags are not set to `ios_base::dec`, the behavior may be undefined.                               |
+
+### Standard library
+The following standard library facilities satisfy *RandomNumberEngine*:
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/numeric/random/linear_congruential_engine" name={<>linear_congruential_engine<Version v='cpp11'></Version></>} desc={<>implements <a href="https://en.wikipedia.org/wiki/Linear_congruential_generator">linear congruential algorithm</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/mersenne_twister_engine"    name={<>mersenne_twister_engine<Version v='cpp11'></Version></>}    desc={<>implements <a href="https://en.wikipedia.org/wiki/Mersenne_Twister">Mersenne twister algorithm</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/subtract_with_carry_engine" name={<>subtract_with_carry_engine<Version v='cpp11'></Version></>} desc={<>implements a subtract-with-carry (<a href="https://en.wikipedia.org/wiki/Lagged_Fibonacci_generator">lagged Fibonacci</a>) algorithm</>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/discard_block_engine"       name={<>discard_block_engine<Version v='cpp11'></Version></>}       desc={<>discards some output of a random number engine></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/independent_bits_engine"    name={<>independent_bits_engine<Version v='cpp11'></Version></>}    desc={<>packs the output of a random number engine into blocks of a specified number of bits</>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/shuffle_order_engine"       name={<>shuffle_order_engine<Version v='cpp11'></Version></>}       desc={<>delivers the output of a random number engine in a different order</>}/>
+</SymbolTable>
+
+The following standard library facilities satisfy [*UniformRandomBitGenerator*](/docs/named_req/UniformRandomBitGenerator) but not *RandomNumberEngine*:
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/numeric/random/random_device" name={<>random_device<Version v='cpp11'></Version></>} desc={<>non-deterministic random number generator using hardware entropy source</>}/>
+</SymbolTable>

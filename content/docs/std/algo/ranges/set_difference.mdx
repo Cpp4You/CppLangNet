@@ -1,0 +1,238 @@
+---
+title:         ranges::set_difference algorithm
+sidebar_label: ranges::set_difference(  )
+description:   ranges::set_difference algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, set_difference]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/set_difference
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+import Tooltip                 from "@site-comps/Tooltip";
+
+import Term_UndefinedBehaviour        from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/set_difference/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/set_difference/since-cpp20-simplified.mdx';
+
+# std::ranges::set_difference() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+With the helper types defined as follows:
+```cpp
+template< class I, class O >
+using set_difference_result = ranges::in_out_result<I, O>;
+```
+
+Copies the elements from the sorted input range [`first1`; `last1`)
+which are not found in the sorted input range [`first2`; `last2`) to the output range beginning at `result`.
+
+- **(1)** Elements are compared using the given binary comparison function `comp`.
+- **(2)** Same as **(1)**, but uses `r1` as the first range and `r2` as the second range, as if using `ranges::begin(r1)` as `first1`, `ranges::end(r1)` as `last1`, `ranges::begin(r2)` as `first2`, and `ranges::end(r2)` as `last2`.
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_UndefinedBehaviour / > }>behavior is undefined</Tooltip> if:
+ - The input ranges are not sorted with respect to `comp` and `proj1` or `proj2`, respectively
+ - Or the resulting range overlaps with either of the input ranges.
+:::
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The first sorted input range.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>r</code> <br/> <code>r1</code> </> }>
+    The first sorted input range.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first2</code> <br/> <code>last2</code> </> }>
+    The second sorted input range.
+  </Symbol>
+  <Symbol none noLink name={ <code>r2</code> }>
+    The second sorted input range.
+  </Symbol>
+  <Symbol none noLink name={ <code>result</code> }>
+    The beginning of the destination range.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparator to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj1</code> }>
+    Projection to apply to the elements in the first range.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj2</code> }>
+    Projection to apply to the elements in the second range.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+A value of type `ranges::set_difference_result` initialized as follows:
+```cpp
+{
+  last1,
+  result_last
+}
+```
+Where `result_last` is the end of the constructed range.
+
+### Complexity
+
+Given `N1` as `ranges::distance(first1, last1)` and `N2` as `ranges::distance(first2, last12)`:
+
+**2 \* (N1 + N2) − 1** comparisons and applications of each projection.
+
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>set_difference(1) and set_difference(2)</summary>
+
+```cpp
+struct set_difference_fn
+{
+    template<std::input_iterator I1, std::sentinel_for<I1> S1,
+             std::input_iterator I2, std::sentinel_for<I2> S2,
+             std::weakly_incrementable O, class Comp = ranges::less,
+             class Proj1 = std::identity, class Proj2 = std::identity >
+    requires std::mergeable<I1, I2, O, Comp, Proj1, Proj2>
+    constexpr ranges::set_difference_result<I1, O>
+        operator()(I1 first1, S1 last1, I2 first2, S2 last2,
+                   O result, Comp comp = {},
+                   Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        while (!(first1 == last1 or first2 == last2))
+        {
+            if (std::invoke(comp, std::invoke(proj1, *first1), std::invoke(proj2, *first2)))
+            {
+                *result = *first1;
+                ++first1;
+                ++result;
+            }
+            else if (std::invoke(comp, std::invoke(proj2, *first2),
+                                 std::invoke(proj1, *first1)))
+            {
+                ++first2;
+            }
+            else
+            {
+                ++first1;
+                ++first2;
+            }
+        }
+        return ranges::copy(std::move(first1), std::move(last1), std::move(result));
+    }
+
+    template<ranges::input_range R1, ranges::input_range R2,
+             std::weakly_incrementable O, class Comp = ranges::less,
+             class Proj1 = std::identity, class Proj2 = std::identity>
+    requires std::mergeable<ranges::iterator_t<R1>, ranges::iterator_t<R2>,
+                            O, Comp, Proj1, Proj2>
+    constexpr ranges::set_difference_result<ranges::borrowed_iterator_t<R1>, O>
+        operator()(R1&& r1, R2&& r2, O result, Comp comp = {},
+                   Proj1 proj1 = {}, Proj2 proj2 = {}) const
+    {
+        return (*this)(ranges::begin(r1), ranges::end(r1),
+                       ranges::begin(r2), ranges::end(r2),
+                       std::move(result), std::move(comp),
+                       std::move(proj1), std::move(proj2));
+    }
+};
+
+inline constexpr set_difference_fn set_difference {};
+```
+
+</details>
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <iterator>
+#include <string_view>
+#include <vector>
+
+auto print = [](const auto& v, std::string_view end = "")
+{
+    for (std::cout << "{ "; auto i : v)
+        std::cout << i << ' ';
+    std::cout << "} " << end;
+};
+
+struct Order // a struct with some very interesting data
+{
+    int order_id {};
+
+    friend std::ostream& operator<<(std::ostream& os, const Order& ord)
+    {
+        return os << "{" << ord.order_id << "},";
+    }
+};
+
+int main()
+{
+    const auto v1 = {1, 2, 5, 5, 5, 9};
+    const auto v2 = {2, 5, 7};
+    std::vector<int> diff {};
+
+    std::ranges::set_difference(v1, v2, std::back_inserter(diff));
+    print(v1, "∖ ");
+    print(v2, "= ");
+    print(diff, "\n");
+
+    // we want to know which orders "cut" between old and new states:
+    const std::vector<Order> old_orders { {1}, {2}, {5}, {9}, };
+    const std::vector<Order> new_orders { {2}, {5}, {7}, };
+    std::vector<Order> cut_orders(old_orders.size() + new_orders.size());
+
+    auto [old_orders_end, cut_orders_last] =
+        std::ranges::set_difference(old_orders, new_orders,
+                                    cut_orders.begin(), {},
+                                    &Order::order_id, &Order::order_id);
+    assert(old_orders_end == old_orders.end());
+
+    std::cout << "old orders = "; print(old_orders, "\n");
+    std::cout << "new orders = "; print(new_orders, "\n");
+    std::cout << "cut orders = "; print(cut_orders, "\n");
+    cut_orders.erase(cut_orders_last, end(cut_orders));
+    std::cout << "cut orders = "; print(cut_orders, "\n");
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+{ 1 2 5 5 5 9 } ∖ { 2 5 7 } = { 1 5 5 9 } 
+old orders = { {1}, {2}, {5}, {9}, } 
+new orders = { {2}, {5}, {7}, } 
+cut orders = { {1}, {9}, {0}, {0}, {0}, {0}, {0}, } 
+cut orders = { {1}, {9}, }
+```
+
+</div>
+</Columns>

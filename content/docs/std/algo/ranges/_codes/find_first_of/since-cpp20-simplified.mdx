@@ -1,0 +1,24 @@
+```cpp
+// (1)
+constexpr I1 find_first_of( I1 first1, S1 last1, I2 first2, S2 last2,
+                            Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {} );
+
+// (2)
+constexpr ranges::borrowed_iterator_t<R1>
+    find_first_of(R1&& r1, R2&& r2, Pred pred = {}, Proj1 proj1 = {}, Proj2 proj2 = {});
+```
+
+The type of arguments are generic and have the following constraints:
+- `I1`, `I2` - `std::input_iterator`, `std::forward_iterator`
+- `S1`, `S2` - `std::sentinel_for<I1>`, `std::sentinel_for<I2>`
+- `Pred` - **(none)**
+- `Proj1`, `Proj2` - **(none)**
+- `R1`, `R2` - `std::ranges::input_range`, `std::ranges::forward_range`
+
+The `Proj1` and `Proj2` template arguments have a default type of `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)** - `indirectly_comparable<I1, I2, Pred, Proj1, Proj2>`
+- **(2)** - `indirectly_comparable<ranges::iterator_t<R1>, ranges::iterator_t<R2>, Pred, Proj1, Proj2>`
+
+(The `std::` namespace was ommitted here for readability)

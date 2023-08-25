@@ -1,0 +1,76 @@
+---
+title:                  C++ named requirements:ReversibleContainer 
+tags:                   [named_req,ReversibleContainer]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import {Since, Deprecated, Until, Version, Removed}     from "@site-comps/Versions";
+import Columns                                          from "@site-comps/Columns"
+
+# <small>C++ named requirements:</small> *ReversibleContainer*
+A ***ReversibleContainer*** is a [Container](/docs/named_req/Container) that has iterators that meet the requirements of either 
+[LegacyBidirectionalIterator](/docs/named_req/LegacyBidirectionalIterator) or [LegacyRandomAccessIterator](/docs/named_req/LegacyRandomAccessIterator). 
+Such iterators allow a *ReversibleContainer* to be iterated over in reverse.
+
+### Requirements
+* `X` Container type
+* `T` Element type
+* `a` Objects of type `X`
+
+### Types
+
+|  **Expression**             |  **Return type**                               |  **Conditions**                    |**Complexity**|
+|:---------------------------:|:----------------------------------------------:|:----------------------------------:|:------------:|
+| `X::reverse_iterator`       | iterator type whose value type is `T`          | `reverse_iterator<iterator>`       | compile time |
+| `X::const_reverse_iterator` | constant iterator type whose value type is `T` | `reverse_iterator<const_iterator>` | compile time |
+
+### Methods
+
+|**Expression** |  **Return type**                                              |  **Conditions**                    |**Complexity**|
+|:-------------:|:-------------------------------------------------------------:|:----------------------------------:|:------------:|
+| `a.rbegin()`  | `reverse_iterator`; `const_reverse_iterator` for constant `a` | `reverse_iterator(end())`          | constant     |
+| `a.rend()`    | `reverse_iterator`; `const_reverse_iterator` for constant `a` | `reverse_iterator(begin())`        | constant     |
+| `a.crbegin()` | `const_reverse_iterator`                                      | `const_cast<X const&>(a).rbegin()` | constant     |
+| `a.crend()`   | `const_reverse_iterator`                                      | `const_cast<X const&>(a).rend()`   | constant     |
+
+### Standard library
+* [std::array](/docs/std/containers/arrays/array)
+* [std::deque](/docs/std/containers/queues/deque)
+* [std::list](/docs/std/containers/lists/list)
+* [std::vector](/docs/std/container/vector)
+* [std::map](/docs/std/containers/maps/map)
+* [std::multimap](/docs/std/containers/maps/multimap)
+* [std::set](/docs/std/containers/sets/set)
+* [std::multiset](/docs/std/containers/sets/multiset)
+
+### Example 
+
+The following example iterates over a [vector](/docs/std/container/vector) (which has [random-access iterators](/docs/std/container/vector#Member_types)) in reverse.
+
+<Columns>
+<div>
+
+```cpp
+#include <vector>
+#include <iostream>
+ 
+int main()
+{
+    std::vector<int> v = {3, 1, 4, 1, 5, 9};
+ 
+    for(std::vector<int>::reverse_iterator i = v.rbegin(); i != v.rend(); ++i) {
+        std::cout << *i << ' ';
+    }
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+9 5 1 4 1 3
+```
+
+</div>
+</Columns>

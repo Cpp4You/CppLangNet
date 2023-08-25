@@ -1,0 +1,37 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::allocate
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::allocate
+
+```cpp title='Since C++20'
+[[nodiscard]] T* allocate( std::size_t n );
+```
+```cpp title='Since C++17, Until C++20'
+T* allocate( std::size_t n );
+```
+
+Allocates storage for `n` objects of type T using the underlying memory resource. <br/>
+Equivalent to `return static_cast<T*>(resource()->allocate(n * sizeof(T), alignof(T)));`.
+
+### Parameters
+`n`	-	the number of objects to allocate storage for
+
+### Return value
+A pointer to the allocated storage.
+
+### Exceptions
+
+Throws [std::bad_array_new_length](/docs/std/memory/new/bad_array_new_length) if `n > std::numeric_limits<std::size_t>::max() / sizeof(T);`  <br/>
+may also throw any exceptions thrown by the call to `resource()->allocate`.
+
+### Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                              Behavior as published                              |       Correct behavior      |
+|:--------:|:----------:|:-------------------------------------------------------------------------------:|:---------------------------:|
+| LWG 3038 | C++17      | allocate might allocate storage of wrong size                                   | throws length_error instead |
+| LWG 3237 | C++17      | the exception thrown by allocate was inconsistent with std::allocator::allocate | made consistent             |

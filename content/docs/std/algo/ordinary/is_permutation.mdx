@@ -1,0 +1,176 @@
+---
+title:         is_permutation algorithm
+sidebar_label: is_permutation(  )
+description:   is_permutation algorithm C++ documentation
+hide_title:    true
+tags:          [algorithm, is_permutation, permutation]
+
+cppreference_origin_rel: w/cpp/algorithm/is_permutation
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import Tooltip                 from '@site-comps/Tooltip';
+import SwitchView              from "@site-comps/SwitchView";
+
+<!-- Terms -->
+
+import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp11 from './_codes/is_permutation/since-cpp11.mdx';
+import Signature_SinceCpp14 from './_codes/is_permutation/since-cpp14.mdx';
+import Signature_SinceCpp20 from './_codes/is_permutation/since-cpp20.mdx';
+
+# std::is_permutation() algorithm
+
+<SwitchView content={{
+  'since-cpp20': <Signature_SinceCpp20 />,
+  'since-cpp14': <Signature_SinceCpp14 />,
+  'since-cpp11': <Signature_SinceCpp11 />
+}} />
+
+Returns `true` if there exists a permutation of the elements in the range [`first1`; `last1`)
+that makes that range equal to the range [`first2`; `last2`), where `last2` denotes `first2 + (last1 - first1)` if it was not given.
+
+- **(1, 3)** Elements are compared using `operator==`.
+- **(2, 4)** Elements are compared using the given binary predicate `p`.
+
+:::danger Undefined Behaviour
+The <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Tooltip> if it is not an equivalence relation.
+:::
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The range of elements to compare.
+  </Symbol>
+  <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
+    The second range to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>p</code> }>
+
+Unary predicate which returns `true` if the element value should be replaced.
+
+- Type should be the value type of both `ForwardIt1` and `ForwardIt2`.
+- The signature does not need to have `const&`, but the function must not modify the objects passed to it.
+
+
+  </Symbol>
+
+</SymbolTable>
+
+#### Type requirements
+
+<SymbolTable>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    <a href="/docs/named_req/LegacyForwardIterator">LegacyForwardIterator</a>
+  </Symbol>
+  <Symbol none noLink name={ <> <code>ForwardIt1</code> <br/> <code>ForwardIt2</code> </> }>
+    Must have the same value type.
+  </Symbol>
+</SymbolTable>
+
+### Return value
+
+`true` if the range [`first1`; `last1`) is a permutation of the range [`first2`; `last2`).
+
+### Complexity
+
+Given `N` as `std::distance(first1, last1)`:
+
+At most **O(N2)** applications of the predicate, or exactly `N` if the sequences are already equal, where N is .
+
+However if `ForwardIt1` and `ForwardIt2` meet the requirements of [`LegacyRandomAccessIterator`](/docs/named_req/LegacyRandomAccessIterator)
+and `std::distance(first1, last1) != std::distance(first2, last2)` no applications of the predicate are made.
+
+### Exceptions
+
+The overloads with a template parameter named `ExecutionPolicy` report errors as follows:
+- If execution of a function invoked as part of the algorithm throws an exception and `ExecutionPolicy` is one of the [**standard policies**](#), [`std::terminate`](#) is called.
+	For any other `ExecutionPolicy`, the behavior is <Tooltip title={<Term_ImplementationDefined/>}>**implementation-defined**</Tooltip>.
+- If the algorithm fails to allocate memory, `std::bad_alloc` is thrown.
+
+### Possible implementation
+
+<details>
+<summary>is_permutation (1)</summary>
+
+```cpp
+template<class ForwardIt1, class ForwardIt2>
+bool is_permutation(ForwardIt1 first, ForwardIt1 last,
+                    ForwardIt2 d_first)
+{
+    // skip common prefix
+    std::tie(first, d_first) = std::mismatch(first, last, d_first);
+    // iterate over the rest, counting how many times each element
+    // from [first, last) appears in [d_first, d_last)
+    if (first != last)
+    {
+        ForwardIt2 d_last = std::next(d_first, std::distance(first, last));
+        for (ForwardIt1 i = first; i != last; ++i)
+        {
+            if (i != std::find(first, i, *i))
+                continue; // this *i has been checked
+
+            auto m = std::count(d_first, d_last, *i);
+            if (m == 0 || std::count(i, last, *i) != m)
+                return false;
+        }
+    }
+    return true;
+}
+```
+
+</details>
+
+### Notes
+
+The [`std::is_permutation`](#) can be used in testing, namely to check the correctness of rearranging algorithms (e.g. sorting, shuffling, partitioning).
+
+If `x` is an original range and `y` is a permuted range then `std::is_permutation(x, y) == true` means that `y` consist of "the same" elements, maybe staying at other positions.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+
+template<typename Os, typename V>
+Os& operator<<(Os& os, V const& v)
+{
+    os << "{ ";
+    for (auto const& e : v)
+        os << e << ' ';
+    return os << '}';
+}
+
+int main()
+{
+    static constexpr auto v1 = {1, 2, 3, 4, 5};
+    static constexpr auto v2 = {3, 5, 4, 1, 2};
+    static constexpr auto v3 = {3, 5, 4, 1, 1};
+
+    std::cout << v2 << " is a permutation of " << v1 << ": " << std::boolalpha
+              << std::is_permutation(v1.begin(), v1.end(), v2.begin()) << '\n'
+              << v3 << " is a permutation of " << v1 << ": "
+              << std::is_permutation(v1.begin(), v1.end(), v3.begin()) << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+{ 3 5 4 1 2 } is a permutation of { 1 2 3 4 5 }: true
+{ 3 5 4 1 1 } is a permutation of { 1 2 3 4 5 }: false
+```
+
+</div>
+</Columns>

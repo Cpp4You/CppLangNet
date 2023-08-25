@@ -1,0 +1,46 @@
+---
+title:                  C++ named requirements:RandomNumberEngineAdaptor  
+tags:                   [named_req,RandomNumberEngineAdaptor]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small><br/>*RandomNumberEngineAdaptor*</Since>
+
+A ***RandomNumberEngineAdaptor*** is a [*RandomNumberEngine*](/docs/named_req/RandomNumberEngine) that transforms the output of 
+another [*RandomNumberEngine*](/docs/named_req/RandomNumberEngine), the latter of which is termed a base engine.
+
+### Requirements
+Given
+* `B`, a [*RandomNumberEngine*](/docs/named_req/RandomNumberEngine)
+* `b`, an object of type **B**
+* `A`, a *RandomNumberEngineAdaptor*, adapting **B** as a base engine
+* `a`, an object of type **A**
+
+| **function**                                   | **semantics**                                                               |
+|:-----------------------------------------------|:----------------------------------------------------------------------------|
+| `A::A();`                                      | The base engine is initialized as if by its default constructor.            |
+| `bool operator==(const A& lhs, const A& rhs);` | Returns whether `lhs`'s base engine is equal to `rhs`'s base engine or not. |
+| `A::A(result_type s);`                         | The base engine is initialized with `s`.                                    |
+| `template<class Sseq> A::A(Sseq& q);`          | The base engine is initialized with `q`.                                    |
+| `void seed();`                                 | Invokes `b.seed()`.                                                         |
+| `void seed(result_type s);`                    | Invokes `b.seed(s)`.                                                        |
+| `template<class Sseq> void seed(Sseq& q);`     | Invokes `b.seed(q)`.                                                        |
+
+Furthermore
+* The complexity of each function of **A** does not exceed the complexity of the function of **B**
+* The state of **A** includes the state of **B**
+* The size of **A**'s state is no less than the size of `b`
+* Copying **A**'s state includes copying **B**'s state
+* The textual representation of **A** includes the textual representation of **B**
+
+### Standard library
+The following standard library facilities satisfy *RandomNumberEngineAdaptor*:
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/numeric/random/discard_block_engine"    name={<>discard_block_engine<Version v='cpp11'></Version></>}     desc={<>discards some output of a random number engine</>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/independent_bits_engine" name={<>independent_bits_engine<Version v='cpp11'></Version></>}  desc={<>packs the output of a random number engine into blocks of a specified number of bits</>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/shuffle_order_engine"    name={<>shuffle_order_engine<Version v='cpp11'></Version></>}     desc={<>delivers the output of a random number engine in a different order></>}/>
+</SymbolTable>

@@ -1,0 +1,24 @@
+```cpp
+// (1)
+constexpr std::iter_difference_t<I>
+    count( I first, S last, const T& value, Proj proj = {} );
+
+// (2)
+constexpr ranges::range_difference_t<R>
+    count( R&& r, const T& value, Proj proj = {} );
+```
+
+The type of arguments are generic and have the following constraints:
+- `I` - `std::input_iterator`
+- `S` - `std::sentinel_for<I>`
+- `R` - `std::ranges::input_range`
+- `T` - **(none)**
+- `P` - **(none)**
+
+The `Proj` template argument has a default type of `std::identity` for all overloads.
+
+Additionally, each overload has the following constraints:
+- **(1)** - `indirect_binary_predicate<ranges::equal_to, projected<I, Proj>, const T*>`
+- **(2)** - `indirect_binary_predicate<ranges::equal_to, projected<ranges::iterator_t<R>, Proj>, const T*>`
+
+(The `std::` namespace was ommitted here for readability)

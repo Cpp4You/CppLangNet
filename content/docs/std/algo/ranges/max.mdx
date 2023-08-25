@@ -1,0 +1,175 @@
+---
+title:         ranges::max algorithm
+sidebar_label: ranges::max(  )
+description:   ranges::max algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, max, maximum, biggest, greatest, bigger, greater]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/max
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/max/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/max/since-cpp20-simplified.mdx';
+
+# std::ranges::max() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Returns the greater of the given projected elements.
+
+- **(1)** Returns the greatest of `a` and `b`.
+
+- **(2)** Returns the first greatest element in the initializer list `r`.
+
+- **(3)** Returns the first greatest value in the range `r`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>a</code> <br/> <code>b</code> </> }>
+    The values to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of values to compare.
+  </Symbol>
+  <Symbol none noLink name={ <code>comp</code> }>
+    Comparison to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    Projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+- **(1)** The greater of `a` and `b`, according to the projection. If they are equivalent, returns `a`.
+- **(3 - 4)** The greatest element in `r`, according to the projection.
+			If several values are equivalent to the smallest, returns the leftmost one.
+:::danger Undefined Behavior
+If the range is empty (as determined by `ranges::distance(r)`), the behavior is undefined.
+:::
+
+### Complexity
+
+- **(1)** Exactly one comparison.
+- **(3 - 4)** Exactly `ranges::distance(r) - 1` comparisons.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>max(1) and max(2)</summary>
+
+```cpp
+struct max_fn
+{
+    template<class T, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                 std::projected<const T*, Proj>> Comp = ranges::less>
+    constexpr
+    const T& operator()(const T& a, const T& b, Comp comp = {}, Proj proj = {}) const
+    {
+        return std::invoke(comp, std::invoke(proj, a), std::invoke(proj, b)) ? b : a;
+    }
+
+    template<std::copyable T, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                 std::projected<const T*, Proj>> Comp = ranges::less>
+    constexpr
+    const T operator()(std::initializer_list<T> r, Comp comp = {}, Proj proj = {}) const
+    {
+        return *ranges::max_element(r, std::ref(comp), std::ref(proj));
+    }
+
+    template<ranges::input_range R, class Proj = std::identity,
+             std::indirect_strict_weak_order<
+                  std::projected<ranges::iterator_t<R>, Proj>> Comp = ranges::less>
+    requires std::indirectly_copyable_storable<ranges::iterator_t<R>,
+                                               ranges::range_value_t<R>*>
+    constexpr
+    ranges::range_value_t<R> operator()(R&& r, Comp comp = {}, Proj proj = {}) const
+    {
+        using V = ranges::range_value_t<R>;
+        if constexpr (ranges::forward_range<R>)
+            return
+                static_cast<V>(*ranges::max_element(r, std::ref(comp), std::ref(proj)));
+        else
+        {
+            auto i = ranges::begin(r);
+            auto s = ranges::end(r);
+            V m(*i);
+            while (++i != s)
+                if (std::invoke(comp, std::invoke(proj, m), std::invoke(proj, *i)))
+                    m = *i;
+            return m;
+        }
+    }
+};
+
+inline constexpr max_fn max;
+```
+
+</details>
+
+### Notes
+
+:::danger Undefined Behavior
+Capturing the result of `std::ranges::max` by reference produces a dangling reference if one of the parameters is a temporary and that parameter is returned:
+```cpp
+int n = 1;
+const int& r = std::ranges::max(n - 1, n + 1); // r is dangling
+```
+:::
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string>
+
+int main()
+{
+    namespace ranges = std::ranges;
+    using namespace std::string_view_literals;
+
+    std::cout << "smaller of 1 and 9999: " << ranges::min(1, 9999) << '\n'
+              << "smaller of 'a', and 'b': '" << ranges::min('a', 'b') << "'\n"
+              << "shortest of \"foo\", \"bar\", and \"hello\": \""
+              << ranges::min({ "foo"sv, "bar"sv, "hello"sv }, {},
+                             &std::string_view::size) << "\"\n";
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Output"
+smaller of 1 and 9999: 1
+smaller of 'a', and 'b': 'a'
+shortest of "foo", "bar", and "hello": "foo"
+```
+
+</div>
+</Columns>

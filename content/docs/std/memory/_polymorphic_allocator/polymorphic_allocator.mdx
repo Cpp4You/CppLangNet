@@ -1,0 +1,40 @@
+---
+title:                  std::pmr::polymorphic_allocator<T>::polymorphic_allocator
+description:            Allocator
+tags:                   [memory,polymorphic_allocator]
+hide_title:             true
+---
+
+# std::pmr::polymorphic_allocator&lt;T>::polymorphic_allocator
+
+```cpp
+// 1)
+polymorphic_allocator() noexcept;
+// 2)
+polymorphic_allocator( const polymorphic_allocator& other ) = default;
+// 3)
+template< class U >
+polymorphic_allocator( const polymorphic_allocator<U>& other ) noexcept;
+// 4)
+polymorphic_allocator( std::pmr::memory_resource* r );
+```
+
+Constructs a new polymorphic_allocator.
+
+1) Constructs a polymorphic_allocator using the return value of <code>[std::pmr::get_default_resource()](/docs/std/memory/get_default_resource)</code> 
+as the underlying memory resource. <br/>
+2-3) Constructs a polymorphic_allocator using `other.resource()` as the underlying memory resource. <br/>
+4) Constructs a polymorphic_allocator using `r` as the underlying memory resource. 
+This constructor provides an implicit conversion from <code>[std::pmr::memory_resource*](/docs/std/memory/memory_resource)</code>.
+
+### Parameters
+`other`	-	another polymorphic_allocator to copy from  <br/>
+`r`	-	pointer to the memory resource to use. May not be null.
+
+### Exceptions
+4) Throws nothing.
+
+### Notes
+Copying a container using a polymorphic_allocator will not call the allocator's copy constructor. 
+Instead, the new container will use the return value of [select_on_container_copy_construction](polymorphic_allocator/select_on_container_copy_construction) 
+(a default-constructed polymorphic_allocator) as its allocator.

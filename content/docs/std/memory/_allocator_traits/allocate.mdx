@@ -1,0 +1,46 @@
+---
+title:                  std::allocator_traits<Alloc>::allocate
+description:            Allocator
+tags:                   [memory,allocator]
+hide_title:             true
+---
+
+# std::allocator_traits&lt;Alloc>::allocate
+
+```cpp title="Since C++20"
+// 1)
+[[nodiscard]] static constexpr pointer allocate( Alloc& a, size_type n );
+// 2)
+[[nodiscard]] static constexpr pointer allocate( Alloc& a, size_type n,
+                                                 const_void_pointer hint );
+```
+```cpp title="Since C++11, Until C++20"
+// 1)
+static pointer allocate( Alloc& a, size_type n );
+// 2)
+static pointer allocate( Alloc& a, size_type n,
+                         const_void_pointer hint );
+```
+
+		
+Uses the allocator `a` to allocate `n*sizeof(Alloc::value_type)` bytes of uninitialized storage. An array of type `Alloc::value_type[n]` is created in the storage, 
+but none of its elements are constructed.
+
+1) Calls `a.allocate(n)` <br/>
+2) Additionally passes memory locality hint hint. Calls `a.allocate(n, hint)` if possible. 
+If not possible (e.g. a has no two-argument member function allocate() ), calls `a.allocate(n)`
+
+### Parameters
+`a`	-	allocator to use <br/>
+`n`	-	the number of objects to allocate storage for <br/>
+`hint`	-	pointer to a nearby memory location <br/>
+### Return value
+The pointer returned by the call to `a.allocate(n)`
+
+### Notes
+Alloc::allocate was not required to create array object until [P0593R6](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/p0593r6.html), 
+which made using non-default allocator for [std::vector](/docs/std/containers/arrays/vector/) and some other containers not actually well-defined according 
+to the core language specification.
+
+After calling allocate and before construction of elements, pointer arithmetic of `Alloc::value_type*` is well-defined within the allocated array, 
+but the behavior is undefined if elements are accessed.

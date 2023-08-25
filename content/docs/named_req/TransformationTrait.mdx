@@ -1,0 +1,28 @@
+---
+title:                  C++ named requirements:TransformationTrait    
+tags:                   [named_req,TransformationTrait]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++ named requirements:</small> *TransformationTrait*</Since>
+
+A ***TransformationTrait*** is a class template that provides a transformation of its template type parameter.
+
+### Requirements
+* Takes one template type parameter (additional template parameters are optional and allowed)
+* The transformed type is a publicly accessible nested type named `type`
+
+### Standard library
+The [type modifications and transformations](/docs/std/types#Type_modifications) all satisfy *TransformationTrait*.
+
+The following standard library class templates also satisfy *TransformationTrait*.
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/utility/tuple/tuple_size"              name={<>std::tuple_size<small>&lt;std::tuple&gt;</small><Version v='cpp11'></Version></>} desc={<>obtains the size of tuple at compile time</>}/>
+    <Symbol autoLink linkName="/docs/std/container/array/tuple_size"            name={<>std::tuple_size<small>&lt;std::array&gt;</small><Version v='cpp11'></Version></>} desc={<>obtains the size of an array</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/pair/tuple_size"               name={<>std::tuple_size<small>&lt;std::pair&gt;</small><Version v='cpp11'></Version></>}  desc={<>obtains the size of a pair</>}/>
+    <Symbol autoLink linkName="/docs/std/utility/variant/variant_size"          name={<>variant_size<br/>variant_size_v<Version v='cpp17'></Version></>}                  desc={<>obtains the size of the variant's list of alternatives at compile time</>}/>
+</SymbolTable>

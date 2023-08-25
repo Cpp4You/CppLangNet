@@ -1,0 +1,22 @@
+---
+title:                  std::scoped_allocator_adaptor<OuterAlloc,InnerAlloc...>::operator=
+description:            Allocator
+tags:                   [memory,scoped_allocator_adaptor]
+hide_title:             true
+---
+
+# std::scoped_allocator_adaptor&lt;OuterAlloc,InnerAlloc...>::operator=
+
+```cpp
+// 1)
+scoped_allocator_adaptor& operator=(const scoped_allocator_adaptor& other) = default;
+// 2)
+scoped_allocator_adaptor& operator=(scoped_allocator_adaptor&& other) = default;
+```
+1) Explicitly defaulted copy assignment operator that copy assigns the base class (OuterAlloc, the outer allocator) and all inner allocators.
+
+2) Explicitly defaulted move assignment operator that move assigns the base class (OuterAlloc, the outer allocator) and all inner allocators.
+
+### Parameters
+
+`other`	-	another std::scoped_allocator_adaptor

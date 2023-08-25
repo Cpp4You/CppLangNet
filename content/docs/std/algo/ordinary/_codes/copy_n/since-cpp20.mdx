@@ -1,0 +1,10 @@
+```cpp
+// (1)
+template< class InputIt, class Size, class OutputIt >
+constexpr OutputIt copy_n( InputIt first, Size count, OutputIt result );
+
+// (2)
+template< class ExecutionPolicy, class ForwardIt1, class Size, class ForwardIt2 >
+ForwardIt2 copy_n( ExecutionPolicy&& policy,
+                   ForwardIt1 first, Size count, ForwardIt2 result );
+```

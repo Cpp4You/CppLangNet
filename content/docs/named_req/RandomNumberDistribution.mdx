@@ -1,0 +1,90 @@
+---
+title:                  C++                  named requirements:RandomNumberDistribution  
+tags:                   [named_req,RandomNumberDistribution]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	                from "@site-comps/SymbolTable";
+import {Since, Until, Version, Deprecated}      from "@site-comps/Versions";
+
+# <Since v='cpp11'><small>C++                    named requirements:</small><br/>*RandomNumberDistribution*</Since>
+
+A ***RandomNumberDistribution*** is a function object returning random numbers according to a 
+[probability density function](https://en.wikipedia.org/wiki/Probability_density_function) *p(x)* or a 
+[discrete probability distribution](https://en.wikipedia.org/wiki/Probability_distribution#Discrete_probability_distribution) *P(x<sub>i</sub>)*.
+
+### Requirements
+The type `D` satisfies ***RandomNumberDistribution*** if
+
+* **D** satisfies [*CopyConstructible*](/docs/named_req/CopyConstructible)
+* **D** satisfies [*CopyAssignable*](/docs/named_req/CopyAssignable) and
+
+Given
+
+* `T`, the type                  named by `D::result_type`
+* `P`, the type                  named by `D::param_type`, which
+    * satisfies [*CopyConstructible*](/docs/named_req/CopyConstructible)
+    * satisfies [*CopyAssignable*](/docs/named_req/CopyAssignable)
+    * satisfies [*EqualityComparable*](/docs/named_req/EqualityComparable)
+    * has a constructor taking identical arguments as each of the constructors of D that take arguments corresponding to the distribution parameters.
+    * has a member function with the identical                   name, type, and semantics, as every member function of D that returns a parameter of the distribution
+    * declares a member typedef `using distribution_type = D;`
+* `d`, a value of type **D**
+* `x` and `y`, (possibly const) values of type **D**
+* `p`, a (possibly const) value of type **P**
+* `g`, `g1`, `g2`, lvalues of a type satisfying [*UniformRandomBitGenerator*](/docs/named_req/UniformRandomBitGenerator)
+* `os`, lvalue of a specialization of [std::basic_ostream](/docs/std/io/basic_ostream)
+* `is`, lvalue of a specialization of [std::basic_istream](/docs/std/io/basic_istream)
+
+The following expressions must be valid and have their specified effects
+
+
+| **Expression**   | **Type**                      | **Notes**                                                                                                                                                                                                                                                                                                                                                                                                                                                             | **Complexity**                                  |
+|:-----------------|:------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:------------------------------------------------|
+| `D::result_type` | **T**                         | An arithmetic type                                                                                                                                                                                                                                                                                                                                                                                                                                                    | compile-time                                    |
+| `D::param_type`  | **P**                         |                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | compile-time                                    |
+| `D()`            |                               | creates a distribution indistinguishable from any other default-constructed **D**                                                                                                                                                                                                                                                                                                                                                                                     | constant                                        |
+| `D(p)`           |                               | creates a distribution indistinguishable from **D** constructed directly from the values used to construct `p`                                                                                                                                                                                                                                                                                                                                                        | Same as `p`'s construction                      |
+| `d.reset()`      | `void`                        | Resets the internal state of the distribution. The next call to operator() on `d` will not depend on values produced by any engine prior to reset().                                                                                                                                                                                                                                                                                                                  | constant                                        |
+| `x.param()`      | **P**                         | Returns `p` such that `D(p).param() == p`                                                                                                                                                                                                                                                                                                                                                                                                                             | No worse than `D(p)`                            |
+| `d.param(p)`     | void                          | Postcondition: `d.param() == p`                                                                                                                                                                                                                                                                                                                                                                                                                                       | No worse than `D(p)`                            |
+| `d(g)`           | **T**                         | The sequence of numbers returned by successive invocations of this call with the same `g` are randomly distributed according to the distribution parametrized by d.param()                                                                                                                                                                                                                                                                                            | Amortized constant number of invocations of `g` |
+| `d(g,p)`         | **T**                         | The sequence of numbers returned by successive invocations of this call with the same `g` are randomly distributed according to the distribution parametrized by p                                                                                                                                                                                                                                                                                                    | Amortized constant number of invocations of `g` |
+| `x.min()`        | **T**                         | the greatest lower bound on the values potentially returned by `x`’s operator(), as determined by the current values of `x`’s parameters                                                                                                                                                                                                                                                                                                                              | constant                                        |
+| `x.max()`        | **T**                         | the least upper bound on the values potentially returned by `x`’s operator(), as determined by the current values of `x`’s parameters                                                                                                                                                                                                                                                                                                                                 | constant                                        |
+| `x == y`         | `bool`                        | Establishes an equivalence relation. Returns true if `x.param() == y.param()` and future infinite sequences of values that would be generated by repeated invocations of `x(g1)` and `y(g2)` would be equal as long as `g1 == g2`.                                                                                                                                                                                                                                    | constant                                        |
+| `x != y`         | `bool`                        | `!(x == y)`                                                                                                                                                                                                                                                                                                                                                                                                                                                           | constant                                        |
+| `os << x`        | Reference to the type of `os` | Writes a textual representation of the distribution parameters and internal state to `os`. The formatting flags and fill character of `os` are unchanged.                                                                                                                                                                                                                                                                                                             |                                                 |
+| `is >> d`        | Reference to the type of `is` | Restores the distribution parameters and internal state with data read from `is`. The formatting flags of `is` are unchanged. The data must have been written using a stream with the same locale, CharT and Traits stream template parameters, otherwise the behavior is undefined. If bad input is encountered, `is.setstate(std::ios::failbit)` is called, which may throw [std::ios_base::failure](/docs/std/io/ios_base/failure). `d` is unchanged in that case. |                                                 |
+
+### Notes
+The parameters of a distribution object may be changed either permanently, by using `d.param(p)` or just for the duration of a single operator() call, 
+by using `d(g,p)`.
+
+Calls to const member functions of the distribution and `os << d` do not affect the sequence of numbers produced by repeated `d(g)`.
+
+### Standard library
+The following standard library components satisfy *RandomNumberDistribution*
+
+<SymbolTable noTraits>
+    <Symbol autoLink linkName="/docs/std/numeric/random/uniform_int_distribution"        name={<>uniform_int_distribution<Version v='cpp11'></Version></>}        desc={<>produces integer values evenly distributed across a range</>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/uniform_real_distribution"       name={<>uniform_real_distribution<Version v='cpp11'></Version></>}       desc={<>produces real values evenly distributed across a range</>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/bernoulli_distribution"          name={<>bernoulli_distribution<Version v='cpp11'></Version></>}          desc={<>produces bool values on a <a href="https://en.wikipedia.org/wiki/Bernoulli_distribution">Bernoulli distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/binomial_distribution"           name={<>binomial_distribution<Version v='cpp11'></Version></>}           desc={<>produces integer values on a <a href="https://en.wikipedia.org/wiki/Binomial_distribution">binomial distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/negative_binomial_distribution"  name={<>negative_binomial_distribution<Version v='cpp11'></Version></>}  desc={<>produces integer values on a negative <a href="https://en.wikipedia.org/wiki/Negative_binomial_distribution">binomial distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/geometric_distribution"          name={<>geometric_distribution<Version v='cpp11'></Version></>}          desc={<>produces integer values on a <a href="https://en.wikipedia.org/wiki/Geometric_distribution">geometric distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/poisson_distribution"            name={<>poisson_distribution<Version v='cpp11'></Version></>}            desc={<>produces integer values on a <a href="https://en.wikipedia.org/wiki/Poisson_distribution">poisson distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/exponential_distribution"        name={<>exponential_distribution<Version v='cpp11'></Version></>}        desc={<>produces real values on an <a href="https://en.wikipedia.org/wiki/Exponential_distribution">exponential distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/gamma_distribution"              name={<>gamma_distribution<Version v='cpp11'></Version></>}              desc={<>produces real values on an <a href="https://en.wikipedia.org/wiki/Gamma_distribution">gamma distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/weibull_distribution"            name={<>weibull_distribution<Version v='cpp11'></Version></>}            desc={<>produces real values on a <a href="https://en.wikipedia.org/wiki/Weibull_distribution">Weibull distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/extreme_value_distribution"      name={<>extreme_value_distribution<Version v='cpp11'></Version></>}      desc={<>produces real values on an <a href="https://en.wikipedia.org/wiki/Generalized_extreme_value_distribution">extreme value distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/normal_distribution"             name={<>normal_distribution<Version v='cpp11'></Version></>}             desc={<>produces real values on a <a href="https://en.wikipedia.org/wiki/Normal_distribution">standard normal (Gaussian) distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/lognormal_distribution"          name={<>lognormal_distribution<Version v='cpp11'></Version></>}          desc={<>produces real values on a <a href="https://en.wikipedia.org/wiki/Log-normal_distribution">lognormal distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/chi_squared_distribution"        name={<>chi_squared_distribution<Version v='cpp11'></Version></>}        desc={<>produces real values on a <a href="https://en.wikipedia.org/wiki/Chi-squared_distribution">chi-squared distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/cauchy_distribution"             name={<>cauchy_distribution<Version v='cpp11'></Version></>}             desc={<>produces real values on a <a href="https://en.wikipedia.org/wiki/Cauchy_distribution">Cauchy distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/fisher_f_distribution"           name={<>fisher_f_distribution<Version v='cpp11'></Version></>}           desc={<>produces real values on a  <a href="https://en.wikipedia.org/wiki/F-distribution">Fisher'sF-distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/student_t_distribution"          name={<>student_t_distribution<Version v='cpp11'></Version></>}          desc={<>produces real values on a <a href="https://en.wikipedia.org/wiki/Student%27s_t-distribution">Student's t-distribution</a></>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/discrete_distribution"           name={<>discrete_distribution<Version v='cpp11'></Version></>}           desc={<>produces random integers on a discrete distribution</>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/piecewise_constant_distribution" name={<>piecewise_constant_distribution<Version v='cpp11'></Version></>} desc={<>produces real values distributed on constant subintervals</>}/>
+    <Symbol autoLink linkName="/docs/std/numeric/random/piecewise_linear_distribution"   name={<>piecewise_linear_distribution<Version v='cpp11'></Version></>}   desc={<>produces real values distributed on defined subintervals</>}/>
+</SymbolTable>

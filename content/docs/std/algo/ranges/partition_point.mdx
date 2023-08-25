@@ -1,0 +1,156 @@
+---
+title:         ranges::partition_point algorithm
+sidebar_label: ranges::partition_point(  )
+description:   ranges::partition_point algorithm C++ documentation
+hide_title:    true
+tags:          [ranges, algorithm, partition, partition_point]
+
+cppreference_origin_rel: w/cpp/algorithm/ranges/partition_point
+---
+
+import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
+import Columns                 from "@site-comps/Columns";
+import SwitchView              from "@site-comps/SwitchView";
+
+<!----------------- Codes ---------------------->
+
+import Signature_SinceCpp20_Detailed   from './_codes/partition_point/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified from './_codes/partition_point/since-cpp20-simplified.mdx';
+
+# std::ranges::partition_point() algorithm
+
+<SwitchView content={{
+	'since-cpp20': {
+		simplified:	<Signature_SinceCpp20_Simplified />,
+		detailed:	<Signature_SinceCpp20_Detailed />,
+	}
+}} />
+
+Examines the partitioned (as if by [`ranges::partition`](/docs/std/algo/ranges/partition)) range [`first`; `last`) or `r` and locates the end of the first partition, that is, the projected element that does not satisfy `pred` or last if all projected elements satisfy `pred`.
+
+The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+### Parameters
+
+<SymbolTable>
+
+  <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>r</code> }>
+    The range of elements to examine.
+  </Symbol>
+  <Symbol none noLink name={ <code>pred</code> }>
+    The predicate to apply to the projected elements.
+  </Symbol>
+  <Symbol none noLink name={ <code>proj</code> }>
+    The projection to apply to the elements.
+  </Symbol>
+
+</SymbolTable>
+
+### Return value
+
+The iterator past the end of the first partition within [`first`; `last`) or the iterator equal to `last` if all projected elements satisfy `pred`.
+
+### Complexity
+
+Given `N` as `ranges::distance(first, last)`:
+
+Performs **O(log(N))** applications of the predicate `pred` and projection `proj`.
+
+However, if sentinels don't model [`std::sized_sentinel_for<I>`](#), the number of iterator increments is **O(N)**.
+
+### Exceptions
+
+**(none)**
+
+### Possible implementation
+
+<details>
+<summary>partition_point(1) and partition_point(2)</summary>
+
+```cpp
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <iterator>
+
+auto print_seq = [](auto rem, auto first, auto last)
+{
+    for (std::cout << rem; first != last; std::cout << *first++ << ' ') {}
+    std::cout << '\n';
+};
+
+int main()
+{
+    std::array v {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    auto is_even = [](int i) { return i % 2 == 0; };
+
+    std::ranges::partition(v, is_even);
+    print_seq("After partitioning, v: ", v.cbegin(), v.cend());
+
+    const auto pp = std::ranges::partition_point(v, is_even);
+    const auto i = std::ranges::distance(v.cbegin(), pp);
+    std::cout << "Partition point is at " << i << "; v[" << i << "] = " << *pp << '\n';
+
+    print_seq("First partition (all even elements): ", v.cbegin(), pp);
+    print_seq("Second partition (all odd elements): ", pp, v.cend());
+}
+```
+
+</details>
+
+### Notes
+
+This algorithm is a more general form of [`ranges::lower_bound`](/docs/std/ranges/lower_bound), which can be expressed in terms of [`ranges::partition_point`](#) with the predicate `[&](auto const& e) { return std::invoke(pred, e, value); });`.
+
+### Examples
+
+<Columns columns={['8fr', '4fr']}>
+<div>
+
+```cpp title='Main.cpp' showLineNumbers
+
+#include <algorithm>
+#include <array>
+#include <iostream>
+#include <iterator>
+
+auto print_seq = [](auto rem, auto first, auto last)
+{
+    for (std::cout << rem; first != last; std::cout << *first++ << ' ') {}
+    std::cout << '\n';
+};
+
+int main()
+{
+    std::array v {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+    auto is_even = [](int i) { return i % 2 == 0; };
+
+    std::ranges::partition(v, is_even);
+    print_seq("After partitioning, v: ", v.cbegin(), v.cend());
+
+    const auto pp = std::ranges::partition_point(v, is_even);
+    const auto i = std::ranges::distance(v.cbegin(), pp);
+    std::cout << "Partition point is at " << i << "; v[" << i << "] = " << *pp << '\n';
+
+    print_seq("First partition (all even elements): ", v.cbegin(), pp);
+    print_seq("Second partition (all odd elements): ", pp, v.cend());
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Output"
+After partitioning, v: 2 4 6 8 5 3 7 1 9
+Partition point is at 4; v[4] = 5
+First partition (all even elements): 2 4 6 8
+Second partition (all odd elements): 5 3 7 1 9
+```
+
+</div>
+</Columns>

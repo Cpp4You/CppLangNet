@@ -1,0 +1,178 @@
+---
+title:                  std::default_delete
+description:            Default destruction policy
+tags:                   [memory,default_delete]
+hide_title:             true
+---
+
+import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
+import Columns      from "@site-comps/Columns";
+
+# std::default_delete
+
+Defined in header `<memory>`
+
+```cpp title="Since C++11"
+template< class T > struct default_delete;
+template< class T > struct default_delete<T[]>;
+```
+
+std::default_delete is the default destruction policy used by [std::unique_ptr](../unique_ptr) when no deleter is specified. 
+Specializations of default_delete are empty classes on typical implementations, and used in the 
+[empty base class optimization](/docs/std/language/ebo).
+
+1) <br/>
+The non-specialized default_delete uses `delete` to deallocate memory for a single object.
+2) <br/>
+A partial specialization for array types that uses `delete[]` is also provided.
+
+### Member functions
+
+<SymbolTable noTraits>
+	<Symbol name={<>
+               (constructor)
+                </>}
+    		desc={<>
+                constructs a default_delete object <br/>
+                <small>(public member function)</small>
+                </>} 
+/>
+    <Symbol name={<>
+                operator()
+                </>}
+    		desc={<>
+                deletes the object or array <br/>
+                <small>(public member function)</small>
+                </>} 
+/>
+</SymbolTable>  
+
+---
+
+std::default_delete::**default_delete** <br/>
+`Since C++11`
+```cpp
+// 1)
+constexpr default_delete() noexcept = default;
+
+// 2)
+template <class U>
+default_delete( const default_delete<U>& d ) noexcept;             // (since C++11, until C++23)
+
+template <class U>
+constexpr default_delete( const default_delete<U>& d ) noexcept;   // (since C++23)
+
+// 3)
+template<class U>
+default_delete( const default_delete<U[]>& d ) noexcept;           // (since C++11, until C++23)
+
+template<class U>
+constexpr default_delete( const default_delete<U[]>& d ) noexcept; // (since C++23)
+```
+		
+1) <br/>
+Constructs a std::default_delete object.
+
+2)&emsp; *(member only of primary default_delete template)* <br/>
+Constructs a std::default_delete&lt;T> object from another std::default_delete object. This constructor will only participate in overload resolution 
+if U* is implicitly convertible to T*.
+
+3)&emsp; *(member only of default_delete&lt;T[]> specialization)* <br/>
+Constructs a std::default_delete&lt;T[]> object from another std::default_delete&lt;U[]> object. 
+This constructor will only participate in overload resolution if U(\*)[] is implicitly convertible to T(\*)[].
+
+
+#### Parameters
+`d`	-	a deleter to copy from
+
+#### Notes
+The [converting constructor](/docs/std/language/converting_constructor) template of std::default_delete makes possible 
+the implicit conversion from [std::unique_ptr](../unique_ptr)&lt;Derived> to [std::unique_ptr](../unique_ptr)&lt;Base>.
+
+---
+
+std::default_delete::**operator()** <br/>
+`Since C++11`
+```cpp
+// 1)
+void operator()(T* ptr) const;                  // (since C++11, until C++23)
+
+constexpr void operator()(T* ptr) const;        // (since C++23)
+
+// 2)
+template <class U>
+void operator()(U* ptr) const;                  // (since C++11, until C++23)
+
+template <class U>
+constexpr void operator()(U* ptr) const;        // (since C++23)
+```
+		
+1) &emsp; *(member only of primary default_delete template)* <br/>
+Calls delete on ptr
+
+2) &emsp; *(member only of default_delete&lt;T[]> specialization)* <br/>
+Calls delete[] on ptr. This function will only participate in overload resolution if U(\*)[] is implicitly convertible to T(\*)[].
+In any case, if U is an incomplete type, the program is ill-formed.
+
+
+#### Parameters
+`ptr`	-	an object or array to delete
+##### Exceptions
+No exception guarantees.
+
+---
+
+### Invoking over Incomplete Types
+
+At the point in the code the `operator()` is called, the type must be complete. In some implementations a static_assert is used to make sure this is the case. 
+The reason for this requirement is that calling [delete](/docs/std/language/delete) on an incomplete type is undefined behavior in C++ if the complete class type has a nontrivial destructor 
+or a deallocation function, as the compiler has no way of knowing whether such functions exist and must be invoked.
+
+### Notes
+
+
+|     Feature-test macro     |  Value  |   Std   |                Comment               |
+|:--------------------------:|:-------:|:-------:|:------------------------------------:|
+| __cpp_lib_constexpr_memory | 202202L | (C++23) | constexpr constructor and operator() |
+
+### Example
+
+```cpp
+#include <memory>
+#include <vector>
+#include <algorithm>
+ 
+int main()
+{
+//  {
+//      std::shared_ptr<int> shared_bad(new int[10]);
+//  } // the destructor calls delete, undefined behavior
+ 
+    {
+        std::shared_ptr<int> shared_good(new int[10], std::default_delete<int[]>());
+    } // the destructor calls delete[], ok
+ 
+    {
+        std::unique_ptr<int> ptr(new int(5));
+    } // unique_ptr<int> uses default_delete<int>
+ 
+    {
+        std::unique_ptr<int[]> ptr(new int[10]);
+    } // unique_ptr<int[]> uses default_delete<int[]>
+ 
+    // default_delete can be used anywhere a delete functor is needed
+    std::vector<int*> v;
+    for(int n = 0; n < 100; ++n)
+        v.push_back(new int(n));
+    std::for_each(v.begin(), v.end(), std::default_delete<int>());
+}
+```
+
+
+### Defect reports
+
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+|    DR    | Applied to |                            Behavior as published                              | Correct behavior |
+|:--------:|:----------:|:-----------------------------------------------------------------------------:|:----------------:|
+| LWG 2118 | C++11      | member functions of default_delete&lt;T[]> rejected qualification conversions | accept           |
