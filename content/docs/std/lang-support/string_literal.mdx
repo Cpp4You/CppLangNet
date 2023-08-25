@@ -4,7 +4,7 @@ tags:               [Language, Literals]
 hite_title:         true
 ---
 
-import {Since, Version}                                 from "@site-comps/Versions";
+import {Since, Until, Version}                          from "@site-comps/Versions";
 import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
 import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
 import Columns                                          from "@site-comps/Columns";
@@ -37,7 +37,247 @@ import styles                                           from "@site-comps/Syntax
   <Symbol name={<i class='col-g'>basic-s-char</i>}    desc={<>A character from the <a href='./docs/std/lang-support/charset#translation-character-set'>translation character set</a>, except the double-quote <code>"</code>, backslash <code>\</code>, or new-line character</>}/>
   <Symbol name={<i class='col-g'>prefix</i>}          desc={<>One of <b>L, u8, u, U</b></>}/>
   <Symbol name={<i class='col-g'>d-char-sequence</i>} desc={<>A sequence of one or more <i class='col-g'>d-char</i>s, at most 16 characters long</>}/>
-  <Symbol name={<i class='col-g'>d-char</i>}          desc={<>A character from the <a href='/docs/std/lang-support/charset#basic-character-set'>basic character set, except parentheses, backslash and <a href='/docs/std/containers/strings/other/isspace'>spaces</a></>}/>
+  <Symbol name={<i class='col-g'>d-char</i>}          desc={<>A character from the <a href='/docs/std/lang-support/charset#basic-character-set'>basic character set</a>, except parentheses, backslash and <a href='/docs/std/containers/strings/other/isspace'>spaces</a></>}/>
   <Symbol name={<i class='col-g'>r-char-sequence</i>} desc={<>A sequence of one or more <i class='col-g'>r-char</i>s, except that it must not contain the closing sequence)d-char-sequence"</>}/>
   <Symbol name={<i class='col-g'>r-char</i>}          desc={<>A character from the <a href='./docs/std/lang-support/charset#translation-character-set'>translation character set</a></>}/>
 </SymbolTable>
+
+1. Ordinary string literal. The type of an unprefixed string literal is <span class='col-lb'>const char</span>[N], where `N` is the size of the string in code units of the ordinary literal encoding, including the null terminator.
+2. Wide string literal. The type of a <code>L<span class='col-d'>"..."</span></code> string literal is <span class='col-lb'>const wchar_t</span>[N], where `N` is the size of the string in code units of the wide literal encoding, including the null terminator.
+3. UTF-8 string literal. The type of a <code>u8<span class='col-d'>"..."</span></code> string literal is <Until v='cpp20'><span class='col-lb'>const char</span>[N]</Until> <Since v='cpp20'>const char8_t[N]</Since>, where `N` is the size of the string in UTF-8 code units including the null terminator.
+4. UTF-16 string literal. The type of a <code>u<span class='col-d'>"..."</span></code> string literal is <span class='col-lb'>const char16_t</span>[N], where `N` is the size of the string in UTF-16 code units including the null terminator.
+5. UTF-32 string literal. The type of a <code>U<span class='col-d'>"..."</span></code> string literal is <span class='col-lb'>const char32_t</span>[N], where `N` is the size of the string in UTF-32 code units including the null terminator.
+6. Raw string literal. Used to avoid escaping of any character. Anything between the delimiters becomes part of the string. <i class='col-g'>prefix</i>, if present, has the same meaning as described above. The terminating <i class='col-g'>d-char-sequence</i> is the same sequence of characters as the initial <i class='col-g'>d-char-sequence</i>.
+
+Each <i class='col-g'>s-char</i> (originally from non-raw string literals) <Since v='cpp11'>or <i class='col-g'>r-char</i> (originally from raw string literals)</Since> 
+initializes the corresponding element(s) in the string literal object. An <i class='col-g'>s-char</i> <Since v='cpp11'>or <i class='col-g'>r-char</i></Since> 
+corresponds to more than one element if and only if it is represented by a sequence of more than one code units in the string literal's associated character encoding. <Since v='cpp23'>If 
+a character lacks representation in the associated character encoding, the program is ill-formed. </Since>
+
+Each numeric escape sequence corresponds to a single element. <Since v='cpp23' block>If the value specified by the escape sequence fits within the unsigned version of the element type, 
+the element has the specified value (possibly after conversion to the element type); otherwise (the specified value is out of range), the program is ill-formed. </Since>
+
+### Concatenation
+
+String literals placed side-by-side are concatenated at [translation phase 6](/docs/std/lang-support/translation_phases#phase-6) (after the preprocessor). That is, <code class='col-d'>"Hello,"  " world!"</code> yields the (single) string <code class='col-d'>"Hello, world!"</code>. 
+If the two strings have the same encoding prefix (or neither has one), the resulting string will have the same encoding prefix (or no prefix).
+
+<Since v='cpp11' block>
+
+If one of the strings has an encoding prefix and the other doesn't, the one that doesn't will be considered to have the same encoding prefix as the other.
+```cpp
+L"Δx = %" PRId16 // at phase 4, PRId16 expands to "d"
+                 // at phase 6, L"Δx = %" and "d" form L"Δx = %d"
+```
+If a UTF-8 string literal and a wide string literal are side by side, the program is ill-formed.
+
+</Since>
+<br/>
+<Since v='cpp11' block><Until v='cpp23' block>
+Any other combination of encoding prefixes is conditionally supported with implementation-defined semantics. (No known implementation supports such concatenation.)
+</Until></Since><br/>
+<Since v='cpp23'>
+Any other combination of encoding prefixes is ill-formed.
+</Since>
+
+## Unevaluated strings
+The following contexts expect a string literal, but do not evaluate it:
+
+* [language linkage](/docs/std/lang-support/language_linkage) specification
+* [static_assert](/docs/std/lang-support/static_assert) <Since v='cpp11'></Since>
+* [literal operator](/docs/std/lang-support/user_literal#literal-operators) name <Since v='cpp11'></Since>
+* [[[deprecated](/docs/std/lang-support/attributes/deprecated)]] <Since v='cpp14'></Since>
+* [[[nodiscard](/docs/std/lang-support/attributes/nodiscard)]] <Since v='cpp20'></Since>
+
+<Until v='cpp26' block>The standard does not specify whether an encoding prefix is allowed in these contexts 
+<Since v='cpp11'>(except that a literal operator name must not have an encoding prefix)</Since>. 
+Implementations behave inconsistently.</Until>
+<br/>
+<Since v='cpp26'>
+
+No encoding prefix is allowed in these contexts.
+
+Each [universal character name](./escape) and each [simple escape sequence](./escape) in an unevaluated string is replaced by the member of the [translation character set](./charset) it denotes. 
+An unevaluated string that contains a numeric escape sequence or a conditional escape sequence is ill-formed. 
+
+</Since>
+
+## Notes
+The null character (<code class='col-d'>'<b>\0</b>'</code>, <code>L<span class='col-d'>'<b>\0</b>'</span></code>, <code class='col-lb'>char16_t<span class='col-d'>()</span></code>, etc) 
+is always appended to the string literal: thus, a string literal <code class='col-d'>"Hello"</code> is a <code class='col-lb'>const char<span class='col-d'>[</span>6<span class='col-d'>]</span></code>, 
+holding the characters <code-d>'H'</code-d>, <code-d>'e'</code-d>, <code-d>'l'</code-d>, <code-d>'l'</code-d>, <code-d>'o'</code-d>, and <code-d>'\0'</code-d>.
+
+The encoding of ordinary string literals (1) and wide string literals (2) is implementation-defined. 
+For example, gcc selects them with the [command line options](https://gcc.gnu.org/onlinedocs/cpp/Invocation.html) `-fexec-charset` and `-fwide-exec-charset`.
+
+String literals have [static storage duration](./storage_duration), and thus exist in memory for the life of the program.
+
+String literals can be used to [initialize character arrays](./aggregate_initialization). If an array is initialized like <code><span class='col-lb'>char</span> str<span class='col-d'>[]</span> = <span class='col-d'>"foo"</span>;</code>, 
+`str` will contain a copy of the string <code-d>"foo"</code-d>.
+
+Whether string literals can overlap and whether successive evaluations of a string-literal yield the same object is unspecified. That means that identical string literals may or may not compare equal when compared by pointer.
+
+```cpp
+bool b = "bar" == 3 + "foobar"; // could be true or false, implementation-defined
+```
+
+Attempting to modify a string literal results in *undefined behavior*: they may be stored in read-only storage (such as .rodata) or combined with other string literals:
+
+```cpp
+const char* pc = "Hello";
+char* p = const_cast<char*>(pc);
+p[0] = 'M'; // undefined behavior
+```
+
+<Until v='cpp11'>String literals are convertible and assignable to non-const <span class='col-lb'>char</span>* or <span class='col-lb'>wchar_t</span>* in order to be compatible with C, where string literals are of types <span class='col-lb'>char</span>[N] and <span class='col-lb'>wchar_t</span>[N]. Such implicit conversion is deprecated.</Until>
+<br/>
+<Since v='cpp11'>String literals are not convertible or assignable to non-const CharT*. An explicit cast (e.g. <a href='const_cast'>const_cast</a>) must be used if such conversion is wanted.</Since>
+
+A string literal is not necessarily a null-terminated character sequence: if a string literal has embedded null characters, it represents an array which contains more than one string.
+
+```cpp
+const char* p = "abc\0def"; // std::strlen(p) == 3, but the array has size 8
+```
+
+If a valid hex digit follows a hex escape in a string literal, it would fail to compile as an invalid escape sequence. String concatenation can be used as a workaround:
+
+```cpp
+//const char* p = "\xfff"; // error: hex escape sequence out of range
+const char* p = "\xff""f"; // OK: the literal is const char[3] holding {'\xff','f','\0'}
+```
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>Feature-test macro</th>
+        <th>Value</th>
+        <th>Std</th>
+        <th>Comment</th>
+    </tr>
+    <tr>
+        <td><a href='/docs/std/feature_test'>__cpp_char8_t</a></td>
+        <td>202207L</td>
+        <td><Version v='cpp20'></Version> <code class='col-d'>(DR)</code></td>
+        <td>char8_t compatibility and portability fix (allow <a href='aggregate_initialization#character-arrays'>initialization of <span class='col-lb'>(unsigned) char</span> arrays</a> from UTF-8 string literals)</td>
+    </tr>
+    <tr>
+        <td><a href='/docs/std/feature_test'>__cpp_raw_strings</a></td>
+        <td>200710L</td>
+        <td><Version v='cpp11'></Version></td>
+        <td>Raw string literals</td>
+    </tr>
+    <tr>
+        <td><a href='/docs/std/feature_test'>__cpp_unicode_literals</a></td>
+        <td>200710L</td>
+        <td><Version v='cpp11'></Version></td>
+        <td>Unicode string literals</td>
+    </tr>
+</table>
+
+## Example
+
+<Columns spacing='20px' columns={['6fr','4fr']}><div>
+
+```cpp
+#include <iostream>
+ 
+char array1[] = "Foo" "bar";
+// same as
+char array2[] = {'F', 'o', 'o', 'b', 'a', 'r', '\0'};
+ 
+const char* s1 = R"foo(
+Hello
+  World
+)foo";
+// same as
+const char* s2 = "\nHello\n  World\n";
+// same as
+const char* s3 = "\n"
+                 "Hello\n"
+                 "  World\n";
+ 
+const wchar_t* s4 = L"ABC" L"DEF"; // OK, same as
+const wchar_t* s5 = L"ABCDEF";
+const char32_t* s6 = U"GHI" "JKL"; // OK, same as
+const char32_t* s7 = U"GHIJKL";
+const char16_t* s9 = "MN" u"OP" "QR"; // OK, same as
+const char16_t* sA = u"MNOPQR";
+ 
+// const auto* sB = u"Mixed" U"Types";
+        // before C++23 may or may not be supported by
+        // the implementation; ill-formed since C++23
+ 
+const wchar_t* sC = LR"--(STUV)--"; // OK, raw string literal
+ 
+int main()
+{
+    std::cout << array1 << ' ' << array2 << '\n'
+              << s1 << s2 << s3 << std::endl;
+    std::wcout << s4 << ' ' << s5 << ' ' << sC
+               << std::endl;
+}
+```
+
+</div><div>
+
+```plaintext title='Result'
+Foobar Foobar
+ 
+Hello
+  World
+ 
+Hello
+  World
+ 
+Hello
+  World
+ 
+ABCDEF ABCDEF STUV
+```
+
+</div></Columns>
+
+## Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>DR</th>
+        <th>Applied to</th>
+        <th>Behavior as published</th>
+        <th>Correct behavior</th>
+    </tr>
+    <tr>
+        <td><a href='https://cplusplus.github.io/CWG/issues/1759.html'>CWG 1759</a></td>
+        <td><Version v='cpp11'></Version></td>
+        <td>A UTF-8 string literal might have code units that are not representable in <span class='col-lb'>char</span></td>
+        <td><span class='col-lb'>char</span> can represent all UTF-8 code units</td>
+    </tr>
+    <tr>
+        <td><a href='https://cplusplus.github.io/CWG/issues/1823.html'>CWG 1823</a></td>
+        <td><Version v='cpp98'></Version></td>
+        <td>whether string literals are distinct was implementation-defined</td>
+        <td>distinctness is unspecified, and same string literal can yield different object</td>
+    </tr>
+    <tr>
+        <td><a href='https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2023/p1854r4.pdf'>P1854R4</a></td>
+        <td><Version v='cpp23'></Version></td>
+        <td>string literals with non-encodable characters were conditionally-supported</td>
+        <td>the program is ill-formed</td>
+    </tr>
+</table>
+
+## References
+* C++23 standard (ISO/IEC 14882:2023):
+  * 5.13.5 String literals [lex.string]
+* C++20 standard (ISO/IEC 14882:2020):
+  * 5.13.5 String literals [lex.string]
+* C++17 standard (ISO/IEC 14882:2017):
+  * 5.13.5 String literals [lex.string]
+* C++14 standard (ISO/IEC 14882:2014):
+  * 2.14.5 String literals [lex.string]
+* C++11 standard (ISO/IEC 14882:2011):
+  * 2.14.5 String literals [lex.string]
+* C++03 standard (ISO/IEC 14882:2003):
+  * 2.13.4 String literals [lex.string]
+* C++98 standard (ISO/IEC 14882:1998):
+  * 2.13.4 String literals [lex.string]
