@@ -21,8 +21,8 @@ in his C++14 [**range-v3**](https://github.com/ericniebler/range-v3/) library.
 
 The name was suggested by the author himself in a [poll on twitter in 2018](https://twitter.com/tcanens/status/1063723279414890496).
 
-Before getting to niebloids and understanding fully what these give us, we first have to have some understanding in the following topics:
-- Unqualified lookup / Qualified lookup
+Before getting to niebloids, we first have to have some basic understanding in the following topics:
+- Unqualified / Qualified lookup
 - ADL (Argument Dependent Lookup)
 - Customization Points
 - Customization Point Objects
@@ -112,7 +112,7 @@ print_me(my_ns::MyEnum::One);
 </CustomCodeBlock>
 
 You may be surprised it works - intuiton tells us that it shouldn't, because even though we have a fully qualified `my_ns::MyEnum::One` which
-is resolved via qualified lookup correctly, `print_me` is not qualified and not be present in this scope, unqualified lookup shouldn't find it and this code should not compile.
+is resolved via qualified lookup correctly, `print_me` is not qualified and should not be present in this scope, unqualified lookup shouldn't find it and this code should not compile.
 
 And your intuition would be right.. At least if it wasn't for ADL.
 
@@ -148,20 +148,20 @@ auto y = x + 1; // unqualified lookup for x, no ADL because x is an object
 And if you think about it - it makes sense, ADL should only apply to function calls, it doesn't make sense to apply
 ADL to an object that was being looked up. An object doesn't accept any parameters that we can examine.
 
-Why am I talking about it? Because it's crucial for understanding Niebloids.
+Why am I talking about it? Because it's crucial for understanding **niebloids**.
 
 So once again, keep in mind - <span class="inline-important">ADL doesn't happen if unqualified lookup found something that is neither a function nor a function template</span>
 
 ##  Customization Points
 
-One of the ways we can utilize ADL in is making so called Customization Points.
+One of the ways we can utilize ADL in is making so called **customization points**.
 
 You may not know about it, but you've probably used them yourself several times.
 
 `std::swap`, `std::data`, `std::begin`, `std::end` - these are all customization points.
 
 If you have a custom type which has a special, more performant or otherwise better implementation of any of these
-functions above, you can "hook" your own implementations by creating a free function with a similar interface in your type's namespace.
+functions above, you can "hook" your own implementations by creating a free function with a matching interface in your type's namespace.
 
 ```cpp
 namespace my_ns {
@@ -175,7 +175,7 @@ auto swap(MyAwesomeType& first, MyAwesomeType& second) -> void {
 }
 ```
 
-The consequence of having such a design is that now the programmer has to remember about these Customization Points
+This is great, but it has consequences. This design forces the programmer to remember about these customization points
 and handle them properly. What it means, is that everytime you write generic code, you have to remember to bring
 the default implementation to the current scope and call it unqualified, e.g.:
 
@@ -188,8 +188,10 @@ auto awesome_function(T t, U u)
 }
 ```
 
-This ensures that if the type has "hooked" into the customization point, it will be called, but if not, the default
-implementation will be chosen.
+Calling swap unqualified: `swap(t, u);` ensures that if the type has "hooked" into the customization point, it will be called.
+
+If, however, there is no user provided implementation, this will produce an error, that's why we bring `std::swap` to the scope
+with `using std::swap;`, so that when there is no custom behaviour defined, the default one from the standard library will be chosen.
 
 So, remember, everytime you see code like this:
 ```cpp
@@ -199,29 +201,28 @@ where `a` and `b` are some generic parameters - it's probably a bug.
 
 ## Customization Points are flawed, Customization Point Objects to the rescue
 
-The two problems with Customization Points are that, first of all, the programmer has to remember
-to correctly use them in generic code (doing more to achieve the correct thing) and, second of all,
-if the standard decides to add some requirements to the types of these customization points
-(for example, `Range`, for `begin`, which is pretty sensible), it would not be possible to apply them to the "hooked", custom
-implementations.
+The two problems with customization points are that:
+1. The programmer has to remember to correctly use them in generic code (doing more to achieve the correct thing)
+2. If the standard decides to add some requirements to the types of these customization points
+  (for example, `Range`, for `begin`, which is pretty sensible), it would not be possible to apply them to the "hooked", custom implementations.
 
-These problems are solved by **C**ustomization **P**oint **O**objects, or CPOs in short.
+These problems are solved by **C**ustomization **P**oint **O**bjects, or CPOs in short.
 
-They came to C++ together with the C++20 standard ([paper which introduced them](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4381.html)).
+They came to C++ [together with the C++20 standard](https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4381.html).
 
 CPOs have two main goals:
-- define a central point to apply requirements to
-- define a central point to call, which will dispatch to either the "hooked" implementation or the default standard implementation
+1. Define a central point to apply requirements to (which is easy to do, just apply the requirements to the CPO and tell programmers to use the CPO instead of classic customization points)
+2. Define a central point to call, which will dispatch to either the "hooked" implementation or the default standard implementation
 
-The second goal is done by inhibiting (disallowing) ADL.
-
-The are currently only two ways to achieve that.
+The second goal is done by inhibiting (disallowing) ADL. How do we do that? Well, there are currently only two ways to achieve that.
 
 One of them is to to make them function objects, as specified in the [Unqualified lookup and ADL together](#unqualified-lookup-and-adl-together) section,
 ADL doesn't happen if unqualified lookup happens to find something that is neither a **function**, nor a **function template** - a function object
 is none of those, so ADL is disabled.
 
 The other way to implement such behaviour is to use internal compiler extensions, but no known implementation does that currently.
+
+The CPOs are implemented under the `std::ranges` namespace in the standard library  - `std::ranges::swap`, `std::ranges::begin`, etc.
 
 ## Niebloids
 
@@ -238,8 +239,11 @@ You may also stumble upon people mentioning, that <span class="inline-danger">ev
 ### Implementation
 
 You may notice, that niebloids have similar goals to CPOs. And, yeah, they are pretty much the same, except that niebloids
-don't allow for any customization points. Similarily to CPOs, they are also typically implemented using function objects,
-although that's not required.
+don't allow for any customization points, that is, `std::ranges::find` is pretty much the same thing as `std::ranges::swap`,
+except that creating a free function called `find` doesn't really do anything, because these identifiers are not used as
+customization points.
+
+Similarily to CPOs, they are also typically implemented using function objects, although that's not required.
 
 <span>**</span> One of the characteristics specified is not being able to specify explicit template arguments, it is true with
 how niebloids are currently implemented by all the major vendors, but keep in mind that it's not a planned feature of niebloids
