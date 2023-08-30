@@ -1,0 +1,69 @@
+---
+title:              Boolean literals
+tags:               [Language, Literals]
+hite_title:         true
+---
+
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import Columns                                          from "@site-comps/Columns";
+
+# Boolean literals
+## Syntax
+
+<SyntaxTable>
+  <Syntax id ='1' directive={<b>True</b>}  args={[]}/>
+  <Syntax id ='2' directive={<b>False</b>} args={[]}/>
+</SyntaxTable>
+
+## Explanation
+The Boolean literals are the keywords <code class="col-lb">true</code> and <code class="col-lb">false</code>. They are [prvalues](./value_category#prvalue) of type [bool](./types#boolean-type).
+
+## Notes
+See [Integral conversions](implicit_conversion#integral-conversions) for implicit conversions from bool to other types and [boolean conversions](implicit_conversion#boolean-conversions) 
+for the implicit conversions from other types to bool.
+
+## Example
+
+<Columns spacing = '20px' columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iostream>
+ 
+int main()
+{
+    std::cout << std::boolalpha
+              << true << '\n'
+              << false << '\n'
+              << std::noboolalpha
+              << true << '\n'
+              << false << '\n';
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+true
+false
+1
+0
+```
+
+</div>
+</Columns>
+
+## References
+* C++23 standard (ISO/IEC 14882:2023):
+    * 5.13.6 Boolean literals [lex.bool]
+* C++20 standard (ISO/IEC 14882:2020):
+    * 5.13.6 Boolean literals [lex.bool]
+* C++17 standard (ISO/IEC 14882:2017):
+    * 5.13.6 Boolean literals [lex.bool]
+* C++14 standard (ISO/IEC 14882:2014):
+    * 2.13.6 Boolean literals [lex.bool]
+* C++11 standard (ISO/IEC 14882:2011):
+    * 2.13.6 Boolean literals [lex.bool]
+* C++98 standard (ISO/IEC 14882:1998):
+    * 2.13.5 Boolean literals [lex.bool]
