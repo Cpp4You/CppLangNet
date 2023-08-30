@@ -1,0 +1,302 @@
+---
+title:              Integer literal
+tags:               [Language, Literals]
+hite_title:         true
+---
+
+import {Since, Until, Version}                          from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import Columns                                          from "@site-comps/Columns";
+import styles                                           from "@site-comps/SyntaxTable.module.scss";
+
+# Integer literal
+Allows values of integer type to be used in expressions directly.
+
+## Syntax
+An integer literal has the form
+
+<SyntaxTable>
+  <Syntax id ='1' directive={<></>} args={['decimal-literal', 'integer-suffix', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id ='2' directive={<></>} args={['octal-literal', 'integer-suffix', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id ='3' directive={<></>} args={['hex-literal', 'integer-suffix', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id ='4' directive={<></>} args={['binary-literal', 'integer-suffix', <small class="col-d"> (optional)</small>, <Since v='cpp14'></Since>]}/>
+</SyntaxTable>
+
+where
+<ul>
+    <li><span class='col-g'>decimal-literal</span> is a non-zero decimal digit (1, 2, 3, 4, 5, 6, 7, 8, 9), followed by zero or more decimal digits (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)</li>
+    <li><span class='col-g'>octal-literal</span> is the digit zero (0) followed by zero or more octal digits (0, 1, 2, 3, 4, 5, 6, 7)</li>
+    <li><span class='col-g'>hex-literal</span> is the character sequence 0x or the character sequence 0X followed by one or more hexadecimal digits (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, A, b, B, c, C, d, D, e, E, f, F)</li>
+    <li><span class='col-g'>binary-literal</span> is the character sequence <code>0b</code> or the character sequence <code>0B</code> followed by one or more binary digits (0, 1)</li>
+    <li><span class='col-g'>integer-suffix</span>, if provided, may contain one or both of the following (if both are provided, they may appear in any order):
+        <ul>
+            <li><span class='col-g'>unsigned-suffix</span> (the character <code>u</code> or the character <code>U</code>)</li>
+            <li>one of
+                <ul>
+                    <li><span class='col-g'>long-suffix</span> (the character <code>l</code> or the character <code>L</code>)</li>
+                    <li><Since v='cpp11'><span class='col-g'>long-long-suffix</span> (the character sequence <code>ll</code> or the character sequence <code>LL</code>)</Since></li>
+                    <li><Since v='cpp23'><span class='col-g'>size-suffix</span> (the character <code>z</code> or the character <code>Z</code>)</Since></li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+<Since v='cpp14'>Optional single quotes <code>'</code> may be inserted between the digits as a separator; they are ignored when determining the value of the literal.</Since>
+
+An integer literal (as any literal) is a [primary expression](/docs/std/lang-support/expressions#primary-expressions).
+
+## Explanation
+1. Decimal integer literal (base 10).
+2. Octal integer literal (base 8).
+3. Hexadecimal integer literal (base 16, the letters <span class='col-d'>'a'</span> through <span class='col-d'>'f'</span> represent values (decimal) 10 through 15).
+4. Binary integer literal (base 2).
+The first digit of an integer literal is the most significant.
+
+Example. The following variables are initialized to the same value:
+```cpp
+int d = 42;
+int o = 052;
+int x = 0x2a;
+int X = 0X2A;
+int b = 0b101010; // C++14
+```
+Example. The following variables are also initialized to the same value:
+```cpp
+unsigned long long l1 = 18446744073709550592ull;       // C++11
+unsigned long long l2 = 18'446'744'073'709'550'592llu; // C++14
+unsigned long long l3 = 1844'6744'0737'0955'0592uLL;   // C++14
+unsigned long long l4 = 184467'440737'0'95505'92LLU;   // C++14
+```
+
+## The type of the literal
+The type of the integer literal is the first type in which the value can fit, from the list of types which depends on which numeric base and which <span class='col-g'>integer-suffix</span> was used:
+
+<table className={styles.syntaxTable}>
+<tr>
+    <th>Suffix</th>
+    <th>Decimal bases</th>
+    <th>Binary, octal, or hexadecimal bases</th>
+</tr>
+<tr>
+    <td>(no suffix)</td>
+    <td><ul>
+        <li><code class='col-lb'>int</code></li>
+        <li><code class='col-lb'>long int</code></li>
+        <li><Since v='cpp11'><code class='col-lb'>long long int</code></Since></li>
+    </ul></td>
+    <td><ul>
+        <li><code class='col-lb'>int</code></li>
+        <li><code class='col-lb'>unsigned int</code></li>
+        <li><code class='col-lb'>long int</code></li>
+        <li><code class='col-lb'>unsigned long int</code></li>
+        <li><Since v='cpp11'><code class='col-lb'>long long int</code></Since></li>
+        <li><Since v='cpp11'><code class='col-lb'>unsigned long long int</code></Since></li>
+    </ul></td>
+</tr>
+<tr>
+    <td>u or U</td>
+    <td><ul>
+        <li><code class='col-lb'>unsigned int</code></li>
+        <li><code class='col-lb'>unsigned long int</code></li>
+        <li><Since v='cpp11'><code class='col-lb'>unsigned long long int</code></Since></li>
+    </ul></td>
+    <td><ul>
+        <li><code class='col-lb'>unsigned int</code></li>
+        <li><code class='col-lb'>iunsigned long intnt</code></li>
+        <li><Since v='cpp11'><code class='col-lb'>unsigned long long int</code></Since></li>
+    </ul></td>
+</tr>
+<tr>
+    <td>l or L</td>
+    <td><ul>
+        <li><code class='col-lb'>long int</code></li>
+        <li><Until v='cpp11'><code class='col-lb'>unsigned long int</code></Until></li>
+        <li><Since v='cpp11'><code class='col-lb'>long long int</code></Since></li>
+    </ul></td>
+    <td><ul>
+        <li><code class='col-lb'>long int</code></li>
+        <li><code class='col-lb'>unsigned long int</code></li>
+        <li><Since v='cpp11'><code class='col-lb'>long long int</code></Since></li>
+        <li><Since v='cpp11'><code class='col-lb'>unsigned long long int</code></Since></li>
+    </ul></td>
+</tr>
+<tr>
+    <td>both l/L and u/U</td>
+    <td><ul>
+        <li><code class='col-lb'>unsigned long int</code></li>
+        <li><Since v='cpp11'><code class='col-lb'>unsigned long long int</code></Since></li>
+    </ul></td>
+    <td><ul>
+        <li><code class='col-lb'>unsigned long int</code></li>
+        <li><Since v='cpp11'><code class='col-lb'>unsigned long long int</code></Since></li>
+    </ul></td>
+</tr>
+<tr>
+    <td>ll or LL</td>
+    <td><ul>
+        <li><Since v='cpp11'><code class='col-lb'>long long int</code></Since></li>
+    </ul></td>
+    <td><ul>
+        <li><code class='col-lb'>unsigned long int</code></li>
+        <li><Since v='cpp11'><code class='col-lb'>unsigned long long int</code></Since></li>
+    </ul></td>
+</tr>
+<tr>
+    <td>both ll/LL and u/U</td>
+    <td><ul>
+        <li><Since v='cpp11'><code class='col-lb'>unsigned long long int</code></Since></li>
+    </ul></td>
+    <td><ul>
+        <li><Since v='cpp11'><code class='col-lb'>unsigned long long int</code></Since></li>
+    </ul></td>
+</tr>
+<tr>
+    <td>z or Z</td>
+    <td><ul>
+        <li><Since v='cpp23'>the signed version of <a href='/docs/std/types/size_t'>std::size_t</a></Since></li>
+    </ul></td>
+    <td><ul>
+        <li><Since v='cpp23'>the signed version of <a href='/docs/std/types/size_t'>std::size_t</a></Since></li>
+        <li><Since v='cpp23'><a href='/docs/std/types/size_t'>std::size_t</a></Since></li>
+    </ul></td>
+</tr>
+<tr>
+    <td>both z/Z and u/U</td>
+    <td><ul>
+        <li><Since v='cpp23'><a href='/docs/std/types/size_t'>std::size_t</a></Since></li>
+    </ul></td>
+    <td><ul>
+        <li><Since v='cpp23'><a href='/docs/std/types/size_t'>std::size_t</a></Since></li>
+    </ul></td>
+</tr>
+</table>
+
+If the value of the integer literal <Since v='cpp23'>that does not have size-suffix</Since> is too big to fit in any of the types allowed by suffix/base combination 
+and the compiler supports an extended integer type (such as `__int128`) which can represent the value of the literal, the literal may be given that extended integer type — otherwise the program is ill-formed.
+
+## Notes
+Letters in the integer literals are case-insensitive: 0xDeAdBeEfU and 0XdeadBEEFu represent the same number <Since v='cpp11'>(one exception is the <span class='col-g'>long-long-suffix</span>, 
+which is either <code>ll</code> or <code>LL</code>, never <code>lL</code> or <code>Ll</code>) </Since>.
+
+There are no negative integer literals. Expressions such as `-1` apply the [unary minus operator](./operator_arithmetic) to the value represented by the literal, which may involve implicit type conversions.
+
+In C prior to C99 (but not in C++), unsuffixed decimal values that do not fit in <code class='col-lb'>long int</code> are allowed to have the type <code class='col-lb'>unsigned long int</code>.
+
+<Since v='cpp11'>When used in a controlling expression of <a class='col-d' href='./preprocessor/conditional'><u>#if</u></a> or <a class='col-d' href='./preprocessor/conditional'><u>#elif</u></a>, 
+all signed integer constants act as if they have type <a href='/docs/std/types/integer'>std::intmax_t</a> and all unsigned integer constants act as if they have type <a href='/docs/std/types/integer'>std::uintmax_t</a></Since>.
+
+Due to [maximal munch](/docs/std/lang-support/translation_phases#maximal-munch), hexadecimal integer literals ending in `e` and `E`, when followed by the operators `+` or `-`, 
+must be separated from the operator with whitespace or parentheses in the source:
+```cpp
+auto x = 0xE+2.0;   // error
+auto y = 0xa+2.0;   // OK
+auto z = 0xE +2.0;  // OK
+auto q = (0xE)+2.0; // OK
+```
+Otherwise, a single invalid preprocessing number token is formed, which causes further analysis to fail.
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th><a href='/docs/std/feature-test'>Feature-test</a> macro</th>
+        <th>Value</th>
+        <th>Std</th>
+        <th>Comment</th>
+    </tr>
+    <tr>
+        <td><a href='/docs/std/feature-test#language-features'>__cpp_binary_literals</a></td>
+        <td>201304L</td>
+        <td><Version v='cpp14'></Version></td>
+        <td><a href='#syntax'>Binary literals</a></td>
+    </tr>
+    <tr>
+        <td><a href='/docs/std/feature-test#language-features'>__cpp_size_t_suffix</a></td>
+        <td>202011L</td>
+        <td><Version v='cpp23'></Version></td>
+        <td>Literal suffixes for <a href='docs/std/types/size_t'>std::size_t</a> and its signed version</td>
+    </tr>
+</table>
+
+## Example
+
+<Columns spacing = '20px' columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <cstddef>
+#include <iostream>
+#include <type_traits>
+ 
+int main()
+{
+    std::cout << 123 << '\n'
+              << 0123 << '\n'
+              << 0x123 << '\n'
+              << 0b10 << '\n'
+              << 12345678901234567890ull << '\n'
+              << 12345678901234567890u << '\n'; // the type is unsigned long long
+                                                // even without a long long suffix
+ 
+//  std::cout << -9223372036854775808 << '\n'; // error: the value
+               // 9223372036854775808 cannot fit in signed long long, which is the
+               // biggest type allowed for unsuffixed decimal integer literal
+    std::cout << -9223372036854775808u << '\n'; // unary minus applied to unsigned
+               // value subtracts it from 2^64, this gives 9223372036854775808
+    std::cout << -9223372036854775807 - 1 << '\n'; // correct way to calculate
+                                                   // the value -9223372036854775808
+ 
+#if __cpp_size_t_suffix >= 202011L // C++23
+    static_assert(std::is_same_v<decltype(0UZ), std::size_t>);
+    static_assert(std::is_same_v<decltype(0Z), std::make_signed_t<std::size_t>>);
+#endif
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Result"
+123
+83
+291
+2
+12345678901234567890
+12345678901234567890
+9223372036854775808
+-9223372036854775808
+```
+
+</div>
+</Columns>
+
+## Defect reports
+The following behavior-changing defect reports were applied retroactively to previously published C++ standards.
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>DR</th>
+        <th>Applied to</th>
+        <th>Behavior as published</th>
+        <th>Correct behavior</th>
+    </tr>
+    <tr>
+        <td><a href='https://cplusplus.github.io/CWG/issues/2698.html'>CWG 2698</a></td>
+        <td><Version v='cpp23'></Version></td>
+        <td>an integer literal with <span class='col-g'>size-suffix</span> could have an extended integer type</td>
+        <td>ill-formed if too large</td>
+    </tr>
+</table>
+
+## References
+* C++23 standard (ISO/IEC 14882:2023):
+    * 5.13.2 Integer literals [lex.icon]
+* C++20 standard (ISO/IEC 14882:2020):
+    * 5.13.2 Integer literals [lex.icon]
+* C++17 standard (ISO/IEC 14882:2017):
+    * 5.13.2 Integer literals [lex.icon]
+* C++14 standard (ISO/IEC 14882:2014):
+    * 2.14.2 Integer literals [lex.icon]
+* C++11 standard (ISO/IEC 14882:2011):
+    * 2.14.2 Integer literals [lex.icon]
+* C++98 standard (ISO/IEC 14882:1998):
+    * 2.13.1 Integer literals [lex.icon]

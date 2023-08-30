@@ -1,0 +1,189 @@
+---
+title:              Floating-point literal
+tags:               [Language, Literals]
+hite_title:         true
+---
+
+import {Since, Version}                                 from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import Columns                                          from "@site-comps/Columns";
+import styles                                           from "@site-comps/SyntaxTable.module.scss";
+
+# Floating-point literal
+Floating-point literal defines a compile-time constant whose value is specified in the source file.
+
+## Syntax
+
+<SyntaxTable>
+  <Syntax id ='1' directive={<></>}      args={['digit-sequence', 'decimal-exponent suffix', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id ='2' directive={<></>}      args={['digit-sequence', <b>.</b>, 'decimal-exponent', <small class="col-d"> (optional)</small>, 'suffix', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id ='3' directive={<></>}      args={['digit-sequence', <small class="col-d"> (optional)</small>, <b>.</b>, 'digit-sequence', 'decimal-exponent', <small class="col-d"> (optional)</small>, 'suffix', <small class="col-d"> (optional)</small>]}/>
+  <Syntax id ='4' directive={<>0x|0X</>} args={['hex-digit-sequence', 'hex-exponent suffix', <small class="col-d"> (optional)</small>, <Since v='cpp17'></Since>]}/>
+  <Syntax id ='5' directive={<>0x|0X</>} args={['hex-digit-sequence', <b>.</b>, 'hex-exponent suffix', <small class="col-d"> (optional)</small>, <Since v='cpp17'></Since>]}/>
+  <Syntax id ='6' directive={<>0x|0X</>} args={['hex-digit-sequence', <small class="col-d"> (optional)</small>, <b>.</b>, 'hex-digit-sequence', 'hex-exponent suffix', <small class="col-d"> (optional)</small>, <Since v='cpp17'></Since>]}/>
+</SyntaxTable>
+
+1. <i class='col-g'>digit-sequence</i> representing a whole number without a decimal separator, in this case the exponent is not optional: `1e10`, `1e-5L`.
+2. <i class='col-g'>digit-sequence</i> representing a whole number with a decimal separator, in this case the exponent is optional: `1.`, `1.e-2`.
+3. <i class='col-g'>digit-sequence</i> representing a fractional number. The exponent is optional: `3.14`, `.1f`, `0.1e-1L`.
+4. Hexadecimal <i class='col-g'>digit-sequence</i> representing a whole number without a radix separator. The exponent is never optional for hexadecimal floating-point literals: `0x1ffp10`, `0X0p-1`.
+5. Hexadecimal <i class='col-g'>digit-sequence</i> representing a whole number with a radix separator. The exponent is never optional for hexadecimal floating-point literals: `0x1.p0`, `0xf.p-1`.
+6. Hexadecimal <i class='col-g'>digit-sequence</i> representing a fractional number with a radix separator. The exponent is never optional for hexadecimal floating-point literals: `0x0.123p-1`, `0xa.bp10l.`
+
+&#8203;<i class='col-g'>decimal-exponent</i> has the form:
+
+<table className={styles.syntaxTable}>
+<tr>
+    <th>e | E</th>
+    <th><i class='col-g'>exponent-sign</i> <small class="col-d">(optional)</small> &emsp; <i class='col-g'>digit-sequence</i></th>
+</tr>
+</table>
+
+&#8203;<i class='col-g'>hex-exponent</i> has the form:
+
+<table className={styles.syntaxTable}>
+<tr>
+    <th>p | P</th>
+    <th><i class='col-g'>exponent-sign</i> <small class="col-d">(optional)</small> &emsp; <i class='col-g'>digit-sequence</i> <Since v='cpp17'></Since></th>
+</tr>
+</table>
+
+
+&#8203;<i class='col-g'>exponent-sign</i>, if present, is either `+` or `-`
+
+&#8203;<i class='col-g'>suffix</i>, if present, is one of <b>f, l, F, L, <Since v='cpp23'>f16, f32, f64, f128, bf16, F16, F32, F64, F128, BF16</Since></b>. The suffix determines the type of the floating-point literal:
+* (no suffix) defines <code class='col-lb'>double</code>
+* **f F** defines <code class='col-lb'>float</code>
+* **l L** defines <code class='col-lb'>long double</code>
+
+<Since block v='cpp23'>
+
+* **f16 F16** defines std::float16_t
+* **f32 F32** defines std::float32_t
+* **f64 F64** defines std::float64_t
+* **f128 F128** defines std::float128_t
+* **bf16 BF16** defines std::bfloat16_t
+
+</Since>
+
+<Since v='cpp14'>Optional single quotes <code>'</code> may be inserted between the digits as a separator; they are ignored when determining the value of the literal.</Since>
+
+## Explanation
+Decimal scientific notation is used, meaning that the value of the floating-point literal is the significand multiplied by the number 10 raised to the power of <i class='col-g'>decimal-exponent</i>. 
+E.g. the mathematical meaning of `123e4` is *123×104*.
+
+<Since block v='cpp17'>
+
+If the floating literal begins with the character sequence `0x` or `0X`, the floating literal is a *hexadecimal floating literal*. Otherwise, it is a *decimal floating literal*.
+
+For a *hexadecimal floating literal*, the significand is interpreted as a hexadecimal rational number, and the <i class='col-g'>digit-sequence</i> of the exponent is interpreted as 
+the (decimal) integer power of 2 by which the significand has to be scaled.
+
+```cpp
+double d = 0x1.4p3;// hex fraction 1.4 (decimal 1.25) scaled by 23, that is 10.0
+```
+
+</Since>
+
+## Notes
+The hexadecimal floating-point literals were not part of C++ until C++17, although they can be parsed and printed by the I/O functions since C++11: both C++ I/O streams when [std::hexfloat](/docs/std/io/manip/fixed) is enabled and 
+the C I/O streams: [std::printf](/docs/std/io/c/fprintf), [std::scanf](/docs/std/io/c/fscanf), etc. See [std::strtof](/docs/std/containers/strings/byte/strtof) for the format description.
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th><a href='/docs/std/feature-test'>Feature-test</a> macro</th>
+        <th>Value</th>
+        <th>Std</th>
+        <th>Comment</th>
+    </tr>
+    <tr>
+        <td><a href='/docs/std/feature-test#language-features'>__cpp_hex_float</a></td>
+        <td>201603L</td>
+        <td><Version v='cpp17'></Version></td>
+        <td>Hexadecimal floating literals</td>
+    </tr>
+</table>
+
+## Example
+
+<Columns spacing = '20px' columns={['6fr', '4fr']}>
+<div>
+
+```cpp
+#include <iomanip>
+#include <iostream>
+#include <limits>
+#include <typeinfo>
+ 
+#define OUT(x) '\n' << std::setw(16) << #x << x
+ 
+int main()
+{
+    std::cout
+        << "Literal" "\t" "Printed value" << std::left
+        << OUT( 58.            ) // double
+        << OUT( 4e2            ) // double
+        << OUT( 123.456e-67    ) // double
+        << OUT( 123.456e-67f   ) // float, truncated to zero
+        << OUT( .1E4f          ) // float
+        << OUT( 0x10.1p0       ) // double
+        << OUT( 0x1p5          ) // double
+        << OUT( 0x1e5          ) // integer literal, not floating-point
+        << OUT( 3.14'15'92     ) // double, single quotes ignored (C++14)
+        << OUT( 1.18e-4932l    ) // long double
+        << std::setprecision(39)
+        << OUT( 3.4028234e38f  ) // float
+        << OUT( 3.4028234e38   ) // double
+        << OUT( 3.4028234e38l  ) // long double
+        << '\n';
+ 
+    static_assert(3.4028234e38f == std::numeric_limits<float>::max());
+ 
+    static_assert(3.4028234e38f ==  // ends with 4
+                  3.4028235e38f);   // ends with 5
+ 
+    static_assert(3.4028234e38 !=   // ends with 4
+                  3.4028235e38);    // ends with 5
+ 
+    // Both floating-point constants below are 3.4028234e38
+    static_assert(3.4028234e38f !=  // a float (then promoted to double)
+                  3.4028234e38);    // a double
+}
+```
+
+</div>
+<div>
+
+```plaintext title="Possible Result"
+Literal         Printed value
+58.             58
+4e2             400
+123.456e-67     1.23456e-65
+123.456e-67f    0
+.1E4f           1000
+0x10.1p0        16.0625
+0x1p5           32
+0x1e5           485
+3.14'15'92      3.14159
+1.18e-4932l     1.18e-4932
+3.4028234e38f   340282346638528859811704183484516925440
+3.4028234e38    340282339999999992395853996843190976512
+3.4028234e38l   340282339999999999995912555211526242304
+```
+
+</div>
+</Columns>
+
+## References
+* C++23 standard (ISO/IEC 14882:2023):
+    * 5.13.4 Floating-point literals [lex.fcon]
+* C++20 standard (ISO/IEC 14882:2020):
+    * 5.13.4 Floating-point literals [lex.fcon]
+* C++17 standard (ISO/IEC 14882:2017):
+    * 5.13.4 Floating literals [lex.fcon]
+* C++14 standard (ISO/IEC 14882:2014):
+    * 2.14.4 Floating literals [lex.fcon]
+* C++11 standard (ISO/IEC 14882:2011):
+    * 2.14.4 Floating literals [lex.fcon]
+* C++98 standard (ISO/IEC 14882:1998):
+    * 2.13.3 Floating literals [lex.fcon]
