@@ -67,7 +67,7 @@ In all other cases, the result is exact (FE_INEXACT is never raised) and the cur
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/logb.html)
 requires that a pole error occurs if `num` is `±0`.
 
-The value of the exponent returned by `std::logb` is always 1 less than the exponent returned by `std::frexp` because of the different normalization requirements: 
+The value of the exponent returned by `std::logb` is always 1 less than the exponent returned by <a href='/docs/std/math/mathematical_functions/frexp'><code>std::frexp</code></a> because of the different normalization requirements: 
 for the exponent `e` returned by `std::logb`, `|num*r-e|` is between 1 and `r` (typically between 1 and 2), 
 but for the exponent `e` returned by st`d::fre`xp, `|num*2-e|` is between 0.5 and 1.
 

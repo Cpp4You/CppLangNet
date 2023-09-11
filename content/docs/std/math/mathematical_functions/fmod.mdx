@@ -75,7 +75,7 @@ double fmod(double x, double y)
 }
 ```
 
-The expression `x - std::trunc(x / y) * y` may not equal `std::fmod(x, y)`, when the rounding of `x / y` to initialize the argument of `std::trunc` loses too much precision (example: `x = 30.508474576271183309`, `y = 6.1016949152542370172`).
+The expression `x - std::trunc(x / y) * y` may not equal `std::fmod(x, y)`, when the rounding of `x / y` to initialize the argument of <a href='/docs/std/math/mathematical_functions/trunc'><code>std::trunc</code></a> loses too much precision (example: `x = 30.508474576271183309`, `y = 6.1016949152542370172`).
 
 The additional overloads are not required to be provided exactly as (A). They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 

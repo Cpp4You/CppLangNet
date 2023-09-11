@@ -69,7 +69,7 @@ On a binary system (where FLT_RADIX is 2), `std::frexp` may be implemented as
     return std::scalbn(value, -(*exp));
 }
 ```
-The function `std::frexp`, together with its dual, `std::ldexp`, can be used to manipulate the representation of a floating-point 
+The function `std::frexp`, together with its dual, <a href='/docs/std/math/mathematical_functions/ldexp'><code>std::ldexp</code></a>, can be used to manipulate the representation of a floating-point 
 number without direct bit manipulations.
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. <br/>

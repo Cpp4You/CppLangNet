@@ -52,12 +52,12 @@ If `num` is NaN, NaN is returned<br/>
 
 ### Notes
 
-The only difference between `std::nearbyint` and `std::rint` is that `std::nearbyint` never raises FE_INEXACT.
+The only difference between `std::nearbyint` and <a href='/docs/std/math/mathematical_functions/rint'><code>std::rint</code></a> is that `std::nearbyint` never raises FE_INEXACT.
 
 The largest representable floating-point values are exact integers in all standard floating-point formats, so `std::nearbyint` 
 never overflows on its own; however the result may overflow any integer type (including `std::intmax_t`), when stored in an integer variable.
 
-If the current rounding mode is FE_TONEAREST, this function rounds to even in halfway cases (like `std::rint`, but unlike `std::round`).
+If the current rounding mode is FE_TONEAREST, this function rounds to even in halfway cases (like <a href='/docs/std/math/mathematical_functions/rint'><code>std::rint</code></a>, but unlike <a href='/docs/std/math/mathematical_functions/round'><code>std::round</code></a>).
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 

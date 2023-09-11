@@ -63,9 +63,9 @@ If `num` is NaN, NaN is returned<br/>
 
 ### Notes
 
-On binary systems (where FLT_RADIX is 2), `std::ldexp` is equivalent to `std::scalbn`.
+On binary systems (where FLT_RADIX is 2), `std::ldexp` is equivalent to <a href='/docs/std/math/mathematical_functions/scalbn'><code>std::scalbn</code></a>.
 
-The function `std::ldexp` ("load exponent"), together with its dual, `std::frexp`, 
+The function `std::ldexp` ("load exponent"), together with its dual, <a href='/docs/std/math/mathematical_functions/frexp'><code>std::frexp</code></a>, 
 can be used to manipulate the representation of a floating-point number without direct bit manipulations.
 
 On many implementations, `std::ldexp` is less efficient than multiplication or division by a power of two using arithmetic operators.

@@ -72,16 +72,16 @@ specifies that all cases where `std::lrint` or `std::llrint` raise FE_INEXACT ar
 
 As specified in math_errhandling, FE_INEXACT may be (but isn't required to be on non-IEEE floating-point platforms) raised by `std::rint` when rounding a non-integer finite value.
 
-The only difference between `std::rint` and `std::nearbyint` is that `std::nearbyint` **never** raises FE_INEXACT.
+The only difference between `std::rint` and <a href='/docs/std/math/mathematical_functions/nearbyint'><code>std::nearbyint</code></a> is that <a href='/docs/std/math/mathematical_functions/nearbyint'><code>std::nearbyint</code></a> **never** raises FE_INEXACT.
 
 The largest representable floating-point values are exact integers in all standard floating-point formats, so std::rint never overflows on its own; however the result may overflow any integer type (including std::intmax_t), when stored in an integer variable.
 
 If the current rounding mode is:
 
-FE_DOWNWARD, then `std::rint` is equivalent to `std::floor`.
-FE_UPWARD, then `std::rint` is equivalent to `std::ceil`.
-FE_TOWARDZERO, then `std::rint` is equivalent to `std::trunc`
-FE_TONEAREST, then `std::rint` differs from `std::round` in that halfway cases are rounded to even rather than away from zero.
+FE_DOWNWARD, then `std::rint` is equivalent to <a href='/docs/std/math/mathematical_functions/floor'><code>std::floor</code></a>.
+FE_UPWARD, then `std::rint` is equivalent to <a href='/docs/std/math/mathematical_functions/ceil'><code>std::ceil</code></a>.
+FE_TOWARDZERO, then `std::rint` is equivalent to <a href='/docs/std/math/mathematical_functions/trunc'><code>std::trunc</code></a>
+FE_TONEAREST, then `std::rint` differs from <a href='/docs/std/math/mathematical_functions/round'><code>std::round</code></a> in that halfway cases are rounded to even rather than away from zero.
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. They only need to be sufficient to ensure that for their argument `num` of integer type:
 
