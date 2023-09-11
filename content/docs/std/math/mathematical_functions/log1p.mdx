@@ -19,7 +19,7 @@ Defined in header `<cmath>`.
 ### Description
 
 Computes the natural (base `e`) logarithm of `1 + num`. This function is more precise than the expression `std::log(1 + num)` if `num` is close to zero.
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
 
 ### Declarations
 
@@ -64,7 +64,7 @@ If the argument is NaN, NaN is returned<br/>
 The functions [std::expm1](/docs/std/math/mathematical_functions/expm1/) and `std::log1p` are useful for financial calculations, for example, when calculating small daily interest rates: `(1+x)n-1` 
 an be expressed as `std::expm1(n * std::log1p(x))`. These functions also simplify writing accurate inverse hyperbolic functions.
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. They only need to be sufficient to ensure that for their first argument `num1` 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. They only need to be sufficient to ensure that for their first argument `num1` 
 and second argument `num2`:
 
 If `num1` or `num2` has type `long double`, then  <br/>

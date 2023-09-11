@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Fpclassify_Function_Declaration_Cpp11         from "./fpclassify/_codes/fpclassify_function_declaration/cpp11.mdx";
 import  Fpclassify_Function_Declaration_Cpp23         from "./fpclassify/_codes/fpclassify_function_declaration/cpp23.mdx";
@@ -20,8 +21,8 @@ Defined in header `<cmath>`.
 
 Categorizes floating point value `num` into the following categories: <br/>
 `zero`, `subnormal`, `normal`, `infinite`, `NAN`, or `implementation-defined category`. <br/>
-The library provides overloads of `std::fpclassify` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23). <br/>
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+The library provides overloads of `std::fpclassify` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>. <br/>
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
 
 
 ### Declarations
@@ -42,7 +43,7 @@ One of `FP_INFINITE`, `FP_NAN`, `FP_NORMAL`, `FP_SUBNORMAL`, `FP_ZERO` or `imple
 
 ### Notes
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. <br/>
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. <br/>
 They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
 `std::fpclassify(num)` has the same effect as `std::fpclassify(static_cast<double>(num))`.
 

@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Logb_Function_Declaration_Cpp11         from "./logb/_codes/logb_function_declaration/cpp11.mdx";
 import  Logb_Function_Declaration_Cpp23         from "./logb/_codes/logb_function_declaration/cpp23.mdx";
@@ -19,9 +20,9 @@ Defined in header `<cmath>`.
 ### Description
 Extracts the value of the unbiased radix-independent exponent from the floating-point argument `num`,  
 and returns it as a floating-point value. The library provides overloads of std::logb for all 
-cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
 
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
 
 Formally, the unbiased exponent is the signed integral part of log<sub>r</sub>|num| 
 (returned by this function as a floating-point value), for non-zero `num`, where `r` 
@@ -70,7 +71,7 @@ The value of the exponent returned by `std::logb` is always 1 less than the expo
 for the exponent `e` returned by `std::logb`, `|num*r-e|` is between 1 and `r` (typically between 1 and 2), 
 but for the exponent `e` returned by st`d::fre`xp, `|num*2-e|` is between 0.5 and 1.
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
 `std::logb(num)` has the same effect as `std::logb(static_cast<double>(num))`.
 

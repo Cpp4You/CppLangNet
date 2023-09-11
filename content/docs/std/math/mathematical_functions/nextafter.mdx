@@ -2,12 +2,13 @@
 title:                  Nextafter
 description:            Standard function
 tags:                   [math,nextafter]
-#slug:                  /std/math/mathematical_functions/  /
+#slug:                  /std/math/mathematical_functions/nextafter/
 hide_title:             true
 ---
 
 import SwitchView   from '@site-comps/SwitchView';
-import Columns      from "@site-comps/Columns";
+import Columns      from '@site-comps/Columns';
+import {Since}      from '@site-comps/Versions';
 
 import  Nextafter_Function_Declaration_Cpp11         from "./nextafter/_codes/nextafter_function_declaration/cpp11.mdx";
 import  Nextafter_Function_Declaration_Cpp23         from "./nextafter/_codes/nextafter_function_declaration/cpp23.mdx";
@@ -19,11 +20,11 @@ Defined in header `<cmath>`.
 ### Description
 
 If `from` equals `to`, `to` is returned. 
-The library provides overloads of `std::nextafter` for all cv-unqualified floating-point types as the type of the parameters `from` and `to` (since C++23).
+The library provides overloads of `std::nextafter` for all cv-unqualified floating-point types as the type of the parameters `from` and `to` <Since v='cpp23'></Since>.
 
 4-6) 
 If `from` equals `to`, `to` is returned, converted from `long double` to the return type of the function without loss of range or precision. 
-The library provides overloads of `std::nexttoward` for all cv-unqualified floating-point types as the type of the parameter `from` (since C++23).
+The library provides overloads of `std::nexttoward` for all cv-unqualified floating-point types as the type of the parameter `from` <Since v='cpp23'></Since>.
 
 A) Additional `std::nextafter` overloads are provided for all other combinations of arithmetic types.
 B) Additional `std::nexttoward` overloads are provided for all integer types, which are treated as `double`.
@@ -71,7 +72,7 @@ which makes the behavior around zero consistent: <br/>
 
 `std::nextafter` is typically implemented by manipulation of IEEE representation (glibc, musl).
 
-The additional `std::nextafter` overloads are not required to be provided exactly as `Additional Overloads`. 
+The additional `std::nextafter` overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 
 If `num1` or `num2` has type `long double`, then <br/>
@@ -95,9 +96,9 @@ conversion rank and greatest floating-point conversion subrank between the types
 arguments of integer type are considered to have the same floating-point conversion rank as `double`.
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a 
-usable candidate from the overloads provided. (since C++23)
+usable candidate from the overloads provided. <Since v='cpp23'></Since>
 
-The additional `std::nexttoward` overloads are not required to be provided exactly as `Additional Overloads`. 
+The additional `std::nexttoward` overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their argument `num` of integer type, 
 `std::nexttoward(num)` has the same effect as `std::nexttoward(static_cast<double>(num))`.
 

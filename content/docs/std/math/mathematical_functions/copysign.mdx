@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Copysign_Function_Declaration_Cpp11         from "./copysign/_codes/copysign_function_declaration/cpp11.mdx";
 import  Copysign_Function_Declaration_Cpp23         from "./copysign/_codes/copysign_function_declaration/cpp23.mdx";
@@ -19,8 +20,8 @@ Defined in header `<cmath>`.
 ### Description
 
 Composes a floating point value with the magnitude of `mag` and the sign of `sgn`. <br/>
-The library provides overloads of `std::copysign` for all cv-unqualified floating-point types as the type of the parameters `mag` and `sgn` (since C++23). <br/>
-`Additional overloads` are provided for all other combinations of arithmetic types.
+The library provides overloads of `std::copysign` for all cv-unqualified floating-point types as the type of the parameters `mag` and `sgn` <Since v='cpp23'></Since>. <br/>
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all other combinations of arithmetic types.
 
 
 ### Declarations
@@ -55,7 +56,7 @@ The returned value is exact (FE_INEXACT is never raised) and independent of the 
 
 `std::copysign` is the only portable way to manipulate the sign of a NaN value (to examine the sign of a NaN, `std::signbit` may also be used).
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 
 If `num1` or `num2` has type `long double`, then <br/>

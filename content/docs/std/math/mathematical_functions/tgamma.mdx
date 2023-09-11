@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Tgamma_Function_Declaration_Cpp11         from "./tgamma/_codes/tgamma_function_declaration/cpp11.mdx";
 import  Tgamma_Function_Declaration_Cpp23         from "./tgamma/_codes/tgamma_function_declaration/cpp23.mdx";
@@ -17,8 +18,8 @@ import  Tgamma_Function_Declaration_Cpp23         from "./tgamma/_codes/tgamma_f
 Defined in header `<cmath>`.
 
 ### Description
-Computes the gamma function of `num`. The library provides overloads of `std::tgamma` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+Computes the gamma function of `num`. The library provides overloads of `std::tgamma` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
 
 
 ### Declarations
@@ -72,7 +73,7 @@ domain errors may be replaced by pole errors for negative integer arguments (in 
 There is a non-standard function named `gamma` in various implementations, but its definition is inconsistent.
  For example, glibc and 4.2BSD version of gamma executes lgamma, but 4.4BSD version of gamma executes tgamma.
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>.
 They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
 `std::tgamma(num)` has the same effect as `std::tgamma(static_cast<double>(num))`.
 

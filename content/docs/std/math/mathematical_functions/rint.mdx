@@ -7,6 +7,7 @@ hide_title:             true
 ---
 
 import SwitchView   from '@site-comps/SwitchView';
+import {Since}      from '@site-comps/Versions';
 import Columns      from "@site-comps/Columns";
 
 import  Rint_Function_Declaration_Cpp11         from "./rint/_codes/rint_function_declaration/cpp11.mdx";
@@ -19,12 +20,12 @@ Defined in header `<cmath>`.
 ### Description
 
 Rounds the floating-point argument `num` to an integer value (in floating-point format), using the current rounding mode. 
-The library provides overloads of `std::rint` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+The library provides overloads of `std::rint` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
 
 `Rounding to long` and `Rounding to long long` Rounds the floating-point argument num to an integer value, using the current rounding mode. 
-The library provides overloads of `std::lrint` and `std::llrint` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23)
+The library provides overloads of `std::lrint` and `std::llrint` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>
 
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
 
 ### Declarations
 
@@ -82,7 +83,7 @@ FE_UPWARD, then `std::rint` is equivalent to `std::ceil`.
 FE_TOWARDZERO, then `std::rint` is equivalent to `std::trunc`
 FE_TONEAREST, then `std::rint` differs from `std::round` in that halfway cases are rounded to even rather than away from zero.
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. They only need to be sufficient to ensure that for their argument `num` of integer type:
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. They only need to be sufficient to ensure that for their argument `num` of integer type:
 
 `std::rint(num)` has the same effect as `std::rint(static_cast<double>(num))`.<br/>
 `std::lrint(num)` has the same effect as `std::lrint(static_cast<double>(num))`.<br/>

@@ -9,6 +9,7 @@ hide_title:             true
 import Image        from "@site-comps/Image";
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Round_Function_Declaration_Cpp11         from "./round/_codes/round_function_declaration/cpp11.mdx";
 import  Round_Function_Declaration_Cpp23         from "./round/_codes/round_function_declaration/cpp23.mdx";
@@ -19,13 +20,13 @@ Defined in header `<cmath>`.
 
 ### Description
 Computes the nearest integer value to `num` (in floating-point format), rounding halfway cases away from zero, regardless of the current rounding mode. 
-The library provides overloads of `std::round` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+The library provides overloads of `std::round` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
 
 `Rounding to long` and `Rounding to long long` Computes the nearest integer value to `num` (in integer format), 
 rounding halfway cases away from zero, regardless of the current rounding mode. 
 The library provides overloads of `std::lround` and `std::llround` for all cv-unqualified floating-point types as the type of the parameter `num`(since C++23). 
 
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
 
 
 ### Declarations
@@ -107,7 +108,7 @@ double round(double x)
 }
 ```
 
-The additional overloads are not required to be provided exactly as `additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their argument `num` of integer type:
 
 `std::round(num)` has the same effect as `std::round(static_cast<double>(num))` <br/>

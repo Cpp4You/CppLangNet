@@ -7,6 +7,7 @@ hide_title:             true
 ---
 
 import SwitchView   from '@site-comps/SwitchView';
+import {Since}      from '@site-comps/Versions';
 import Columns      from "@site-comps/Columns";
 
 import  Nearbyint_Function_Declaration_Cpp11         from "./nearbyint/_codes/nearbyint_function_declaration/cpp11.mdx";
@@ -19,8 +20,8 @@ Defined in header `<cmath>`.
 ### Description
 
 Rounds the floating-point argument `num` to an integer value in floating-point format, using the current rounding mode. 
-The library provides overloads of `std::nearbyint` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+The library provides overloads of `std::nearbyint` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
 
 ### Declarations
 
@@ -58,7 +59,7 @@ never overflows on its own; however the result may overflow any integer type (in
 
 If the current rounding mode is FE_TONEAREST, this function rounds to even in halfway cases (like `std::rint`, but unlike `std::round`).
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 
 They only need to be sufficient to ensure that for their argument `num` of integer type, 
 `std::nearbyint(num)` has the same effect as `std::nearbyint(static_cast<double>(num))`.

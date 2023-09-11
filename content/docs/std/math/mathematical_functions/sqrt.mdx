@@ -7,7 +7,8 @@ hide_title:             true
 ---
 
 import SwitchView   from '@site-comps/SwitchView';
-import Columns      from "@site-comps/Columns";
+import Columns      from '@site-comps/Columns';
+import {Since}      from '@site-comps/Versions';
 
 import  Sqrt_Function_Declaration_Cpp11         from "./sqrt/_codes/sqrt_function_declaration/cpp11.mdx";
 import  Sqrt_Function_Declaration_Cpp23         from "./sqrt/_codes/sqrt_function_declaration/cpp23.mdx";
@@ -18,8 +19,8 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the square root of `num`. The library provides overloads of `std::sqrt` for all cv-unqualified floating-point types as the type of the parameter `num`. (since C++23)
-`Additional overloads` are provided for all integer types, which are treated as `double`. (since C++11)
+Computes the square root of `num`. The library provides overloads of `std::sqrt` for all cv-unqualified floating-point types as the type of the parameter `num`. <Since v='cpp23'></Since>
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`. <Since v='cpp11'></Since>
 
 
 ### Declarations
@@ -61,7 +62,7 @@ If the argument is NaN, NaN is returned
  The only other operations which require this are the arithmetic operators and the function [std::fma](/docs/std/math/mathematical_functions/fma/). Other functions, 
  including [std::pow](/docs/std/math/mathematical_functions/pow/), are not so constrained.
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. They only need to be sufficient to ensure that 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. They only need to be sufficient to ensure that 
 for their argument `num` of integer type, <br/>
 `std::sqrt(num)` has the same effect as `std::sqrt(static_cast<double>(num))`.
 

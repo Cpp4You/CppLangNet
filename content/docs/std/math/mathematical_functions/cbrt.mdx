@@ -19,7 +19,7 @@ Defined in header `<cmath>`.
 ### Description
 
 Computes the cube root of `num`. The library provides overloads of `std::cbrt` for all cv-unqualified floating-point types as the type of the parameter `num`.
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
 
 ### Declarations
 
@@ -52,7 +52,7 @@ if the argument is NaN, NaN is returned
 `std::cbrt(num)` is not equivalent to `std::pow(num, 1.0 / 3)` because the rational number `⅓`
  is typically not equal to `1.0 / 3` and [std::pow](/docs/std/math/mathematical_functions/pow/) cannot raise a negative base to a fractional exponent. Moreover,
   `std::cbrt(num)` usually gives more accurate results than `std::pow(num, 1.0 / 3)` [(see example)](#examples). <br/>
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their argument `num` of integer type, 
 `std::cbrt(num)` has the same effect as `std::cbrt(static_cast<double>(num))`.
 

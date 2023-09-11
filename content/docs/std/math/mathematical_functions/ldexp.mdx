@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Ldexp_Function_Declaration_Cpp11         from "./ldexp/_codes/ldexp_function_declaration/cpp11.mdx";
 import  Ldexp_Function_Declaration_Cpp23         from "./ldexp/_codes/ldexp_function_declaration/cpp23.mdx";
@@ -18,10 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 Multiplies a floating point value `num` by the number `2` raised to the `exp` power. The library provides overloads of `std::ldexp` 
-for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
 
-`Additional overloads` are provided for all integer types, which are treated as `double`
-(since C++11).
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`
+<Since v='cpp11'></Since>.
 
 
 
@@ -69,7 +70,7 @@ can be used to manipulate the representation of a floating-point number without 
 
 On many implementations, `std::ldexp` is less efficient than multiplication or division by a power of two using arithmetic operators.
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their argument `num` of integer type, 
 
 `std::ldexp(num, exp)` has the same effect as `std::ldexp(static_cast<double>(num), exp)`.

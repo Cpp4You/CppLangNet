@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Isunordered_Function_Declaration_Cpp11         from "./isunordered/_codes/isunordered_function_declaration/cpp11.mdx";
 import  Isunordered_Function_Declaration_Cpp23         from "./isunordered/_codes/isunordered_function_declaration/cpp23.mdx";
@@ -19,8 +20,8 @@ Defined in header `<cmath>`.
 ### Description
 
 Determines if the floating point numbers `x` and `y` are unordered, that is, one or both are `NaN` and thus cannot be meaningfully compared with each other. 
-The library provides overloads for all cv-unqualified floating-point types as the type of the parameters `x` and `y` (since C++23). <br/>
-`Additional overloads` are provided for all other combinations of arithmetic types.
+The library provides overloads for all cv-unqualified floating-point types as the type of the parameters `x` and `y` <Since v='cpp23'></Since>. <br/>
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all other combinations of arithmetic types.
 
 
 ### Declarations
@@ -44,7 +45,7 @@ The library provides overloads for all cv-unqualified floating-point types as th
 The built-in operator `>`and operator `<` for floating-point numbers may raise `FE_INVALID` if one or both of the arguments is `NaN`. 
 This function is a "quiet" version of the expression `x < y || x > y`.
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 
 If `num1` or `num2` has type `long double`, then <br/>

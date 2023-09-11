@@ -9,6 +9,7 @@ hide_title:             true
 import Image        from "@site-comps/Image";
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Ceil_Function_Declaration_Cpp11         from "./ceil/_codes/ceil_function_declaration/cpp11.mdx";
 import  Ceil_Function_Declaration_Cpp23         from "./ceil/_codes/ceil_function_declaration/cpp23.mdx";
@@ -20,9 +21,9 @@ Defined in header `<cmath>`.
 ### Description
 
 Computes the smallest integer value not less than `num`. 
-The library provides overloads of `std::ceil` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+The library provides overloads of `std::ceil` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
 Additional overloads are provided for all integer types, which are treated as `double`
-(since C++11).
+<Since v='cpp11'></Since>.
 
 
 
@@ -80,7 +81,7 @@ double ceil(double x)
     return result;
 }
 ```
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
 `std::ceil(num)` has the same effect as `std::ceil(static_cast<double>(num))`.
 

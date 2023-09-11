@@ -8,6 +8,7 @@ hide_title:             true
 
 import Image        from "@site-comps/Image"
 import SwitchView   from '@site-comps/SwitchView';
+import {Since}      from '@site-comps/Versions';
 import Columns      from "@site-comps/Columns";
 
 import  Atan2_Function_Declaration_Cpp11         from "./atan2/_codes/atan2_function_declaration/cpp11.mdx";
@@ -19,8 +20,8 @@ Defined in header `<cmath>`.
 
 ### Description
 Computes the arc tangent of `y / x` using the signs of arguments to determine the correct quadrant.  
-The library provides overloads of `std::atan2` for all cv-unqualified floating-point types as the type of the parameters `y` and `x` (since C++23).
-`Additional overloads` are provided for all other combinations of arithmetic types (since C++11).
+The library provides overloads of `std::atan2` for all cv-unqualified floating-point types as the type of the parameters `y` and `x` <Since v='cpp23'></Since>.
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all other combinations of arithmetic types <Since v='cpp11'></Since>.
 
 
 ### Declarations
@@ -84,7 +85,7 @@ std::arg(std::complex<std::common_type_t<decltype(x), decltype(y)>>(x, y))
 specifies that in case of underflow, `y / x` is the value returned, and if that is not supported, an implementation-defined value no 
 greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 
 If `num1` or `num2` has type `long double`, then  <br/>

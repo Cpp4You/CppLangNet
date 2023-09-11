@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Hypot_Function_Declaration_Cpp11         from "./hypot/_codes/hypot_function_declaration/cpp11.mdx";
 import  Hypot_Function_Declaration_Cpp17         from "./hypot/_codes/hypot_function_declaration/cpp17.mdx";
@@ -79,8 +80,8 @@ Implementations usually guarantee precision of less than 1 ulp (Unit in the Last
 POSIX specifies that underflow may only occur when both arguments are subnormal and the correct result is also subnormal (this forbids naive implementations).
 
 Distance between two points `(x1,y1,z1)` and `(x2,y2,z2)` on 3D space can be calculated using 3-argument overload of `std::hypot` 
-as `std::hypot(x2 - x1, y2 - y1, z2 - z1)`. (since C++17)
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+as `std::hypot(x2 - x1, y2 - y1, z2 - z1)`. <Since v='cpp17'></Since>
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their first argument `num1`, second argument `num2` and the optional third argument `num3`:
 
 If `num1`, `num2` or `num3` has type `long double`, then <br/>

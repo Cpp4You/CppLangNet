@@ -9,6 +9,7 @@ hide_title:             true
 import Image        from "@site-comps/Image";
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Trunc_Function_Declaration_Cpp11         from "./trunc/_codes/trunc_function_declaration/cpp11.mdx";
 import  Trunc_Function_Declaration_Cpp23         from "./trunc/_codes/trunc_function_declaration/cpp23.mdx";
@@ -20,9 +21,9 @@ Defined in header `<cmath>`.
 ### Description
 
 Computes the nearest integer not greater in magnitude than `num`. The library provides overloads of `std::trunc` 
-for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
 
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
 
 ### Declarations
 
@@ -65,7 +66,7 @@ so this function never overflows on its own; however the result may overflow any
 The implicit conversion from floating-point to integral types also rounds towards zero, 
 but is limited to the values that can be represented by the target type.
 
-The additional overloads are not required to be provided exactly as `additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
 They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
 `std::trunc(num)` has the same effect as `std::trunc(static_cast<double>(num))`.
 
