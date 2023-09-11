@@ -13,8 +13,7 @@ Defined in header `<variant>`.
 
 ### Declarations
 
-`Since C++17`
-```cpp
+```cpp title="Since C++17"
 // 1)
 template< class... Types >
 constexpr bool operator==( const std::variant<Types...>& v,
@@ -40,8 +39,7 @@ template< class... Types >
 constexpr bool operator>=( const std::variant<Types...>& v,
                            const std::variant<Types...>& w );
 ```
-`Since C++20`
-```cpp
+```cpp title="Since C++20"
 // 7)
 template< class... Types >
 constexpr std::common_comparison_category_t<

@@ -1,6 +1,4 @@
-Defined in `<cstdlib>`:
-
-```cpp
+```cpp title="Defined in <cstdlib>"
 // 1)
 int abs (int n);
 // 2)
@@ -16,9 +14,7 @@ constexpr /* floating-point-type */
             abs( /* floating-point-type */ n );
 ```
 
-Defined in `<cmath>`:
-
-```cpp
+```cpp title="Defined in <cmath>"
 // 7)
 constexpr /* floating-point-type */
             fabs ( /* floating-point-type */ n );
@@ -28,18 +24,15 @@ constexpr float fabsf( float n );
 constexpr long double fabsl( long double n );
 ```
 
-Defined in `<cinttypes>`:
-
-```cpp
+```cpp title="Defined in <cinttypes>"
 // 10)
 std::intmax_t abs( std::intmax_t n );
 // 11) 
 std::intmax_t imaxabs( std::intmax_t n );
 ```
 
-`Additional Overloads`
-
-```cpp
+`Additional Overloads
+`cpp title="AdditionalDefined in<,`>
 // 16)
 template< class Integer >
 constexpr double fabs ( Integer n );

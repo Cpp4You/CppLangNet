@@ -50,8 +50,7 @@ A partial specialization for array types that uses `delete[]` is also provided.
 ---
 
 std::default_delete::**default_delete** <br/>
-`Since C++11`
-```cpp
+```cpp title="Since C++11"
 // 1)
 constexpr default_delete() noexcept = default;
 
@@ -92,8 +91,7 @@ the implicit conversion from [std::unique_ptr](../unique_ptr)&lt;Derived> to [st
 ---
 
 std::default_delete::**operator()** <br/>
-`Since C++11`
-```cpp
+```cpp title="Since C++11"
 // 1)
 void operator()(T* ptr) const;                  // (since C++11, until C++23)
 
