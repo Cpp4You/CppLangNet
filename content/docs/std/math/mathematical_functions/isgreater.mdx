@@ -61,10 +61,9 @@ Otherwise, if `num1` or `num2` has type `float`, then  <br/>
 (until C++23)
 
 If `num1` and `num2` have arithmetic types, then  <br/>
-`std::isgreater(num1, num2)` has the same effect as  <br/>
-`std::isgreater(static_cast</* common-floating-point-type */>(num1), static_cast</* common-floating-point-type */>(num2))`, 
+`std::isgreater(num1, num2)` has the same effect as  <br/> <code> std::isgreater(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2))</code> ,
                
-where `/* common-floating-point-type */` is the floating-point type with the greatest floating-point conversion rank and greatest floating-point 
+where <span class='col-d'>/\* common-floating-point-type \*/</span> is the floating-point type with the greatest floating-point conversion rank and greatest floating-point 
 conversion subrank between the types of `num1` and `num2`, arguments of integer type are considered to have the same floating-point conversion rank as `double`.
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
