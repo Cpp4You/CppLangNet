@@ -19,11 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the principal value of the arc sine of `num`. 
-The library provides overloads of `std::asin` for all cv-unqualified floating-point types as the type of the parameter `num`. <Since v='cpp23'></Since>
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
-(since C++11)
-
+Computes the principal value of the arc sine of <code>num</code>. 
+<Since v='cpp23'>The library provides overloads of `std::asin` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>. </Since> <br/>
+<Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>. </Since>
 
 ### Declarations
 
@@ -32,24 +30,23 @@ The library provides overloads of `std::asin` for all cv-unqualified floating-po
     "cpp11" : <Asin_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the arc sine of `num` (arcsin(num)) in the range `[-π/2, π/2]` is returned.
+If no errors occur, the arc sine of <code>num</code> (arcsin(num)) in the range `[-π/2, π/2]` is returned.
 If a domain error occurs, an implementation-defined value is returned (NaN where supported).
 
 If a range error occurs due to underflow, the correct result (after rounding) is returned.
 
 ### Error handling
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 Domain error occurs if num is outside the range `[-1.0, 1.0]`.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic ([IEC 60559](https://www.iso.org/standard/80985.html)):
 
 If the argument is `±0`, it is returned unmodified
 If `|num| > 1`, a domain error occurs and NaN is returned
@@ -57,14 +54,11 @@ if the argument is NaN, NaN is returned
 
 ### Notes
 
-The additional overloads are not required to be provided exactly as in <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, 
+The additional overloads are not required to be provided exactly as in <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
 `std::asin(num)` has the same effect as `std::asin(static_cast<double>(num))`.
 
-
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -117,9 +111,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 asin(1.0) = 1.5708

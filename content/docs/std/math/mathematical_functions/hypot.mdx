@@ -6,9 +6,9 @@ tags:                   [math, hypot]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
-import Columns      from "@site-comps/Columns";
-import {Since}      from '@site-comps/Versions';
+import SwitchView           from '@site-comps/SwitchView';
+import Columns              from "@site-comps/Columns";
+import {Since, Version}     from '@site-comps/Versions';
 
 import  Hypot_Function_Declaration_Cpp11         from "./hypot/_codes/hypot_function_declaration/cpp11.mdx";
 import  Hypot_Function_Declaration_Cpp17         from "./hypot/_codes/hypot_function_declaration/cpp17.mdx";
@@ -19,12 +19,13 @@ import  Hypot_Function_Declaration_Cpp23         from "./hypot/_codes/hypot_func
 Defined in header `<cmath>`.
 
 ### Description
-#### `Declarations 1-3`
+
+##### Declarations 1-3 &emsp;<Version v='cpp23'></Version>
 Computes the square root of the sum of the squares of `x` and `y`, 
 without undue overflow or underflow at intermediate stages of the computation. 
 The library provides overloads of `std::hypot` for all cv-unqualified floating-point types as the type of the parameters `x` and `y`.
 
-#### `Declaration 4` 
+##### Declaration 4 &emsp;<Version v='cpp23'></Version>
 Computes the square root of the sum of the squares of `x`, `y`, and `z`, 
 without undue overflow or underflow at intermediate stages of the computation. 
 The library provides overloads of `std::hypot` for all cv-unqualified floating-point types as the type of the parameters `x`, `y` and `z`.
@@ -32,10 +33,8 @@ The library provides overloads of `std::hypot` for all cv-unqualified floating-p
 The value computed by the two-argument version of this function is the length of the hypotenuse of a 
 right-angled triangle with sides of length `x` and `y`, or the distance of the point `(x,y)` from the origin `(0,0)`, or the magnitude of a complex number `x+iy`.
 
-
 The value computed by the three-argument version of this function is length of the body diagonal of a rectangular parallelepiped with sides of
 length `x`, `y` and `z` or the distance of the point `(x,y,z)` from the origin `(0,0,0)`.
-
 
 ### Declarations
 
@@ -44,7 +43,6 @@ length `x`, `y` and `z` or the distance of the point `(x,y,z)` from the origin `
     "cpp17" : <Hypot_Function_Declaration_Cpp17 />,
     "cpp11" : <Hypot_Function_Declaration_Cpp11 />,
 }}/>
-
 
 ### Parameters
  
@@ -60,13 +58,13 @@ If a range error due to underflow occurs, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559),
 
-`std::hypot(x, y)`, `std::hypot(y, x)`, and `std::hypot(x, -y)` are equivalent <br/>
-if one of the arguments is `±0`, `std::hypot(x, y)` is equivalent to [std::fabs](/docs/std/math/mathematical_functions/abs/#declarations) called with the non-zero argument<br/>
-if one of the arguments is `±∞`, `std::hypot(x, y)` returns `+∞` even if the other argument is NaN<br/>
+&#8203;<code>std::hypot(<span class='col-lb'>x, y</span>)</code>, <code>std::hypot(<span class='col-lb'>y, x</span>)</code>, and <code>std::hypot(<span class='col-lb'>x, -y</span>)</code> are equivalent <br/>
+if one of the arguments is `±0`, <code>std::hypot(<span class='col-lb'>x, y</span>)</code> is equivalent to [std::fabs](/docs/std/math/mathematical_functions/abs/#declarations) called with the non-zero argument<br/>
+if one of the arguments is `±∞`, <code>std::hypot(<span class='col-lb'>x, y</span>)</code> returns `+∞` even if the other argument is NaN<br/>
 otherwise, if any of the arguments is NaN, NaN is returned<br/>
 
 ### Notes
@@ -75,13 +73,15 @@ Implementations usually guarantee precision of less than 1 ulp (Unit in the Last
 [GNU](https://sourceware.org/git/?p=glibc.git;a=blob_plain;f=sysdeps/ieee754/dbl-64/e_hypot.c), 
 [BSD](https://svnweb.freebsd.org/base/head/lib/msun/src/e_hypot.c).
 
-`std::hypot(x, y)` is equivalent to `std::abs(std::complex<double>(x, y))`.
+&#8203;<code>std::hypot(<span class='col-lb'>x, y</span>)</code> is equivalent to <code><a href='/docs/std/math/mathematical_functions/abs'>std::abs</a>(<a href='/docs/std/numeric/complex'>std::complex</a>&lt;<span class='col-lb'>double</span>&gt;(<span class='col-lb'>x, y</span>))</code>.
 
 POSIX specifies that underflow may only occur when both arguments are subnormal and the correct result is also subnormal (this forbids naive implementations).
 
-Distance between two points `(x1,y1,z1)` and `(x2,y2,z2)` on 3D space can be calculated using 3-argument overload of `std::hypot` 
-as `std::hypot(x2 - x1, y2 - y1, z2 - z1)`. <Since v='cpp17'></Since>
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
+<Since v='cpp17'>Distance between two points <code>(<span class='col-lb'>x1,y1,z1</span>)</code> and <code>(<span class='col-lb'>x2,y2,z2</span>)</code> on 3D space can be calculated 
+using <a href='#declarations'>3-argument overload of std::hypot</a>:<br/>
+&#8203;<code>std::hypot(<span class='col-lb'>x2</span> - <span class='col-lb'>x1</span>, <span class='col-lb'>y2</span> - <span class='col-lb'>y1</span>, <span class='col-lb'>z2</span> - <span class='col-lb'>z1</span>)</code>. </Since>
+
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their first argument `num1`, second argument `num2` and the optional third argument `num3`:
 
 If `num1`, `num2` or `num3` has type `long double`, then <br/>
@@ -92,7 +92,7 @@ and
 `std::hypot(num1, num2, num3)` has the same effect as  <br/>
 `std::hypot(static_cast<long double>(num1), static_cast<long double>(num2), static_cast<long double>(num3))`.
 
-Otherwise, if `num1`, `num2` and/or `num3` has type `double` or an integer type, then <br/>
+Otherwise, if `num1`, `num2` and/or `num3` has type <span class='col-lb'>double</span> or an integer type, then <br/>
 `std::hypot(num1, num2)` has the same effect as  <br/>
 `std::hypot(static_cast<double>(num1), static_cast<double>(num2))`.
 
@@ -117,7 +117,7 @@ and
 `std::hypot(num1, num2, num3)` has the same effect as  <br/> <code> std::hypot(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num3)) </code>
 
 where <span class='col-d'>/\* common-floating-point-type \*/</span> is the floating-point type with the greatest floating-point conversion rank and greatest floating-point 
-conversion subrank among the types of `num1`, `num2` and `num3`, arguments of integer type are considered to have the same floating-point conversion rank as `double`.
+conversion subrank among the types of `num1`, `num2` and `num3`, arguments of integer type are considered to have the same floating-point conversion rank as <span class='col-lb'>double</span>.
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
 

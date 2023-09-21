@@ -18,9 +18,9 @@ import  Asinh_Function_Declaration_Cpp23         from "./asinh/_codes/asinh_func
 Defined in header `<cmath>`.
 
 ### Description
-Computes the inverse hyperbolic sine of `num`. The library provides overloads of `std::asinh` for all cv-unqualified 
-floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+Computes the inverse hyperbolic sine of <code>num</code>. 
+<Since v='cpp23'> The library provides overloads of std::asinh for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 
 ### Declarations
@@ -33,17 +33,17 @@ floating-point types as the type of the parameter `num` <Since v='cpp23'></Since
 
 ### Parameters
 
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the inverse hyperbolic sine of `num` (sinh<sup>-1</sup>(num), or arsinh(num)) is returned.
+If no errors occur, the inverse hyperbolic sine of <code>num</code> (sinh<sup>-1</sup>(num), or arsinh(num)) is returned.
 
 If a range error occurs due to underflow, the correct result (after rounding) is returned.
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559):
 
@@ -57,7 +57,7 @@ Although the C standard (to which C++ refers for this function) names this funct
 *"arc hyperbolic sine"*, the inverse functions of the hyperbolic functions are the area functions. 
 Their argument is the area of a hyperbolic sector, not an arc. The correct name is *"inverse hyperbolic sine"* (used by POSIX) or *"area hyperbolic sine"*.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, 
 `std::asinh(num)` has the same effect as `std::asinh(static_cast<double>(num))`.
 

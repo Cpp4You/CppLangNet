@@ -19,9 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Rounds the floating-point argument `num` to an integer value in floating-point format, using the current rounding mode. 
-The library provides overloads of `std::nearbyint` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+Rounds the floating-point argument <code>num</code> to an integer value in floating-point format, using the current rounding mode. 
+The library provides overloads of `std::nearbyint` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -33,11 +33,11 @@ The library provides overloads of `std::nearbyint` for all cv-unqualified floati
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-The nearest integer value to `num`, according to the current rounding mode, is returned.
+The nearest integer value to <code>num</code>, according to the current rounding mode, is returned.
 
 ### Error handling
 
@@ -46,9 +46,9 @@ This function is not subject to any of the errors specified in math_errhandling.
 If the implementation supports IEEE floating-point arithmetic (IEC 60559):
 
 FE_INEXACT is never raised <br/>
-If `num` is `±∞`, it is returned, unmodified<br/>
-If `num` is `±0`, it is returned, unmodified<br/>
-If `num` is NaN, NaN is returned<br/>
+If <code>num</code> is `±∞`, it is returned, unmodified<br/>
+If <code>num</code> is `±0`, it is returned, unmodified<br/>
+If <code>num</code> is NaN, NaN is returned<br/>
 
 ### Notes
 
@@ -59,9 +59,9 @@ never overflows on its own; however the result may overflow any integer type (in
 
 If the current rounding mode is FE_TONEAREST, this function rounds to even in halfway cases (like <a href='/docs/std/math/mathematical_functions/rint'><code>std::rint</code></a>, but unlike <a href='/docs/std/math/mathematical_functions/round'><code>std::round</code></a>).
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 
-They only need to be sufficient to ensure that for their argument `num` of integer type, 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
 `std::nearbyint(num)` has the same effect as `std::nearbyint(static_cast<double>(num))`.
 
 ### Examples

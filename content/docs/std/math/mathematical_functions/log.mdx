@@ -17,7 +17,7 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the natural (base `e`) logarithm of `num`. The library provides overloads of `std::log` for all cv-unqualified floating-point types as the type of the parameter `num`.
+Computes the natural (base `e`) logarithm of <code>num</code>. The library provides overloads of `std::log` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>.
 
 
 ### Declarations
@@ -30,11 +30,11 @@ Computes the natural (base `e`) logarithm of `num`. The library provides overloa
 
 ### Parameters
  
- `num` - floating-point or integer value
+ <code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the natural (base `e`) logarithm of `num` (ln(num) or log<sub>e</sub>(num)) is returned.
+If no errors occur, the natural (base `e`) logarithm of <code>num</code> (ln(num) or log<sub>e</sub>(num)) is returned.
 
 If a domain error occurs, an implementation-defined value is returned (NaN where supported)
 
@@ -42,11 +42,11 @@ If a pole error occurs, `-HUGE_VAL`, `-HUGE_VALF`, or `-HUGE_VALL` is returned.
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-Domain error occurs if `num` is less than zero.
+Domain error occurs if <code>num</code> is less than zero.
 
-Pole error may occur if `num` is zero.
+Pole error may occur if <code>num</code> is zero.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559),
 
@@ -58,8 +58,8 @@ If the argument is NaN, NaN is returned
 
 ### Notes
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type,  <br/>
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type,  <br/>
 `std::log(num)` has the same effect as `std::log(static_cast<double>(num))`
 
 

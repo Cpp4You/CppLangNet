@@ -19,13 +19,13 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Rounds the floating-point argument `num` to an integer value (in floating-point format), using the current rounding mode. 
-The library provides overloads of `std::rint` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
+Rounds the floating-point argument <code>num</code> to an integer value (in floating-point format), using the current rounding mode. 
+The library provides overloads of `std::rint` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
 
 `Rounding to long` and `Rounding to long long` Rounds the floating-point argument num to an integer value, using the current rounding mode. 
-The library provides overloads of `std::lrint` and `std::llrint` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>
+The library provides overloads of `std::lrint` and `std::llrint` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>
 
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -37,15 +37,15 @@ The library provides overloads of `std::lrint` and `std::llrint` for all cv-unqu
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the nearest integer value to `num`, according to the current rounding mode, is returned
+If no errors occur, the nearest integer value to <code>num</code>, according to the current rounding mode, is returned
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the result of `std::lrint` or `std::llrint` is outside the range representable by the return type, a domain error or a range error may occur.
 
@@ -54,23 +54,23 @@ If the implementation supports IEEE floating-point arithmetic (IEC 60559):
 For the `std::rint` function:<br/>
 
 
-If `num` is `±∞`, it is returned, unmodified<br/>
-If `num` is `±0`, it is returned, unmodified<br/>
-If `num` is NaN, NaN is returned<br/>
+If <code>num</code> is `±∞`, it is returned, unmodified<br/>
+If <code>num</code> is `±0`, it is returned, unmodified<br/>
+If <code>num</code> is NaN, NaN is returned<br/>
 
 For `std::lrint` and `std::llrint` functions:<br/>
 
 
-If `num` is `±∞`, FE_INVALID is raised and an implementation-defined value is returned<br/>
+If <code>num</code> is `±∞`, FE_INVALID is raised and an implementation-defined value is returned<br/>
 If the result of the rounding is outside the range of the return type, FE_INVALID is raised and an implementation-defined value is returned<br/>
-If `num` is NaN, FE_INVALID is raised and an implementation-defined value is returned<br/>
+If <code>num</code> is NaN, FE_INVALID is raised and an implementation-defined value is returned<br/>
 
 ### Notes
 
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lrint.html) 
 specifies that all cases where `std::lrint` or `std::llrint` raise FE_INEXACT are domain errors.
 
-As specified in math_errhandling, FE_INEXACT may be (but isn't required to be on non-IEEE floating-point platforms) raised by `std::rint` when rounding a non-integer finite value.
+as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>, FE_INEXACT may be (but isn't required to be on non-IEEE floating-point platforms) raised by `std::rint` when rounding a non-integer finite value.
 
 The only difference between `std::rint` and <a href='/docs/std/math/mathematical_functions/nearbyint'><code>std::nearbyint</code></a> is that <a href='/docs/std/math/mathematical_functions/nearbyint'><code>std::nearbyint</code></a> **never** raises FE_INEXACT.
 
@@ -83,7 +83,7 @@ FE_UPWARD, then `std::rint` is equivalent to <a href='/docs/std/math/mathematica
 FE_TOWARDZERO, then `std::rint` is equivalent to <a href='/docs/std/math/mathematical_functions/trunc'><code>std::trunc</code></a>
 FE_TONEAREST, then `std::rint` differs from <a href='/docs/std/math/mathematical_functions/round'><code>std::round</code></a> in that halfway cases are rounded to even rather than away from zero.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. They only need to be sufficient to ensure that for their argument `num` of integer type:
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. They only need to be sufficient to ensure that for their argument <code>num</code> of integer type:
 
 `std::rint(num)` has the same effect as `std::rint(static_cast<double>(num))`.<br/>
 `std::lrint(num)` has the same effect as `std::lrint(static_cast<double>(num))`.<br/>

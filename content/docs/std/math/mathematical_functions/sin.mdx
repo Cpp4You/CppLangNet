@@ -18,9 +18,9 @@ import  Sin_Function_Declaration_Cpp23         from "./sin/_codes/sin_function_d
 Defined in header `<cmath>`.
 
 ### Description
-Computes the sine of `num` (measured in radians). The library provides overloads of `std::sin` for all cv-unqualified floating-point 
-types as the type of the parameter `num`. <Since v='cpp23'></Since>
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+Computes the sine of <code>num</code> (measured in radians). The library provides overloads of `std::sin` for all cv-unqualified floating-point 
+types as the type of the parameter <code>num</code>. <Since v='cpp23'></Since>
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 (since C++11)
 
 
@@ -34,20 +34,20 @@ types as the type of the parameter `num`. <Since v='cpp23'></Since>
 
 ### Parameters
  
-`num` - floating-point or integer value representing angle in radians
+<code>num</code> - floating-point or integer value representing angle in radians
 
 ### Return value
-If no errors occur, the sine of `num` (sin(num)) in the range [-1, +1], is returned.
+If no errors occur, the sine of <code>num</code> (sin(num)) in the range [-1, +1], is returned.
 
 
-The result may have little or no significance if the magnitude of `num` is large.(until C++11)
+The result may have little or no significance if the magnitude of <code>num</code> is large.(until C++11)
 
 If a domain error occurs, an implementation-defined value is returned (NaN where supported).
 
 If a range error occurs due to underflow, the correct result (after rounding) is returned.
 
 ### Error handling
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559):
 
@@ -59,11 +59,11 @@ if the argument is NaN, NaN is returned
 The case where the argument is infinite is not specified to be a domain error in C (to which C++ defers), but it is defined as a domain error in 
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/sin.html)
 
-POSIX also specifies that in case of underflow, `num` is returned unmodified, and if that is not supported, an implementation-defined 
+POSIX also specifies that in case of underflow, <code>num</code> is returned unmodified, and if that is not supported, an implementation-defined 
 value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
 `std::sin(num)` has the same effect as `std::sin(static_cast<double>(num))`.
 
 

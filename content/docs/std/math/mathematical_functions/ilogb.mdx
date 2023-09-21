@@ -19,17 +19,18 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Extracts the value of the unbiased exponent from the floating-point argument `num`, and returns it as a signed integer value. 
-The library provides overloads of `std::ilogb` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
+Extracts the value of the unbiased exponent from the floating-point argument <code>num</code>, and returns it as a signed integer value. 
+<Since v='cpp23'>The library provides overloads of `std::ilogb` for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>.
 
-`Definitions` <br/>
+#### Definitions
+
 4) Expands to integer constant expression whose value is either `INT_MIN` or `-INT_MAX`. <br/>
 5) Expands to integer constant expression whose value is either `INT_MIN` or `+INT_MAX`. <br/>
 
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
-Formally, the unbiased exponent is the integral part of log<sub>r</sub>|num| as a signed integral value, for non-zero `num`, where `r` is 
-`std::numeric_limits<T>::radix` and `T` is the floating-point type of `num`.
+Formally, the unbiased exponent is the integral part of log<sub>r</sub>|num| as a signed integral value, for non-zero <code>num</code>, where `r` is 
+&#8203;<code><a href='/docs/std/types/numeric_limits'>std::numeric_limits</a>&lt;T&gt;::<a href='/docs/std/types/numeric_limits/radix'>radix</a></code> and `T` is the floating-point type of <code>num</code>.
 
 ### Declarations
 
@@ -38,29 +39,27 @@ Formally, the unbiased exponent is the integral part of log<sub>r</sub>|num| as 
     "cpp11" : <Ilogb_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the unbiased exponent of `num` is returned as a signed `int` value.
+If no errors occur, the unbiased exponent of <code>num</code> is returned as a signed `int` value.
 
-If `num` is zero, FP_ILOGB0 is returned.
+If <code>num</code> is zero, FP_ILOGB0 is returned.
 
-If `num` is infinite, INT_MAX is returned.
+If <code>num</code> is infinite, INT_MAX is returned.
 
-If `num` is a NaN, FP_ILOGBNAN is returned.
+If <code>num</code> is a NaN, FP_ILOGBNAN is returned.
 
 If the correct result is greater than INT_MAX or smaller than INT_MIN, the return value is unspecified.
 
-
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-A domain error or range error may occur if `num` is zero, infinite, or NaN. <br/>
+A domain error or range error may occur if <code>num</code> is zero, infinite, or NaN. <br/>
 If the correct result is greater than INT_MAX or smaller than INT_MIN, a domain error or a range error may occur.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559):
@@ -69,13 +68,12 @@ If the correct result is greater than INT_MAX or smaller than INT_MIN, FE_INVALI
 If num is `±0`, `±∞`, or NaN, FE_INVALID is raised. <br/>
 In all other cases, the result is exact (FE_INEXACT is never raised) and the current rounding mode is ignored. <br/>
 
-
 ### Notes
 
-If `num` is not zero, infinite, or NaN, the value returned is exactly equivalent to `static_cast<int>(std::logb(num))`
+If <code>num</code> is not zero, infinite, or NaN, the value returned is exactly equivalent to `static_cast<int>(std::logb(num))`
 
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/ilogb.html) 
-requires that a domain error occurs if `num` is zero, infinite, NaN, or if the correct result is outside of the range of `int`.
+requires that a domain error occurs if <code>num</code> is zero, infinite, NaN, or if the correct result is outside of the range of `int`.
 
 POSIX also requires that, on XSI-conformant systems, the value returned when the correct result is greater than `INT_MAX` is `INT_MAX`
  and the value returned when the correct result is less than `INT_MIN` is `INT_MIN`.
@@ -89,14 +87,12 @@ The value of the exponent returned by `std::ilogb` is always 1 less than the exp
 for the exponent `e` returned by `std::ilogb`, `|num*r-e|` is between 1 and `r` (typically between 1 and 2), <br/>
 but for the exponent `e` returned by <a href='/docs/std/math/mathematical_functions/frexp'><code>std::frexp</code></a>, `|num*2-e|` is between 0.5 and 1.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, 
 
 `std::ilogb(num)` has the same effect as `std::ilogb(static_cast<double>(num))`.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -151,9 +147,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 Given the number 123.45 or 0x1.edccccccccccdp+6 in hex,

@@ -18,8 +18,8 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the cube root of `num`. The library provides overloads of `std::cbrt` for all cv-unqualified floating-point types as the type of the parameter `num`.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+Computes the cube root of <code>num</code>. The library provides overloads of `std::cbrt` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>.
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -31,7 +31,7 @@ Computes the cube root of `num`. The library provides overloads of `std::cbrt` f
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 If no errors occur, the cube root of num (<sup>3</sup>√num), is returned.
@@ -40,7 +40,7 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559),
 
@@ -52,8 +52,8 @@ if the argument is NaN, NaN is returned
 `std::cbrt(num)` is not equivalent to `std::pow(num, 1.0 / 3)` because the rational number `⅓`
  is typically not equal to `1.0 / 3` and [std::pow](/docs/std/math/mathematical_functions/pow/) cannot raise a negative base to a fractional exponent. Moreover,
   `std::cbrt(num)` usually gives more accurate results than `std::pow(num, 1.0 / 3)` [(see example)](#examples). <br/>
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
 `std::cbrt(num)` has the same effect as `std::cbrt(static_cast<double>(num))`.
 
 ### Examples

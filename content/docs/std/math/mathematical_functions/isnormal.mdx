@@ -19,9 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Determines if the given floating point number `num` is `normal`, i.e. is neither `zero`, `subnormal`, `infinite`, nor `NaN`. 
-The library provides overloads for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>. <br/>
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+Determines if the given floating point number <code>num</code> is `normal`, i.e. is neither `zero`, `subnormal`, `infinite`, nor `NaN`. 
+The library provides overloads for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>. <br/>
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -33,14 +33,14 @@ The library provides overloads for all cv-unqualified floating-point types as th
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-`true` if `num` is `normal`, `false` otherwise.
+`true` if <code>num</code> is `normal`, `false` otherwise.
 
 ### Notes
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, <br/>
 `std::isnormal(num)` has the same effect as `std::isnormal(static_cast<double>(num))`.
 

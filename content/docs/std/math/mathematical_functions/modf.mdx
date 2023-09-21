@@ -19,10 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Decomposes given floating point value `num` into integral and fractional parts, each having the same type and sign as `num`. 
+Decomposes given floating point value <code>num</code> into integral and fractional parts, each having the same type and sign as <code>num</code>. 
 The integral part (in floating-point format) is stored in the object pointed to by `iptr`. The library provides overloads of `std::modf` 
-for all cv-unqualified floating-point types as the type of the parameter `num` and the pointed-to type of `iptr` <Since v='cpp23'></Since>.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`
+for all cv-unqualified floating-point types as the type of the parameter <code>num</code> and the pointed-to type of `iptr` <Since v='cpp23'></Since>.
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>
 <Since v='cpp11'></Since>.
 
 
@@ -37,14 +37,14 @@ for all cv-unqualified floating-point types as the type of the parameter `num` a
 
 ### Parameters
 
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 `iptr` - pointer to floating-point value to store the integral part to
 
 ### Return value
 
-If no errors occur, returns the fractional part of `num` with the same sign as `num`. The integral part is put into the value pointed to by `iptr`.
+If no errors occur, returns the fractional part of <code>num</code> with the same sign as <code>num</code>. The integral part is put into the value pointed to by `iptr`.
 
-The sum of the returned value and the value stored in `*iptr` gives `num` (allowing for rounding).
+The sum of the returned value and the value stored in `*iptr` gives <code>num</code> (allowing for rounding).
 
 ### Error handling
 
@@ -71,8 +71,8 @@ double modf(double num, double* iptr)
     return std::copysign(std::isinf(num) ? 0.0 : num - (*iptr), num);
 }
 ```
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
 `std::modf(num, iptr)` has the same effect as `std::modf(static_cast<double>(num), iptr)`.
 
 ### Examples

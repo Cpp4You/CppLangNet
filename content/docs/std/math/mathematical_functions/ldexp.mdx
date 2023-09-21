@@ -18,10 +18,10 @@ import  Ldexp_Function_Declaration_Cpp23         from "./ldexp/_codes/ldexp_func
 Defined in header `<cmath>`.
 
 ### Description
-Multiplies a floating point value `num` by the number `2` raised to the `exp` power. The library provides overloads of `std::ldexp` 
-for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
+Multiplies a floating point value <code>num</code> by the number `2` raised to the `exp` power. The library provides overloads of `std::ldexp` 
+for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
 
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>
 <Since v='cpp11'></Since>.
 
 
@@ -36,13 +36,13 @@ for all cv-unqualified floating-point types as the type of the parameter `num` <
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 `exp` - integer value
 
 ### Return value
 
-If no errors occur, `num` multiplied by 2 to the power of `exp` (num×2<sup>exp</sup>) is returned.
+If no errors occur, <code>num</code> multiplied by 2 to the power of `exp` (num×2<sup>exp</sup>) is returned.
 
 If a range error due to overflow occurs, `±HUGE_VAL`, `±HUGE_VALF`, or `±HUGE_VALL` is returned.
 
@@ -50,16 +50,16 @@ If a range error due to underflow occurs, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559):
 
 Unless a range error occurs, FE_INEXACT is never raised (the result is exact)<br/>
 Unless a range error occurs, the current rounding mode is ignored<br/>
-If `num` is `±0`, it is returned, unmodified<br/>
-If `num` is `±∞`, it is returned, unmodified<br/>
-If `exp` is 0, then `num` is returned, unmodified<br/>
-If `num` is NaN, NaN is returned<br/>
+If <code>num</code> is `±0`, it is returned, unmodified<br/>
+If <code>num</code> is `±∞`, it is returned, unmodified<br/>
+If `exp` is 0, then <code>num</code> is returned, unmodified<br/>
+If <code>num</code> is NaN, NaN is returned<br/>
 
 ### Notes
 
@@ -70,8 +70,8 @@ can be used to manipulate the representation of a floating-point number without 
 
 On many implementations, `std::ldexp` is less efficient than multiplication or division by a power of two using arithmetic operators.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
 
 `std::ldexp(num, exp)` has the same effect as `std::ldexp(static_cast<double>(num), exp)`.
 

@@ -19,10 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the principal value of the arc tangent of `num`. 
-The library provides overloads of `std::atan` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`
-<Since v='cpp11'></Since>.
+Computes the principal value of the arc tangent of <code>num</code>. 
+<Since v='cpp23'>The library provides overloads of std::atan for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
+<Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span></Since>.
 
 
 ### Declarations
@@ -35,16 +34,16 @@ The library provides overloads of `std::atan` for all cv-unqualified floating-po
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the arc tangent of `num` (arctan(num)) in the range `[-π/2, π/2]` radians, is returned.
+If no errors occur, the arc tangent of <code>num</code> (arctan(num)) in the range `[-π/2, π/2]` radians, is returned.
 If a range error occurs due to underflow, the correct result (after rounding) is returned.
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559):
 
@@ -55,10 +54,10 @@ if the argument is NaN, NaN is returned
 
 ### Notes
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atan.html) 
-specifies that in case of underflow, `num` is returned unmodified, 
+specifies that in case of underflow, <code>num</code> is returned unmodified, 
 and if that is not supported, an implementation-defined value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, 
 `std::atan(num)` has the same effect as `std::atan(static_cast<double>(num))`.
 

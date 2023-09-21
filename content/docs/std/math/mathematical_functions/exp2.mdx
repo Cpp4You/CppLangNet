@@ -18,7 +18,7 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes `2` raised to the given power `num`. The library provides overloads of `std::exp2` for all cv-unqualified floating-point types as the type of the parameter `num`
+Computes `2` raised to the given power <code>num</code>. The library provides overloads of `std::exp2` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>
 
 ### Declarations
 
@@ -30,11 +30,11 @@ Computes `2` raised to the given power `num`. The library provides overloads of 
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the base-2 exponential of `num` is returned.
+If no errors occur, the base-2 exponential of <code>num</code> is returned.
 
 If a range error due to overflow occurs, `+HUGE_VAL`, `+HUGE_VALF`, or `+HUGE_VALL` is returned.
 
@@ -43,7 +43,7 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559):
 
@@ -54,8 +54,8 @@ If the argument is NaN, NaN is returned
 
 ### Notes
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
 `std::exp2(num)` has the same effect as `std::exp2(static_cast<double>(num))`.
 
 

@@ -19,9 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the inverse hyperbolic tangent of `num`. The library provides overloads of `std::atanh` for 
-all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+Computes the inverse hyperbolic tangent of <code>num</code>.
+<Since v='cpp23'> The library provides overloads of std::atanh for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>.<br/>
+
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 
 ### Declarations
@@ -34,7 +35,7 @@ all cv-unqualified floating-point types as the type of the parameter `num` <Sinc
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -48,7 +49,7 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the argument is not on the interval `[-1, +1]`, a range error occurs.
 
@@ -67,11 +68,11 @@ names this function *"arc hyperbolic tangent"*, the inverse functions of the hyp
 Their argument is the area of a hyperbolic sector, not an arc. The correct name is *"inverse hyperbolic tangent"* (used by POSIX) or *"area hyperbolic tangent"*.
 
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/atanh.html)
-specifies that in case of underflow, `num` is returned unmodified, and if that is not supported, 
+specifies that in case of underflow, <code>num</code> is returned unmodified, and if that is not supported, 
 an implementation-defined value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type,  <br/>
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type,  <br/>
 `std::atanh(num)` has the same effect as `std::atanh(static_cast<double>(num))`
 
 ### Examples

@@ -23,7 +23,7 @@ Computes `x * y + z` as if to infinite precision and rounded only once to fit th
 The library provides overloads of `std::fma` for all cv-unqualified floating-point types as the type of the parameters `x`, `y` and `z`.
 
  If the macro constants `FP_FAST_FMA`, `FP_FAST_FMAF`, or `FP_FAST_FMAL` are defined, the function `std::fma` evaluates faster (in addition to being more precise) 
- than the expression `x * y + z` for `float`, `double`, and `long double` arguments, respectively. If defined, these macros evaluate to integer `1`.
+ than the expression `x * y + z` for `float`, <span class='col-lb'>double</span>, and `long double` arguments, respectively. If defined, these macros evaluate to integer `1`.
 
 ### Declarations
 
@@ -77,7 +77,7 @@ If `num1`, `num2` or `num3` has type `long double`, then <br/>
 `std::fma(num1, num2, num3)` has the same effect as <br/>
 `std::fma(static_cast<long double>(num1), static_cast<long double>(num2), static_cast<long double>(num3))`.
 
-Otherwise, if `num1`, `num2` and/or `num3` has type `double` or an integer type, then <br/>
+Otherwise, if `num1`, `num2` and/or `num3` has type <span class='col-lb'>double</span> or an integer type, then <br/>
 `std::fma(num1, num2, num3)` has the same effect as <br/>
 `std::fma(static_cast<double>(num1), static_cast<double>(num2), static_cast<double>(num3))`.
 
@@ -90,7 +90,7 @@ If `num1`, `num2` and `num3` have arithmetic types, then <br/>
 
 where <span class='col-d'>/\* common-floating-point-type \*/</span> is the floating-point type with the greatest floating-point conversion rank and greatest 
 floating-point conversion subrank among the types of `num1`, `num2` and `num3`, 
-arguments of integer type are considered to have the same floating-point conversion rank as `double`.
+arguments of integer type are considered to have the same floating-point conversion rank as <span class='col-lb'>double</span>.
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
 

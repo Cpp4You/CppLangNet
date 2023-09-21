@@ -19,8 +19,8 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the square root of `num`. The library provides overloads of `std::sqrt` for all cv-unqualified floating-point types as the type of the parameter `num`. <Since v='cpp23'></Since>
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`. <Since v='cpp11'></Since>
+Computes the square root of <code>num</code>. The library provides overloads of `std::sqrt` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>. <Since v='cpp23'></Since>
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>. <Since v='cpp11'></Since>
 
 
 ### Declarations
@@ -33,7 +33,7 @@ Computes the square root of `num`. The library provides overloads of `std::sqrt`
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -45,9 +45,9 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-Domain error occurs if `num` is less than zero.
+Domain error occurs if <code>num</code> is less than zero.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559):
 
@@ -62,8 +62,8 @@ If the argument is NaN, NaN is returned
  The only other operations which require this are the arithmetic operators and the function [std::fma](/docs/std/math/mathematical_functions/fma/). Other functions, 
  including [std::pow](/docs/std/math/mathematical_functions/pow/), are not so constrained.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. They only need to be sufficient to ensure that 
-for their argument `num` of integer type, <br/>
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. They only need to be sufficient to ensure that 
+for their argument <code>num</code> of integer type, <br/>
 `std::sqrt(num)` has the same effect as `std::sqrt(static_cast<double>(num))`.
 
 ### Examples

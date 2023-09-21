@@ -19,9 +19,8 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the inverse hyperbolic cosine of `num`. The library provides overloads of `std::acosh` for 
-all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+Computes the inverse hyperbolic cosine of <code>num</code>. <br/><Since v='cpp23'>The library provides overloads of std::acosh for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>
+.<br/><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 
 ### Declarations
@@ -34,17 +33,17 @@ all cv-unqualified floating-point types as the type of the parameter `num` <Sinc
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the inverse hyperbolic cosine of `num` (cosh<sup>-1</sup>(num), or arcosh(num)) on the interval `[0, +∞]`, is returned.
+If no errors occur, the inverse hyperbolic cosine of <code>num</code> (cosh<sup>-1</sup>(num), or arcosh(num)) on the interval `[0, +∞]`, is returned.
 
 If a domain error occurs, an implementation-defined value is returned (NaN where supported).
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the argument is less than `1`, a domain error occurs.
 
@@ -61,8 +60,8 @@ Although the C standard (to which C++ refers for this function) names this funct
 *"arc hyperbolic cosine"*, the inverse functions of the hyperbolic functions are the area functions.
 Their argument is the area of a hyperbolic sector, not an arc. The correct name is *"inverse hyperbolic cosine"* (used by POSIX) or *"area hyperbolic cosine"*.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>.
-They only need to be sufficient to ensure that for their argument `num` of integer type,
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>.
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type,
 `std::acosh(num)` has the same effect as `std::acosh(static_cast<double>(num))`.
 ### Examples
 

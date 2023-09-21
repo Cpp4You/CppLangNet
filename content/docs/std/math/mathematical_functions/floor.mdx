@@ -21,12 +21,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the largest integer value not greater than `num`. The library provides overloads of `std::floor` for all 
-cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`
-<Since v='cpp11'></Since>.
-
-
+Computes the largest integer value not greater than <code>num</code>.
+<Since v='cpp23'>The library provides overloads of std::floor for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
+<Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span></Since>.
 
 ### Declarations
 
@@ -35,14 +32,13 @@ cv-unqualified floating-point types as the type of the parameter `num` <Since v=
     "cpp11" : <Floor_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the largest integer value not greater than `num`, that is *⌊num⌋*, is returned.
+If no errors occur, the largest integer value not greater than <code>num</code>, that is *⌊num⌋*, is returned.
 
 <Image maxheight={300}
         src="/img/doc/math/floor/math-floor.svg"
@@ -50,7 +46,7 @@ If no errors occur, the largest integer value not greater than `num`, that is *�
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the implementation supports IEEE floating-point arithmetic (IEC 60559):
 
@@ -67,14 +63,11 @@ The largest representable floating-point values are exact integers in all standa
 so this function never overflows on its own; 
 however the result may overflow any integer type (including `std::intmax_t`), when stored in an integer variable.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
 `std::floor(num)` has the same effect as `std::floor(static_cast<double>(num))`
 
-
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -99,9 +92,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 floor(+2.7) = 2.000000

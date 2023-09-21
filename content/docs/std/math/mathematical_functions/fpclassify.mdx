@@ -19,10 +19,17 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Categorizes floating point value `num` into the following categories: <br/>
-`zero`, `subnormal`, `normal`, `infinite`, `NAN`, or `implementation-defined category`. <br/>
-The library provides overloads of `std::fpclassify` for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>. <br/>
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+Categorizes floating point value <code>num</code> into the following categories: 
+* `zero`, 
+* `subnormal`,
+* `normal`,
+* `infinite`,
+* `NAN`,
+* `implementation-defined category`
+
+<Since v='cpp23'>The library provides overloads of std::fpclassify for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
+
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 
 ### Declarations
@@ -35,16 +42,16 @@ The library provides overloads of `std::fpclassify` for all cv-unqualified float
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-One of `FP_INFINITE`, `FP_NAN`, `FP_NORMAL`, `FP_SUBNORMAL`, `FP_ZERO` or `implementation-defined type`, specifying the category of `num`.
+One of `FP_INFINITE`, `FP_NAN`, `FP_NORMAL`, `FP_SUBNORMAL`, `FP_ZERO` or `implementation-defined type`, specifying the category of <code>num</code>.
 
 ### Notes
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. <br/>
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. <br/>
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
 `std::fpclassify(num)` has the same effect as `std::fpclassify(static_cast<double>(num))`.
 
 ### Examples

@@ -20,8 +20,8 @@ Defined in header `<cmath>`.
 
 ### Description
 Computes the arc tangent of `y / x` using the signs of arguments to determine the correct quadrant.  
-The library provides overloads of `std::atan2` for all cv-unqualified floating-point types as the type of the parameters `y` and `x` <Since v='cpp23'></Since>.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all other combinations of arithmetic types <Since v='cpp11'></Since>.
+<Since v='cpp23'>The library provides overloads of std::atan2 for all cv-unqualified floating-point types as the type of the parameters <code>y</code> and <code>x</code> </Since>.<br/>
+<Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all other combinations of arithmetic types </Since>.
 
 
 ### Declarations
@@ -52,7 +52,7 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 Domain error may occur if `x` and `y` are both zero.
 
@@ -85,14 +85,14 @@ std::arg(std::complex<std::common_type_t<decltype(x), decltype(y)>>(x, y))
 specifies that in case of underflow, `y / x` is the value returned, and if that is not supported, an implementation-defined value no 
 greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 
 If `num1` or `num2` has type `long double`, then  <br/>
 `std::atan2(num1, num2)` has the same effect as  <br/>
 `std::atan2(static_cast<long double>(num1), static_cast<long double>(num2))`.
 
-Otherwise, if `num1` and/or `num2` has type `double` or an integer type, then  <br/>
+Otherwise, if `num1` and/or `num2` has type <span class='col-lb'>double</span> or an integer type, then  <br/>
 `std::atan2(num1, num2)` has the same effect as  <br/>
 `std::atan2(static_cast<double>(num1), static_cast<double>(num2))`.
 
@@ -105,7 +105,7 @@ If `num1` and `num2` have arithmetic types, then  <br/>
      
 where <span class='col-d'>/\* common-floating-point-type \*/</span> is the floating-point type with the greatest floating-point conversion rank and 
 greatest floating-point conversion subrank between the types of `num1` and `num2`, 
-arguments of integer type are considered to have the same floating-point conversion rank as `double`.
+arguments of integer type are considered to have the same floating-point conversion rank as <span class='col-lb'>double</span>.
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
 ### Examples

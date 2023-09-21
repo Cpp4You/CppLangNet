@@ -19,9 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Determines if the given floating point number `num` is negative. 
-The library provides overloads for all cv-unqualified floating-point types as the type of the parameter `num` <Since v='cpp23'></Since>.
-<a href='#declarations'><code><b>Additional Overloads</b></code></a> are provided for all integer types, which are treated as `double`.
+Determines if the given floating point number <code>num</code> is negative. 
+The library provides overloads for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
+<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 
 ### Declarations
@@ -34,11 +34,11 @@ The library provides overloads for all cv-unqualified floating-point types as th
 
 ### Parameters
  
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-`true` if `num` is negative, `false` otherwise.
+`true` if <code>num</code> is negative, `false` otherwise.
 
 
 
@@ -46,8 +46,8 @@ The library provides overloads for all cv-unqualified floating-point types as th
 This function detects the sign bit of zeroes, infinities, and `NaN`s. 
 Along with <a href='/docs/std/math/mathematical_functions/copysign'><code>std::copysign</code></a>, `std::signbit` is one of the only two portable ways to examine the sign of a `NaN`.
 
-The additional overloads are not required to be provided exactly as <a href='#declarations'><code><b>Additional Overloads</b></code></a>. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
 `std::signbit(num)` has the same effect as `std::signbit(static_cast<double>(num))`.
 
 ### Examples
