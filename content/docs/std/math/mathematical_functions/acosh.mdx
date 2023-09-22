@@ -19,9 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the inverse hyperbolic cosine of <code>num</code>. <br/><Since v='cpp23'>The library provides overloads of std::acosh for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>
-.<br/><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
+Computes the inverse hyperbolic cosine of <code>num</code>. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of std::acosh for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since> <br/>
 
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -30,10 +31,9 @@ Computes the inverse hyperbolic cosine of <code>num</code>. <br/><Since v='cpp23
     "cpp11" : <Acosh_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -47,7 +47,7 @@ Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>ma
 
 If the argument is less than `1`, a domain error occurs.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 if the argument is less than `1`, FE_INVALID is raised an NaN is returned <br/>
 if the argument is `1`, `+0` is returned<br/>
@@ -62,10 +62,9 @@ Their argument is the area of a hyperbolic sector, not an arc. The correct name 
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>.
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type,
-`std::acosh(num)` has the same effect as `std::acosh(static_cast<double>(num))`.
+`std::acosh(num)` has the same effect as <code>std::acosh(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
+
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -110,9 +109,7 @@ int main()
 }
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 acosh(1) = 0

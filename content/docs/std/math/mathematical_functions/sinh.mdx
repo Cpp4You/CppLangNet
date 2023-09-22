@@ -19,11 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the hyperbolic sine of <code>num</code>. The library provides overloads of `std::sinh` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>. <Since v='cpp23'></Since>
-<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
-(since C++11)
-
-
+Computes the hyperbolic sine of <code>num</code>. <br/>
+<Since v='cpp23'>The library provides overloads of std::sinh for all cv-unqualified floating-point types as the type of the parameter <code>num</code>. </Since> <br/>
+<Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>. </Since>
 
 ### Declarations
 
@@ -32,10 +30,9 @@ Computes the hyperbolic sine of <code>num</code>. The library provides overloads
     "cpp11" : <Sinh_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -48,7 +45,7 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 if the argument is `±0` or `±∞`, it is returned unmodified
 if the argument is NaN, NaN is returned
@@ -61,11 +58,9 @@ and implementation-defined value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
-`std::sinh(num)` has the same effect as  `std::sinh(static_cast<double>(num))`.
+`std::sinh(num)` has the same effect as  <code>std::sinh(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -118,9 +113,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 sinh(1) = 1.1752

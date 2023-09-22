@@ -27,10 +27,9 @@ Computes the binary (base-2) logarithm of <code>num</code>. The library provides
     "cpp11" : <Log2_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -49,7 +48,7 @@ Domain error occurs if <code>num</code> is less than zero.
 
 Pole error may occur if <code>num</code> is zero.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If the argument is `±0`, `-∞` is returned and `FE_DIVBYZERO `is raised<br/>
 If the argument is `1`, `+0` is returned<br/>
@@ -63,12 +62,9 @@ For integer <code>num</code>, the binary logarithm can be interpreted as the zer
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, 
-`std::log2(num)` has the same effect as `std::log2(static_cast<double>(num))`.
+`std::log2(num)` has the same effect as <code>std::log2(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
-
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
 
@@ -120,9 +116,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 log2(65536) = 16

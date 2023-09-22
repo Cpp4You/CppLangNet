@@ -21,7 +21,7 @@ floating point constant expressions which compare equal to the values returned b
 | HUGE_VAL  | Expands to positive double expression that indicates overflow, not necessarily representable as a float                |
 | HUGE_VALL | Expands to positive long double expression that indicates overflow, not necessarily representable as a float or double |
 
-On implementations that support floating-point infinities, these macros always expand to the positive infinities of `float`, <span class='col-lb'>double</span>, and `long double`, respectively.
+On implementations that support floating-point infinities, these macros always expand to the positive infinities of <span class='col-lb'>float</span>, <span class='col-lb'>double</span>, and <span class='col-lb'>long double</span>, respectively.
 
 
 
@@ -44,8 +44,8 @@ On implementations that support floating-point infinities, these macros always e
 
 On implementations that do not support floating-point infinities, these macros expand to the maximum finite number of their respective types.
 
-C++98 added `float` and `long double` overloads of mathematical functions. 
-There is a problem that the `float` overloads cannot return `HUGE_VAL` to indicate overflow because this macro is not guaranteed to be representable as a `float`.
+C++98 added <span class='col-lb'>float</span> and <span class='col-lb'>long double</span> overloads of mathematical functions. 
+There is a problem that the <span class='col-lb'>float</span> overloads cannot return `HUGE_VAL` to indicate overflow because this macro is not guaranteed to be representable as a <span class='col-lb'>float</span>.
 
-LWG issue 357 was raised to target this problem. LWG found that C99 has the same problem (`float` and `long double` overloads were also added in C99), 
+LWG issue 357 was raised to target this problem. LWG found that C99 has the same problem (<span class='col-lb'>float</span> and <span class='col-lb'>long double</span> overloads were also added in C99), 
 and C99 introduced new macros `HUGE_VALF` and `HUGE_VALL` to solve the problem. Therefore the issue was closed and the C99 resolution was adopted in C++11.

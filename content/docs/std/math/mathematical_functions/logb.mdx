@@ -18,15 +18,14 @@ import  Logb_Function_Declaration_Cpp23         from "./logb/_codes/logb_functio
 Defined in header `<cmath>`.
 
 ### Description
-Extracts the value of the unbiased radix-independent exponent from the floating-point argument <code>num</code>,  
-and returns it as a floating-point value. The library provides overloads of std::logb for all 
-cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
+Extracts the value of the unbiased radix-independent exponent from the floating-point argument <code>num</code>, and returns it as a floating-point value. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of std::logb for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>. <br/>
 
-<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 Formally, the unbiased exponent is the signed integral part of log<sub>r</sub>|num| 
 (returned by this function as a floating-point value), for non-zero <code>num</code>, where `r` 
-is `std::numeric_limits<T>::radix` and `T` is the floating-point type of <code>num</code>. 
+is <code><a href='/docs/std/types/numeric_limits'>std::numeric_limits</a>&lt;T&gt;::<a href='/docs/std/types/numeric_limits/radix'>radix</a></code> and `T` is the floating-point type of <code>num</code>. 
 If <code>num</code> is subnormal, it is treated as though it was normalized.
 
 
@@ -40,7 +39,7 @@ If <code>num</code> is subnormal, it is treated as though it was normalized.
 
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -56,7 +55,7 @@ Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>ma
 
 Domain or range error may occur if <code>num</code> is zero.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If <code>num</code> is `±0`, `-∞` is returned and FE_DIVBYZERO is raised
 If <code>num</code> is `±∞`, `+∞` is returned
@@ -73,7 +72,7 @@ but for the exponent `e` returned by st`d::fre`xp, `|num*2-e|` is between 0.5 an
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
-`std::logb(num)` has the same effect as `std::logb(static_cast<double>(num))`.
+`std::logb(num)` has the same effect as <code>std::logb(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
 

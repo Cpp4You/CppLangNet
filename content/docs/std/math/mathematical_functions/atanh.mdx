@@ -24,7 +24,6 @@ Computes the inverse hyperbolic tangent of <code>num</code>.
 
 &#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
-
 ### Declarations
 
 <SwitchView content ={{
@@ -32,10 +31,9 @@ Computes the inverse hyperbolic tangent of <code>num</code>.
     "cpp11" : <Atanh_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -55,7 +53,7 @@ If the argument is not on the interval `[-1, +1]`, a range error occurs.
 
 If the argument is `±1`, a pole error occurs.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 if the argument is `±0`, it is returned unmodified <br/>
 if the argument is `±1`, `±∞` is returned and FE_DIVBYZERO is raised<br/>
@@ -73,11 +71,9 @@ an implementation-defined value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type,  <br/>
-`std::atanh(num)` has the same effect as `std::atanh(static_cast<double>(num))`
+`std::atanh(num)` has the same effect as <code>std::atanh(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -120,9 +116,7 @@ int main()
 }
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 atanh(0) = 0

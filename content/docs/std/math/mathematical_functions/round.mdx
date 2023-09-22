@@ -19,15 +19,14 @@ import  Round_Function_Declaration_Cpp23         from "./round/_codes/round_func
 Defined in header `<cmath>`.
 
 ### Description
-Computes the nearest integer value to <code>num</code> (in floating-point format), rounding halfway cases away from zero, regardless of the current rounding mode. 
-The library provides overloads of `std::round` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
+Computes the nearest integer value to <code>num</code> (in floating-point format), rounding halfway cases away from zero, regardless of the current rounding mode. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of <code>std::round</code> for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.
 
-`Rounding to long` and `Rounding to long long` Computes the nearest integer value to <code>num</code> (in integer format), 
-rounding halfway cases away from zero, regardless of the current rounding mode. 
-The library provides overloads of `std::lround` and `std::llround` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>(since C++23). 
+&#8203;<a href='#declarations'>Rounding to long</a> and <a href='#declarations'>Rounding to long long</a> Computes the nearest integer value to <code>num</code> (in integer format), 
+rounding halfway cases away from zero, regardless of the current rounding mode. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of <code>std::lround</code> and <code>std::llround</code> for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.
 
-<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
-
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -36,10 +35,9 @@ The library provides overloads of `std::lround` and `std::llround` for all cv-un
     "cpp11" : <Round_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -57,7 +55,7 @@ Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>ma
 
 If the result of `std::lround` or `std::llround` is outside the range representable by the return type, a domain error or a range error may occur.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 For the `std::round` function:
 
@@ -111,13 +109,11 @@ double round(double x)
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type:
 
-`std::round(num)` has the same effect as `std::round(static_cast<double>(num))` <br/>
-`std::lround(num)` has the same effect as `std::lround(static_cast<double>(num))`<br/>
-`std::llround(num)` has the same effect as `std::llround(static_cast<double>(num))`<br/>
+`std::round(num)` has the same effect as <code>std::round(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code><br/>
+`std::lround(num)` has the same effect as <code>std::lround(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code><br/>
+`std::llround(num)` has the same effect as <code>std::llround(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code><br/>
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -177,9 +173,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 round(+2.3) = 2  

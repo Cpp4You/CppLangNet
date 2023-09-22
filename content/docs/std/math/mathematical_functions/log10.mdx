@@ -18,8 +18,8 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the common (base-10) logarithm of <code>num</code>. The library provides overloads of `std::log10` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>.
-
+Computes the common (base-10) logarithm of <code>num</code>. <br/>
+The library provides overloads of `std::log10` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>.
 
 ### Declarations
 
@@ -49,7 +49,7 @@ Domain error occurs if <code>num</code> is less than zero.
 
 Pole error may occur if <code>num</code> is zero.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If the argument is `±0`, `-∞` is returned and `FE_DIVBYZERO` is raised.<br/>
 If the argument is `1`, `+0` is returned<br/>
@@ -61,11 +61,9 @@ If the argument is NaN, NaN is returned<br/>
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
-`std::log10(num)` has the same effect as `std::log10(static_cast<double>(num))`.
+`std::log10(num)` has the same effect as <code>std::log10(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -115,9 +113,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 log10(1000) = 3

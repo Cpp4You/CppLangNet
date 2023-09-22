@@ -19,9 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Determines if the given floating point number <code>num</code> is `normal`, i.e. is neither `zero`, `subnormal`, `infinite`, nor `NaN`. 
-The library provides overloads for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>. <br/>
-<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
+Determines if the given floating point number <code>num</code> is `normal`, i.e. is neither `zero`, `subnormal`, `infinite`, nor `NaN`. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>. <br/>
+
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -30,10 +31,9 @@ The library provides overloads for all cv-unqualified floating-point types as th
     "cpp11" : <Isnormal_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -42,11 +42,9 @@ The library provides overloads for all cv-unqualified floating-point types as th
 ### Notes
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, <br/>
-`std::isnormal(num)` has the same effect as `std::isnormal(static_cast<double>(num))`.
+`std::isnormal(num)` has the same effect as <code>std::isnormal(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -74,9 +72,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 isnormal(NaN) = false

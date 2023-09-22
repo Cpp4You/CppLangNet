@@ -23,7 +23,6 @@ Computes the principal value of the arc cosine of <code>num</code>.
 <Since v='cpp23'> The library provides overloads of std::acos for all cv-unqualified floating-point types as the type of the parameter <code>num</code>. </Since><br/>
 <Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>. </Since>
 
-
 ### Declarations
 
 <SwitchView content ={{
@@ -31,10 +30,9 @@ Computes the principal value of the arc cosine of <code>num</code>.
     "cpp11" : <Acos_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -50,23 +48,19 @@ Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>ma
 
 Domain error occurs if num is outside the range `[-1.0, 1.0]`
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If the argument is `+1`, the value `+0` is returned.
 If `|num| > 1`, a domain error occurs and NaN is returned.
 if the argument is NaN, NaN is returned.
 
-
 ### Notes
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
-`std::acos(num)` has the same effect as `std::acos(static_cast<double>(num))`.
-
+`std::acos(num)` has the same effect as <code>std::acos(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -115,9 +109,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 acos(-1) = 3.14159

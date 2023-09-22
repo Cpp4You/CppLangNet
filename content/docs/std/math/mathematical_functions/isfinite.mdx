@@ -33,7 +33,7 @@ it is `normal`, `subnormal` or `zero`, but not `infinite` or `NaN`. <br/>
 
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -42,7 +42,7 @@ it is `normal`, `subnormal` or `zero`, but not `infinite` or `NaN`. <br/>
 ### Notes
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type,<br/>
-`std::isfinite(num)` has the same effect as `std::isfinite(static_cast<double>(num))`.
+`std::isfinite(num)` has the same effect as <code>std::isfinite(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
 

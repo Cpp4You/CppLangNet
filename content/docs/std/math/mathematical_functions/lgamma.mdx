@@ -19,10 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the natural logarithm of the absolute value of the gamma function of <code>num</code>.
- The library provides overloads of `std::lgamma` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.<br/>
-<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
+Computes the natural logarithm of the absolute value of the gamma function of <code>num</code>.<br/>
+&#8203;<Since v='cpp23'>The library provides overloads of std::lgamma for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
 
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -31,10 +31,9 @@ Computes the natural logarithm of the absolute value of the gamma function of <c
     "cpp11" : <Lgamma_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 If no errors occur, the value of the logarithm of the gamma function of num, that is, `math here` , is returned.
@@ -49,7 +48,7 @@ Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>ma
 
 If <code>num</code> is zero or is an integer less than zero, a pole error may occur.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559)
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>)
 
 If the argument is `1`, `+0` is returned.
 If the argument is `2`, `+0` is returned.
@@ -70,11 +69,9 @@ For example, glibc and 4.2BSD version of gamma executes lgamma, but 4.4BSD versi
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
-`std::lgamma(num)` has the same effect as `std::lgamma(static_cast<double>(num))`.
+`std::lgamma(num)` has the same effect as <code>std::lgamma(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -131,9 +128,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 lgamma(10) = 12.8018, log(9!) = 12.8018, exp(lgamma(10)) = 362880

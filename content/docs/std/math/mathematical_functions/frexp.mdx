@@ -19,7 +19,7 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Decomposes given floating point value <code>num</code> into a normalized fraction and an integral power of two. 
+Decomposes given floating point value <code>num</code> into a normalized fraction and an integral power of two. <br/>
 <Since v='cpp23'>The library provides overloads of std::frexp for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
 <Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span></Since>.
 
@@ -32,7 +32,7 @@ Decomposes given floating point value <code>num</code> into a normalized fractio
 
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 `exp` - pointer to integer value to store the exponent to
 
 ### Return value
@@ -48,7 +48,7 @@ If the value to be stored in` *exp` is outside the range of `int`, the behavior 
 
 This function is not subject to any errors specified in math_errhandling.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If <code>num</code> is `±0`, it is returned, unmodified, and 0 is stored in `*exp`. <br/>
 If <code>num</code> is `±∞`, it is returned, and an unspecified value is stored in `*exp`. <br/>
@@ -70,7 +70,7 @@ number without direct bit manipulations.
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. <br/>
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
-`std::frexp(num, exp)` has the same effect as `std::frexp(static_cast<double>(num), exp)`.
+`std::frexp(num, exp)` has the same effect as <code>std::frexp(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num), exp)</code>.
 
 ### Examples
 

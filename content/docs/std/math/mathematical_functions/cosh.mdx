@@ -42,7 +42,7 @@ If a range error due to overflow occurs,  `+HUGE_VAL`,` +HUGE_VALF`, or `+HUGE_V
 
 Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 if the argument is `±0`, `1` is returned
 If the argument is `±∞`, `+∞` is returned
@@ -54,7 +54,7 @@ For the IEEE-compatible type double, if `|num| > 710.5`, then `std::cosh(num)` o
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
-`std::cosh(num)` has the same effect as `std::cosh(static_cast<double>(num))`.
+`std::cosh(num)` has the same effect as <code>std::cosh(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
 

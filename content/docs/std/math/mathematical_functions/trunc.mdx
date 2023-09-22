@@ -20,10 +20,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the nearest integer not greater in magnitude than <code>num</code>. The library provides overloads of `std::trunc` 
-for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
+Computes the nearest integer not greater in magnitude than <code>num</code>. 
+&#9203;<Since v='cpp23'> The library provides overloads of std::trunc for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>. <br/>
 
-<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
+&#9203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -32,10 +32,9 @@ for all cv-unqualified floating-point types as the type of the parameter <code>n
     "cpp11" : <Trunc_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -49,7 +48,7 @@ If no errors occur, the nearest integer value not greater in magnitude than <cod
 
 Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 The current rounding mode has no effect. <br/>
 If <code>num</code> is `±∞`, it is returned, unmodified<br/>
@@ -68,11 +67,9 @@ but is limited to the values that can be represented by the target type.
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
-`std::trunc(num)` has the same effect as `std::trunc(static_cast<double>(num))`.
+`std::trunc(num)` has the same effect as <code>std::trunc(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>

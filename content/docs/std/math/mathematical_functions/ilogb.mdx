@@ -19,13 +19,13 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Extracts the value of the unbiased exponent from the floating-point argument <code>num</code>, and returns it as a signed integer value. 
-<Since v='cpp23'>The library provides overloads of `std::ilogb` for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>.
+Extracts the value of the unbiased exponent from the floating-point argument <code>num</code>, and returns it as a signed integer value. <br/>
+<Since v='cpp23'>The library provides overloads of std::ilogb for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>.
 
 #### Definitions
 
-4) Expands to integer constant expression whose value is either `INT_MIN` or `-INT_MAX`. <br/>
-5) Expands to integer constant expression whose value is either `INT_MIN` or `+INT_MAX`. <br/>
+- 4) Expands to integer constant expression whose value is either `INT_MIN` or `-INT_MAX`.
+- 5) Expands to integer constant expression whose value is either `INT_MIN` or `+INT_MAX`.
 
 &#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
@@ -41,7 +41,7 @@ Formally, the unbiased exponent is the integral part of log<sub>r</sub>|num| as 
 
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -62,7 +62,7 @@ Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>ma
 A domain error or range error may occur if <code>num</code> is zero, infinite, or NaN. <br/>
 If the correct result is greater than INT_MAX or smaller than INT_MIN, a domain error or a range error may occur.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If the correct result is greater than INT_MAX or smaller than INT_MIN, FE_INVALID is raised. <br/>
 If num is `±0`, `±∞`, or NaN, FE_INVALID is raised. <br/>
@@ -90,7 +90,7 @@ but for the exponent `e` returned by <a href='/docs/std/math/mathematical_functi
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, 
 
-`std::ilogb(num)` has the same effect as `std::ilogb(static_cast<double>(num))`.
+`std::ilogb(num)` has the same effect as <code>std::ilogb(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
 

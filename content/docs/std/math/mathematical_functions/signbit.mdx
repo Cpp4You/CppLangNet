@@ -19,10 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Determines if the given floating point number <code>num</code> is negative. 
-The library provides overloads for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
-<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
+Determines if the given floating point number <code>num</code> is negative. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>.<br/>
 
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -31,28 +31,23 @@ The library provides overloads for all cv-unqualified floating-point types as th
     "cpp11" : <Signbit_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
 `true` if <code>num</code> is negative, `false` otherwise.
 
-
-
-### Notes
+## Notes
 This function detects the sign bit of zeroes, infinities, and `NaN`s. 
 Along with <a href='/docs/std/math/mathematical_functions/copysign'><code>std::copysign</code></a>, `std::signbit` is one of the only two portable ways to examine the sign of a `NaN`.
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
-`std::signbit(num)` has the same effect as `std::signbit(static_cast<double>(num))`.
+`std::signbit(num)` has the same effect as <code>std::signbit(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -79,9 +74,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 signbit(+0.0) = false

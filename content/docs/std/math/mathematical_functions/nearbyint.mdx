@@ -19,9 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Rounds the floating-point argument <code>num</code> to an integer value in floating-point format, using the current rounding mode. 
-The library provides overloads of `std::nearbyint` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
-<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
+Rounds the floating-point argument <code>num</code> to an integer value in floating-point format, using the current rounding mode. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of `std::nearbyint` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
+
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -30,10 +31,9 @@ The library provides overloads of `std::nearbyint` for all cv-unqualified floati
     "cpp11" : <Nearbyint_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -43,7 +43,7 @@ The nearest integer value to <code>num</code>, according to the current rounding
 
 This function is not subject to any of the errors specified in math_errhandling.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 FE_INEXACT is never raised <br/>
 If <code>num</code> is `±∞`, it is returned, unmodified<br/>
@@ -62,11 +62,9 @@ If the current rounding mode is FE_TONEAREST, this function rounds to even in ha
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
-`std::nearbyint(num)` has the same effect as `std::nearbyint(static_cast<double>(num))`.
+`std::nearbyint(num)` has the same effect as <code>std::nearbyint(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -123,9 +121,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 rounding to nearest: 

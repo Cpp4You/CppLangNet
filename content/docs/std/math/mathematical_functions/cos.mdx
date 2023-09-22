@@ -31,7 +31,7 @@ Computes the cosine of <code>num</code> (measured in radians).
 
 ### Parameters
  
-<code>num</code> - floating-point or integer value representing angle in radians
+&#8203;<code>num</code> - floating-point or integer value representing angle in radians
 
 ### Return value
 If no errors occur, the cosine of <code>num</code> (cos(num)) in the range [-1, +1], is returned.
@@ -46,7 +46,7 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 if the argument is `±0`, the result is `1.0`
 if the argument is `±∞`, NaN is returned and `FE_INVALID` is raised
@@ -59,7 +59,7 @@ The case where the argument is infinite is not specified to be a domain error in
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, <br/>
-`std::cos(num)` has the same effect as `std::cos(static_cast<double>(num))`.
+`std::cos(num)` has the same effect as <code>std::cos(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
 

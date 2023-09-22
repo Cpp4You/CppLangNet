@@ -31,7 +31,6 @@ Categorizes floating point value <code>num</code> into the following categories:
 
 &#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
-
 ### Declarations
 
 <SwitchView content ={{
@@ -39,10 +38,9 @@ Categorizes floating point value <code>num</code> into the following categories:
     "cpp11" : <Fpclassify_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -52,11 +50,9 @@ One of `FP_INFINITE`, `FP_NAN`, `FP_NORMAL`, `FP_SUBNORMAL`, `FP_ZERO` or `imple
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. <br/>
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
-`std::fpclassify(num)` has the same effect as `std::fpclassify(static_cast<double>(num))`.
+`std::fpclassify(num)` has the same effect as <code>std::fpclassify(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -102,9 +98,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 1.0/0.0 is Inf

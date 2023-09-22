@@ -19,13 +19,13 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Rounds the floating-point argument <code>num</code> to an integer value (in floating-point format), using the current rounding mode. 
-The library provides overloads of `std::rint` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>.
+Rounds the floating-point argument <code>num</code> to an integer value (in floating-point format), using the current rounding mode. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of <code>std::rint</code> for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.
 
-`Rounding to long` and `Rounding to long long` Rounds the floating-point argument num to an integer value, using the current rounding mode. 
-The library provides overloads of `std::lrint` and `std::llrint` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> <Since v='cpp23'></Since>
+&#8203;<a href='#declarations'>Rounding to long</a> and <a href='#declarations'>Rounding to long long</a> Rounds the floating-point argument num to an integer value, using the current rounding mode. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of <code>std::lrint</code> and <code>std::llrint</code> for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since><br/>
 
-<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -34,10 +34,9 @@ The library provides overloads of `std::lrint` and `std::llrint` for all cv-unqu
     "cpp11" : <Rint_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -49,17 +48,15 @@ Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>ma
 
 If the result of `std::lrint` or `std::llrint` is outside the range representable by the return type, a domain error or a range error may occur.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 For the `std::rint` function:<br/>
-
 
 If <code>num</code> is `±∞`, it is returned, unmodified<br/>
 If <code>num</code> is `±0`, it is returned, unmodified<br/>
 If <code>num</code> is NaN, NaN is returned<br/>
 
 For `std::lrint` and `std::llrint` functions:<br/>
-
 
 If <code>num</code> is `±∞`, FE_INVALID is raised and an implementation-defined value is returned<br/>
 If the result of the rounding is outside the range of the return type, FE_INVALID is raised and an implementation-defined value is returned<br/>
@@ -85,13 +82,11 @@ FE_TONEAREST, then `std::rint` differs from <a href='/docs/std/math/mathematical
 
 The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. They only need to be sufficient to ensure that for their argument <code>num</code> of integer type:
 
-`std::rint(num)` has the same effect as `std::rint(static_cast<double>(num))`.<br/>
-`std::lrint(num)` has the same effect as `std::lrint(static_cast<double>(num))`.<br/>
-`std::llrint(num)` has the same effect as `std::llrint(static_cast<double>(num))`.<br/>
+`std::rint(num)` has the same effect as <code>std::rint(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.<br/>
+`std::lrint(num)` has the same effect as <code>std::lrint(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.<br/>
+`std::llrint(num)` has the same effect as <code>std::llrint(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.<br/>
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -183,9 +178,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 rounding to nearest (halfway cases to even): 

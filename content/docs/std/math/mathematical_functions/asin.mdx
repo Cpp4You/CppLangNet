@@ -32,7 +32,7 @@ Computes the principal value of the arc sine of <code>num</code>.
 
 ### Parameters
  
-<code>num</code> - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -46,7 +46,7 @@ Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>ma
 
 Domain error occurs if num is outside the range `[-1.0, 1.0]`.
 
-If the implementation supports IEEE floating-point arithmetic ([IEC 60559](https://www.iso.org/standard/80985.html)):
+If the implementation supports IEEE floating-point arithmetic ([<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>](https://www.iso.org/standard/80985.html)):
 
 If the argument is `±0`, it is returned unmodified
 If `|num| > 1`, a domain error occurs and NaN is returned
@@ -56,7 +56,7 @@ if the argument is NaN, NaN is returned
 
 The additional overloads are not required to be provided exactly as in <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
-`std::asin(num)` has the same effect as `std::asin(static_cast<double>(num))`.
+`std::asin(num)` has the same effect as <code>std::asin(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
 
@@ -108,7 +108,7 @@ int main()
         std::cout 
             << "FE_INVALID raised" 
             << '\n';
-
+}
 ```
 
 </div><div>

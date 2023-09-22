@@ -19,16 +19,15 @@ Defined in header `<cmath>`.
 
 ### Description
 
-If `from` equals `to`, `to` is returned. 
-The library provides overloads of `std::nextafter` for all cv-unqualified floating-point types as the type of the parameters `from` and `to` <Since v='cpp23'></Since>.
+If `from` equals `to`, `to` is returned. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of <code>std::nextafter</code> for all cv-unqualified floating-point types as the type of the parameters <code>from</code> and <code>to</code> </Since>. 
 
 4-6) 
-If `from` equals `to`, `to` is returned, converted from `long double` to the return type of the function without loss of range or precision. 
-The library provides overloads of `std::nexttoward` for all cv-unqualified floating-point types as the type of the parameter `from` <Since v='cpp23'></Since>.
+If `from` equals `to`, `to` is returned, converted from <span class='col-lb'>long double</span> to the return type of the function without loss of range or precision. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of <code>std::nexttoward</code> for all cv-unqualified floating-point types as the type of the parameter <code>from</code> </Since>.
 
-A) Additional `std::nextafter` overloads are provided for all other combinations of arithmetic types.
-B) Additional `std::nexttoward` overloads are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
-
+- A) Additional `std::nextafter` overloads are provided for all other combinations of arithmetic types.
+- B) Additional `std::nexttoward` overloads are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -36,7 +35,6 @@ B) Additional `std::nexttoward` overloads are provided for all integer types, wh
     "cpp23" : <Nextafter_Function_Declaration_Cpp23 />,
     "cpp11" : <Nextafter_Function_Declaration_Cpp11 />,
 }}/>
-
 
 ### Parameters
  
@@ -54,7 +52,7 @@ If a range error occurs due to underflow, the correct result is returned.
 
 Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 if `from` is finite, but the expected result is an infinity, raises FE_INEXACT and FE_OVERFLOW
 if `from` does not equal `to` and the result is subnormal or zero, raises FE_INEXACT and FE_UNDERFLOW
@@ -66,7 +64,7 @@ if either `from` or `to` is NaN, NaN is returned
 [POSIX] (https://pubs.opengroup.org/onlinepubs/9699919799/functions/nextafter.html)
 specifies that the overflow and the underflow conditions are range errors (errno may be set).
 
-IEC 60559 recommends that `from` is returned whenever `from == to`. These functions return `to` instead, 
+<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a> recommends that `from` is returned whenever `from == to`. These functions return `to` instead, 
 which makes the behavior around zero consistent: <br/>
 `std::nextafter(-0.0, +0.0)` returns `+0.0` and `std::nextafter(+0.0, -0.0)` returns `-0.0`.
 
@@ -75,17 +73,17 @@ which makes the behavior around zero consistent: <br/>
 The additional `std::nextafter` overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 
-If `num1` or `num2` has type `long double`, then <br/>
+If `num1` or `num2` has type <span class='col-lb'>long double</span>, then <br/>
 `std::nextafter(num1, num2)` has the same effect as  <br/>
-`std::nextafter(static_cast<long double>(num1), static_cast<long double>(num2)).`
+&#8203;<code>std::nextafter(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>.
 
 Otherwise, if `num1` and/or `num2` has type <span class='col-lb'>double</span> or an integer type, then  <br/>
 `std::nextafter(num1, num2)` has the same effect as  <br/>
-`std::nextafter(static_cast<double>(num1), static_cast<double>(num2))`.
+&#8203;<code>std::nextafter(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>.
 
-Otherwise, if `num1` or `num2` has type `float`, then  <br/>
+&#8203;<Until block v='cpp23'>Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then  <br/>
 `std::nextafter(num1, num2)` has the same effect as  <br/>
-`std::nextafter(static_cast<float>(num1), static_cast<float>(num2))`. <Until v='cpp23'></Until>
+&#8203;<code>std::nextafter(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code>.</Until>
 
 If `num1` and `num2` have arithmetic types, then  <br/>
 `std::nextafter(num1, num2)` has the same effect as  <br/> <code> std::nextafter(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2)) </code> ,
@@ -94,16 +92,14 @@ where <span class='col-d'>/\* common-floating-point-type \*/</span> is the float
 conversion rank and greatest floating-point conversion subrank between the types of `num1` and `num2`, 
 arguments of integer type are considered to have the same floating-point conversion rank as <span class='col-lb'>double</span>.
 
-If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a 
-usable candidate from the overloads provided. <Since v='cpp23'></Since>
+&#8203;<Since block v='cpp23'>If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a 
+usable candidate from the overloads provided.</Since>
 
 The additional `std::nexttoward` overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
-`std::nexttoward(num)` has the same effect as `std::nexttoward(static_cast<double>(num))`.
+`std::nexttoward(num)` has the same effect as <code>std::nexttoward(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -204,9 +200,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 The next representable float after 0 is 1.4012984643248170709e-45 (0x1p-149)
