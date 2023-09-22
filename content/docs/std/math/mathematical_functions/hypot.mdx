@@ -86,35 +86,34 @@ They only need to be sufficient to ensure that for their first argument `num1`, 
 
 If `num1`, `num2` or `num3` has type <span class='col-lb'>long double</span>, then <br/>
 `std::hypot(num1, num2)` has the same effect as  <br/>
-`std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))`.
+&#8203;<code>std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>.
 
 and
 `std::hypot(num1, num2, num3)` has the same effect as  <br/>
-`std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num3))`.
+&#8203;<code>std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num3))</code>.
 
 Otherwise, if `num1`, `num2` and/or `num3` has type <span class='col-lb'>double</span> or an integer type, then <br/>
 `std::hypot(num1, num2)` has the same effect as  <br/>
-`std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))`.
+&#8203;<code>std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>.
 
 and
 `std::hypot(num1, num2, num3)` has the same effect as  <br/>
-`std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num3))`.
+&#8203;<code>std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num3))</code>.
 
 Otherwise, if `num1`, `num2` or `num3` has type <span class='col-lb'>float</span>, then <br/>
 `std::hypot(num1, num2)` has the same effect as  <br/>
-`std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))`.
+&#8203;<code>std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code>.
        
 and
-`std::hypot(num1, num2, num3)` has the same effect as  <br/>
-`std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num3))`.
-//(until C++23)
+&#8203;<Until v='cpp23' block>`std::hypot(num1, num2, num3)` has the same effect as  <br/>
+&#8203;<code>std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num3))</code>. </Until>
 
 If `num1`, `num2` and `num3` have arithmetic types, then <br/>
 
-`std::hypot(num1, num2)` has the same effect as  <br/> <code> std::hypot(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2)) </code> .
+`std::hypot(num1, num2)` has the same effect as  <br/> <code> std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2)) </code> .
 
 and
-`std::hypot(num1, num2, num3)` has the same effect as  <br/> <code> std::hypot(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num3)) </code>
+`std::hypot(num1, num2, num3)` has the same effect as  <br/> <code> std::hypot(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num3)) </code>
 
 where <span class='col-d'>/\* common-floating-point-type \*/</span> is the floating-point type with the greatest floating-point conversion rank and greatest floating-point 
 conversion subrank among the types of `num1`, `num2` and `num3`, arguments of integer type are considered to have the same floating-point conversion rank as <span class='col-lb'>double</span>.

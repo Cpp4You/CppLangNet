@@ -56,29 +56,25 @@ They only need to be sufficient to ensure that for their first argument `num1` a
 
 If `num1` or `num2` has type <span class='col-lb'>long double</span>, then  <br/>
 `std::fmax(num1, num2)` has the same effect as <br/>
-`std::fmax(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))`.
+&#8203;<code>std::fmax(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>.
 
 Otherwise, if `num1` and/or `num2` has type <span class='col-lb'>double</span> or an integer type, then  <br/>
 `std::fmax(num1, num2)` has the same effect as  <br/>
-`std::fmax(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))`.
+&#8203;<code>std::fmax(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>.
 
-Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then  <br/>
+&#8203;<Until v='cpp23' block>Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then  <br/>
 `std::fmax(num1, num2)` has the same effect as  <br/>
-`std::fmax(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))`. <Until v='cpp23'></Until>
+&#8203;<code>std::fmax(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code>. </Until>
 
 If `num1` and `num2` have arithmetic types, then  <br/>
 `std::fmax(num1, num2)` has the same effect as  <br/> <code> std::fmax(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2))</code>
 
-where `/* common-floating-point-type *`/ is the floating-point type with the greatest floating-point conversion rank and 
+where <span class='col-d'>/\* common-floating-point-type \*/</span> is the floating-point type with the greatest floating-point conversion rank and 
 greatest floating-point conversion subrank between the types of `num1` and `num2`, arguments of integer type are considered to have the same floating-point conversion rank as <span class='col-lb'>double</span>.
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided
 
-
-
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -99,9 +95,7 @@ int main()
 }
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 fmax(2,1)    = 2

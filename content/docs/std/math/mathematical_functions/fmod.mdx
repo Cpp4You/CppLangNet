@@ -45,13 +45,11 @@ Domain error may occur if `y` is zero.
 
 If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>),
 
-If `x` is ±0 and `y` is not zero, ±0 is returned <br/>
-If `x` is ±∞ and `y` is not NaN, NaN is returned and FE_INVALID is raised <br/>
-If `y` is ±0 and `x` is not NaN, NaN is returned and FE_INVALID is raised <br/>
-If `y` is ±∞ and `x` is finite, `x` is returned. <br/>
-If either argument is NaN, NaN is returned
-
-
+* If `x` is ±0 and `y` is not zero, ±0 is returned 
+* If `x` is ±∞ and `y` is not NaN, NaN is returned and FE_INVALID is raised 
+* If `y` is ±0 and `x` is not NaN, NaN is returned and FE_INVALID is raised 
+* If `y` is ±∞ and `x` is finite, `x` is returned. 
+* If either argument is NaN, NaN is returned
 
 ### Notes
 
@@ -81,15 +79,15 @@ The additional overloads are not required to be provided exactly as (A). They on
 
 If `num1` or `num2` has type long double, then  <br/>
 `std::fmod(num1, num2)` has the same effect as <br/>
-`std::fmod(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))`.
+&#8203; <code>std::fmod(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>.
 
 Otherwise, if `num1` and/or `num2` has type double or an integer type, then  <br/>
 `std::fmod(num1, num2)` has the same effect as  <br/>
-`std::fmod(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))`.
+&#8203; <code>std::fmod(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>.
 
 Otherwise, if `num1` or `num2` has type float, then  <br/>
 `std::fmod(num1, num2)` has the same effect as  <br/>
-`std::fmod(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))`.
+&#8203; <code>std::fmod(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code>.
 
 If `num1` and `num2` have arithmetic types, then  <br/>
 `std::fmod(num1, num2)` has the same effect as  <br/> <code> std::fmod(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2))</code>
@@ -97,9 +95,6 @@ If `num1` and `num2` have arithmetic types, then  <br/>
 where <span class='col-d'>/\* common-floating-point-type \*/</span> is the floating-point type with the greatest floating-point conversion rank and greatest floating-point conversion subrank between the types of `num1` and `num2`, arguments of integer type are considered to have the same floating-point conversion rank as double.
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
-
-
-
 
 ### Examples
 
@@ -142,10 +137,7 @@ int main()
 }
 ```
 
-</div>
-
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 fmod(+5.1, +3.0) = 2.1
@@ -158,7 +150,6 @@ fmod(5.1, Inf) = 5.1
 fmod(+5.1, 0) = -nan
 FE_INVALID raised
 ```
-
 
 </div>
 </Columns>

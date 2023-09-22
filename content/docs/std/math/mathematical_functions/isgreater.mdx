@@ -19,7 +19,7 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Determines if the floating point number `x` is greater than the floating-point number `y`, without setting floating-point exceptions. 
+Determines if the floating point number `x` is greater than the floating-point number `y`, without setting floating-point exceptions. <br/>
 &#8203;<Since v='cpp23'>The library provides overloads for all cv-unqualified floating-point types as the type of the parameters `x` and `y` </Since>. <br/>
 &#8203;<a href='#declarations'>Additional Overloads</a> are provided for all other combinations of arithmetic types.
 
@@ -47,16 +47,15 @@ They only need to be sufficient to ensure that for their first argument `num1` a
 
 If `num1` or `num2` has type <span class='col-lb'>long double</span>, then <br/>
 `std::isgreater(num1, num2)` has the same effect as  <br/>
-`std::isgreater(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))`.
+&#8203;<code>std::isgreater(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>.
 
 Otherwise, if `num1` and/or `num2` has type <span class='col-lb'>double</span> or an integer type, then  <br/>
 `std::isgreater(num1, num2)` has the same effect as  <br/>
-`std::isgreater(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))`.
+&#8203;<code>std::isgreater(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>.
 
-Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then  <br/>
+&#8203;<Until block v='cpp23'>Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then  <br/>
 `std::isgreater(num1, num2)` has the same effect as  <br/>
-`std::isgreater(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))`.
-(until C++23)
+&#8203;<code>std::isgreater(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code>.</Until>
 
 If `num1` and `num2` have arithmetic types, then  <br/>
 `std::isgreater(num1, num2)` has the same effect as  <br/> <code> std::isgreater(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2))</code> ,

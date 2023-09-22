@@ -6,9 +6,9 @@ tags:                   [math, pow]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
-import Columns      from "@site-comps/Columns";
-import {Until}      from '@site-comps/Versions';
+import SwitchView            from '@site-comps/SwitchView';
+import Columns               from "@site-comps/Columns";
+import {Until, Version}      from '@site-comps/Versions';
 
 import  Pow_Function_Declaration_Cpp11         from "./pow/_codes/pow_function_declaration/cpp11.mdx";
 import  Pow_Function_Declaration_Cpp23         from "./pow/_codes/pow_function_declaration/cpp23.mdx";
@@ -30,7 +30,6 @@ types as the type of the parameters `base` and `exp`.
     "cpp11" : <Pow_Function_Declaration_Cpp11 />,
     "cpp98" : <Pow_Function_Declaration_Cpp98 />,
 }}/>
-
 
 ### Parameters
 
@@ -60,32 +59,32 @@ If `base` is zero and `exp` is negative, a domain error or a pole error may occu
 
 If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
-`pow(+0, exp)`, where `exp` is a negative odd integer, returns `+∞` and raises `FE_DIVBYZERO`<br/>
-`pow(-0, exp)`, where `exp` is a negative odd integer, returns `-∞` and raises `FE_DIVBYZERO`<br/>
-`pow(±0, exp)`, where `exp` is negative, finite, and is an even integer or a non-integer, returns `+∞` and raises `FE_DIVBYZERO`<br/>
-`pow(±0, -∞)` returns `+∞` and may raise `FE_DIVBYZERO`<br/>
-`pow(+0, exp)`, where `exp` is a positive odd integer, returns `+0`<br/>
-`pow(-0, exp)`, where `exp` is a positive odd integer, returns `-0`<br/>
-`pow(±0, exp)`, where `exp` is positive non-integer or a positive even integer, returns `+0`<br/>
-`pow(-1, ±∞)` returns 1<br/>
-`pow(+1, exp)` returns 1 for any `exp`, even when `exp` is NaN<br/>
-`pow(base, ±0)` returns 1 for any `base`, even when base is NaN<br/>
-`pow(base, exp)` returns NaN and raises `FE_INVALID` if `base` is finite and negative and `exp` is finite and non-integer.<br/>
-`pow(base, -∞)` returns `+∞` for any |base|<1<br/>
-`pow(base, -∞)` returns `+0` for any |base|>1<br/>
-`pow(base, +∞)` returns `+0` for any |base|<1<br/>
-`pow(base, +∞)` returns `+∞` for any |base|>1<br/>
-`pow(-∞, exp)` returns `-0` if `exp` is a negative odd integer<br/>
-`pow(-∞, exp)` returns `+0` if `exp` is a negative non-integer or negative even integer<br/>
-`pow(-∞, exp)` returns `-∞` if `exp` is a positive odd integer<br/>
-`pow(-∞, exp)` returns `+∞` if `exp` is a positive non-integer or positive even integer<br/>
-`pow(+∞, exp)` returns `+0` for any negative `exp`<br/>
-`pow(+∞, exp)` returns `+∞` for any positive `exp`<br/>
-except where specified above, if any argument is NaN, NaN is returned<br/>
+* `pow(+0, exp)`, where `exp` is a negative odd integer, returns `+∞` and raises `FE_DIVBYZERO`
+* `pow(-0, exp)`, where `exp` is a negative odd integer, returns `-∞` and raises `FE_DIVBYZERO`
+* `pow(±0, exp)`, where `exp` is negative, finite, and is an even integer or a non-integer, returns `+∞` and raises `FE_DIVBYZERO`
+* `pow(±0, -∞)` returns `+∞` and may raise `FE_DIVBYZERO`
+* `pow(+0, exp)`, where `exp` is a positive odd integer, returns `+0`
+* `pow(-0, exp)`, where `exp` is a positive odd integer, returns `-0`
+* `pow(±0, exp)`, where `exp` is positive non-integer or a positive even integer, returns `+0`
+* `pow(-1, ±∞)` returns 1
+* `pow(+1, exp)` returns 1 for any `exp`, even when `exp` is NaN
+* `pow(base, ±0)` returns 1 for any `base`, even when base is NaN
+* `pow(base, exp)` returns NaN and raises `FE_INVALID` if `base` is finite and negative and `exp` is finite and non-integer.
+* `pow(base, -∞)` returns `+∞` for any |base|<1
+* `pow(base, -∞)` returns `+0` for any |base|>1
+* `pow(base, +∞)` returns `+0` for any |base|<1
+* `pow(base, +∞)` returns `+∞` for any |base|>1
+* `pow(-∞, exp)` returns `-0` if `exp` is a negative odd integer
+* `pow(-∞, exp)` returns `+0` if `exp` is a negative non-integer or negative even integer
+* `pow(-∞, exp)` returns `-∞` if `exp` is a positive odd integer
+* `pow(-∞, exp)` returns `+∞` if `exp` is a positive non-integer or positive even integer
+* `pow(+∞, exp)` returns `+0` for any negative `exp`
+* `pow(+∞, exp)` returns `+∞` for any positive `exp`
+* except where specified above, if any argument is NaN, NaN is returned
 
 ### Notes
 
-C++98 added overloads where `exp` has type `int` on top of C `pow()`, and the return type of `std::pow(float, int)` was <span class='col-lb'>float</span>. However, the additional overloads 
+&#8203;<Version v='cpp98'></Version> added overloads where `exp` has type `int` on top of C `pow()`, and the return type of `std::pow(float, int)` was <span class='col-lb'>float</span>. However, the additional overloads 
 introduced in C++11 specify that `std::pow(float, int)` should return <span class='col-lb'>double</span>. LWG issue 550 was raised to target this conflict, and the resolution is to removed 
 the extra int `exp` overloads.
 
@@ -96,15 +95,15 @@ argument `num1` and second argument `num2`:
 
 If `num1` or `num2` has type <span class='col-lb'>long double</span>, then <br/>
 `std::pow(num1, num2)` has the same effect as <br/>
-`std::pow(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))`
+&#8203;<code>std::pow(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>
 
 Otherwise, if `num1` and/or `num2` has type <span class='col-lb'>double</span> or an integer type, then <br/>
 `std::pow(num1, num2)` has the same effect as <br/>
-`std::pow(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))`
+&#8203;<code>std::pow(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>
 
-Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then <br/>
+&#8203;<Until v='cpp23' block>Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then <br/>
 `std::pow(num1, num2)` has the same effect as <br/>
-`std::pow(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))` <Until v='cpp23'></Until>
+&#8203;<code>std::pow(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code> </Until>
 
 If `num1` and `num2` have arithmetic types, then <br/>
 `std::pow(num1, num2)` has the same effect as <br/> <code> std::pow(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2)) </code>
@@ -115,8 +114,6 @@ floating-point conversion subrank between the types of `num1` and `num2`, argume
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -179,9 +176,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 pow(2, 10) = 1024

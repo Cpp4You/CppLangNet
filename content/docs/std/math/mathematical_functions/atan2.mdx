@@ -58,21 +58,21 @@ Domain error may occur if `x` and `y` are both zero.
 
 If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>),
 
-If `x` and `y` are both zero, domain error does not occur <br/>
-If `x` and `y` are both zero, range error does not occur either<br/>
-If `y` is zero, pole error does not occur<br/>
-If `y` is `±0` and `x` is negative or `-0`, `±π` is returned<br/>
-If `y` is `±0` and `x` is positive or `+0`,` ±0` is returned<br/>
-If `y` is `±∞` and `x` is finite, `±π/2` is returned<br/>
-If `y` is `±∞` and `x` is `-∞`, `±3π/4` is returned<br/>
-If `y` is `±∞` and `x` is `+∞`, `±π/4` is returned<br/>
-If `x` is `±0` and `y` is negative, `-π/2` is returned<br/>
-If `x` is `±0` and `y` is positive, `+π/2` is returned<br/>
-If `x` is `-∞` and `y` is finite and positive, `+π` is returned<br/>
-If `x` is `-∞` and `y` is finite and negative, `-π` is returned<br/>
-If `x` is `+∞` and `y` is finite and positive, `+0` is returned<br/>
-If `x` is `+∞` and `y` is finite and negative, `-0` is returned<br/>
-If either `x` is NaN or `y` is NaN, NaN is returned<br/>
+* If `x` and `y` are both zero, domain error does not occur 
+* If `x` and `y` are both zero, range error does not occur either
+* If `y` is zero, pole error does not occur
+* If `y` is `±0` and `x` is negative or `-0`, `±π` is returned
+* If `y` is `±0` and `x` is positive or `+0`,` ±0` is returned
+* If `y` is `±∞` and `x` is finite, `±π/2` is returned
+* If `y` is `±∞` and `x` is `-∞`, `±3π/4` is returned
+* If `y` is `±∞` and `x` is `+∞`, `±π/4` is returned
+* If `x` is `±0` and `y` is negative, `-π/2` is returned
+* If `x` is `±0` and `y` is positive, `+π/2` is returned
+* If `x` is `-∞` and `y` is finite and positive, `+π` is returned
+* If `x` is `-∞` and `y` is finite and negative, `-π` is returned
+* If `x` is `+∞` and `y` is finite and positive, `+0` is returned
+* If `x` is `+∞` and `y` is finite and negative, `-0` is returned
+* If either `x` is NaN or `y` is NaN, NaN is returned
 
 ### Notes
 
@@ -90,15 +90,15 @@ They only need to be sufficient to ensure that for their first argument `num1` a
 
 If `num1` or `num2` has type <span class='col-lb'>long double</span>, then  <br/>
 `std::atan2(num1, num2)` has the same effect as  <br/>
-`std::atan2(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))`.
+&#8203;<code>std::atan2(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>.
 
 Otherwise, if `num1` and/or `num2` has type <span class='col-lb'>double</span> or an integer type, then  <br/>
 `std::atan2(num1, num2)` has the same effect as  <br/>
-`std::atan2(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))`.
+&#8203;<code>std::atan2(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>.
 
-Otherwise, if `num1` or `num2` has type `float`, then  <br/>
+<Until v='cpp23' block>Otherwise, if `num1` or `num2` has type `float`, then  <br/>
 `std::atan2(num1, num2)` has the same effect as  <br/>
-`std::atan2(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))`. (until C++23)
+&#8203;<code>std::atan2(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code>.</Until>
 
 If `num1` and `num2` have arithmetic types, then  <br/>
 `std::atan2(num1, num2)` has the same effect as  <br/> <code>std::atan2(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2))</code>.

@@ -13,7 +13,6 @@ import {Until}      from "@site-comps/Versions";
 import Fmin_Function_Declaration_Cpp11         from "./fmin/_codes/fmin_function_declaration/cpp11.mdx";
 import Fmin_Function_Declaration_Cpp23         from "./fmin/_codes/fmin_function_declaration/cpp23.mdx";
 
-
 # Fmin
 
 Defined in header `<cmath>`.
@@ -23,14 +22,12 @@ Defined in header `<cmath>`.
 Returns the smaller of two floating point arguments, treating NaNs as missing data (between a NaN and a numeric value, the numeric value is chosen). 
 The library provides overloads of std::fmin for all cv-unqualified floating-point types as the type of the parameters x and y.
 
-
 ### Declarations
 
 <SwitchView content ={{
     "cpp23" : <Fmin_Function_Declaration_Cpp23 />,
     "cpp11" : <Fmin_Function_Declaration_Cpp11 />,
 }}/>
-
 
 ### Parameters
     
@@ -58,15 +55,15 @@ They only need to be sufficient to ensure that for their first argument `num1` a
 
 If `num1` or `num2` has type <span class='col-lb'>long double</span>, then  <br/>
 `std::fmin(num1, num2)` has the same effect as  <br/>
-`std::fmin(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))`.
+&#8203;<code>std::fmin(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>.
 
 Otherwise, if `num1` and/or `num2` has type <span class='col-lb'>double</span> or an integer type, then  <br/>
 `std::fmin(num1, num2)` has the same effect as  <br/>
-`std::fmin(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))`.
+&#8203;<code>std::fmin(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>.
 
-Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then  <br/>
+&#8203;<Until v='cpp23' block>Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then  <br/>
 `std::fmin(num1, num2)` has the same effect as  <br/>
-`std::fmin(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))`. <Until v='cpp23'></Until>
+&#8203;<code>std::fmin(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code>. </Until>
 
 If `num1` and `num2` have arithmetic types, then  <br/>
 `std::fmin(num1, num2)` has the same effect as  <br/> <code> std::fmin(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2)) </code>
@@ -76,10 +73,7 @@ floating-point conversion subrank between the types of `num1`and `num2`, argumen
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
 
-
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -100,9 +94,7 @@ int main()
 }
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 fmin(2,1)    = 1

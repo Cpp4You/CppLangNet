@@ -28,7 +28,6 @@ Computes the `e` (Euler's number, 2.7182818...) raised to the given power <code>
     "cpp11" : <Expm1_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
 &#8203;<code>num</code> - floating-point or integer value
@@ -47,15 +46,12 @@ Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>ma
 
 If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
-If the argument is `±0`, it is returned, unmodified <br/>
-If the argument is `-∞`, -1 is returned<br/>
-If the argument is `+∞`, `+∞` is returned<br/>
-If the argument is NaN, NaN is returned<br/>
-
+* If the argument is `±0`, it is returned, unmodified 
+* If the argument is `-∞`, -1 is returned
+* If the argument is `+∞`, `+∞` is returned
+* If the argument is NaN, NaN is returned
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -107,9 +103,7 @@ int main()
 }
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 expm1(1) = 1.71828

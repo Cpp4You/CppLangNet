@@ -44,7 +44,6 @@ The following floating-point error conditions are recognized:
 #define math_errhandling  /*implementation defined*/
 ```
 
-
 ### Notes
 
 Whether `FE_INEXACT` is raised by the mathematical library functions is unspecified in general, but may be explicitly specified in the description of the function 
@@ -54,8 +53,6 @@ Before C++11, floating-point exceptions were not specified, `EDOM` was required 
 `ERANGE` was required for overflows and implementation-defined for underflows.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -90,9 +87,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 MATH_ERRNO is set

@@ -12,7 +12,6 @@ import Columns      from "@site-comps/Columns";
 import Remquo_Function_Declaration_Cpp11         from "./remquo/_codes/remquo_function_declaration/cpp11.mdx";
 import Remquo_Function_Declaration_Cpp23         from "./remquo/_codes/remquo_function_declaration/cpp23.mdx";
 
-
 # Remquo
 
 Defined in header `<cmath>`.
@@ -35,7 +34,6 @@ sufficient to determine the octant of the result within a period.
 `x`,`y`	-	floating-point or integer values
 `quo`	-	pointer to int to store the sign and some bits of `x / y`
 
-
 ### Return Value
 
 If successful, returns the floating-point remainder of the division `x / y` as defined in [std::remainder](/docs/std/math/mathematical_functions/remainder/), and stores, in `*quo`, 
@@ -50,7 +48,6 @@ If a range error occurs due to underflow, the correct result is returned if subn
 
 If `y` is zero, but the domain error does not occur, zero is returned.
 
-
 ### Error handling
 
 Domain error may occur if `y` is zero.
@@ -58,15 +55,10 @@ Domain error may occur if `y` is zero.
 If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 The current rounding mode has no effect<br/>
-FE_INEXACT is never raised <br/>
-If `x` is ±∞ and `y` is not NaN, NaN is returned and FE_INVALID is raised<br/>
-If `y` is ±0 and `x` is not NaN, NaN is returned and FE_INVALID is raised<br/>
-If either `x` or `y` is NaN, NaN is returned<br/>
-
-
-
-
-
+FE_INEXACT is never raised 
+* If `x` is ±∞ and `y` is not NaN, NaN is returned and FE_INVALID is raised
+* If `y` is ±0 and `x` is not NaN, NaN is returned and FE_INVALID is raised
+* If either `x` or `y` is NaN, NaN is returned
 
 ### Examples
 
@@ -141,10 +133,7 @@ int main()
 }
 ```
 
-</div>
-
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 naive:
