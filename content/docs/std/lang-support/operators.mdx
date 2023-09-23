@@ -1,0 +1,163 @@
+---
+title:              Operators
+tags:               [Language, Operators]
+hide_title:         true
+---
+
+import {Since, Until, Version, Deprecated, Removed}     from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
+import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
+import Columns                                          from "@site-comps/Columns";
+
+import styles                                           from "@site-comps/SyntaxTable.module.scss";
+
+# operator overloading
+Customizes the C++ operators for operands of user-defined types.
+
+## Syntax
+Overloaded operators are [functions](/docs/std/lang-support/functions) with special function names:
+
+<SyntaxTable>
+    <Syntax id='1' directive={<>operator</>}                                              args={['op']}/>
+    <Syntax id='2' directive={<>operator</>}                                              args={['type']}/>
+    <Syntax id='3' directive={<>operator&nbsp;new<br/>operator&nbsp;new&nbsp;[]</>}       args={[]}/>
+    <Syntax id='4' directive={<>operator&nbsp;delete<br/>operator&nbsp;delete&nbsp;[]</>} args={[]}/>
+    <Syntax id='5' directive={<>operator ""</>}                                           args={['suffix-identifier', <Since v='cpp11'></Since>]}/>
+    <Syntax id='6' directive={<>operator co_await</>}                                     args={[<Since v='cpp20'></Since>]}/>
+</SyntaxTable>
+
+<SymbolTable noTraits>
+    <Symbol name = {<i class='col-g'>op</i>}
+    desc = {<>any of the following operators: <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code> <code>^</code> <code>&</code> <code>|</code> <code>~</code> <code>!</code> <code>=</code>&nbsp;
+    <code>&lt;</code> <code>&gt;</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code> <code>^=</code> <code>&=</code> <code>|=</code> &nbsp;
+    <code>&lt;&lt;</code> <code>&gt;&gt;</code> <code>&gt;&gt;=</code> <code>&lt;&lt;=</code> <code>==</code> <code>!=</code> <code>&lt;=</code> <code>&gt;=</code> &nbsp;
+    <Since v='cpp20'><code>&lt;=&gt;</code></Since> <code>&&</code> <code>||</code> <code>++</code> <code>--</code> <code>,</code> <code>->*</code> <code>-></code> <code>( )</code> <code>[ ]</code></>}/>
+</SymbolTable>
+
+1. overloaded operator;
+2. [user-defined conversion function](./cast_operator);
+3. [allocation function](/docs/std/memory/new/operator_new);
+4. [deallocation function](/docs/std/memory/new/operator_delete);
+5. [user-defined literal](./user_literal);
+6. overloaded co_await operator for use in [co_await expressions](./coroutines#co_await).
+
+## Overloaded operators
+
+When an operator appears in an expression, and at least one of its operands has a class type or an enumeration type, 
+then overload resolution is used to determine the user-defined function to be called among all the functions whose signatures match the following:
+
+<table className={styles.syntaxTable}>
+    <tr>
+        <th>Expression</th>
+        <th>As member function</th>
+        <th>As non-member function</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>@a</td>
+        <td>(a).operator@ ( )</td>
+        <td>operator@ (a)</td>
+        <td><code>!<a href='/docs/std/io/cin'>std::cin</a></code> 
+        calls <code><a href='/docs/std/io/cin'>std::cin.operator!<span class ='col-d'>()</span></a></code></td>
+    </tr>
+    <tr>
+        <td>a@b</td>
+        <td>(a).operator@ (b)</td>
+        <td>operator@ (a, b)</td>
+        <td><code><a href='/docs/std/io/cout'>std::cout</a> &lt;&lt; 42</code> 
+        calls <code><a href='/docs/std/io/cout'>std::cout</a>.operator&lt;&lt;<span class ='col-d'>(<span class='col-lb'>42</span>)</span></code></td>
+    </tr>
+    <tr>
+        <td>a=b</td>
+        <td>(a).operator= (b)</td>
+        <td style={{backgroundColor:'#912626'}}>cannot be non-member</td>
+        <td>Given <code><a href='/docs/std/containers/strings/string'>std::string</a> s<span class ='col-d'>;</span></code>, 
+        <code>s = <span class ='col-d'>&quot;abc&quot;;</span></code> 
+        calls <code>s.operator=<span class='col-d'>(&quot;abc&quot;)</span></code></td>
+    </tr>
+    <tr>
+        <td>a(b...)</td>
+        <td>(a).operator()(b...)</td>
+        <td style={{backgroundColor:'#912626'}}>cannot be non-member</td>
+        <td>Given <code><a href='/docs/std/numeric/random/random_device'>std::random_device</a> r<span class ='col-d'>;</span></code>, 
+        <code>auto n = r<span class ='col-d'>();</span></code> 
+        calls <code>r.operator<span class ='col-d'>()()</span></code></td>
+    </tr>
+    <tr>
+        <td>a[b...]</td>
+        <td>(a).operator[](b...)</td>
+        <td style={{backgroundColor:'#912626'}}>cannot be non-member</td>
+        <td>Given <code><a href='/docs/std/containers/maps/map'>std::map</a>&lt;<span class='col-lb'>int, int</span>&gt; m<span class ='col-d'>;</span></code>, 
+        <code>m<span class='col-d'>[<span class='col-lb'>1</span>]</span> = <span class='col-lb'>2</span><span class ='col-d'>;</span></code> 
+        calls <code>m.operator<span class='col-d'>[](<span class='col-lb'>1</span>)</span></code></td>
+    </tr>
+    <tr>
+        <td>a-&gt;</td>
+        <td>(a).operator-&gt; ( )</td>
+        <td style={{backgroundColor:'#912626'}}>cannot be non-member</td>
+        <td>Given <code><a href='/docs/std/memory/unique_ptr'>std::unique_ptr</a>&lt;S&gt; p<span class ='col-d'>;</span></code>, 
+        <code>p-&gt;bar<span class='col-d'>();</span></code>
+        calls <code>p.operator-&gt;<span class='col-d'>()</span></code></td>
+    </tr>
+    <tr>
+        <td>a@</td>
+        <td>(a).operator@ (0)</td>
+        <td>operator@ (a, 0)</td>
+        <td>Given <code><a href='/docs/std/containers/arrays/vector'>std::vector</a>&lt;<span class='col-lb'>int</span>&gt;::iterator i<span class ='col-d'>;</span></code>, 
+        <code>i++</code>
+        calls <code>i.operator++<span class ='col-d'>(</span>0<span class ='col-d'>)</span></code></td>
+    </tr>
+</table>
+<table className={styles.syntaxTable}>
+    <tr>
+        <td>In this table, @ is a placeholder representing all matching operators: all prefix operators in @a, all postfix operators other than -> in a@, all infix operators other than = in a@b.</td>
+    </tr>
+</table>
+
+<Since v='cpp20' block> In addition, for comparison operators <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>&lt;=&gt;</code>, 
+overload resolution also considers the <i>rewritten candidates</i> generated from <code>operator==</code> or <code>operator&lt;=&gt;</code>. </Since>
+
+Note: for overloading <Since v='cpp20'><a>co_await</a></Since>, [user-defined conversion function](./cast_operator), [user-defined literals](./user_literal), 
+[allocation](/docs/std/memory/new/operator_new) and [deallocation](/docs/std/memory/new/operator_delete) see their respective articles.
+
+Overloaded operators (but not the built-in operators) can be called using function notation:
+
+```cpp
+std::string str = "Hello, ";
+str.operator+=("world");                      // same as str += "world";
+operator<<(operator<<(std::cout, str), '\n'); // same as std::cout << str << '\n'
+                                              // (since C++17) except for sequencing
+```
+
+## Restrictions
+
+* The operators `::` (scope resolution), `.` (member access), `.*` (member access through pointer to member), and `?:` (ternary conditional) cannot be overloaded.
+* New operators such as `**`, `<>`, or `&|` cannot be created.
+* It is not possible to change the precedence, grouping, or number of operands of operators.
+* The overload of operator `->` must either return a raw pointer, or return an object (by reference or by value) for which operator `->` is in turn overloaded.
+* The overloads of operators `&&` and `||` lose short-circuit evaluation.
+* <Until v='cpp17'><code>&&</code>, <code>||</code>, and <code>,</code> (comma) lose their special <a href='./eval_order'>sequencing properties</a> when overloaded and behave like regular function calls even when they are used without function-call notation.</Until>
+
+## Canonical implementations
+
+### Assignment operator
+### Stream extraction and insertion
+### Function call operator
+### Increment and decrement
+### Binary arithmetic operators
+### Comparison operators
+### Array subscript operator
+### Bitwise arithmetic operators
+### Boolean negation operator
+### Rarely overloaded operators
+
+
+## Notes
+
+## Example
+
+## Defect reports
+
+## See also
+
+## External Links
