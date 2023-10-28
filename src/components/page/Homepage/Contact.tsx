@@ -1,7 +1,7 @@
 import React from "react";
 import "./Contact.scss";
 
-const PROFILE_PIC = "https://i.imgur.com/31E5neo.jpg";
+const PROFILE_PIC = "https://i.imgur.com/09vRoT8.png";
 
 const CONTACT_LINKS = {
   LinkedIn: "https://www.linkedin.com/in/pawe%C5%82-syska-b00155227/",
@@ -10,7 +10,7 @@ const CONTACT_LINKS = {
 
 export default function Contact() {
 
-  const linkedIn = <a href={CONTACT_LINKS.LinkedIn} target="_blank">LinkedIn</a>;
+  const linkedIn = <a href={CONTACT_LINKS.LinkedIn} target="_blank" rel="noreferrer">LinkedIn</a>;
   const discord = <a href={CONTACT_LINKS.Discord}>Discord</a>;
 
   return (
