@@ -10,25 +10,23 @@ import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
 import siteConfig from "@generated/docusaurus.config";
 
 export default function prismIncludeLanguages() {
-	if (ExecutionEnvironment.canUseDOM) {
-		const {
-			themeConfig: {
-				prism: {
-					additionalLanguages = [],
-					scripts = [],
-				} = {}
-			},
-		} = siteConfig;
+  if (ExecutionEnvironment.canUseDOM) {
+    const {
+      themeConfig: {
+        prism: {
+          additionalLanguages = [],
+          scripts = [],
+        } = {}
+      },
+    } = siteConfig;
 
-		window.Prism = Prism;
-		additionalLanguages.forEach(lang => {
-			require(`/static/prism/lang-${lang}`);
-		});
+    window.Prism = Prism;
+    additionalLanguages.forEach(lang => {
+      require(`/static/prism/lang-${lang}`);
+    });
 
-		scripts.forEach(hook => {
-			require(`/static/prism/${hook}`);
-		});
-
-		// delete window.Prism;
-	}
+    scripts.forEach(hook => {
+      require(`/static/prism/${hook}`);
+    });
+  }
 }
