@@ -7,18 +7,13 @@ constexpr int ilogbf( float num );
 constexpr int ilogbl( long double num );
 ```
 
-`Definitions`
-
-```cpp
+```cpp title="Definitions"
 // 4)
 #define FP_ILOGB0   /* implementation-defined */
 // 5)
 #define FP_ILOGBNAN /* implementation-defined */
 ```
-
-`Additional Overloads`
-
-```cpp
+```cpp title="Additional Overloads"
 // 6)
 template< class Integer >
 constexpr int ilogb ( Integer num );

@@ -18,8 +18,8 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the `e` (Euler's number, 2.7182818...) raised to the given power `num`, minus 1.0. This function is more accurate than the expression 
-`std::exp(num) - 1.0` if `num` is close to zero. The library provides overloads of `std::expm1` for all cv-unqualified floating-point types as the type of the parameter `num`.
+Computes the `e` (Euler's number, 2.7182818...) raised to the given power <code>num</code>, minus 1.0. This function is more accurate than the expression 
+`std::exp(num) - 1.0` if <code>num</code> is close to zero. The library provides overloads of `std::expm1` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>.
 
 ### Declarations
 
@@ -28,10 +28,9 @@ Computes the `e` (Euler's number, 2.7182818...) raised to the given power `num`,
     "cpp11" : <Expm1_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -43,19 +42,16 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
-If the argument is `±0`, it is returned, unmodified <br/>
-If the argument is `-∞`, -1 is returned<br/>
-If the argument is `+∞`, `+∞` is returned<br/>
-If the argument is NaN, NaN is returned<br/>
-
+* If the argument is `±0`, it is returned, unmodified 
+* If the argument is `-∞`, -1 is returned
+* If the argument is `+∞`, `+∞` is returned
+* If the argument is NaN, NaN is returned
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -107,9 +103,7 @@ int main()
 }
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 expm1(1) = 1.71828

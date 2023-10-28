@@ -9,6 +9,7 @@ hide_title:             true
 import Image        from "@site-comps/Image";
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Round_Function_Declaration_Cpp11         from "./round/_codes/round_function_declaration/cpp11.mdx";
 import  Round_Function_Declaration_Cpp23         from "./round/_codes/round_function_declaration/cpp23.mdx";
@@ -18,15 +19,14 @@ import  Round_Function_Declaration_Cpp23         from "./round/_codes/round_func
 Defined in header `<cmath>`.
 
 ### Description
-Computes the nearest integer value to `num` (in floating-point format), rounding halfway cases away from zero, regardless of the current rounding mode. 
-The library provides overloads of `std::round` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+Computes the nearest integer value to <code>num</code> (in floating-point format), rounding halfway cases away from zero, regardless of the current rounding mode. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of <code>std::round</code> for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.
 
-`Rounding to long` and `Rounding to long long` Computes the nearest integer value to `num` (in integer format), 
-rounding halfway cases away from zero, regardless of the current rounding mode. 
-The library provides overloads of `std::lround` and `std::llround` for all cv-unqualified floating-point types as the type of the parameter `num`(since C++23). 
+&#8203;<a href='#declarations'>Rounding to long</a> and <a href='#declarations'>Rounding to long long</a> Computes the nearest integer value to <code>num</code> (in integer format), 
+rounding halfway cases away from zero, regardless of the current rounding mode. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of <code>std::lround</code> and <code>std::llround</code> for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.
 
-`Additional overloads` are provided for all integer types, which are treated as `double`.
-
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -35,14 +35,13 @@ The library provides overloads of `std::lround` and `std::llround` for all cv-un
     "cpp11" : <Round_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the nearest integer value to `num`, rounding halfway cases away from zero, is returned.
+If no errors occur, the nearest integer value to <code>num</code>, rounding halfway cases away from zero, is returned.
 
 <Image maxheight={300}
         src="/img/doc/math/round/math-round_away_zero.svg"
@@ -52,26 +51,26 @@ If a domain error occurs, an implementation-defined value is returned.
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 If the result of `std::lround` or `std::llround` is outside the range representable by the return type, a domain error or a range error may occur.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 For the `std::round` function:
 
 The current rounding mode has no effect.<br/>
-If `num` is `±∞`, it is returned, unmodified<br/>
-If `num` is `±0`, it is returned, unmodified<br/>
-If `num` is NaN, NaN is returned<br/>
+If <code>num</code> is `±∞`, it is returned, unmodified<br/>
+If <code>num</code> is `±0`, it is returned, unmodified<br/>
+If <code>num</code> is NaN, NaN is returned<br/>
 
 For `std::lround` and `std::llround` functions:
 
 FE_INEXACT is **never** raised <br/>
 The current rounding mode has no effect.<br/>
-If `num` is `±∞`, FE_INVALID is raised and an implementation-defined value is returned<br/>
+If <code>num</code> is `±∞`, FE_INVALID is raised and an implementation-defined value is returned<br/>
 If the result of the rounding is outside the range of the return type, FE_INVALID is raised and an implementation-defined value is returned<br/>
-If `num` is NaN, FE_INVALID is raised and an implementation-defined value is returned.<br/>
+If <code>num</code> is NaN, FE_INVALID is raised and an implementation-defined value is returned.<br/>
 
 ### Notes
 
@@ -83,7 +82,7 @@ The largest representable floating-point values are exact integers in all standa
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/lround.html) 
 specifies that all cases where `std::lround` or `std::llround` raise FE_INEXACT are domain errors.
 
-The `double` version of `std::round` behaves as if implemented as follows:
+The <span class='col-lb'>double</span> version of `std::round` behaves as if implemented as follows:
 ```cpp
 #include <cfenv>
 #include <cmath>
@@ -107,16 +106,14 @@ double round(double x)
 }
 ```
 
-The additional overloads are not required to be provided exactly as `additional overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type:
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type:
 
-`std::round(num)` has the same effect as `std::round(static_cast<double>(num))` <br/>
-`std::lround(num)` has the same effect as `std::lround(static_cast<double>(num))`<br/>
-`std::llround(num)` has the same effect as `std::llround(static_cast<double>(num))`<br/>
+`std::round(num)` has the same effect as <code>std::round(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code><br/>
+`std::lround(num)` has the same effect as <code>std::lround(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code><br/>
+`std::llround(num)` has the same effect as <code>std::llround(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code><br/>
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -176,9 +173,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 round(+2.3) = 2  

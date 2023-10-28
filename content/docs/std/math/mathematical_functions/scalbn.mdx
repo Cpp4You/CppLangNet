@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Scalbn_Function_Declaration_Cpp11         from "./scalbn/_codes/scalbn_function_declaration/cpp11.mdx";
 import  Scalbn_Function_Declaration_Cpp23         from "./scalbn/_codes/scalbn_function_declaration/cpp23.mdx";
@@ -18,9 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Multiplies a floating point value `num` by `FLT_RADIX` raised to power `exp`. The library provides overloads of `std::scalbn` and `std::scalbln` 
-for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+Multiplies a floating point value <code>num</code> by `FLT_RADIX` raised to power `exp`. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of std::scalbn and std::scalbln for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -29,15 +30,14 @@ for all cv-unqualified floating-point types as the type of the parameter `num` (
     "cpp11" : <Scalbn_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 `exp` - integer value
 
 ### Return value
 
-If no errors occur, `num` multiplied by `FLT_RADIX` to the power of `exp` (num×FLT_RADIX<sup>exp</sup>) is returned.
+If no errors occur, <code>num</code> multiplied by `FLT_RADIX` to the power of `exp` (num×FLT_RADIX<sup>exp</sup>) is returned.
 
 If a range error due to overflow occurs, `±HUGE_VAL`, `±HUGE_VALF`, or `±HUGE_VALL` is returned.
 
@@ -45,20 +45,20 @@ If a range error due to underflow occurs, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 Unless a range error occurs, FE_INEXACT is never raised (the result is exact)
 Unless a range error occurs, the current rounding mode is ignored
-If `num` is `±0`, it is returned, unmodified
-If `num` is `±∞`, it is returned, unmodified
-If `exp` is `0`, then `num` is returned, unmodified
-If `num` is NaN, NaN is returned
+If <code>num</code> is `±0`, it is returned, unmodified
+If <code>num</code> is `±∞`, it is returned, unmodified
+If `exp` is `0`, then <code>num</code> is returned, unmodified
+If <code>num</code> is NaN, NaN is returned
 
 ### Notes
 
-On binary systems (where FLT_RADIX is 2), `std::scalbn` is equivalent to `std::ldexp`.
+On binary systems (where FLT_RADIX is 2), `std::scalbn` is equivalent to <a href='/docs/std/math/mathematical_functions/ldexp'><code>std::ldexp</code></a>.
 
 Although `std::scalbn` and `std::scalbln` are specified to perform the operation efficiently, 
 on many implementations they are less efficient than multiplication or division by a power of two using arithmetic operators.
@@ -70,14 +70,12 @@ largest finite one may be greater than 32767, the standard-guaranteed `INT_MAX`.
 
 The GNU implementation does not set errno regardless of math_errhandling.
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. They only need to be sufficient to ensure that for their argument `num` of integer type:
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. They only need to be sufficient to ensure that for their argument <code>num</code> of integer type:
 
-`std::scalbn(num, exp)` has the same effect as `std::scalbn(static_cast<double>(num), exp)` <br/>
-`std::scalbln(num, exp)` has the same effect as `std::scalbln(static_cast<double>(num), exp)` <br/>
+`std::scalbn(num, exp)` has the same effect as <code>std::scalbn(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num), exp)</code> <br/>
+`std::scalbln(num, exp)` has the same effect as <code>std::scalbln(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num), exp)</code> <br/>
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -129,9 +127,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 scalbn(7, -4) = 0.4375

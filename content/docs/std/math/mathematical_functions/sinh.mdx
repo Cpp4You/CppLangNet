@@ -7,9 +7,9 @@ hide_title:             true
 ---
 
 import SwitchView   from '@site-comps/SwitchView';
-import Columns      from "@site-comps/Columns";
+import Columns      from '@site-comps/Columns';
+import {Since}      from '@site-comps/Versions';
 
-<!----------------- Codes ---------------------->
 import  Sinh_Function_Declaration_Cpp11         from "./sinh/_codes/sinh_function_declaration/cpp11.mdx";
 import  Sinh_Function_Declaration_Cpp23         from "./sinh/_codes/sinh_function_declaration/cpp23.mdx";
 
@@ -19,11 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the hyperbolic sine of `num`. The library provides overloads of `std::sinh` for all cv-unqualified floating-point types as the type of the parameter `num`. (since C++23)
-`Additional overloads` are provided for all integer types, which are treated as `double`.
-(since C++11)
-
-
+Computes the hyperbolic sine of <code>num</code>. <br/>
+<Since v='cpp23'>The library provides overloads of std::sinh for all cv-unqualified floating-point types as the type of the parameter <code>num</code>. </Since> <br/>
+<Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>. </Since>
 
 ### Declarations
 
@@ -32,23 +30,22 @@ Computes the hyperbolic sine of `num`. The library provides overloads of `std::s
     "cpp11" : <Sinh_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the hyperbolic sine of `num` (sinh(num), or (e<sup>num</sup> - e<sup>-num</sup>)/2) is returned.
+If no errors occur, the hyperbolic sine of <code>num</code> (sinh(num), or (e<sup>num</sup> - e<sup>-num</sup>)/2) is returned.
 If a range error due to overflow occurs, `±HUGE_VAL`, `±HUGE_VALF`, or `±HUGE_VALL` is returned.
 
 If a range error occurs due to underflow, the correct result (after rounding) is returned.
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 if the argument is `±0` or `±∞`, it is returned unmodified
 if the argument is NaN, NaN is returned
@@ -56,16 +53,14 @@ if the argument is NaN, NaN is returned
 
 ### Notes
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/sinh.html) 
-specifies that in case of underflow, `num` is returned unmodified, and if that is not supported, 
+specifies that in case of underflow, <code>num</code> is returned unmodified, and if that is not supported, 
 and implementation-defined value no greater than `DBL_MIN`, `FLT_MIN`, and `LDBL_MIN` is returned.
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
-`std::sinh(num)` has the same effect as  `std::sinh(static_cast<double>(num))`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
+`std::sinh(num)` has the same effect as  <code>std::sinh(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -118,9 +113,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 sinh(1) = 1.1752

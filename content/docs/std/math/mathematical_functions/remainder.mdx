@@ -1,6 +1,6 @@
 ---
 title:              Remainder
-description:        Structure type, return of the std::div function
+description:        Structure type, return of the <a href='/docs/std/math/mathematical_functions/div'><code>std::div</code></a> function
 tags:               [math, remainder]
 # slug:               /std/math/mathematical_functions/remainder/
 hide_title:         true
@@ -31,7 +31,6 @@ If the returned value is zero, it will have the same sign as `x`.
     "cpp11": <Remainder_Function_Declaration_Cpp11  />,
 }}/>
 
-
 ### Parameters
 
 `x`, `y` - floating-point or integer values
@@ -48,17 +47,17 @@ If `y` is zero, but the domain error does not occur, zero is returned.
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
 Domain error may occur if `y` is zero.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559),
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>),
 
 The current rounding mode has no effect.
-FE_INEXACT is never raised, the result is always exact.<br/>
-If `x` is ±∞ and `y` is not NaN, NaN is returned and FE_INVALID is raised<br/>
-If `y` is ±0 and `x` is not NaN, NaN is returned and FE_INVALID is raised<br/>
-If either argument is NaN, NaN is returned
+FE_INEXACT is never raised, the result is always exact.
+* If `x` is ±∞ and `y` is not NaN, NaN is returned and FE_INVALID is raised
+* If `y` is ±0 and `x` is not NaN, NaN is returned and FE_INVALID is raised
+* If either argument is NaN, NaN is returned
 
 ### Examples
 
@@ -102,10 +101,7 @@ int main()
 }
 ```
 
-</div>
-
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 remainder(+5.1, +3.0) = -0.9
@@ -117,7 +113,6 @@ remainder(5.1, Inf) = 5.1
 remainder(+5.1, 0) = -nan
 FE_INVALID raised
 ```
-
 
 </div>
 </Columns>

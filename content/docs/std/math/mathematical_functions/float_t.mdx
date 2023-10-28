@@ -6,37 +6,29 @@ tags:               [math, types]
 hide_title:         true
 ---
 
-
 # std::float_t; std::double_t
 
 ### Description
 
-The types `float_t` and `double_t` are floating types at least as wide as `float` and `double`, 
-respectively, and such that `double_t` is at least as wide as `float_t`. 
+The types <span class='col-lb'>float_t</span> and <span class='col-lb'>double_t</span> are floating types at least as wide as <span class='col-lb'>float</span> and <span class='col-lb'>double</span>, 
+respectively, and such that <span class='col-lb'>double_t</span> is at least as wide as <span class='col-lb'>float_t</span>. 
 
-The value of `FLT_EVAL_METHOD` determines the types of `float_t` and `double_t`.
+The value of `FLT_EVAL_METHOD` determines the types of <span class='col-lb'>float_t</span> and <span class='col-lb'>double_t</span>.
 
 `FLT_EVAL_METHOD`	Explanation: <br/>
-`0`	`float_t` and `double_t` are equivalent to `float` and `double`, respectively<br/>
-`1`	both `float_t` and `double_t` are equivalent to `double`<br/>
-`2`	both `float_t` and `double_t` are equivalent to `long double`<br/>
-other	both `float_t` and `double_t` are implementation defined<br/>
-
-
+`0`	<span class='col-lb'>float_t</span> and <span class='col-lb'>double_t</span> are equivalent to <span class='col-lb'>float</span> and <span class='col-lb'>double</span>, respectively<br/>
+`1`	both <span class='col-lb'>float_t</span> and <span class='col-lb'>double_t</span> are equivalent to <span class='col-lb'>double</span><br/>
+`2`	both <span class='col-lb'>float_t</span> and <span class='col-lb'>double_t</span> are equivalent to <span class='col-lb'>long double</span><br/>
+other	both <span class='col-lb'>float_t</span> and <span class='col-lb'>double_t</span> are implementation defined<br/>
 
 ### Declarations 
-`Since C99`
-```cpp
+```cpp title="Since C99"
 typedef /*implementation defined*/ float_t
 
 typedef /*implementation defined*/ double_t
 ```
 
-
-
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -56,9 +48,7 @@ int main(void)
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 0

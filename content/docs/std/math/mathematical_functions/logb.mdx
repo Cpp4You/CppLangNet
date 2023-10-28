@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Logb_Function_Declaration_Cpp11         from "./logb/_codes/logb_function_declaration/cpp11.mdx";
 import  Logb_Function_Declaration_Cpp23         from "./logb/_codes/logb_function_declaration/cpp23.mdx";
@@ -17,16 +18,15 @@ import  Logb_Function_Declaration_Cpp23         from "./logb/_codes/logb_functio
 Defined in header `<cmath>`.
 
 ### Description
-Extracts the value of the unbiased radix-independent exponent from the floating-point argument `num`,  
-and returns it as a floating-point value. The library provides overloads of std::logb for all 
-cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+Extracts the value of the unbiased radix-independent exponent from the floating-point argument <code>num</code>, and returns it as a floating-point value. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of std::logb for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>. <br/>
 
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 Formally, the unbiased exponent is the signed integral part of log<sub>r</sub>|num| 
-(returned by this function as a floating-point value), for non-zero `num`, where `r` 
-is `std::numeric_limits<T>::radix` and `T` is the floating-point type of `num`. 
-If `num` is subnormal, it is treated as though it was normalized.
+(returned by this function as a floating-point value), for non-zero <code>num</code>, where `r` 
+is <code><a href='/docs/std/types/numeric_limits'>std::numeric_limits</a>&lt;T&gt;::<a href='/docs/std/types/numeric_limits/radix'>radix</a></code> and `T` is the floating-point type of <code>num</code>. 
+If <code>num</code> is subnormal, it is treated as though it was normalized.
 
 
 ### Declarations
@@ -39,11 +39,11 @@ If `num` is subnormal, it is treated as though it was normalized.
 
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the unbiased exponent of `num` is returned as a signed floating-point value.
+If no errors occur, the unbiased exponent of <code>num</code> is returned as a signed floating-point value.
 
 If a domain error occurs, an implementation-defined value is returned.
 
@@ -51,28 +51,28 @@ If a pole error occurs, `-HUGE_VAL`, `-HUGE_VALF`, or `-HUGE_VALL` is returned.
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-Domain or range error may occur if `num` is zero.
+Domain or range error may occur if <code>num</code> is zero.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
-If `num` is `±0`, `-∞` is returned and FE_DIVBYZERO is raised
-If `num` is `±∞`, `+∞` is returned
-If `num` is NaN, NaN is returned
+If <code>num</code> is `±0`, `-∞` is returned and FE_DIVBYZERO is raised
+If <code>num</code> is `±∞`, `+∞` is returned
+If <code>num</code> is NaN, NaN is returned
 In all other cases, the result is exact (FE_INEXACT is never raised) and the current rounding mode is ignored
 
 ### Notes
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/logb.html)
-requires that a pole error occurs if `num` is `±0`.
+requires that a pole error occurs if <code>num</code> is `±0`.
 
-The value of the exponent returned by `std::logb` is always 1 less than the exponent returned by `std::frexp` because of the different normalization requirements: 
+The value of the exponent returned by `std::logb` is always 1 less than the exponent returned by <a href='/docs/std/math/mathematical_functions/frexp'><code>std::frexp</code></a> because of the different normalization requirements: 
 for the exponent `e` returned by `std::logb`, `|num*r-e|` is between 1 and `r` (typically between 1 and 2), 
 but for the exponent `e` returned by st`d::fre`xp, `|num*2-e|` is between 0.5 and 1.
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
-`std::logb(num)` has the same effect as `std::logb(static_cast<double>(num))`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
+`std::logb(num)` has the same effect as <code>std::logb(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
 

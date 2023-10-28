@@ -1,5 +1,4 @@
-`int exponent`
-```cpp
+```cpp title="int exponent"
 // 1)
 constexpr /* floating-point-type */
             scalbn ( /* floating-point-type */ num, int exp );
@@ -9,9 +8,7 @@ constexpr float scalbnf( float num, int exp );
 constexpr long double scalbnl( long double num, int exp );
 ```
 
-`long exponent`
-
-```cpp
+```cpp title="long exponent"
 // 4)
 constexpr /* floating-point-type */
             scalbln ( /* floating-point-type */ num, long exp );
@@ -22,8 +19,7 @@ constexpr long double scalblnl( long double num, long exp );
 
 ```
 
-`Additional Overloads`
-```cpp
+```cpp title="Additional Overloads"
 // 7)
 template< class Integer >
 constexpr double scalbn( Integer num, int exp );

@@ -18,8 +18,8 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the common (base-10) logarithm of `num`. The library provides overloads of `std::log10` for all cv-unqualified floating-point types as the type of the parameter `num`.
-
+Computes the common (base-10) logarithm of <code>num</code>. <br/>
+The library provides overloads of `std::log10` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>.
 
 ### Declarations
 
@@ -31,11 +31,11 @@ Computes the common (base-10) logarithm of `num`. The library provides overloads
 
 ### Parameters
   
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the common (base-10) logarithm of `num` (log<sub>10</sub>(num) or lg(num)) is returned.
+If no errors occur, the common (base-10) logarithm of <code>num</code> (log<sub>10</sub>(num) or lg(num)) is returned.
 
 If a domain error occurs, an implementation-defined value is returned (NaN where supported).
 
@@ -43,13 +43,13 @@ If a pole error occurs, `-HUGE_VAL`, `-HUGE_VALF`, or `-HUGE_VALL` is returned.
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-Domain error occurs if `num` is less than zero.
+Domain error occurs if <code>num</code> is less than zero.
 
-Pole error may occur if `num` is zero.
+Pole error may occur if <code>num</code> is zero.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If the argument is `±0`, `-∞` is returned and `FE_DIVBYZERO` is raised.<br/>
 If the argument is `1`, `+0` is returned<br/>
@@ -59,13 +59,11 @@ If the argument is NaN, NaN is returned<br/>
 
 ### Notes
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, 
-`std::log10(num)` has the same effect as `std::log10(static_cast<double>(num))`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
+`std::log10(num)` has the same effect as <code>std::log10(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -115,9 +113,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 log10(1000) = 3

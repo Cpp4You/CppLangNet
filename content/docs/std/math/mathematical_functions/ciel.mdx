@@ -9,6 +9,7 @@ hide_title:             true
 import Image        from "@site-comps/Image";
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Ceil_Function_Declaration_Cpp11         from "./ceil/_codes/ceil_function_declaration/cpp11.mdx";
 import  Ceil_Function_Declaration_Cpp23         from "./ceil/_codes/ceil_function_declaration/cpp23.mdx";
@@ -19,12 +20,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the smallest integer value not less than `num`. 
-The library provides overloads of `std::ceil` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
-Additional overloads are provided for all integer types, which are treated as `double`
-(since C++11).
-
-
+Computes the smallest integer value not less than <code>num</code>. 
+<Since v='cpp23'>The library provides overloads of std::ceil for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
+<Since v='cpp11'>Additional overloads are provided for all integer types, which are treated as <span class='col-lb'>double</span></Since>.
 
 ### Declarations
 
@@ -33,14 +31,13 @@ Additional overloads are provided for all integer types, which are treated as `d
     "cpp11" : <Ceil_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating point or integer value
+&#8203;<code>num</code> - floating point or integer value
 
 ### Return value
 
-If no errors occur, the smallest integer value not less than `num`, that is *⌈num⌉*, is returned.
+If no errors occur, the smallest integer value not less than <code>num</code>, that is *⌈num⌉*, is returned.
 
 <Image maxheight={300}
         src="/img/doc/math/ciel/math-ceil.svg"
@@ -48,9 +45,9 @@ If no errors occur, the smallest integer value not less than `num`, that is *⌈
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 The current rounding mode has no effect.<br/>
 If num is `±∞`, it is returned unmodified<br/>
@@ -64,7 +61,7 @@ The largest representable floating-point values are exact integers in all standa
 so this function never overflows on its own; however the result may overflow any integer type (including `std::intmax_t`), 
 when stored in an integer variable. It is for this reason that the return type is floating-point not integral.
 
-This function (for `double` argument) behaves as if (except for the freedom to not raise FE_INEXACT) implemented by the following code:
+This function (for <span class='col-lb'>double</span> argument) behaves as if (except for the freedom to not raise FE_INEXACT) implemented by the following code:
 ```cpp
 #include <cfenv>
 #include <cmath>
@@ -80,13 +77,11 @@ double ceil(double x)
     return result;
 }
 ```
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
-`std::ceil(num)` has the same effect as `std::ceil(static_cast<double>(num))`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
+`std::ceil(num)` has the same effect as <code>std::ceil(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -111,9 +106,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 ceil(+2.4) = 3.000000

@@ -22,7 +22,7 @@ Constant	Explanation
 `MATH_ERRNO`	    indicates that floating-point operations use the variable `errno` to report errors.
 
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559), `math_errhandling` & `MATH_ERREXCEPT` is required to be non-zero.
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>), `math_errhandling` & `MATH_ERREXCEPT` is required to be non-zero.
 
 The following floating-point error conditions are recognized:
 
@@ -36,8 +36,7 @@ The following floating-point error conditions are recognized:
 
 
 ### Declarations
-`Since C++11`
-```cpp
+```cpp title="Since C++11"
 #define MATH_ERRNO        
 
 #define MATH_ERREXCEPT    
@@ -45,18 +44,15 @@ The following floating-point error conditions are recognized:
 #define math_errhandling  /*implementation defined*/
 ```
 
-
 ### Notes
 
 Whether `FE_INEXACT` is raised by the mathematical library functions is unspecified in general, but may be explicitly specified in the description of the function 
-(e.g. `std::rint` vs `std::nearbyint`)
+(e.g. <a href='/docs/std/math/mathematical_functions/rint'><code>std::rint</code></a> vs <a href='/docs/std/math/mathematical_functions/nearbyint'><code>std::nearbyint</code></a>)
 
 Before C++11, floating-point exceptions were not specified, `EDOM` was required for any domain error, 
 `ERANGE` was required for overflows and implementation-defined for underflows.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -91,9 +87,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 MATH_ERRNO is set

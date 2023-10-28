@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Frexp_Function_Declaration_Cpp11         from "./frexp/_codes/frexp_function_declaration/cpp11.mdx";
 import  Frexp_Function_Declaration_Cpp23         from "./frexp/_codes/frexp_function_declaration/cpp23.mdx";
@@ -18,12 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Decomposes given floating point value `num` into a normalized fraction and an integral power of two. 
-The library provides overloads of `std::frexp` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
-
-`Additional overloads` are provided for all integer types, which are treated as `double`
-(since C++11).
-
+Decomposes given floating point value <code>num</code> into a normalized fraction and an integral power of two. <br/>
+<Since v='cpp23'>The library provides overloads of std::frexp for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
+<Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span></Since>.
 
 ### Declarations
 
@@ -32,17 +30,16 @@ The library provides overloads of `std::frexp` for all cv-unqualified floating-p
     "cpp11" : <Frexp_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 `exp` - pointer to integer value to store the exponent to
 
 ### Return value
 
-If `num` is zero, returns zero and stores zero in `*exp`.
+If <code>num</code> is zero, returns zero and stores zero in `*exp`.
 
-Otherwise (if `num` is not zero), if no errors occur, returns the value `x` in the range `(-1, -0.5], [0.5, 1)` and stores an integer value in `*exp` 
+Otherwise (if <code>num</code> is not zero), if no errors occur, returns the value `x` in the range `(-1, -0.5], [0.5, 1)` and stores an integer value in `*exp` 
 such that x×2<sup>(*exp)</sup> == num.
 
 If the value to be stored in` *exp` is outside the range of `int`, the behavior is unspecified.
@@ -51,11 +48,11 @@ If the value to be stored in` *exp` is outside the range of `int`, the behavior 
 
 This function is not subject to any errors specified in math_errhandling.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
-If `num` is `±0`, it is returned, unmodified, and 0 is stored in `*exp`. <br/>
-If `num` is `±∞`, it is returned, and an unspecified value is stored in `*exp`. <br/>
-If `num` is NaN, NaN is returned, and an unspecified value is stored in `*exp`. <br/>
+If <code>num</code> is `±0`, it is returned, unmodified, and 0 is stored in `*exp`. <br/>
+If <code>num</code> is `±∞`, it is returned, and an unspecified value is stored in `*exp`. <br/>
+If <code>num</code> is NaN, NaN is returned, and an unspecified value is stored in `*exp`. <br/>
 No floating-point exceptions are raised. <br/>
 If FLT_RADIX is 2 (or a power of 2), the returned value is exact, the current rounding mode is ignored. <br/>
 
@@ -68,16 +65,14 @@ On a binary system (where FLT_RADIX is 2), `std::frexp` may be implemented as
     return std::scalbn(value, -(*exp));
 }
 ```
-The function `std::frexp`, together with its dual, `std::ldexp`, can be used to manipulate the representation of a floating-point 
+The function `std::frexp`, together with its dual, <a href='/docs/std/math/mathematical_functions/ldexp'><code>std::ldexp</code></a>, can be used to manipulate the representation of a floating-point 
 number without direct bit manipulations.
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. <br/>
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
-`std::frexp(num, exp)` has the same effect as `std::frexp(static_cast<double>(num), exp)`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. <br/>
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
+`std::frexp(num, exp)` has the same effect as <code>std::frexp(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num), exp)</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -119,9 +114,7 @@ int main()
 }
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 Given the number 123.45 or 0x1.edccccccccccdp+6 in hex,

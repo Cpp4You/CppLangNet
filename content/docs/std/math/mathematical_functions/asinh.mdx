@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Asinh_Function_Declaration_Cpp11         from "./asinh/_codes/asinh_function_declaration/cpp11.mdx";
 import  Asinh_Function_Declaration_Cpp23         from "./asinh/_codes/asinh_function_declaration/cpp23.mdx";
@@ -17,10 +18,9 @@ import  Asinh_Function_Declaration_Cpp23         from "./asinh/_codes/asinh_func
 Defined in header `<cmath>`.
 
 ### Description
-Computes the inverse hyperbolic sine of `num`. The library provides overloads of `std::asinh` for all cv-unqualified 
-floating-point types as the type of the parameter `num` (since C++23).
-`Additional overloads` are provided for all integer types, which are treated as `double`.
-
+Computes the inverse hyperbolic sine of <code>num</code>. 
+&#8203;<Since v='cpp23'> The library provides overloads of std::asinh for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>. <br/>
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -29,22 +29,21 @@ floating-point types as the type of the parameter `num` (since C++23).
     "cpp11" : <Asinh_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
 
-`num` - floating-point or integer value
+<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the inverse hyperbolic sine of `num` (sinh<sup>-1</sup>(num), or arsinh(num)) is returned.
+If no errors occur, the inverse hyperbolic sine of <code>num</code> (sinh<sup>-1</sup>(num), or arsinh(num)) is returned.
 
 If a range error occurs due to underflow, the correct result (after rounding) is returned.
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 if the argument is `±0` or `±∞`, it is returned unmodified
 if the argument is NaN, NaN is returned
@@ -56,13 +55,11 @@ Although the C standard (to which C++ refers for this function) names this funct
 *"arc hyperbolic sine"*, the inverse functions of the hyperbolic functions are the area functions. 
 Their argument is the area of a hyperbolic sector, not an arc. The correct name is *"inverse hyperbolic sine"* (used by POSIX) or *"area hyperbolic sine"*.
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, 
-`std::asinh(num)` has the same effect as `std::asinh(static_cast<double>(num))`.
+`std::asinh(num)` has the same effect as <code>std::asinh(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -89,9 +86,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 asinh(1) = 0.881374

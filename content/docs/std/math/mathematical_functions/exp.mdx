@@ -18,8 +18,8 @@ Defined in header `<cmath>`.
 
 ### Description
 
- Computes `e` (Euler's number, 2.7182818...) 
- raised to the given power `num`. The library provides overloads of `std::exp` for all cv-unqualified floating-point types as the type of the parameter num.
+Computes `e` (Euler's number, 2.7182818...) raised to the given power <code>num</code>. <br/>
+The library provides overloads of `std::exp` for all cv-unqualified floating-point types as the type of the parameter <code>num</code>.
 
 ### Declarations
 
@@ -28,14 +28,13 @@ Defined in header `<cmath>`.
     "cpp11" : <Exp_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the base-e exponential of `num` is returned.
+If no errors occur, the base-e exponential of <code>num</code> is returned.
 
 If a range error due to overflow occurs, `+HUGE_VAL`, `+HUGE_VALF`, or `+HUGE_VALL` is returned.
 
@@ -44,9 +43,9 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If the argument is `±0`, `1` is returned
 If the argument is `-∞`, `+0` is returned
@@ -55,17 +54,13 @@ If the argument is NaN, NaN is returned
 
 ### Notes
 
-For IEEE-compatible type `double`, overflow is guaranteed if `709.8 < num`, and underflow is guaranteed if `num < -708.4`.
+For IEEE-compatible type <span class='col-lb'>double</span>, overflow is guaranteed if `709.8 < num`, and underflow is guaranteed if `num < -708.4`.
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, <br/>
-`std::exp(num)` has the same effect as `std::exp(static_cast<double>(num))`.
-
-
+`std::exp(num)` has the same effect as <code>std::exp(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -114,9 +109,7 @@ int main()
 }
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 exp(1) = e¹ = 2.718281828459045

@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Tgamma_Function_Declaration_Cpp11         from "./tgamma/_codes/tgamma_function_declaration/cpp11.mdx";
 import  Tgamma_Function_Declaration_Cpp23         from "./tgamma/_codes/tgamma_function_declaration/cpp23.mdx";
@@ -17,9 +18,10 @@ import  Tgamma_Function_Declaration_Cpp23         from "./tgamma/_codes/tgamma_f
 Defined in header `<cmath>`.
 
 ### Description
-Computes the gamma function of `num`. The library provides overloads of `std::tgamma` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+Computes the gamma function of <code>num</code>. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of std::tgamma for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
 
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -28,10 +30,9 @@ Computes the gamma function of `num`. The library provides overloads of `std::tg
     "cpp11" : <Tgamma_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 If no errors occur, the value of the gamma function of num, that is, `math here` , is returned.
@@ -46,11 +47,11 @@ If a range error due to underflow occurs, the correct value (after rounding) is 
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If `num` is zero or is an integer less than zero, a pole error or a domain error may occur.
+If <code>num</code> is zero or is an integer less than zero, a pole error or a domain error may occur.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If the argument is `±0`, `±∞` is returned and FE_DIVBYZERO is raised
 If the argument is a negative integer, NaN is returned and FE_INVALID is raised
@@ -58,9 +59,8 @@ If the argument is `-∞`, NaN is returned and FE_INVALID is raised
 If the argument is `+∞`, `+∞` is returned
 If the argument is NaN, NaN is returned
 
-
 ### Notes
-If `num` is a natural number, `std::tgamma(num)` is the factorial of `num - 1`. 
+If <code>num</code> is a natural number, `std::tgamma(num)` is the factorial of `num - 1`. 
 Many implementations calculate the exact integer-domain factorial if the argument is a sufficiently small integer.
 
 For IEEE-compatible type double, overflow happens if `0 < num && num < 1 / DBL_MAX` or if `num > 171.7`.
@@ -72,13 +72,11 @@ domain errors may be replaced by pole errors for negative integer arguments (in 
 There is a non-standard function named `gamma` in various implementations, but its definition is inconsistent.
  For example, glibc and 4.2BSD version of gamma executes lgamma, but 4.4BSD version of gamma executes tgamma.
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`.
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
-`std::tgamma(num)` has the same effect as `std::tgamma(static_cast<double>(num))`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>.
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
+`std::tgamma(num)` has the same effect as <code>std::tgamma(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -133,9 +131,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 tgamma(10) = 362880, 9! = 362880

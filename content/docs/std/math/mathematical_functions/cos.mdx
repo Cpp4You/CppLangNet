@@ -7,7 +7,8 @@ hide_title:             true
 ---
 
 import SwitchView   from '@site-comps/SwitchView';
-import Columns      from "@site-comps/Columns";
+import Columns      from '@site-comps/Columns';
+import {Since}      from '@site-comps/Versions';
 
 import  Cos_Function_Declaration_Cpp11         from "./cos/_codes/cos_function_declaration/cpp11.mdx";
 import  Cos_Function_Declaration_Cpp23         from "./cos/_codes/cos_function_declaration/cpp23.mdx";
@@ -17,11 +18,9 @@ import  Cos_Function_Declaration_Cpp23         from "./cos/_codes/cos_function_d
 Defined in header `<cmath>`.
 
 ### Description
-Computes the cosine of `num` (measured in radians). The library provides overloads of `std::sin` for all cv-unqualified floating-point 
-types as the type of the parameter `num`. (since C++23)
-`Additional overloads` are provided for all integer types, which are treated as `double`.
-(since C++11)
-
+Computes the cosine of <code>num</code> (measured in radians). 
+<Since v='cpp23'>The library provides overloads of std::sin for all cv-unqualified floating-point types as the type of the parameter <code>num</code>. </Since> <br/>
+<Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span></Since>.
 
 ### Declarations
 
@@ -30,27 +29,24 @@ types as the type of the parameter `num`. (since C++23)
     "cpp11" : <Cos_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value representing angle in radians
+&#8203;<code>num</code> - floating-point or integer value representing angle in radians
 
 ### Return value
-If no errors occur, the cosine of `num` (cos(num)) in the range [-1, +1], is returned.
+If no errors occur, the cosine of <code>num</code> (cos(num)) in the range [-1, +1], is returned.
 
-
-The result may have little or no significance if the magnitude of `num` is large.(until C++11)
+The result may have little or no significance if the magnitude of <code>num</code> is large.(until C++11)
 
 If a domain error occurs, an implementation-defined value is returned (NaN where supported).
 
 If a range error occurs due to underflow, the correct result (after rounding) is returned.
 
-
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 if the argument is `±0`, the result is `1.0`
 if the argument is `±∞`, NaN is returned and `FE_INVALID` is raised
@@ -61,13 +57,11 @@ if the argument is NaN, NaN is returned
 The case where the argument is infinite is not specified to be a domain error in C, but it is defined as a domain error in 
 [POSIX](https://pubs.opengroup.org/onlinepubs/9699919799/functions/cos.html).
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their argument num of integer type, <br/>
-`std::cos(num)` has the same effect as `std::cos(static_cast<double>(num))`.
+`std::cos(num)` has the same effect as <code>std::cos(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -113,9 +107,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 cos(pi/3) = 0.5

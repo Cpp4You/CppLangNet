@@ -7,7 +7,8 @@ hide_title:             true
 ---
 
 import SwitchView   from '@site-comps/SwitchView';
-import Columns      from "@site-comps/Columns";
+import Columns      from '@site-comps/Columns';
+import {Since}      from '@site-comps/Versions';
 
 import  Sqrt_Function_Declaration_Cpp11         from "./sqrt/_codes/sqrt_function_declaration/cpp11.mdx";
 import  Sqrt_Function_Declaration_Cpp23         from "./sqrt/_codes/sqrt_function_declaration/cpp23.mdx";
@@ -18,9 +19,8 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the square root of `num`. The library provides overloads of `std::sqrt` for all cv-unqualified floating-point types as the type of the parameter `num`. (since C++23)
-`Additional overloads` are provided for all integer types, which are treated as `double`. (since C++11)
-
+<Since v='cpp23'>Computes the square root of <code>num</code>. The library provides overloads of std::sqrt for all cv-unqualified floating-point types as the type of the parameter <code>num</code>. </Since> <br/>
+<Since v='cpp11'><a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>. </Since>
 
 ### Declarations
 
@@ -29,10 +29,9 @@ Computes the square root of `num`. The library provides overloads of `std::sqrt`
     "cpp11" : <Sqrt_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
@@ -44,11 +43,11 @@ If a range error occurs due to underflow, the correct result (after rounding) is
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-Domain error occurs if `num` is less than zero.
+Domain error occurs if <code>num</code> is less than zero.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If the argument is less than `-0`, `FE_INVALID` is raised and NaN is returned <br/>
 If the argument is `+∞` or `±0`, it is returned, unmodified<br/>
@@ -61,13 +60,11 @@ If the argument is NaN, NaN is returned
  The only other operations which require this are the arithmetic operators and the function [std::fma](/docs/std/math/mathematical_functions/fma/). Other functions, 
  including [std::pow](/docs/std/math/mathematical_functions/pow/), are not so constrained.
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. They only need to be sufficient to ensure that 
-for their argument `num` of integer type, <br/>
-`std::sqrt(num)` has the same effect as `std::sqrt(static_cast<double>(num))`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. They only need to be sufficient to ensure that 
+for their argument <code>num</code> of integer type, <br/>
+`std::sqrt(num)` has the same effect as <code>std::sqrt(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -115,9 +112,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 sqrt(100) = 10

@@ -7,6 +7,7 @@ hide_title:             true
 ---
 
 import SwitchView   from '@site-comps/SwitchView';
+import {Since}      from '@site-comps/Versions';
 import Columns      from "@site-comps/Columns";
 
 import  Nearbyint_Function_Declaration_Cpp11         from "./nearbyint/_codes/nearbyint_function_declaration/cpp11.mdx";
@@ -18,9 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Rounds the floating-point argument `num` to an integer value in floating-point format, using the current rounding mode. 
-The library provides overloads of `std::nearbyint` for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+Rounds the floating-point argument <code>num</code> to an integer value in floating-point format, using the current rounding mode. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of `std::nearbyint` for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>.<br/>
+
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -29,43 +31,40 @@ The library provides overloads of `std::nearbyint` for all cv-unqualified floati
     "cpp11" : <Nearbyint_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
-The nearest integer value to `num`, according to the current rounding mode, is returned.
+The nearest integer value to <code>num</code>, according to the current rounding mode, is returned.
 
 ### Error handling
 
 This function is not subject to any of the errors specified in math_errhandling.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 FE_INEXACT is never raised <br/>
-If `num` is `±∞`, it is returned, unmodified<br/>
-If `num` is `±0`, it is returned, unmodified<br/>
-If `num` is NaN, NaN is returned<br/>
+If <code>num</code> is `±∞`, it is returned, unmodified<br/>
+If <code>num</code> is `±0`, it is returned, unmodified<br/>
+If <code>num</code> is NaN, NaN is returned<br/>
 
 ### Notes
 
-The only difference between `std::nearbyint` and `std::rint` is that `std::nearbyint` never raises FE_INEXACT.
+The only difference between `std::nearbyint` and <a href='/docs/std/math/mathematical_functions/rint'><code>std::rint</code></a> is that `std::nearbyint` never raises FE_INEXACT.
 
 The largest representable floating-point values are exact integers in all standard floating-point formats, so `std::nearbyint` 
 never overflows on its own; however the result may overflow any integer type (including `std::intmax_t`), when stored in an integer variable.
 
-If the current rounding mode is FE_TONEAREST, this function rounds to even in halfway cases (like `std::rint`, but unlike `std::round`).
+If the current rounding mode is FE_TONEAREST, this function rounds to even in halfway cases (like <a href='/docs/std/math/mathematical_functions/rint'><code>std::rint</code></a>, but unlike <a href='/docs/std/math/mathematical_functions/round'><code>std::round</code></a>).
 
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 
-They only need to be sufficient to ensure that for their argument `num` of integer type, 
-`std::nearbyint(num)` has the same effect as `std::nearbyint(static_cast<double>(num))`.
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
+`std::nearbyint(num)` has the same effect as <code>std::nearbyint(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -122,9 +121,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 rounding to nearest: 

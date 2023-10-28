@@ -9,6 +9,7 @@ hide_title:             true
 import Image        from "@site-comps/Image";
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Trunc_Function_Declaration_Cpp11         from "./trunc/_codes/trunc_function_declaration/cpp11.mdx";
 import  Trunc_Function_Declaration_Cpp23         from "./trunc/_codes/trunc_function_declaration/cpp23.mdx";
@@ -19,10 +20,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the nearest integer not greater in magnitude than `num`. The library provides overloads of `std::trunc` 
-for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
+Computes the nearest integer not greater in magnitude than <code>num</code>. 
+&#9203;<Since v='cpp23'> The library provides overloads of std::trunc for all cv-unqualified floating-point types as the type of the parameter <code>num</code> </Since>. <br/>
 
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+&#9203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -31,14 +32,13 @@ for all cv-unqualified floating-point types as the type of the parameter `num` (
     "cpp11" : <Trunc_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
-If no errors occur, the nearest integer value not greater in magnitude than `num` (in other words, `num` rounded towards zero) is returned.
+If no errors occur, the nearest integer value not greater in magnitude than <code>num</code> (in other words, <code>num</code> rounded towards zero) is returned.
 
 <Image maxheight={300}
         src="/img/doc/math/trunc/math-trunc.svg"
@@ -46,14 +46,14 @@ If no errors occur, the nearest integer value not greater in magnitude than `num
 
 ### Error handling
 
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 The current rounding mode has no effect. <br/>
-If `num` is `±∞`, it is returned, unmodified<br/>
-If `num` is `±0`, it is returned, unmodified<br/>
-If `num` is NaN, NaN is returned<br/>
+If <code>num</code> is `±∞`, it is returned, unmodified<br/>
+If <code>num</code> is `±0`, it is returned, unmodified<br/>
+If <code>num</code> is NaN, NaN is returned<br/>
 
 ### Notes
 
@@ -65,13 +65,11 @@ so this function never overflows on its own; however the result may overflow any
 The implicit conversion from floating-point to integral types also rounds towards zero, 
 but is limited to the values that can be represented by the target type.
 
-The additional overloads are not required to be provided exactly as `additional overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, <br/>
-`std::trunc(num)` has the same effect as `std::trunc(static_cast<double>(num))`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, <br/>
+`std::trunc(num)` has the same effect as <code>std::trunc(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -96,9 +94,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Possible Result"
 trunc(+2.7) == +2

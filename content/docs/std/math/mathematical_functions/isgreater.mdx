@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Isgreater_Function_Declaration_Cpp11         from "./isgreater/_codes/isgreater_function_declaration/cpp11.mdx";
 import  Isgreater_Function_Declaration_Cpp23         from "./isgreater/_codes/isgreater_function_declaration/cpp23.mdx";
@@ -18,10 +19,9 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Determines if the floating point number `x` is greater than the floating-point number `y`, without setting floating-point exceptions. 
-The library provides overloads for all cv-unqualified floating-point types as the type of the parameters `x` and `y` (since C++23). <br/>
-`Additional overloads` are provided for all other combinations of arithmetic types.
-
+Determines if the floating point number `x` is greater than the floating-point number `y`, without setting floating-point exceptions. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads for all cv-unqualified floating-point types as the type of the parameters `x` and `y` </Since>. <br/>
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all other combinations of arithmetic types.
 
 ### Declarations
 
@@ -29,7 +29,6 @@ The library provides overloads for all cv-unqualified floating-point types as th
     "cpp23" : <Isgreater_Function_Declaration_Cpp23 />,
     "cpp11" : <Isgreater_Function_Declaration_Cpp11 />,
 }}/>
-
 
 ### Parameters
  
@@ -43,28 +42,25 @@ The library provides overloads for all cv-unqualified floating-point types as th
 
 The built-in operator `>` for floating-point numbers may set `FE_INVALID` if one or both of the arguments is `NaN`. This function is a "quiet" version of operator `>` .
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 
-If `num1` or `num2` has type `long double`, then <br/>
+If `num1` or `num2` has type <span class='col-lb'>long double</span>, then <br/>
 `std::isgreater(num1, num2)` has the same effect as  <br/>
-`std::isgreater(static_cast<long double>(num1), static_cast<long double>(num2))`.
+&#8203;<code>std::isgreater(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>.
 
-Otherwise, if `num1` and/or `num2` has type `double` or an integer type, then  <br/>
+Otherwise, if `num1` and/or `num2` has type <span class='col-lb'>double</span> or an integer type, then  <br/>
 `std::isgreater(num1, num2)` has the same effect as  <br/>
-`std::isgreater(static_cast<double>(num1), static_cast<double>(num2))`.
+&#8203;<code>std::isgreater(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>.
 
-Otherwise, if `num1` or `num2` has type `float`, then  <br/>
+&#8203;<Until block v='cpp23'>Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then  <br/>
 `std::isgreater(num1, num2)` has the same effect as  <br/>
-`std::isgreater(static_cast<float>(num1), static_cast<float>(num2))`.
-(until C++23)
+&#8203;<code>std::isgreater(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code>.</Until>
 
 If `num1` and `num2` have arithmetic types, then  <br/>
-`std::isgreater(num1, num2)` has the same effect as  <br/>
-`std::isgreater(static_cast</* common-floating-point-type */>(num1), static_cast</* common-floating-point-type */>(num2))`, 
+`std::isgreater(num1, num2)` has the same effect as  <br/> <code> std::isgreater(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2))</code> ,
                
-where `/* common-floating-point-type */` is the floating-point type with the greatest floating-point conversion rank and greatest floating-point 
-conversion subrank between the types of `num1` and `num2`, arguments of integer type are considered to have the same floating-point conversion rank as `double`.
+where <span class='col-d'>/\* common-floating-point-type \*/</span> is the floating-point type with the greatest floating-point conversion rank and greatest floating-point 
+conversion subrank between the types of `num1` and `num2`, arguments of integer type are considered to have the same floating-point conversion rank as <span class='col-lb'>double</span>.
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
-

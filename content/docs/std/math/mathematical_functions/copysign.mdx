@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Copysign_Function_Declaration_Cpp11         from "./copysign/_codes/copysign_function_declaration/cpp11.mdx";
 import  Copysign_Function_Declaration_Cpp23         from "./copysign/_codes/copysign_function_declaration/cpp23.mdx";
@@ -19,9 +20,9 @@ Defined in header `<cmath>`.
 ### Description
 
 Composes a floating point value with the magnitude of `mag` and the sign of `sgn`. <br/>
-The library provides overloads of `std::copysign` for all cv-unqualified floating-point types as the type of the parameters `mag` and `sgn` (since C++23). <br/>
-`Additional overloads` are provided for all other combinations of arithmetic types.
+<Since v='cpp23'>The library provides overloads of std::copysign for all cv-unqualified floating-point types as the type of the parameters <code>mag</code> and <code>sgn</code> </Since>. <br/>
 
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all other combinations of arithmetic types.
 
 ### Declarations
 
@@ -29,7 +30,6 @@ The library provides overloads of `std::copysign` for all cv-unqualified floatin
     "cpp23" : <Copysign_Function_Declaration_Cpp23 />,
     "cpp11" : <Copysign_Function_Declaration_Cpp11 />,
 }}/>
-
 
 ### Parameters
  
@@ -47,41 +47,38 @@ If `sgn` is `-0`, the result is only negative if the implementation supports the
 
 This function is not subject to any errors specified in math_errhandling.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 The returned value is exact (FE_INEXACT is never raised) and independent of the current rounding mode.
 
 ### Notes
 
-`std::copysign` is the only portable way to manipulate the sign of a NaN value (to examine the sign of a NaN, `std::signbit` may also be used).
+`std::copysign` is the only portable way to manipulate the sign of a NaN value (to examine the sign of a NaN, <a href='/docs/std/math/mathematical_functions/signbit'><code>std::signbit</code></a> may also be used).
 
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
 They only need to be sufficient to ensure that for their first argument `num1` and second argument `num2`:
 
-If `num1` or `num2` has type `long double`, then <br/>
+If `num1` or `num2` has type <span class='col-lb'>long double</span>, then <br/>
 `std::copysign(num1, num2)` has the same effect as  <br/>
-`std::copysign(static_cast<long double>(num1), static_cast<long double>(num2))`.
+&#8203;<code>std::copysign(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>long double</span>&gt;(num2))</code>.
 
-Otherwise, if `num1` and/or `num2` has type `double` or an integer type, then  <br/>
+Otherwise, if `num1` and/or `num2` has type <span class='col-lb'>double</span> or an integer type, then  <br/>
 `std::copysign(num1, num2)` has the same effect as  <br/>
-`std::copysign(static_cast<double>(num1), static_cast<double>(num2))`.
+&#8203;<code>std::copysign(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num2))</code>.
 
-Otherwise, if `num1` or `num2` has type `float`, then  <br/>
+&#8203;<Until v='cpp23' block>Otherwise, if `num1` or `num2` has type <span class='col-lb'>float</span>, then  <br/>
 `std::copysign(num1, num2)` has the same effect as  <br/>
-`std::copysign(static_cast<float>(num1), static_cast<float>(num2))`. (until C++23)
+&#8203;<code>std::copysign(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num1), <a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>float</span>&gt;(num2))</code>.</Until>
 
 If `num1` and `num2` have arithmetic types, then  <br/>
-`std::copysign(num1, num2)` has the same effect as  <br/>
-`std::copysign(static_cast</* common-floating-point-type */>(num1), static_cast</* common-floating-point-type */>(num2)) `, 
+`std::copysign(num1, num2)` has the same effect as  <br/> <code>std::copysign(static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num1), static_cast&lt;<span class='col-d'>/\* common-floating-point-type \*/</span>&gt;(num2))</code>, 
 
-where `/* common-floating-point-type */` is the floating-point type with the greatest floating-point conversion rank and greatest floating-point 
-conversion subrank between the types of `num1` and `num2`, arguments of integer type are considered to have the same floating-point conversion rank as `double`.
+where <span class='col-d'>/\* common-floating-point-type \*/</span> is the floating-point type with the greatest floating-point conversion rank and greatest floating-point 
+conversion subrank between the types of `num1` and `num2`, arguments of integer type are considered to have the same floating-point conversion rank as <span class='col-lb'>double</span>.
 
 If no such floating-point type with the greatest rank and subrank exists, then overload resolution does not result in a usable candidate from the overloads provided.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -106,9 +103,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 copysign(1.0,+2.0) = +1

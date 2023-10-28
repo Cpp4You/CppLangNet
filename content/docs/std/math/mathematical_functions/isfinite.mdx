@@ -8,6 +8,7 @@ hide_title:             true
 
 import SwitchView   from '@site-comps/SwitchView';
 import Columns      from "@site-comps/Columns";
+import {Since}      from '@site-comps/Versions';
 
 import  Isfinite_Function_Declaration_Cpp11         from "./isfinite/_codes/isfinite_function_declaration/cpp11.mdx";
 import  Isfinite_Function_Declaration_Cpp23         from "./isfinite/_codes/isfinite_function_declaration/cpp23.mdx";
@@ -18,11 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Determines if the given floating point number `num` has finite value i.e. 
+Determines if the given floating point number <code>num</code> has finite value i.e. 
 it is `normal`, `subnormal` or `zero`, but not `infinite` or `NaN`. <br/>
-The library provides overloads for all cv-unqualified floating-point types as the type of the parameter `num` (since C++23).
-`Additional overloads` are provided for all integer types, which are treated as `double`.
-
+&#8203;<Since v='cpp23'>The library provides overloads for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>.<br/>
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -31,23 +31,20 @@ The library provides overloads for all cv-unqualified floating-point types as th
     "cpp11" : <Isfinite_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 
 ### Return value
 
-`true` if `num` has finite value, `false` otherwise.
+`true` if <code>num</code> has finite value, `false` otherwise.
 
 ### Notes
-The additional overloads are not required to be provided exactly as `Additional overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type,<br/>
-`std::isfinite(num)` has the same effect as `std::isfinite(static_cast<double>(num))`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type,<br/>
+`std::isfinite(num)` has the same effect as <code>std::isfinite(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
 
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -79,9 +76,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 isfinite(NaN) = false

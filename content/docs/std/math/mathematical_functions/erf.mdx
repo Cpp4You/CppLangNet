@@ -7,7 +7,8 @@ hide_title:             true
 ---
 
 import SwitchView   from '@site-comps/SwitchView';
-import Columns      from "@site-comps/Columns";
+import Columns      from '@site-comps/Columns';
+import {Since}      from '@site-comps/Versions';
 
 import  Erf_Function_Declaration_Cpp11         from "./erf/_codes/erf_function_declaration/cpp11.mdx";
 import  Erf_Function_Declaration_Cpp23         from "./erf/_codes/erf_function_declaration/cpp23.mdx";
@@ -18,8 +19,10 @@ Defined in header `<cmath>`.
 
 ### Description
 
-Computes the error function of `num`. The library provides overloads of `std::erf` for all cv-unqualified floating-point types as the type of the parameter `num`. (since C++23)
-`Additional overloads` are provided for all integer types, which are treated as `double`.
+Computes the error function of <code>num</code>. <br/>
+&#8203;<Since v='cpp23'>The library provides overloads of std::erf for all cv-unqualified floating-point types as the type of the parameter <code>num</code></Since>.<br/>
+
+&#8203;<a href='#declarations'>Additional Overloads</a> are provided for all integer types, which are treated as <span class='col-lb'>double</span>.
 
 ### Declarations
 
@@ -28,20 +31,18 @@ Computes the error function of `num`. The library provides overloads of `std::er
     "cpp11" : <Erf_Function_Declaration_Cpp11 />,
 }}/>
 
-
 ### Parameters
  
-
-`num` - floating-point or integer value
+&#8203;<code>num</code> - floating-point or integer value
 ### Return value
 
-If no errors occur, value of the error function of `num`, that is ,   `math here`        , is returned.
+If no errors occur, value of the error function of <code>num</code>, that is ,   `math here`        , is returned.
 If a range error occurs due to underflow, the correct result (after rounding), that is    `math here`       is returned.
 
 ### Error handling
-Errors are reported as specified in math_errhandling.
+Errors are reported as specified in <a href='/docs/std/math/math_errhandling'>math_errhandling</a>.
 
-If the implementation supports IEEE floating-point arithmetic (IEC 60559):
+If the implementation supports IEEE floating-point arithmetic (<a href='https://www.iso.org/standard/80985.html'>IEC 60559</a>):
 
 If the argument is `±0`, `±0` is returned
 If the argument is `±∞`, `±1` is returned
@@ -52,12 +53,11 @@ If the argument is NaN, NaN is returned
 Underflow is guaranteed if `|num| < DBL_MIN * (std::sqrt(π)/2)`
 
 `math here`       is the probability that a measurement whose errors are subject to a normal distribution with standard deviation σ is less than x away from the mean value.
-The additional overloads are not required to be provided exactly as `Additional Overloads`. 
-They only need to be sufficient to ensure that for their argument `num` of integer type, 
-`std::erf(num)` has the same effect as `std::erf(static_cast<double>(num))`.
+The additional overloads are not required to be provided exactly as <a href='#declarations'>Additional Overloads</a>. 
+They only need to be sufficient to ensure that for their argument <code>num</code> of integer type, 
+`std::erf(num)` has the same effect as <code>std::erf(<a href='/docs/std/lang-support/static_cast'>static_cast</a>&lt;<span class='col-lb'>double</span>&gt;(num))</code>.
+
 ### Examples
-
-
 
 <Columns spacing = "20px" columns={['6fr', '4fr']}>
 <div>
@@ -97,9 +97,7 @@ int main()
 
 ```
 
-</div>
-
-<div>
+</div><div>
 
 ```plaintext title="Result"
 Normal variate probabilities:
