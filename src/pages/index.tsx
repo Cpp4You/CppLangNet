@@ -3,8 +3,7 @@ import Translate from "@docusaurus/Translate";
 import Layout from "@theme/Layout";
 
 import Supporters from "../components/Supporters";
-import { HomepageFeatures } from "../components/HomepageFeatures";
-import styles from "./index.module.scss";
+import HomepageFeatures from "../components/HomepageFeatures";
 
 import Contact from "../components/page/Homepage/Contact";
 // import ProjectsGallery from "../components/page/Homepage/ProjectsGallery";
@@ -12,9 +11,10 @@ import LanguageOverview from "../components/page/Homepage/LanguageOverview";
 import Links from "../components/page/Homepage/Links";
 import SiteFeaturesSlider from "../components/page/Homepage/SiteFeaturesSlider";
 
+import styles from "./index.module.scss";
+
 
 function HomepageHeader() {
-
   return (
     <div className={"site-hero-banner"}>
       <section className={"site-hero-text-part " + styles["main-part"]}>

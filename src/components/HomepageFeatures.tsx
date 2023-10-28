@@ -1,26 +1,24 @@
 import React from "react";
 import styles from "./HomepageFeatures.module.scss";
 
-import useBaseUrl from "@docusaurus/useBaseUrl";
 import ThemedImage from "@theme/ThemedImage";
-
 
 import { translate } from "@docusaurus/Translate";
 
-const VscIconsFolder = "img/icons/vscode/dark";
-const vscIcon = (name) => `${VscIconsFolder}/${name}.svg`;
-const vscThemedIcon = (light, dark = light) => ({
-  default: {
-    light: `img/icons/vscode/light/${light}.svg`,
-    dark: `img/icons/vscode/dark/${dark}.svg`,
-  },
-  color: {
-    light: `img/icons/vscode/light/${light}-color.svg`,
-    dark: `img/icons/vscode/dark/${dark}-color.svg`,
-  }
-});
+const VSC_ICONS_FOLDER = "img/icons/vscode";
 
-
+function vscThemedIcon(light: string, dark: string = light) {
+  return {
+    default: {
+      light: `${VSC_ICONS_FOLDER}/light/${light}.svg`,
+      dark: `${VSC_ICONS_FOLDER}/dark/${dark}.svg`,
+    },
+    color: {
+      light: `${VSC_ICONS_FOLDER}/light/${light}-color.svg`,
+      dark: `${VSC_ICONS_FOLDER}/dark/${dark}-color.svg`,
+    }
+  };
+}
 
 const FeatureList = [
   {
@@ -65,74 +63,51 @@ const FeatureList = [
   },
 ];
 
-function Feature({ svgPath, title, url, description }) {
+type ThemedIcon = {
+  light: string;
+  dark: string;
+};
+
+type IconWithColor = { default: ThemedIcon; color: ThemedIcon; };
+type FeatureIcon = string | IconWithColor;
+
+type FeatureProps = {
+  svgPath: FeatureIcon;
+  title: string;
+  url: string;
+  description: React.ReactNode;
+};
+
+function Feature({ svgPath, title, url }: FeatureProps) {
   return (
     <div className={styles.pageCard}>
       <a href={url} className={styles.pageCardInner}>
         <div className={styles.pageCardSvg}>
-          {typeof svgPath == "object" && <ThemedImage className={styles.normalIcon} sources={svgPath.default} />}
-          {typeof svgPath == "string" && <img src={svgPath} alt={title} />}
-
-          {typeof svgPath === "object" && typeof svgPath.color === "object" && <ThemedImage className={styles.hoverIcon} sources={svgPath.color} />}
+          {typeof svgPath == "object" &&
+            <ThemedImage
+              className={styles.normalIcon}
+              sources={svgPath.default}
+            />
+          }
+          {typeof svgPath == "string" &&
+            <img src={svgPath} alt={title} />
+          }
+          {isIconWithColor(svgPath) &&
+            <ThemedImage
+              className={styles.hoverIcon}
+              sources={(svgPath as IconWithColor).color}
+            />
+          }
         </div>
         <div className={styles.pageCardText}>
           <p>{title}</p>
-          {/* <p>{description}</p> */}
         </div>
       </a>
     </div>
   );
 }
 
-export function HomepageOverview() {
-  return (
-    <>
-      <section className={styles.overview}>
-        <div className={styles.overviewContainer}>
-          <div className={styles.overviewContent}>
-            <h1>Watch talks</h1>
-            <p>
-              Get advices from professionals on different topics related to C++ programming.
-              Use our search tool to find the best talks for you. Use tags to filter the results.
-            </p>
-            <a className={styles.actionButton} href="/talks">Browse catalogue</a>
-          </div>
-          <figure><video loop autoPlay muted src={useBaseUrl("video/talks.mp4")} /></figure>
-        </div>
-      </section>
-      <section className={styles.overview}>
-        <div className={styles.overviewContainer}>
-          <div className={styles.overviewContent}>
-            <h1>Join community</h1>
-            <p>
-              Talk with other C++ passionates, engage in common projects,
-              get updates, ask questions, do a code review and more.
-              Browse Facebook groups, Discord servers, visit Reddit, Slack,
-              Forums etc.
-            </p>
-            <a className={styles.actionButton} href="/community">Get involved</a>
-          </div>
-          <figure><img src={useBaseUrl("img/community.png")} /></figure>
-        </div>
-      </section>
-      <section className={styles.overview}>
-        <div className={styles.overviewContainer}>
-          <div className={styles.overviewContent}>
-            <h1>Browse papers</h1>
-            <p>
-              Read standards, proposals and other papers related to C++ language.
-              Use our search tool to find the best papers for you. Use tags to filter the results.
-            </p>
-            <a className={styles.actionButton} href="/papers">Browse</a>
-          </div>
-          <figure><img src={useBaseUrl("img/papers.png")} /></figure>
-        </div>
-      </section>
-    </>
-  );
-}
-
-export function HomepageFeatures() {
+export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
       {FeatureList.map((props, idx) => (
@@ -140,4 +115,8 @@ export function HomepageFeatures() {
       ))}
     </section>
   );
+}
+
+function isIconWithColor(svgPath: FeatureIcon) {
+  return typeof svgPath === "object" && "color" in svgPath;
 }
