@@ -28,7 +28,7 @@ function MaterialThemeProvider(props: MaterialThemeProviderProps) {
   type Theme = "light" | "dark";
 
   const isBrowser = useIsBrowser();
-  const {colorMode} = useColorMode();
+  const { colorMode } = useColorMode();
 
   function getThemesToRender(): Theme[] {
     if (isBrowser) {
