@@ -12,27 +12,6 @@ const supporters = [
     alt: "PJATK logo",
     siteLink: "https://pja.edu.pl/en/"
   },
-  // {
-  // 	name: "PJAIT1",
-  // 	tagline: "Polish-Japanese Academy of Information Technology",
-  // 	logo: "img/supporters/pjait.png",
-  // 	alt: "PJATK logo",
-  // 	siteLink: "https://pja.edu.pl/en/,
-  // },
-  // {
-  // 	name: "PJAIT2",
-  // 	tagline: "Polish-Japanese Academy of Information Technology",
-  // 	logo: "img/supporters/pjait.png",
-  // 	alt: "PJATK logo",
-  // 	siteLink: "https://pja.edu.pl/en/,
-  // },
-  // {
-  // 	name: "PJAIT3",
-  // 	tagline: "Polish-Japanese Academy of Information Technology",
-  // 	logo: "img/supporters/pjait.png",
-  // 	alt: "PJATK logo",
-  // 	siteLink: "https://pja.edu.pl/en/,
-  // },
 ];
 
 
