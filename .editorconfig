@@ -2,6 +2,8 @@ root = true
 [*]
 # Most of the standard properties are supported
 indent_size=4
+charset = utf-8
+end_of_line = lf
 
 [*.{mdx,js,jsx,ts,tsx}]
 indent_style = space
