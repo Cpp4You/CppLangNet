@@ -36,6 +36,10 @@ const useDoc = useDocInternal as useDocFn;
 
 type Props = WrapperProps<typeof ContentType>;
 
+/**
+ * Wraps the content of a document with extra features, like {@linkcode DocSettings}
+ * or extra FrontMatter-based features e.g. {@linkcode CppRefAttribution}.
+ */
 export default function ContentWrapper(props: Props): JSX.Element {
   const { metadata } = useDoc();
 
