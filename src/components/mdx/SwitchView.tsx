@@ -28,36 +28,55 @@ export default function SwitchView(props: SwitchViewProps) {
   return (
     <Tabs>
       {Object.entries(content).map(([key, value], index) => (
-        (typeof value === "object" && ("value" in value || "simplified" in value || "detailed" in value))
-          ?
-          (
-            <TabItem value={key} label={LanguageVersions.get(key)} default={value.default || index == 0}>
-              {value.simplified
-                ?
-                (
-                  <>
-                    <Tabs groupId="view_mode" className={styles.smallTabs}>
-                      <TabItem value="simplified" label="Simplified" default>
-                        {transformEmptyTagElem(value.simplified)}
-                      </TabItem>
-                      <TabItem value="detailed" label="Detailed">
-                        {transformEmptyTagElem(value.detailed)}
-                      </TabItem>
-                    </Tabs>
-                  </>
-                )
-                :
-                value.value
-              }
-            </TabItem>
-          )
-          :
-          (
-            <TabItem value={key} label={LanguageVersions.get(key)} default={index == 0}>
-              {transformEmptyTagElem(value)}
-            </TabItem>
-          )
+        <SwitchViewItem key={key} value={value} index={index}/>
       ))}
     </Tabs>
+  );
+}
+
+type SwitchViewItemProps = {
+  key: string;
+  index: number;
+  value: SwitchViewContent | React.ReactNode;
+}
+
+function SwitchViewItem({key, index, value}: SwitchViewItemProps) {
+
+  if (typeof value === "object" && ("value" in value || "simplified" in value || "detailed" in value))
+  {
+    return (
+      <TabItem value={key}
+        label={LanguageVersions.get(key)}
+        default={value.default || index == 0}
+      >
+        {value.simplified
+          ?
+          (
+            <>
+              <Tabs groupId="view_mode" className={styles.smallTabs}>
+                <TabItem value="simplified" label="Simplified" default>
+                  {transformEmptyTagElem(value.simplified)}
+                </TabItem>
+                <TabItem value="detailed" label="Detailed">
+                  {transformEmptyTagElem(value.detailed)}
+                </TabItem>
+              </Tabs>
+            </>
+          )
+          :
+          value.value
+        }
+      </TabItem>
+    );
+  }
+
+  return (
+    <TabItem
+      value={key}
+      label={LanguageVersions.get(key)}
+      default={index == 0}
+    >
+      {transformEmptyTagElem(value)}
+    </TabItem>
   );
 }
