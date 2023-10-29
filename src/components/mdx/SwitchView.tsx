@@ -3,9 +3,9 @@ import React from "react";
 // Docusaurus
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
-import { LanguageVersions } from "./Versions";
 
 // Custom
+import { LanguageVersions } from "./Versions";
 import transformEmptyTagElem from "../../helper/TransformEmptyTagElem";
 
 import styles from "./SwitchView.module.scss";
