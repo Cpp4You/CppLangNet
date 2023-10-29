@@ -10,14 +10,25 @@ import transformEmptyTagElem from "../../helper/TransformEmptyTagElem";
 
 import styles from "./SwitchView.module.scss";
 
-export default function SwitchView(props) {
+type SwitchViewContent = {
+  value?: string;
+  simplified?: React.ReactNode;
+  detailed?: React.ReactNode;
+  default?: boolean;
+}
+
+type SwitchViewProps = {
+  content: Record<string, SwitchViewContent | React.ReactNode>;
+}
+
+export default function SwitchView(props: SwitchViewProps) {
 
   const content = props.content || {};
 
   return (
     <Tabs>
       {Object.entries(content).map(([key, value], index) => (
-        (value.value || value.simplified || value.detailed)
+        (typeof value === "object" && ("value" in value || "simplified" in value || "detailed" in value))
           ?
           (
             <TabItem value={key} label={LanguageVersions.get(key)} default={value.default || index == 0}>
