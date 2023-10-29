@@ -14,10 +14,18 @@ import { setCookie, getCookie } from "@site/src/helper/Cookies";
 
 import styles from "./Content.module.scss";
 
+interface FrontMatterData {
+  "cppreference_origin"?: string;
+  "cppreference_origin_rel"?: string;
+
+  "arrow_jumping"?: string;
+  "arrow_jumping_preset"?: string;
+
+  // Possibly other
+}
+
 type DocMetadata = {
-  frontMatter: {
-    [key: string]: string | undefined;
-  };
+  frontMatter: FrontMatterData;
 };
 
 type useDocFn = () => {
@@ -52,7 +60,6 @@ export default function ContentWrapper(props: Props): JSX.Element {
     arrowJumping = arrowJumpingQueryFromPreset(metadata.frontMatter["arrow_jumping_preset"]);
   }
 
-
   return (
     <div className={`document-content-wrapper ${styles[`sizeMode-${textSize}`]}`}>
       <BrowserOnly>
@@ -64,14 +71,32 @@ export default function ContentWrapper(props: Props): JSX.Element {
         )}
       </BrowserOnly>
       <Content {...props} />
-      {(metadata.frontMatter["cppreference_origin"] !== undefined &&
-        <CppRefAttribution fullUrl={metadata.frontMatter["cppreference_origin"]} />)
-        ||
-        (metadata.frontMatter["cppreference_origin_rel"] !== undefined &&
-          <CppRefAttribution lang="en" relativeUrl={metadata.frontMatter["cppreference_origin_rel"]} />)
-      }
+      <FrontMatterCppRefAttribution frontMatter={metadata.frontMatter} />
     </div>
   );
+}
+
+type AttrProps = {
+  frontMatter: FrontMatterData;
+}
+
+function FrontMatterCppRefAttribution(props: AttrProps) {
+  const absolute = props.frontMatter["cppreference_origin"];
+  const relative = props.frontMatter["cppreference_origin_rel"];
+
+  if (absolute) {
+    return (
+      <CppRefAttribution fullUrl={absolute} />
+    );
+  }
+
+  if (relative) {
+    return (
+      <CppRefAttribution lang="en" relativeUrl={relative} />
+    );
+  }
+
+  return null;
 }
 
 function arrowJumpingQueryFromPreset(preset: string) {
