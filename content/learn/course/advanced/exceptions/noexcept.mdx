@@ -10,5 +10,202 @@ import NotFinished from "@site/i18n/en/presets/NotFinished.mdx";
 
 <NotFinished />
 
-# Using `noexcept` specifier
+# noexcept
+Exception handling is a fundamental concept in nearly all contemporary programming languages, and C++ is no different in this respect.
+However, one crucial aspect we have yet to explore is the noexcept operator and specifier. 
+This valuable tool allows us to precisely indicate whether a function is intended to throw exceptions. 
+In this lesson, we will delve into a comprehensive understanding of how these utilities are used
+
+## Motivation
+This utility allows to express intent clearly: whether a function throws or not, or whether there are specific cases in which
+it may throw. This is important in programming in general, and holds true for C++ as well: anyone reading your code
+can instantly tell whether a function throws or not, and furthermore, using noexcept correctly may allow optimizations to be made, 
+for example by standard library code. <br />
+A good example of optimization is the reallocations made by `std::vector`. Let's suppose we create our own class `Foo`.
+We'd like to store our type `Foo` inside `std::vector`, such as `std::vector<Foo>`. For the sake of the example, let's also assume
+that our vector will reallocate memory at a certain time.
+If, for some reason, we do not mark our move constructor `noexcept`, then `std::vector` will use copy construction while
+reallocating! On the contrary, had we used the `noexcept` for our move constructor, it would have used move construction to do the
+same operation. This is because `std::vector` (as most stdlib containers) must preserve the strong exception guarantee (which we
+aren't covering in this lesson). To do that, what `std::vector<Foo>` does while reallocating is: <br />
+```cpp
+// std::is_nothrow_move_constructible_v<Foo> checks if Foo's move constructor is noexcept
+if constexpr (std::is_nothrow_move_constructible_v<Foo>) {
+    // Move the original elements from the old buffer into the new buffer, which has more space
+    // Faster
+} else {
+    // Copy the original elements from the old buffer into the new buffer, which has more space
+    // Pessimization
+}
+```
+Of course, you can learn the details about this <a href="https://quuxplusone.github.io/blog/2022/08/26/vector-pessimization/">here</a>.
+
+## Introduction
+In C++, the `noexcept` keyword is both an operator and a specifier. Therefore we are going to cover them both, since there are cases
+in which they might be used together. 
+
+# `noexcept` as a specifier
+The `noexcept` specifier is used with functions (or constructors, or lambdas) to specify whether they throw an exception.
+```cpp
+void non_throwing_function() noexcept {
+    // Note the noexcept specifier...
+}
+
+void function_that_might_throw() {
+    // Note that we did not use noexcept here.
+}
+```
+This is the basic syntax of `noexcept`. It's almost always the last thing that you see before the function's body.<br />
+As stated above, though, we are allowed to use this specifier within our constructors or even lambdas: let's see two examples.
+```cpp
+struct Foo {
+    Foo() = default;
+    Foo(Foo&& other) noexcept {
+        // move contents...
+    }
+};
+```
+```cpp
+int main() {
+    auto non_throwable_lambda = []() noexcept {
+        // this lambda won't throw exceptions
+    };
+}
+```
+:::note Notes
+`noexcept` actually takes in an expression, such as `noexcept(expression)`.<br />
+However, in this case, `noexcept` without any expression implicitly means `noexcept(true)`, and it is a common practice
+to avoid writing `true` as the expression, which we are also doing in this lesson.<br />
+`noexcept` (and thus `noexcept(true)`) implies that the function does not throw.
+:::
+The `noexcept` specifier can also take an expression and **evaluate** it: if the expression evaluates to true, then the function is declared not to throw anything.
+This is usually done with type traits (and concepts since C++20), as shown in the following example:
+```cpp
+#include <type_traits>
+
+template<typename T>
+void foo() noexcept(std::is_nothrow_constructible<T>::value) {
+    // this function is non throwable only if T's defualt constructor is marked noexcept
+    // basically, if std::is_nothrow_constructible<T>::value is true, this results in noexcept(true)
+    // which means that the function it marked noexcept and it does not throw
+    // otherwise, it results in noexcept(false), which means that this function is not noexcept and it might throw
+}
+```
+However, we could also use the `noexcept` operator (as shown below) to do the same.
+
+# `noexcept` as an operator
+Although the syntax is equivalent (`noexcept(expression)`), the `noexcept` operator has a different meaning compared to its specifier counterpart. <br />
+When you use it as an operator, it simply performs a compile time check: it returns `true` only if `expression` is declared to
+not throw any exception. It can be used inside a function's `noexcept` specifier in order to state that the function itself might throw for certain types but not for others, as we'll see in a moment.
+Sounds simple enough, right? But don't be fooled...<br />
+Let's look at an example. Can you guess what the following statement prints?
+```cpp
+#include <iostream>
+int main() {
+    std::cout << std::boolalpha << noexcept(4 + 5 == 0);
+}
+```
+
+It turns out that this code prints `true`. You might be confused, since `4 + 5 == 0` is clearly not true. <br />
+However, note that the `noexcept` operator **only** returns `true` if the given expression is *declared not to throw*: and since a simple integer addition
+and an integer comparision can never throw, the correct result is that `noexcept(4 + 5 == 0)` returns true! <br />
+Note that this also implies that the expression inside a `noexcept` operator is never evaluated. Whether `4 + 5 == 0` is actually true does not
+matter to this operator: all it matters is whether this expression can ever throw!
+:::caution Be aware!
+Unlike its specifier counterpart, the `noexcept` operator **never** evaluates its expression. It only checks whether the expression throws! <br />
+For example, `noexcept(false)` still returns `true`. That is because the expression `false` is guaranteed to never throw.
+:::
+
+A final example on the usage of this operator follows.
+```cpp
+void potentially_throwing() {}
+void not_throwing() noexcept {} // this is a noexcept specifier, not a noexcept operator!
+
+struct Foo {
+};
+
+int main() {
+    Foo f;
+    // The following are all noexcept operators, and not specifiers.
+    std::cout << noexcept(potentially_throwing()); // false because our function is not marked noexcept and thus may throw
+    std::cout << noexcept(not_throwing()); // true because our function is marked noexcept and thus will not throw
+    std::cout << noexcept(Foo{}); // default constructor -> true (which means it's noexcept by default)
+    std::cout << noexcept(Foo{f}); // copy constructor -> true (which means it's noexcept by default)
+}
+```
+
+# How to differentiate `noexcept` operators and specifiers
+It might seem confusing that we use the same keyword both as a specifier and an operator. However, in practice, it is really easy to differentiate the two.
+The `noexcept` specifier is always written before the function's body:
+```cpp
+void foo() noexcept { /* ... */ }
+```
+In all other cases except for one, `noexcept` is an operator. <br />
+As stated above, there's an exception to this rule...
+
+# Combining `noexcept` specifiers and operators together
+...The exception is that we are allowed to combine both `noexcept` specifiers and operators. The end result is similar to this:
+```cpp
+template<typename T>
+void foo() noexcept(noexcept(T{})) {
+    // this function is non throwable only if T's defualt constructor is marked noexcept
+    // noexcept(T{}) is the noexcept operator, and it checks whether the constructor is noexcept
+    // the outer noexcept is the noexcept specifier, and evaluates to true if the inner
+    // noexcept operator evaluates to true
+}
+```
+As explained through the comments, it's also rather easy to differentiate the specifier from the operator: the `noexcept` operator is 
+always **inside** the `noexcept` specifier.<br />
+Note that the example above can be rewritten with type traits (and concepts) as shown before, and this is what we recommend as it is more expressive:
+```cpp
+#include <type_traits>
+
+template<typename T>
+void foo() noexcept(std::is_nothrow_constructible<T>::value) {
+    // this is the same as before, but more expressive through type_traits
+}
+```
+:::tip Recommendation
+We suggest using type traits (or concepts after C++20) inside the `noexcept` specifier instead of its operator counterpart. <br />
+This is because it's more expressive and often easier to read and understand at first glance.
+:::
+
+:::note Differentiating nested `noexcept`
+Whenever you encounter nested `noexcept`, remember that the inner `noexcept` is the operator and the outer `noexcept` is the specifier.
+:::
+
+# Some notes that you should be aware of
+Here's a very short list of some things that you should be aware of when working with `noexcept`.<br />
+- First of all, if you mark a `virtual` function with the `noexcept` specifier, then all the functions in derived classes
+that override it must also have the `noexcept` specifier. Otherwise, they will not overriding the base class' `virtual` function:
+```cpp
+struct A {
+    virtual void f() noexcept {}
+};
+struct B: A {
+    void f() override {} // illegal, missing noexcept specifier
+};
+```
+- If a function that is marked `noexcept` actually throws, `std::terminate` will be called and your program will be terminated instantly. <br/>
+This also means that you may leak resources.
+- Unlike the `noexcept` operator, the `noexcept` specifier **actually evaluates** its expression.
+```cpp
+void not_throwing() noexcept(sizeof(int)==4) {
+    // sizeof(int) is actually 4 on my machine,
+    // therefore the specifier is noexpect(true) and this function is non throwable
+}
+```
+
+## When should we use `noexcept`?
+The core guidelines have a specific section for the usage of `noexcept`... Therefore, we highly recommend reading about it <a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Re-noexcept">here</a>. <br/>
+Here's a little tip that you can follow after you've read the general guidelines and the reasons behind them, though:
+:::tip Don't just mark all functions noexcept
+The noexcept specifier should be used when necessary, and you should not just mark all your functions noexcept. 
+First, you need to really consider whether the function can potentially throw something. It's really easy to mark a function noexcept, 
+only to realize later that it actually calls some potentially-throwing functions! <br/>
+The main general guideline is:<br/>
+Mark your function noexcept *only* if it really can't throw, or it throwing is not acceptable.
+:::
+
+
 
