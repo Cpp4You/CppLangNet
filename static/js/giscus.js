@@ -3,6 +3,7 @@
 	const calcTheme = v => (v === "dark") ? "dark" : "light";
 	let giscusScript = null;
 
+
 	const stringHash = str => {
 		let hash = 0;
 		if (str.length == 0) {
@@ -16,23 +17,26 @@
 		return hash;
 	};
 
-	const uniqueSiteId = () => {
-		const pathName		= window.location.pathname;
+  const uniqueSiteId = () => {
+    const clearPathName = pathName => {
+      const capitalize = x => x[0].toUpperCase() + x.slice(1);
 
-		let term			= pathName.length < 2 ? "index" : pathName.substr(1).replace(/\.\w+$/, "");
-		if (term.endsWith("/"))
-			term = term.substring(0, term.length - 1);
+      const removeLastIfNotAlone = pathElems => {
+        if(pathElems.length == 1) return pathElems;
+        return pathElems.slice(0, -1);
+      };
 
-		let hash = `${stringHash(term)}`;
-		
-		// pad hash  to 14 chars with zeros
-		if (hash[0] === "-")
-			hash = `n${hash.substring(1).padStart(13, "0")}`;
-		else
-			hash = hash.padStart(14, "0");
+      const capitalizedPathElems = pathName.slice(1, -1).split('/').map(capitalize);
 
-		return `Comment-Section-${hash}-cs`;
-	};
+      return removeLastIfNotAlone(capitalizedPathElems).join('/');
+    };
+    const removeDocusaurusTitle = title => title.split('|')[0].slice(0, -1);
+
+    const clearedPathName = clearPathName(window.location.pathname);
+    const titleWithoutDocusaurusTitle = removeDocusaurusTitle(document.title);
+
+    return `${clearedPathName}: ${titleWithoutDocusaurusTitle}`;
+  };
 
 	/**
 	 * Inserts the Giscus script into the page.
@@ -68,7 +72,7 @@
 		if (!iframe)
 			return;
 		iframe.contentWindow.postMessage({ giscus: message }, "*");
-	}
+ }
 
 	function destroyPreviousGiscus() {
 		if (giscusScript)
