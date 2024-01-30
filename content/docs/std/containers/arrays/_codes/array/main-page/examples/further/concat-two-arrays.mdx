@@ -14,7 +14,7 @@ auto concat(
 	std::array<T, N1 + N2> result;
 
 	rg::copy(lhs, result.begin());
-	rg::copy(rhs, result.begin() + rhs.size());
+	rg::copy_backward(rhs, result.end());
 
 	return result;
 }
