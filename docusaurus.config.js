@@ -2,16 +2,16 @@ const path = require("path");
 const lightCodeTheme = require("./src/prism/theme-vscode-light");
 const darkCodeTheme = require("./src/prism/theme-vscode-dark");
 
-const remarkDisableTokenizers = require("remark-disable-tokenizers");
+// const remarkDisableTokenizers = require("remark-disable-tokenizers");
 
-const remarkConfig = [
-  [
-    remarkDisableTokenizers,
-    {
-      "block": ["indentedCode"]
-    }
-  ]
-];
+// const remarkConfig = [
+//   [
+//     remarkDisableTokenizers,
+//     {
+//       "block": ["indentedCode"]
+//     }
+//   ]
+// ];
 
 // With JSDoc @type annotations, IDEs can provide config autocompletion
 /** @type {import('@docusaurus/types').DocusaurusConfig} */
