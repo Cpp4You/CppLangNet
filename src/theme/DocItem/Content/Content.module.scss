@@ -84,7 +84,7 @@ $minTextSize: 0.6;
 $maxTextSize: 1.0;
 
 @function linearScaleAt($scaleLevel, $min, $max) {
-	@return $min + ($max - $min) * ($scaleLevel / 5.0);
+	@return $min + ($max - $min) * (calc($scaleLevel / 5));
 }
 
 @function linearTextScaleAt($scaleLevel) {
