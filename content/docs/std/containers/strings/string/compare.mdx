@@ -14,7 +14,7 @@ import { Since }	from "@site-comps/Versions";
 
 import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Method_UntilCpp11	from './_codes/compare/until-cpp11.mdx';
 import Method_SinceCpp11	from './_codes/compare/since-cpp11.mdx';
@@ -82,7 +82,7 @@ A character sequence consisting of `count1` characters starting at `data1` is co
 For standard strings this function performs character-by-character lexicographical comparison.  
 If the result is zero (the character sequences are equal so far), then their sizes are compared as follows:
 
-<!-- Somehow insert that table here -->
+{/* Somehow insert that table here */}
 
 <ImproveSection />
 
@@ -142,9 +142,9 @@ int basic_string<CharT, Traits, Alloc>::compare(const std::basic_string& s) cons
 
 ### Notes
 
-<!-- link here to the operators -->
+{/* link here to the operators */}
 
-For the situations when three-way comparison is not required, [`std::basic_string`](../string) provides the usual relational operators (<, <=, ==, >, etc).
+For the situations when three-way comparison is not required, [`std::basic_string`](../string) provides the usual relational operators (`<`, `<=`, `==`, `>`, etc).
 
 By default (with the default [`std::char_traits`](#)), this function is not locale-sensitive. See [`std::collate::compare()`](#) for locale-aware three-way string comparison.
 

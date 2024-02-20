@@ -13,11 +13,11 @@ import Columns                 from "@site-comps/Columns";
 import Tooltip                 from '@site-comps/Tooltip';
 import SwitchView              from "@site-comps/SwitchView";
 
-<!-- Terms -->
+{/* Terms */}
 
 import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_SinceCpp11 from './_codes/is_permutation/since-cpp11.mdx';
 import Signature_SinceCpp14 from './_codes/is_permutation/since-cpp14.mdx';
@@ -44,7 +44,6 @@ The <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Toolti
 ### Parameters
 
 <SymbolTable>
-
   <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
     The range of elements to compare.
   </Symbol>
@@ -52,15 +51,11 @@ The <Tooltip title={ <Term_UndefinedBehaviour /> }>behavior is undefined</Toolti
     The second range to compare.
   </Symbol>
   <Symbol none noLink name={ <code>p</code> }>
+    Unary predicate which returns `true` if the element value should be replaced.
 
-Unary predicate which returns `true` if the element value should be replaced.
-
-- Type should be the value type of both `ForwardIt1` and `ForwardIt2`.
-- The signature does not need to have `const&`, but the function must not modify the objects passed to it.
-
-
+    - Type should be the value type of both `ForwardIt1` and `ForwardIt2`.
+    - The signature does not need to have `const&`, but the function must not modify the objects passed to it.
   </Symbol>
-
 </SymbolTable>
 
 #### Type requirements

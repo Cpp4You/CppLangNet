@@ -5,16 +5,16 @@ description:		"Lesson: using algorithms on arrays in C++"
 hide_title:			true
 ---
 
-<!-- Components -->
+{/* Components */}
 import SwitchView		from "@site-comps/SwitchView";
 import Image			from "@site-comps/Image";
 import Columns			from "@site-comps/Columns";
 
-<!-- Presets -->
+{/* Presets */}
 import NotFinished		from "@site/i18n/en/presets/NotFinished.mdx";
 import ImproveSection	from "@site/i18n/en/presets/ImproveSection.mdx";
 
-<!-- Codes -->
+{/* Codes */}
 import AlgoIntroExampleCpp20		from "./_codes/algo-intro-example-cpp20.mdx";
 import AlgoIntroExampleUntilCpp20	from "./_codes/algo-intro-example-until-cpp20.mdx";
 
@@ -97,22 +97,17 @@ First, let's see an example code using all these algorithms, and then we'll disc
 
 To find the smallest value inside a vector, we use [`std::ranges::min`](/docs/std/algo/ranges/min):
 
+import CodeBlock from "@theme/CodeBlock";
+
 <SwitchView content={
 		{
-			"cpp20": <div>
-
-```cpp
+			"cpp20":
+<CodeBlock language="cpp">{`
 std::cout << std::ranges::min(numbers);
-```
-
-			</div>,
-			"until-cpp20":	<div>
-
-```cpp
+`}</CodeBlock>,
+			"until-cpp20":	<CodeBlock language="cpp">{`
 std::cout << std::min(numbers.begin(), numbers.end());
-```
-
-			</div>		
+`}</CodeBlock>
 		}
 	}/>
 
@@ -128,20 +123,12 @@ To find the greatest value inside a vector, we use [`std::ranges::max`](/docs/st
 
 <SwitchView content={
 		{
-			"cpp20": <div>
-
-```cpp
+			"cpp20": <CodeBlock language="cpp">{`
 std::cout << std::ranges::max(numbers);
-```
-
-			</div>,
-			"until-cpp20":	<div>
-
-```cpp
+`}</CodeBlock>,
+			"until-cpp20":	<CodeBlock language="cpp">{`
 std::cout << std::max(numbers.begin(), numbers.end());
-```
-
-			</div>		
+`}</CodeBlock>
 		}
 	}/>
 
@@ -164,22 +151,14 @@ which is simply a non-negative number (because the number of occurrences cannot 
 
 <SwitchView content={
 		{
-			"cpp20": <div>
-
-```cpp
+			"cpp20": <CodeBlock language="cpp">{`
 size_t count = std::ranges::count(numbers, 13);
 std::cout << "Occurrences of 13: " << count;
-```
-
-			</div>,
-			"until-cpp20":	<div>
-
-```cpp
+`}</CodeBlock>,
+			"until-cpp20":	<CodeBlock language="cpp">{`
 size_t count = std::count(numbers.begin(), numbers.end(), 13);
 std::cout << "Occurrences of 13: " << count;
-```
-
-			</div>		
+`}</CodeBlock>
 		}
 	}/>
 
@@ -196,20 +175,12 @@ To reverse the order of the vector's elements, we use [`std::ranges::reverse`](/
 
 <SwitchView content={
 		{
-			"cpp20": <div>
-
-```cpp
+			"cpp20": <CodeBlock language="cpp">{`
 std::ranges::reverse(numbers);
-```
-
-			</div>,
-			"until-cpp20": <div>
-
-```cpp
+`}</CodeBlock>,
+			"until-cpp20": <CodeBlock language="cpp">{`
 std::reverse(numbers.begin(), numbers.end());
-```
-
-			</div>,
+`}</CodeBlock>
 		}
 	}/>
 
@@ -225,19 +196,11 @@ We use the [`sort`](/docs/std/algo/ranges/sort/) function like this:
 
 <SwitchView content={
 		{
-			"cpp20": <div>
-
-```cpp
+			"cpp20": <CodeBlock language="cpp">{`
 std::ranges::sort(numbers);
-```
-
-			</div>,
-			"until-cpp20": <div>
-
-```cpp
+`}</CodeBlock>,
+			"until-cpp20": <CodeBlock language="cpp">{`
 std::sort(numbers.begin(), numbers.end());
-```
-
-			</div>,
+`}</CodeBlock>
 		}
 	}/>

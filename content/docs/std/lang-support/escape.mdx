@@ -80,7 +80,7 @@ The following escape sequences are available:
     <tr><th>Numeric escape sequences</th></tr>
     <tr>
         <td><table className={styles.syntaxTable}>
-            <tr><th>\<small><i>nnn</i></small></th></tr>
+            <tr><th>\\<small><i>nnn</i></small></th></tr>
             <tr><th><Since v='cpp23'>\o&#123;<small><i>n...</i></small>&#125;</Since></th></tr>        
         </table></td>
         <td>arbitrary octal value</td>
@@ -99,7 +99,7 @@ The following escape sequences are available:
     </tr>
     <tr><th>Conditional escape sequences<sup><a href="#cite-1" id="ref-1" >[1]</a></sup></th></tr>
     <tr>
-        <th>\<small>c</small></th>
+        <th>\\<small>c</small></th>
         <td>Implementation-defined</td>
         <td>Implementation-defined</td>
     </tr>
@@ -172,7 +172,7 @@ If a universal character name does not correspond to a scalar value of a charact
 </SyntaxTable>
 <SymbolTable noTraits>
     <Symbol name={<i class='col-g'>n-char-sequence</i>} desc={<>one or more <i class='col-g'>n-char</i>s</>}/>
-    <Symbol name={<i class='col-g'>n-char</i>} desc={<>a character from the <a href="/docs/std/lang-support/charset#translation-character-set">translation character set</a>, except the right curly bracket <code>}</code> or new-line character</>}/>
+    <Symbol name={<i class='col-g'>n-char</i>} desc={<>a character from the <a href="/docs/std/lang-support/charset#translation-character-set">translation character set</a>, except the right curly bracket <code>&rcub;</code> or new-line character</>}/>
 </SymbolTable>
 
 A universal character name of the syntax above is a *named universal character*. It designates the corresponding character in the [Unicode Standard](https://www.unicode.org/versions/Unicode15.0.0/) 
@@ -203,8 +203,8 @@ A universal character name in a narrow string literal or a 16-bit string literal
 
 </Since>
 
-The question mark escape sequence <code>\<span class='col-d'>?</span></code> is used to prevent [trigraphs](/docs/std/lang-support/operator_alternative) from being interpreted inside string literals: a string such as <code-d>"??/"</code-d> 
-is compiled as <code-d>"\"</code-d>, but if the second question mark is escaped, as in <code-d>"?\<b>?</b>/"</code-d>, it becomes <code-d>"??/"</code-d>. <Since v='cpp17'>As trigraphs have been removed from C++, the question mark escape sequence is no longer necessary. It is preserved for compatibility with C++14 (and former revisions) and C.</Since>
+The question mark escape sequence <code>\\<span class='col-d'>?</span></code> is used to prevent [trigraphs](/docs/std/lang-support/operator_alternative) from being interpreted inside string literals: a string such as <code-d>"??/"</code-d> 
+is compiled as <code-d>"\"</code-d>, but if the second question mark is escaped, as in <code-d>"?\\<b>?</b>/"</code-d>, it becomes <code-d>"??/"</code-d>. <Since v='cpp17'>As trigraphs have been removed from C++, the question mark escape sequence is no longer necessary. It is preserved for compatibility with C++14 (and former revisions) and C.</Since>
 
 <table className={styles.syntaxTable}>
     <tr>

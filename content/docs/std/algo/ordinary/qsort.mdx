@@ -14,10 +14,10 @@ import SwitchView              from "@site-comps/SwitchView";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
-<!-- Terms -->
+{/* Terms */}
 import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_SinceCpp98 from './_codes/qsort/since-cpp98.mdx';
 
@@ -28,6 +28,7 @@ import Signature_SinceCpp98 from './_codes/qsort/since-cpp98.mdx';
 }} />
 
 With the exposition-only types defined as follows:
+
 ```cpp
 extern "C++" using cpp_compare_pred = int(const void*, const void*);
 extern "C" using c_compare_pred = int(const void*, const void*);
@@ -48,7 +49,6 @@ If the type of the elements of the array is not a <Until v='cpp11'><a href="/doc
 ### Parameters
 
 <SymbolTable>
-
   <Symbol none noLink name={ <code>ptr</code> }>
     Pointer to the array to sort.
   </Symbol>
@@ -59,23 +59,20 @@ If the type of the elements of the array is not a <Until v='cpp11'><a href="/doc
     The size of each element of the array in bytes.
   </Symbol>
   <Symbol none noLink name={ <code>comp</code> }>
+    Comparison function which returns:
+    - **A negative** integer value if the first argument is less than the second.
+    - **A positive** integer value if the first argument is greater than the second.
+    - **Zero** if the arguments are equivalent.
 
-Comparison function which returns:
-- **A negative** integer value if the first argument is less than the second.
-- **A positive** integer value if the first argument is greater than the second.
-- **Zero** if the arguments are equivalent.
+    The signature of the comparison function should be equivalent to the following:
 
-The signature of the comparison function should be equivalent to the following:
-```cpp
-int cmp(const void *a, const void *b);
-```
+    ```cpp
+    int cmp(const void *a, const void *b);
+    ```
 
-- The function must not modify the objects passed to it
-- Must return consistent results when called for the same objects, regardless of their positions in the array
-
-
+    - The function must not modify the objects passed to it
+    - Must return consistent results when called for the same objects, regardless of their positions in the array
   </Symbol>
-
 </SymbolTable>
 
 ### Return value

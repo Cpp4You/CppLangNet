@@ -14,12 +14,12 @@ import Tooltip                 from '@site-comps/Tooltip';
 import SwitchView              from "@site-comps/SwitchView";
 import { Since, Until }        from "@site-comps/Versions";
 
-<!-- Terms -->
+{/* Terms */}
 
 import Term_UndefinedBehaviour    from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_SinceCpp11 from './_codes/is_sorted/since-cpp11.mdx';
 import Signature_SinceCpp17 from './_codes/is_sorted/since-cpp17.mdx';
@@ -50,7 +50,6 @@ A sequence is sorted with respect to a comparator `comp` if for any iterator `it
 ### Parameters
 
 <SymbolTable>
-
   <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
     The range of elements to examine.
   </Symbol>
@@ -58,21 +57,19 @@ A sequence is sorted with respect to a comparator `comp` if for any iterator `it
     The execution policy to use. See <a href="#">execution policy</a> for details.
   </Symbol>
   <Symbol none noLink name={ <code>p</code> }>
+    Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)),
+    which returns `true` if the first argument is *less* than the second.
 
-Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)),
-which returns `true` if the first argument is *less* than the second.
+    The signature of the comparison function should be equivalent to the following:
 
-The signature of the comparison function should be equivalent to the following:
-```cpp
-bool cmp(const Type1 &a, const Type2 &b);
-```
-- The signature does not need to have `const&`, but must not modify arguments.
-- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
-- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
-
-
+    ```cpp
+    bool cmp(const Type1 &a, const Type2 &b);
+    ```
+    
+    - The signature does not need to have `const&`, but must not modify arguments.
+    - Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+    - The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
   </Symbol>
-
 </SymbolTable>
 
 #### Type requirements

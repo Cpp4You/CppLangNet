@@ -14,11 +14,11 @@ import SwitchView              from "@site-comps/SwitchView";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
-<!-- Terms -->
+{/* Terms */}
 
 import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_UntilCpp14 from './_codes/equal/until-cpp14.mdx';
 import Signature_SinceCpp14 from './_codes/equal/since-cpp14.mdx';
@@ -51,7 +51,6 @@ The overloads **(1, 3, 5, 7)** use `operator==` to determine if two elements are
 ### Parameters
 
 <SymbolTable>
-
   <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
     The first range of elements compare.
   </Symbol>
@@ -62,21 +61,19 @@ The overloads **(1, 3, 5, 7)** use `operator==` to determine if two elements are
     The execution policy to use. See <a href="#">execution policy</a> for details.
   </Symbol>
   <Symbol none noLink name={ <code>p</code> }>
+    Binary predicate which returns `true` if the elements should be treated as equal.
 
-Binary predicate which returns `true` if the elements should be treated as equal.
+    The signature of the function should be equivalent to the following:
 
-The signature of the function should be equivalent to the following:
-```cpp
-bool fun(const Type1& a, const Type2& b);
-```
-- The signature does not need to have `const&`.
-- The function **must not** modify the objects passed to it
-- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
-- The types `Type1` and `Type2` must be such that an object of type `InputIt1` and `InputIt2` can be dereferenced and then implicitly converted to them.
+    ```cpp
+    bool fun(const Type1& a, const Type2& b);
+    ```
 
-
+    - The signature does not need to have `const&`.
+    - The function **must not** modify the objects passed to it
+    - Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+    - The types `Type1` and `Type2` must be such that an object of type `InputIt1` and `InputIt2` can be dereferenced and then implicitly converted to them.
   </Symbol>
-
 </SymbolTable>
 
 #### Type requirements

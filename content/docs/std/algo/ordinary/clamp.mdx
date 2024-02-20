@@ -14,11 +14,11 @@ import SwitchView              from "@site-comps/SwitchView";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
-<!-- Terms -->
+{/* Terms */}
 
 import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_SinceCpp17 from './_codes/clamp/since-cpp17.mdx';
 
@@ -51,20 +51,17 @@ The <Tooltip title={ <Term_ImplementationDefined /> }>behavior is undefined</Too
     The boundaries to clamp <code>v</code> to.
   </Symbol>
   <Symbol none noLink name={ <code>comp</code> }>
+    Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare))
+    which returns `true` if the first argument is less than the second.
 
-Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare))
-which returns `true` if the first argument is less than the second.
-
-```cpp
-bool cmp(const Type1 &a, const Type2 &b);
-```
-- The signature does not need to have `const&`, but must not modify arguments.
-- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
-- The types `Type1` and `Type2` must be such that an object of type `T` can be implicitly converted to both of them.
-
-
+    ```cpp
+    bool cmp(const Type1 &a, const Type2 &b);
+    ```
+    
+    - The signature does not need to have `const&`, but must not modify arguments.
+    - Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+    - The types `Type1` and `Type2` must be such that an object of type `T` can be implicitly converted to both of them.
   </Symbol>
-
 </SymbolTable>
 
 #### Type requirements

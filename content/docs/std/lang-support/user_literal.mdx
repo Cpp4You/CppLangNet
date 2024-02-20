@@ -186,9 +186,9 @@ double operator ""_Z(const char* args);
 int main() {}
 ```
 
-Since the introduction of user-defined literals, the code that uses [format macro constants for fixed-width integer types](/docs/std/types/integer) with no space after the preceding string literal became 
-invalid: <code><a href='/docs/std/io/c/fprintf'>std::printf</a>(<span class='col-d'>"%"</span><a href='/docs/std/types/integer'>PRId64</a><span class='col-d'>"\<b>n</b>"</span>,<a href='/docs/std/types/integer'>INT64_MIN</a>);</code> 
-has to be replaced by <code><a href='/docs/std/io/c/fprintf'>std::printf</a>(<span class='col-d'>"%"</span> <a href='/docs/std/types/integer'>PRId64</a><span class='col-d'>"\<b>n</b>"</span>,<a href='/docs/std/types/integer'>INT64_MIN</a>);</code>.
+Since the introduction of user-defined literals, the code that uses format macro constants for fixed-width integer types with no space
+after the preceding string literal became invalid: `std::printf("%"PRId64"\n",INT64_MIN);` has to be replaced by
+`std::printf("%" PRId64"\n",INT64_MIN);`.
 
 Due to [maximal munch](/docs/std/lang-support/translation_phases#maximal-munch), user-defined integer and floating point literals ending in <Since v='cpp17'>p, P</Since>, e and E, when followed by the operators + or -, 
 must be separated from the operator with whitespace or parentheses in the source:

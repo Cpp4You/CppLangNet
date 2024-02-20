@@ -14,11 +14,11 @@ import SwitchView              from "@site-comps/SwitchView";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
-<!-- Terms -->
+{/* Terms */}
 
 import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_SinceCpp20 from './_codes/partial_sum/since-cpp20.mdx';
 import Signature_UntilCpp20 from './_codes/partial_sum/until-cpp20.mdx';
@@ -79,20 +79,18 @@ If `op` invalidates any iterators (including the end iterators) or modifies any 
     Initial value of the fold.
   </Symbol>
   <Symbol none noLink name={ <code>op</code> }>
+    Binary operation function object that will be applied.
+    The signature of the function should be equivalent to the following:
 
-Binary operation function object that will be applied.
-The signature of the function should be equivalent to the following:
-```cpp
- Ret fun(const Type1 &a, const Type2 &b);
-```
-- The signature does not need to have `const&`.
-- The type `Type1` must be such that an object of type `std::iterator_traits<InputIt>::value_type` can be implicitly converted to it.
-- The type `Type2` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to  it.
-- The type `Ret` must be such that an object of type `InputIt` can be dereferenced and assigned a value of it's type.
+    ```cpp
+    Ret fun(const Type1 &a, const Type2 &b);
+    ```
 
-
+    - The signature does not need to have `const&`.
+    - The type `Type1` must be such that an object of type `std::iterator_traits<InputIt>::value_type` can be implicitly converted to it.
+    - The type `Type2` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to  it.
+    - The type `Ret` must be such that an object of type `InputIt` can be dereferenced and assigned a value of it's type.
   </Symbol>
-
 </SymbolTable>
 
 #### Type requirements
