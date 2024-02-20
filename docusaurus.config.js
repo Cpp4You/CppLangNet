@@ -63,7 +63,7 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
         editLocalizedFiles: true,
         showLastUpdateTime: false,
         showLastUpdateAuthor: false,
-        remarkPlugins: remarkConfig,
+        // remarkPlugins: remarkConfig,
       },
     ],
     [
@@ -77,7 +77,7 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
         editLocalizedFiles: true,
         showLastUpdateTime: false,
         showLastUpdateAuthor: false,
-        remarkPlugins: remarkConfig,
+        // remarkPlugins: remarkConfig,
       },
     ],
     [
@@ -91,7 +91,7 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
         editLocalizedFiles: true,
         showLastUpdateTime: false,
         showLastUpdateAuthor: false,
-        remarkPlugins: remarkConfig,
+        // remarkPlugins: remarkConfig,
       },
     ],
     [
@@ -105,7 +105,7 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
         editLocalizedFiles: true,
         showLastUpdateTime: false,
         showLastUpdateAuthor: false,
-        remarkPlugins: remarkConfig,
+        // remarkPlugins: remarkConfig,
       },
     ],
   ],
@@ -124,7 +124,7 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
           editLocalizedFiles: true,
           showLastUpdateTime: false,
           showLastUpdateAuthor: false,
-          remarkPlugins: remarkConfig,
+          // remarkPlugins: remarkConfig,
           exclude: ["**/_codes/**.{mdx}"],
         },
         blog: {
@@ -132,7 +132,7 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
           path: "content/blog",
           // Please change this to your repo.
           editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/blog/",
-          remarkPlugins: remarkConfig,
+          // remarkPlugins: remarkConfig,
         },
         theme: {
           customCss: require.resolve("./src/css/Custom.scss"),
