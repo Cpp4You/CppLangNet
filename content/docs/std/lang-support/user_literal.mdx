@@ -4,11 +4,14 @@ tags:               [Language, Literals]
 hite_title:         true
 ---
 
-import {Since, Version}                                 from "@site-comps/Versions";
-import SyntaxTable, { Syntax }	                        from "@site-comps/SyntaxTable";
-import SymbolTable, { Symbol }	                        from "@site-comps/SymbolTable";
-import Columns                                          from "@site-comps/Columns";
-import styles                                           from "@site-comps/SyntaxTable.module.scss";
+import { Since, Version, Deprecated } from "@site-comps/Versions";
+import SyntaxTable, { Syntax }	      from "@site-comps/SyntaxTable";
+import SymbolTable, { Symbol }	      from "@site-comps/SymbolTable";
+import Columns                        from "@site-comps/Columns";
+
+{/* Styles?? */}
+
+import styles from "@site-comps/SyntaxTable.module.scss";
 
 # <Since v='cpp11'>User-defined literals</Since> 
 Allows integer, floating-point, character, and <a href='string_literals'>string literals</a> to produce objects of user-defined type by defining a user-defined suffix.
