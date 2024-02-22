@@ -13,13 +13,13 @@ import SwitchView			from "@site-comps/SwitchView";
 import Tooltip				from "@site-comps/Tooltip";
 import Tabs					from "@theme/Tabs";
 
-<!-- Terms -->
+{/* Terms */}
 import Term_ContAlias_ReverseIterator from "@site/i18n/en/presets/terms/cont-alias-reverse-iterator.mdx";
 import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
-<!-- erase() -->
+{/* erase() */}
 import Method_UntilCpp11 	from './_codes/erase/until-cpp11.mdx';
 import Method_SinceCpp11 	from './_codes/erase/since-cpp11.mdx';
 import Method_SinceCpp20 	from './_codes/erase/since-cpp20.mdx';
@@ -76,7 +76,7 @@ Does not throw unless an exception is thrown by the **assignment operator** of `
 ### Notes
 
 If value-initialization in overload **(1)** is undesirable, for example, if the elements are of non-class type and zeroing out is not needed,
-<!-- TODO add a link here -->
+{/* TODO add a link here */}
 it can be avoided by providing a custom [`Allocator::construct()`](#).
 Vector capacity is never reduced when resizing to smaller size because that would invalidate all iterators,
 rather than only the ones that would be invalidated by the equivalent sequence of [`pop_back()`](pop_back) calls.
