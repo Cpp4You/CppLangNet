@@ -27,12 +27,12 @@ export const ToolSummaryInfo: Record<string, ToolDesc> = {
     site: "https://code.visualstudio.com/",
 
     galleryThumbnail: getGalleryUrl("vscode-thumbnail.png"),
-    gallery: [
-      getGalleryUrl("vscode-2-hd.png"),
-      getGalleryUrl("vscode-1-hd.png"),
-      getGalleryUrl("vscode-3-hd.png"),
-      getGalleryUrl("vscode-4-hd.png"),
-    ],
+    gallery: galleryUrls([
+      "vscode-2-hd.png",
+      "vscode-1-hd.png",
+      "vscode-3-hd.png",
+      "vscode-4-hd.png",
+    ]),
   },
   "vs2022": {
     author: "Microsoft",
@@ -41,12 +41,12 @@ export const ToolSummaryInfo: Record<string, ToolDesc> = {
     site: "https://visualstudio.com/",
 
     galleryThumbnail: getGalleryUrl("vs2022-thumbnail.png"),
-    gallery: [
-      getGalleryUrl("vs2022-4-hd.png"),
-      getGalleryUrl("vs2022-2-hd.png"),
-      getGalleryUrl("vs2022-1-hd.png"),
-      getGalleryUrl("vs2022-3-hd.png"),
-    ],
+    gallery: galleryUrls([
+      "vs2022-4-hd.png",
+      "vs2022-2-hd.png",
+      "vs2022-1-hd.png",
+      "vs2022-3-hd.png",
+    ]),
   },
   "clion": {
     author: "Jetbrains",
@@ -55,13 +55,13 @@ export const ToolSummaryInfo: Record<string, ToolDesc> = {
     site: "https://www.jetbrains.com/clion/",
 
     galleryThumbnail: getGalleryUrl("clion-thumbnail.png"),
-    gallery: [
-      getGalleryUrl("clion-1-hd.png"),
-      getGalleryUrl("clion-2-hd.png"),
-      getGalleryUrl("clion-3-hd.png"),
-      getGalleryUrl("clion-4-hd.png"),
-      getGalleryUrl("clion-5-hd.png"),
-    ],
+    gallery: galleryUrls([
+      "clion-1-hd.png",
+      "clion-2-hd.png",
+      "clion-3-hd.png",
+      "clion-4-hd.png",
+      "clion-5-hd.png",
+    ]),
   },
   "qtcreator": {
     author: "The Qt Company",
@@ -70,13 +70,13 @@ export const ToolSummaryInfo: Record<string, ToolDesc> = {
     site: "https://www.qt.io/product/development-tools/",
 
     galleryThumbnail: getGalleryUrl("qtcreator-thumbnail.png"),
-    gallery: [
-      getGalleryUrl("qtcreator-1-hd.png"),
-      getGalleryUrl("qtcreator-2-hd.png"),
-      getGalleryUrl("qtcreator-3-hd.png"),
-      getGalleryUrl("qtcreator-4-hd.png"),
-      getGalleryUrl("qtcreator-5-hd.png"),
-    ],
+    gallery: galleryUrls([
+      "qtcreator-1-hd.png",
+      "qtcreator-2-hd.png",
+      "qtcreator-3-hd.png",
+      "qtcreator-4-hd.png",
+      "qtcreator-5-hd.png",
+    ]),
   },
   "codeblocks": {
     author: "The Code::Blocks team",
@@ -85,11 +85,11 @@ export const ToolSummaryInfo: Record<string, ToolDesc> = {
     site: "https://www.codeblocks.org/",
 
     galleryThumbnail: getGalleryUrl("codeblocks-thumbnail.png"),
-    gallery: [
-      getGalleryUrl("codeblocks-1-hd.png"),
-      getGalleryUrl("codeblocks-2-hd.png"),
-      getGalleryUrl("codeblocks-3-hd.png"),
-    ],
+    gallery: galleryUrls([
+      "codeblocks-1-hd.png",
+      "codeblocks-2-hd.png",
+      "codeblocks-3-hd.png",
+    ]),
   },
   "cppbuilder": {
     author: "Embarcadero",
@@ -110,12 +110,12 @@ export const ToolSummaryInfo: Record<string, ToolDesc> = {
     site: "https://www.replit.com/",
 
     galleryThumbnail: getGalleryUrl("replit-thumbnail.png"),
-    gallery: [
-      getGalleryUrl("replit-3-hd.png"),
-      getGalleryUrl("replit-2-hd.png"),
-      getGalleryUrl("replit-4-hd.png"),
-      getGalleryUrl("replit-1-hd.png"),
-    ],
+    gallery: galleryUrls([
+      "replit-3-hd.png",
+      "replit-2-hd.png",
+      "replit-4-hd.png",
+      "replit-1-hd.png",
+    ]),
   },
 
   ////////////////////////////////////
@@ -228,4 +228,8 @@ function getIconUrl(iconName: string): string {
 
 function getGalleryUrl(imageFileName: string): string {
   return `/img/tutorials/tools/${imageFileName}`;
+}
+
+function galleryUrls(images: string[]): string[] {
+  return images.map(getGalleryUrl);
 }
