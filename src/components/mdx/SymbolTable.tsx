@@ -237,4 +237,4 @@ function SymbolAccess(props: SymbolAccessProps) {
   return (
     <span className={a.Style}>{a.ShortName}</span>
   );
-};
+}

@@ -14,8 +14,7 @@ function ProjectEntry() {
   );
 }
 
-export default function ProjectsGallery()
-{
+export default function ProjectsGallery() {
   return (
     <section className={"homepage-section projects-gallery homepage-browse-section"}>
       <header>

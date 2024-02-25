@@ -7,8 +7,9 @@
 	],
 	"compilerOptions": {
 		"baseUrl": ".",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
 		"types": [
-			"raw-loader.d.ts",
 			"node"
 		],
 		"paths": {

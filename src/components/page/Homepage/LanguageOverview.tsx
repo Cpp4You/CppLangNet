@@ -72,7 +72,7 @@ function ExampleSelection({ onChange }: ExampleSelectionProps) {
                 </span>
               ))}
             </div>
-            <span style={{marginLeft: "auto", color: isRunnable ? "green" : "gray" }}><PlayCircleOutlineIcon/></span>
+            <span style={{ marginLeft: "auto", color: isRunnable ? "green" : "gray" }}><PlayCircleOutlineIcon /></span>
           </li>
         );
       }}
@@ -164,7 +164,7 @@ export default function LanguageOverview() {
         </p>
       </header>
       <main>
-        <ExampleSelection onChange={handleExampleChange}/>
+        <ExampleSelection onChange={handleExampleChange} />
         <RunButton runUrl={currentExample.runUrl} />
         <CodeBlock language="cpp" title={currentExample.codeTitle}>
           {currentExample.code}

@@ -181,7 +181,7 @@ export default function ToolCard(props: ToolCardProps) {
       </ProductCard.Actions>
     </ProductCard>
   );
-};
+}
 ToolCard.Details = ProductCard.Details;
 ToolCard.isMDXComponent = true;
 

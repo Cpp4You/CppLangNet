@@ -97,7 +97,7 @@ export default function CustomCodeBlock(props: CustomCodeBlockProps) {
       codeParent.style.maxHeight = "90vh";
       codeParent.style.flexDirection = "column";
     }
-    
+
   };
 
   useEffect(updateCurrentContainerStyle, [displayFullCode, containerRef, fullCodeRef]);

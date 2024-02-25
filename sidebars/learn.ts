@@ -1,14 +1,5 @@
-/**
- * Creating a sidebar enables you to:
- - create an ordered group of docs
- - render a sidebar for each doc of that group
- - provide next/previous navigation
-
- The sidebars can be generated from the filesystem, or explicitly defined here.
-
- Create as many sidebars as you want.
- */
-const { cat } = require("./common");
+import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
+import { cat } from "./common";
 
 const doc = (sidebarLabel, docId) => {
 	return { type: "doc", label: sidebarLabel, id: docId };
@@ -17,7 +8,7 @@ const doc = (sidebarLabel, docId) => {
 const lessonsSeparator = cat("Lessons:");
 const additionalSeparator = cat("Additional:");
 
-module.exports = {
+const sidebars: SidebarsConfig = {
 	defaultSidebar: [
 		"index",
 		{
@@ -313,3 +304,5 @@ module.exports = {
 		},
 	],
 };
+
+export default sidebars;

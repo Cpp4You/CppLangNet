@@ -1,4 +1,4 @@
-module.exports = {
+const partialSidebar = {
   type: "category",
   label: "Standard Library",
   collapsed: false,
@@ -11,3 +11,5 @@ module.exports = {
     require("./std/utility"),
   ],
 };
+
+export default partialSidebar;

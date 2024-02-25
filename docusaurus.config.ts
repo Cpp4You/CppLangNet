@@ -1,21 +1,16 @@
-const path = require("path");
-const lightCodeTheme = require("./src/prism/theme-vscode-light");
-const darkCodeTheme = require("./src/prism/theme-vscode-dark");
+// Packages
+import path from "path";
 
-// const remarkDisableTokenizers = require("remark-disable-tokenizers");
+// Docusaurus
+import type { Config } from "@docusaurus/types";
+import type * as Preset from "@docusaurus/preset-classic";
 
-// const remarkConfig = [
-//   [
-//     remarkDisableTokenizers,
-//     {
-//       "block": ["indentedCode"]
-//     }
-//   ]
-// ];
+// Custom
+import lightCodeTheme from "./src/prism/theme-vscode-light";
+import darkCodeTheme from "./src/prism/theme-vscode-dark";
 
-// With JSDoc @type annotations, IDEs can provide config autocompletion
-/** @type {import('@docusaurus/types').DocusaurusConfig} */
-(module.exports = {
+
+const config = {
   title: "C++ Programming Language",
   tagline: "Learn how to build blazing fast software",
   url: "https://cpp-lang.net",
@@ -39,7 +34,8 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
   // Note: we're not accepting more locales for now (limited workforce)
   i18n: {
     defaultLocale: "en",
-    locales: ["en", "pl"]
+    locales: ["en", "pl"],
+    localeConfigs: {},
   },
 
   plugins: [
@@ -58,12 +54,11 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
         id: "learn",
         path: "content/learn",
         routeBasePath: "learn",
-        sidebarPath: require.resolve("./sidebars/learn.js"),
+        sidebarPath: "./sidebars/learn.ts",
         editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
         editLocalizedFiles: true,
         showLastUpdateTime: false,
         showLastUpdateAuthor: false,
-        // remarkPlugins: remarkConfig,
       },
     ],
     [
@@ -72,12 +67,11 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
         id: "tools",
         path: "content/tools",
         routeBasePath: "tools",
-        sidebarPath: require.resolve("./sidebars/tools.js"),
+        sidebarPath: "./sidebars/tools.ts",
         editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
         editLocalizedFiles: true,
         showLastUpdateTime: false,
         showLastUpdateAuthor: false,
-        // remarkPlugins: remarkConfig,
       },
     ],
     [
@@ -86,12 +80,11 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
         id: "community",
         path: "content/community",
         routeBasePath: "community",
-        sidebarPath: require.resolve("./sidebars/community.js"),
+        sidebarPath: "./sidebars/community.ts",
         editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
         editLocalizedFiles: true,
         showLastUpdateTime: false,
         showLastUpdateAuthor: false,
-        // remarkPlugins: remarkConfig,
       },
     ],
     [
@@ -100,12 +93,11 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
         id: "contributing",
         path: "content/contributing",
         routeBasePath: "contributing",
-        sidebarPath: require.resolve("./sidebars/contributing.js"),
+        sidebarPath: "./sidebars/contributing.ts",
         editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
         editLocalizedFiles: true,
         showLastUpdateTime: false,
         showLastUpdateAuthor: false,
-        // remarkPlugins: remarkConfig,
       },
     ],
   ],
@@ -113,18 +105,16 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
   presets: [
     [
       "classic",
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: {
           path: "content/docs",
 
-          sidebarPath: require.resolve("./sidebars/docs.js"),
+          sidebarPath: "./sidebars/docs.ts",
           // Please change this to your repo.
           editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/",
           editLocalizedFiles: true,
           showLastUpdateTime: false,
           showLastUpdateAuthor: false,
-          // remarkPlugins: remarkConfig,
           exclude: ["**/_codes/**.{mdx}"],
         },
         blog: {
@@ -132,7 +122,6 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
           path: "content/blog",
           // Please change this to your repo.
           editUrl: "https://github.com/Cpp4You/CppLangNet/edit/main/blog/",
-          // remarkPlugins: remarkConfig,
         },
         theme: {
           customCss: require.resolve("./src/css/Custom.scss"),
@@ -141,13 +130,12 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
           trackingID: "G-N768FKNY0R",
           anonymizeIP: true,
         },
-      }),
+      } satisfies Preset.Options,
     ],
   ],
 
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
+    {
       image: "img/favicon.png",
       docs: {
         sidebar: {
@@ -286,5 +274,7 @@ const darkCodeTheme = require("./src/prism/theme-vscode-dark");
           }
         ]
       },
-    }),
-});
+    } satisfies Preset.ThemeConfig,
+} satisfies Config;
+
+export default config;
