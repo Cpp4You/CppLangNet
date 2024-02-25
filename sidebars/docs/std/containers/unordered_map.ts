@@ -1,14 +1,17 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("unordered_multimap", "std/containers/maps/unordered-multimap", "", [
+const sidebar: SidebarItemConfig = docsClassCat("unordered_map", "std/containers/maps/unordered-map", "", [
   "constructors",
   "destructors",
   "op:operator_assign",
   "m:get_allocator",
+  cat("Element access"),
+  "m:at",
+  "op:operator_subscript",
   cat("Iterators"),
   "m:begin",
   "m:end",
@@ -19,8 +22,10 @@ module.exports = docsClassCat("unordered_multimap", "std/containers/maps/unorder
   cat("Modifiers"),
   "m:clear",
   "m:insert",
+  ["m:insert_or_assign", "since-cpp17"],
   "m:emplace",
   "m:emplace_hint",
+  ["m:try_emplace", "since-cpp17"],
   "m:erase",
   "m:swap",
   ["m:extract", "since-cpp17"],
@@ -28,7 +33,7 @@ module.exports = docsClassCat("unordered_multimap", "std/containers/maps/unorder
   cat("Lookup"),
   "m:count",
   "m:find",
-  "m:contains",
+  ["m:contains", "since-cpp20"],
   "m:equal_range",
   cat("Bucket interface"),
   "m:begin_size_type",
@@ -46,3 +51,5 @@ module.exports = docsClassCat("unordered_multimap", "std/containers/maps/unorder
   "m:hash_function",
   "m:key_eq"
 ]);
+
+export default sidebar;

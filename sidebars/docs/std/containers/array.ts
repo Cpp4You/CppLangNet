@@ -1,10 +1,10 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("array", "std/containers/arrays/array", "since-cpp11", [
+const sidebar: SidebarItemConfig = docsClassCat("array", "std/containers/arrays/array", "since-cpp11", [
   cat("Element access"),
   "m:at",
   "op:operator_subscript",
@@ -26,3 +26,5 @@ module.exports = docsClassCat("array", "std/containers/arrays/array", "since-cpp
   cat("Non-member functions"),
   ["f:to_array", "since-cpp20"],
 ]);
+
+export default sidebar;

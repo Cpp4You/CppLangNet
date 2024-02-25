@@ -1,17 +1,17 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("unordered_multiset", "std/containers/sets/unordered-multiset", "", [
+const sidebar: SidebarItemConfig = docsClassCat("unordered_multimap", "std/containers/maps/unordered-multimap", "", [
   "constructors",
   "destructors",
   "op:operator_assign",
   "m:get_allocator",
   cat("Iterators"),
-  ["m:begin", "since-cpp11"],
-  ["m:end", "since-cpp11"],
+  "m:begin",
+  "m:end",
   cat("Capacity"),
   "m:empty",
   "m:size",
@@ -28,7 +28,7 @@ module.exports = docsClassCat("unordered_multiset", "std/containers/sets/unorder
   cat("Lookup"),
   "m:count",
   "m:find",
-  ["m:contains", "since-cpp20"],
+  "m:contains",
   "m:equal_range",
   cat("Bucket interface"),
   "m:begin_size_type",
@@ -42,7 +42,9 @@ module.exports = docsClassCat("unordered_multiset", "std/containers/sets/unorder
   "m:max_load_factor",
   "m:rehash",
   "m:reserve",
-  cat("Obervers"),
+  cat("Observers"),
   "m:hash_function",
-  "m:key_eq",
+  "m:key_eq"
 ]);
+
+export default sidebar;

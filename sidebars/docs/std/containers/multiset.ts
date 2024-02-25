@@ -1,12 +1,12 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("multimap", "std/containers/maps/multimap", "", [
+const sidebar: SidebarItemConfig = docsClassCat("multiset", "std/containers/sets/multiset", "", [
   "constructors",
-  "destructor",
+  "destructors",
   "op:operator_assign",
   "m:get_allocator",
   cat("Iterators"),
@@ -38,3 +38,5 @@ module.exports = docsClassCat("multimap", "std/containers/maps/multimap", "", [
   "m:key_comp",
   "m:value_comp",
 ]);
+
+export default sidebar;

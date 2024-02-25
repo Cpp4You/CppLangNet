@@ -1,10 +1,10 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("map", "std/containers/maps/map", "", [
+const sidebar: SidebarItemConfig = docsClassCat("map", "std/containers/maps/map", "", [
   "constructors",
   "destructor",
   "op:operator_assign",
@@ -44,3 +44,5 @@ module.exports = docsClassCat("map", "std/containers/maps/map", "", [
   "m:value_comp",
   "m:value_compare",
 ]);
+
+export default sidebar;

@@ -1,16 +1,22 @@
 import type { SidebarItemConfig } from "../types";
 
+import StdMath from "./std/math";
+import StdContainers from "./std/containers";
+import StdAlgorithms from "./std/algorithms";
+import StdMemoryManagement from "./std/memory-management";
+import StdUtility from "./std/utility";
+
 const partialSidebar: SidebarItemConfig = {
   type: "category",
   label: "Standard Library",
   collapsed: false,
   link: { type: "doc", id: "std/index" },
   items: [
-    require("./std/math"),
-    require("./std/containers"),
-    require("./std/algorithms"),
-    require("./std/memory-management"),
-    require("./std/utility"),
+    StdMath,
+    StdContainers,
+    StdAlgorithms,
+    StdMemoryManagement,
+    StdUtility,
   ],
 };
 

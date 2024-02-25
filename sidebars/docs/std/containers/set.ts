@@ -1,17 +1,19 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("unordered_set", "std/containers/sets/unordered-set", "", [
+const sidebar: SidebarItemConfig = docsClassCat("set", "std/containers/sets/set", "", [
   "constructors",
   "destructors",
   "op:operator_assign",
   "m:get_allocator",
   cat("Iterators"),
-  "m:begin",
-  "m:end",
+  ["m:begin", "since-cpp11"],
+  ["m:end", "since-cpp11"],
+  ["m:rbegin", "since-cpp11"],
+  ["m:rend", "since-cpp11"],
   cat("Capacity"),
   "m:empty",
   "m:size",
@@ -30,19 +32,11 @@ module.exports = docsClassCat("unordered_set", "std/containers/sets/unordered-se
   "m:find",
   ["m:contains", "since-cpp20"],
   "m:equal_range",
-  cat("Bucket interface"),
-  "m:begin_size_type",
-  "m:end_size_type",
-  "m:bucket_count",
-  "m:max_bucket_count",
-  "m:bucket_size",
-  "m:bucket",
-  cat("Hash policy"),
-  "m:load_factor",
-  "m:max_load_factor",
-  "m:rehash",
-  "m:reserve",
+  "m:lower_bound",
+  "m:upper_bound",
   cat("Observers"),
-  "m:hash_function",
-  "m:key_eq",
+  "m:key_comp",
+  "m:value_comp",
 ]);
+
+export default sidebar;

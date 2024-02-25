@@ -1,10 +1,10 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("stack", "std/containers/other/stack", "", [
+const sidebar: SidebarItemConfig = docsClassCat("stack", "std/containers/other/stack", "", [
   "constructors",
   "destructors",
   "op:operator_assign",
@@ -19,3 +19,5 @@ module.exports = docsClassCat("stack", "std/containers/other/stack", "", [
   "m:pop",
   ["m:swap", "since-cpp11"],
 ]);
+
+export default sidebar;

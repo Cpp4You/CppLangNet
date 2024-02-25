@@ -1,10 +1,10 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("forward_list", "std/containers/lists/forward-list", "", [
+const sidebar: SidebarItemConfig = docsClassCat("forward_list", "std/containers/lists/forward-list", "", [
   "constructors",
   "destructor",
   "op:operator_assign",
@@ -37,3 +37,5 @@ module.exports = docsClassCat("forward_list", "std/containers/lists/forward-list
   "m:unique",
   "m:sort",
 ]);
+
+export default sidebar;

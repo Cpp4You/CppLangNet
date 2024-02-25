@@ -1,10 +1,10 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("vector", "std/containers/arrays/vector", "", [
+const sidebar: SidebarItemConfig = docsClassCat("deque", "std/containers/queues/deque", "", [
   "constructors",
   "destructor",
   "op:operator_assign",
@@ -15,7 +15,6 @@ module.exports = docsClassCat("vector", "std/containers/arrays/vector", "", [
   "op:operator_subscript",
   "m:front",
   "m:back",
-  "m:data",
   cat("Iterators"),
   ["m:begin", "since-cpp11"],
   ["m:end", "since-cpp11"],
@@ -25,8 +24,6 @@ module.exports = docsClassCat("vector", "std/containers/arrays/vector", "", [
   "m:empty",
   "m:size",
   "m:max_size",
-  "m:capacity",
-  "m:reserve",
   ["m:shrink_to_fit", "since-cpp11"],
   cat("Modifiers"),
   "m:clear",
@@ -36,6 +33,11 @@ module.exports = docsClassCat("vector", "std/containers/arrays/vector", "", [
   "m:push_back",
   ["m:emplace_back", "since-cpp11"],
   "m:pop_back",
+  "m:push_front",
+  ["m:emplace_front", "since-cpp11"],
+  "m:pop_front",
   "m:resize",
-  "m:swap",
+  "m:swap"
 ]);
+
+export default sidebar;

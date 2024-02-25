@@ -1,8 +1,10 @@
-const {
-  docsClassCat,
-} = require("../../common");
+import type { SidebarItemConfig } from "../../types";
 
-module.exports = {
+import {
+  docsClassCat,
+} from "../../common";
+
+const sidebar: SidebarItemConfig = {
   type: "category",
   label: "Math",
   items: [
@@ -161,3 +163,5 @@ module.exports = {
     "std/math/numeric_algorithms",
   ]
 };
+
+export default sidebar;

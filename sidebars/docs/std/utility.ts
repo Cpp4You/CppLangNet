@@ -1,8 +1,8 @@
-const {
-  docsMethod,
-} = require("../../common");
+import type { SidebarItemConfig } from "../../types";
 
-module.exports = {
+import { docsMethod } from "../../common";
+
+const sidebar: SidebarItemConfig = {
   type: "category",
   label: "Utility",
   items: [
@@ -10,3 +10,5 @@ module.exports = {
     docsMethod("std/utility/variant", "since-cpp17"),
   ]
 };
+
+export default sidebar;

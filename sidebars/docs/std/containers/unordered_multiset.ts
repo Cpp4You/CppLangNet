@@ -1,20 +1,17 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("unordered_map", "std/containers/maps/unordered-map", "", [
+const sidebar: SidebarItemConfig = docsClassCat("unordered_multiset", "std/containers/sets/unordered-multiset", "", [
   "constructors",
   "destructors",
   "op:operator_assign",
   "m:get_allocator",
-  cat("Element access"),
-  "m:at",
-  "op:operator_subscript",
   cat("Iterators"),
-  "m:begin",
-  "m:end",
+  ["m:begin", "since-cpp11"],
+  ["m:end", "since-cpp11"],
   cat("Capacity"),
   "m:empty",
   "m:size",
@@ -22,10 +19,8 @@ module.exports = docsClassCat("unordered_map", "std/containers/maps/unordered-ma
   cat("Modifiers"),
   "m:clear",
   "m:insert",
-  ["m:insert_or_assign", "since-cpp17"],
   "m:emplace",
   "m:emplace_hint",
-  ["m:try_emplace", "since-cpp17"],
   "m:erase",
   "m:swap",
   ["m:extract", "since-cpp17"],
@@ -47,7 +42,9 @@ module.exports = docsClassCat("unordered_map", "std/containers/maps/unordered-ma
   "m:max_load_factor",
   "m:rehash",
   "m:reserve",
-  cat("Observers"),
+  cat("Obervers"),
   "m:hash_function",
-  "m:key_eq"
+  "m:key_eq",
 ]);
+
+export default sidebar;

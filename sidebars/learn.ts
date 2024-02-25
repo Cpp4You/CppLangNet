@@ -1,7 +1,7 @@
-import type { SidebarsConfig } from "./types";
+import type { SidebarItemConfig, SidebarsConfig } from "./types";
 import { cat } from "./common";
 
-function doc(sidebarLabel: string, docId: string) {
+function doc(sidebarLabel: string, docId: string): SidebarItemConfig {
   return { type: "doc", label: sidebarLabel, id: docId };
 }
 

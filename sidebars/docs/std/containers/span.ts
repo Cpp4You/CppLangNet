@@ -1,10 +1,10 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("span", "std/containers/other/span", "", [
+const sidebar: SidebarItemConfig = docsClassCat("span", "std/containers/other/span", "", [
   "constructors",
   "op:operator_assign",
   cat("Element access"),
@@ -26,3 +26,5 @@ module.exports = docsClassCat("span", "std/containers/other/span", "", [
   "m:last",
   "m:subspan",
 ]);
+
+export default sidebar;

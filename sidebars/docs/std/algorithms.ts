@@ -1,9 +1,10 @@
-const {
+import type { SidebarItemConfig } from "../../types";
+
+import {
   docsMethod,
-} = require("../../common");
+} from "../../common";
 
-
-module.exports = {
+const sidebar: SidebarItemConfig = {
   type: "category",
   label: "Algorithms",
   link: { type: "doc", id: "std/algo/index" },
@@ -525,3 +526,5 @@ module.exports = {
     }
   ]
 };
+
+export default sidebar;

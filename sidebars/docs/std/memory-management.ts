@@ -1,9 +1,10 @@
-const {
+import type { SidebarItemConfig } from "../../types";
+
+import {
   docsClassCat,
-} = require("../../common");
+} from "../../common";
 
-
-module.exports = {
+const sidebar: SidebarItemConfig = {
   type: "category",
   label: "Memory",
   collapsed: true,
@@ -76,3 +77,5 @@ module.exports = {
     },
   ]
 };
+
+export default sidebar;

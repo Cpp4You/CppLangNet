@@ -1,10 +1,10 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("queue", "std/containers/queues/queue", "", [
+const sidebar: SidebarItemConfig = docsClassCat("queue", "std/containers/queues/queue", "", [
   "constructors",
   "destructors",
   "op:operator_assign",
@@ -20,3 +20,5 @@ module.exports = docsClassCat("queue", "std/containers/queues/queue", "", [
   ["m:emplace", "since-cpp11"],
   ["m:swap", "since-cpp11"],
 ]);
+
+export default sidebar;

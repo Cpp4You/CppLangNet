@@ -1,11 +1,14 @@
 import type { SidebarsConfig } from "./types";
 
+import StdLib from "./docs/std_lib";
+import NamedReq from "./docs/named_req";
+
 const sidebars: SidebarsConfig = {
   defaultSidebar: [
     "index",
     "useful-links",
-    require("./docs/std_lib.ts"),
-    require("./docs/named_req"),
+    StdLib,
+    NamedReq,
   ],
 };
 export default sidebars;

@@ -1,10 +1,10 @@
-const {
-  docsClass,
+import { SidebarItemConfig } from "@site/sidebars/types";
+import {
   cat,
   docsClassCat,
-} = require("../../../common");
+} from "../../../common";
 
-module.exports = docsClassCat("string_view", "std/containers/strings/string_view", "", [
+const sidebar: SidebarItemConfig = docsClassCat("string_view", "std/containers/strings/string_view", "", [
   "constructors",
   "op:operator_assign",
   cat("Element access"),
@@ -40,3 +40,5 @@ module.exports = docsClassCat("string_view", "std/containers/strings/string_view
   "m:find_last_of",
   "m:find_last_not_of"
 ]);
+
+export default sidebar;
