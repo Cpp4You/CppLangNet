@@ -1,4 +1,6 @@
-const partialSidebar = {
+import type { SidebarItemConfig } from "../types";
+
+const partialSidebar: SidebarItemConfig = {
   type: "category",
   label: "Standard Library",
   collapsed: false,

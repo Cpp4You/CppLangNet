@@ -1,9 +1,9 @@
-import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
+import type { SidebarsConfig } from "./types";
 import { cat } from "./common";
 
-const doc = (sidebarLabel, docId) => {
+function doc(sidebarLabel: string, docId: string) {
   return { type: "doc", label: sidebarLabel, id: docId };
-};
+}
 
 const lessonsSeparator = cat("Lessons:");
 const additionalSeparator = cat("Additional:");
