@@ -1,15 +1,16 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-// import Prism from "prism-react-renderer/prism";
 // import ExecutionEnvironment from "@docusaurus/ExecutionEnvironment";
-import siteConfig from "@generated/docusaurus.config";
-import type * as PrismNamespace from 'prismjs';
-// import type {Optional} from 'utility-types';
+// import siteConfig from "@generated/docusaurus.config";
+import type * as PrismNamespace from "prismjs";
+
+import ExtendCpp from "@site/src/prism/extend-cpp";
+import LangLog from "@site/src/prism/lang-log";
+import LangConsole from "@site/src/prism/lang-console";
+
+const plugins = [
+  ExtendCpp,
+  LangLog,
+  LangConsole,
+];
 
 export default function prismIncludeLanguages(
   PrismObject: typeof PrismNamespace,
@@ -18,31 +19,5 @@ export default function prismIncludeLanguages(
   //   return;
   // }
 
-  const {
-    themeConfig: {
-      prism: {
-        additionalLanguages = [],
-        scripts = [],
-      } = {}
-    },
-  } = siteConfig;
-
-  additionalLanguages.forEach((lang) => loadPrismLanguage(PrismObject, lang));
-  scripts.forEach((name: string) => loadPrismScript(PrismObject, name));
-}
-
-async function loadPrismLanguage(prismContext: typeof PrismNamespace, name: string) {
-  return await loadPrismScript(prismContext, `lang-${name}`);
-}
-
-async function loadPrismScript(prismContext: typeof PrismNamespace, name: string) {
-  try {
-    const mod = await import(`/static/prism/${name}`);
-    if (mod.default) {;
-      mod.default(prismContext);
-    } 
-  }
-  catch (e) {
-    console.error(`Failed to load prism plugin "${name}"`, e);
-  }
+  plugins.forEach(p => p(PrismObject));
 }
