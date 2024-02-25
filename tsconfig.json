@@ -1,24 +1,43 @@
 {
-	"extends": "@tsconfig/docusaurus/tsconfig.json",
-	"exclude": [
-		".docusaurus/*",
-		"**/node_modules/",
-		"build"
-	],
-	"compilerOptions": {
-		"baseUrl": ".",
-		"module": "ESNext",
-		"moduleResolution": "Bundler",
-		"types": [
-			"node"
-		],
-		"paths": {
-			"@site/*": [
-				"./*"
-			],
-			"@site-comps/*": [
-				"./src/components/mdx/*"
-			]
-		}
-	},
+  "extends": "@tsconfig/docusaurus/tsconfig.json",
+  "exclude": [
+    ".docusaurus/*",
+    "**/node_modules/",
+    "build"
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "@site/*": [
+        "./*"
+      ],
+      "@site-comps/*": [
+        "./src/components/mdx/*"
+      ]
+    },
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": false,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "noUncheckedIndexedAccess": true,
+    "strict": true,
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictBindCallApply": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "useUnknownInCatchVariables": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "importsNotUsedAsValues": "remove",
+  },
 }
