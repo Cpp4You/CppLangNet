@@ -10,7 +10,7 @@ cppreference_origin_rel: w/cpp/algorithm/mismatch
 
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
-import SwitchView              from "@site-comps/SwitchView";
+import VersionTabs             from "@site-comps/VersionTabs";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
@@ -27,7 +27,7 @@ import Signature_SinceCpp20 from './_codes/mismatch/since-cpp20.mdx';
 
 # std::mismatch() algorithm
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Signature_SinceCpp20 />,
 	'since-cpp17': <Signature_SinceCpp17 />,
 	'since-cpp14': <Signature_SinceCpp14 />,
@@ -97,7 +97,7 @@ For **(1, 2, 5, 6)**, if `last2` is not provided, it denotes `first2 + (last1 - 
 
 [`std::pair`](#) with iterators to the first two non-equal elements.
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp14': <div>
     If no mismatches are found when the comparison reaches <code>last1</code> or <code>last2</code>, whichever happens first, the pair holds the end iterator and the corresponding iterator from the other range.
   </div>,

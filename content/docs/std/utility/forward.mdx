@@ -9,7 +9,7 @@ hide_title:			true
 
 import Columns					from "@site-comps/Columns";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 
 {/* Codes */}
 import Forward_Function_Declaration_Cpp14_Simple			from "./_codes/forward-function-declaration/cpp14-simple.mdx";
@@ -46,7 +46,7 @@ which illustrate what problems may occur if forwarding is omitted.
 
 ### Declarations
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp14': {
 			simplified:	<Forward_Function_Declaration_Cpp14_Simple/>,
 			detailed:	<Forward_Function_Declaration_Cpp14_Detailed/>,
@@ -63,7 +63,7 @@ which illustrate what problems may occur if forwarding is omitted.
 
 ### Return value
 
-<SwitchView content={{
+<VersionTabs content={{
 		simplified: <Forward_Function_Decription_ReturnValue_Simple/>,
 		detailed:	<Forward_Function_Decription_ReturnValue_Detailed/>,
 	}}/>
@@ -289,7 +289,7 @@ person(S1&& name, S2&& surname)
         : name(std::forward<S1>(name)), surname(std::forward<S2>(surname)) { }
 ```
 :::note
-<SwitchView content={{
+<VersionTabs content={{
 		Simplified: <Universal_Reference_Description_Simple/>,
 		Detailed:	<Universal_Reference_Description_Detailed/>,
 	}}/>

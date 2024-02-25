@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/unordered_set/insert
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 
 import ImproveSection		from "@site/i18n/en/presets/ImproveSection.mdx";
 
@@ -24,7 +24,7 @@ import IteratorDereferenceNote_SinceCpp17 	from './_codes/insert/explanation/ite
 
 # std::unordered_set insert() method
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <Method_SinceCpp17 />,
     'until-cpp17': <Method_UntilCpp17 />
     }} />
@@ -70,7 +70,7 @@ The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_al
 :::
 
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <IteratorDereferenceNote_SinceCpp17 />,
     'until-cpp17': <IteratorDereferenceNote_UntilCpp17 />,
     }} />

@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/map/operator_at
 ---
 
 import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 import Tooltip					from "@site-comps/Tooltip";
 
 {/* Terms */}
@@ -26,7 +26,7 @@ import Method_SinceCpp11 	from './_codes/operator_subscript/since-cpp11.mdx';
 
 # std::map operator[]
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp11': <Method_SinceCpp11 />,
 		'since-cpp98': <Method_SinceCpp98 />,
 	}}/>
@@ -34,7 +34,7 @@ import Method_SinceCpp11 	from './_codes/operator_subscript/since-cpp11.mdx';
 Returns a <Tooltip title={Term_ContAlias_Reference}>reference</Tooltip> to the value that is mapped to a key equivalent to key,
 performing an insertion if such key does not already exist.
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp11': <Explanation_SinceCpp11 />,
 		'until-cpp11': <Explanation_UntilCpp11 />,
 	}}/>

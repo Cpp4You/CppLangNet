@@ -13,7 +13,7 @@ arrow_jumping_preset: overloads
 # std::initializer_list constructors
 
 import CodeBlock					from '@theme/CodeBlock';
-import SwitchView					from '@site-comps/SwitchView';
+import VersionTabs					from '@site-comps/VersionTabs';
 import Columns						from '@site-comps/Columns';
 import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
 
@@ -33,7 +33,7 @@ import Ctor_Default_UntilCpp14_Detailed			from "./_codes/constructors/default/un
 
 ## Default constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp14': {
 		simplified:	<Ctor_Default_SinceCpp14_Simplified/>,
 		detailed:	<Ctor_Default_SinceCpp14_Detailed/>,

@@ -6,7 +6,7 @@ hide_title:             true
 
 import Columns                  from "@site-comps/Columns";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
-import SwitchView               from '@site-comps/SwitchView';
+import VersionTabs              from '@site-comps/VersionTabs';
 
 import  IsU                 from "./_codes/allocate_shared/isU.mdx";
 import  IsNotU              from "./_codes/allocate_shared/isnotU.mdx";
@@ -19,7 +19,7 @@ Defined in header `<memory>`.
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "T is U[]" : <IsU />,
     "T is not U[]" : <IsNotU />,
     "T is non-array" : <IsNonArray />,

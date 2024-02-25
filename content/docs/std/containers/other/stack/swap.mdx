@@ -6,7 +6,7 @@ hide_title:				true
 tags:					[swap, exchange]
 ---
 
-import SwitchView from "@site-comps/SwitchView";
+import VersionTabs from "@site-comps/VersionTabs";
 import Columns    from "@site-comps/Columns";
 
 {/* Codes */}
@@ -18,7 +18,7 @@ import NoexceptSpecification_SinceCpp17 	from './_codes/swap/noexcept-specificat
 
 # std::stack swap()
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <Method_SinceCpp11 />
 }}/>
 
@@ -42,7 +42,7 @@ swap(c, other.c);
 
 ### Exceptions
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
 		'since-cpp11': <NoexceptSpecification_SinceCpp11  />,
 	}}/>

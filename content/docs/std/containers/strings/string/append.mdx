@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/string/append
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import { Since }			from "@site-comps/Versions";
 import Tabs					from "@theme/Tabs";
 
@@ -29,7 +29,7 @@ import Explanation_UntilCpp11 from './_codes/append/explanation/until-cpp11.mdx'
 
 # std::string append() method
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp20': <Method_SinceCpp20 />,
     'since-cpp17': <Method_SinceCpp17 />,
     'since-cpp14': <Method_SinceCpp14 />,
@@ -55,7 +55,7 @@ Appends characters into the string.
 
  - **(6)** Appends characters in the range **[ first, last )**.
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'since-cpp11': <Explanation_SinceCpp11 />,
 		'until-cpp11': <Explanation_UntilCpp11 />
 	}} />

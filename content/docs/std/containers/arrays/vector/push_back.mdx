@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/vector/push_back
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip				from "@site-comps/Tooltip";
 import Tabs					from "@theme/Tabs";
 
@@ -26,7 +26,7 @@ import Method_SinceCpp20 	from './_codes/push_back/since-cpp20.mdx';
 
 # std::vector push_back() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Method_SinceCpp20 />,
 	'since-cpp11': <Method_SinceCpp11 />,
 	'until-cpp11': <Method_UntilCpp11 />,
@@ -70,7 +70,7 @@ Amortized constant - **O(1)**.
 {/* TODO add a link here */}
 If an exception is thrown (which can be due to `Allocator::allocate()` or element copy/move constructor/assignment), this function has no effect ([**strong exception guarantee**](#)).
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp11': <>
         If <code>T</code>s move constructor is <b>not noexcept</b> and <code>T</code> is not <a href="/docs/named_req/CopyInsertable">CopyInsertable</a> into <code>*this</code>,
         vector will use the throwing move constructor. If it throws, the guarantee is waived and the effects are unspecified.

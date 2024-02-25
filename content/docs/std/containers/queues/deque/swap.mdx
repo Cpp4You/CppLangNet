@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/deque/swap
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -22,7 +22,7 @@ import PropagateOnContainerChangNote_SineCpp11 from './_codes/swap/explanation/p
 
 # std::deque swap() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp17': <Method_SinceCpp17 />,
 	'until-cpp17': <Method_UntilCpp17 />
 }} />
@@ -34,7 +34,7 @@ The **past-the-end iterator** is invalidated.
 All iterators and references remain valid.
 :::
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp11': <PropagateOnContainerChangNote_SineCpp11 />,
 }} />
 
@@ -52,7 +52,7 @@ Constant - **O(1)**.
 
 ### Exceptions
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
     'until-cpp17': <><b>(none)</b></>
 }} />

@@ -15,7 +15,7 @@ import ClassSummary				from "@site-comps/ClassSummary";
 import CustomCodeBlock			from "@site-comps/CustomCodeBlock";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 import Image					from "@site-comps/Image";
 
 import Tabs						from "@theme/Tabs";
@@ -61,7 +61,7 @@ The examples in this section are very simple ones. Navigate to [examples section
 
 <Tabs>
 	<TabItem value="create" label="Create" default>
-		<SwitchView content={
+		<VersionTabs content={
 				{
 					"cpp20": <TopExampleCreateCpp20 />,
 					"cpp17": <TopExampleCreateCpp17 />,
@@ -74,7 +74,7 @@ The examples in this section are very simple ones. Navigate to [examples section
 		<TopExampleFillAndPrint />
 	</TabItem>
 	<TabItem value="sort" label="Sort">
-		<SwitchView content={
+		<VersionTabs content={
 				{
 					"cpp20":		<TopExampleSortCpp20 />,
 					"until-cpp20":	<TopExampleSortUntilCpp20 />,

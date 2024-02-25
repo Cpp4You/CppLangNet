@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/map/insert_or_assign
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip				from "@site-comps/Tooltip";
 import Tabs					from "@theme/Tabs";
 import ImproveSection		from "@site/i18n/en/presets/ImproveSection.mdx";
@@ -21,7 +21,7 @@ import Method_SinceCpp17 	from './_codes/insert_or_assign/since-cpp17.mdx';
 
 # std::map insert_or_assign() method
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <Method_SinceCpp17 />
     }} />
 
@@ -30,7 +30,7 @@ import Method_SinceCpp17 	from './_codes/insert_or_assign/since-cpp17.mdx';
     If the key does not exist, inserts the new value as if by [`insert()`](/docs/std/containers/maps/map/insert), constructing it from `value_type(k, std::forward<M>(obj))`.
  - **(2-4)** Same as **(1-3)**, except the mapped value is constructed from `value_type(std::move(k), std::forward<M>(obj))`.
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp20': <> The program is ill-formed if <code>std::is_assignable_v&lt;mapped_type&, M&&&gt;</code> is <code>false</code> </>,
     'until-cpp20': <> The behaviour is undefined if <code>std::is_assignable_v&lt;mapped_type&, M&&&gt;</code> is <code>false</code> </>
     }} />

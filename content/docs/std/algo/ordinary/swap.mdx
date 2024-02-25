@@ -10,7 +10,7 @@ cppreference_origin_rel: w/cpp/algorithm/swap
 
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
-import SwitchView              from "@site-comps/SwitchView";
+import VersionTabs             from "@site-comps/VersionTabs";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
@@ -32,7 +32,7 @@ import NoexceptSpecification_Overload2_UntilCpp17 from './_codes/swap/noexcept-s
 
 # std::swap() algorithm
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp20': <Signature_SinceCpp20 />,
   'since-cpp11': <Signature_SinceCpp11 />,
   'until-cpp11': <Signature_UntilCpp11 />
@@ -88,12 +88,12 @@ Exchanges the given values.
 Before C++11 no exceptions were thrown.
 
 - **(1)**
-  <SwitchView content={{
+  <VersionTabs content={{
     'since-cpp11': <NoexceptSpecification_Overload1_SinceCpp11 />,
   }} />
 
 - **(2)**
-  <SwitchView content={{
+  <VersionTabs content={{
     'since-cpp17': <NoexceptSpecification_Overload2_SinceCpp17 />,
     'until-cpp17': <NoexceptSpecification_Overload2_UntilCpp17 />,
   }} />
@@ -105,7 +105,7 @@ The overloads with a template parameter named `ExecutionPolicy` report errors as
 
 ### Specializations
 
-<SwitchView content={{
+<VersionTabs content={{
   'until-cpp20': <>
   std::swap may be specialized in namespace std for program-defined types, but such specializations are not found by <a href="#">ADL</a> (the namespace std is not the associated namespace for the program-defined type).
   </>

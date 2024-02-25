@@ -6,7 +6,7 @@ tags:                   [math, lgamma]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 import {Since}      from '@site-comps/Versions';
 
@@ -26,7 +26,7 @@ Computes the natural logarithm of the absolute value of the gamma function of <c
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Lgamma_Function_Declaration_Cpp23 />,
     "cpp11" : <Lgamma_Function_Declaration_Cpp11 />,
 }}/>

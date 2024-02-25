@@ -13,7 +13,7 @@ arrow_jumping_preset: overloads
 # std::string constructors
 
 import CodeBlock					from '@theme/CodeBlock';
-import SwitchView					from '@site-comps/SwitchView';
+import VersionTabs					from '@site-comps/VersionTabs';
 import Columns						from '@site-comps/Columns';
 import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
 
@@ -90,7 +90,7 @@ that are used within constructors:
 <!-------------------------------------------------------------------------------------->
 ## Default constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20': {
 			simplified:	<Ctor_Default_Cpp20_Simple/>,
 			detailed: 	<Ctor_Default_Cpp20_Detailed/>,
@@ -143,7 +143,7 @@ s.capacity(): 15
 <!-------------------------------------------------------------------------------------->
 ## Repeat character constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_RepeatChar_Cpp20 />,
 		'until-cpp20':	<Ctor_RepeatChar_UntilCpp20 />,
 	}}/>
@@ -189,7 +189,7 @@ int main() {
 <!-------------------------------------------------------------------------------------->
 ## Copy substring constructor (unbound)
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_CopySubstrUnbound_Cpp20 />,
 		'until-cpp20':	<Ctor_CopySubstrUnbound_UntilCpp20 />,
 	}}/>
@@ -232,7 +232,7 @@ World
 <!-------------------------------------------------------------------------------------->
 ## Copy substring constructor (bound)
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_CopySubstrBound_Cpp20 />,
 		'until-cpp20':	<Ctor_CopySubstrBound_UntilCpp20 />,
 	}}/>
@@ -275,7 +275,7 @@ llo,
 <!-------------------------------------------------------------------------------------->
 ## Copy character range constructor (unbound)
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_CopyCharRangeUnbound_Cpp20 />,
 		'until-cpp20':	<Ctor_CopyCharRangeUnbound_UntilCpp20 />,
 	}}/>
@@ -323,7 +323,7 @@ Hello, World!
 <!-------------------------------------------------------------------------------------->
 ## Copy character range constructor (bound)
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_CopyCharRangeBound_Cpp20 />,
 		'until-cpp20':	<Ctor_CopyCharRangeBound_UntilCpp20 />,
 	}}/>
@@ -365,7 +365,7 @@ Hello
 <!-------------------------------------------------------------------------------------->
 ## Copy from iterator-range constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_CopyItRange_Cpp20 />,
 		'until-cpp20':	<Ctor_CopyItRange_UntilCpp20 />,
 	}}/>
@@ -375,7 +375,7 @@ Constructs the string with the contents of the range `[first, last)`.
 <details>
 	<summary>Details</summary>
 	<div>
-		<SwitchView content={{
+		<VersionTabs content={{
 				'cpp11':
 					<>
 						Only if <code>InputIt</code> is an integral type, equivalent to overload (2), as if by<br/>
@@ -422,7 +422,7 @@ Hello
 <!-------------------------------------------------------------------------------------->
 ## Copy constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_CopyOtherString_Cpp20 />,
 		'since-cpp11':	<Ctor_CopyOtherString_UntilCpp20 />,
 	}}/>
@@ -462,7 +462,7 @@ Hello World
 <!-------------------------------------------------------------------------------------->
 ## Move constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_MoveOtherString_Cpp20 />,
 		'since-cpp11':	<Ctor_MoveOtherString_UntilCpp20 />,
 	}}/>
@@ -506,7 +506,7 @@ Hello, World
 <!-------------------------------------------------------------------------------------->
 ## Initializer-list constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_InitList_Cpp20 />,
 		'since-cpp11':	<Ctor_InitList_UntilCpp20 />,
 	}}/>
@@ -546,7 +546,7 @@ Hello
 <!-------------------------------------------------------------------------------------->
 ## Copy from `string_view`-like type constructor (unbound)
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_CopyFromViewUnbound_Cpp20 />,
 		'since-cpp17':	<Ctor_CopyFromViewUnbound_SinceCpp17 />,
 	}}/>
@@ -588,7 +588,7 @@ Constructs the string from contents copied from object `t` of a `string_view`-li
 <!-------------------------------------------------------------------------------------->
 ## Copy from `string_view`-like type constructor (bound)
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_CopyFromViewBound_Cpp20 />,
 		'since-cpp17':	<Ctor_CopyFromViewBound_SinceCpp17 />,
 	}}/>
@@ -625,7 +625,7 @@ Constructs the string from subrange `[pos, pos + n)` of contents copied from obj
 
 ## Deleted `std::nullptr_t` constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp23':
 			<CodeBlock className="language-cpp">
 				constexpr basic_string( std::nullptr_t ) = delete;

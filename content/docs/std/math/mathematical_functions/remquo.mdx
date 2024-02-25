@@ -6,7 +6,7 @@ tags:                   [math, remquo]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 
 import Remquo_Function_Declaration_Cpp11         from "./remquo/_codes/remquo_function_declaration/cpp11.mdx";
@@ -24,7 +24,7 @@ sufficient to determine the octant of the result within a period.
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Remquo_Function_Declaration_Cpp23 />,
     "cpp11" : <Remquo_Function_Declaration_Cpp11 />,
 }}/>

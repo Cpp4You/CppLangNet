@@ -4,7 +4,7 @@ title: Summary
 slug: /std/algo/
 ---
 
-import SwitchView                from  "@site-comps/SwitchView";
+import VersionTabs               from  "@site-comps/VersionTabs";
 import SymbolTable, { Symbol }   from "@site-comps/SymbolTable";
 import { Since, Until, Removed } from "@site-comps/Versions";
 import Columns from "@site-comps/Columns";
@@ -48,7 +48,7 @@ To use the algorithms you have to include the `<algorithm>` header, like so:
 
 Then you can use them in code:
 
-<SwitchView content={{
+<VersionTabs content={{
 	'Rangified version': <Sorting_Example_Rangified/>,
 	'Ordinary version': <Sorting_Example_Ordinary/>
 }}/>
@@ -105,7 +105,7 @@ Different iterators have different types and they work a little bit differently,
  Here are a few examples of using iterators with [std::vector](/docs/std/containers/arrays/vector):
 
 
-<SwitchView content={{
+<VersionTabs content={{
 	'Printing vector': <Iterator_Example_Printing/>,
 	'Printing vector in reverse': <Iterator_Example_Printing_Reverse/>,
 	'Zeroing vector': <Iterator_Example_Zeroing/>,
@@ -140,7 +140,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/find" name={ <Since v='cpp20'>ranges::find</Since> }>
 				Finds the first element satisfying specific criteria.
@@ -151,7 +151,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/find_if" name={ <Since v='cpp20'>ranges::find_if</Since> }>
 				Finds the first element satisfying specific predicate.
@@ -162,7 +162,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/find_if_not" name={ <Since v='cpp20'>ranges::find_if_not</Since> }>
 				Finds the first element **not** satisfying specific predicate.
@@ -173,7 +173,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/find_first_of" name={ <Since v='cpp20'>ranges::find_first_of</Since> }>
         Searches for any of the elements from one range in another.
@@ -184,7 +184,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/find_end" name={ <Since v='cpp20'>ranges::find_end</Since> }>
         Finds the last sequence of elements in a certain range.
@@ -195,28 +195,28 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/find_last" name={ <Since v='cpp20'>ranges::find_last</Since> }>
         Finds the last element equal to some value.
 			</Symbol>,
 	}}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/find_last_if" name={ <Since v='cpp20'>ranges::find_last_if</Since> }>
         Finds the last element satisfying specific criteria.
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/find_last_if_not" name={ <Since v='cpp20'>ranges::find_last_if_not</Since> }>
         Finds the last element **not** satisfying specific criteria.
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/adjacent_find" name={ <Since v='cpp20'>ranges::adjacent_find</Since> }>
         Finds the first two adjacent items that satisfy a condition.
@@ -227,7 +227,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/search" name={ <Since v='cpp20'>ranges::search</Since> }>
         Search for a range of elements.
@@ -238,7 +238,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/search_n" name={ <Since v='cpp20'>ranges::search_n</Since> }>
         Searches a range for a consecutive sequence of an element.
@@ -255,7 +255,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/all_of" name={ <Since v='cpp20'>ranges::all_of</Since> }>
 				Checks if all elements in a range hold a condition.
@@ -266,7 +266,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/any_of" name={ <Since v='cpp20'>ranges::any_of</Since> }>
 				Checks if any elements in a range hold a condition.
@@ -277,7 +277,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/none_of" name={ <Since v='cpp20'>ranges::none_of</Since> }>
 				Checks if no elements in a range hold a condition.
@@ -288,7 +288,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/count" name={ <Since v='cpp20'>ranges::count</Since> }>
 				Returns the number of certain elements.
@@ -299,7 +299,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/count_if" name={ <Since v='cpp20'>ranges::count_if</Since> }>
 				Returns the number of elements satisfying specific criteria.
@@ -310,7 +310,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/mismatch" name={ <Since v='cpp20'>ranges::mismatch</Since> }>
         Finds the first position where two ranges differ.
@@ -321,14 +321,14 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/starts_with" name={ <Since v='cpp20'>ranges::starts_with</Since> }>
         Checks whether a range starts with another range.
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/ends_with" name={ <Since v='cpp20'>ranges::ends_with</Since> }>
         Checks whether a range ends with another range.
@@ -341,7 +341,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/for_each" name={ <Since v='cpp20'>ranges::for_each</Since> }>
 				Applies a function to a range of elements.
@@ -352,7 +352,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/for_each_n" name={ <Since v='cpp20'>ranges::for_each_n</Since> }>
 				Applies a function to a range of elements consisting of an iterator and a size.
@@ -369,7 +369,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Ordinary':
       <Symbol linkName="./ordinary/random_shuffle" name={ <Removed v='cpp17'>random_shuffle</Removed> }>
         <span class="inline-danger">Deprecated in C++14 and removed in C++17, use <a href="/docs/std/algo/ordinary/shuffle"><code>std::shuffle</code></a> instead. </span> <br/>
@@ -377,7 +377,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/shuffle" name={ <Since v='cpp20'>ranges::shuffle</Since> }>
         Randomly re-orders elements in a range.
@@ -389,7 +389,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/sample" name={ <Since v='cpp20'>ranges::sample</Since> }>
         Selects <code>n</code> random elements from a sequence.
@@ -406,14 +406,14 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Ordinary':
       <Symbol linkName="./ordinary/swap" name="swap">
         Swaps the values of two objects.
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/copy" name={ <Since v='cpp20'>ranges::copy</Since> }>
         Copies a range of elements to a new location.
@@ -424,7 +424,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/copy_if" name={ <Since v='cpp20'>ranges::copy_if</Since> }>
         Copies elements from a range that satisfy a condition to a new location.
@@ -435,7 +435,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/copy_n" name={ <Since v='cpp20'>ranges::copy_n</Since> }>
         Copies a number elements from a range to a new location.
@@ -446,7 +446,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/copy_backward" name={ <Since v='cpp20'>ranges::copy_backward</Since> }>
         Copies a range of elements in backwards order.
@@ -457,7 +457,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/move" name={ <Since v='cpp20'>ranges::move</Since> }>
         Moves a range of elements to a new location.
@@ -468,7 +468,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/move_backward" name={ <Since v='cpp20'>ranges::move_backward</Since> }>
         Moves a range of elements to a new location in backwards order.
@@ -479,7 +479,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/transform" name={ <Since v='cpp20'>ranges::transform</Since> }>
 				Applies a function to a range of elements.
@@ -491,7 +491,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 	}}/>
 
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/reverse" name={ <Since v='cpp20'>ranges::reverse</Since> }>
 				Reverses the order of elements.
@@ -502,7 +502,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/reverse_copy" name={ <Since v='cpp20'>ranges::reverse_copy</Since> }>
 				Creates a reversed copy of a range.
@@ -513,7 +513,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/fill" name={ <Since v='cpp20'>ranges::fill</Since> }>
         Copy-assigns the given value to every element in a range.
@@ -524,7 +524,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/fill_n" name={ <Since v='cpp20'>ranges::fill_n</Since> }>
         Copy-assigns a value to a number of elements.
@@ -535,7 +535,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/generate" name={ <Since v='cpp20'>ranges::generate</Since> }>
         Assigns the results of successive function calls to every element in a range.
@@ -546,7 +546,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/remove" name={ <Since v='cpp20'>ranges::remove</Since> }>
         Removes elements equal to <code>value</code>.
@@ -557,7 +557,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/remove_if" name={ <Since v='cpp20'>ranges::remove_if</Since> }>
         Removes elements satisfying specific criteria.
@@ -568,7 +568,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/remove_copy" name={ <Since v='cpp20'>ranges::remove_copy</Since> }>
         Copies a range of elements omitting those that are equal to <code>value</code>.
@@ -579,7 +579,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/remove_copy_if" name={ <Since v='cpp20'>ranges::remove_copy_if</Since> }>
         Copies a range of elements omitting those that satisfy a predicate.
@@ -590,7 +590,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/replace" name={ <Since v='cpp20'>ranges::replace</Since> }>
         Replaces old values with new values.
@@ -601,7 +601,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/replace_if" name={ <Since v='cpp20'>ranges::replace_if</Since> }>
         Replaces values satisfying a predicate with new values.
@@ -612,7 +612,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/replace_copy" name={ <Since v='cpp20'>ranges::replace_copy</Since> }>
         Copies a range, replacing elements equal to old value with new value.
@@ -623,7 +623,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/replace_copy_if" name={ <Since v='cpp20'>ranges::replace_copy_if</Since> }>
         Copies a range, replacing elements that satisfy a predicate with new value.
@@ -634,7 +634,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/swap_ranges" name={ <Since v='cpp20'>ranges::swap_ranges</Since> }>
         Swaps two ranges.
@@ -645,14 +645,14 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Ordinary':
       <Symbol linkName="./ordinary/iter_swap" name="iter_swap">
         Swaps the values of the elements the given iterators are pointing to.
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/rotate" name={ <Since v='cpp20'>ranges::rotate</Since> }>
         Rotates elements in a range.
@@ -663,7 +663,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/rotate_copy" name={ <Since v='cpp20'>ranges::rotate_copy</Since> }>
         Copies and rotates a range of elements.
@@ -674,7 +674,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/shift_left" name={ <Since v='cpp23'>ranges::shift_left</Since> }>
         Shifts elements in a range left.
@@ -685,7 +685,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/shift_right" name={ <Since v='cpp23'>ranges::shift_right</Since> }>
         Shifts elements in a range right.
@@ -696,7 +696,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/unique" name={ <Since v='cpp20'>ranges::unique</Since> }>
         Removes consecutive duplicates of an element in a range.
@@ -707,7 +707,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/unique_copy" name={ <Since v='cpp20'>ranges::unique_copy</Since> }>
         Creates a copy of range with no consecutive duplicates.
@@ -724,7 +724,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/is_partitioned" name={ <Since v='cpp20'>ranges::is_partitioned</Since> }>
         Determines if the range is partitioned by the given predicate.
@@ -735,7 +735,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/partition" name={ <Since v='cpp20'>ranges::partition</Since> }>
         Divides a range of elements into two groups based on a predicate.
@@ -746,7 +746,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/partition_copy" name={ <Since v='cpp20'>ranges::partition_copy</Since> }>
         Copies a range dividing the elements into two groups.
@@ -757,7 +757,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/stable_partition" name={ <Since v='cpp20'>ranges::stable_partition</Since> }>
         Divides elements into two groups while preserving their relative order.
@@ -768,7 +768,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/partition_point" name={ <Since v='cpp20'>ranges::partition_point</Since> }>
         Locates the partition point of a range.
@@ -785,7 +785,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/sort" name={ <Since v='cpp20'>ranges::sort</Since> }>
 				Sorts a range into (by default) ascending order.
@@ -796,7 +796,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/stable_sort" name={ <Since v='cpp20'>ranges::stable_sort</Since> }>
 				Sorts a range into (by default) ascending order while preserving the order between equal elements.
@@ -807,7 +807,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/partial_sort" name={ <Since v='cpp20'>ranges::partial_sort</Since> }>
 				Sorts the first <b>N</b> elements of a range.
@@ -818,7 +818,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/partial_sort_copy" name={ <Since v='cpp20'>ranges::partial_sort_copy</Since> }>
 				Copies and partially sorts a range of elements.
@@ -829,7 +829,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/nth_element" name={ <Since v='cpp20'>ranges::stable_sort</Since> }>
 				Partially sorts the given range making sure that it is partitioned by the given element.
@@ -840,7 +840,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/is_sorted" name={ <Since v='cpp20'>ranges::is_sorted</Since> }>
 				Checks whether a range is sorted.
@@ -851,7 +851,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/is_sorted_until" name={ <Since v='cpp20'>ranges::is_sorted_until</Since> }>
 				Finds the largest sorted subrange.
@@ -868,7 +868,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/binary_search" name={ <Since v='cpp20'>ranges::binary_search</Since> }>
         Searches for an element in a partially-ordered range.
@@ -879,7 +879,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/lower_bound" name={ <Since v='cpp20'>ranges::lower_bound</Since> }>
         Returns an iterator to the first element <em>not less</em> than the given value.
@@ -890,7 +890,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/upper_bound" name={ <Since v='cpp20'>ranges::upper_bound</Since> }>
         Returns an iterator to the first element <em>greater</em> than the given value.
@@ -901,7 +901,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/equal_range" name={ <Since v='cpp20'>ranges::equal_range</Since> }>
         Returns range of elements matching a specific key.
@@ -918,7 +918,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/includes" name={ <Since v='cpp20'>ranges::includes</Since> }>
         Returns <code>true</code> if a sequence is a subsequence of another.
@@ -929,7 +929,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/set_difference" name={ <Since v='cpp20'>ranges::set_difference</Since> }>
         Computes the difference between two sets.
@@ -940,7 +940,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/set_intersection" name={ <Since v='cpp20'>ranges::set_intersection</Since> }>
         Computes the intersection between two sets.
@@ -951,7 +951,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/set_symmetric_difference" name={ <Since v='cpp20'>ranges::set_symmetric_difference</Since> }>
         Computes the symmetric difference between two sets.
@@ -962,7 +962,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/set_union" name={ <Since v='cpp20'>ranges::set_union</Since> }>
         Computes the union between two sets.
@@ -979,7 +979,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/merge" name={ <Since v='cpp20'>ranges::merge</Since> }>
         Merges two sorted ranges.
@@ -990,7 +990,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/inplace_merge" name={ <Since v='cpp20'>ranges::inplace_merge</Since> }>
         Merges two sorted ranges in-place.
@@ -1007,7 +1007,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/is_heap" name={ <Since v='cpp20'>ranges::is_heap</Since> }>
         Checks if the given range is a max heap.
@@ -1018,7 +1018,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/is_heap_until" name={ <Since v='cpp20'>ranges::is_heap_until</Since> }>
         Checks if the given range is a max heap.
@@ -1029,7 +1029,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/make_heap" name={ <Since v='cpp20'>ranges::make_heap</Since> }>
         Creates a max heap out of a range of elements.
@@ -1040,7 +1040,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/push_heap" name={ <Since v='cpp20'>ranges::push_heap</Since> }>
         Adds an element to a max heap.
@@ -1051,7 +1051,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/pop_heap" name={ <Since v='cpp20'>ranges::pop_heap</Since> }>
         Adds an element to a max heap.
@@ -1062,7 +1062,7 @@ All rangified algorithms accept a range. The same way iterators can be different
       </Symbol>,
   }}/>
 
-  <SwitchView content={{
+  <VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/sort_heap" name={ <Since v='cpp20'>ranges::sort_heap</Since> }>
         Turns a max heap into a range of elements sorted in ascending order.
@@ -1079,7 +1079,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/min" name={ <Since v='cpp20'>ranges::min</Since> }>
 				Returns the smallest of the given values.
@@ -1090,7 +1090,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>,
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/max" name={ <Since v='cpp20'>ranges::max</Since> }>
 				Returns the greatest of the given values.
@@ -1101,7 +1101,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/max_element" name={ <Since v='cpp20'>ranges::max_element</Since> }>
 				Returns the largest element in a range.
@@ -1112,7 +1112,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/min_element" name={ <Since v='cpp20'>ranges::min_element</Since> }>
 				Returns the smallest element in a range.
@@ -1123,7 +1123,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/minmax" name={ <Since v='cpp20'>ranges::minmax</Since> }>
 				Returns the smallest and largest from the given values.
@@ -1134,7 +1134,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/minmax_element" name={ <Since v='cpp20'>ranges::minmax_element</Since> }>
         Returns the smallest and the largest elements in a range.
@@ -1145,7 +1145,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/clamp" name={ <Since v='cpp20'>ranges::clamp</Since> }>
         Clamps a value between a pair of boundary values.
@@ -1162,7 +1162,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/equal" name={ <Since v='cpp20'>ranges::equal</Since> }>
         Determines if two sets of elements are the same.
@@ -1173,7 +1173,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/lexicographical_compare" name={ <Since v='cpp20'>ranges::lexicographical_compare</Since> }>
         Returns <code>true</code> if one range is lexicographically less than another.
@@ -1184,7 +1184,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
 	}}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/lexicographical_compare_three_way" name="lexicographical_compare_three_way">
         Compares two ranges using three-way comparison.
@@ -1197,7 +1197,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/is_permutation" name={ <Since v='cpp20'> ranges::is_permutation </Since> }>
         Determines if a sequence is a permutation of another sequence.
@@ -1208,7 +1208,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/next_permutation" name={ <Since v='cpp20'> ranges::next_permutation </Since> }>
         Generates the next greater lexicographic permutation of a range of elements.
@@ -1219,7 +1219,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/prev_permutation" name={ <Since v='cpp20'> ranges::prev_permutation </Since> }>
         Generates the prev smaller lexicographic permutation of a range of elements.
@@ -1236,7 +1236,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
     'Rangified':
       <Symbol linkName="./ranges/iota" name={ <Since v='cpp23'> ranges::iota </Since> }>
         Fills a range with successive increments of the starting value.
@@ -1247,70 +1247,70 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/accumulate" name="accumulate">
         Sums up or <a href="https://en.wikipedia.org/wiki/Fold_(higher-order_function)"><b>folds/reduces</b></a> a range of elements.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/inner_product" name="inner_product">
         Computes the inner product of two ranges of elements.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/adjacent_difference" name="adjacent_difference">
         Computes the differences between adjacent elements in a range.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/partial_sum" name="partial_sum">
         Computes the partial sum of a range of elements.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/reduce" name={ <Since v='cpp17'>reduce</Since> }>
         Similar to <a href="/docs/std/algo/reduce">std::accumulate</a>, except out of order.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/exclusive_scan" name={ <Since v='cpp17'>exclusive_scan</Since> }>
         Similar to <a href="/docs/std/algo/partial_sum">std::partial_sum</a>, excludes the ith input element from the ith sum.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/inclusive_scan" name={ <Since v='cpp17'>inclusive_scan</Since> }>
         Similar to <a href="/docs/std/algo/partial_sum">std::partial_sum</a>, includes the ith input element from the ith sum.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/transform_reduce" name={ <Since v='cpp17'>transform_reduce</Since> }>
         Applies an invocable, then reduces out of order.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/transform_exclusive_scan" name={ <Since v='cpp17'>transform_exclusive_scan</Since> }>
         Applies an invocable, then calculates exclusive scan.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/transform_inclusive_scan" name={ <Since v='cpp17'>transform_inclusive_scan</Since> }>
         Applies an invocable, then calculates inclusive scan.
@@ -1323,7 +1323,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_copy" name="uninitialized_copy">
         Copies a range of objects to an uninitialized area of memory.
@@ -1334,7 +1334,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_copy_n" name="uninitialized_copy_n">
         Copies an amount of elements from a range to an uninitialized area of memory.
@@ -1345,7 +1345,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_fill" name="uninitialized_fill">
         Fills an uninitialized range.
@@ -1356,7 +1356,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_fill_n" name="uninitialized_fill_n">
         Fills an uninitialized range defined by start and count.
@@ -1367,7 +1367,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_fill_n" name="uninitialized_fill_n">
         Fills an uninitialized range defined by start and count.
@@ -1378,7 +1378,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_move" name={ <Since v='cpp17'>uninitialized_move</Since> }>
         Moves a number of objects to an uninitialized area of memory.
@@ -1389,7 +1389,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_move_n" name={ <Since v='cpp17'>uninitialized_move_n</Since> }>
         Moves a number of objects to an uninitialized area of memory.
@@ -1400,7 +1400,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_default_construct" name={ <Since v='cpp17'>uninitialized_default_construct</Since> }>
         Constructs objects by <a href="#">default-initialization</a> in an uninitialized area of memory, defined by a range.
@@ -1411,7 +1411,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_default_construct_n" name={ <Since v='cpp17'>uninitialized_default_construct_n</Since> }>
         Constructs objects by default-initialization in an uninitialized area of memory, defined by a start and a count.
@@ -1422,7 +1422,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_value_construct" name={ <Since v='cpp17'>uninitialized_value_construct</Since> }>
         Constructs objects by value-initialization in an uninitialized area of memory, defined by a range.
@@ -1433,7 +1433,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/uninitialized_value_construct_n" name={ <Since v='cpp17'>uninitialized_value_construct_n</Since> }>
         Constructs objects by value-initialization in an uninitialized area of memory, defined by a start and size.
@@ -1444,7 +1444,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/destroy" name={ <Since v='cpp17'>destroy</Since> }>
         Destroys a range of objects.
@@ -1455,7 +1455,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/destroy_n" name={ <Since v='cpp17'>destroy_n</Since> }>
         Destroys a number of objects.
@@ -1466,7 +1466,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/destroy_at" name={ <Since v='cpp17'>destroy_at</Since> }>
         Destroys an object at a given address.
@@ -1477,7 +1477,7 @@ All rangified algorithms accept a range. The same way iterators can be different
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Rangified':
 			<Symbol linkName="./ranges/construct_at" name={ <Since v='cpp17'>construct_at</Since> }>
         Creates an object at a given address.
@@ -1494,14 +1494,14 @@ All rangified algorithms accept a range. The same way iterators can be different
 
 <SymbolTable>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/qsort" name="qsort">
         Sorts a range of elements with unspecified type.
 			</Symbol>
   }}/>
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'Ordinary':
 			<Symbol linkName="./ordinary/bsearch" name="bsearch">
         Searches an array for an element of unspecified type.

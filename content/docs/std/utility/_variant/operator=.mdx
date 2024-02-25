@@ -4,7 +4,7 @@ tags:				[variant, utility, visit]
 hide_title:			true
 ---
 import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 
 import CPP17                    from"../_codes/_variant/operator=/cpp17.mdx";
 import CPP20                    from"../_codes/_variant/operator=/cpp20.mdx";
@@ -12,7 +12,7 @@ import CPP20                    from"../_codes/_variant/operator=/cpp20.mdx";
 # std::variant&lt;Types...>::operator=
 
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "C++20" : <CPP20 />,
     "C++17" : <CPP17 />,
 }}/>

@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/vector/swap
 ---
 
 import Columns		from "@site-comps/Columns";
-import SwitchView	from "@site-comps/SwitchView";
+import VersionTabs	from "@site-comps/VersionTabs";
 import Tooltip		from "@site-comps/Tooltip";
 
 {/* Terms */}
@@ -27,7 +27,7 @@ import NoexceptSpecification_SinceCpp17	from './_codes/swap/noexcept-specificati
 # std::vector swap() method
 
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Method_SinceCpp20 />,
 	'since-cpp17': <Method_SinceCpp17 />,
 	'until-cpp17': <Method_UntilCpp17 />
@@ -41,7 +41,7 @@ The **past-the-end iterator** is invalidated.
 
 All other iterators and references remain valid.
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <>
 		If <code>std::allocator_traits&lt;allocator_type&gt;::propagate_on_container_swap::value</code> is <code>true</code>,
 		then the allocators are exchanged using an unqualified call to non-member swap. 
@@ -59,7 +59,7 @@ All other iterators and references remain valid.
 
 ### Exceptions
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
 	'until-cpp17': <b>(none)</b>
 }} />

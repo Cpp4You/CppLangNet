@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/unordered_set/swap
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -23,7 +23,7 @@ import PropagateOnContainerChangeNote_SinceCpp11 from './_codes/swap/explanation
 
 # std::unordered_set swap() method
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <Method_SinceCpp17 />,
     'until-cpp17': <Method_UntilCpp17 />
     }} />
@@ -38,7 +38,7 @@ The past-the-end iterator is invalidated.
 
 The `Hash` and `KeyEqual` objects must be [`Swappable`](/docs/named_req/Swappable), and they are exchanged using unqualified calls to non-member swap.
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp11': <PropagateOnContainerChangeNote_SinceCpp11 />,
     }} />
 
@@ -56,7 +56,7 @@ Constant - **O(1)**.
 
 ### Exceptions
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
     'until-cpp17': <>
         Any exception thrown by the swap of the <code>Hash</code> or <code>KeyEqual</code> objects.

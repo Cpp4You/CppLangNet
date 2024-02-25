@@ -6,7 +6,7 @@ tags:                   [math,copysign]
 hide_title:             true
 ---
 
-import SwitchView       from '@site-comps/SwitchView';
+import VersionTabs      from '@site-comps/VersionTabs';
 import Columns          from "@site-comps/Columns";
 import { Since, Until } from '@site-comps/Versions';
 
@@ -26,7 +26,7 @@ Composes a floating point value with the magnitude of `mag` and the sign of `sgn
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Copysign_Function_Declaration_Cpp23 />,
     "cpp11" : <Copysign_Function_Declaration_Cpp11 />,
 }}/>

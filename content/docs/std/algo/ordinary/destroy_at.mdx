@@ -10,7 +10,7 @@ cppreference_origin_rel: w/cpp/algorithm/destroy_at
 
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
-import SwitchView              from "@site-comps/SwitchView";
+import VersionTabs             from "@site-comps/VersionTabs";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
@@ -23,7 +23,7 @@ import Signature_SinceCpp17 from './_codes/destroy_at/since-cpp17.mdx';
 
 # std::destroy_at() algorithm
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp17': <Signature_SinceCpp17 />,
 }} />
 
@@ -77,7 +77,7 @@ constexpr void destroy_at(T* p)
 
 [`destroy_at`](#) deduces the type of object to be destroyed and hence avoids writing it explicitly in the destructor call.
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp20': <>
     When <code>destroy_at</code> is called in the evaluation of some <a href="#">constant expression</a> <code>e</code>,
     the argument <code>p</code> must point to an object whose lifetime began within the evaluation of <code>e</code>.

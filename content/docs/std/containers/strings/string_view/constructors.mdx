@@ -13,7 +13,7 @@ arrow_jumping_preset: overloads
 # std::string_view constructors
 
 import CodeBlock					from '@theme/CodeBlock';
-import SwitchView					from '@site-comps/SwitchView';
+import VersionTabs					from '@site-comps/VersionTabs';
 import Columns						from '@site-comps/Columns';
 import Tooltip						from '@site-comps/Tooltip';
 import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
@@ -63,7 +63,7 @@ that are used within constructors:
 
 ## Default constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': {
 		simplified: <Ctor_Default_SinceCpp17_Simplified/>,
 		detailed: <Ctor_Default_SinceCpp17_Detailed/>
@@ -110,7 +110,7 @@ int main() {
 
 ## Defaulted copy constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_Copy_Defaulted_SinceCpp20 />
 }}/>
 
@@ -156,7 +156,7 @@ int main() {
 
 ## Char pointer constructor (bound)
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_CharPointer_Bound_SinceCpp17 />
 }} />
 
@@ -208,7 +208,7 @@ int main() {
 
 ## Char pointer constructor (unbound)
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_CharPointer_Unbound_SinceCpp17 />
 }} />
 
@@ -260,7 +260,7 @@ int main() {
 
 ## Copy range constructor (iterators)
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_RangeBased_Iterators_SinceCpp20 />
 }}/>
 
@@ -327,7 +327,7 @@ Hello World!
 
 ## Copy range constructor (range)
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp23': <Ctor_RangeBased_Range_SinceCpp23 />
 }}/>
 
@@ -387,7 +387,7 @@ Hello
 
 ## Deleted [`std::nullptr_t`](#) constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp23': <Ctor_Nullptr_Deleted_SinceCpp23 />
 }}/>
 

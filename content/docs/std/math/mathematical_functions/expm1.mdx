@@ -6,7 +6,7 @@ tags:                   [math, exp, expm1]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 
 import  Expm1_Function_Declaration_Cpp11         from "./expm1/_codes/expm1_function_declaration/cpp11.mdx";
@@ -23,7 +23,7 @@ Computes the `e` (Euler's number, 2.7182818...) raised to the given power <code>
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Expm1_Function_Declaration_Cpp23 />,
     "cpp11" : <Expm1_Function_Declaration_Cpp11 />,
 }}/>

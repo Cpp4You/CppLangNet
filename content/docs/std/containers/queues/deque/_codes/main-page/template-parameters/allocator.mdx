@@ -1,9 +1,9 @@
-import SwitchView		from "@site-comps/SwitchView";
+import VersionTabs		from "@site-comps/VersionTabs";
 
 An allocator that is used to acquire/release memory and to construct/destroy the elements in that memory.
 The type must meet the requirements of [`Allocator`](/docs/named_req/Allocator).
 
-<SwitchView content={
+<VersionTabs content={
 	{
 		'since-cpp11': <>
 			The behavior is undefined if <code>Allocator::value_type</code> is not the same as <code>T</code>.

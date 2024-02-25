@@ -6,7 +6,7 @@ tags:                   [math, hypot]
 hide_title:             true
 ---
 
-import SwitchView                 from '@site-comps/SwitchView';
+import VersionTabs                from '@site-comps/VersionTabs';
 import Columns                    from "@site-comps/Columns";
 import { Since, Until, Version }  from '@site-comps/Versions';
 
@@ -38,7 +38,7 @@ length `x`, `y` and `z` or the distance of the point `(x,y,z)` from the origin `
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Hypot_Function_Declaration_Cpp23 />,
     "cpp17" : <Hypot_Function_Declaration_Cpp17 />,
     "cpp11" : <Hypot_Function_Declaration_Cpp11 />,

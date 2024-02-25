@@ -7,7 +7,7 @@ tags:					[emplace, add, new, append]
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -16,7 +16,7 @@ import Method_SinceCpp17 	from './_codes/emplace/since-cpp17.mdx';
 
 # std::queue emplace() method
 
-<SwitchView content={{
+<VersionTabs content={{
         'since-cpp17': <Method_SinceCpp17 />,
         'since-cpp11': <Method_SinceCpp11 />,
     }}/>
@@ -33,7 +33,7 @@ Effectively calls `c.emplace_back(std::forward<Args>(args)...)`.
 
 ### Return value
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp17': <b>(none)</b>,
 		'until-cpp17': <>
 			The value or reference, if any, returned by the above call to the underlying container's <code>emplace_back</code>.

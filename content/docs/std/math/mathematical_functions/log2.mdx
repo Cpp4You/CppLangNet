@@ -6,7 +6,7 @@ tags:                   [math, log, log2]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 
 import  Log2_Function_Declaration_Cpp11         from "./log2/_codes/log2_function_declaration/cpp11.mdx";
@@ -22,7 +22,7 @@ Computes the binary (base-2) logarithm of <code>num</code>. The library provides
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Log2_Function_Declaration_Cpp23 />,
     "cpp11" : <Log2_Function_Declaration_Cpp11 />,
 }}/>

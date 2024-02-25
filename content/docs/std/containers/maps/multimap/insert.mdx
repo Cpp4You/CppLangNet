@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/multimap/insert
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip				from "@site-comps/Tooltip";
 import Tabs					from "@theme/Tabs";
 import ImproveSection		from "@site/i18n/en/presets/ImproveSection.mdx";
@@ -29,7 +29,7 @@ import IteratorDereferenceNote 	from './_codes/insert/explanation/iterator-deref
 
 # std::multimap insert() method
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <Method_SinceCpp17 />,
     'since-cpp11': <Method_SinceCpp11 />,
     'until-cpp11': <Method_UntilCpp11 />,
@@ -38,7 +38,7 @@ import IteratorDereferenceNote 	from './_codes/insert/explanation/iterator-deref
 Inserts element(s) into the container, if the container doesn't already contain an element with an equivalent key.
 
  - **(1-2)** Inserts value.
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp11': <>
         If the container has elements with equivalent key, inserts at the upper bound of that range.
         The overload <b>(2)</b> is equivalent to <code>emplace(std::forward&lt;P&gt;(value))</code> and only participates in overload resolution <code>if std::is_constructible&lt;value_type, P&&&gt;::value == true</code>.
@@ -61,7 +61,7 @@ Inserts element(s) into the container, if the container doesn't already contain 
     If the insertion succeeds, `nh` is moved from, otherwise it retains ownership of the element.
     The element is inserted as close as possible to the position just prior to hint. The behavior is undefined if `nh` is not empty and `get_allocator() != nh.get_allocator()`.
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <> No iterators or references are invalidated. </>,
     'until-cpp11': <IteratorDereferenceNote />,
     }} />
@@ -69,7 +69,7 @@ Inserts element(s) into the container, if the container doesn't already contain 
 ### Parameters
 
  - `hint`
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp11': <> iterator to the position before which the new element will be inserted </>,
     'until-cpp11': <> iterator, used as a suggestion as to where to start the search </>,
     }} />
@@ -91,7 +91,7 @@ Inserts element(s) into the container, if the container doesn't already contain 
 
  - **(1-2)** Logarithmic in the size of the container - **O(log size())**.
  - **(4-6)** 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <>
 		Amortized constant if the insertion happens in the position just before the hint - <b>O(1)</b>. <br/>
 		Logarithmic in the size of the container otherwise - <b>O(log size())</b>.

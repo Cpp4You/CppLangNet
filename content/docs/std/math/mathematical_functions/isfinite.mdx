@@ -6,7 +6,7 @@ tags:                   [math,isfinite]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 import {Since}      from '@site-comps/Versions';
 
@@ -26,7 +26,7 @@ it is `normal`, `subnormal` or `zero`, but not `infinite` or `NaN`. <br/>
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Isfinite_Function_Declaration_Cpp23 />,
     "cpp11" : <Isfinite_Function_Declaration_Cpp11 />,
 }}/>

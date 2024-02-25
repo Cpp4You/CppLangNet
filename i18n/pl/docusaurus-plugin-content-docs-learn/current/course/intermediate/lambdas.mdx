@@ -11,7 +11,7 @@ import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
 import Image			from "@site-comps/Image";
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
-import SwitchView		from "@site-comps/SwitchView";
+import VersionTabs		from "@site-comps/VersionTabs";
 
 import TransformIntroExampleCpp20		from "./lambdas/_codes/transform-example-cpp20.mdx";
 import TransformIntroExampleUntilCpp20	from "./lambdas/_codes/transform-example-until-cpp20.mdx";
@@ -271,7 +271,7 @@ W naszym przykładzie stworzymy wektor oraz będziemy chcieli podnieść wszystk
 Algorytm `transform` może przyjąć zarówno funkcję, obiekt funkcyjny jak i lambdę.
 Jako argument wyślemy lambdę, bo o nich jest ten rozdział. Nasza lambda przyjmnie jeden argument typu `int` oraz zwróci wartość tego samego typu.
 
-<SwitchView content={
+<VersionTabs content={
 		{
 			"cpp20":		<TransformIntroExampleCpp20 />,
 			"until-cpp20":	<TransformIntroExampleUntilCpp20 />,

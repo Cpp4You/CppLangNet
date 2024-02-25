@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/string/replace
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import { Since }			from "@site-comps/Versions";
 import Tabs					from "@theme/Tabs";
 
@@ -29,7 +29,7 @@ import Explanation_UntilCpp11 from './_codes/replace/explanation/until-cpp11.mdx
 
 # std::string replace() method
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp20': <Method_SinceCpp20 />,
   'since-cpp17': <Method_SinceCpp17 />,
   'since-cpp14': <Method_SinceCpp14 />,
@@ -43,7 +43,7 @@ The new string can be one of:
  - **(1)** String `str`.
  - **(2)** Substring **[ pos2, pos2 + count2 )** of `str`, except if `count2 == npos` or if would extend past `str.size()`, `[ pos2, str.size() )` is used.
  - **(3)** Characters in the range **[ first2, last2 )**.
-	<SwitchView content={{
+	<VersionTabs content={{
 		'since-cpp11': <Explanation_SinceCpp11 />,
 		'until-cpp11': <Explanation_UntilCpp11 />,
 	}} />

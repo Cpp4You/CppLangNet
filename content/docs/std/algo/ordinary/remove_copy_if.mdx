@@ -10,7 +10,7 @@ cppreference_origin_rel: w/cpp/algorithm/remove_copy
 
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
-import SwitchView              from "@site-comps/SwitchView";
+import VersionTabs             from "@site-comps/VersionTabs";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
@@ -27,7 +27,7 @@ import Signature_SinceCpp20 from './_codes/remove_copy_if/since-cpp20.mdx';
 
 # std::remove_copy_if() algorithm
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp20': <Signature_SinceCpp20 />,
   'since-cpp17': <Signature_SinceCpp17 />,
   'until-cpp17': <Signature_UntilCpp17 />
@@ -41,7 +41,7 @@ import Signature_SinceCpp20 from './_codes/remove_copy_if/since-cpp20.mdx';
 	<Until v='cpp20'> <code>std::is_execution_policy_v&lt;std::decay_t&lt;ExecutionPolicy&gt;&gt;</code> </Until> <Since v='cpp20'> <code>std::is_execution_policy_v&lt;std::remove_cvref_t&lt;ExecutionPolicy&gt;&gt;</code> </Since> is <code>true</code>.
 	:::
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp11': <>
     If the type of <code>*first</code> is not <a href="/docs/named_req/MoveAssignable">MoveAssignable</a>, the <Tooltip title={ <Term_UndefinedBehaviour/> }>behaviour is undefined</Tooltip>.
   </>,
@@ -101,7 +101,7 @@ The expression `p(v)` must be convertible to `bool` for every argument `v` of ty
   </Symbol>
 </SymbolTable>
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp20': <SymbolTable>
     <Symbol none noLink name={ <code>*first</code> }>
       Must be <a href="#">writable</a> to <code>d_first</code>.

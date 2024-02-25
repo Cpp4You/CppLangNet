@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/deque/insert
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import { Since }			from "@site-comps/Versions";
 
 {/* Codes */}
@@ -25,7 +25,7 @@ import TypeRequirements_45_SinceCpp17	from './_codes/insert/other/type-requireme
 
 # std::deque insert() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <Method_SinceCpp11 />,
 	'until-cpp11': <Method_UntilCpp11 />
 }} />
@@ -35,7 +35,7 @@ Inserts element(s) into the container, if the container doesn't already contain 
  - **(1-2)** Inserts `value` before `pos`.  
  - **(3)** Inserts `count` copies of the value before `pos`.  
  - **(4)** Inserts elements from range **[ first; last )** before `pos`.
-	<SwitchView content={{
+	<VersionTabs content={{
 		'since-cpp11': <Explanation_Overload4_SinceCpp11 />,
 		'until-cpp11': <Explanation_Overload4_UntilCpp11 />
 	}} />
@@ -63,7 +63,7 @@ Inserts element(s) into the container, if the container doesn't already contain 
  - **(2)** - `T` must meet the requirements of [`MoveAssignable`](/docs/named_req/MoveAssignable) and [`MoveInsertable`](/docs/named_req/MoveInsertable).
  - **(3)** - `T` must meet the requirements of [`CopyAssignable`](/docs/named_req/CopyAssignable) and [`CopyInsertable`](/docs/named_req/CopyInsertable).
  - **(4-5)** - `T` must meet the requirements of [`EmplaceConstructible`](/docs/named_req/EmplaceConstructible).
- - <SwitchView content={{
+ - <VersionTabs content={{
       'since-cpp17': <TypeRequirements_45_SinceCpp17 />
     }} />
 

@@ -7,7 +7,7 @@ hide_title:             true
 ---
 
 import Image        from "@site-comps/Image";
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 import {Since}      from '@site-comps/Versions';
 
@@ -30,7 +30,7 @@ rounding halfway cases away from zero, regardless of the current rounding mode. 
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Round_Function_Declaration_Cpp23 />,
     "cpp11" : <Round_Function_Declaration_Cpp11 />,
 }}/>

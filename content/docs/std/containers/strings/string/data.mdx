@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/string/data
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip			from "@site-comps/Tooltip";
 import { Since, Until }			from "@site-comps/Versions";
 
@@ -26,14 +26,14 @@ import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behav
 
 # std::string data() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Method_SinceCpp20 />,
 	'since-cpp17': <Method_SinceCpp11 />,
 	'since-cpp11': <Method_SinceCpp11 />,
 	'until-cpp11': <Method_UntilCpp11 />
 }} />
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <Explanation_SinceCpp11 />,
 	'until-cpp11': <Explanation_UntilCpp11 />
 }} />
@@ -59,7 +59,7 @@ The pointer obtained from [`data()`](#) may be invalidated by:
 A pointer to the underlying character storage.
 
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <>
 		<code>data()[i] == operator[](i)</code> for every <code>i</code> in <b>[ 0, size() )</b>.
 	</>,

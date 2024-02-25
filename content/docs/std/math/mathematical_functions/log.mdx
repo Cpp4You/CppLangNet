@@ -6,7 +6,7 @@ tags:                   [math, log]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 
 import  Log_Function_Declaration_Cpp11         from "./log/_codes/log_function_declaration/cpp11.mdx";
@@ -22,7 +22,7 @@ The library provides overloads of `std::log` for all cv-unqualified floating-poi
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Log_Function_Declaration_Cpp23 />,
     "cpp11" : <Log_Function_Declaration_Cpp11 />,
 }}/>

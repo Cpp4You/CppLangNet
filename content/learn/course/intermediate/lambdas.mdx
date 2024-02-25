@@ -11,7 +11,7 @@ import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
 import Image			from "@site-comps/Image";
 import Tabs				from '@theme/Tabs';
 import TabItem			from '@theme/TabItem';
-import SwitchView		from "@site-comps/SwitchView";
+import VersionTabs		from "@site-comps/VersionTabs";
 
 import TransformIntroExampleCpp20		from "./lambdas/_codes/transform-example-cpp20.mdx";
 import TransformIntroExampleUntilCpp20	from "./lambdas/_codes/transform-example-until-cpp20.mdx";
@@ -274,7 +274,7 @@ In the example, we will create a vector of numbers and square every each of it w
 The `transform` algorithm, can be passed a function, function object, or a lambda.
 Since it's a lesson about lambdas, we will make use of them. Our lambda will take one parameter of type `int` and will return a value of the same type.
 
-<SwitchView content={
+<VersionTabs content={
 		{
 			"cpp20":		<TransformIntroExampleCpp20 />,
 			"until-cpp20":	<TransformIntroExampleUntilCpp20 />,

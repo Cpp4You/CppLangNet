@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/map/value_compare
 ---
 
 import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
 
 {/* Codes */}
@@ -21,7 +21,7 @@ import ValueComp_CallOperator	from './_codes/value_compare/other/value-comp-call
 
 # std::map value_compare
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp98': <Method_SinceCpp98 />,
 }} />
 
@@ -45,7 +45,7 @@ import ValueComp_CallOperator	from './_codes/value_compare/other/value-comp-call
 		/>
 </SymbolTable>
 
-<SwitchView content={{
+<VersionTabs content={{
 		'until-cpp11': <>
 				These member types are obtained via publicly inheriting <code>std::binary_function&lt;value_type, value_type, bool&gt;</code>.
 		</>

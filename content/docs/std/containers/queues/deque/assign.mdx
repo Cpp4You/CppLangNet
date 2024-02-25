@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/deque/assign
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip				from "@site-comps/Tooltip";
 import Tabs					from "@theme/Tabs";
 import { Since, Until }		from "@site-comps/Versions";
@@ -29,7 +29,7 @@ import OverloadNote_UntilCpp11 	from './_codes/assign/explanation/overload-note-
 
 # std::deque assign() method
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp11': <Method_SinceCpp11 />,
     'until-cpp11': <Method_UntilCpp11 />,
 }} />
@@ -42,7 +42,7 @@ Replaces the contents of the container with the contents of another.
 	The behavior is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip> if either argument is an iterator into `*this`.
 	:::
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'since-cpp11': <OverloadNote_SinceCpp11 />,
 		'until-cpp11': <OverloadNote_UntilCpp11 />
 	}} />

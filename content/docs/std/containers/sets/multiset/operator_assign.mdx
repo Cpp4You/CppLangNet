@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/multiset/operator=
 ---
 
 import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 import Tooltip					from "@site-comps/Tooltip";
 
 {/* Terms */}
@@ -26,7 +26,7 @@ import Method_SinceCpp17 from './_codes/operator_assign/since-cpp17.mdx';
 
 # std::multiset operator=
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp17': <Method_SinceCpp17 />,
 		'since-cpp11': <Method_SinceCpp11 />,
 		'since-cpp98': <Method_SinceCpp98 />
@@ -35,7 +35,7 @@ import Method_SinceCpp17 from './_codes/operator_assign/since-cpp17.mdx';
 Replaces the contents of the container with the contents of another.
 
  - **(1)** **Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.
-     <SwitchView content={{
+     <VersionTabs content={{
 		    'since-cpp11': <PropagateOnContainerChange_SinceCpp11 />,
 	    }}/>
 
@@ -62,7 +62,7 @@ A reference to the container, `*this`.
 
 ### Exceptions
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
 		'until-cpp17': <> May throw implementation-defined exceptions. </>
 	}}/>
