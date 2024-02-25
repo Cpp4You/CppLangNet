@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	defaultSidebar: [
-		'index',
-	],
+  defaultSidebar: [
+    "index",
+  ],
 };
