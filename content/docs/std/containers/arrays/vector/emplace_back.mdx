@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/vector/emplace_back
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip				from "@site-comps/Tooltip";
 
 {/* Terms */}
@@ -24,7 +24,7 @@ import Method_SinceCpp20	from './_codes/emplace_back/since-cpp20.mdx';
 
 # std::vector emplace_back() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Method_SinceCpp20 />,
 	'since-cpp17': <Method_SinceCpp17 />,
 	'since-cpp11': <Method_SinceCpp11 />,
@@ -52,7 +52,7 @@ Otherwise only the **past-the-end iterator** is invalidated.
 
 ### Return value
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <>A reference to the inserted element.</>,
     'until-cpp17': <><b>(none)</b></>
 }} />

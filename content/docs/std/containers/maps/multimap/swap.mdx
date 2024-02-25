@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/multimap/swap
 ---
 
 import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -22,7 +22,7 @@ import PropagateOnContainerSwapNote_SinceCpp11 	from './_codes/swap/explanation/
 
 # std::multimap swap() method
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp17': <Method_SinceCpp17 />,
 		'until-cpp17': <Method_UntilCpp17 />,
 	}}/>
@@ -37,7 +37,7 @@ All other iterators and references remain valid.
 
 The `Compare` objects must be [`Swappable`](/docs/named_req/Swappable), and they are exchanged using unqualified call to non-member swap.
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp11': <PropagateOnContainerSwapNote_SinceCpp11 />,
 	}}/>
 
@@ -50,7 +50,7 @@ The `Compare` objects must be [`Swappable`](/docs/named_req/Swappable), and they
 **(none)**
 
 ### Exceptions
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp17': <>
             noexcept specification:
             <NoexceptSpecification />

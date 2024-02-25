@@ -7,7 +7,7 @@ hide_title:			true
 {/* Components */}
 
 import CodeBlock  from "@theme/CodeBlock";
-import SwitchView from "@site-comps/SwitchView";
+import VersionTabs from "@site-comps/VersionTabs";
 import Image      from "@site-comps/Image";
 
 {/* Presets */}
@@ -62,7 +62,7 @@ std::vector<int> numbers = { 22, 13, 27, 4 };
 
 W każdym wypadku, użycie algorytmu sprowadzi się do wpisania:
 
-<SwitchView content={
+<VersionTabs content={
   {
     "cpp20":		<AlgoIntroExampleCpp20 />,		
     "until-cpp20":	<AlgoIntroExampleUntilCpp20 />,		
@@ -83,7 +83,7 @@ for (int n : numbers)
 Na początek zobaczmy przykładowy kod, z wykorzystaniem wszystkich tych algorytmów,
 a później je omówimy.
 
-<SwitchView content={
+<VersionTabs content={
   {
     "cpp20":		<AlgosOverviewCpp20 />,
     "until-cpp20":	<AlgosOverviewUntilCpp20 />,
@@ -104,7 +104,7 @@ a później je omówimy.
 
 Aby znaleźć najmniejszą wartość wewnątrz wektora, używamy [`std::ranges::min`](/docs/std/algo/ranges/min):
 
-<SwitchView content={
+<VersionTabs content={
   {
     "cpp20":
       <CodeBlock language="cpp">{`std::cout << std::ranges::min(numbers);`}</CodeBlock>,
@@ -123,7 +123,7 @@ Aby znaleźć najmniejszą wartość wewnątrz wektora, używamy [`std::ranges::
 
 Aby znaleźć największą wartość wewnątrz wektora, używamy [`std::ranges::max`](/docs/std/algo/ranges/max) tak:
 
-<SwitchView content={
+<VersionTabs content={
   {
     "cpp20": <CodeBlock language="cpp">{`std::cout << std::ranges::max(numbers);`}</CodeBlock>,
     "until-cpp20":	<CodeBlock language="cpp">{`std::cout << std::max(numbers.begin(), numbers.end());`}</CodeBlock>
@@ -145,7 +145,7 @@ Na potrzeby tego algorytmu, dodamy sobie jeszcze jedną wartość `13` na koniec
 [`count`](/docs/std/algo/ranges/count) służy do zliczania wystąpień elementów, w tym wypadku, wewnątrz wektora.
 Korzystamy z tego w ten sposób:
 
-<SwitchView content={
+<VersionTabs content={
   {
     "cpp20": <CodeBlock language="cpp">{`std::cout << std::ranges::count(numbers, 13);`}</CodeBlock>,
     "until-cpp20":	<CodeBlock language="cpp">{`std::cout << std::count(numbers.begin(), numbers.end(), 13);`}</CodeBlock>
@@ -157,7 +157,7 @@ Korzystamy z tego w ten sposób:
 Możemy również zapisać ten wynik do zmiennej. Powinniśmy do tego użyć specjalnego typu `size_t`, który
 w uproszczeniu jest **nieujemną liczbą** (ponieważ liczba wystąpień nie może być ujemna):
 
-<SwitchView content={
+<VersionTabs content={
 	{
     "cpp20":
       <CodeBlock language="cpp">{[
@@ -185,7 +185,7 @@ w uproszczeniu jest **nieujemną liczbą** (ponieważ liczba wystąpień nie mo�
 Aby odwrócić kolejność elementów wektora, używamy [`std::ranges::reverse`](/docs/std/algo/ranges/reverse/)
 &nbsp;<small>(lub [`std::reverse`](/docs/std/algo/reverse/) przed C++20)</small>.
 
-<SwitchView content={
+<VersionTabs content={
   {
     "cpp20": <CodeBlock language="cpp">{`std::ranges::reverse(numbers);`}</CodeBlock>,
     "until-cpp20": <CodeBlock language="cpp">{`std::reverse(numbers.begin(), numbers.end());`}</CodeBlock>,
@@ -202,7 +202,7 @@ Aby odwrócić kolejność elementów wektora, używamy [`std::ranges::reverse`]
 
 Używamy funkcji sortującej w ten sposób:
 
-<SwitchView content={
+<VersionTabs content={
   {
     "cpp20": <CodeBlock language="cpp">{`std::ranges::sort(numbers);`}</CodeBlock>,
     "until-cpp20": <CodeBlock language="cpp">{`std::sort(numbers.begin(), numbers.end());`}</CodeBlock>,

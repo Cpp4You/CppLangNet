@@ -13,7 +13,7 @@ arrow_jumping_preset: overloads
 # std::span constructors
 
 import CodeBlock					from '@theme/CodeBlock';
-import SwitchView					from '@site-comps/SwitchView';
+import VersionTabs					from '@site-comps/VersionTabs';
 import Columns						from '@site-comps/Columns';
 import Tooltip						from '@site-comps/Tooltip';
 import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
@@ -66,7 +66,7 @@ that are used within constructors:
 
 ## Default constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': {
 		simplified: <Ctor_Default_SinceCpp20_Simplified/>,
 		detailed: <Ctor_Default_SinceCpp20_Detailed/>
@@ -128,7 +128,7 @@ s.size(): 0
 
 ## Iterator + size constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_It_And_Size_SinceCpp20 />
 }}/>
 
@@ -196,7 +196,7 @@ elems: 1 2 3
 
 ## Range based constructor (iterators)
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_RangeBased_Iterators_Size_SinceCpp20 />
 }} />
 
@@ -269,7 +269,7 @@ elems: 2 3 4
 
 ## C array and [`std::array`](../../arrays/array) constructors
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_C_And_Std_Array_SinceCpp20 />
 }} />
 
@@ -347,7 +347,7 @@ elems: 12 13 14 15 16
 
 ## Arbitrary range constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_RangeBased_Range_SinceCpp20 />
 }}/>
 
@@ -440,7 +440,7 @@ elems: 1 2 3
 
 ## Converting constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_Converting_SinceCpp20 />
 }}/>
 
@@ -536,7 +536,7 @@ elems: 1 2 3 4 5
 
 ## Defaulted copy constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp20': <Ctor_Copy_Defaulted_SinceCpp20 />
 }}/>
 

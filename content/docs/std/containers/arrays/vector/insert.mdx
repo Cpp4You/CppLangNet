@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/vector/insert
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip				from "@site-comps/Tooltip";
 import Tabs					from "@theme/Tabs";
 
@@ -32,7 +32,7 @@ import TypeRequirements_Note_Until_Cpp17	from './_codes/insert/other/type-requir
 
 # std::vector insert() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Method_SinceCpp20 />,
 	'since-cpp11': <Method_SinceCpp11 />,
 	'until-cpp11': <Method_UntilCpp11 />,
@@ -44,7 +44,7 @@ Inserts elements at the specified location in the container.
  - **(3)** Inserts `count` copies of the `value` before `pos`.
  - **(4)** Inserts elements from range **[ first, last )** before `pos`.
 
-    <SwitchView content={{
+    <VersionTabs content={{
         'since-cpp11': <Explanation_Overload4_Since_Cpp11 />,
         'until-cpp11': <Explanation_Overload4_Until_Cpp11 />
 	}} />
@@ -81,7 +81,7 @@ The **past-the-end iterator** is also invalidated.
  - **(3)** `T` must meet the requirements of CopyAssignable and [`CopyInsertable`](/docs/named_req/CopyInsertable).
  - **(4,5)** `T` must meet the requirements of [`EmplaceConstructible`](/docs/named_req/EmplaceConstructible)
 
- - <SwitchView content={{
+ - <VersionTabs content={{
 	'since-cpp17': <TypeRequirements_Note_Since_Cpp17 />,
 	'until-cpp17': <TypeRequirements_Note_Until_Cpp17 />,
    }} />

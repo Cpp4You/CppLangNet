@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/forward_list/operator=
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -21,7 +21,7 @@ import NoexceptSpecification_SinceCpp17  from './_codes/operator_assign/noexcept
 
 # std::forward_list operator=
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp17': <Method_SinceCpp17 />,
 	'until-cpp17': <Method_UntilCpp17 />
 }} />
@@ -71,7 +71,7 @@ import NoexceptSpecification_SinceCpp17  from './_codes/operator_assign/noexcept
 
 ### Exceptions
 
-<SwitchView content={{
+<VersionTabs content={{
         'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
         'until-cpp17': <>
 			May throw implementation-defined exceptions.

@@ -6,7 +6,7 @@ tags:                   [math,isless]
 hide_title:             true
 ---
 
-import SwitchView       from '@site-comps/SwitchView';
+import VersionTabs      from '@site-comps/VersionTabs';
 import { Since, Until}  from '@site-comps/Versions';
 
 import Isless_Function_Declaration_Cpp11 from "./isless/_codes/isless_function_declaration/cpp11.mdx";
@@ -25,7 +25,7 @@ Determines if the floating point number `x` is less than the floating-point numb
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Isless_Function_Declaration_Cpp23 />,
     "cpp11" : <Isless_Function_Declaration_Cpp11 />,
 }}/>

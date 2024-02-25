@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/deque/operator=
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -23,7 +23,7 @@ import PropagateOnContainerChangeNote_SinceCpp11 from './_codes/operator_assign/
 
 # std::deque operator=
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp17': <Method_SinceCpp17 />,
 	'until-cpp17': <Method_UntilCpp17 />,
 	'until-cpp11': <Method_UntilCpp11 />
@@ -32,7 +32,7 @@ import PropagateOnContainerChangeNote_SinceCpp11 from './_codes/operator_assign/
 Replaces the contents of the container with the contents of `other`.
 
  - **(1)** **Copy** assignment operator. Replaces the contents with a copy of the contents of `other`.
-    <SwitchView content={{
+    <VersionTabs content={{
 		'since-cpp11': <PropagateOnContainerChangeNote_SinceCpp11 />,
 	}}/>
 
@@ -68,7 +68,7 @@ Replaces the contents of the container with the contents of `other`.
 
 ### Exceptions
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp17': <NoexceptSpecification_SinceCpp17 />,
 	'until-cpp17': <>May throw implementation-defined exceptions.</>
 }} />

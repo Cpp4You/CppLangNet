@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/unordered_map/insert_or_assign
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -18,7 +18,7 @@ import Method_SinceCpp17	from './_codes/insert_or_assign/since-cpp17.mdx';
 
 # std::unordered_map insert_or_assign() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp17': <Method_SinceCpp17 />,
 }} />
 
@@ -31,7 +31,7 @@ import Method_SinceCpp17	from './_codes/insert_or_assign/since-cpp17.mdx';
     Same as **(1-3)**, except the mapped value is constructed from `value_type(std::move(k), std::forward<M>(obj))`.
 
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp20': <>
         The behavior is undefined if <code>std::is_assignable_v&lt;mapped_type&, M&&&gt;</code> is <code>false</code>.
     </>,

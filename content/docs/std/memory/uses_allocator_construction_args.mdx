@@ -6,7 +6,7 @@ hide_title:             true
 ---
 
 import ClassSummary				            from "@site-comps/ClassSummary";
-import SwitchView                           from "@site-comps/SwitchView";
+import VersionTabs                          from "@site-comps/VersionTabs";
 import { Since, Until, Removed, Version }   from "@site-comps/Versions";
 import { Static }                           from "@site-comps/StaticTag";
 import SymbolTable, { Symbol }              from "@site-comps/SymbolTable";
@@ -16,7 +16,7 @@ import T_Not_Pair                           from "./_uses_allocator_construction
 
 <ClassSummary name="uses_allocator_construction_args" namespaces="std" folder="memory" headerName="memory"/>
 
-<SwitchView content={{
+<VersionTabs content={{
     "T is not a specialization of std::pair" : <T_Not_Pair />,
     "T is a specialization of std::pair": <T_Is_Pair />,
 }}/>

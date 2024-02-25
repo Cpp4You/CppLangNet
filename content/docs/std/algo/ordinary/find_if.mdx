@@ -10,7 +10,7 @@ cppreference_origin_rel: w/cpp/algorithm/find
 
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
-import SwitchView              from "@site-comps/SwitchView";
+import VersionTabs             from "@site-comps/VersionTabs";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
@@ -26,7 +26,7 @@ import Signature_SinceCpp20 from './_codes/find_if/since-cpp20.mdx';
 
 # std::find_if() algorithm
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp20': <Signature_SinceCpp20 />,
   'since-cpp17': <Signature_SinceCpp17 />,
   'until-cpp17': <Signature_UntilCpp17 />

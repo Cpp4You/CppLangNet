@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/multiset/erase
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -19,7 +19,7 @@ import Method_SinceCpp23	from './_codes/erase/since-cpp23.mdx';
 
 # std::multiset erase() method
 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp23': <Method_SinceCpp23 />,
 		'since-cpp11': <Method_SinceCpp11 />,
 		'until-cpp11': <Method_UntilCpp11 />,
@@ -28,7 +28,7 @@ import Method_SinceCpp23	from './_codes/erase/since-cpp23.mdx';
 Removes specified elements from the container.
 
 - **(1)** Removes the element at `pos`.
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp11': <>
 			Only one overload is provided if <code>iterator</code> and <code>const_iterator</code> are the same type.
 		</>
@@ -57,7 +57,7 @@ The iterator pos must be **valid** and **dereferenceable**. Thus the [`end()`](/
 ### Return value
 
  - **(1-2)** 
-<SwitchView content={{
+<VersionTabs content={{
 		'since-cpp11': <> Iterator following the last removed element. </>,
 		'until-cpp11': <> <b>(none)</b> </>,
 	}}/>

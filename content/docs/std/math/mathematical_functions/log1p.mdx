@@ -6,7 +6,7 @@ tags:                   [math, log, log1p]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 import {Until}      from '@site-comps/Versions';
 
@@ -24,7 +24,7 @@ Computes the natural (base `e`) logarithm of `1 + num`. This function is more pr
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Log1p_Function_Declaration_Cpp23 />,
     "cpp11" : <Log1p_Function_Declaration_Cpp11 />,
 }}/>

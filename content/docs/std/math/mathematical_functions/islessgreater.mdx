@@ -6,7 +6,7 @@ tags:                   [math,islessgreater]
 hide_title:             true
 ---
 
-import SwitchView       from '@site-comps/SwitchView';
+import VersionTabs      from '@site-comps/VersionTabs';
 import { Since, Until } from '@site-comps/Versions';
 
 import Islessgreater_Function_Declaration_Cpp11 from "./islessgreater/_codes/islessgreater_function_declaration/cpp11.mdx";
@@ -25,7 +25,7 @@ Determines if the floating point number `x` is less than or greater than the flo
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Islessgreater_Function_Declaration_Cpp23 />,
     "cpp11" : <Islessgreater_Function_Declaration_Cpp11 />,
 }}/>

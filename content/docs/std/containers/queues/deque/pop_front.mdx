@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/deque/pop_back
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip				from "@site-comps/Tooltip";
 
 {/* Terms */}
@@ -25,7 +25,7 @@ import Method_SinceCpp98	from './_codes/pop_back/since-cpp98.mdx';
 
 # std::deque pop_back() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp98': <Method_SinceCpp98 />,
 }} />
 
@@ -35,7 +35,7 @@ Removes the first element of the container.
 Calling [`pop_front`](#) on an empty container results in <Tooltip title={Term_UndefinedBehaviour}>undefined behavior</Tooltip>.
 :::
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <IteratorDereferenceNote_SinceCpp11 />,
 	'until-cpp11': <IteratorDereferenceNote_UntilCpp11 />,
 }} />

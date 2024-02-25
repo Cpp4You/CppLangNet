@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/string/compare
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import { Since }	from "@site-comps/Versions";
 
 import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
@@ -26,7 +26,7 @@ import NoexceptSpecification_SinceCpp17 from './_codes/compare/noexcept-specific
 
 # std::string compare() method
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp20': <Method_SinceCpp20 />,
     'since-cpp17': <Method_SinceCpp17 />,
     'since-cpp14': <Method_SinceCpp14 />,
@@ -111,7 +111,7 @@ If the result is zero (the character sequences are equal so far), then their siz
 The overloads **(2-3)**, **(5-6)**, and **(8-9)** throw [`std::out_of_range`](#) if the argument is out of range.
 
  - **(7)**
-	<SwitchView content={{
+	<VersionTabs content={{
 		'since-cpp17': <NoexceptSpecification_SinceCpp17 />
 	}} />
 

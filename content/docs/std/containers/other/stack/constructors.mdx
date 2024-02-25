@@ -12,7 +12,7 @@ arrow_jumping_preset: overloads
 
 # std::stack constructors
 
-import SwitchView					from '@site-comps/SwitchView';
+import VersionTabs					from '@site-comps/VersionTabs';
 import Columns						from '@site-comps/Columns';
 import Tooltip						from '@site-comps/Tooltip';
 import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
@@ -88,7 +88,7 @@ that are used within constructors:
 
 ## Default constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <Ctor_Default_SinceCpp11 />
 }}/>
 
@@ -133,7 +133,7 @@ int main() {
 
 ## Copy constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp98': <Ctor_Copy_SinceCpp98 />
 }} />
 
@@ -194,7 +194,7 @@ Sink size size: 5
 
 ## Move constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp11': <Ctor_Move_SinceCpp11 />
 }}/>
 
@@ -255,7 +255,7 @@ Sink size size: 5
 
 ## Copy container constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp11': <Ctor_Copy_FromContainer_SinceCpp11 />
 }}/>
 
@@ -309,7 +309,7 @@ Original data size: 5
 
 ## Move container constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp11': <Ctor_Move_FromContainer_SinceCpp11 />
 }} />
 
@@ -363,7 +363,7 @@ Original data size: 0
 
 ## Range based constructor (iterators)
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp23': <Ctor_RangeBased_Iterators_SinceCpp23 />
 }}/>
 
@@ -428,7 +428,7 @@ int main() {
 
 ## Default construct underlying container with allocator constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp11': <Ctor_UnderlyingViaAllocator_SinceCpp11 />
 }}/>
 
@@ -495,7 +495,7 @@ H i !
 
 ## Copy container with allocator constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp11': <Ctor_Copy_Container_With_Allocator_SinceCpp11 />
 }}/>
 
@@ -561,7 +561,7 @@ H i !
 
 ## Move container with allocator constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp11': <Ctor_Move_Container_With_Allocator_SinceCpp11 />
 }}/>
 
@@ -627,7 +627,7 @@ H i !
 
 ## Copy stack with allocator constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp11': <Ctor_Copy_Stack_With_Allocator_SinceCpp11 />
 }} />
 
@@ -699,7 +699,7 @@ H i !
 
 ## Move stack with allocator constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp11': <Ctor_Move_Stack_With_Allocator_SinceCpp11 />
 }}/>
 
@@ -771,7 +771,7 @@ H i !
 
 ## Range based constructor with allocator (iterators)
 
-<SwitchView content={{
+<VersionTabs content={{
 	'cpp23': <Ctor_RangeBased_Iterators_With_Allocator_SinceCpp23 />
 }}/>
 

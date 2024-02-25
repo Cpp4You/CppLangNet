@@ -8,34 +8,34 @@ import TabItem from "@theme/TabItem";
 import { LanguageVersions } from "./Versions";
 import transformEmptyTagElem from "../../helper/TransformEmptyTagElem";
 
-import styles from "./SwitchView.module.scss";
+import styles from "./VersionTabs.module.scss";
 
-type SwitchViewContent = {
+type VersionTabsContent = {
   value?: string;
   simplified?: React.ReactNode;
   detailed?: React.ReactNode;
   default?: boolean;
 }
 
-type SwitchViewProps = {
-  content: Record<string, SwitchViewContent | React.ReactNode>;
+type VersionTabsProps = {
+  content: Record<string, VersionTabsContent | React.ReactNode>;
 }
 
 
-export default function SwitchView(props: SwitchViewProps) {
+export default function VersionTabs(props: VersionTabsProps) {
 
   const content = props.content || {};
 
   return (
     <Tabs>
       {Object.entries(content).map(([key, value], index) => (
-        renderSwitchViewItem(key, index, value)
+        renderVersionTabsItem(key, index, value)
       ))}
     </Tabs>
   );
 }
 
-type SwitchViewItemValue = SwitchViewContent | React.ReactNode;
+type VersionTabsItemValue = VersionTabsContent | React.ReactNode;
 
 /**
  * **⚠️ Important**  
@@ -44,7 +44,7 @@ type SwitchViewItemValue = SwitchViewContent | React.ReactNode;
  * [sanitized](https://github.com/facebook/docusaurus/blob/1bbc68bc30d017158bb352cf25552b4791799619/packages/docusaurus-theme-common/src/utils/tabsUtils.tsx#L64)
  * and it explicitly checks the type of children before rendering.
  */
-function renderSwitchViewItem(key: string, index: number, value: SwitchViewItemValue) {
+function renderVersionTabsItem(key: string, index: number, value: VersionTabsItemValue) {
   const explicitDefaultOption = (typeof value === "object" && "default" in value) ? value.default : null;
   const defaultOption = explicitDefaultOption ?? index === 0;
 
@@ -54,16 +54,19 @@ function renderSwitchViewItem(key: string, index: number, value: SwitchViewItemV
       label={LanguageVersions.get(key) || key}
       default={defaultOption}
     >
-      {isSwitchViewContent(value) ? renderSwitchViewContent(value) : transformEmptyTagElem(value)}
+      {isVersionTabsContent(value) ? renderVersionTabsContent(value) : transformEmptyTagElem(value)}
     </TabItem>
   );
 }
 
-function isSwitchViewContent(value: any): value is SwitchViewContent {
+function isVersionTabsContent(value: unknown): value is VersionTabsContent {
+  if (value === null || value === undefined) {
+    return false;
+  }
   return typeof value === "object" && ("value" in value || "simplified" in value || "detailed" in value);
 }
 
-function renderSwitchViewContent(value: SwitchViewContent) {
+function renderVersionTabsContent(value: VersionTabsContent) {
 
   if (!value.simplified) {
     return value.value;

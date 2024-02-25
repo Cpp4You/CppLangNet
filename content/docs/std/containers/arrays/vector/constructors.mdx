@@ -14,7 +14,7 @@ arrow_jumping_preset: overloads
 {/* Components */}
 
 import CodeBlock					from '@theme/CodeBlock';
-import SwitchView					from '@site-comps/SwitchView';
+import VersionTabs					from '@site-comps/VersionTabs';
 import Columns						from '@site-comps/Columns';
 import Tooltip						from '@site-comps/Tooltip';
 import SymbolTable, { Symbol }		from '@site-comps/SymbolTable';
@@ -78,7 +78,7 @@ that are used within constructors:
 <!-------------------------------------------------------------------------------------->
 ## Default constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20': {
 			simplified:	<Ctor_Default_Cpp20_Simple/>,
 			detailed: 	<Ctor_Default_Cpp20_Detailed/>,
@@ -129,7 +129,7 @@ v.size(): 0
 
 ## Repeat value constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_RepeatValue_Cpp20 />,
 		'until-cpp20':	<Ctor_RepeatValue_UntilCpp20 />,
 		'until-cpp11':	<Ctor_RepeatValue_UntilCpp11 />,
@@ -182,7 +182,7 @@ int main() {
 <!-------------------------------------------------------------------------------------->
 ## `count` default elements constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_DefaultElements_Cpp20 />,
 		'since-cpp14':	<Ctor_DefaultElements_SinceCpp14 />,
 		'since-cpp11':	<Ctor_DefaultElements_SinceCpp11 />
@@ -230,7 +230,7 @@ int main() {
 
 ## Range-based constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_RangeBased_Cpp20 />,
 		'until-cpp20':	<Ctor_RangeBased_UntilCpp20 />,
 	}}/>
@@ -240,7 +240,7 @@ Constructs the container with the contents of the range [`first`, `last`).
 <details>
 	<summary>Overload resolution</summary>
 	<div>
-		<SwitchView content={{
+		<VersionTabs content={{
 				'since-cpp11': <>
 					This overload participates in overload resolution only if <code>InputIt</code> satisfies <i>LegacyInputIterator</i>,
 					to avoid ambiguity with the <a href="#repeat-value-constructor"><i>repeat value overload</i></a>
@@ -303,7 +303,7 @@ H e l l o
 
 ## Copy constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_Copy_Cpp20 />,
 		'until-cpp20':	<Ctor_Copy_UntilCpp20 />,
 	}}/>
@@ -314,7 +314,7 @@ The second version uses `alloc` as the allocator.
 <details>
 	<summary>Obtaining the allocator and deduction</summary>
 	<div>
-		<SwitchView content={{
+		<VersionTabs content={{
 				'since-cpp11':
 					<>
 						<p>The allocator is obtained as if by calling:</p>
@@ -373,7 +373,7 @@ int main() {
 
 ## Move constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_Move_Cpp20 />,
 		'since-cpp17':	<Ctor_Move_SinceCpp17 />,
 		'since-cpp11':	<Ctor_Move_SinceCpp11 />,
@@ -437,7 +437,7 @@ prev.empty(): true
 
 ## Initializer-list constructor
 
-<SwitchView content={{
+<VersionTabs content={{
 		'cpp20':		<Ctor_InitList_Cpp20 />,
 		'since-cpp11':	<Ctor_InitList_UntilCpp20 />,
 	}}/>

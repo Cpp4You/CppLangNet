@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/unordered_map/operator_at
 ---
 
 import Columns					from "@site-comps/Columns";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -23,13 +23,13 @@ import Method_SinceCpp11			from './_codes/operator_subscript/since-cpp11.mdx';
 
 # std::unordered_map operator[] method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <Method_SinceCpp11 />,
 }} />
 
 Returns a reference to the value that is mapped to a key equivalent to `key`, performing an insertion if such key does not already exist.
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp17': <Explanation_SinceCpp17 />,
 	'until-cpp17': <Explanation_UntilCpp17 />,
 }} />
@@ -76,7 +76,7 @@ This specification was defective and was fixed by [**LWG 2469**](https://cpluspl
 However, one implementation (**libc++**) is known to construct the `key_type` and `mapped_type` objects via two separate allocator [`construct()`](#) calls,
 as arguably required by the standards as published, rather than emplacing a `value_type` object.
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp17': <Notes_InsertOrAssign_Since17 />
     }} />
 

@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/array/swap
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 
 
 {/* Codes */}
@@ -23,14 +23,14 @@ import NoexceptSpecification_SinceCpp17	from './_codes/swap/noexcept-specificati
 
 # std::array swap() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Method_SinceCpp20 />,
 	'until-cpp20': <Method_UntilCpp20 />,
 }}/>
 
 The noexcept specification for these two looks like follows:
 
-<SwitchView content={{
+<VersionTabs content={{
 	'until-cpp17': <NoexceptSpecification_UntilCpp17 />,
 	'since-cpp17': <NoexceptSpecification_SinceCpp17 />
 }}/>

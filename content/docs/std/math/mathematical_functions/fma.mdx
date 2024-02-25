@@ -6,7 +6,7 @@ tags:                   [math, fma]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 
 import Fma_Function_Declaration_Cpp11         from "./fma/_codes/fma_function_declaration/cpp11.mdx";
@@ -27,7 +27,7 @@ The library provides overloads of `std::fma` for all cv-unqualified floating-poi
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Fma_Function_Declaration_Cpp23 />,
     "cpp11" : <Fma_Function_Declaration_Cpp11 />,
 }}/>

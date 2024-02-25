@@ -6,7 +6,7 @@ tags:               [math, abs]
 hide_title:         true
 ---
  
-import SwitchView   from "@site-comps/SwitchView";
+import VersionTabs  from "@site-comps/VersionTabs";
 import Columns	  	from "@site-comps/Columns";
 
 import Abs_Function_Declaration_Cpp98_Simple            from "./abs/_codes/abs_function_declaration/cpp98.mdx";
@@ -22,7 +22,7 @@ Defined in headers `<cstdlib>`, `<cinttypes>`, `<cmath>`.
 Computes the absolute value of an integer number. The behavior is undefined if the result cannot be represented by the return type.
 
 ### Declarations 
-<SwitchView content={{
+<VersionTabs content={{
     "cpp23" : <Abs_Function_Declaration_Cpp23_Simple />,
     "cpp11": <Abs_Function_Declaration_Cpp11_Simple />,
     "cpp98" : <Abs_Function_Declaration_Cpp98_Simple />,

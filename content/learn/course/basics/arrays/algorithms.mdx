@@ -6,7 +6,7 @@ hide_title:			true
 ---
 
 {/* Components */}
-import SwitchView		from "@site-comps/SwitchView";
+import VersionTabs		from "@site-comps/VersionTabs";
 import Image			from "@site-comps/Image";
 import Columns			from "@site-comps/Columns";
 
@@ -59,7 +59,7 @@ std::vector<int> numbers = { 22, 13, 27, 4 };
 
 In any case, using the algorithm will come down to typing:
 
-<SwitchView content={
+<VersionTabs content={
 		{
 			"cpp20":		<AlgoIntroExampleCpp20 />,		
 			"until-cpp20":	<AlgoIntroExampleUntilCpp20 />,		
@@ -78,7 +78,7 @@ for (int n : numbers)
 
 First, let's see an example code using all these algorithms, and then we'll discuss them.
 
-<SwitchView content={
+<VersionTabs content={
 		{
 			"cpp20":		<AlgosOverviewCpp20 />,
 			"until-cpp20":	<AlgosOverviewUntilCpp20 />,
@@ -99,7 +99,7 @@ To find the smallest value inside a vector, we use [`std::ranges::min`](/docs/st
 
 import CodeBlock from "@theme/CodeBlock";
 
-<SwitchView content={
+<VersionTabs content={
 		{
 			"cpp20":
 <CodeBlock language="cpp">{`
@@ -121,7 +121,7 @@ std::cout << std::min(numbers.begin(), numbers.end());
 
 To find the greatest value inside a vector, we use [`std::ranges::max`](/docs/std/algo/ranges/max) this way:
 
-<SwitchView content={
+<VersionTabs content={
 		{
 			"cpp20": <CodeBlock language="cpp">{`
 std::cout << std::ranges::max(numbers);
@@ -149,7 +149,7 @@ For the purposes of this algorithm, we're going to add one more value `13` to th
 We can also write this result to a variable. We should use a special type `size_t` for this,
 which is simply a non-negative number (because the number of occurrences cannot be negative):
 
-<SwitchView content={
+<VersionTabs content={
 		{
 			"cpp20": <CodeBlock language="cpp">{`
 size_t count = std::ranges::count(numbers, 13);
@@ -173,7 +173,7 @@ std::cout << "Occurrences of 13: " << count;
 To reverse the order of the vector's elements, we use [`std::ranges::reverse`](/docs/std/algo/ranges/reverse/)
 &nbsp;<small>(or [`std::reverse`](/docs/std/algo/reverse/) before C++20)</small>.
 
-<SwitchView content={
+<VersionTabs content={
 		{
 			"cpp20": <CodeBlock language="cpp">{`
 std::ranges::reverse(numbers);
@@ -194,7 +194,7 @@ std::reverse(numbers.begin(), numbers.end());
 
 We use the [`sort`](/docs/std/algo/ranges/sort/) function like this:
 
-<SwitchView content={
+<VersionTabs content={
 		{
 			"cpp20": <CodeBlock language="cpp">{`
 std::ranges::sort(numbers);

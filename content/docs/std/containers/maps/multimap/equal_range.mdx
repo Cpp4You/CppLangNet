@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/multimap/equal_range
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 
 {/* Codes */}
 
@@ -21,7 +21,7 @@ import ReturnValueOrderNote_SinceCpp11 	from './_codes/equal_range/other/return-
 
 # std::multimap equal_range() method
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp14': <Method_SinceCpp14 />,
     'since-cpp98': <Method_SinceCpp98 />,
     }} />
@@ -47,7 +47,7 @@ Alternatively, the first iterator may be obtained with [`lower_bound()`](/docs/s
 If there are no elements not less than `key`, past-the-end (see [`end()`](/docs/std/containers/maps/multimap/end)) iterator is returned as the first element.
 Similarly if there are no elements greater than key, past-the-end iterator is returned as the second element.
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp11': <ReturnValueOrderNote_SinceCpp11 />
     }} />
 

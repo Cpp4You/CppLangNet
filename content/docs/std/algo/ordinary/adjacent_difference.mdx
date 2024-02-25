@@ -10,7 +10,7 @@ cppreference_origin_rel: w/cpp/algorithm/adjacent_difference
 
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
-import SwitchView              from "@site-comps/SwitchView";
+import VersionTabs             from "@site-comps/VersionTabs";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
@@ -27,7 +27,7 @@ import Signature_UntilCpp17 from './_codes/adjacent_difference/until-cpp17.mdx';
 
 # std::adjacent_difference() algorithm
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp20': <Signature_SinceCpp20 />,
   'since-cpp17': <Signature_SinceCpp17 />,
   'until-cpp17': <Signature_UntilCpp17 />,

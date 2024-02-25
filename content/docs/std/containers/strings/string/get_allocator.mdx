@@ -11,7 +11,7 @@ cppreference_origin_rel: w/cpp/string/basic_string/get_allocator
 
 import Columns					from "@site-comps/Columns";
 import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
-import SwitchView				from "@site-comps/SwitchView";
+import VersionTabs				from "@site-comps/VersionTabs";
 
 import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
 
@@ -23,7 +23,7 @@ import Method_get_allocator_SinceCpp20	from './_codes/get_allocator/since-cpp20.
 
 # std::string get_allocator() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Method_get_allocator_SinceCpp20 />,
 	'until-cpp20': <Method_get_allocator_UntilCpp20 />,
 }} />

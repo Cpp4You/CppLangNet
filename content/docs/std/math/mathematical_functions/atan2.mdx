@@ -7,7 +7,7 @@ hide_title:             true
 ---
 
 import Image            from "@site-comps/Image"
-import SwitchView       from '@site-comps/SwitchView';
+import VersionTabs      from '@site-comps/VersionTabs';
 import { Since, Until } from '@site-comps/Versions';
 import Columns          from "@site-comps/Columns";
 
@@ -26,7 +26,7 @@ Computes the arc tangent of `y / x` using the signs of arguments to determine th
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Atan2_Function_Declaration_Cpp23 />,
     "cpp11" : <Atan2_Function_Declaration_Cpp11 />,
 }}/>

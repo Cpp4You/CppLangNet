@@ -10,7 +10,7 @@ cppreference_origin_rel: w/cpp/algorithm/uninitialized_copy
 
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
-import SwitchView              from "@site-comps/SwitchView";
+import VersionTabs             from "@site-comps/VersionTabs";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
@@ -26,7 +26,7 @@ import Signature_SinceCpp17 from './_codes/uninitialized_copy/since-cpp17.mdx';
 
 # std::uninitialized_copy() algorithm
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp17': <Signature_SinceCpp17 />,
   'until-cpp17': <Signature_UntilCpp17 />
 }} />
@@ -38,7 +38,7 @@ import Signature_SinceCpp17 from './_codes/uninitialized_copy/since-cpp17.mdx';
           typename std::iterator_traits<NoThrowForwardIt>::value_type(*first);
   ```
   Where `/* VOIDIFY */` is
-  <SwitchView content={{
+  <VersionTabs content={{
     'since-cpp20': <code>voidify(e)</code>,
     'since-cpp11': <code>static_cast&lt;void*&gt;(std::addressof(e))</code>,
     'until-cpp11': <code>static_cast&lt;void*&gt;(&e)</code>,

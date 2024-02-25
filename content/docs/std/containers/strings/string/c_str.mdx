@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/string/c_str
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip			from "@site-comps/Tooltip";
 import { Since, Until }			from "@site-comps/Versions";
 
@@ -22,7 +22,7 @@ import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behav
 
 # std::string c_str() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Method_SinceCpp20 />,
 	'since-cpp11': <Method_SinceCpp11 />,
 	'until-cpp11': <Method_UntilCpp11 />
@@ -52,7 +52,7 @@ Writing to the character array accessed through [`c_str`](#) is <Tooltip title={
 
 A pointer to the underlying character storage.
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp11': <>
 		<code>c_str()[i] == operator[](i)</code> for every <code>i</code> in <b>[ 0, size() )</b>.
 	</>,

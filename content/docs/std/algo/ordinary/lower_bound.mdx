@@ -10,7 +10,7 @@ cppreference_origin_rel: w/cpp/algorithm/lower_bound
 
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
-import SwitchView              from "@site-comps/SwitchView";
+import VersionTabs             from "@site-comps/VersionTabs";
 import { Since }        from "@site-comps/Versions";
 
 {/* Terms */}
@@ -24,7 +24,7 @@ import Signature_SinceCpp20 from './_codes/lower_bound/since-cpp20.mdx';
 
 # std::lower_bound() algorithm
 
-<SwitchView content={{
+<VersionTabs content={{
   'since-cpp20': <Signature_SinceCpp20 />,
   'until-cpp20': <Signature_UntilCpp20 />
 }} />

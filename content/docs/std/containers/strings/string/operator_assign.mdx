@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/string/operator=
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import { Since }	from "@site-comps/Versions";
 
 {/* Codes */}
@@ -25,7 +25,7 @@ import NoexceptSpecification_SinceCpp17 from './_codes/operator_assign/noexcept-
 
 # std::string operator=
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp23': <Method_SinceCpp23 />,
     'since-cpp20': <Method_SinceCpp20 />,
     'since-cpp17': <Method_SinceCpp17 />,
@@ -92,7 +92,7 @@ Replaces the contents of the string.
 
 ### Exceptions
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp17': <NoexceptSpecification_SinceCpp17 />
 }} />
 

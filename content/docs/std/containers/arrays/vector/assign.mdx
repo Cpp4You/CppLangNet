@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/vector/assign
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip				from "@site-comps/Tooltip";
 import Tabs					from "@theme/Tabs";
 
@@ -29,7 +29,7 @@ import Explanation_Overload2_UntilCpp11 	from './_codes/assign/explanation/overl
 
 # std::vector assign() method
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp20': <Method_SinceCpp20 />,
     'since-cpp11': <Method_SinceCpp11 />,
     'until-cpp11': <Method_UntilCpp11 />,
@@ -44,7 +44,7 @@ Replaces the contents of the container with the contents of another.
     The behavior is <Tooltip title={Term_UndefinedBehaviour}>undefined</Tooltip> if either argument is an iterator into `*this`.
 	:::
 
-	<SwitchView content={{
+	<VersionTabs content={{
 		'since-cpp11': <Explanation_Overload2_SinceCpp11 />,
 		'until-cpp11': <Explanation_Overload2_UntilCpp11 />
 	}} />

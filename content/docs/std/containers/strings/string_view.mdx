@@ -15,7 +15,7 @@ import SymbolTable, { Symbol }				from "@site-comps/SymbolTable";
 import Columns								from "@site-comps/Columns";
 import Image								from "@site-comps/Image";
 import Tooltip								from "@site-comps/Tooltip";
-import SwitchView							from "@site-comps/SwitchView";
+import VersionTabs							from "@site-comps/VersionTabs";
 
 import { Since, Until, Removed }            from "@site-comps/Versions";
 
@@ -344,13 +344,13 @@ All requirements on the iterator types of a [`Container`](/docs/named_req/Contai
 
 ## Specializations
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <HelperTemplate_BorrowedRange />
 }} />
 
 This specialization of [`ranges::enable_borrowed_range`](#) makes [`basic_string_view`](#) satisfy [`borrowed_range`](#).
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <HelperTemplate_EnableView />
 }} />
 

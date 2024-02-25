@@ -6,7 +6,7 @@ tags:                   [math, cbrt]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 
 import  Cbrt_Function_Declaration_Cpp11         from "./cbrt/_codes/cbrt_function_declaration/cpp11.mdx";
@@ -23,7 +23,7 @@ Computes the cube root of <code>num</code>. The library provides overloads of `s
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Cbrt_Function_Declaration_Cpp23 />,
     "cpp11" : <Cbrt_Function_Declaration_Cpp11 />,
 }}/>

@@ -6,7 +6,7 @@ tags:                   [math, exp, exp2]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 
 import Exp2_Function_Declaration_Cpp11         from "./exp2/_codes/exp2_function_declaration/cpp11.mdx";
@@ -23,7 +23,7 @@ The library provides overloads of `std::exp2` for all cv-unqualified floating-po
 
 ### Declarations
 
-<SwitchView content ={{
+<VersionTabs content ={{
     "cpp23" : <Exp2_Function_Declaration_Cpp23 />,
     "cpp11" : <Exp2_Function_Declaration_Cpp11 />,
 }}/>

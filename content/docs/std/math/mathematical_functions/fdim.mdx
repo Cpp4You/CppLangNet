@@ -6,7 +6,7 @@ tags:                   [math, fdim]
 hide_title:             true
 ---
 
-import SwitchView   from '@site-comps/SwitchView';
+import VersionTabs  from '@site-comps/VersionTabs';
 import Columns      from "@site-comps/Columns";
 import {Until}      from '@site-comps/Versions';
 
@@ -24,7 +24,7 @@ Returns the positive difference between `x` and `y`, that is, if `x > y`, return
 otherwise (i.e. if `x <= y`) returns `+0`. The library provides overloads of `std::fdim` for all cv-unqualified floating-point types as the type of the parameters `x` and `y`.
 
 ### Declarations 
-<SwitchView content={{
+<VersionTabs content={{
     "cpp23" : <Fdim_Function_Declaration_Cpp23 />,
     "cpp11": <Fdim_Function_Declaration_Cpp11 />,
 }}/>

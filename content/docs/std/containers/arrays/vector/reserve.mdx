@@ -9,7 +9,7 @@ cppreference_origin_rel: w/cpp/container/vector/reserve
 ---
 
 import Columns				from "@site-comps/Columns";
-import SwitchView			from "@site-comps/SwitchView";
+import VersionTabs			from "@site-comps/VersionTabs";
 import Tooltip				from "@site-comps/Tooltip";
 
 {/* Terms */}
@@ -23,7 +23,7 @@ import Method_SinceCpp20	from './_codes/reserve/since-cpp20.mdx';
 
 # std::vector reserve() method
 
-<SwitchView content={{
+<VersionTabs content={{
 	'since-cpp20': <Method_SinceCpp20 />,
 	'until-cpp20': <Method_UntilCpp20 />,
 }} />
@@ -65,7 +65,7 @@ At most linear in the `size()` of the container - **O(sizes())**.
 
 If an exception is thrown, this function has no effect ([**strong exception guarantee**](#)).
 
-<SwitchView content={{
+<VersionTabs content={{
     'since-cpp11': <>
         If <code>T</code>'s move constructor is <b>not noexcept</b> and <code>T</code> is not <a href="/docs/named_req/CopyInsertable">CopyInsertable</a> into <code>*this</code>,
         vector will use the throwing move constructor. If it throws, the guarantee is waived and the effects are unspecified.
