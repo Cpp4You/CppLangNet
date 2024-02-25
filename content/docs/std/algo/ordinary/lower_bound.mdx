@@ -13,11 +13,11 @@ import Columns                 from "@site-comps/Columns";
 import SwitchView              from "@site-comps/SwitchView";
 import { Since }        from "@site-comps/Versions";
 
-<!-- Terms -->
+{/* Terms */}
 
 import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_UntilCpp20 from './_codes/lower_bound/until-cpp20.mdx';
 import Signature_SinceCpp20 from './_codes/lower_bound/since-cpp20.mdx';
@@ -45,7 +45,6 @@ A fully-sorted range meets this criterion.
 ### Parameters
 
 <SymbolTable>
-
   <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
     The partially-ordered range to examine.
   </Symbol>
@@ -53,20 +52,17 @@ A fully-sorted range meets this criterion.
     The value to compare the elements to.
   </Symbol>
   <Symbol none noLink name={ <code>comp</code> }>
+    Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
+    The signature of the comparison function should be equivalent to the following:
 
-Comparison function object (i.e. an object that satisfies the requirements of [Compare](/docs/named_req/Compare)).
-The signature of the comparison function should be equivalent to the following:
-```cpp
-bool cmp(const Type1 &a, const Type2 &b);
-```
-- The signature does not need to have `const&`, but must not modify arguments.
-- Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
-- The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
+    ```cpp
+    bool cmp(const Type1 &a, const Type2 &b);
+    ```
 
-
+    - The signature does not need to have `const&`, but must not modify arguments.
+    - Must accept all values of type (possibly const) `Type` and `Type2`, regardless of [value category](#) (so `Type1&` is not allowed, <Since v='cpp11'>nor is <code>Type1</code> unless for <code>Type1</code> a move is equivalent to a copy</Since>)
+    - The types `Type1` and `Type2` must be such that an object of type `RandomIt` can be implicitly converted to both of them.
   </Symbol>
-
-
 </SymbolTable>
 
 #### Type requirements

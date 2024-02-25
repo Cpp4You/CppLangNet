@@ -6,7 +6,20 @@ import styles from "./SymbolTable.module.scss";
 
 import { ClassContext } from "./ClassContext";
 
-export const Access = {
+type AccessDesc = {
+  Order: number,
+  ShortName: string,
+  FullName: string,
+  Style: string,
+};
+
+type AvailableAccessSpecs = "None" | "Public" | "Protected" | "Private";
+
+type AccessSpec = {
+  [key in AvailableAccessSpecs]: AccessDesc;
+};
+
+export const Access: AccessSpec = {
   None: {
     Order: 0,
     ShortName: "",
@@ -33,7 +46,7 @@ export const Access = {
   }
 };
 
-type AccessProps = {
+type SymbolAccessProps = {
   none?: boolean,
   pub?: boolean,
   public?: boolean,
@@ -43,10 +56,7 @@ type AccessProps = {
   private?: boolean,
 };
 
-function readAccess(props: AccessProps) {
-  if (typeof props !== "object")
-    return Access.Public;
-
+function readAccess(props: SymbolAccessProps) {
   if (props.none)
     return Access.None;
   if (props.pub || props.public)
@@ -65,8 +75,11 @@ type SymbolTableProps = {
   children: React.ReactNode,
 };
 
-function compareOrder(l: React.ReactElement, r: React.ReactElement): number {
-  return readAccess(l).Order - readAccess(r).Order;
+function compareOrder(l: React.ReactElement<SymbolAccessProps>, r: React.ReactElement<SymbolAccessProps>): number {
+  if (typeof l !== "object" || typeof r !== "object")
+    return 0;
+
+  return readAccess(l as unknown as SymbolAccessProps).Order - readAccess(r as unknown as SymbolAccessProps).Order;
 }
 
 export default function SymbolTable(props: SymbolTableProps) {
@@ -89,8 +102,13 @@ export default function SymbolTable(props: SymbolTableProps) {
   );
 }
 
+type SymbolModifierKeyNames = "static" | "constexpr" | "const" | "volatile" | "virtual";
 
-type SymbolProps = {
+type WithSymbolModifiers = {
+  [key in SymbolModifierKeyNames]?: boolean;
+}
+
+type SymbolProps = WithSymbolModifiers & {
   none?: boolean,
   name: string,
   desc?: string,
@@ -98,54 +116,70 @@ type SymbolProps = {
   linkName?: string,
   autoLink?: boolean,
   noLink?: boolean,
-  static?: boolean,
-  constexpr?: boolean,
-  const?: boolean,
-  volatile?: boolean,
-  virtual?: boolean,
   children?: React.ReactNode,
 };
 
+type SymbolModifierDesc = {
+  keyName: SymbolModifierKeyNames,
+  label: string,
+  styleName: string,
+};
+
+const SYMBOL_MODIFIER_LIST: SymbolModifierDesc[] = [
+  {
+    keyName: "static",
+    label: "static",
+    styleName: "modStatic",
+  },
+  {
+    keyName: "constexpr",
+    label: "constexpr",
+    styleName: "modConstexpr",
+  },
+  {
+    keyName: "const",
+    label: "const",
+    styleName: "modConst",
+  },
+  {
+    keyName: "volatile",
+    label: "volatile",
+    styleName: "modVolatile",
+  },
+  {
+    keyName: "virtual",
+    label: "virtual",
+    styleName: "modVirtual",
+  },
+];
+
 export function Symbol(props: SymbolProps) {
 
-  const ctx = React.useContext(ClassContext);
+  // const ctx = React.useContext(ClassContext);
 
   let nameElem = transformEmptyTagElem(props.name);
 
   let desc = null;
-  if (props.desc)
+  if (props.desc) {
     desc = props.desc;
-  else if (props.children)
+  }
+  else if (props.children) {
     desc = props.children;
+  }
 
   const hasLink = props.linkName || props.autoLink;
   const canBeLinked = !props.noLink && hasLink;
 
-  if (canBeLinked)
+  if (canBeLinked) {
     nameElem = <a href={props.link || `${(props.linkName || props.name)}`}>{nameElem}</a>;
-
-  const mapAccess = props => {
-    const a = readAccess(props);
-    return (<span className={a.Style}>{a.ShortName}</span>);
-  };
-
-  const mapModifier = (testValue, style, content) => {
-    switch (testValue) {
-    case true: return <span className={styles[style]}>{content}</span>;
-    default: return null;
-    }
-  };
+  }
 
   return (
     <tr>
       {!props.none && (
         <td className={styles.symbolProp}>
-          {mapAccess(props)}
-          {mapModifier(props.static, "modStatic", "static")}
-          {mapModifier(props.constexpr, "modConstexpr", "constexpr")}
-          {mapModifier(props.const, "modConst", "const")}
-          {mapModifier(props.volatile, "modVolatile", "volatile")}
-          {mapModifier(props.virtual, "modVirtual", "virtual")}
+          <SymbolAccess {...props} />
+          <SymbolModifiers {...props} />
         </td>
       )}
       <td className={styles.symbolName}>
@@ -162,3 +196,45 @@ Symbol.isMDXComponent = true;
 SymbolTable.isMDXComponent = true;
 
 SymbolTable.Symbol = Symbol;
+
+
+function SymbolModifiers(props: WithSymbolModifiers) {
+  const modifiers = SYMBOL_MODIFIER_LIST.map((desc) => {
+    if (!props[desc.keyName]) {
+      return null;
+    }
+    return (
+      <SymbolModifier
+        key={desc.keyName}
+        label={desc.label}
+        styleName={desc.styleName}
+      />
+    );
+  });
+
+  return (
+    <>
+      {modifiers}
+    </>
+  );
+}
+
+type SymbolModifierProps = {
+  label: string;
+  styleName: string;
+}
+
+function SymbolModifier(props: SymbolModifierProps) {
+  return (
+    <span className={styles[props.styleName]}>
+      {props.label}
+    </span>
+  );
+}
+
+function SymbolAccess(props: SymbolAccessProps) {
+  const a = readAccess(props);
+  return (
+    <span className={a.Style}>{a.ShortName}</span>
+  );
+}

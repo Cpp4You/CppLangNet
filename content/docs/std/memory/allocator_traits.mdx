@@ -20,8 +20,7 @@ struct allocator_traits;
 
 The allocator_traits class template provides the standardized way to access various properties of Allocators. The standard containers and other standard library components access allocators through this template, which makes it possible to use any class type as an allocator, as long as the user-provided specialization of std::allocator_traits implements all required functionality.
 
-<Since v='cpp23'>
-A program that declares an explicit or partial specialization of std::allocator_traits is ill-formed, no diagnostic required.</Since>
+<Since v='cpp23'>A program that declares an explicit or partial specialization of std::allocator_traits is ill-formed, no diagnostic required.</Since>
 
 The default, non-specialized, std::allocator_traits contains the following members:
 

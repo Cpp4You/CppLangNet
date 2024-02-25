@@ -15,9 +15,9 @@ import Tabs					from "@theme/Tabs";
 
 import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
-<!-- replace() -->
+{/* replace() */}
 import Method_UntilCpp11 	from './_codes/replace/until-cpp11.mdx';
 import Method_SinceCpp11 	from './_codes/replace/since-cpp11.mdx';
 import Method_SinceCpp14 	from './_codes/replace/since-cpp14.mdx';
@@ -30,11 +30,11 @@ import Explanation_UntilCpp11 from './_codes/replace/explanation/until-cpp11.mdx
 # std::string replace() method
 
 <SwitchView content={{
-    'since-cpp20': <Method_SinceCpp20 />,
-    'since-cpp17': <Method_SinceCpp17 />,
-    'since-cpp14': <Method_SinceCpp14 />,
-    'since-cpp11': <Method_SinceCpp11 />,
-    'until-cpp11': <Method_UntilCpp11 />,
+  'since-cpp20': <Method_SinceCpp20 />,
+  'since-cpp17': <Method_SinceCpp17 />,
+  'since-cpp14': <Method_SinceCpp14 />,
+  'since-cpp11': <Method_SinceCpp11 />,
+  'until-cpp11': <Method_UntilCpp11 />,
 }} />
 
 Replaces the part of the string indicated by either **[ pos, pos + count )** or **[ first, last )** with a new string.
@@ -59,6 +59,7 @@ The new string can be one of:
  - **(9)** Subview **[ pos2, pos2 + count2 )** of a string view `sv`, converted from `t` as if by `std::basic_string_view<CharT, Traits> sv = t;`, except if `count2 == npos` or if it would extend past `sv.size()`, **[ pos2, sv.size() )** is used.  
 	:::important Overload Resolution
 	This overload participates in overload resolution only if `std::is_convertible_v<const StringViewLike&, std::basic_string_view<CharT, Traits>>` is `true` and `std::is_convertible_v<const StringViewLike&, const CharT*>` is `false`.
+  :::
 
 ### Parameters
 

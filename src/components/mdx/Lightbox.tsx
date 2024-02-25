@@ -1,80 +1,72 @@
-import React, { Component } from "react";
-import ReactLightbox from "react-image-lightbox";
-import "react-image-lightbox/style.css"; // This only needs to be imported once in your app
+import React, { useState, useEffect, ReactElement } from "react";
+import ReactLightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
 
-export default class Lightbox extends Component {
-	constructor(props) {
-		super(props);
+type Slide = {
+  src: string;
+  alt?: string;
+};
 
-		this.state = {
-			photoIndex: 0,
-			isOpen:		false,
-		};
+type TriggerProps = {
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+};
 
-		this.setScrollEnabled = (enabled) => {
-			document.body.style.overflow = enabled ? "unset" : "hidden";
-		};
+type TriggerRenderer = (props: TriggerProps) => ReactElement;
 
-		this.handleOpen = () => {
-			this.setState({ isOpen: true });
-			this.setScrollEnabled(false);
-		};
-		this.handleClose = () => {
-			this.setState(
-				{
-					isOpen:		false,
-					photoIndex:	0,
-				});
-			this.setScrollEnabled(true);
-		};
+interface LightboxProps {
+  images: string[];
+  renderTrigger: TriggerRenderer;
+}
 
-		this.trigger = React.cloneElement(this.props.trigger,
-			{
-				onClick: (e) => {
-					e.preventDefault();
-					this.handleOpen()
-				}
-			});
-	}
+function setWindowScrollEnabled(enabled: boolean): void {
+  document.body.style.overflow = enabled ? "auto" : "hidden";
+}
 
-	componentDidMount() {
-		if (this.state.isOpen)
-			this.setScrollEnabled(false);
-	}
+export default function Lightbox({ images, renderTrigger }: LightboxProps): ReactElement {
+  const [open, setOpen] = useState<boolean>(false);
+  const [photoIndex, setPhotoIndex] = useState<number>(0);
 
-	componentWillUnmount() {
-		this.setScrollEnabled(true);
-	}
+  const slides: Slide[] = images.map((image, index) => ({
+    src: image,
+    alt: `Image ${index + 1}`,
+  }));
 
-	render() {
-		const { photoIndex, isOpen } = this.state;
+  const handleOpen = () => {
+    setOpen(true);
+    setWindowScrollEnabled(false);
+  };
 
-		return (
-			<div>
-				{this.trigger}
+  function handleClose(): void {
+    setOpen(false);
+    setPhotoIndex(0);
+    setWindowScrollEnabled(true);
+  }
 
-				{isOpen && (
-					<ReactLightbox
-						imagePadding={100}
-						mainSrc={this.props.images[photoIndex]}
-						nextSrc={this.props.images[(photoIndex + 1) % this.props.images.length]}
-						prevSrc={this.props.images[(photoIndex + this.props.images.length - 1) % this.props.images.length]}
-						onCloseRequest={() => this.handleClose()}
-						onMovePrevRequest={() =>
-							this.setState({
-								photoIndex: (photoIndex + this.props.images.length - 1) % this.props.images.length,
-							})
-						}
-						onMoveNextRequest={() =>
-							this.setState({
-								photoIndex: (photoIndex + 1) % this.props.images.length,
-							})
-						}
-					/>
-				)}
-			</div>
-		);
-	}
+  useEffect(() => {
+    return () => {
+      if (open) {
+        setWindowScrollEnabled(true);
+      }
+    };
+  }, []);
+
+  const handleTriggerClick = (e: React.MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    handleOpen();
+  };
+
+  return (
+    <>
+      {renderTrigger({ onClick: handleTriggerClick })}
+      <ReactLightbox
+        open={open}
+        close={handleClose}
+        slides={slides}
+        index={photoIndex}
+        noScroll={{ disabled: true }}
+      />
+    </>
+  );
 }
 
 Lightbox.isMDXComponent = true;

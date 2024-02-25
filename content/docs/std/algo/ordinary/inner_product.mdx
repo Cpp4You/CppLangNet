@@ -14,11 +14,11 @@ import SwitchView              from "@site-comps/SwitchView";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
-<!-- Terms -->
+{/* Terms */}
 
 import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_SinceCpp20 from './_codes/inner_product/since-cpp20.mdx';
 import Signature_UntilCpp20 from './_codes/inner_product/until-cpp20.mdx';
@@ -52,7 +52,6 @@ If `op1` or `op2` invalidates any iterators (including the end iterators) or mod
 ### Parameters
 
 <SymbolTable>
-
   <Symbol none noLink name={ <> <code>first1</code> <br/> <code>last1</code> </> }>
     The firstrange of elements.
   </Symbol>
@@ -63,39 +62,35 @@ If `op1` or `op2` invalidates any iterators (including the end iterators) or mod
     Initial value of the products.
   </Symbol>
   <Symbol none noLink name={ <code>op1</code> }>
+    Binary operation function object that will be applied.
+    This "sum" function takes a value returned by `op2` and the current value of the accumulator
+    and produces a new value to be stored in the accumulator.
 
-Bnary operation function object that will be applied.
-This "sum" function takes a value returned by `op2` and the current value of the accumulator
-and produces a new value to be stored in the accumulator.
+    The signature of the function should be equivalent to the following:
 
-The signature of the function should be equivalent to the following:
-```cpp
- Ret fun(const Type1 &a, const Type2 &b);
-```
-- The signature does not need to have `const&`.
-- The types `Type1` and `Type2` must be such that objects of types `T` and `Type3` can be implicitly converted to them, respectively.
-- The type `Ret` must be such that an object of type `T` can be assigned a value of it's type.
+    ```cpp
+    Ret fun(const Type1 &a, const Type2 &b);
+    ```
 
-
+    - The signature does not need to have `const&`.
+    - The types `Type1` and `Type2` must be such that objects of types `T` and `Type3` can be implicitly converted to them, respectively.
+    - The type `Ret` must be such that an object of type `T` can be assigned a value of it's type.
   </Symbol>
-
   <Symbol none noLink name={ <code>op2</code> }>
+    Binary operation function object that will be applied.
+    This "product" function takes one value from each range and produces a new value.
 
-binary operation function object that will be applied.
-This "product" function takes one value from each range and produces a new value.
+    The signature of the function should be equivalent to the following:
 
-The signature of the function should be equivalent to the following:
-```cpp
- Ret fun(const Type1 &a, const Type2 &b);
-```
-- The signature does not need to have `const&`.
-- The types `Type1` and `Type2` must be such that objects of types `InputIt1` and `InputIt2` can be dereferenced
-  and then implicitly converted to them, respectively.
-- The type `Ret` must be such that an object of type `Type3` can be assigned a value of it's type.
-
-
+    ```cpp
+    Ret fun(const Type1 &a, const Type2 &b);
+    ```
+    
+    - The signature does not need to have `const&`.
+    - The types `Type1` and `Type2` must be such that objects of types `InputIt1` and `InputIt2` can be dereferenced
+      and then implicitly converted to them, respectively.
+    - The type `Ret` must be such that an object of type `Type3` can be assigned a value of it's type.
   </Symbol>
-
 </SymbolTable>
 
 #### Type requirements

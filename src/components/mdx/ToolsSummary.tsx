@@ -1,208 +1,235 @@
 import React from "react";
 
-import ProductCard		from "./ProductCard";
+import Translate from "@docusaurus/Translate";
+import useBaseUrl from "@docusaurus/useBaseUrl";
 
-import VSCodeIcon		from "@site/static/img/icons/products/vscode_1_35.svg";
-import VS2022Icon		from "@site/static/img/icons/products/vs_2019.svg";
-import CLionIcon		from "@site/static/img/icons/products/clion.svg";
-import QtCreatorIcon	from "@site/static/img/icons/products/qtcreator.svg";
-import CodeBlocksIcon	from "@site/static/img/icons/products/codeblocks.png";
-import CppBuilderIcon	from "@site/static/img/icons/products/cppbuilder.png";
-import DevCppIcon		from "@site/static/img/icons/products/devcpp.png";
+import ProductCard from "./ProductCard";
+import Lightbox from "./Lightbox";
 
-import GCCIcon			from "@site/static/img/icons/products/gcc.svg";
-import LLVMIcon			from "@site/static/img/icons/products/llvm.png";
+// Styles
+import thumbnailStyles from "./ToolsSummary.module.scss";
 
-import ReplitIcon		from "@site/static/img/icons/products/replit.svg";
+type ToolDesc = {
+  author: string;
+  title: string;
+  iconUrl: string;
+  site: string;
 
-import Translate		from "@docusaurus/Translate";
-import useBaseUrl		from "@docusaurus/useBaseUrl";
-import Lightbox			from "./Lightbox";
-import thumbnailStyles	from "./ToolsSummary.module.scss";
- 
-export const ToolSummaryInfo = {
-	"vscode": {
-		author:				"Microsoft",
-		title:				"Visual Studio Code",
-		icon:				VSCodeIcon,
-		rating:				9,
-		site:				"https://code.visualstudio.com/",
-
-		galleryThumbnail:	"/img/tutorials/tools/vscode-thumbnail.png",
-		gallery: [
-			"/img/tutorials/tools/vscode-2-hd.png",
-			"/img/tutorials/tools/vscode-1-hd.png",
-			"/img/tutorials/tools/vscode-3-hd.png",
-			"/img/tutorials/tools/vscode-4-hd.png",
-		],
-	},
-	"vs2022": {
-		author:				"Microsoft",
-		title:				"Visual Studio",
-		icon:				VS2022Icon,
-		rating:				8,
-		site:				"https://visualstudio.com/",
-
-		galleryThumbnail:	"/img/tutorials/tools/vs2022-thumbnail.png",
-		gallery: [
-			"/img/tutorials/tools/vs2022-4-hd.png",
-			"/img/tutorials/tools/vs2022-2-hd.png",
-			"/img/tutorials/tools/vs2022-1-hd.png",
-			"/img/tutorials/tools/vs2022-3-hd.png",
-		],
-	},
-	"clion": {
-		author:		"Jetbrains",
-		title:		"CLion",
-		icon:		CLionIcon,
-		rating:		8,
-		site:		"https://www.jetbrains.com/clion/",
-
-		galleryThumbnail: "/img/tutorials/tools/clion-thumbnail.png",
-		gallery: [
-			"/img/tutorials/tools/clion-1-hd.png",
-			"/img/tutorials/tools/clion-2-hd.png",
-			"/img/tutorials/tools/clion-3-hd.png",
-			"/img/tutorials/tools/clion-4-hd.png",
-			"/img/tutorials/tools/clion-5-hd.png",
-		],
-	},
-	"qtcreator": {
-		author:		"The Qt Company",
-		title:		"QtCreator",
-		icon:		QtCreatorIcon,
-		rating:		7,
-		site:		"https://www.qt.io/product/development-tools/",
-
-		galleryThumbnail: "/img/tutorials/tools/qtcreator-thumbnail.png",
-		gallery: [
-			"/img/tutorials/tools/qtcreator-1-hd.png",
-			"/img/tutorials/tools/qtcreator-2-hd.png",
-			"/img/tutorials/tools/qtcreator-3-hd.png",
-			"/img/tutorials/tools/qtcreator-4-hd.png",
-			"/img/tutorials/tools/qtcreator-5-hd.png",
-		],
-	},
-	"codeblocks": {
-		author:				"The Code::Blocks team",
-		title:				"Code Blocks",
-		icon:				CodeBlocksIcon,
-		rating:				5,
-		site:				"https://www.codeblocks.org/",
-
-		galleryThumbnail:	"/img/tutorials/tools/codeblocks-thumbnail.png",
-		gallery: [
-			"/img/tutorials/tools/codeblocks-1-hd.png",
-			"/img/tutorials/tools/codeblocks-2-hd.png",
-			"/img/tutorials/tools/codeblocks-3-hd.png",
-		],
-	},
-	"cppbuilder": {
-		author:		"Embarcadero",
-		title:		"C++ Builder",
-		icon:		CppBuilderIcon,
-		rating:		4,
-		site:		"https://www.embarcadero.com/products/cbuilder",
-	},
-	"devcpp": {
-		author:		"Bloodshed",
-		title:		"Dev-C++",
-		icon:		DevCppIcon,
-		rating:		3,
-		site:		"https://www.bloodshed.net/",
-	},
-	"replit": {
-		author:				"The Replit Team",
-		title:				"Repl.it",
-		icon:				ReplitIcon,
-		rating:				8,
-		site:				"https://www.replit.com/",
-
-		galleryThumbnail:	"/img/tutorials/tools/replit-thumbnail.png",
-		gallery: [
-			"/img/tutorials/tools/replit-3-hd.png",
-			"/img/tutorials/tools/replit-2-hd.png",
-			"/img/tutorials/tools/replit-4-hd.png",
-			"/img/tutorials/tools/replit-1-hd.png",
-		],
-	},
-
-	////////////////////////////////////
-	// Compilers
-	////////////////////////////////////
-	"msvc": {
-		author:		"Microsoft",
-		title:		"Visual Studio Compiler",
-		icon:		VS2022Icon,
-		site:		"https://visualstudio.com/",
-	},
-	"gcc": {
-		author:		"The GNU Project",
-		title:		"GCC (GNU Compiler Collection)",
-		icon:		GCCIcon,
-		site:		"https://gcc.gnu.org/",
-	},
-	"clang": {
-		author:		"LLVM Developer Group",
-		title:		"Clang",
-		icon:		LLVMIcon,
-		site:		"https://clang.llvm.org/",
-	},
-	"apple-clang": {
-		author:		"Apple & LLVM Authors",
-		title:		"Apple Clang",
-		icon:		LLVMIcon,
-		site:		"https://github.com/apple/llvm-project",
-	},
-};
-
-export function GalleryThumbnail(props)
-{
-	return (
-		<>
-			<div className={thumbnailStyles.Thumbnail} onClick={props.onClick}>
-				<img src={props.src}/>
-				<p className={thumbnailStyles.ThumbnailIcon}>🔎</p>
-			</div>
-		</>
-	);
+  galleryThumbnail?: string;
+  gallery?: string[];
 }
 
-export default function ToolCard(props)
-{
-	const tool = ToolSummaryInfo[props.toolId];
-	return (
-		<ProductCard title={tool.title} img={tool.icon} author={tool.author} >
-			<ProductCard.Desc>
-				{props.children}
-			</ProductCard.Desc>
-			<ProductCard.Actions>
-				<ul style={ { listStyle: "none", margin: 0, padding: 0 } }>
-					<li>
-						<a href={tool.site} target="_blank" rel="noreferrer">
-							<Translate id="tool.projectWebsite">🌐 Project website</Translate>
-						</a>
-					</li>
-					{props.setupLink && (<li><a href={props.setupLink}><Translate id="tool.howToUse">🚀 How to use</Translate></a></li>)}
-					{tool.gallery &&
-						<li>
-							
-							<Lightbox
-								trigger={
-									tool.galleryThumbnail
-										?
-										<GalleryThumbnail src={useBaseUrl(tool.galleryThumbnail)} />
-										:
-										<a href="#"><Translate>🖼 Gallery</Translate></a>
-								}
-								images={tool.gallery.map(l => useBaseUrl(l))}
-							/>
-						</li>
-					}
-				</ul>
-			</ProductCard.Actions>
-		</ProductCard>
-	);
+export const ToolSummaryInfo: Record<string, ToolDesc> = {
+  "vscode": {
+    author: "Microsoft",
+    title: "Visual Studio Code",
+    iconUrl: getIconUrl("vscode_1_35.svg"),
+    site: "https://code.visualstudio.com/",
+
+    galleryThumbnail: getGalleryUrl("vscode-thumbnail.png"),
+    gallery: galleryUrls([
+      "vscode-2-hd.png",
+      "vscode-1-hd.png",
+      "vscode-3-hd.png",
+      "vscode-4-hd.png",
+    ]),
+  },
+  "vs2022": {
+    author: "Microsoft",
+    title: "Visual Studio",
+    iconUrl: getIconUrl("vs_2019.svg"),
+    site: "https://visualstudio.com/",
+
+    galleryThumbnail: getGalleryUrl("vs2022-thumbnail.png"),
+    gallery: galleryUrls([
+      "vs2022-4-hd.png",
+      "vs2022-2-hd.png",
+      "vs2022-1-hd.png",
+      "vs2022-3-hd.png",
+    ]),
+  },
+  "clion": {
+    author: "Jetbrains",
+    title: "CLion",
+    iconUrl: getIconUrl("clion.svg"),
+    site: "https://www.jetbrains.com/clion/",
+
+    galleryThumbnail: getGalleryUrl("clion-thumbnail.png"),
+    gallery: galleryUrls([
+      "clion-1-hd.png",
+      "clion-2-hd.png",
+      "clion-3-hd.png",
+      "clion-4-hd.png",
+      "clion-5-hd.png",
+    ]),
+  },
+  "qtcreator": {
+    author: "The Qt Company",
+    title: "QtCreator",
+    iconUrl: getIconUrl("qtcreator.svg"),
+    site: "https://www.qt.io/product/development-tools/",
+
+    galleryThumbnail: getGalleryUrl("qtcreator-thumbnail.png"),
+    gallery: galleryUrls([
+      "qtcreator-1-hd.png",
+      "qtcreator-2-hd.png",
+      "qtcreator-3-hd.png",
+      "qtcreator-4-hd.png",
+      "qtcreator-5-hd.png",
+    ]),
+  },
+  "codeblocks": {
+    author: "The Code::Blocks team",
+    title: "Code Blocks",
+    iconUrl: getIconUrl("codeblocks.png"),
+    site: "https://www.codeblocks.org/",
+
+    galleryThumbnail: getGalleryUrl("codeblocks-thumbnail.png"),
+    gallery: galleryUrls([
+      "codeblocks-1-hd.png",
+      "codeblocks-2-hd.png",
+      "codeblocks-3-hd.png",
+    ]),
+  },
+  "cppbuilder": {
+    author: "Embarcadero",
+    title: "C++ Builder",
+    iconUrl: getIconUrl("cppbuilder.png"),
+    site: "https://www.embarcadero.com/products/cbuilder",
+  },
+  "devcpp": {
+    author: "Bloodshed",
+    title: "Dev-C++",
+    iconUrl: getIconUrl("devcpp.png"),
+    site: "https://www.bloodshed.net/",
+  },
+  "replit": {
+    author: "The Replit Team",
+    title: "Repl.it",
+    iconUrl: getIconUrl("replit.svg"),
+    site: "https://www.replit.com/",
+
+    galleryThumbnail: getGalleryUrl("replit-thumbnail.png"),
+    gallery: galleryUrls([
+      "replit-3-hd.png",
+      "replit-2-hd.png",
+      "replit-4-hd.png",
+      "replit-1-hd.png",
+    ]),
+  },
+
+  ////////////////////////////////////
+  // Compilers
+  ////////////////////////////////////
+  "msvc": {
+    author: "Microsoft",
+    title: "Visual Studio Compiler",
+    iconUrl: getIconUrl("vs_2019.svg"),
+    site: "https://visualstudio.com/",
+  },
+  "gcc": {
+    author: "The GNU Project",
+    title: "GCC (GNU Compiler Collection)",
+    iconUrl: getIconUrl("gcc.svg"),
+    site: "https://gcc.gnu.org/",
+  },
+  "clang": {
+    author: "LLVM Developer Group",
+    title: "Clang",
+    iconUrl: getIconUrl("llvm.png"),
+    site: "https://clang.llvm.org/",
+  },
+  "apple-clang": {
+    author: "Apple & LLVM Authors",
+    title: "Apple Clang",
+    iconUrl: getIconUrl("llvm.png"),
+    site: "https://github.com/apple/llvm-project",
+  },
 };
+
+type ToolCardProps = {
+  toolId: keyof typeof ToolSummaryInfo;
+  setupLink?: string;
+  children?: React.ReactNode;
+}
+
+export default function ToolCard(props: ToolCardProps) {
+  const tool = ToolSummaryInfo[props.toolId];
+  return (
+    <ProductCard title={tool.title} img={tool.iconUrl} author={tool.author} >
+      <ProductCard.Desc>
+        {props.children}
+      </ProductCard.Desc>
+      <ProductCard.Actions>
+        <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+          <li>
+            <a href={tool.site} target="_blank" rel="noreferrer">
+              <Translate id="tool.projectWebsite">🌐 Project website</Translate>
+            </a>
+          </li>
+          {props.setupLink && (
+            <li>
+              <a href={props.setupLink}><Translate id="tool.howToUse">🚀 How to use</Translate></a>
+            </li>
+          )}
+          {tool.gallery &&
+            <li>
+              <Gallery thumbnail={tool.galleryThumbnail} images={tool.gallery} />
+            </li>
+          }
+        </ul>
+      </ProductCard.Actions>
+    </ProductCard>
+  );
+}
 ToolCard.Details = ProductCard.Details;
 ToolCard.isMDXComponent = true;
+
+
+type GalleryProps = {
+  thumbnail: string;
+  images: string[];
+}
+
+function Gallery(props: GalleryProps) {
+  return (
+    <Lightbox
+      renderTrigger={({ onClick }) => (
+        props.thumbnail
+          ?
+          <GalleryThumbnail onClick={onClick} src={useBaseUrl(props.thumbnail)} />
+          :
+          <a href="#"><Translate>🖼 Gallery</Translate></a>
+      )}
+      images={props.images.map(l => useBaseUrl(l))}
+    />
+  );
+}
+
+type GalleryThumbnailProps = {
+  src: string;
+  onClick: (e: React.MouseEvent) => void;
+};
+
+function GalleryThumbnail(props: GalleryThumbnailProps) {
+  return (
+    <>
+      <div className={thumbnailStyles.Thumbnail} onClick={props.onClick}>
+        <img src={props.src} alt="Gallery" />
+        <p className={thumbnailStyles.ThumbnailIcon}>🔎</p>
+      </div>
+    </>
+  );
+}
+
+function getIconUrl(iconName: string): string {
+  return `/img/icons/products/${iconName}`;
+}
+
+function getGalleryUrl(imageFileName: string): string {
+  return `/img/tutorials/tools/${imageFileName}`;
+}
+
+function galleryUrls(images: string[]): string[] {
+  return images.map(getGalleryUrl);
+}

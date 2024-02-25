@@ -29,10 +29,12 @@ where
     <li><span class='col-g'>octal-literal</span> is the digit zero (0) followed by zero or more octal digits (0, 1, 2, 3, 4, 5, 6, 7)</li>
     <li><span class='col-g'>hex-literal</span> is the character sequence 0x or the character sequence 0X followed by one or more hexadecimal digits (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, a, A, b, B, c, C, d, D, e, E, f, F)</li>
     <li><span class='col-g'>binary-literal</span> is the character sequence <code>0b</code> or the character sequence <code>0B</code> followed by one or more binary digits (0, 1)</li>
-    <li><span class='col-g'>integer-suffix</span>, if provided, may contain one or both of the following (if both are provided, they may appear in any order):
+    <li>
+        <span class='col-g'>integer-suffix</span>, if provided, may contain one or both of the following (if both are provided, they may appear in any order):
         <ul>
             <li><span class='col-g'>unsigned-suffix</span> (the character <code>u</code> or the character <code>U</code>)</li>
-            <li>one of
+            <li>
+                one of
                 <ul>
                     <li><span class='col-g'>long-suffix</span> (the character <code>l</code> or the character <code>L</code>)</li>
                     <li><Since v='cpp11'><span class='col-g'>long-long-suffix</span> (the character sequence <code>ll</code> or the character sequence <code>LL</code>)</Since></li>

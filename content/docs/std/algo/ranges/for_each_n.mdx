@@ -10,13 +10,14 @@ cppreference_origin_rel: w/cpp/algorithm/ranges/for_each_n
 
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
+import Tooltip                 from "@site-comps/Tooltip";
 import SwitchView              from "@site-comps/SwitchView";
 
-<!-- Terms -->
+{/* Terms */}
 
 import Term_UndefinedBehaviour from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_SinceCpp20_Detailed   from './_codes/for_each_n/since-cpp20-detailed.mdx';
 import Signature_SinceCpp20_Simplified from './_codes/for_each_n/since-cpp20-simplified.mdx';
@@ -50,7 +51,6 @@ The function-like entities described on this page are [**niebloids**](/docs/std/
 ### Parameters
 
 <SymbolTable>
-
   <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
     The beginning of the range to apply the function to.
   </Symbol>
@@ -61,18 +61,16 @@ The function-like entities described on this page are [**niebloids**](/docs/std/
     Projection to apply to the elements.
   </Symbol>
   <Symbol none noLink name={ <code>f</code> }>
+    Function object, to be applied to every element of the range.
+    The signature of the function should be equivalent to the following:
 
-Function object, to be applied to every element of the range.
-The signature of the function should be equivalent to the following:
-```cpp
-void fun(const Type& a);
-```
-- The signature does not need to have `const&`.
-- The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
+    ```cpp
+    void fun(const Type& a);
+    ```
 
-
+    - The signature does not need to have `const&`.
+    - The type `Type` must be such that an object of type `InputIt` can be dereferenced and then implicitly converted to `Type`.
   </Symbol>
-
 </SymbolTable>
 
 ### Return value

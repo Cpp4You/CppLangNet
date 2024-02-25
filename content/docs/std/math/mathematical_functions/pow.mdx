@@ -70,10 +70,10 @@ If the implementation supports IEEE floating-point arithmetic (<a href='https://
 * `pow(+1, exp)` returns 1 for any `exp`, even when `exp` is NaN
 * `pow(base, ±0)` returns 1 for any `base`, even when base is NaN
 * `pow(base, exp)` returns NaN and raises `FE_INVALID` if `base` is finite and negative and `exp` is finite and non-integer.
-* `pow(base, -∞)` returns `+∞` for any |base|<1
-* `pow(base, -∞)` returns `+0` for any |base|>1
-* `pow(base, +∞)` returns `+0` for any |base|<1
-* `pow(base, +∞)` returns `+∞` for any |base|>1
+* `pow(base, -∞)` returns `+∞` for any |base|&lt;1
+* `pow(base, -∞)` returns `+0` for any |base|&gt;1
+* `pow(base, +∞)` returns `+0` for any |base|&lt;1
+* `pow(base, +∞)` returns `+∞` for any |base|&gt;1
 * `pow(-∞, exp)` returns `-0` if `exp` is a negative odd integer
 * `pow(-∞, exp)` returns `+0` if `exp` is a negative non-integer or negative even integer
 * `pow(-∞, exp)` returns `-∞` if `exp` is a positive odd integer

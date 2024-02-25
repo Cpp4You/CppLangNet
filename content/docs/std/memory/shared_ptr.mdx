@@ -200,9 +200,9 @@ non-const member function of `shared_ptr` then a data race will occur; the `shar
                     operator!=  <small>(removed in C++20)</small>  <br/>
                     operator&lt;   <small>(removed in C++20)</small> <br/>
                     operator&lt;=  <small>(removed in C++20)</small> <br/>
-                    operator>   <small>(removed in C++20)</small> <br/>
-                    operator>=  <small>(removed in C++20)</small> <br/>
-                    operator&lt;=> <small>(C++20)</small>
+                    operator&gt;   <small>(removed in C++20)</small> <br/>
+                    operator&gt;=  <small>(removed in C++20)</small> <br/>
+                    operator&lt;=&gt; <small>(C++20)</small>
 			    </>}                
             desc={<>
                 compares with another shared_ptr or with nullptr<br/>
@@ -250,7 +250,7 @@ non-const member function of `shared_ptr` then a data race will occur; the `shar
 ### Helper Classes
 <SymbolTable noTraits>
     <Symbol autoLink linkName="/docs/std/memory/_shared_ptr/atomic2" name={<>
-                std::atomic<small>&lt;std::shared_ptr>(C++20)</small>
+                std::atomic<small>&lt;std::shared_ptr&gt;(C++20)</small>
 			    </>}                
             desc={<>
                 atomic shared pointer<br/>
@@ -258,7 +258,7 @@ non-const member function of `shared_ptr` then a data race will occur; the `shar
                 </>} 
     />
     <Symbol autoLink linkName="/docs/std/memory/_shared_ptr/hash" name={<>
-                std::hash<small>&lt;std::shared_ptr>(C++11)</small>
+                std::hash<small>&lt;std::shared_ptr&gt;(C++11)</small>
 			    </>}                
             desc={<>
                 hash support for std::shared_ptr<br/>

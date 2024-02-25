@@ -24,7 +24,7 @@ const features: Array<Feature> = [
   {
     title: "Blog posts",
     imageUrl: "img/homepage/Blog.webp",
-    description: 
+    description:
       <>
         We have a <a href="blog" target="_blank">blog</a> where we post interesting stuff about the language.
         Feel free to <a href="contributing" target="_blank">post your own</a> stuff.
@@ -76,7 +76,7 @@ export default function SiteFeaturesSlider() {
     const timer = setTimeout(handleNext, 5000);
     return () => clearTimeout(timer);
   }, [currentIndex]);
-  
+
 
   return (
     <div className="homepage-slider-container">

@@ -14,11 +14,12 @@ import SwitchView              from "@site-comps/SwitchView";
 import Tooltip                 from '@site-comps/Tooltip';
 import { Since, Until }        from "@site-comps/Versions";
 
-<!-- Terms -->
+{/* Terms */}
 
+import Term_ImplementationDefined from "@site/i18n/en/presets/terms/implementation-defined.mdx";
 import Term_UndefinedBehaviour	from "@site/i18n/en/presets/terms/undefined-behaviour.mdx";
 
-<!----------------- Codes ---------------------->
+{/* Codes */}
 
 import Signature_SinceCpp20 from './_codes/adjacent_difference/since-cpp20.mdx';
 import Signature_SinceCpp17 from './_codes/adjacent_difference/since-cpp17.mdx';
@@ -84,7 +85,6 @@ For overloads <b>(1 - 2)</b>, if <code>std::iterator_traits&lt;InputIt&gt;::valu
 ### Parameters
 
 <SymbolTable>
-
   <Symbol none noLink name={ <> <code>first</code> <br/> <code>last</code> </> }>
     The range of elements.
   </Symbol>
@@ -95,19 +95,17 @@ For overloads <b>(1 - 2)</b>, if <code>std::iterator_traits&lt;InputIt&gt;::valu
     The execution policy to use. See <a href="#">execution policy</a> for details.
   </Symbol>
   <Symbol none noLink name={ <code>op</code> }>
+    Binary operation function object that will be applied.
+    The signature of the function should be equivalent to the following:
 
-Binary operation function object that will be applied.
-The signature of the function should be equivalent to the following:
-```cpp
- Ret fun(const Type1 &a, const Type2 &b);
-```
-- The signature does not need to have `const&`.
-- The types `Type1` and `Type2` must be such that an object of type `iterator_traits<InputIt>::value_type` can be implicitly converted to both of them.
-- The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`.
+    ```cpp
+    Ret fun(const Type1 &a, const Type2 &b);
+    ```
 
-
+    - The signature does not need to have `const&`.
+    - The types `Type1` and `Type2` must be such that an object of type `iterator_traits<InputIt>::value_type` can be implicitly converted to both of them.
+    - The type `Ret` must be such that an object of type `OutputIt` can be dereferenced and assigned a value of type `Ret`.
   </Symbol>
-
 </SymbolTable>
 
 #### Type requirements
