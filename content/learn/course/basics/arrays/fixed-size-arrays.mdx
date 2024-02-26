@@ -57,7 +57,7 @@ Remember: we're talking about an array of **fixed-size** that we have to know in
 A common practice is to estimate the largest number of elements we'll use and then create an array of that size.
 
 ```cpp title="Allow up to 10 players in our game"
-std::array<std::string, 10> playerNames;
+std::array<std::string, 10> player_names;
 ```
 
 In the previous lesson we used similar notation to create `vector` instance. This time we have to provide both:
@@ -75,7 +75,7 @@ std::array<Type, N>
 It's quite usual to initialize an array with some predefined values. We can do that by using the curly braces syntax:
 
 ```cpp title="Allow up to 10 players, provide three initial names"
-std::array<std::string, 10> playerNames = {
+std::array<std::string, 10> player_names = {
 	"HappyBanana", "AngryCrab", "SadWolf",
 };
 ```
@@ -84,11 +84,11 @@ std::array<std::string, 10> playerNames = {
 <summary>Alternative syntax</summary>
 <div>
 
-You can omit the `=` between the `playerNames` and the curly braces then wrap the list of elements
+You can omit the `=` between the `player_names` and the curly braces then wrap the list of elements
 in an additional `{}` to achieve the same result:
 
 ```cpp
-std::array<std::string, 10> playerNames {{
+std::array<std::string, 10> player_names {{
 	"HappyBanana", "AngryCrab", "SadWolf",
 }};
 ```
@@ -123,16 +123,16 @@ We can access elements of an array [the same way](../dynamic-arrays/#accessing-e
 
 int main()
 {
-    std::array< std::string, 10 > playerNames = {
+    std::array< std::string, 10 > player_names = {
 		"HappyBanana", "AngryCrab", "SadWolf"
 	};
 
     // Setting names of the players
-    playerNames[0] = "SadBanana";
-    playerNames[2] = "HappyWolf";
+    player_names[0] = "SadBanana";
+    player_names[2] = "HappyWolf";
 
     // Printing the name of the first player:
-    std::cout << "Name of the first player: " << playerNames[0];
+    std::cout << "Name of the first player: " << player_names[0];
 }
 ```
 
@@ -158,11 +158,11 @@ This is the content of the array after the previous code snippet:
 We can use the `size()` method to get the size of an array:
 
 ```cpp
-std::array<std::string, 10> playerNames = {
+std::array<std::string, 10> player_names = {
 	"HappyBanana", "AngryCrab", "SadWolf",
 };
 
-std::cout << "Number of players: " << playerNames.size();
+std::cout << "Number of players: " << player_names.size();
 ```
 
 The output of the program is:
@@ -181,7 +181,7 @@ The rest are initialized with default values, which in this case are empty strin
 Just like we did with vectors, we can use a `for` loop to display all elements of an array:
 
 ```cpp title="Display all player names"
-for (std::string name : playerNames)
+for (std::string name : player_names)
 {
 	std::cout << "Player: " << name << '\n';
 }

@@ -41,22 +41,22 @@ std::cin >> name;
 
 // Użytkownik jest szczęśliwy, jeśli jego imię ma więcej niż 5 znaków
 // highlight-next-line
-bool isLucky = name.size() > 5;
+bool is_lucky = name.size() > 5;
 
 // Spróbuj pozmieniać te wartości i zobacz co się stanie!
 // highlight-start
-bool isTuesday = true;
-bool isCloudy = false;
+bool is_tuesday = true;
+bool is_cloudy = false;
 // highlight-end
 
 std::string weather = "sunny";
 
-if (not isTuesday and isCloudy) {
+if (not is_tuesday and is_cloudy) {
 	weather = "raining";
-} else if (isTuesday) {
-	if (isCloudy) {
+} else if (is_tuesday) {
+	if (is_cloudy) {
 		weather = "overcast";
-	} else if (not isLucky) {
+	} else if (not is_lucky) {
 		weather = "downpouring";
 	}
 }
@@ -68,9 +68,9 @@ Wcześniej wprowadzone [operatory logiczne](/learn/course/basics/conditions/intr
 mogą zostać użyte do stworzenia nowych zmiennych boolowskich:
 
 ```cpp title="Używanie operatorów logicznych na boolach"
-bool isPrecipitating = weather == "raining" or weather == "downpouring";
-bool isRainbowMade   = isPrecipitating and not isCloudy;
-bool isBoringDay     = not isRainbowMade;
+bool is_precipitating = weather == "raining" or weather == "downpouring";
+bool is_rainbow_made  = is_precipitating and not is_cloudy;
+bool is_boring_day    = not is_rainbow_made;
 ```
 
 ## Wczytywanie/Wypisywanie typów boolowskich

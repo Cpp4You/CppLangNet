@@ -7,10 +7,10 @@ struct Vehicle
 {
     std::string brand;
     std::string model;
-    int productionYear;
+    int production_year;
 
     // highlight-next-line
-    std::string completeName()
+    std::string complete_name()
     {
         return brand + " " + model;
     }
@@ -18,13 +18,13 @@ struct Vehicle
 
 struct Car : Vehicle
 {
-    bool isCabrio;
+    bool is_cabrio;
 };
 
 struct Airplane : Vehicle
 {
-    int enginesNumber;
-    std::string airlinesName; 
+    int number_of_engines;
+    std::string airlines_name; 
 };
 
 int main()
@@ -32,19 +32,19 @@ int main()
     Car ford;
     ford.brand = "Ford";
     ford.model = "Fiesta";
-    ford.productionYear = 2010;
-    ford.isCabrio = false;
+    ford.production_year = 2010;
+    ford.is_cabrio = false;
 
     Airplane boeing;
     boeing.brand = "Boeing";
     boeing.model = "737";
-    boeing.productionYear = 2010;
-    boeing.enginesNumber = 2;
-    boeing.airlinesName = "Air Canada";
+    boeing.production_year = 2010;
+    boeing.number_of_engines = 2;
+    boeing.airlines_name = "Air Canada";
     
     // highlight-next-line
-    std::cout << ford.completeName() << '\n'; // "Ford Fiesta"
+    std::cout << ford.complete_name() << '\n'; // "Ford Fiesta"
     // highlight-next-line
-    std::cout << boeing.completeName() << '\n'; // "Boeing 737"
+    std::cout << boeing.complete_name() << '\n'; // "Boeing 737"
 }
 ```

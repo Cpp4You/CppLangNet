@@ -52,10 +52,10 @@ struct Car
 	// informacje o pojeździe
 	std::string	brand;
 	std::string	model;
-	int			yearOfProduction;
+	int			year_of_production;
 
 	// poruszanie się
-	float		topSpeed = 200;		// max. prędkość (km/h)
+	float		top_speed = 200;		// max. prędkość (km/h)
 	float		acceleration = 50;	// przyspieszenie (km/h na sekundę)
 	float		speed = 0;			// aktualna prędkość (km/h)
 };
@@ -69,7 +69,7 @@ int main()
 	Car car;
 	car.brand = "Ford";
 	car.model = "Focus";
-	car.yearOfProduction = 2010;
+	car.year_of_production = 2010;
 
 }
 ```
@@ -164,7 +164,7 @@ która też do tej struktury należy:
 <Tabs>
 <TabItem value="good1" label="✔ Dobrze" default>
 
-Zwróć uwagę na kolejność definiowania metod: `limitSpeed` została użyta w `accelerate`,
+Zwróć uwagę na kolejność definiowania metod: `limit_speed` została użyta w `accelerate`,
 mimo że jej definicja znajduje się niżej. Podobnie pola `speed` oraz `acceleration`,
 zostały użyte przed ich deklaracją, bo znajduje się ona w kodzie **pod** tym użyciem.
 W ramach struktury jest to dozwolone.
@@ -176,16 +176,16 @@ struct Car
 	void accelerate()
 	{
 		speed += acceleration;
-		limitSpeed();
+		limit_speed();
 	}
 
-	void limitSpeed() {
-		if (speed > topSpeed)
-			speed = topSpeed;
+	void limit_speed() {
+		if (speed > top_speed)
+			speed = top_speed;
 	}
 
 	// Zmienne należące do klasy
-	float topSpeed = 200;
+	float top_speed = 200;
 	float acceleration = 50;
 	float speed = 0;
 	// reszta...
@@ -201,21 +201,21 @@ Kolejność funkcji i zmiennych jest ustawiona według ich użycia - również p
 struct Car
 {
 	// Zmienne należące do klasy
-	float topSpeed = 200;
+	float top_speed = 200;
 	float acceleration = 50;
 	float speed = 0;
 	// reszta...
 
-	void limitSpeed() {
-		if (speed > topSpeed)
-			speed = topSpeed;
+	void limit_speed() {
+		if (speed > top_speed)
+			speed = top_speed;
 	}
 
 	// funkcja zwiększająca prędkość
 	void accelerate()
 	{
 		speed += acceleration;
-		limitSpeed();
+		limit_speed();
 	}
 };
 ```
@@ -254,30 +254,30 @@ Dzięki temu jesteśmy w stanie przenieść ich definicje poza ciało struktury:
 struct Car
 {
 	// Zmienne należące do klasy
-	float topSpeed = 200;
+	float top_speed = 200;
 	float acceleration = 50;
 	float speed = 0;
 	// reszta...
 
 	// Deklaracje metod:
 	// highlight-start
-	void limitSpeed();
+	void limit_speed();
 	void accelerate();
 	// highlight-end
 };
 
 // highlight-next-line
-void Car::limitSpeed()
+void Car::limit_speed()
 {
-	if (speed > topSpeed)
-		speed = topSpeed;
+	if (speed > top_speed)
+		speed = top_speed;
 }
 
 // highlight-next-line
 void Car::accelerate()
 {
 	speed += acceleration;
-	limitSpeed();
+	limit_speed();
 }
 ```
 
@@ -314,7 +314,7 @@ int main()
 	Car car;
 	car.brand = "Ford";
 	car.model = "Focus";
-	car.yearOfProduction = 2010;
+	car.year_of_production = 2010;
 }
 ```
 moglibyśmy po prostu zrobić jedno z poniższych:
@@ -363,7 +363,7 @@ int main()
 Oczywiście kolejność argumentów podawanych w nawiasie odpowiada kolejnym składowym struktury, w tym przypadku:
  - `Car::brand` zostanie zainicjalizowane wartością **"Ford"**
  - `Car::model` zostanie zainicjalizowane wartością **"Focus"**
- - `Car::yearOfProduction` zostanie zainicjalizowane wartością **2010**
+ - `Car::year_of_production` zostanie zainicjalizowane wartością **2010**
 
 
 ### Designated initializers (C++20)
@@ -377,7 +377,7 @@ int main()
 	auto car = Car {
 		.brand = "Ford",
 		.model = "Focus",
-		.yearOfProduction = 2010
+		.year_of_production = 2010
 	};
 }
 ```
@@ -395,7 +395,7 @@ int main()
 {
 	auto car = Car();
 	car.model = "Focus";
-	car.yearOfProduction = 2010;
+	car.year_of_production = 2010;
 }
 ```
 
@@ -408,7 +408,7 @@ int main()
 {
 	Car car;
 	car.model = "Focus";
-	car.yearOfProduction = 2010;
+	car.year_of_production = 2010;
 }
 ```
 
@@ -425,7 +425,7 @@ int main()
 {
 	auto car = Car {
 		.model = "Focus",
-		.yearOfProduction = 2010
+		.year_of_production = 2010
 	};
 }
 ```
@@ -439,12 +439,12 @@ int main()
 {
 	Car car = {
 		.model = "Focus",
-		.yearOfProduction = 2010
+		.year_of_production = 2010
 	};
 
 	Car car2 = Car { // również poprawne
 		.model = "Focus",
-		.yearOfProduction = 2010
+		.year_of_production = 2010
 	};
 }
 ```

@@ -156,16 +156,16 @@ The easiest way to fix this is to simply combine the string literals yourself li
 int main()
 {
 	int age;
-	int fullName;
+	std::string full_name;
 
 	std::cout << "Enter your age: ";
 	std::cin >> age;
 
 	std::cout << "Enter your full name: ";
 	// warning-next-line
-	std::getline(std::cin, fullName); // This line is seemingly skipped
+	std::getline(std::cin, full_name); // This line is seemingly skipped
 
-	std::cout << "\nYour name is " << fullName << " and your age is " << age;
+	std::cout << "\nYour name is " << full_name << " and your age is " << age;
 }
 ```
 
@@ -185,7 +185,7 @@ it places a *newline character* `\n` onto *stdin*. `std::cin` then reads the num
 `std::getline` uses the presence of these `\n` characters to determine where a full line ends.
 So, when it attempts to read from *stdin* (`std::cin`) to read a line up to the next `\n`,
 it immediately sees the `\n` character that was left by the previous `std::cin >> age;`.
-Therefore, it interprets this as an empty line and sets `fullName` to be an empty string `""`.
+Therefore, it interprets this as an empty line and sets `full_name` to be an empty string `""`.
 
 The solution to this is another *method* called `ignore`. This method will tell `std::cin` to 
 skip the remaining newline character that was left from the previous operation. Whenever you plan on using `std::getline` after
@@ -193,14 +193,14 @@ a `std::cin >> ...` operation, you should put the method call `std::cin.ignore()
 
 ```cpp title="How to use the ignore method"
 int age;
-std::string fullName;
+std::string full_name;
 
 std::cin >> age;
 
 //highlight-next-line
 std::cin.ignore();
 
-std::getline(std::cin, fullName);
+std::getline(std::cin, full_name);
 ```
 
 

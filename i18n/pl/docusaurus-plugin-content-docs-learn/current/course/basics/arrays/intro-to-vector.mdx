@@ -33,18 +33,18 @@ Nick jest tekstem, który będziemy zapisywać w zmiennej typu [`std::string`](/
 
 int main()
 {
-	std::string playerName1;
-	std::string playerName2;
-	std::string playerName3;
+	std::string player_name1;
+	std::string player_name2;
+	std::string player_name3;
 
 	std::cout << "Podaj nick gracza 1: ";
-	std::cin >> playerName1;
+	std::cin >> player_name1;
 
 	std::cout << "Podaj nick gracza 2: ";
-	std::cin >> playerName2;
+	std::cin >> player_name2;
 
 	std::cout << "Podaj nick gracza 3: ";
-	std::cin >> playerName3;
+	std::cin >> player_name3;
 }
 ```
 
@@ -89,9 +89,9 @@ kandydatów, do zrobienia z nich jednej tablicy.
 Zmienne
 
 ```cpp
-std::string playerName1;
-std::string playerName2;
-std::string playerName3;
+std::string player_name1;
+std::string player_name2;
+std::string player_name3;
 ```
 
 są tego samego typu i różnią się tylko numerkiem.
@@ -109,7 +109,7 @@ Zamiast robić trzy osobne, możemy stworzyć jedną
 int main()
 {
 	// highlight-next-line
-	std::vector< std::string > playerNames(3);
+	std::vector< std::string > player_names(3);
 	// ...
 }
 ```
@@ -136,16 +136,16 @@ Ale co to oznacza "*vector danego typu*"? Należy rozumieć przez to tyle,
 
 Zapis:
 ```cpp
-std::vector< std::string > playerNames(3);
+std::vector< std::string > player_names(3);
 ```
 
-oznacza, że tworzymy *zmienną typu tablicowego* o nazwie `playerNames`,
+oznacza, że tworzymy *zmienną typu tablicowego* o nazwie `player_names`,
 która przechowuje teksty (`std::string`).
 
 Nawias z trójką w środku na końcu tego zapisu:
 
 ```cpp
-playerNames(3)
+player_names(3)
 ```
 
 sprawi, że przy utworzeniu tej tablicy, zostaną utworzone
@@ -163,15 +163,15 @@ z jego indeksu:
 
 int main()
 {
-	std::vector< std::string > playerNames(3);
+	std::vector< std::string > player_names(3);
 
 	// Ustawianie nazw graczy:
-	playerNames[0] = "HappyBanana";
-	playerNames[1] = "AngryCrab";
-	playerNames[2] = "SadWolf";
+	player_names[0] = "HappyBanana";
+	player_names[1] = "AngryCrab";
+	player_names[2] = "SadWolf";
 
 	// Wyświetlenie nazw graczy:
-	std::cout << "Gracz 0 ma nick: " << playerNames[0];
+	std::cout << "Gracz 0 ma nick: " << player_names[0];
 }
 ```
 
@@ -204,27 +204,27 @@ Używamy jej analogicznie jak metod w przypadku `std::string`:
 
 int main()
 {
-	std::vector< std::string > playerNames(3);
+	std::vector< std::string > player_names(3);
 
 	// Ustawianie nazw graczy:
-	playerNames[0] = "HappyBanana";
-	playerNames[1] = "AngryCrab";
-	playerNames[2] = "SadWolf";
+	player_names[0] = "HappyBanana";
+	player_names[1] = "AngryCrab";
+	player_names[2] = "SadWolf";
 
 	// Dodawanie nowego gracza:
 	// highlight-next-line
-	playerNames.push_back("WickedWitch");
+	player_names.push_back("WickedWitch");
 
 	// Wyświetlenie nazw graczy:
-	std::cout << "Gracz 3 ma nick: " << playerNames[3];
+	std::cout << "Gracz 3 ma nick: " << player_names[3];
 }
 ```
 
-Od momentu wywołania `push_back`, tablica `playerNames` ma już cztery elementy.
+Od momentu wywołania `push_back`, tablica `player_names` ma już cztery elementy.
 
 :::important Zakres indeksów
 Zwróć uwagę, że tablica o ilości elementów `N`, zawsze ma indeksy
-od `0` do `N-1` włącznie. Czteroelementowa tablica `playerNames`
+od `0` do `N-1` włącznie. Czteroelementowa tablica `player_names`
 ma indeksy od `0` do `3` włącznie.
 :::
 
@@ -232,7 +232,7 @@ Próba zapisania do tablicy o indeksie `4` spowoduje błąd:
 
 ```cpp title="🔴 Błąd wykonania"
 // error-next-line
-playerNames[4] = "NewPlayer"; // Błąd!
+player_names[4] = "NewPlayer"; // Błąd!
 ```
 
 Powodem jest to, że element o indeksie `4` nie istnieje.
@@ -245,28 +245,28 @@ Aktualny rozmiar tablicy możemy odczytać używając metody `size()`:
 
 ```cpp
 // Ustawianie nazw graczy:
-playerNames[0] = "HappyBanana";
-playerNames[1] = "AngryCrab";
-playerNames[2] = "SadWolf";
+player_names[0] = "HappyBanana";
+player_names[1] = "AngryCrab";
+player_names[2] = "SadWolf";
 
 // highlight-next-line
-std::cout << "Tablica posiada " << playerNames.size() << " elementów\n";
+std::cout << "Tablica posiada " << player_names.size() << " elementów\n";
 
 // Dodawanie nowego gracza:
-playerNames.push_back("WickedWitch");
+player_names.push_back("WickedWitch");
 std::cout << "Dodano nowego gracza.\n";
 // highlight-next-line
-std::cout << "Tablica posiada " << playerNames.size() << " elementów\n";
+std::cout << "Tablica posiada " << player_names.size() << " elementów\n";
 ```
 
 ### Usuwanie elementów
 
 Na tym etapie nauki będziesz musiał/a mi trochę zaufać.
 Nie będę zagłębiał się w szczegóły, bo to na teraz zbyt skomplikowane.
-Aby usunąć `n`-ty element z vectora (np. z `playerNames`), używamy zapisu:
+Aby usunąć `n`-ty element z vectora (np. z `player_names`), używamy zapisu:
 
 ```cpp title="Usuwanie z tablicy"
-playerNames.erase( playerNames.begin() + n );
+player_names.erase( player_names.begin() + n );
 ```
 
 W bardzo dużym uproszczeniu `erase` usuwa konkretny element, ale sam indeks nie wystarczy.
@@ -279,7 +279,7 @@ Możesz zapamiętać to rozróżniając te dwa pojęcia:
 - **pozycja**
 
 Są to dwie różne, ale tematycznie zbliżone rzeczy. Do `erase` podajemy *pozycję*, którą uzyskujemy właśnie
-dodając *indeks* do *pozycji poczatkowej* (`playerNames.begin()`).
+dodając *indeks* do *pozycji poczatkowej* (`player_names.begin()`).
 :::
 
 :::danger Uwaga
@@ -289,9 +289,9 @@ Zanim usuniesz dany element tablicy, upewnij się, że istnieje (czyli jest z za
 int index;
 std::cin >> index;
 
-if (index >= 0 && index < playerNames.size())
+if (index >= 0 && index < player_names.size())
 {
-	playerNames.erase( playerNames.begin() + index );
+	player_names.erase( player_names.begin() + index );
 }
 else
 	std::cout << "Indeks " << index << " nie jest prawidłowy!";
@@ -305,7 +305,7 @@ O pętlach powiemy sobie w przyszłości więcej. Pętla pozwala wykonać ten sa
 kodu wielokrotnie.
 
 ```cpp title="Wyświetlanie elementów"
-for (std::string name : playerNames)
+for (std::string name : player_names)
 {
 	std::cout << "Nick gracza: " << name << '\n';
 }
@@ -314,11 +314,11 @@ for (std::string name : playerNames)
 Żeby to zrozumieć, pokażę Ci jak to "przeczytać":
 
 ```cpp
-for (std::string name : playerNames)
+for (std::string name : player_names)
 ```
 
 > **Dla** <small>(`for`)</small> **każdej nazwy** <small>(`name`)</small> **która jest typu** `std::string`
-> **z tablicy** `playerNames` **wykonuj następujący blok kodu...**
+> **z tablicy** `player_names` **wykonuj następujący blok kodu...**
 
 Wewnątrz tego bloku kodu jest tylko jedna instrukcja:
 
@@ -334,13 +334,13 @@ i wykonywać dla każdego z nich instrukcję wyświetlenia.
 możesz skrócić zapis:
 
 ```cpp
-for (std::string name : playerNames)
+for (std::string name : player_names)
 ```
 
 do
 
 ```cpp
-for (auto name : playerNames)
+for (auto name : player_names)
 ```
 
 wtedy `auto` spowoduje, że typ elementu zostanie wykryty automatycznie.

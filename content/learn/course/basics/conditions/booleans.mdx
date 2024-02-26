@@ -40,22 +40,22 @@ std::cin >> name;
 
 // User is lucky if their name has more than 5 characters
 // highlight-next-line
-bool isLucky = name.size() > 5; 
+bool is_lucky = name.size() > 5; 
 
 // Try changing these values yourself and see what happens!
 // highlight-start
-bool isTuesday = true;
-bool isCloudy = false;
+bool is_tuesday = true;
+bool is_cloudy = false;
 // highlight-end
 
 std::string weather = "sunny";
 
-if (not isTuesday and isCloudy) {
+if (not is_tuesday and is_cloudy) {
 	weather = "raining";
-} else if (isTuesday) {
-	if (isCloudy) {
+} else if (is_tuesday) {
+	if (is_cloudy) {
 		weather = "overcast";
-	} else if (not isLucky) {
+	} else if (not is_lucky) {
 		weather = "downpouring";
 	}
 }
@@ -67,9 +67,9 @@ The [logical operators](/learn/course/basics/conditions/intro/#compound-boolean-
 can also be used to create new boolean variables.
 
 ```cpp title="Using logical operators on bools"
-bool isPrecipitating = weather == "raining" or weather == "downpouring";
-bool isRainbowMade   = isPrecipitating and not isCloudy;
-bool isBoringDay     = not isRainbowMade;
+bool is_precipitating = weather == "raining" or weather == "downpouring";
+bool is_rainbow_made  = is_precipitating and not is_cloudy;
+bool is_boring_day    = not is_rainbow_made;
 ```
 
 ## Input/Output with `bool`

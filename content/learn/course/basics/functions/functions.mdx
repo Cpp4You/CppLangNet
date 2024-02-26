@@ -131,10 +131,10 @@ inside the parentheses
 The above notation
 
 ```cpp
-printEvenNumbers(10);
+print_even_numbers(10);
 ```
 
-means that when called, the `howMany` parameter inside this function
+means that when called, the `how_many` parameter inside this function
 will be assigned the value `10`. We can pass any number of parameters to the function.
 Separate them by commas:
 
@@ -150,14 +150,14 @@ A common mistake among beginners is omitting the type in the following parameter
 <TabItem label="❌ Bad" value="bad" default>
 
 ```cpp
-void printBiggerNumber(int a, b)
+void print_bigger_number(int a, b)
 ```
 
 </TabItem>
 <TabItem label="✔ Good" value="good">
 
 ```cpp
-void printBiggerNumber(int a, int b)
+void print_bigger_number(int a, int b)
 ```
 
 </TabItem>
@@ -175,33 +175,33 @@ return;
 
 Upon encountering it, the program stops executing further instructions in the function
 and returns to the place from which it was called.
-Let's recall the function we created earlier - `printEvenNumbers`
+Let's recall the function we created earlier - `print_even_numbers`
 
 ```cpp
-void printEvenNumbers(int howMany)
+void print_even_numbers(int how_many)
 {
-	for (int i = 0; i < howMany; i++)
+	for (int i = 0; i < how_many; i++)
 		std::cout << (i * 2) << ' ';
 	std::cout << '\n';
 }
 ```
 
-What happens if we pass a negative number to `howMany`?
+What happens if we pass a negative number to `how_many`?
 
 ```cpp
-printEvenNumbers(-10);
+print_even_numbers(-10);
 ```
 
 Executing a function with such a parameter value makes no sense, so we can detect this at
 the very beginning and use the `return`:
 
 ```cpp
-void printEvenNumbers(int howMany)
+void print_even_numbers(int how_many)
 {
-	if (howMany <= 0)
+	if (how_many <= 0)
 		return;
 
-	for (int i = 0; i < howMany; i++)
+	for (int i = 0; i < how_many; i++)
 		std::cout << (i * 2) << ' ';
 	std::cout << '\n';
 }

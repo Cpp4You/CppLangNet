@@ -7,7 +7,7 @@ title: Examples - Functions
 ## Calculate area of a circle
 
 ```cpp
-double areaOfCircle(double radius) {
+double area_of_circle(double radius) {
 	return 3.14159 * radius * radius;
 }
 ```
@@ -17,7 +17,7 @@ double areaOfCircle(double radius) {
 ## Convert Fahrenheit to Celsius
 
 ```cpp
-double fahrenheitToCelsius(double fahrenheit) {
+double fahrenheit_to_celsius(double fahrenheit) {
 	return (fahrenheit - 32) * 5 / 9;
 }
 ```
@@ -74,7 +74,7 @@ double power(double base, int exponent) {
 ## Reverse a string
 
 ```cpp
-std::string reverseString(std::string str) {
+std::string reverse_string(std::string str) {
 	int n = str.length();
 	for (int i = 0; i < n / 2; ++i) {
 		char temp = str[i];
@@ -88,7 +88,7 @@ std::string reverseString(std::string str) {
 ## Check if a string is a palindrome
 
 ```cpp
-bool isPalindrome(std::string str) {
+bool is_palindrome(std::string str) {
 	int n = str.length();
 	for (int i = 0; i < n / 2; ++i) {
 		if (str[i] != str[n - i - 1]) return false;

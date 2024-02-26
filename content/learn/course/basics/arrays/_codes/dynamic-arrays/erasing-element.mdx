@@ -7,22 +7,22 @@ int main()
 {
     using std::vector, std::string, std::cout;
 
-    vector<string> playerNames = {
+    vector<string> player_names = {
 		"HappyBanana",
 		"AngryCrab",
 		"SadWolf",
 	};
 
     // Adding a new player:
-    playerNames.push_back("WickedWitch");
+    player_names.push_back("WickedWitch");
 
-	playerNames.insert(playerNames.begin() + 1, "BadPenguin");
+	player_names.insert(player_names.begin() + 1, "BadPenguin");
 
 	// Erase the first element:
 	// highlight-next-line
-	playerNames.erase(playerNames.begin() + 0);
+	player_names.erase(player_names.begin() + 0);
 
     // Printing the name of player with index 1
-    cout << "Name of the player with index 1: " << playerNames[1];
+    cout << "Name of the player with index 1: " << player_names[1];
 }
 ```

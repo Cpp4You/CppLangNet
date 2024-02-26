@@ -59,9 +59,9 @@ and differ only in number at the end of their name.
 <CustomCodeBlock fullCode={<FullCode_Motivation/>}>
 
 ```cpp
-std::string playerName1;
-std::string playerName2;
-std::string playerName3;
+std::string player_name1;
+std::string player_name2;
+std::string player_name3;
 ```
 
 </CustomCodeBlock>
@@ -85,7 +85,7 @@ that will be stored inside it. All elements in a vector are of the same type.
 int main()
 {
 	// highlight-next-line
-	std::vector<std::string> playerNames(3);
+	std::vector<std::string> player_names(3);
 	// ...
 }
 ```
@@ -101,7 +101,7 @@ int main() {
 	// highlight-next-line
 	using std::vector, std::string;
 
-	vector<string> playerNames(3);
+	vector<string> player_names(3);
 }
 ```
 
@@ -114,45 +114,45 @@ You can add these to the `using` statement too.
 We tell it which type to use by putting it in angle brackets right after `vector`. Like this:
 
 ```cpp title="Using vector with different types"
-vector< int > arrayOfInts;
-vector< float > arrayOfFloats;
-vector< char > arrayOfChars;
-vector< string > arrayOfStrings;
-vector< /*other type*/ > arrayOfXYZ;
+vector< int > array_of_ints;
+vector< float > array_of_floats;
+vector< char > array_of_chars;
+vector< string > array_of_strings;
+vector< /*other type*/ > array_of_xyz;
 ```
 
-This code defines the vector `playerNames` that stores text elements (`std::strings`):
+This code defines the vector `player_names` that stores text elements (`std::strings`):
 
 ```cpp title="Defining a variable of vector type"
-vector<string> playerNames(3);
+vector<string> player_names(3);
 ```
 
-Writing (3) after playerNames makes it so that when it is created it will have room for three elements
+Writing (3) after player_names makes it so that when it is created it will have room for three elements
 of type `string` right from the beginning.
 
 ```cpp title="Storing 3 elements in the vector"
-playerNames(3)
+player_names(3)
 ```
 
 Note that this is a vector-specific thing and not a general rule. If you want to create a vector that is initially empty,
 just don't write the parentheses at all:
 
 ```cpp title="Creating an empty vector"
-vector<string> playerNames;
+vector<string> player_names;
 ```
 
 :::danger Empty parentheses problem
 A mistake that is often made by beginners is to write empty parentheses when creating a vector (or actually any other type):
 
 ```cpp title="This is not defining a variable"
-vector< string > playerNames();
+vector< string > player_names();
 ```
 
 Later in the course you'll learn about **functions**, and the syntax that declares them:
 
 ```cpp title="This is actually a function declaration"
 // prism-push-types:AnyType
-AnyType functionName();
+AnyType function_name();
 ```
 
 This is why the empty parentheses turns this into a function declaration, which is not what we want.
@@ -189,15 +189,15 @@ int main()
 {
 	using std::vector, std::string, std::cout;
 
-	vector<string> playerNames(3);
+	vector<string> player_names(3);
 
 	// Setting names of the players
-	playerNames[0] = "HappyBanana";
-	playerNames[1] = "AngryCrab";
-	playerNames[2] = "SadWolf";
+	player_names[0] = "HappyBanana";
+	player_names[1] = "AngryCrab";
+	player_names[2] = "SadWolf";
 
 	// Printing the name of the first player:
-	cout << "Name of the first player: " << playerNames[0];
+	cout << "Name of the first player: " << player_names[0];
 }
 ```
 
@@ -212,7 +212,7 @@ arrayName[ index ]
 ```
 
 A non-empty array with a number of elements equal to `N` always has indexes  ranging from `0` to `N-1` inclusive.
-The three-element array `playerNames` has indexes `0`, `1` and `2`.
+The three-element array `player_names` has indexes `0`, `1` and `2`.
 
 ### Out of bounds access
 
@@ -221,7 +221,7 @@ If we had tried to rename the player at index `3` the program would most likely 
 
 ```cpp
 // error-next-line
-playerNames[3] = "NewPlayer"; // !
+player_names[3] = "NewPlayer"; // !
 ```
 
 This code will compile correctly (we might get a warning) but when the program is executed it will try to access
@@ -231,7 +231,7 @@ This is called a **buffer overflow** and it is a very serious problem.
 An alternative, safer way of accessing an element is to use the `at()` method:
 
 ```cpp
-playerNames.at( 3 ) = "NewPlayer";
+player_names.at( 3 ) = "NewPlayer";
 ```
 
 The difference is that the `at()` method checks if the index is out of bounds and throws an exception if it is.
@@ -247,13 +247,13 @@ This is how we can ask a user to enter the name of a certain player:
 ```cpp
 cout << "Enter the name of the second player: ";
 // highlight-next-line
-cin >> playerNames[1];
+cin >> player_names[1];
 ```
 
 Now let's output the number of characters in the provided name:
 
 ```cpp
-cout << "The name of the second player has " << playerNames[1].size() << " characters.\n";
+cout << "The name of the second player has " << player_names[1].size() << " characters.\n";
 ```
 
 ```console title="Possible output"
@@ -268,7 +268,7 @@ There is also a way to provide initial values for the elements of the `vector` r
 <CustomCodeBlock fullCode={<FullCode_InitializingVector/>}>
 
 ```cpp
-vector<string> playerNames = {
+vector<string> player_names = {
 	"HappyBanana",
 	"AngryCrab",
 	"SadWolf",
@@ -285,7 +285,7 @@ In the case of initializing a `vector` you can also omit the `=` sign:
 
 ```cpp title="Alternative syntax"
 // highlight-next-line
-vector<string> playerNames { // note the lack of '='
+vector<string> player_names { // note the lack of '='
 	"HappyBanana",
 	"AngryCrab",
 	"SadWolf",
@@ -301,15 +301,15 @@ We will use this method of initialization in the current lesson from now on.
 
 ## Adding elements at the end
 
-To add an item to the end of an array (in this case `playerNames`), we need to use `push_back` like this:
+To add an item to the end of an array (in this case `player_names`), we need to use `push_back` like this:
 <CustomCodeBlock fullCode={<FullCode_AddingElementToArray/>}>
 
 ```cpp
 // highlight-next-line
-playerNames.push_back("WickedWitch");
+player_names.push_back("WickedWitch");
 
 // Printing the name of player with index 3
-cout << "Name of the player with index 3: " << playerNames[3];
+cout << "Name of the player with index 3: " << player_names[3];
 ```
 
 ```console title="Output"
@@ -317,7 +317,7 @@ Name of the player with index 3: WickedWitch
 ```
 </CustomCodeBlock>
 
-From the moment `.push_back(...)` instruction was executed, the `playerNames` array already has four elements.
+From the moment `.push_back(...)` instruction was executed, the `player_names` array already has four elements.
 We say that we are *calling* the `push_back(...)` *method*. We'll talk more about calls and methods in the future.
 For now, just remember that:
 
@@ -359,20 +359,20 @@ To let the user add a new player, we can ask them to enter their name, and then 
 
 ```cpp
 std::cout << "Enter the name of the new player: ";
-std::string newPlayerName;
+std::string new_player_name;
 // highlight-start
-std::cin >> newPlayerName;
-playerNames.push_back(newPlayerName);
+std::cin >> new_player_name;
+player_names.push_back(new_player_name);
 // highlight-end
 ```
 
 ## Inserting elements at a specific position
 
 At this point you will have to trust me a little. I won't go into details because it's too complicated for now.
-To insert **before** index `n` to a vector (in this case `playerNames`) we use the following notation:
+To insert **before** index `n` to a vector (in this case `player_names`) we use the following notation:
 
 ```cpp
-playerNames.insert(playerNames.begin() + n, elementToInsert);
+player_names.insert(player_names.begin() + n, elementToInsert);
 ```
 
 Simply put, `insert` adds an element just before a
@@ -384,7 +384,7 @@ Knowing this, we will now insert a new player just before the `AngryCrab` (index
 <CustomCodeBlock fullCode={<FullCode_InsertingElement />}>
 
 ```cpp
-playerNames.insert(playerNames.begin() + 1, "BadPenguin");
+player_names.insert(player_names.begin() + 1, "BadPenguin");
 ```
 
 </CustomCodeBlock>
@@ -422,10 +422,10 @@ After:
 ## Removing elements
 
 This is a similar case to inserting elements. We need to specify a **position** again.
-So to remove the `n`-th element from a vector (e.g. from `playerNames`) we will use the following notation:
+So to remove the `n`-th element from a vector (e.g. from `player_names`) we will use the following notation:
 
-```cpp title="Erasing n-th element from playerNames"
-playerNames.erase( playerNames.begin() + n );
+```cpp title="Erasing n-th element from player_names"
+player_names.erase( player_names.begin() + n );
 ```
 
 We'll now erase the first player from the array:
@@ -433,13 +433,13 @@ We'll now erase the first player from the array:
 <CustomCodeBlock fullCode={<FullCode_ErasingElement />}>
 
 ```cpp
-playerNames.erase( playerNames.begin() + 0 );
+player_names.erase( player_names.begin() + 0 );
 ```
 
 </CustomCodeBlock>
 
-Note that in this case `+ 0` actually does nothing, but I put it there to make it clear: `playerNames.begin()`
-is the same as `playerNames.begin() + 0`.
+Note that in this case `+ 0` actually does nothing, but I put it there to make it clear: `player_names.begin()`
+is the same as `player_names.begin() + 0`.
 
 The contents of the array before and after the removal:
 
@@ -485,9 +485,9 @@ Before erasing an item from an array, make sure it exists (that is, it's in scop
 int index;
 cin >> index; // don't forget to add using std::cin;
 
-if (index >= 0 && index < playerNames.size())
+if (index >= 0 && index < player_names.size())
 {
-	playerNames.erase( playerNames.begin() + index );
+	player_names.erase( player_names.begin() + index );
 }
 else
 	cout << "Index " << index << " does not exist!";
@@ -500,7 +500,7 @@ else
 To clear the contents of a vector, we can use the [`clear()`](/docs/std/containers/arrays/vector/clear/) method:
 
 ```cpp
-playerNames.clear();
+player_names.clear();
 ```
 
 After the call, the array will be empty.
@@ -513,20 +513,20 @@ it currently contains. The current size can be read using the `size()` method:
 <CustomCodeBlock fullCode={<FullCode_ReadingSize/>}>
 
 ```cpp
-vector<string> playerNames = {
+vector<string> player_names = {
 	"HappyBanana",
 	"AngryCrab",
 	"SadWolf",
 };
 
 // highlight-next-line
-cout << "The array contains " << playerNames.size() << " elements\n";
+cout << "The array contains " << player_names.size() << " elements\n";
 
 // Adding a new player:
-playerNames.push_back("WickedWitch");
+player_names.push_back("WickedWitch");
 cout << "Added new player.\n";
 // highlight-next-line
-cout << "The array contains " << playerNames.size() << " elements\n";
+cout << "The array contains " << player_names.size() << " elements\n";
 ```
 
 </CustomCodeBlock>
@@ -545,7 +545,7 @@ Then we put the parentheses, and in the case of `.size` we leave them empty.
 To check if a vector is empty, we can use the `empty()` method like this:
 
 ```cpp
-if (playerNames.empty())
+if (player_names.empty())
 	cout << "The array is empty!\n";
 else
 	cout << "The array is not empty!\n";
@@ -562,7 +562,7 @@ piece of code multiple times.
 <CustomCodeBlock fullCode={<FullCode_DisplayingArrayOfPlayerNames/>}>
 
 ```cpp title="Displaying items"
-for (string name : playerNames)
+for (string name : player_names)
 {
 	cout << "Player name: " << name << '\n';
 }
@@ -580,7 +580,7 @@ Player name: WickedWitch
 To understand this, let me show you how to "read" it:
 
 > **For** <small>(`for`)</small> **each player name** <small>(`name`)</small>
-> **which is of a type** `std::string` **in an array** `playerNames` **execute**
+> **which is of a type** `std::string` **in an array** `player_names` **execute**
 > **the following block of code**...
 
 There is only one statement inside this block of code:

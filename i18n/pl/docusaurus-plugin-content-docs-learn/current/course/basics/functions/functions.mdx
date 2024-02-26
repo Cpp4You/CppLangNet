@@ -136,10 +136,10 @@ w środku nawiasów okrągłych:
 Powyższy zapis
 
 ```cpp
-printEvenNumbers(10);
+print_even_numbers(10);
 ```
 
-oznacza, że w momencie wywołania, do parametru `howMany` wewnątrz tej funkcji
+oznacza, że w momencie wywołania, do parametru `how_many` wewnątrz tej funkcji
 zostanie przypisana wartość `10`. Możemy do funkcji przekazywać dowolną liczbę parametrów.
 Oddzielamy je przecinkami:
 
@@ -155,14 +155,14 @@ Częstym błędem wśród początkujących jest pominięcie typu w następnych p
 <TabItem label="❌ Źle" value="bad" default>
 
 ```cpp
-void printBiggerNumber(int a, b)
+void print_bigger_number(int a, b)
 ```
 
 </TabItem>
 <TabItem label="✔ Dobrze" value="good">
 
 ```cpp
-void printBiggerNumber(int a, int b)
+void print_bigger_number(int a, int b)
 ```
 
 </TabItem>
@@ -180,33 +180,33 @@ return;
 
 W momencie jej napotkania, program przestaje wykonywać kolejne instrukcje w funkcji
 i wraca do miejsca, z którego została ona wywołana. Przytoczmy stworzoną przez nas wcześniej
-funkcję `printEvenNumbers`:
+funkcję `print_even_numbers`:
 
 ```cpp
-void printEvenNumbers(int howMany)
+void print_even_numbers(int how_many)
 {
-	for (int i = 0; i < howMany; i++)
+	for (int i = 0; i < how_many; i++)
 		std::cout << (i * 2) << ' ';
 	std::cout << '\n';
 }
 ```
 
-Co się stanie, jeśli podamy ujemną liczbę do `howMany`?
+Co się stanie, jeśli podamy ujemną liczbę do `how_many`?
 
 ```cpp
-printEvenNumbers(-10);
+print_even_numbers(-10);
 ```
 
 Wykonywanie funkcji z taką wartością parametru nie ma sensu, dlatego możemy to już na samym początku
 wychwycić i wykonać powrót:
 
 ```cpp
-void printEvenNumbers(int howMany)
+void print_even_numbers(int how_many)
 {
-	if (howMany <= 0)
+	if (how_many <= 0)
 		return;
 
-	for (int i = 0; i < howMany; i++)
+	for (int i = 0; i < how_many; i++)
 		std::cout << (i * 2) << ' ';
 	std::cout << '\n';
 }

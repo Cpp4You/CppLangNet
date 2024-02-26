@@ -30,10 +30,10 @@ struct Car
 	// highlight-start
 	std::string brand; // marka
 	std::string model;
-	int productionYear; // rok produkcji
+	int production_year; // rok produkcji
 	// highlight-end
 
-	bool isCabrio;
+	bool is_cabrio;
 };
 
 struct Airplane
@@ -41,11 +41,11 @@ struct Airplane
 	// highlight-start
 	std::string brand; // marka
 	std::string model;
-	int productionYear; // rok produkcji
+	int production_year; // rok produkcji
 	// highlight-end
 
-	int enginesNumber; // liczba silników
-	std::string airlinesName; // nazwa linii lotniczych
+	int number_of_engines; // liczba silników
+	std::string airlines_name; // nazwa linii lotniczych
 };
 ```
 
@@ -67,7 +67,7 @@ struct Vehicle
 {
 	std::string brand; // marka
 	std::string model;
-	int productionYear; // rok produkcji
+	int production_year; // rok produkcji
 };
 ```
 
@@ -94,13 +94,13 @@ w ten sposób:
 ```cpp
 struct Car : Vehicle
 {
-	bool isCabrio;
+	bool is_cabrio;
 };
 
 struct Airplane : Vehicle
 {
-	int enginesNumber; // liczba silników
-	std::string airlinesName; // nazwa linii lotniczych
+	int number_of_engines; // liczba silników
+	std::string airlines_name; // nazwa linii lotniczych
 };
 ```
 
@@ -129,15 +129,15 @@ Definicję struktury `Vehicle` musimy umieścić przed definicjami struktur poch
 Powyższy schemat pokazuje, że elementy odziedziczone ze struktury `Vehicle` równierz znajdują
 się w strukturze `Car` i `Airplane`.
 
-Z tego powodu, tworząc samochód wewnątrz kodu, możemy śmiało korzystać z pól `brand`, `model`, `productionYear`,
+Z tego powodu, tworząc samochód wewnątrz kodu, możemy śmiało korzystać z pól `brand`, `model`, `production_year`,
 tak jakby były one bezpośrednio w strukturze `Car`:
 
 ```cpp
 Car ford;
 ford.brand = "Ford";
 ford.model = "Fiesta";
-ford.productionYear = 2010;
-ford.isCabrio = false;
+ford.production_year = 2010;
+ford.is_cabrio = false;
 ```
 
 Analogicznie z samolotem:
@@ -146,9 +146,9 @@ Analogicznie z samolotem:
 Airplane boeing;
 boeing.brand = "Boeing";
 boeing.model = "737";
-boeing.productionYear = 2010;
-boeing.enginesNumber = 2;
-boeing.airlinesName = "Air Canada";
+boeing.production_year = 2010;
+boeing.number_of_engines = 2;
+boeing.airlines_name = "Air Canada";
 ```
 
 <details>
@@ -163,7 +163,7 @@ boeing.airlinesName = "Air Canada";
 ### Dziedziczenie metod
 
 Podobnie jak składowe zmienne, dziedziczone są też metody klasy bazowej. Dodajmy do `Vehicle` metodę
-`completeName()`, która zwróci nam nazwę składającą się z `brand` i `model`:
+`complete_name()`, która zwróci nam nazwę składającą się z `brand` i `model`:
 
 ```cpp
 struct Vehicle
@@ -171,7 +171,7 @@ struct Vehicle
 	// ...
 
 	// highlight-next-line
-	std::string completeName()
+	std::string complete_name()
 	{
 		return brand + " " + model;
 	}
@@ -186,7 +186,7 @@ ford.brand = "Ford";
 ford.model = "Fiesta";
 
 // highlight-next-line
-std::cout << ford.completeName(); // "Ford Fiesta"
+std::cout << ford.complete_name(); // "Ford Fiesta"
 ```
 
 <details>

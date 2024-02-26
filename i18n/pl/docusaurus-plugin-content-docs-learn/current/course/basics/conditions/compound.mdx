@@ -84,12 +84,12 @@ prawa jazdy zależnie od ich wieku, według następujących zasad:
 int main() {
 	std::cout << "Welcome to the Driver's License Oracle 4000\n";
 
-	int yearOfBirth;
+	int year_of_birth;
 	std::cout << "Please enter your year of birth: ";
-	std::cin >> yearOfBirth;
+	std::cin >> year_of_birth;
 
 	// W momencie pisania tej lekcji mamy 2022 rok
-	int age = 2022 - yearOfBirth;
+	int age = 2022 - year_of_birth;
 
 	// highlight-start
 	if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
@@ -137,29 +137,29 @@ ostateczną wiadomość połączoną z utworzoną przez nas zmienną.
 int main() {
 	std::cout << "Welcome to the Driver's License Oracle 4500\n";
 
-	int yearOfBirth;
+	int year_of_birth;
 	std::cout << "Please enter your year of birth: ";
-	std::cin >> yearOfBirth;
+	std::cin >> year_of_birth;
 
 
 	// W momencie pisania tej lekcji mamy 2022 rok
-	int age = 2022 - yearOfBirth;
+	int age = 2022 - year_of_birth;
 
 	// highlight-next-line
-	char licenseClass = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
+	char license_class = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
 
 	if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
-		licenseClass = 'C';
+		license_class = 'C';
 	} else if (age >= 22 and age <= 30) {
-		licenseClass = 'B';
+		license_class = 'B';
 	} else if (age >= 31 and age <= 50) {
-		licenseClass = 'A';
+		license_class = 'A';
 	} else {
 		std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
 	}
 
 	// warning-next-line
-	std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	std::cout << "You can legally get a Class " << license_class << " driver's license\n";
 }
 ```
 
@@ -181,8 +181,8 @@ You can legally get a Class X driver's license
 
 ... co jest błędne! Program wypisuje oba pr zypadki *ponieważ* przneieśliśmy poprawne wyjście poza instrukcję if.
 To co musimy zrobić, to stworzyć kolejną instrukcję if, która sprawdzi czy daliśmy użytkownikowi ważne prawo jazdy czy nie.
-Możemy to łatwo zrobić, dzięki temu, że ustawiliśmy `'X'` jako domyślną wartość `licenseClass`. Oznacza to, że każdy kto
-nie otrzymał prawa jazdy, nadal będzie miał `'X'` jako wartość `licenseClass`, a my możemy to sprawdzić za pomocą warunku.
+Możemy to łatwo zrobić, dzięki temu, że ustawiliśmy `'X'` jako domyślną wartość `license_class`. Oznacza to, że każdy kto
+nie otrzymał prawa jazdy, nadal będzie miał `'X'` jako wartość `license_class`, a my możemy to sprawdzić za pomocą warunku.
 
 ```cpp title="Sprawdzacz Prawo Jazdy 4500"
 #include <iostream>
@@ -190,27 +190,27 @@ nie otrzymał prawa jazdy, nadal będzie miał `'X'` jako wartość `licenseClas
 int main() {
 	std::cout << "Welcome to the Driver's License Oracle 4500\n";
 
-	int yearOfBirth;
+	int year_of_birth;
 	std::cout << "Please enter your year of birth: ";
-	std::cin >> yearOfBirth;
+	std::cin >> year_of_birth;
 
 	// W momencie pisania tej lekcji mamy 2022 rok
-	int age = 2022 - yearOfBirth;
+	int age = 2022 - year_of_birth;
 
-	char licenseClass = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
+	char license_class = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
 
 	if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
-		licenseClass = 'C';
+		license_class = 'C';
 	} else if (age >= 22 and age <= 30) {
-		licenseClass = 'B';
+		license_class = 'B';
 	} else if (age >= 31 and age <= 50) {
-		licenseClass = 'A';
+		license_class = 'A';
 	// highlight-next-line
 	} // Usunęliśmy blok else, aby obsłużyć ten przypadek dalej w ifie
 
 	// highlight-start
-	if (licenseClass != 'X') {
-		std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	if (license_class != 'X') {
+		std::cout << "You can legally get a Class " << license_class << " driver's license\n";
 	} else {
 		std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
 	}
@@ -218,7 +218,7 @@ int main() {
 }
 ```
 
-Stworzyliśmy tutaj nową instrukcję if, która sprawdza czy `licenseClass != 'X'`.
+Stworzyliśmy tutaj nową instrukcję if, która sprawdza czy `license_class != 'X'`.
 Sprawdzamy w niej, czy wydaliśmy użytkownik prawo jazdy, czy nie;
 w zależności od wyniku wypisujemy odpowiednią wiadomość.
 W ten sposób na nowo sprawiliśmy, że te dwa warunki się wzajemnei wykluczają
@@ -293,37 +293,37 @@ osoby z dwoma lub więcej wypadkami nie kwalifikują się na prawo jazdy żadnej
 int main() {
 	std::cout << "Welcome to the Driver's License Oracle 5000\n";
 
-	int yearOfBirth;
+	int year_of_birth;
 	std::cout << "Please enter your year of birth: ";
-	std::cin >> yearOfBirth;
+	std::cin >> year_of_birth;
 
-	int numCrashes;
+	int num_crashes;
 	std::cout << "Please enter the number of crashes you have had: \n";
-	std::cin >> numCrashes;
+	std::cin >> num_crashes;
 
 	// highlight-next-line
-	if (numCrashes < 2) {
+	if (num_crashes < 2) {
 		// W momencie pisania tej lekcji mamy 2022 rok
-		int age = 2022 - yearOfBirth;
+		int age = 2022 - year_of_birth;
 
-		char licenseClass = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
+		char license_class = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
 
 		if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
-			licenseClass = 'C';
+			license_class = 'C';
 		} else if (age >= 22 and age <= 30) {
-			licenseClass = 'B';
+			license_class = 'B';
 		} else if (age >= 31 and age <= 50) {
-			licenseClass = 'A';
+			license_class = 'A';
 		}
 
-		if (licenseClass != 'X') {
-			std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+		if (license_class != 'X') {
+			std::cout << "You can legally get a Class " << license_class << " driver's license\n";
 		} else {
 			std::cout << "You cannot legally get a driver's license because you are not between 18 and 64 years old\n";
 		}
 	// highlight-start
 	} else {
-		std::cout << "You cannot legally get a driver's license because you have " << numCrashes << " accidents\n";
+		std::cout << "You cannot legally get a driver's license because you have " << num_crashes << " accidents\n";
 	}
 	// highlight-end
 }
@@ -345,42 +345,42 @@ aby zastosować zasadę DRY i uprościć nasz kod na potrzeby przyszłej konserw
 int main() {
 	std::cout << "Welcome to the Driver's License Oracle 5500\n";
 
-	int yearOfBirth;
+	int year_of_birth;
 	std::cout << "Please enter your year of birth: ";
-	std::cin >> yearOfBirth;
+	std::cin >> year_of_birth;
 
-	int numCrashes;
+	int num_crashes;
 	std::cout << "Please enter the number of crashes you have had: \n";
-	std::cin >> numCrashes;
+	std::cin >> num_crashes;
 
-	char licenseClass = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
+	char license_class = 'X'; // X jest wybraną wartością reprezentującą, że użytkownik nie dostał prawa jazdy
 	// highlight-next-line
-	std::string illegalReason;
+	std::string illegal_reason;
 
-	if (numCrashes < 2) {
+	if (num_crashes < 2) {
 		// W momencie pisania tej lekcji mamy 2022 rok
-		int age = 2022 - yearOfBirth;
+		int age = 2022 - year_of_birth;
 
 		if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
-			licenseClass = 'C';
+			license_class = 'C';
 		} else if (age >= 22 and age <= 30) {
-			licenseClass = 'B';
+			license_class = 'B';
 		} else if (age >= 31 and age <= 50) {
-			licenseClass = 'A';
+			license_class = 'A';
 		} else {
 			// highlight-next-line
-			illegalReason = "you are not between 18 and 64 years old";
+			illegal_reason = "you are not between 18 and 64 years old";
 		}
 	} else {
 		// highlight-next-line
-		illegalReason = "you have " + std::to_string(numCrashes) + " accidents";
+		illegal_reason = "you have " + std::to_string(num_crashes) + " accidents";
 	}
 
-	if (licenseClass != 'X') {
-		std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	if (license_class != 'X') {
+		std::cout << "You can legally get a Class " << license_class << " driver's license\n";
 	} else {
 		// highlight-next-line
-		std::cout << "You cannot legally get a driver's license because " << illegalReason << "\n";
+		std::cout << "You cannot legally get a driver's license because " << illegal_reason << "\n";
 	}
 }
 ```
@@ -392,5 +392,5 @@ dodać więcej regulacji.
 Po drugie, rozseparowaliśmy kod odpowiedzialny za logikę oraz za wyświetlanie.
 Jeśli przeplatasz wyświetlanie z logiką programu (obliczenia, etc.),
 może to sprawić, że kod stanie się bardzo szybko zagmatwany.
-W naszym programie cała logika do określania `licenseClass` oraz `illegalReason` znajduje się w jednym ifie,
+W naszym programie cała logika do określania `license_class` oraz `illegal_reason` znajduje się w jednym ifie,
 a kdo odpowiedzialny za wyświetlanie wyniku do użytkownika w innym.

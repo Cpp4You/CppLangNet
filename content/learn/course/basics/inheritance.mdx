@@ -27,10 +27,10 @@ struct Car
     // highlight-start
     std::string brand;
     std::string model;
-    int productionYear;
+    int production_year;
     // highlight-end
 
-    bool isCabrio;
+    bool is_cabrio;
 };
 
 struct Airplane
@@ -38,11 +38,11 @@ struct Airplane
     // highlight-start
     std::string brand;
     std::string model;
-    int productionYear;
+    int production_year;
 	// highlight-end
 
-    int enginesNumber;
-    std::string airlinesName;
+    int number_of_engines;
+    std::string airlines_name;
 };
 ```
 
@@ -63,7 +63,7 @@ struct Vehicle
 {
     std::string brand;
     std::string model;
-    int productionYear;
+    int production_year;
 };
 ```
 
@@ -88,13 +88,13 @@ In order to create **derived structres** using inheritance, we have to put the b
 ```cpp
 struct Car : Vehicle
 {
-    bool isCabrio;
+    bool is_cabrio;
 };
 
 struct Airplane : Vehicle
 {
-    int enginesNumber;
-    std::string airlinesName;
+    int number_of_engines;
+    std::string airlines_name;
 }
 ```
 
@@ -117,15 +117,15 @@ We have to place the `Vehicle` definition before the derived structures definiti
 
 The above scheme shows, that properties inherited from `Vehicle` are in both `Car` and `Airplane` structures.
 
-Because of this, when we create a car inside our code, we can use `brand`, `model` and `productionYear` fields as if they were directly in `Car` structure:
+Because of this, when we create a car inside our code, we can use `brand`, `model` and `production_year` fields as if they were directly in `Car` structure:
 
 ```cpp
 // prism-push-types:Car
 Car ford;
 ford.brand = "Ford";
 ford.model = "Fiesta";
-ford.productionYear = 2010;
-ford.isCabrio = false;
+ford.production_year = 2010;
+ford.is_cabrio = false;
 ```
 
 The same applies to the plane:
@@ -135,9 +135,9 @@ The same applies to the plane:
 Airplane boeing;
 boeing.brand = "Boeing";
 boeing.model = "737";
-boeing.productionYear = 2010;
-boeing.enginesNumber = 2;
-boeing.airlinesName = "Air Canada";
+boeing.production_year = 2010;
+boeing.number_of_engines = 2;
+boeing.airlines_name = "Air Canada";
 ```
 
 <details>
@@ -151,14 +151,14 @@ boeing.airlinesName = "Air Canada";
 
 ### Inheriting methods
 
-Just like member variables, methods are also inherited. Let's add `completeName()` method to the `Vehicle` class which will return the name consisiting of `brand` and `model`:
+Just like member variables, methods are also inherited. Let's add `complete_name()` method to the `Vehicle` class which will return the name consisiting of `brand` and `model`:
 
 ```cpp
 struct Vehicle 
 {
     // ... 
 
-    std::string completeName() 
+    std::string complete_name() 
     {
         return brand + " " + model;
     }
@@ -173,7 +173,7 @@ Car ford;
 ford.brand = "Ford";
 ford.model = "Fiesta";
 
-std::cout << ford.completeName(); // "Ford Fiesta"
+std::cout << ford.complete_name(); // "Ford Fiesta"
 ```
 
 <details>

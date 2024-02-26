@@ -19,7 +19,7 @@ Let's say that you have a function that doubles the parameter.
 ```cpp
 #include <iostream>
 
-void doubleNumber(int num) 
+void double_number(int num) 
 {
     num = num * 2;
 }
@@ -27,7 +27,7 @@ void doubleNumber(int num)
 int main()
 {
     int x = 5;
-    doubleNumber(x); 
+    double_number(x); 
     std::cout << x;
 }
 ```
@@ -72,7 +72,7 @@ We just need to make the function take a `int reference` instead of `int`.
 ```cpp
 #include <iostream>
 
-void doubleNumber(int &num) 
+void double_number(int &num) 
 {
     num = num * 2;
 }
@@ -80,7 +80,7 @@ void doubleNumber(int &num)
 int main()
 {
     int x = 5;
-    doubleNumber(x);
+    double_number(x);
 }
 ```
 
@@ -95,7 +95,7 @@ int main()
 </div>
 </Columns>
 
-Now the the function `doubleNumber` takes a reference,
+Now the the function `double_number` takes a reference,
 `num` will become whatever variable is passed into the function.
 This means when we modify num (which has become `x`), we also indirectly modify `x`.
 
