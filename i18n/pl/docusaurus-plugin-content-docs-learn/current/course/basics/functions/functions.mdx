@@ -103,7 +103,7 @@ Nazywając funkcję przestrzegamy tych samych zasad co przy [nazwach zmiennych](
 W ten sposób mamy już zdefiniowaną funkcję. Oznacza to, że gdy tylko będziemy tego chcieli, możemy
 ją **wywołać**. Robimy to w ten sposób:
 
-```cpp title="🔹 Wywołanie funkcji"
+```cpp title="Wywołanie funkcji"
 print();
 ```
 
@@ -231,11 +231,11 @@ chcemy znać ich rezultat, czyli **wartość zwracaną**.
 
 Wymagane jest, aby określić jakiego typu jest wartość zwracana. Podajemy go **przed** nazwą funkcji, przykładowo:
 
-```cpp title="🔹 Zwracamy liczbę całkowitą" 
+```cpp title="Zwracamy liczbę całkowitą" 
 int sum(int from, int to)
 ```
 
-```cpp title="🔹 Brak zwracanej wartości"
+```cpp title="Brak zwracanej wartości"
 void print(int number)
 ```
 
@@ -269,13 +269,13 @@ int sum(int from, int to)
 
 Zwróconą wartość możemy użyć np. zapisując ją do zmiennej:
 
-```cpp title="🔹 Zapisywanie rezultatu do zmiennej"
+```cpp title="Zapisywanie rezultatu do zmiennej"
 int s = sum(10, 100);
 ```
 
 ... lub użyć w wyrażeniu (np. jako parametr funkcji):
 
-```cpp title="🔹 Używanie rezultatu"
+```cpp title="Używanie rezultatu"
 std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
 ```
 
@@ -748,7 +748,7 @@ Wszystko kompiluje się poprawnie, linkuje się poprawnie i wykonuje się popraw
 
 Weźmy pod lupę taki kod:
 
-```cpp title="🔹 Wiele definicji funkcji"
+```cpp title="Wiele definicji funkcji"
 #include <iostream>
 
 int sum(int from, int to)
@@ -1146,14 +1146,14 @@ error C4716: 'foo': must return a value
 Tak samo jak możemy użyć słówka kluczowego `auto` w przypadku zmiennych, aby typ zmiennej został wydedukowany przez kompilator,
 możemy również zamiast typu zwracanego funkcji dać `auto`, aby typ zwracanej wartości był wydedukowany, np.
 
-```cpp title="🔹 Dedukcja typu zwracanego funkcji"
+```cpp title="Dedukcja typu zwracanego funkcji"
 auto println(std::string msg) {
 	std::cout << msg << '\n';
 }
 ```
 Tutaj typ zwracany zostaje wydedukowany do `void`, bowiem nie zwracamy żadnej wartości.
 
-```cpp title="🔹 Dedukcja typu zwracanego funkcji"
+```cpp title="Dedukcja typu zwracanego funkcji"
 auto clamp(int value, int low, int high) {
 	if(value < low) return low;
 	if(value > high) return high;

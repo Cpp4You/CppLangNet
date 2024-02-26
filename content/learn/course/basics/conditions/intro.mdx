@@ -63,7 +63,7 @@ Continue on and you'll see how we can translate these cases into code.
 
 The simplest form of a condition in C++ is the `if` statement, the basic form of which is as follows:
 
-```cpp title="🔹 Anatomy of an if statement"
+```cpp title="Anatomy of an if statement"
 if (/* boolean condition */) 
 {
 	// The code in here executes only if the condition evaluates to true
@@ -84,7 +84,7 @@ from outside it.
 
 Let's apply this to our Driver's License example by combining the if statement with the cases we previously determined:
 
-```cpp title="🔹 First attempt at using if statements"
+```cpp title="First attempt at using if statements"
 #include <iostream>
 
 int main()
@@ -125,7 +125,7 @@ This means that it is not possible for both cases to be true; only one or the ot
 C++ provides the `else` keyword to delineate mutually exclusive conditions. While the above code
 will work as expected, we can improve it like so:
 
-```cpp title="🔹 Anatomy of an if-else statement"
+```cpp title="Anatomy of an if-else statement"
 if (/* boolean condition */)
 {
 	// The code in here executes only if the condition evalutes to true
@@ -143,7 +143,7 @@ Now we can turn back to our example and see only one condition is necessary,
 as if one is true then the other must be false.
 
 
-```cpp title="🔹 First attempt at using an if-else statement"
+```cpp title="First attempt at using an if-else statement"
 #include <iostream>
 
 int main()
@@ -254,7 +254,7 @@ we need to make a condition that checks whether the user's age is greater than
 or equal to 18. Using the table above, the closest match is `age >= 18`.
 Now we can fill in our `if` statement:
 
-```cpp title="🔹 Driver's License Oracle 2000"
+```cpp title="Driver's License Oracle 2000"
 #include <iostream>
 
 int main()
@@ -350,7 +350,7 @@ that the left/right order here does not matter, meaning that
 `age < 65 and age >= 18` is an equivalent condition.
 
 
-```cpp title="🔹 Driver's License Oracle 3000"
+```cpp title="Driver's License Oracle 3000"
 #include <iostream>
 
 int main()
@@ -409,7 +409,7 @@ Highest priority is on top.
 
 Let's use this to analyze some examples.
 
-```cpp title="🔹 Order of Operations showcase"
+```cpp title="Order of Operations showcase"
 a > 10 and a < 100 or a == 150
 // equivalent to
 (a > 10 and a < 100) or a == 150

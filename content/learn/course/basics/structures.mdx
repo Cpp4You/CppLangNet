@@ -165,14 +165,14 @@ This means that it was created using `Enemy` structure as a formula.
 As mentioned above, it `boss` contains 3 things (fields), i.e. it consists of three variables.
 To get to a specific member of this object, we need to use the following notation:
 
-```cpp title="🔹 Set the name of the boss to 'Ogre'"
+```cpp title="Set the name of the boss to 'Ogre'"
 boss.name = "Ogre";
 ```
 
 We use a dot `.` to refer to the object's field. In the same way, we can e.g.
 modify the enemy's *strength*:
 
-```cpp title="🔹 Modifying the fields of an object"
+```cpp title="Modifying the fields of an object"
 boss.strength	= 50; // I set bosses strength to 50
 
 // Boss enables "fury" skill - strength increases
@@ -183,7 +183,7 @@ boss.health		*= 0.5f;
 
 ... or display information about it:
 
-```cpp title="🔹 Using object fields"
+```cpp title="Using object fields"
 #include <iostream>
 #include <string>
 
@@ -215,7 +215,7 @@ int main()
 Nothing prevents you from creating a function that takes an object of a certain structure
 as a parameter. A good example will be just displaying information about an enemy:
 
-```cpp title="🔹 A function that displays information about an opponent"
+```cpp title="A function that displays information about an opponent"
 void printEnemyInfo(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " has "
@@ -240,7 +240,7 @@ Using the above information, we will create a "game" that will have two opponent
 
 <CustomCodeBlock maxLines={25}>
 
-```cpp title="🔹 A fragment of a game code with an Ogre and a Goblin" showLineNumbers
+```cpp title="A fragment of a game code with an Ogre and a Goblin" showLineNumbers
 #include <iostream>
 #include <string>
 
@@ -290,13 +290,13 @@ int main()
 
 We can put objects inside arrays just like normal variables:
 
-```cpp title="🔹 Vector of enemies"
+```cpp title="Vector of enemies"
 std::vector< Enemy > enemies;
 ```
 
 Below is an example of how to add to such an array:
 
-```cpp title="🔹 Adding objects inside vector"
+```cpp title="Adding objects inside vector"
 // ...
 
 int main()
@@ -354,7 +354,7 @@ you have to do it **manually**!
 To assign a default value to a structure field, we use the usual initialization,
 known for creating variables:
 
-```cpp title="🔹 Default value for 'totalDamage' ⚔"
+```cpp title="Default value for 'totalDamage' ⚔"
 // Creating the structure
 struct Enemy
 {
@@ -403,7 +403,7 @@ int main() {
 </div>
 <div>
 
-```plaintext title="🔹 Result"
+```plaintext title="Result"
 Snake has dealt 0 total damage
 ```
 

@@ -170,14 +170,14 @@ To oznacza, że został stworzony według wzoru `Enemy`.
 Tak jak wyżej wspomniałem, `boss` zawiera w sobie 3 rzeczy (pola) tj. składa się z trzech zmiennych.
 Żeby dostać się do konkretnej składowej tego obiektu, musimy użyć następującego zapisu:
 
-```cpp title="🔹 Ustaw nazwę bossa na 'Ogr'"
+```cpp title="Ustaw nazwę bossa na 'Ogr'"
 boss.name = "Ogr";
 ```
 
 Używamy kropki `.`, do odniesienia się do pola obiektu. W ten sam sposób,
 możemy np. *zmodyfikować siłę wroga*:
 
-```cpp title="🔹 Modyfikowanie pól obiektu"
+```cpp title="Modyfikowanie pól obiektu"
 boss.strength	= 50; // Ustawiam siłę na 50
 
 // Boss włącza tryb "furia" - siła zwiększona
@@ -188,7 +188,7 @@ boss.health		*= 0.5f;
 
 ... lub wyświetlić informacje o nim:
 
-```cpp title="🔹 Korzystanie z pól obiektu"
+```cpp title="Korzystanie z pól obiektu"
 #include <iostream>
 #include <string>
 
@@ -221,7 +221,7 @@ Nic nie stoi na przeszkodzie, żeby stworzyć funkcję,
 która przyjmuje obiekt pewnej struktury jako parametr.
 Dobrym przykładem bedzie właśnie wyświetlanie informacji o wrogu:
 
-```cpp title="🔹 Funkcja wyświetlająca informacje o przeciwniku"
+```cpp title="Funkcja wyświetlająca informacje o przeciwniku"
 void printEnemyInfo(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " posiada "
@@ -250,7 +250,7 @@ która będzie posiadała dwóch przeciwników:
 
 <CustomCodeBlock maxLines={25}>
 
-```cpp title="🔹 Fragment gry z Ogrem i Goblinem" showLineNumbers
+```cpp title="Fragment gry z Ogrem i Goblinem" showLineNumbers
 #include <iostream>
 #include <string>
 
@@ -300,13 +300,13 @@ int main()
 
 Obiekty możemy umieszczać wewnątrz tablic tak samo jak normalne zmienne:
 
-```cpp title="🔹 Tablica przeciwników"
+```cpp title="Tablica przeciwników"
 std::vector< Enemy > enemies;
 ```
 
 Poniżej przykład jak dodawać do takiej tablicy:
 
-```cpp title="🔹 Wykorzystanie tablicy"
+```cpp title="Wykorzystanie tablicy"
 // ...
 
 int main()
@@ -368,7 +368,7 @@ to nie oznacza to, że `numberOfWheels` na początku otrzyma wartość `0`, musi
 używamy zwykłej inicjalizacji, znaną z tworzenia zmiennych:
 
 
-```cpp title="🔹 Domyślna wartość dla 'totalDamage' ⚔"
+```cpp title="Domyślna wartość dla 'totalDamage' ⚔"
 /// Utworzenie struktury
 struct Enemy
 {
@@ -416,7 +416,7 @@ int main() {
 </div>
 <div>
 
-```plaintext title="🔹 Wynik"
+```plaintext title="Wynik"
 Wąż zadał łącznie 0 obrażeń
 ```
 

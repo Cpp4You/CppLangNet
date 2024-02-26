@@ -113,7 +113,7 @@ You can add these to the `using` statement too.
 **vector** is a *template*, which means that it can be used with different types.
 We tell it which type to use by putting it in angle brackets right after `vector`. Like this:
 
-```cpp title="🔹 Using vector with different types"
+```cpp title="Using vector with different types"
 vector< int > arrayOfInts;
 vector< float > arrayOfFloats;
 vector< char > arrayOfChars;
@@ -481,7 +481,7 @@ empty space left after an element is removed.
 :::danger
 Before erasing an item from an array, make sure it exists (that is, it's in scope `[0, N)`).
 
-```cpp title="🔹 Deleting n-th element from an array (safe)"
+```cpp title="Deleting n-th element from an array (safe)"
 int index;
 cin >> index; // don't forget to add using std::cin;
 
@@ -561,7 +561,7 @@ piece of code multiple times.
 
 <CustomCodeBlock fullCode={<FullCode_DisplayingArrayOfPlayerNames/>}>
 
-```cpp title="🔹 Displaying items"
+```cpp title="Displaying items"
 for (string name : playerNames)
 {
 	cout << "Player name: " << name << '\n';

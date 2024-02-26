@@ -197,7 +197,7 @@ Na ten moment nasza tablica ma 3 elementy, o indeksach `0`, `1` i `2`:
 Aby dodać kolejny element do tablicy, musimy skorzystać z metody `push_back`.
 Używamy jej analogicznie jak metod w przypadku `std::string`:
 
-```cpp title="🔹 Dodawanie elementu do tablicy"
+```cpp title="Dodawanie elementu do tablicy"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -265,7 +265,7 @@ Na tym etapie nauki będziesz musiał/a mi trochę zaufać.
 Nie będę zagłębiał się w szczegóły, bo to na teraz zbyt skomplikowane.
 Aby usunąć `n`-ty element z vectora (np. z `playerNames`), używamy zapisu:
 
-```cpp title="🔹 Usuwanie z tablicy"
+```cpp title="Usuwanie z tablicy"
 playerNames.erase( playerNames.begin() + n );
 ```
 
@@ -285,7 +285,7 @@ dodając *indeks* do *pozycji poczatkowej* (`playerNames.begin()`).
 :::danger Uwaga
 Zanim usuniesz dany element tablicy, upewnij się, że istnieje (czyli jest z zakresu `[0, N)`).
 
-```cpp title="🔹 Usuwanie z tablicy (zabezpieczone)"
+```cpp title="Usuwanie z tablicy (zabezpieczone)"
 int index;
 std::cin >> index;
 
@@ -304,7 +304,7 @@ Jeśli chcemy wyświetlić **wszystkie** elementy tablicy, bedziemy musieli uży
 O pętlach powiemy sobie w przyszłości więcej. Pętla pozwala wykonać ten sam fragment
 kodu wielokrotnie.
 
-```cpp title="🔹 Wyświetlanie elementów"
+```cpp title="Wyświetlanie elementów"
 for (std::string name : playerNames)
 {
 	std::cout << "Nick gracza: " << name << '\n';

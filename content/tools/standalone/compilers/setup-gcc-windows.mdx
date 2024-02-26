@@ -84,7 +84,7 @@ After installation, start the MSYS2 console through the start bar menu for the p
 Enter the following commands on it:
 
 
-```sh title="🔹 1. Updating the package database"
+```sh title="1. Updating the package database"
 pacman -Syu
 ```
 
@@ -103,7 +103,7 @@ Then type `Y` again when this information appears:
 
 **Please reopen the `MSYS2 MSYS` console**
 
-```sh title="🔹 2. Base packages update"
+```sh title="2. Base packages update"
 pacman -Su
 ```
 
@@ -115,7 +115,7 @@ Again, the question we confirm with `Y`:
 
 And we enter the command that will allow us to install MinGW-w64
 
-```sh title="🔹 3. Installing MinGW-w64 packages"
+```sh title="3. Installing MinGW-w64 packages"
 pacman -S --needed base-devel mingw-w64-x86_64-toolchain
 ```
 
@@ -135,7 +135,7 @@ Enter the numbers of the packages marked in green:
 
 In my case:
 
-```sh title="🔹 4. Installed package numbers"
+```sh title="4. Installed package numbers"
 1 2 3 7 9 10 11 13 14 15 16 17 18 19
 ```
 
@@ -210,7 +210,7 @@ and pressing "Open the Powershell window here".
 
 Enter the following command:
 
-```sh title="🔹 Compile & run command"
+```sh title="Compile & run command"
 g++ Main.cpp -std=c++20 && .\a
 ```
 

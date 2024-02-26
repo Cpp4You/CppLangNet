@@ -28,7 +28,7 @@ Learning basic text storage and manipulation is crucial to making functional app
 The world runs on text. Variables that can store text turn out to quite useful because of this.
 Consider a program which reads the user's name, then greets them with the number of characters in their name.
 
-```cpp title="🔹 Program that loads a name"
+```cpp title="Program that loads a name"
 #include <iostream>
 // highlight-next-line
 #include <string>
@@ -76,7 +76,7 @@ std::string text;
 Assigning the initial value is the same as for variables of other types,
 but note that text is specified between **double quotes**, not single quotes:
 
-```cpp title="🔹 Initializing and outputting a string variable"
+```cpp title="Initializing and outputting a string variable"
 std::string welcome = "Hello, World!";
 std::cout << welcome;
 ```
@@ -90,7 +90,7 @@ and printing it to the console will show nothing.
 
 We can display the strings using `std::cout` and load them using `std::cin`.
 
-```cpp title="🔹 A welcome message"
+```cpp title="A welcome message"
 #include <iostream>
 #include <string>
 
@@ -107,7 +107,7 @@ Note that `std::cin` takes the input text until it encounters the first whitespa
 Because of this, if we enter our first and last name, only the first name will go into the `name` variable.
 To get the whole line of text, you can use `std::getline`:
 
-```cpp title="🔹 Reading a whole line of text"
+```cpp title="Reading a whole line of text"
 std::string fullName;
 std::getline(std::cin, fullName);
 ```
@@ -125,7 +125,7 @@ Consider the following abridged example with an input of `Dwayne Johnson`:
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Concatenation and Appending"
+```cpp title="Concatenation and Appending"
 std::string firstName;
 std::string lastName;
 
@@ -168,7 +168,7 @@ Let's see how to use the `size` method in practice. Consider the following examp
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Program that counts the size of a name"
+```cpp title="Program that counts the size of a name"
 #include <iostream>
 #include <string>
 
@@ -200,7 +200,7 @@ but you will see them later in the Functions and Methods lessons; just remember 
 
 Just to reiterate, we specify the variable (`name`), then we write `size` after the period and then **empty** round brackets:
 
-```cpp title="🔹 Calling the size method"
+```cpp title="Calling the size method"
 name.size()
 ```
 

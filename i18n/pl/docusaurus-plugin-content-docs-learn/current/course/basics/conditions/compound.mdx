@@ -26,7 +26,7 @@ Możemy skutecznie radzić sobie z taką sytuacją dzięki nowej koncepcji: inst
 
 ## Złożona instrukcja warunkowa
 
-```cpp title="🔹 Anatomia instrukcji if/else if/else"
+```cpp title="Anatomia instrukcji if/else if/else"
 if (/* warunek logiczny */)
 {
 	// Kod w środku wykonuje się tylko wtedy, gdy warunek jest prawdziwy
@@ -78,7 +78,7 @@ prawa jazdy zależnie od ich wieku, według następujących zasad:
 - Kierowcy w wieku od `51` od `64` dostaną prawo jazdy klasy C
 - Kierowcy poza tymi zakresami nie mogą dostać prawa jazdy
 
-```cpp title="🔹 Sprawdzacz Prawo Jazdy 4000"
+```cpp title="Sprawdzacz Prawo Jazdy 4000"
 #include <iostream>
 
 int main() {
@@ -184,7 +184,7 @@ To co musimy zrobić, to stworzyć kolejną instrukcję if, która sprawdzi czy 
 Możemy to łatwo zrobić, dzięki temu, że ustawiliśmy `'X'` jako domyślną wartość `licenseClass`. Oznacza to, że każdy kto
 nie otrzymał prawa jazdy, nadal będzie miał `'X'` jako wartość `licenseClass`, a my możemy to sprawdzić za pomocą warunku.
 
-```cpp title="🔹 Sprawdzacz Prawo Jazdy 4500"
+```cpp title="Sprawdzacz Prawo Jazdy 4500"
 #include <iostream>
 
 int main() {
@@ -233,7 +233,7 @@ Wnętrze bloków `if/else if/else` nie jest w żaden sposób specjalne. Można d
 tak samo jak do bloku `main`. Oznacza to, że możemy "zagnieżdżać" w sobie instrukcje warunkowe, poprzez wpisanie
 jednej w drugą.
 
-```cpp title="🔹 Przykład zagnieżdżonej instrukcji if"
+```cpp title="Przykład zagnieżdżonej instrukcji if"
 if (/* Warunek 1 */) {
 	// Kod tutaj wykona się, jeśli Warunek 1 jest prawdziwy
 
@@ -287,7 +287,7 @@ Wykorzystajmy tę wiedzę, aby jeszcze bardziej ulepszyć nasz program:
 Rada Nadzorcza Bezpieczeństwa Transportu wydała nowy wymóg:
 osoby z dwoma lub więcej wypadkami nie kwalifikują się na prawo jazdy żadnej klasy bez względu na wiek.
 
-```cpp title="🔹 Sprawdzacz Prawo Jazdy 5000"
+```cpp title="Sprawdzacz Prawo Jazdy 5000"
 #include <iostream>
 
 int main() {
@@ -339,7 +339,7 @@ aby zastosować zasadę DRY i uprościć nasz kod na potrzeby przyszłej konserw
 
 #### Ponownie zastosowanie zasady DRY
 
-```cpp title="🔹 Sprawdzacz Prawo Jazdy 5500"
+```cpp title="Sprawdzacz Prawo Jazdy 5500"
 #include <iostream>
 
 int main() {

@@ -28,7 +28,7 @@ Poznanie podstawowych zasad przechowywania tekstu i manipulacji nim jest kluczow
 Zmienne typu tekstowego są bardzo przydatne. Przykładem niech będzie program, który
 wczytuje imie użytkownika, po czym wita go podając ilość znaków w jego imieniu.
 
-```cpp title="🔹 Program wczytujący imie"
+```cpp title="Program wczytujący imie"
 #include <iostream>
 // highlight-next-line
 #include <string>
@@ -66,7 +66,7 @@ w ten sam sposób co wcześniej `iostream`:
 Typu `std::string` używamy tak jak każdego innego.
 Tutaj deklarujemy dwie zmienne - jedną o typie `int` oraz jedną o typie `std::string`.
 
-```cpp title="🔹 Używanie typu string"
+```cpp title="Używanie typu string"
 int number;
 std::string text;
 ```
@@ -76,7 +76,7 @@ std::string text;
 Przypisanie początkowej wartości wygląda tak samo jak w przypadku zmiennych o innych typach,
 przy czym należy pamiętać, że **tekst podajemy między cudzysłowami**, nie pojedynczymi apostrofami:
 
-```cpp title="🔹 Inicjalizacja i wypisanie zmiennej typu string"
+```cpp title="Inicjalizacja i wypisanie zmiennej typu string"
 std::string welcome = "Hello, World!";
 std::cout << welcome;
 ```
@@ -90,7 +90,7 @@ Jego długość będzie wynosić 0, a po wypisaniu na konsolę nie zobaczymy nic
 
 Napisy możemy wyświetlać za pomocą `std::cout` oraz wczytywać za pomocą `std::cin`.
 
-```cpp title="🔹 Wczytanie imienia i powitanie"
+```cpp title="Wczytanie imienia i powitanie"
 #include <iostream>
 #include <string>
 
@@ -107,7 +107,7 @@ Zauważ, że `std::cin` pobiera tekst do napotkania pierwszego białego znaku, c
 Przez to, jeśli podamy swoje imię i nazwisko to do zmiennej `name` trafi jedynie imię.
 Aby pobrać całą linię możemy użyć `std::getline`:
 
-```cpp title="🔹 Wczytywanie całej linii tekstu"
+```cpp title="Wczytywanie całej linii tekstu"
 std::string fullName;
 std::getline(std::cin, fullName);
 ```
@@ -125,7 +125,7 @@ Rozważmy następujący skrócony przykład z wejściem `Dwayne Johnson`:
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Konkatenacja i dołączanie"
+```cpp title="Konkatenacja i dołączanie"
 std::string firstName;
 std::string lastName;
 
@@ -168,7 +168,7 @@ Zobaczmy jak wykorzystać metodę `size` w praktyce. Rozważmy następujący prz
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Program liczący długość imienia"
+```cpp title="Program liczący długość imienia"
 #include <iostream>
 #include <string>
 
@@ -204,7 +204,7 @@ Te pojęcia nie są teraz kluczowe do zapamiętania, ale zobaczysz je później 
 
 Dla przypomnienia, określamy zmienną (`name`), następnie piszemy `size` po kropce, a potem **puste** nawiasy okrągłe:
 
-```cpp title="🔹 Wywołanie metody size"
+```cpp title="Wywołanie metody size"
 name.size()
 ```
 

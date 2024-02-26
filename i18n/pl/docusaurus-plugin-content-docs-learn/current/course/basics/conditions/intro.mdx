@@ -66,7 +66,7 @@ Teraz zobaczmy jak możemy przełożyć te przypadki na kod.
 
 Najprostszą formą warunku w C++ jest instrukcja `if`, której podstawowa forma wygląda następująco:
 
-```cpp title="🔹 Anatomia instrukcji if"
+```cpp title="Anatomia instrukcji if"
 if (/* warunek logiczny */)
 {
 	// Kod w środku wykonuje się tylko wtedy, gdy warunek jest prawdziwy
@@ -86,7 +86,7 @@ spoza niego.
 
 Zastosujmy to do naszego przykładu z prawem jazdy, łącząc instrukcję if z przypadkami, które wcześniej ustaliliśmy:
 
-```cpp title="🔹 Pierwsza próba użycia instrukcji if"
+```cpp title="Pierwsza próba użycia instrukcji if"
 #include <iostream>
 
 int main()
@@ -127,7 +127,7 @@ Oznacza to, że nie jest możliwe, aby oba przypadki były prawdziwe na raz; tyl
 W C++ mamy słowo kluczowe `else`, które służy do definiowania wzajemnie wykluczających się warunków.
 Podczas gdy powyższy kod będzie działał zgodnie z oczekiwaniami, możemy go ulepszyć w następujący sposób:
 
-```cpp title="🔹 Anatomia instrukcji if-else"
+```cpp title="Anatomia instrukcji if-else"
 if (/* warunek logiczny */)
 {
 	// Kod w środku wykonuje się tylko wtedy, gdy warunek jest prawdziwy
@@ -146,7 +146,7 @@ wzajemnie wykluczący się warunki.
 Teraz możemy wrócić do naszego przykładu i zobaczyć, że tylko jeden warunek jest konieczny,
 ponieważ jeśli jeden jest prawdziwy, to drugi musi być fałszywy.
 
-```cpp title="🔹 Pierwsza próba użycia instrukcji if-else"
+```cpp title="Pierwsza próba użycia instrukcji if-else"
 #include <iostream>
 
 int main()
@@ -257,7 +257,7 @@ musimy stworzyć warunek, który sprawdzi, czy wiek użytkownika jest większy n
 lub równy 18. Korzystając z powyższej tabeli, najbliższym dopasowaniem jest `age >= 18`.
 Zapiszmy więc ten warunek:
 
-```cpp title="🔹 Sprawdzacz Prawo Jazdy 2000"
+```cpp title="Sprawdzacz Prawo Jazdy 2000"
 #include <iostream>
 
 int main()
@@ -357,7 +357,7 @@ Zauważ że kolejność lewo/prawo nie ma tutaj znaczenia, co oznacza, że
 `age < 65 and age >= 18` jest warunkiem równoważnym.
 
 
-```cpp title="🔹 Sprawdzacz Prawo Jazdy 3000"
+```cpp title="Sprawdzacz Prawo Jazdy 3000"
 #include <iostream>
 
 int main()
@@ -425,7 +425,7 @@ Służy on do zapamiętania poprawnej kolejności podstawowych operacji matematy
 
 Użyjmy tej tabelki do przeanalizowania następujących przykładów:
 
-```cpp title="🔹 Priorytet Operacji"
+```cpp title="Priorytet Operacji"
 a > 10 and a < 100 or a == 150
 // równoważne z
 (a > 10 and a < 100) or a == 150

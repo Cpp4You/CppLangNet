@@ -84,7 +84,7 @@ Po instalacji uruchom konsolę MSYS2 przez pasek start, wyszukując frazę `MSYS
 Wpisz na niej następujące komendy:
 
 
-```sh title="🔹 1. Aktualizacja bazy pakietów"
+```sh title="1. Aktualizacja bazy pakietów"
 pacman -Syu
 ```
 
@@ -103,7 +103,7 @@ Następnie wpisz znów `Y`, gdy pojawi się ta informacja:
 
 **Włącz ponownie konsolę `MSYS2 MSYS`**
 
-```sh title="🔹 2. Aktualizacja pakietów bazowych"
+```sh title="2. Aktualizacja pakietów bazowych"
 pacman -Su
 ```
 
@@ -115,7 +115,7 @@ Znów pytanie, które potwierdzamy `Y`:
 
 I wpisujemy komendę, która pozwoli nam zainstalować MinGW-w64
 
-```sh title="🔹 3. Instalacja pakietów MinGW-w64"
+```sh title="3. Instalacja pakietów MinGW-w64"
 pacman -S --needed base-devel mingw-w64-x86_64-toolchain
 ```
 
@@ -135,7 +135,7 @@ Wpisz numery zaznaczonych na zielono pakietów:
 
 Czyli w moim wypadku:
 
-```sh title="🔹 4. Numery instalowanych pakietów"
+```sh title="4. Numery instalowanych pakietów"
 1 2 3 7 9 10 11 13 14 15 16 17 18 19
 ```
 
@@ -211,7 +211,7 @@ i naciśnięcia "Otwórz tutaj okno programu Powershell".
 
 Wpisz następującą komendę:
 
-```sh title="🔹 Kompilacja i uruchomienie"
+```sh title="Kompilacja i uruchomienie"
 g++ Main.cpp -std=c++20 && .\a
 ```
 

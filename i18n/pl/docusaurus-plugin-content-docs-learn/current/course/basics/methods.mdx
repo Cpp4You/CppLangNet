@@ -106,7 +106,7 @@ Tak utworzoną metodę, możemy wywołać na obiekcie, w ten sposób:
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Wywołanie metody accelerate()"
+```cpp title="Wywołanie metody accelerate()"
 // ...
 
 int main()
@@ -142,14 +142,14 @@ podajemy nazwę metody i parametry - tak jak przy wywołaniu zwykłej funkcji.
 <Columns columns={['1fr', '1fr']}>
 <div>
 
-```cpp title="🔸 Wywołanie metody"
+```cpp title="Wywołanie metody"
 obiekt.nazwaMetody(argumenty);
 ```
 
 </div>
 <div>
 
-```cpp title="🔹 Wywołanie funkcji"
+```cpp title="Wywołanie funkcji"
 nazwaFunkcji(argumenty);
 ```
 
@@ -284,7 +284,7 @@ void Car::accelerate()
 Zauważ, że w takim przypadku poprzedzamy nazwę metody nazwą struktury - `Car`,
 oraz podwójnym dwukropkiem - `::`, czyli tzw. operatorem zakresu (ang.: *scope resolution operator*).
 
-```cpp title="🔹 Schemat definicji poza ciałem struktury"
+```cpp title="Schemat definicji poza ciałem struktury"
 typ NazwaStruktury::nazwaMetody(parametry)
 {
 	// ...
@@ -371,7 +371,7 @@ Oczywiście kolejność argumentów podawanych w nawiasie odpowiada kolejnym sk�
 Od C++20 dostajemy również funkcjonalność, która pozwala nam jasno powiedzieć jakie pola chcemy zainicjalizować.
 Pola musimy wymieniać w tej samej kolejności w jakiej są one zadeklarowane w strukturze:
 
-```cpp title="🔹 Użycie designated initializer"
+```cpp title="Użycie designated initializer"
 int main()
 {
 	auto car = Car {
@@ -459,7 +459,7 @@ int main()
 ### Brak typu struktury przy deklarowaniu metody poza nią
 
 Należy pamiętać, że kiedy deklarujemy metodę poza strukturą:
-```cpp title="🔹 Deklaracja metody poza strukturą"
+```cpp title="Deklaracja metody poza strukturą"
 struct Woobledooble {
 	int wooblines;
 	int skadoodle();

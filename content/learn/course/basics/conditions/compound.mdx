@@ -24,7 +24,7 @@ We can effectively deal with this situation by a new concept: the `if/else if/el
 
 ## Compound Conditional Statements
 
-```cpp title="🔹 Anatomy of an if/else if/else statement"
+```cpp title="Anatomy of an if/else if/else statement"
 if (/* boolean condition */) 
 {
 	// The code in here executes only if the condition evaluates to true
@@ -74,7 +74,7 @@ license by their age. The rules are as follows:
 - Drivers between the ages of `51` and `64` inclusive are given a Class C license
 - Drivers outside of these age ranges cannot receive a driver's license.
 
-```cpp title="🔹 Driver's License Oracle 4000"
+```cpp title="Driver's License Oracle 4000"
 #include <iostream>
 
 int main() {
@@ -180,7 +180,7 @@ We can easily do this because of how we set `'X'` to be the default license valu
 did not receive a license will still have an `'X'` as the value of `licenseClass`, and we can check this with a condition.
 
 
-```cpp title="🔹 Driver's License Oracle 4500"
+```cpp title="Driver's License Oracle 4500"
 #include <iostream>
 
 int main() {
@@ -229,7 +229,7 @@ The inside of an if statement is nothing special. You can put any valid executab
 just like how all the code inside the body of `main` is valid executable code. Thus, it should be easy to "nest"
 if statements by putting one inside of the body of another.
 
-```cpp title="🔹 Example of a nested if statement"
+```cpp title="Example of a nested if statement"
 if (/* Condition 1 */) {
 	// Code here gets run if Condition 1 is true
 
@@ -278,7 +278,7 @@ Let's use this new tool to upgrade our Oracle even further:
 The Overseer Council of Transportation Safety has issued a new requirement:
 those with two or more accidents are not eligble for any class license regardless of their age.
 
-```cpp title="🔹 Driver's License Oracle 5000"
+```cpp title="Driver's License Oracle 5000"
 #include <iostream>
 
 int main() {
@@ -330,7 +330,7 @@ to apply the DRY principles and simplify our code for future maintenance. Let's 
 
 #### Applying DRY principles once more
 
-```cpp title="🔹 Driver's License Oracle 5500"
+```cpp title="Driver's License Oracle 5500"
 #include <iostream>
 
 int main() {
