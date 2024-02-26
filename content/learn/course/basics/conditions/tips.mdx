@@ -26,7 +26,7 @@ body of the if statement, and anything else after that is outside of the if stat
 
 This can sometimes make for shorter, slightly easier to read code. For example:
 
-```cpp title="🔹 Omitting the curly brackets"
+```cpp title="Omitting the curly brackets"
 if (A and B)
     std::cout << "They're both true!\n";
 
@@ -182,7 +182,7 @@ a for loop is a single scope, etc. Below are examples of what good and bad inden
 ```cpp
 // The parts of the functions are always unindented
 // While immediately inside the function, it is indented at one level
-bool checkValue(int x) {
+bool check_value(int x) {
     // The parts of the if statement are indented one level 
     // because it is immediately inside the function
     if (x < 50) {
@@ -201,7 +201,7 @@ int main() {
     // The outer parts of this while loop are indented one level
     while (true) {
         // Inside the while loop, we indent another level
-        if (checkValue(value)) {
+        if (check_value(value)) {
             // Inside another scope, so we indent a third level
             std::cout << "You have entered a good value.\n";
             break;
@@ -222,7 +222,7 @@ int main() {
 ```cpp
 
 
-bool checkValue(int x) {
+bool check_value(int x) {
 
 // This if statement should be indentented one
 if (x < 50) {
@@ -241,7 +241,7 @@ return true; // This line is missing two indentations
 
     while (true) {
     // This if statement is missing an indentation level
-    if (checkValue(value)) {
+    if (check_value(value)) {
         std::cout << "You have entered a good value.\n"; break; // Don't put two things on one line
         } // This brace does not line up with what created it
 
@@ -336,20 +336,20 @@ the sad path escapes early. Study this example to see what this may look like:
 ```cpp
 using std::string;
 
-string loginAsAdmin(string user, string pass) {
-    if (not doesUserExist(user)) {
+string login_as_admin(string user, string pass) {
+    if (not does_user_exist(user)) {
         return "User does not exist";
     }
 
-    if (not isPasswordCorrect(user, pass)) {
+    if (not is_password_correct(user, pass)) {
         return "Password is incorrect";
     }
     
-    if (not tryLogin(user, pass)) {
+    if (not try_login(user, pass)) {
         return "Failed to login";
     }
 
-    if (not isAdmin(user)) {
+    if (not is_admin(user)) {
         return "User is not admin";
     }
 
@@ -362,11 +362,11 @@ string loginAsAdmin(string user, string pass) {
 ```cpp
 using std::string;
 
-string loginAsAdmin(string user, string pass) {
-    if (doesUserExist(user)) {
-        if (isPasswordCorrect(user, pass)) {
-            if (tryLogin(user, pass)) {
-                if (isAdmin(user)) {
+string login_as_admin(string user, string pass) {
+    if (does_user_exist(user)) {
+        if (is_password_correct(user, pass)) {
+            if (try_login(user, pass)) {
+                if (is_admin(user)) {
                     return "Success";
                 } else {
                     return "User is not admin";

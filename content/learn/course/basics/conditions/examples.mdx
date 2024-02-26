@@ -17,38 +17,38 @@ This example was developed throughout the entire [Conditions lesson](learn/cours
 int main() {
 	std::cout << "Welcome to the Driver's License Oracle 5500\n";
 
-	int yearOfBirth;
+	int year_of_birth;
 	std::cout << "Please enter your year of birth: ";
-	std::cin >> yearOfBirth;
+	std::cin >> year_of_birth;
 
-	int numCrashes;
+	int num_crashes;
 	std::cout << "Please enter the number of crashes you have had: \n";
-	std::cin >> numCrashes;
+	std::cin >> num_crashes;
 
-	char licenseClass = 'X'; // X is chosen as a default value to signal if we miss one of our cases
-	std::string illegalReason;
+	char license_class = 'X'; // X is chosen as a default value to signal if we miss one of our cases
+	std::string illegal_reason;
 
-	if (numCrashes < 2) {
+	if (num_crashes < 2) {
 		// Year 2022 at the moment of writing this lesson
-		int age = 2022 - yearOfBirth;
+		int age = 2022 - year_of_birth;
 
 		if ((age >= 18 and age <= 21) or (age >= 51 and age <= 64)) {
-			licenseClass = 'C';
+			license_class = 'C';
 		} else if (age >= 22 and age <= 30) {
-			licenseClass = 'B';
+			license_class = 'B';
 		} else if (age >= 31 and age <= 50) {
-			licenseClass = 'A';
+			license_class = 'A';
 		} else {
-			illegalReason = "you are not between 18 and 64 years old";
+			illegal_reason = "you are not between 18 and 64 years old";
 		}
 	} else {
-		illegalReason = "you have " + std::to_string(numCrashes) + " accidents";
+		illegal_reason = "you have " + std::to_string(num_crashes) + " accidents";
 	}
 
-	if (licenseClass != 'X') {
-		std::cout << "You can legally get a Class " << licenseClass << " driver's license\n";
+	if (license_class != 'X') {
+		std::cout << "You can legally get a Class " << license_class << " driver's license\n";
 	} else {
-		std::cout << "You cannot legally get a driver's license because " << illegalReason << "\n";
+		std::cout << "You cannot legally get a driver's license because " << illegal_reason << "\n";
 	}
 }
 ```
@@ -65,11 +65,11 @@ int main() {
     std::cout << "Welcome to the Boolean Logic Calculator!\n"
               << "Please enter two values of either true or false exactly:\n";
     
-    bool inputA;
-    bool inputB;
+    bool input_a;
+    bool input_b;
 
     // Use std::boolalpha to accept input as either "true" or "false"
-    std::cin >> std::boolalpha >> inputA >> inputB;
+    std::cin >> std::boolalpha >> input_a >> input_b;
 
     // Ask for the operation
     std::cout << "\n\nNow enter a logical operation.\n"
@@ -82,17 +82,17 @@ int main() {
     bool result;
 
     if (op == "AND") {
-        result = inputA and inputB;
+        result = input_a and input_b;
     } else if (op == "NAND") {
-        result = not (inputA and inputB);
+        result = not (input_a and input_b);
     } else if (op == "OR") {
-        result = inputA or inputB;
+        result = input_a or input_b;
     } else if (op == "NOR") {
-        result = not (inputA or inputB);
+        result = not (input_a or input_b);
     } else if (op == "XOR") {
-        result = inputA != inputB; // XOR is equivalent to "not equal" for booleans
+        result = input_a != input_b; // XOR is equivalent to "not equal" for booleans
     } else if (op == "XNOR") {
-        result = inputA == inputB; // XNOR is equivalent to "equals" for booleans
+        result = input_a == input_b; // XNOR is equivalent to "equals" for booleans
     } else {
         std::cout << "Error! Invalid choice. Quitting.";
         
@@ -104,7 +104,7 @@ int main() {
     }
 
     std::cout << std::boolalpha; // Set output to show as true/false for booleans
-    std::cout << "\n\nThe answer of " << inputA << " " << op << " " << inputB << " is " << result;
+    std::cout << "\n\nThe answer of " << input_a << " " << op << " " << input_b << " is " << result;
 }
 ```
 
@@ -115,14 +115,14 @@ int main() {
 
 int main() {
     int value1;
-    bool isValue1Even;
+    bool is_value1_even;
 
     std::cout << "Input a number: ";
     std::cin >> value1;
 
     // Compute the parity (even vs odd) of the number
     if (value1 % 2 == 0) {
-        isValue1Even = true;
+        is_value1_even = true;
         
         std::cout << "Your number is even!\n";
         if (value1 == 0) {
@@ -130,7 +130,7 @@ int main() {
             std::cout << "But does zero count as an even number?\n";
         }
     } else {
-        isValue1Even = false;
+        is_value1_even = false;
         std::cout << "Your number is odd!\n";
     }
 
@@ -165,9 +165,9 @@ int main() {
     // Now check for the "special property"
     // Your numbers are special if they are both even and their difference is divisible by seven
     int diff = value1 - value2;
-    bool isValue2Even = value2 % 2 == 0;
+    bool is_value2_even= value2 % 2 == 0;
 
-    if (isValue1Even && isValue2Even && (diff % 7 == 0)) {
+    if (is_value1_even && is_value2_even&& (diff % 7 == 0)) {
         std::cout << "Your numbers are special!";
     }
 }

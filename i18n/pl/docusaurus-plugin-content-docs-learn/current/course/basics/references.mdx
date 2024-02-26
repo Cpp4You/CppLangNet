@@ -30,7 +30,7 @@ Wyobraź sobie, że chcesz napisać funkcję, która podwaja przekazany jej argu
 ```cpp
 #include <iostream>
 
-void doubleNumber(int num) 
+void double_number(int num) 
 {
     num = num * 2;
 }
@@ -38,7 +38,7 @@ void doubleNumber(int num)
 int main()
 {
     int x = 5;
-    doubleNumber(x); 
+    double_number(x); 
     std::cout << x;
 }
 ```
@@ -80,7 +80,7 @@ Musimy sprawić, aby funkcja przyjmowała jako argument `referencję do zmiennej
 ```cpp
 #include <iostream>
 
-void doubleNumber(int &num) 
+void double_number(int &num) 
 {
     num = num * 2;
 }
@@ -88,7 +88,7 @@ void doubleNumber(int &num)
 int main()
 {
     int x = 5;
-    doubleNumber(x);
+    double_number(x);
 }
 ```
 
@@ -102,7 +102,7 @@ int main()
 </div>
 </Columns>
 
-Teraz kiedy funkcja `doubleNumber` przyjmuje referencję, `num` stanie się zmienną przekazaną do funkcji. Oznacza to, że jeśli zmodyfikujemy `num` (który stał się `x`), `x` także ulegnie zmianie.
+Teraz kiedy funkcja `double_number` przyjmuje referencję, `num` stanie się zmienną przekazaną do funkcji. Oznacza to, że jeśli zmodyfikujemy `num` (który stał się `x`), `x` także ulegnie zmianie.
 
 :::note Uwaga
 Zwróć uwagę, że znak `&` przy tworzeniu referencji został umieszczony raz przy nazwie typu (`int&`), a raz przy nazwie zmiennej (`&num`). Oba te zapisy są poprawne i oznaczają to samo.

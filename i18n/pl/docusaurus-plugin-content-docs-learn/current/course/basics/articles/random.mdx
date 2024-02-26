@@ -56,7 +56,7 @@ biblioteki `<random>`. Wtedy z `std::rand` należy zrezygnować.
 
 W tym artykule będziemy korzystać z poniższych nagłówków:
 
-```cpp title="🔹 Potrzebne nagłówki"
+```cpp title="Potrzebne nagłówki"
 #include <cstdlib>
 #include <ctime>
 ```
@@ -66,7 +66,7 @@ Zobaczmy na przykładzie jak z tego się korzysta:
 <Columns columns={['8fr', '4fr']}>
 <div>
 
-```cpp title="🔹 Losowanie 5 liczb"
+```cpp title="Losowanie 5 liczb"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -112,7 +112,7 @@ nieprzewidywalna, co daje złudzenie losowości.
 To z jakich liczb będzie ta sekwencja się składać zależy od tzw. **ziarna** (*ang.: seed*),
 które również jest pewną liczbą. Do ustawiania ziarna służy funkcja:
 
-```cpp title="🔹 Ustawianie ziarna"
+```cpp title="Ustawianie ziarna"
 std::srand( <ziarno> )
 ```
 (od ang. *seed random*)
@@ -126,7 +126,7 @@ Dobrym pomysłem jest ustawianie go **raz, na początku programu**, tak jak w pr
 Za ziarno posłużył nam aktualny czas, w formie liczby, która zwiększa się z każdą sekundą, dlatego
 za każdym uruchomieniem programu dostaniemy inny efekt. Uzyskaliśmy to za pomocą wywołania funkcji:
 
-```cpp title="🔹 Aktualny czas (w sekundach)"
+```cpp title="Aktualny czas (w sekundach)"
 std::time(0)
 ```
 
@@ -146,7 +146,7 @@ przy czym to `RAND_MAX` to pewna stała, zależna od systemu czy kompilatora (ni
 
 To jaką wartość ma `RAND_MAX` można banalnie sprawdzić:
 
-```cpp title="🔹 Sprawdzanie maks. możliwej liczby do uzyskania z rand"
+```cpp title="Sprawdzanie maks. możliwej liczby do uzyskania z rand"
 #include <iostream>
 #include <cstdlib>
 
@@ -210,7 +210,7 @@ tym trochę "pobawić".
 Wystarczy podzielić uzyskaną liczbę, przez `RAND_MAX`, by uzyskać wartość
 z zakresu od `0` do `1`.
 
-```cpp title="🔹 Liczba od 0 do 1"
+```cpp title="Liczba od 0 do 1"
 float randomFloat() {
 	return float( std::rand() ) / RAND_MAX;
 }
@@ -253,7 +253,7 @@ Co musimy zrobić:
 - pomnożyć liczbę `[0; 1]` przez tą długość, by uzyskać zakres `[0; Length]`
 - przesunąć cały zakres o `A`, by uzyskać: `[A; Length + A]`, czyli `[A; B]`
 
-```cpp title="🔹 Liczba rzeczywista w zakresie"
+```cpp title="Liczba rzeczywista w zakresie"
 // Możemy użyć tej samej nazwy, bo mamy
 // inne parametry (przeładowanie funkcji)
 float randomFloat(float from, float to)
@@ -266,7 +266,7 @@ float randomFloat(float from, float to)
 
 lub upraszczając:
 
-```cpp title="🔹 Liczba rzeczywista w zakresie (uproszczone)"
+```cpp title="Liczba rzeczywista w zakresie (uproszczone)"
 float randomFloat(float from, float to)
 {
 	return randomFloat()*(to - from) + from;

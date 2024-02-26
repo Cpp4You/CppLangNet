@@ -10,17 +10,13 @@ hide_title:			true
 
 {/* Components */}
 
-import Columns			from '@site-comps/Columns'
-import GoogleSlides		from '@site-comps/GoogleSlides'
-import CustomCodeBlock	from '@site-comps/CustomCodeBlock'
-import Image			from '@site-comps/Image'
-import Tabs				from '@theme/Tabs';
-import TabItem			from '@theme/TabItem';
-
-{/* Presets */}
-
-import NotFinished		from '@site/i18n/en/presets/NotFinished.mdx';
-import ImproveSection	from '@site/i18n/en/presets/ImproveSection.mdx';
+import Danger           from "@theme/Admonition/Type/Danger";
+import Tabs             from '@theme/Tabs';
+import TabItem          from '@theme/TabItem';
+import Columns          from '@site-comps/Columns'
+import GoogleSlides     from '@site-comps/GoogleSlides'
+import CustomCodeBlock  from '@site-comps/CustomCodeBlock'
+import Image            from '@site-comps/Image'
 
 # Wprowadzenie do zmiennych
 
@@ -33,26 +29,26 @@ działania programu, czyli jak korzystać ze zmiennych.
 który podnosi pewną liczbę do potęgi trzeciej, a następnie ją wyświetla:
 
 <Columns spacing={40} columns={['8fr', '4fr']}>
-<div>
+  <div>
 
-```cpp title="🔹 main.cpp | Potęga trzecia"
-#include <iostream>
+    ```cpp title="main.cpp | Potęga trzecia"
+    #include <iostream>
 
-int main()
-{
-	std::cout << 212 * 212 * 212;
-}
-```
+    int main()
+    {
+      std::cout << 212 * 212 * 212;
+    }
+    ```
 
-</div>
+  </div>
 
-<div>
+  <div>
 
-```plaintext title="Wynik"
-9528128
-```
+    ```plaintext title="Wynik"
+    9528128
+    ```
 
-</div>
+  </div>
 </Columns>
 
 Jeśli teraz będziemy chcieli podnieść do trzeciej potęgi inną liczbę, będziemy
@@ -67,7 +63,7 @@ do potęgi nazywa się `x`. Jak wtedy będzie wyglądał kod?
 #include <iostream>
 int main()
 {
-	std::cout << x * x * x;
+  std::cout << x * x * x;
 }
 ```
 
@@ -78,8 +74,8 @@ Powyższy program na tym etapie, **nie przejdzie etapu kompilacji**, ponieważ k
 #include <iostream>
 int main()
 {
-	int x = 212;
-	std::cout << x * x * x;
+  int x = 212;
+  std::cout << x * x * x;
 }
 ```
 
@@ -100,18 +96,18 @@ int x = 212;
 Oto schemat tego zapisu:
 
 <Tabs>
-	<TabItem value="creation-init" label="🔢 Z wartością" default>
-		<Image center maxheight={250}
-				src="/img/tutorials/course/basic/variables/creation-init-pl.png"
-				alt="Schemat tworzenia zmiennej (z inicjalizacją)"
-			/>
-	</TabItem>
-	<TabItem value="creation" label="⚪ Bez początkowej wartości">
-		<Image center maxheight={250}
-				src="/img/tutorials/course/basic/variables/creation-pl.png"
-				alt="Schemat tworzenia zmiennej (bez inicjalizacji)"
-			/>
-	</TabItem>
+  <TabItem value="creation-init" label="🔢 Z wartością" default>
+    <Image center maxheight={250}
+        src="/img/tutorials/course/basic/variables/creation-init-pl.png"
+        alt="Schemat tworzenia zmiennej (z inicjalizacją)"
+      />
+  </TabItem>
+  <TabItem value="creation" label="⚪ Bez początkowej wartości">
+    <Image center maxheight={250}
+        src="/img/tutorials/course/basic/variables/creation-pl.png"
+        alt="Schemat tworzenia zmiennej (bez inicjalizacji)"
+      />
+  </TabItem>
 </Tabs>
 
 
@@ -149,87 +145,80 @@ Wyżej wymienione typy zmiennych zawsze piszemy **małą literą**. Ma to znacze
 
 #### Przykłady tworzenia zmiennych:
 
-<div style={ {border: "1px solid lightgray", padding: 15 } } >
-
 <Tabs>
-	<TabItem value="int" label={<code>int</code>} default>
+  <TabItem value="int" label={<code>int</code>} default>
 
-```cpp
-// Bez inicjalizacji
-// Zmienna będzie posiadać przypadkową wartość
-int x;
+    ```cpp
+    // Bez inicjalizacji
+    // Zmienna będzie posiadać przypadkową wartość
+    int x;
 
-// Tworzymy zmienną i przypisujemy jej wartość 30
-int y = 30;
-```
+    // Tworzymy zmienną i przypisujemy jej wartość 30
+    int y = 30;
+    ```
 
+  </TabItem>
+  <TabItem value="float" label={<code>float</code>}>
 
-	</TabItem>
-	<TabItem value="float" label={<code>float</code>}>
+    ```cpp
+    // Bez inicjalizacji
+    // Zmienna będzie posiadać przypadkową wartość
+    float x;
 
-```cpp
-// Bez inicjalizacji
-// Zmienna będzie posiadać przypadkową wartość
-float x;
+    // Tworzymy zmienną i przypisujemy jej wartość 30
+    float y = 30;
 
-// Tworzymy zmienną i przypisujemy jej wartość 30
-float y = 30;
+    // Tworzymy zmienną i przypisujemy jej wartość 1.234
+    float z = 1.234f;
+    ```
 
-// Tworzymy zmienną i przypisujemy jej wartość 1.234
-float z = 1.234f;
-```
+    Gdy zmiennej typu `float` przypisujemy wartość z częścią ułamkową,
+    musimy zakończyć tą liczbę znakiem `f`:
+    
+    - ✔ `12.45f`
+    - ❌ `12.45`
 
-:::caution Część ułamkowa
-Gdy zmiennej typu `float` przypisujemy wartość z częścią ułamkową,
-musimy zakończyć tą liczbę znakiem `f`:
-- ✔ `12.45f`
-- ❌ `12.45`
+    Ma to swoje uzasadnienie, ale o tym kiedy indziej.
 
-Ma to swoje uzasadnienie, ale o tym kiedy indziej.
-:::
+  </TabItem>
+  <TabItem value="char" label={<code>char</code>}>
 
-	</TabItem>
-	<TabItem value="char" label={<code>char</code>}>
+    ```cpp
+    // Bez inicjalizacji
+    // Zmienna będzie posiadać przypadkową wartość
+    char x;
 
-```cpp
-// Bez inicjalizacji
-// Zmienna będzie posiadać przypadkową wartość
-char x;
+    // Tworzymy zmienną i przypisujemy jej znak 'j'
+    char y = 'j';
+    ```
 
-// Tworzymy zmienną i przypisujemy jej znak 'j'
-char y = 'j';
-```
+    <Danger title="Znaki">
+      Pojedyncze znaki zapisujemy **zawsze** między <u>pojedynczymi apostrofami</u>.
+      - znak: `'c'`
+      - ciąg znaków, składający się z jednego znaku: `"c"`
 
-:::danger Znaki
-Pojedyncze znaki zapisujemy **zawsze** między <u>pojedynczymi
-apostrofami</u>.
-- znak: `'c'`
-- ciąg znaków, składający się z jednego znaku: `"c"`
+      Zatem:
+      - ✔ `char x = 'c';`
+      - ❌ `char x = "c";`
+    </Danger>
 
-Zatem:
-- ✔ `char x = 'c';`
-- ❌ `char x = "c";`
-:::
+  </TabItem>
+  <TabItem value="bool" label={<code>bool</code>}>
 
-	</TabItem>
-	<TabItem value="bool" label={<code>bool</code>}>
+    ```cpp
+    // Bez inicjalizacji
+    // Zmienna będzie posiadać przypadkową wartość
+    bool x;
 
-```cpp
-// Bez inicjalizacji
-// Zmienna będzie posiadać przypadkową wartość
-bool x;
+    // Tworzymy zmienną i przypisujemy jej wartość "prawda"
+    bool y = true;
 
-// Tworzymy zmienną i przypisujemy jej wartość "prawda"
-bool y = true;
+    // Tworzymy zmienną i przypisujemy jej wartość "fałsz"
+    bool z = false;
+    ```
 
-// Tworzymy zmienną i przypisujemy jej wartość "fałsz"
-bool z = false;
-```
-
-	</TabItem>
+  </TabItem>
 </Tabs>
-
-</div>
 
 ### Nazwa zmiennej
 
@@ -245,11 +234,9 @@ Nazwa może być dowolna, z pewnymi istotnymi ograniczeniami:
 <details>
 <summary>Dodatkowe uwagi na temat podkreślnika </summary>
 <div>
-
-Podkreślniki są dozwolne w nazwach, jednak są dwa schematy nazewnictwa, które są zarezerwowane przez C++:
- - Podkreślnik na początku i duża litera zaraz po (zabronione: ❌ `_Speed`)
- - Podwójny podkreślnik gdziekolwiek: (zabronione: ❌ `__xyz`, ❌ `user__name`)
-
+  Podkreślniki są dozwolne w nazwach, jednak są dwa schematy nazewnictwa, które są zarezerwowane przez C++:
+  - Podkreślnik na początku i duża litera zaraz po (zabronione: ❌ `_Speed`)
+  - Podwójny podkreślnik gdziekolwiek: (zabronione: ❌ `__xyz`, ❌ `user__name`)
 </div>
 </details>
 
@@ -327,11 +314,11 @@ Aby wczytać dane od użytkownika, możemy stworzyć niezainicjializowaną zmie
 
 int main()
 {
-	// highlight-next-line
-	int age; // aktualny wiek (zmienna niezainicjalizowana!)
-	std::cout << "Podaj ile masz lat: ";
-	std::cin >> age;
-	std::cout << "Za 10 lat będziesz mieć: " << age + 10 << " lat.\n";
+  // highlight-next-line
+  int age; // aktualny wiek (zmienna niezainicjalizowana!)
+  std::cout << "Podaj ile masz lat: ";
+  std::cin >> age;
+  std::cout << "Za 10 lat będziesz mieć: " << age + 10 << " lat.\n";
 }
 ```
 
@@ -339,38 +326,38 @@ int main()
 
 Możemy używać zmiennych do reprezentowania wartości pośrednich w złożonych równaniach. Pomaga to uczynić kod bardziej czytelnym i utrzymywalnym.
 
-```cpp title="🔹 main.cpp"
+```cpp title="🗒️ main.cpp"
 #include <iostream>
 
 int main()
 {
-	float currentPos = 10;        // in meters
-	float targetPos = 20;         // in meters 
-	float currentSpeed = 2.5f;    // in meters/second
-	float timeRemaining = 0.5f;   // in seconds
+  float current_pos = 10;        // w metrach
+  float target_pos = 20;         // w metrach
+  float current_speed = 2.5f;    // w metrach na sekundę
+  float time_remaining = 0.5f;   // w sekundach
 
-	// Calculate where we will end up once time runs out
-	// highlight-next-line
-	// Obliczamy końcową pozycję po zakończeniu czasu
-	float endingPos = currentPos + currentSpeed * timeRemaining;
+  // Oblicz końcową pozycję po zakończeniu czasu
+  // highlight-next-line
+  // Obliczamy końcową pozycję po zakończeniu czasu
+  float ending_pos = current_pos + current_speed * time_remaining;
 
-	// Calculate how far away we landed from the target
-	// highlight-next-line
-	// Obliczamy jak daleko od celu się znaleźliśmy
-	float error = targetPos - endingPos;
+  // Oblicz jak daleko od celu się znaleźliśmy
+  // highlight-next-line
+  // Obliczamy jak daleko od celu się znaleźliśmy
+  float error = target_pos - ending_pos;
 
-	// Calculate the required speed needed to land directly on the target
-	// highlight-next-line
-	// Obliczamy prędkość potrzebną do wylądowania idealnie w celu
-	float requiredSpeed = (targetPos - currentPos) / timeRemaining;
+  // Oblicz prędkość potrzebną do wylądowania idealnie w celu
+  // highlight-next-line
+  // Obliczamy prędkość potrzebną do wylądowania idealnie w celu
+  float required_speed = (target_pos - current_pos) / time_remaining;
 
-	// Calculate the amount of extra speed we needed to land directly on the target
-	// highlight-next-line
-	// Obliczamy ile dodatkowej prędkości potrzebowaliśmy, aby wylądować bezpośrednio na celu
-	float extraSpeedNeeded = requiredSpeed - currentSpeed;
+  // Oblicz ile dodatkowej prędkości potrzebowaliśmy, aby wylądować bezpośrednio na celu
+  // highlight-next-line
+  // Obliczamy ile dodatkowej prędkości potrzebowaliśmy, aby wylądować bezpośrednio na celu
+  float extra_speed_needed = required_speed - current_speed;
 
-	std::cout << "We landed " << error << " meters away from the target.\n";
-	std::cout << "We needed to go " << extraSpeedNeeded << "m/s faster to land on the target.";
+  std::cout << "Wylądowaliśmy " << error << " metrów od celu.\n";
+  std::cout << "Musielibyśmy lecieć " << extra_speed_needed << "m/s szybciej, aby wylądować bezpośrednio na celu.";
 }
 ```
 
@@ -389,9 +376,9 @@ Podsumowując, nauczyliśmy się:
 
 ### Brak inicjalizacji
 
-```cpp title="🔹 Przykład"
+```cpp title="Przykład"
 int main() {
-	int x; // brak inicjalizacji
+  int x; // brak inicjalizacji
 }
 ```
 
@@ -413,7 +400,7 @@ Wiele typów zostanie jednak przekonwertowanych automatycznie.
 Możemy na przykład przypisać wartość całkowitą (`int`) do zmiennej typu `float` (liczba rzeczywista).
 Wywołuje to konwersję z `int` na `float`:
 
-```cpp title="🔹 Przykład"
+```cpp title="Przykład"
 float y = 30; // OK
 ```
 

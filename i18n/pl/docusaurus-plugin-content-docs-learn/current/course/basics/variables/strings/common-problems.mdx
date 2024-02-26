@@ -158,16 +158,16 @@ Najprostszym sposobem na naprawienie tego błędu jest połączenie tych litera�
 int main()
 {
 	int age;
-	int fullName;
+	std::string full_name;
 
 	std::cout << "Enter your age: ";
 	std::cin >> age;
 
 	std::cout << "Enter your full name: ";
 	// warning-next-line
-	std::getline(std::cin, fullName); // Ta linia wydaje się nie wykonywać
+	std::getline(std::cin, full_name); // Ta linia wydaje się nie wykonywać
 
-	std::cout << "\nYour name is " << fullName << " and your age is " << age;
+	std::cout << "\nYour name is " << full_name << " and your age is " << age;
 }
 ```
 
@@ -184,21 +184,21 @@ Zrozumienie dlaczego tak się dzieje jest troszkę skomplikowane. Na początek p
 `std::getline` określa koniec tekstu na podstawie znaków nowej lini w tekście.
 Więc kiedy aby funkcja ta próbuje pobrać od nas kolejne dane z `*stdin` aż do napotkania `\n`,
 od razu widzi ona ten znak, który został tam zostawiony przez poprzednie wywołanie `std::cin >> age;`.
-Interpretuje więc ona to jako koniec danych i ustawia `fullName` jako pusty napis `""`.
+Interpretuje więc ona to jako koniec danych i ustawia `full_name` jako pusty napis `""`.
 
 Rozwiązaniem tego problemu jest użyciem kolejnej *metody* - `ignore`.
 Ta metoda mówi `std::cin`, aby ominął on pozostawiony z poprzedniej operacji znak nowej linii.
 
 
 Za każdym razem, kiedy chcesz użyć `std::getline` po użyciu `std::cin`, powinieneś wywołać `std::cin.ignore()` pomiędzy tymi operacjami, jak w tym przykładzie:
-```cpp title="🔹 Jak użyć metody ignore"
+```cpp title="Jak użyć metody ignore"
 int age;
-std::string fullName;
+std::string full_name;
 
 std::cin >> age;
 
 //highlight-next-line
 std::cin.ignore();
 
-std::getline(std::cin, fullName);
+std::getline(std::cin, full_name);
 ```

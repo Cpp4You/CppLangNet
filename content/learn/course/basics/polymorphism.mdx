@@ -54,7 +54,7 @@ One could write a function that handles the player's input and calls the `accele
 
 ```cpp
 // prism-push-types:Vehicle
-void handleAccelerateButton(Vehicle const& vehicle) {
+void handle_accelerate_button(Vehicle const& vehicle) {
 	std::cout << "Handling the accelerate button...\n";
 	vehicle.accelerate();
 }
@@ -68,8 +68,8 @@ for the actual type of vehicle. This means that the player's vehicle will not ac
 Car car;
 Airplane airplane;
 
-handleAccelerateButton(car);
-handleAccelerateButton(airplane);
+handle_accelerate_button(car);
+handle_accelerate_button(airplane);
 ```
 
 ## Virtual functions
@@ -94,7 +94,7 @@ and the base class' function is **not** marked as `virtual`.
 In the earlier example, the type of the object on which we called the `accelerate()` as seen by the compiler was `Vehicle`:
 
 ```cpp
-void handleAccelerateButton(Vehicle const& vehicle)
+void handle_accelerate_button(Vehicle const& vehicle)
 ```
 
 To call the proper implementation, the program has to first determine the exact type of the object, which requires a **dynamic dispatch**.

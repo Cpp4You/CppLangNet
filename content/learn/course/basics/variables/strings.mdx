@@ -28,7 +28,7 @@ Learning basic text storage and manipulation is crucial to making functional app
 The world runs on text. Variables that can store text turn out to quite useful because of this.
 Consider a program which reads the user's name, then greets them with the number of characters in their name.
 
-```cpp title="🔹 Program that loads a name"
+```cpp title="Program that loads a name"
 #include <iostream>
 // highlight-next-line
 #include <string>
@@ -76,7 +76,7 @@ std::string text;
 Assigning the initial value is the same as for variables of other types,
 but note that text is specified between **double quotes**, not single quotes:
 
-```cpp title="🔹 Initializing and outputting a string variable"
+```cpp title="Initializing and outputting a string variable"
 std::string welcome = "Hello, World!";
 std::cout << welcome;
 ```
@@ -90,7 +90,7 @@ and printing it to the console will show nothing.
 
 We can display the strings using `std::cout` and load them using `std::cin`.
 
-```cpp title="🔹 A welcome message"
+```cpp title="A welcome message"
 #include <iostream>
 #include <string>
 
@@ -107,15 +107,15 @@ Note that `std::cin` takes the input text until it encounters the first whitespa
 Because of this, if we enter our first and last name, only the first name will go into the `name` variable.
 To get the whole line of text, you can use `std::getline`:
 
-```cpp title="🔹 Reading a whole line of text"
-std::string fullName;
-std::getline(std::cin, fullName);
+```cpp title="Reading a whole line of text"
+std::string full_name;
+std::getline(std::cin, full_name);
 ```
 
 `std::getline` is a *function* that takes two arguments - an *input stream* to read the line from, and an `std::string` variable to store the line in.
 This example shows how you can use this function to read a line from `std::cin`. 
 So, this function is "called" by putting the name of the function `std::getline`, then parentheses `(...)`, and inside the parentheses the 
-arguments we want to provide `std::cin, fullName`.
+arguments we want to provide `std::cin, full_name`.
 
 ### Combining Strings
 
@@ -125,16 +125,16 @@ Consider the following abridged example with an input of `Dwayne Johnson`:
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Concatenation and Appending"
-std::string firstName;
-std::string lastName;
+```cpp title="Concatenation and Appending"
+std::string first_name;
+std::string last_name;
 
-std::cin >> firstName;
-std::cin >> lastName;
+std::cin >> first_name;
+std::cin >> last_name;
 
 // Concatenation
 // highlight-next-line
-std::string coolName = firstName + " \"The Rock\" " + lastName;
+std::string coolName = first_name + " \"The Rock\" " + last_name;
 std::cout << "Your cool name is:\n" << coolName << "\n\n";
 
 // Appending
@@ -155,7 +155,7 @@ Dwayne "The Rock" Johnson Mk II
 </div>
 </Columns>
 
-Notice how `coolName` is the result of *concatenating* three strings - `firstName`, `"The Rock"`, and `lastName`.
+Notice how `coolName` is the result of *concatenating* three strings - `first_name`, `"The Rock"`, and `last_name`.
 Then, see how we modify `coolName` by *appending* `" Mk II"` to it.
 
 ### Reading the length
@@ -168,7 +168,7 @@ Let's see how to use the `size` method in practice. Consider the following examp
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Program that counts the size of a name"
+```cpp title="Program that counts the size of a name"
 #include <iostream>
 #include <string>
 
@@ -200,7 +200,7 @@ but you will see them later in the Functions and Methods lessons; just remember 
 
 Just to reiterate, we specify the variable (`name`), then we write `size` after the period and then **empty** round brackets:
 
-```cpp title="🔹 Calling the size method"
+```cpp title="Calling the size method"
 name.size()
 ```
 
@@ -262,7 +262,7 @@ To convert from a number type (like `int` or `float`) to string, we need to use 
 
 ```cpp title="✔ Converting a number to a text"
 int number = 53;
-std::string numberInStr	= std::to_string(number);
+std::string number_in_str	= std::to_string(number);
 ```
 
 In the same way, if we have a number stored inside a string, we can
@@ -273,16 +273,16 @@ to `float` type with `std::stof` (_**s**tring **to** **f**loat_):
 <TabItem value="stoi" label="🔵 std::stoi" default>
 
 ```cpp title="Convert std::string to int"
-std::string numberInStr = "53";
-int number = std::stoi(numberInStr);
+std::string number_in_str = "53";
+int number = std::stoi(number_in_str);
 ```
 
 </TabItem>
 <TabItem value="stof" label="🟣 std::stof">
 
 ```cpp title="Convert std::string to float"
-std::string numberInStr = "53.5"; // do not put `f` at the end in the text
-float number = std::stof(numberInStr);
+std::string number_in_str = "53.5"; // do not put `f` at the end in the text
+float number = std::stof(number_in_str);
 ```
 
 </TabItem>

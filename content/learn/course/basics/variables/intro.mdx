@@ -10,12 +10,13 @@ hide_title:			true
 
 {/* Components */}
 
-import Columns			from '@site-comps/Columns'
-import GoogleSlides		from '@site-comps/GoogleSlides'
-import CustomCodeBlock	from '@site-comps/CustomCodeBlock'
-import Image			from '@site-comps/Image'
-import Tabs				from '@theme/Tabs';
-import TabItem			from '@theme/TabItem';
+import Tabs             from '@theme/Tabs';
+import TabItem          from '@theme/TabItem';
+import Danger           from "@theme/Admonition/Type/Danger";
+import Columns          from '@site-comps/Columns'
+import GoogleSlides     from '@site-comps/GoogleSlides'
+import CustomCodeBlock  from '@site-comps/CustomCodeBlock'
+import Image            from '@site-comps/Image'
 
 {/* Presets */}
 
@@ -32,26 +33,25 @@ To understand what they are useful for, let's write a program that raises a numb
 to the third power and then displays it:
 
 <Columns spacing={40} columns={['8fr', '4fr']}>
-<div>
+  <div>
 
-```cpp title="🔹 main.cpp | Power of three"
-#include <iostream>
+    ```cpp title="main.cpp | Power of three"
+    #include <iostream>
 
-int main()
-{
-	std::cout << 212 * 212 * 212;
-}
-```
+    int main()
+    {
+      std::cout << 212 * 212 * 212;
+    }
+    ```
 
-</div>
+  </div>
+  <div>
 
-<div>
+    ```plaintext title="Result (console)"
+    9528128
+    ```
 
-```plaintext title="Result (console)"
-9528128
-```
-
-</div>
+  </div>
 </Columns>
 
 If we now want to raise a different number to the third power, we will have
@@ -68,7 +68,7 @@ What will the code look like then?
 
 int main()
 {
-	std::cout << x * x * x;
+  std::cout << x * x * x;
 }
 ```
 
@@ -80,8 +80,8 @@ we first need to create a **variable** named `x`:
 
 int main()
 {
-	int x = 212;
-	std::cout << x * x * x;
+  int x = 212;
+  std::cout << x * x * x;
 }
 ```
 
@@ -103,18 +103,18 @@ int x = 212;
 ```
 
 <Tabs>
-	<TabItem value="creation-init" label="🔢 With initial value" default>
-		<Image center maxheight={250}
-				src="/img/tutorials/course/basic/variables/creation-init-en.png"
-				alt="Scheme for creating a variable (with initialization)"
-			/>
-	</TabItem>
-	<TabItem value="creation" label="⚪ Without initial value">
-		<Image center maxheight={250}
-				src="/img/tutorials/course/basic/variables/creation-en.png"
-				alt="Scheme for creating a variable (without initialization)"
-			/>
-	</TabItem>
+  <TabItem value="creation-init" label="🔢 With initial value" default>
+    <Image center maxheight={250}
+        src="/img/tutorials/course/basic/variables/creation-init-en.png"
+        alt="Scheme for creating a variable (with initialization)"
+      />
+  </TabItem>
+  <TabItem value="creation" label="⚪ Without initial value">
+    <Image center maxheight={250}
+        src="/img/tutorials/course/basic/variables/creation-en.png"
+        alt="Scheme for creating a variable (without initialization)"
+      />
+  </TabItem>
 </Tabs>
 
 This is an important notation that you'll see very often throughout your programming career.
@@ -123,9 +123,9 @@ In the following sections, we'll explain what different parts of this notation m
 ### Variable type
 
 <Image center maxheight={120} borderRadius={25}
-		src="/img/tutorials/course/basic/variables/creation-type-en.png"
-		alt="Overview of a variable definition - type"
-	/>
+    src="/img/tutorials/course/basic/variables/creation-type-en.png"
+    alt="Overview of a variable definition - type"
+  />
 
 The type of a variable tells you what the variable can store. As mentioned before,
 a variable is a container that holds certain things of a **certain type**.
@@ -150,86 +150,83 @@ The above-mentioned types of variables are always written with **lowercase lette
 #### Examples of creating variables:
 
 <Tabs>
-	<TabItem value="int" label={<code>int</code>} default>
+  <TabItem value="int" label={<code>int</code>} default>
 
-```cpp
-// Without initialization
-// Variable will contain an unpredictable value
-int x;
+    ```cpp
+    // Without initialization
+    // Variable will contain an unpredictable value
+    int x;
 
-// We create a variable and assign the 30 value to it
-int y = 30;
-```
+    // We create a variable and assign the 30 value to it
+    int y = 30;
+    ```
 
+  </TabItem>
+  <TabItem value="float" label={<code>float</code>}>
 
-	</TabItem>
-	<TabItem value="float" label={<code>float</code>}>
+    ```cpp
+    // Without initialization
+    // Variable will contain an unpredictable value
+    float x;
 
-```cpp
-// Without initialization
-// Variable will contain an unpredictable value
-float x;
+    // We create a variable and assign the 30 value to it
+    float y = 30;
 
-// We create a variable and assign the 30 value to it
-float y = 30;
+    // We create a variable and assign the 1.234 value to it
+    float z = 1.234f;
+    ```
+    
+    When we assign a value with a fractional part to a variable of type `float`, we have to put the `f` character at the very end:
 
-// We create a variable and assign the 1.234 value to it
-float z = 1.234f;
-```
+    - ✔ `12.45f`
+    - ❌ `12.45`
 
-When we assign a value with a fractional part to a variable of type `float`, we have to put the `f` character at the very end:
+    This has its justification, but more on that later.
+  </TabItem>
+  <TabItem value="char" label={<code>char</code>}>
+    
+    ```cpp
+    // Without initialization
+    // Variable will contain an unpredictable value
+    char x;
 
-- ✔ `12.45f`
-- ❌ `12.45`
+    // We create a variable and assign the 'j' character to it
+    char y = 'j';
+    ```
 
-This has its justification, but more on that later.
+    <Danger title="Characters">
+      Single characters are **always** written between <u>single quotes</u>.
+      - character: `'c'`
+      - a **string of characters**, consisting of 1 character: `"c"`
 
-	</TabItem>
-	<TabItem value="char" label={<code>char</code>}>
+      Therefore:
+      - ✔ `char x = 'c';`
+      - ❌ `char x = "c";`
+    </Danger>
+  </TabItem>
+  <TabItem value="bool" label={<code>bool</code>}>
 
-```cpp
-// Without initialization
-// Variable will contain an unpredictable value
-char x;
+    ```cpp
+    // Without initialization
+    // Variable will contain an unpredictable value
+    bool x;
 
-// We create a variable and assign the 'j' character to it
-char y = 'j';
-```
+    // We create a variable and assign the "true" value to it
+    bool y = true;
 
-:::danger Characters
-Single characters are **always** written between <u>single quotes</u>.
-- character: `'c'`
-- a **string of characters**, consisting of 1 character: `"c"`
+    // We create a variable and assign the "false" value to it
+    bool z = false;
+    ```
 
-Therefore:
-- ✔ `char x = 'c';`
-- ❌ `char x = "c";`
-:::
-
-	</TabItem>
-	<TabItem value="bool" label={<code>bool</code>}>
-
-```cpp
-// Without initialization
-// Variable will contain an unpredictable value
-bool x;
-
-// We create a variable and assign the "true" value to it
-bool y = true;
-
-// We create a variable and assign the "false" value to it
-bool z = false;
-```
-
-	</TabItem>
+  </TabItem>
 </Tabs>
 
 ### Variable name
 
 <Image center maxheight={120} borderRadius={25}
-		src="/img/tutorials/course/basic/variables/creation-name-en.png"
-		alt="Overview of a variable definition - name"
-	/>
+    src="/img/tutorials/course/basic/variables/creation-name-en.png"
+    alt="Overview of a variable definition - name"
+  />
 
 The name can be anything you want, with some important restrictions:
 
@@ -243,12 +240,10 @@ The name can be anything you want, with some important restrictions:
 <details>
 <summary>Extra notes on underscores</summary>
 <div>
+  While underscores are allowed in names, there are a few instances that are reserved by C++:
 
-While underscores are allowed in names, there are a few instances that are reserved by C++:
-
-- Leading underscores followed by a capital letter (prohibited: ❌ `_Speed`)
-- Double leading underscores (prohibited: ❌ `__xyz`)
-
+  - Leading underscores followed by a capital letter (prohibited: ❌ `_Speed`)
+  - Double leading underscores (prohibited: ❌ `__xyz`)
 </div>
 </details>
 
@@ -324,11 +319,11 @@ To receive user input, we can make an uninitialized variable, then tell C++ to p
 
 int main()
 {
-	// highlight-next-line
-	int age; // current age (note: uninitialized!)
-	std::cout << "Enter your age: ";
-	std::cin >> age;
-	std::cout << "In 10 years you will be: " << age + 10 << " years\n";
+  // highlight-next-line
+  int age; // current age (note: uninitialized!)
+  std::cout << "Enter your age: ";
+  std::cin >> age;
+  std::cout << "In 10 years you will be: " << age + 10 << " years\n";
 }
 ```
 
@@ -336,30 +331,30 @@ int main()
 
 We can use variables to represent intermediate values in complex equations. This helps make the code more readable and maintainable.
 
-```cpp title="🔹 main.cpp"
+```cpp title="🗒️ main.cpp"
 #include <iostream>
 
 int main()
 {
-	float currentPos = 10;        // in meters
-	float targetPos = 20;         // in meters 
-	float currentSpeed = 2.5f;    // in meters/second
-	float timeRemaining = 0.5f;   // in seconds
+  float current_pos = 10;        // in meters
+  float target_pos = 20;         // in meters 
+  float current_speed = 2.5f;    // in meters/second
+  float time_remaining = 0.5f;   // in seconds
 
-	// Calculate where we will end up once time runs out
-	float endingPos = currentPos + currentSpeed * timeRemaining;
-	
-	// Calculate how far away we landed from the target
-	float error = targetPos - endingPos;
+  // Calculate where we will end up once time runs out
+  float ending_pos = current_pos + current_speed * time_remaining;
 
-	// Calculate the required speed needed to land directly on the target
-	float requiredSpeed = (targetPos - currentPos) / timeRemaining;
+  // Calculate how far away we landed from the target
+  float error = target_pos - ending_pos;
 
-	// Calculate the amount of extra speed we needed to land directly on the target
-	float extraSpeedNeeded = requiredSpeed - currentSpeed;
+  // Calculate the required speed needed to land directly on the target
+  float required_speed = (target_pos - current_pos) / time_remaining;
 
-	std::cout << "We landed " << error << " meters away from the target.\n";
-	std::cout << "We needed to go " << extraSpeedNeeded << "m/s faster to land on the target.";
+  // Calculate the amount of extra speed we needed to land directly on the target
+  float extra_speed_needed = required_speed - current_speed;
+
+  std::cout << "We landed " << error << " meters away from the target.\n";
+  std::cout << "We needed to go " << extra_speed_needed << "m/s faster to land on the target.";
 }
 ```
 
@@ -379,9 +374,9 @@ To summarize, we learned:
 
 ### Lack of initialization
 
-```cpp title="🔹 Example"
+```cpp title="Example"
 int main() {
-	int x; // No initializer
+  int x; // No initializer
 }
 ```
 
@@ -400,7 +395,7 @@ automatically if you assign without matching types.
 For example, we can write an integer value (`int`) to a variable of type `float` (a real number).
 This triggers a conversion from `int` to `float`.
 
-```cpp title="🔹 Example"
+```cpp title="Example"
 float y = 30; // OK - 30 is converted to 30.0f
 ```
 

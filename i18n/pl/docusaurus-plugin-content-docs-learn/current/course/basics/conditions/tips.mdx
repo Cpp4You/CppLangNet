@@ -26,7 +26,7 @@ ciele instrukcji if, a wszystko inne po niej jest poza instrukcją if.
 
 Czasem pozwala to pisać prostszy i troszkę czytelniejszy kod. Dla przykładu:
 
-```cpp title="🔹 Omijanie nawiasów klamrowych"
+```cpp title="Omijanie nawiasów klamrowych"
 if (A and B)
     std::cout << "They're both true!\n";
 
@@ -192,7 +192,7 @@ Oba słowa znaczą to samo; "indentacja" to spolszczenie angielskiego słowa *in
 ```cpp
 // Częsci funkcji są zawsze bez wcięć,
 // jednak to co znajduje się w środku ma wcięcia
-bool checkValue(int x) {
+bool check_value(int x) {
     // Częsci instrukcji if są wcięte,
     // ponieważ są wewnątrz funkcji
     if (x < 50) {
@@ -211,7 +211,7 @@ int main() {
     // Części pętli while są wcięte o jeden pozom
     while (true) {
         // Wewnątrz pętli while; dodatkowe wcięcie
-        if (checkValue(value)) {
+        if (check_value(value)) {
             // Wewnątrz dodatkowego zakresu; dodatkowe wcięcie
             std::cout << "You have entered a good value.\n";
             break;
@@ -232,7 +232,7 @@ int main() {
 ```cpp
 
 
-bool checkValue(int x) {
+bool check_value(int x) {
 
 // Ta instrukcja if powinna zostąć wcięta o jedne poziom
 if (x < 50) {
@@ -251,7 +251,7 @@ return true; // Tej linii brakuje dwóch poziomów wcięcia
 
     while (true) {
     // Tej instrukcji if brakuje poziomu wcięcia
-    if (checkValue(value)) {
+    if (check_value(value)) {
         std::cout << "You have entered a good value.\n"; break; // Nie powinniśmy dawać dwóch instrukcji w tej samej linii
         } // Ten nawias nie jest w tej samej kolumnie co instrukcja if do której należy
 
@@ -349,20 +349,20 @@ smutna ścieżka wychodziłą z funkcji wcześniej. Zobacz przykład, aby zobacz
 ```cpp
 using std::string;
 
-string loginAsAdmin(string user, string pass) {
-    if (not doesUserExist(user)) {
+string login_as_admin(string user, string pass) {
+    if (not does_user_exist(user)) {
         return "User does not exist";
     }
 
-    if (not isPasswordCorrect(user, pass)) {
+    if (not is_password_correct(user, pass)) {
         return "Password is incorrect";
     }
 
-    if (not tryLogin(user, pass)) {
+    if (not try_login(user, pass)) {
         return "Failed to login";
     }
 
-    if (not isAdmin(user)) {
+    if (not is_admin(user)) {
         return "User is not admin";
     }
 
@@ -375,11 +375,11 @@ string loginAsAdmin(string user, string pass) {
 ```cpp
 using std::string;
 
-string loginAsAdmin(string user, string pass) {
-    if (doesUserExist(user)) {
-        if (isPasswordCorrect(user, pass)) {
-            if (tryLogin(user, pass)) {
-                if (isAdmin(user)) {
+string login_as_admin(string user, string pass) {
+    if (does_user_exist(user)) {
+        if (is_password_correct(user, pass)) {
+            if (try_login(user, pass)) {
+                if (is_admin(user)) {
                     return "Success";
                 } else {
                     return "User is not admin";

@@ -50,9 +50,9 @@ który przechowuje te informacje, moglibyśmy zrobić to np. tak:
 #include <string>
 
 int main() {
-	std::string	enemyName = "Goblin";
-	float		enemyHealth = 50;
-	float		enemyStrength = 12;
+	std::string	enemy_name = "Goblin";
+	float		enemy_health = 50;
+	float		enemy_strength = 12;
 	// ...
 }
 ```
@@ -63,16 +63,16 @@ a właściwie uniedogodnienie:
 Jeśli skorzystamy w tym celu z wielu tablic:
 
 ```cpp
-std::vector< std::string >	enemyNames;
-std::vector< float >		enemyHealth;
-std::vector< float >		enemyStrength;
+std::vector< std::string >	enemy_names;
+std::vector< float >		enemy_health;
+std::vector< float >		enemy_strength;
 ```
 
 to każdy przeciwnik będzie opisany pod jednakowym indeksem w tych tablicach:
 
-- `enemyNames[ index ]` opisuje nazwę
-- `enemyHealth[ index ]` opisuje punkty życia
-- `enemyStrength[ index ]` opisuje punkty siły
+- `enemy_names[ index ]` opisuje nazwę
+- `enemy_health[ index ]` opisuje punkty życia
+- `enemy_strength[ index ]` opisuje punkty siły
 
 
 :::important Uwaga
@@ -83,9 +83,9 @@ przeciwniku, po wielu tablicach.
 Dodanie jednego wroga do zbioru, w takim programie wyglądałoby tak:
 
 ```cpp
-enemyNames.push_back("Goblin");
-enemyHealth.push_back(50);
-enemyStrength.push_back(10);
+enemy_names.push_back("Goblin");
+enemy_health.push_back(50);
+enemy_strength.push_back(10);
 ```
 
 Im więcej różnych informacji chcemy o przeciwnikach przechować, tym będzie to
@@ -170,14 +170,14 @@ To oznacza, że został stworzony według wzoru `Enemy`.
 Tak jak wyżej wspomniałem, `boss` zawiera w sobie 3 rzeczy (pola) tj. składa się z trzech zmiennych.
 Żeby dostać się do konkretnej składowej tego obiektu, musimy użyć następującego zapisu:
 
-```cpp title="🔹 Ustaw nazwę bossa na 'Ogr'"
+```cpp title="Ustaw nazwę bossa na 'Ogr'"
 boss.name = "Ogr";
 ```
 
 Używamy kropki `.`, do odniesienia się do pola obiektu. W ten sam sposób,
 możemy np. *zmodyfikować siłę wroga*:
 
-```cpp title="🔹 Modyfikowanie pól obiektu"
+```cpp title="Modyfikowanie pól obiektu"
 boss.strength	= 50; // Ustawiam siłę na 50
 
 // Boss włącza tryb "furia" - siła zwiększona
@@ -188,7 +188,7 @@ boss.health		*= 0.5f;
 
 ... lub wyświetlić informacje o nim:
 
-```cpp title="🔹 Korzystanie z pól obiektu"
+```cpp title="Korzystanie z pól obiektu"
 #include <iostream>
 #include <string>
 
@@ -221,8 +221,8 @@ Nic nie stoi na przeszkodzie, żeby stworzyć funkcję,
 która przyjmuje obiekt pewnej struktury jako parametr.
 Dobrym przykładem bedzie właśnie wyświetlanie informacji o wrogu:
 
-```cpp title="🔹 Funkcja wyświetlająca informacje o przeciwniku"
-void printEnemyInfo(Enemy enemy)
+```cpp title="Funkcja wyświetlająca informacje o przeciwniku"
+void print_enemy_info(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " posiada "
 				<< enemy.health		<< " hp i "
@@ -232,7 +232,7 @@ void printEnemyInfo(Enemy enemy)
 ```
 
 :::danger Kolejność
-`printEnemyInfo` wymaga istnienia typu `Enemy` **przed** zdefiniowaniem
+`print_enemy_info` wymaga istnienia typu `Enemy` **przed** zdefiniowaniem
 samej funkcji. Oznacza to, że musimy umieścić funkcję **pod**
 utworzeniem struktury (zobacz przykład niżej).
 :::
@@ -250,7 +250,7 @@ która będzie posiadała dwóch przeciwników:
 
 <CustomCodeBlock maxLines={25}>
 
-```cpp title="🔹 Fragment gry z Ogrem i Goblinem" showLineNumbers
+```cpp title="Fragment gry z Ogrem i Goblinem" showLineNumbers
 #include <iostream>
 #include <string>
 
@@ -263,7 +263,7 @@ struct Enemy
 };
 
 /// Funkcja wyświetlająca informacje o przeciwniku
-void printEnemyInfo(Enemy enemy)
+void print_enemy_info(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " posiada "
 				<< enemy.health		<< " hp i "
@@ -289,8 +289,8 @@ int main()
 	boss.strength	= 50;
 
 	// Wyświetlam informacje o każdym z nich:
-	printEnemyInfo(goblin);
-	printEnemyInfo(boss);
+	print_enemy_info(goblin);
+	print_enemy_info(boss);
 }
 ```
 
@@ -300,13 +300,13 @@ int main()
 
 Obiekty możemy umieszczać wewnątrz tablic tak samo jak normalne zmienne:
 
-```cpp title="🔹 Tablica przeciwników"
+```cpp title="Tablica przeciwników"
 std::vector< Enemy > enemies;
 ```
 
 Poniżej przykład jak dodawać do takiej tablicy:
 
-```cpp title="🔹 Wykorzystanie tablicy"
+```cpp title="Wykorzystanie tablicy"
 // ...
 
 int main()
@@ -332,7 +332,7 @@ int main()
 
 	// Wyświetl wszystkich przeciwników:
 	for (Enemy enemy : enemies)
-		printEnemyInfo(enemy);
+		print_enemy_info(enemy);
 }
 ```
 
@@ -357,18 +357,18 @@ Jeśli pozostawisz pole struktury **bez domyślnej wartości**, np.:
 ```cpp
 struct Car
 {
-	int numberOfWheels; // ilośc kół samochodu
+	int number_of_wheels; // ilośc kół samochodu
 };
 ```
 
-to nie oznacza to, że `numberOfWheels` na początku otrzyma wartość `0`, musisz to zrobić **ręcznie**!
+to nie oznacza to, że `number_of_wheels` na początku otrzyma wartość `0`, musisz to zrobić **ręcznie**!
 :::
 
 Żeby przypisać domyślną wartość do pola struktury
 używamy zwykłej inicjalizacji, znaną z tworzenia zmiennych:
 
 
-```cpp title="🔹 Domyślna wartość dla 'totalDamage' ⚔"
+```cpp title="Domyślna wartość dla 'total_damage' ⚔"
 /// Utworzenie struktury
 struct Enemy
 {
@@ -377,7 +377,7 @@ struct Enemy
 	float		strength;
 
 	// highlight-next-line
-	float		totalDamage = 0; // ilość obrażeń
+	float		total_damage = 0; // ilość obrażeń
 };
 ```
 
@@ -390,7 +390,7 @@ Enemy snake; // np. wąż
 to wartość
 
 ```cpp
-snake.totalDamage
+snake.total_damage
 ```
 
 będzie równa `0`.
@@ -404,11 +404,11 @@ Możesz się o tym przekonać, np. wyświetlając ją:
 int main() {
 	Enemy snake;
 	snake.name = "Wąż";
-	// 🟡 Uwaga, nie ustawiam ręcznie wartości totalDamage
+	// 🟡 Uwaga, nie ustawiam ręcznie wartości total_damage
 
 	std::cout	<< snake.name
 				<< " zadał łącznie "
-				<< snake.totalDamage
+				<< snake.total_damage
 				<< " obrażeń";
 }
 ```
@@ -416,7 +416,7 @@ int main() {
 </div>
 <div>
 
-```plaintext title="🔹 Wynik"
+```plaintext title="Wynik"
 Wąż zadał łącznie 0 obrażeń
 ```
 
@@ -443,7 +443,7 @@ Przykład **błędnego** kodu:
 ```cpp title="🔴 Niepoprawna kolejność"
 // ❌ Błąd: użycie "Enemy" przed zdefiniowaniem
 // error-next-line
-void printEnemyInfo(Enemy enemy)
+void print_enemy_info(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " posiada "
 				<< enemy.health		<< " hp i "
@@ -462,7 +462,7 @@ struct Enemy
 
 :::tip Ciekawostka
 Ten problem jest możliwy do rozwiązania w inny, wygodniejszy
-sposób niż przenoszenie funkcji `printEnemyInfo` pod definicję
+sposób niż przenoszenie funkcji `print_enemy_info` pod definicję
 struktury, jednak o tzw. *forward declaration* wspomnimy
 w dalszej części kursu.
 :::
@@ -479,7 +479,7 @@ struct Enemy
 	float		health;
 	float		strength;
 
-	int			totalDamage = 0; // OK ✅
+	int			total_damage = 0; // OK ✅
 
 	// ❌ Błąd: próba modyfikacji w złym miejscu
 	// error-next-line

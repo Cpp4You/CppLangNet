@@ -189,7 +189,7 @@ W naszym wypadku niepowodzenie może następić dopiero przy końcu pliku.
 
 Aby wczytać całą linię z pliku, używamy funkcji `std::getline`, w ten sposób:
 
-```cpp title="🔹 Wczytanie linii z pliku"
+```cpp title="Wczytanie linii z pliku"
 std::string line;
 std::getline(file, line);
 ```
@@ -197,7 +197,7 @@ std::getline(file, line);
 Aby wczytać cały plik linia po linii, umieszczamy `getline` w warunku pętli `while`,
 tak samo jak zrobiliśmy wyżej z operatorem `>>`:
 
-```cpp title="🔹 Wczytanie całego pliku"
+```cpp title="Wczytanie całego pliku"
 std::string line;
 while (std::getline(file, line)) {
 	std::cout << "Linia: " << line << '\n';

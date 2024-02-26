@@ -50,7 +50,7 @@ Once you learn them, you shouldn't use `std::rand` anymore.
 
 In this article we'll be using following headers:
 
-```cpp title="🔹 Necessary headers"
+```cpp title="Necessary headers"
 #include <cstdlib>
 #include <ctime>
 ```
@@ -60,7 +60,7 @@ Let's see an example of how it is used:
 <Columns columns={['8fr', '4fr']}>
 <div>
 
-```cpp title="🔹 Generating 5 random numbers"
+```cpp title="Generating 5 random numbers"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -107,7 +107,7 @@ This sequence is very unpredictable, which gives the illusion of true randomness
 What numbers this sequence will consist of depends on the so-called seed which is also a number.
 The following function is used to set the seed:
 
-```cpp title="🔹 Setting the seed"
+```cpp title="Setting the seed"
 std::srand( <seed> )
 ```
 (from *seed random*)
@@ -121,7 +121,7 @@ We used the current time as a seed, in the form of a number that increases every
 so each time we start the program, we will get a different effect.
 We got this with a function call:
 
-```cpp title="🔹 Current time (as a number of seconds)"
+```cpp title="Current time (as a number of seconds)"
 std::time(0)
 ```
 
@@ -141,7 +141,7 @@ and that `RAND_MAX` is some system or compiler-dependent constant (not less than
 
 The value of `RAND_MAX` can be easily checked:
 
-```cpp title="🔹 Checking the max. number possible to get from rand"
+```cpp title="Checking the max. number possible to get from rand"
 #include <iostream>
 #include <cstdlib>
 
@@ -201,7 +201,7 @@ On Windows we got 2<sup>15</sup> - 1, and on Linux 2<sup>31</sup> - 1
 
 We can just divide the obtained number by `RAND_MAX` to get a value in the range from `0` to `1`.
 
-```cpp title="🔹 Number from 0 to 1"
+```cpp title="Number from 0 to 1"
 float randomFloat() {
 	return float( std::rand() ) / RAND_MAX;
 }
@@ -247,7 +247,7 @@ What we have to do:
 - multiply a number `[0; 1]` by the length to get a range `[0; Length]`
 - move the entire range o `A` to get: `[A; Length + A]` that is `[A; B]`
 
-```cpp title="🔹 Real number in custom range"
+```cpp title="Real number in custom range"
 // We can use the same functio name, because
 // it has different parameters (function overload)
 float randomFloat(float from, float to)
@@ -260,7 +260,7 @@ float randomFloat(float from, float to)
 
 or simpler:
 
-```cpp title="🔹 Real number in custom range (simpler)"
+```cpp title="Real number in custom range (simpler)"
 float randomFloat(float from, float to)
 {
 	return randomFloat()*(to - from) + from;
@@ -271,7 +271,7 @@ float randomFloat(float from, float to)
 
 In exactly the same way as above, we can create a function `randomInt`:
 
-```cpp title="🔹 Integer in a range"
+```cpp title="Integer in a range"
 int randomInt(int from, int to)
 {
 	return int( randomFloat()*(to - from) ) + from;

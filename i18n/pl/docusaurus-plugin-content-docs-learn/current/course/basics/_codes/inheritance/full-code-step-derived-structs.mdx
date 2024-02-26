@@ -5,20 +5,20 @@ struct Vehicle
 {
 	std::string brand; // marka
 	std::string model;
-	int productionYear; // rok produkcji
+	int production_year; // rok produkcji
 };
 
 // highlight-next-line
 struct Car : Vehicle
 {
-	bool isCabrio;
+	bool is_cabrio;
 };
 
 // highlight-next-line
 struct Airplane : Vehicle
 {
-	int enginesNumber; // liczba silników
-	std::string airlinesName; // nazwa linii lotniczych
+	int number_of_engines; // liczba silników
+	std::string airlines_name; // nazwa linii lotniczych
 };
 
 int main()

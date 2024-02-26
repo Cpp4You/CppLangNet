@@ -36,11 +36,11 @@ int main()
 
 	std::cout << "Podaj swój wiek: ";
 
-	int yearOfBirth;
-	std::cin >> yearOfBirth;
+	int year_of_birth;
+	std::cin >> year_of_birth;
 
 	// Rok 2021 - na moment pisanie tego artykułu
-	int age = 2021 - yearOfBirth;
+	int age = 2021 - year_of_birth;
 
 	// highlight-start
 	// Sytuacja A:
@@ -81,11 +81,11 @@ int main()
 
 	std::cout << "Podaj swój wiek: ";
 
-	int yearOfBirth;
-	std::cin >> yearOfBirth;
+	int year_of_birth;
+	std::cin >> year_of_birth;
 
 	// Rok 2021 - na moment pisanie tego artykułu
-	int age = 2021 - yearOfBirth;
+	int age = 2021 - year_of_birth;
 
 	// highlight-start	
 	if (age >= 18) 
@@ -197,7 +197,7 @@ się, że używasz:
 Ciekawym przypadkiem jest operator negacji, który jest **jednoargumentowy**.
 To oznacza, że operuje tylko na jednym wyrażeniu. Zobaczmy to na przykładzie:
 
-```cpp title="🔹 Operator negacji"
+```cpp title="Operator negacji"
 #include <iostream>
 
 int main()
@@ -206,11 +206,11 @@ int main()
 
 	std::cout << "Podaj swój wiek: ";
 
-	int yearOfBirth;
-	std::cin >> yearOfBirth;
+	int year_of_birth;
+	std::cin >> year_of_birth;
 
 	// Rok 2021 - na moment pisanie tego artykułu
-	int age = 2021 - yearOfBirth;
+	int age = 2021 - year_of_birth;
 
 	// highlight-next-line
 	if (!(age >= 18)) 
@@ -321,9 +321,9 @@ Przykład:
 int main()
 {
 	std::cout << "Podaj swój rok urodzenia: ";
-	std::cin >> yearOfBirth;
+	std::cin >> year_of_birth;
 
-	int age = 2021 - yearOfBirth;
+	int age = 2021 - year_of_birth;
 
 	// highlight-next-line
 	bool isAdult = age >= 18;

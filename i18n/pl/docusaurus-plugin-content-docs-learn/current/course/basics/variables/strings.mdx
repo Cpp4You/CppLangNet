@@ -28,7 +28,7 @@ Poznanie podstawowych zasad przechowywania tekstu i manipulacji nim jest kluczow
 Zmienne typu tekstowego są bardzo przydatne. Przykładem niech będzie program, który
 wczytuje imie użytkownika, po czym wita go podając ilość znaków w jego imieniu.
 
-```cpp title="🔹 Program wczytujący imie"
+```cpp title="Program wczytujący imie"
 #include <iostream>
 // highlight-next-line
 #include <string>
@@ -66,7 +66,7 @@ w ten sam sposób co wcześniej `iostream`:
 Typu `std::string` używamy tak jak każdego innego.
 Tutaj deklarujemy dwie zmienne - jedną o typie `int` oraz jedną o typie `std::string`.
 
-```cpp title="🔹 Używanie typu string"
+```cpp title="Używanie typu string"
 int number;
 std::string text;
 ```
@@ -76,7 +76,7 @@ std::string text;
 Przypisanie początkowej wartości wygląda tak samo jak w przypadku zmiennych o innych typach,
 przy czym należy pamiętać, że **tekst podajemy między cudzysłowami**, nie pojedynczymi apostrofami:
 
-```cpp title="🔹 Inicjalizacja i wypisanie zmiennej typu string"
+```cpp title="Inicjalizacja i wypisanie zmiennej typu string"
 std::string welcome = "Hello, World!";
 std::cout << welcome;
 ```
@@ -90,7 +90,7 @@ Jego długość będzie wynosić 0, a po wypisaniu na konsolę nie zobaczymy nic
 
 Napisy możemy wyświetlać za pomocą `std::cout` oraz wczytywać za pomocą `std::cin`.
 
-```cpp title="🔹 Wczytanie imienia i powitanie"
+```cpp title="Wczytanie imienia i powitanie"
 #include <iostream>
 #include <string>
 
@@ -107,15 +107,15 @@ Zauważ, że `std::cin` pobiera tekst do napotkania pierwszego białego znaku, c
 Przez to, jeśli podamy swoje imię i nazwisko to do zmiennej `name` trafi jedynie imię.
 Aby pobrać całą linię możemy użyć `std::getline`:
 
-```cpp title="🔹 Wczytywanie całej linii tekstu"
-std::string fullName;
-std::getline(std::cin, fullName);
+```cpp title="Wczytywanie całej linii tekstu"
+std::string full_name;
+std::getline(std::cin, full_name);
 ```
 
 `std::getline` jest *funkcją*, która przyjmuje dwa argumenty - *strumień wejściowy* do odczytania linii oraz zmienną `std::string` do której ta linia zostanie zapisana.
 Ten przykład pokazuje jak można użyć tej funkcji do odczytania linii z `std::cin`.
 Tak więc funkcję tę "wywołujemy" umieszczając nazwę funkcji `std::getline`, następnie nawiasy `(...)`,
-a wewnątrz nawiasów argumenty, które chcemy podać, oddzielone przecinkiem: `std::cin, fullName`.
+a wewnątrz nawiasów argumenty, które chcemy podać, oddzielone przecinkiem: `std::cin, full_name`.
 
 ### Łączenie
 
@@ -125,22 +125,22 @@ Rozważmy następujący skrócony przykład z wejściem `Dwayne Johnson`:
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Konkatenacja i dołączanie"
-std::string firstName;
-std::string lastName;
+```cpp title="Konkatenacja i dołączanie"
+std::string first_name;
+std::string last_name;
 
-std::cin >> firstName;
-std::cin >> lastName;
+std::cin >> first_name;
+std::cin >> last_name;
 
 // Konkatenacja
 // highlight-next-line
-std::string coolName = firstName + " \"The Rock\" " + lastName;
-std::cout << "Your cool name is:\n" << coolName << "\n\n";
+std::string cool_name = first_name + " \"The Rock\" " + last_name;
+std::cout << "Your cool name is:\n" << cool_name << "\n\n";
 
 // Dołączanie
 // highlight-next-line
-coolName += " Mk II";
-std::cout << "Your new name is:\n" << coolName;
+cool_name += " Mk II";
+std::cout << "Your new name is:\n" << cool_name;
 ```
 </div>
 <div>
@@ -155,8 +155,8 @@ Dwayne "The Rock" Johnson Mk II
 </div>
 </Columns>
 
-Zauważ, że `coolName` jest wynikiem *konkatenacji* trzech łańcuchów - `firstName`, `"The Rock"` i `lastName`.
-Dalej w kodzie można zobaczyć, jak modyfikujemy `coolName` poprzez *dołącznie* do niego `" Mk II"`.
+Zauważ, że `cool_name` jest wynikiem *konkatenacji* trzech łańcuchów - `first_name`, `"The Rock"` i `last_name`.
+Dalej w kodzie można zobaczyć, jak modyfikujemy `cool_name` poprzez *dołącznie* do niego `" Mk II"`.
 
 ### Sprawdzanie długości
 
@@ -168,7 +168,7 @@ Zobaczmy jak wykorzystać metodę `size` w praktyce. Rozważmy następujący prz
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Program liczący długość imienia"
+```cpp title="Program liczący długość imienia"
 #include <iostream>
 #include <string>
 
@@ -204,7 +204,7 @@ Te pojęcia nie są teraz kluczowe do zapamiętania, ale zobaczysz je później 
 
 Dla przypomnienia, określamy zmienną (`name`), następnie piszemy `size` po kropce, a potem **puste** nawiasy okrągłe:
 
-```cpp title="🔹 Wywołanie metody size"
+```cpp title="Wywołanie metody size"
 name.size()
 ```
 
@@ -231,7 +231,7 @@ Następujące kawałki kodu to nieudolne i niepoprawne (kończące się błędem
 ```cpp title="❌ Przypisywanie zmiennej liczbowej do łańcucha"
 int number = 53;
 // error-next-line
-std::string numberInStr	= number; // Błąd
+std::string number_in_str	= number; // Błąd
 ```
 
 </TabItem>
@@ -239,7 +239,7 @@ std::string numberInStr	= number; // Błąd
 
 ```cpp title="❌ Przypisywanie literału liczbowego do łańcucha"
 // error-next-line
-std::string numberInStr	= 53; // Błąd
+std::string number_in_str	= 53; // Błąd
 ```
 
 </TabItem>
@@ -265,7 +265,7 @@ Aby przekonwertować z typu liczbowego (np. `int` czy `float`) na typ łańcucho
 
 ```cpp title="✔ Konwersja liczby na napis"
 int number = 53;
-std::string numberInStr	= std::to_string(number);
+std::string number_in_str	= std::to_string(number);
 ```
 
 W ten sam sposób, jeśli mamy wewnątrz łańcucha znaków zapisaną liczbę, możemy ją
@@ -276,16 +276,16 @@ typu `float` za pomocą `std::stof` (od ang.: _**s**tring **to** **f**loat_):
 <TabItem value="stoi" label="🔵 std::stoi" default>
 
 ```cpp title="Konwersja std::string na int"
-std::string numberInStr = "53";
-int number = std::stoi(numberInStr);
+std::string number_in_str = "53";
+int number = std::stoi(number_in_str);
 ```
 
 </TabItem>
 <TabItem value="stof" label="🟣 std::stof">
 
 ```cpp title="Konwersja std::string na float"
-std::string numberInStr = "53.5"; // w tekście nie podajemy `f` na końcu
-float number = std::stof(numberInStr);
+std::string number_in_str = "53.5"; // w tekście nie podajemy `f` na końcu
+float number = std::stof(number_in_str);
 ```
 
 </TabItem>

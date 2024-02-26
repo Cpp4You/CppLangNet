@@ -24,7 +24,7 @@ dalej używać tych zmiennych `bool` w warunkach instrukcji if.
 W C++ istnieją dwie wbudowane wartości logiczne - `true` i `false`. Można ich użyć wszędzie tam,
 gdzie oczekiwany jest typ `bool` lub wyrażenie boolowskie. Dla przykładu:
 
-```cpp title="🔹 Literały boolowskie"
+```cpp title="Literały boolowskie"
 bool var1 = true;
 bool var2 = false;
 ```
@@ -33,7 +33,7 @@ Są też ciekawsze rzeczy, które możemy zrobić ze zmiennymi `bool`.
 Każde wyrażenie boolean można przypisać do zmiennej. Połączenie tego z
 instrukcjami if może w niektórych przypadkach skrócić kod i uczynić go bardziej czytelnym.
 
-```cpp title="🔹 Używanie zmiennych boolowskich do określania pogody"
+```cpp title="Używanie zmiennych boolowskich do określania pogody"
 std::string name;
 
 std::cout << "Enter your first name: ";
@@ -41,22 +41,22 @@ std::cin >> name;
 
 // Użytkownik jest szczęśliwy, jeśli jego imię ma więcej niż 5 znaków
 // highlight-next-line
-bool isLucky = name.size() > 5;
+bool is_lucky = name.size() > 5;
 
 // Spróbuj pozmieniać te wartości i zobacz co się stanie!
 // highlight-start
-bool isTuesday = true;
-bool isCloudy = false;
+bool is_tuesday = true;
+bool is_cloudy = false;
 // highlight-end
 
 std::string weather = "sunny";
 
-if (not isTuesday and isCloudy) {
+if (not is_tuesday and is_cloudy) {
 	weather = "raining";
-} else if (isTuesday) {
-	if (isCloudy) {
+} else if (is_tuesday) {
+	if (is_cloudy) {
 		weather = "overcast";
-	} else if (not isLucky) {
+	} else if (not is_lucky) {
 		weather = "downpouring";
 	}
 }
@@ -67,10 +67,10 @@ std::cout << "It is currently " << weather << " in your location!";
 Wcześniej wprowadzone [operatory logiczne](/learn/course/basics/conditions/intro/#złożone-wyrażenia-logiczne)
 mogą zostać użyte do stworzenia nowych zmiennych boolowskich:
 
-```cpp title="🔹 Używanie operatorów logicznych na boolach"
-bool isPrecipitating = weather == "raining" or weather == "downpouring";
-bool isRainbowMade   = isPrecipitating and not isCloudy;
-bool isBoringDay     = not isRainbowMade;
+```cpp title="Używanie operatorów logicznych na boolach"
+bool is_precipitating = weather == "raining" or weather == "downpouring";
+bool is_rainbow_made  = is_precipitating and not is_cloudy;
+bool is_boring_day    = not is_rainbow_made;
 ```
 
 ## Wczytywanie/Wypisywanie typów boolowskich
@@ -90,7 +90,7 @@ Upewniej się, że dołączyłeś nagłówek `<iomanip>` (`#include <iomanip>`),
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Wypisywanie true/false"
+```cpp title="Wypisywanie true/false"
 std::cout << true << " " << false << "\n";
 // highlight-next-line
 std::cout << std::boolalpha;
@@ -114,7 +114,7 @@ Następnie, wprowadzi `true` po zastosowaniu ustawienia `std::boolalpha`.
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Wprowadzanie true/false"
+```cpp title="Wprowadzanie true/false"
 bool var;
 
 std::cout << "Integral form: ";
@@ -151,7 +151,7 @@ Wartość boolowska `false` odpowiada liczbie o wartośći `0`, a `true` wartoś
 Tak samo liczba o wartości `0` odpowiada wartości boolowskiej `false`, a każda inna od `0`
 odpowiada wartości `true`.
 
-```cpp title="🔹 Przykład konwersji pomiędzy liczbami a boolami"
+```cpp title="Przykład konwersji pomiędzy liczbami a boolami"
 int x = true; // x to 1
 int y = false; // y to 0
 
@@ -166,7 +166,7 @@ kiedy nie jest chciana.
 Z tego powodu, jeśli chcesz intencjonalnie spowodować konwersję pomiędzy `int` (lub każdym innym typem całkowitoliczbowym),
 a `bool` użyć *casta*.
 
-```cpp title="🔹 Castowanie pomiędzy int a bool"
+```cpp title="Castowanie pomiędzy int a bool"
 int x = static_cast<int>(true); // Nowoczesny styl castowania
 int y = (int) false; 			// Castowanie w stylu C
 
@@ -204,7 +204,7 @@ naszej [tabeli priorytetów operatorów](/learn/course/basics/conditions/intro/#
 <Columns columns={['1fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Niepoprawne łączenie warunków z x = 15"
+```cpp title="Niepoprawne łączenie warunków z x = 15"
 10 < x < 25    // Początkowe wyrażenie
 10 < 15 < 25   // Podstawiamy x
 (10 < 15) < 25 // Kolejność operatorów
@@ -215,7 +215,7 @@ true		   // Ewaluujemy wyrażenie
 </div>
 <div>
 
-```cpp title="🔹 Niepoprawne łączenie warunków z x = 7"
+```cpp title="Niepoprawne łączenie warunków z x = 7"
 10 < x < 25   // Początkowe wyrażenie
 10 < 7 < 25   // Podstawiamy x
 (10 < 7) < 25 // Kolejność operatorów
@@ -235,7 +235,7 @@ zawsze będzie to prawda. Zobaczmy dlaczego:
 <Columns columns={['1fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Niepoprawne łączenie warunków z x = 5"
+```cpp title="Niepoprawne łączenie warunków z x = 5"
 x == 5 || 10 || 15     // Początkowe wyrażenie
 5 == 5 || 10 || 15     // Podstawiamy x
 ((5 == 5) || 10) || 15 // Kolejność operatorów
@@ -248,7 +248,7 @@ true                   // Ewaluujemy wyrażenie
 </div>
 <div>
 
-```cpp title="🔹 Niepoprawne łączenie warunków z x = 7"
+```cpp title="Niepoprawne łączenie warunków z x = 7"
 x == 5 || 10 || 15     // Początkowe wyrażenie
 7 == 5 || 10 || 15     // Podstawiamy x
 ((7 == 5) || 10) || 15 // Kolejność operatorów

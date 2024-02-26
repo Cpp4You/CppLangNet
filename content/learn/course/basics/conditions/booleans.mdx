@@ -23,7 +23,7 @@ further use these `bool` variables in the conditions of if statements.
 C++ provides two built-in `bool` constants - `true` and `false`. You can use these wherever
 a `bool` or boolean expression is expected. For example:
 
-```cpp title="🔹 Boolean literals"
+```cpp title="Boolean literals"
 bool var1 = true;
 bool var2 = false;
 ```
@@ -32,7 +32,7 @@ There are more interesting things we can do with `bool` variables, too.
 Any boolean expression is valid to assign here. Combining this with
 if statements can make for shorter and more readable code in some cases.
 
-```cpp title="🔹 Using boolean variables to determine the weather"
+```cpp title="Using boolean variables to determine the weather"
 std::string name;
 
 std::cout << "Enter your first name: ";
@@ -40,22 +40,22 @@ std::cin >> name;
 
 // User is lucky if their name has more than 5 characters
 // highlight-next-line
-bool isLucky = name.size() > 5; 
+bool is_lucky = name.size() > 5; 
 
 // Try changing these values yourself and see what happens!
 // highlight-start
-bool isTuesday = true;
-bool isCloudy = false;
+bool is_tuesday = true;
+bool is_cloudy = false;
 // highlight-end
 
 std::string weather = "sunny";
 
-if (not isTuesday and isCloudy) {
+if (not is_tuesday and is_cloudy) {
 	weather = "raining";
-} else if (isTuesday) {
-	if (isCloudy) {
+} else if (is_tuesday) {
+	if (is_cloudy) {
 		weather = "overcast";
-	} else if (not isLucky) {
+	} else if (not is_lucky) {
 		weather = "downpouring";
 	}
 }
@@ -66,10 +66,10 @@ std::cout << "It is currently " << weather << " in your location!";
 The [logical operators](/learn/course/basics/conditions/intro/#compound-boolean-expressions) previously introduced
 can also be used to create new boolean variables.
 
-```cpp title="🔹 Using logical operators on bools"
-bool isPrecipitating = weather == "raining" or weather == "downpouring";
-bool isRainbowMade   = isPrecipitating and not isCloudy;
-bool isBoringDay     = not isRainbowMade;
+```cpp title="Using logical operators on bools"
+bool is_precipitating = weather == "raining" or weather == "downpouring";
+bool is_rainbow_made  = is_precipitating and not is_cloudy;
+bool is_boring_day    = not is_rainbow_made;
 ```
 
 ## Input/Output with `bool`
@@ -89,7 +89,7 @@ Make sure you `#include <iomanip>` to use `std::boolalpha`.
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Printing true/false"
+```cpp title="Printing true/false"
 std::cout << true << " " << false << "\n";
 // highlight-next-line
 std::cout << std::boolalpha;
@@ -113,7 +113,7 @@ Then, they will input `true` once the `std::boolalpha` setting was applied.
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Inputting true/false"
+```cpp title="Inputting true/false"
 bool var;
 
 std::cout << "Integral form: ";
@@ -149,7 +149,7 @@ A boolean value of `false` is equivalent to an integer value of `0`, and `true` 
 Conversely, an integral value of `0` is equivalent to a boolean value of `false`,
 and any non-zero integer is equivalent to `true`.
 
-```cpp title="🔹 A sampling of int↔bool conversions"
+```cpp title="A sampling of int↔bool conversions"
 int x = true; // x is 1
 int y = false; // y is 0
 
@@ -163,7 +163,7 @@ While this behavior may seem neat, it can unexpectedly crop up in many places wh
 For this reason, if you want to intentionally trigger an `int`↔`bool` conversion, then you should *cast*
 the value.
 
-```cpp title="🔹 Performing a cast"
+```cpp title="Performing a cast"
 int x = static_cast<int>(true); // Modern-style cast
 int y = (int) false; 			// C-style cast
 
@@ -197,7 +197,7 @@ the [operator precedence table](/learn/course/basics/conditions/intro/#order-of-
 <Columns columns={['1fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Incorrect operator chaining with x = 15"
+```cpp title="Incorrect operator chaining with x = 15"
 10 < x < 25    // Initial expression
 10 < 15 < 25   // Substitute x
 (10 < 15) < 25 // Operator precedence
@@ -208,7 +208,7 @@ true		   // Evaluate subexpression
 </div>
 <div>
 
-```cpp title="🔹 Incorrect operator chaining with x = 7"
+```cpp title="Incorrect operator chaining with x = 7"
 10 < x < 25   // Initial expression
 10 < 7 < 25   // Substitute x
 (10 < 7) < 25 // Operator precedence
@@ -228,7 +228,7 @@ It will always be true. Let's see why:
 <Columns columns={['1fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Incorrect operator chaining with x = 5"
+```cpp title="Incorrect operator chaining with x = 5"
 x == 5 || 10 || 15     // Initial expression
 5 == 5 || 10 || 15     // Substitute x
 ((5 == 5) || 10) || 15 // Operator precedence
@@ -241,7 +241,7 @@ true                   // Evaluate subexpression
 </div>
 <div>
 
-```cpp title="🔹 Incorrect operator chaining with x = 7"
+```cpp title="Incorrect operator chaining with x = 7"
 x == 5 || 10 || 15     // Initial expression
 7 == 5 || 10 || 15     // Substitute x
 ((7 == 5) || 10) || 15 // Operator precedence

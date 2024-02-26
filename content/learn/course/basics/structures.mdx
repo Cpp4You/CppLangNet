@@ -48,9 +48,9 @@ information, we could do it like this:
 #include <string>
 
 int main() {
-	std::string	enemyName = "Goblin";
-	float		enemyHealth = 50;
-	float		enemyStrength = 12;
+	std::string	enemy_name = "Goblin";
+	float		enemy_health = 50;
+	float		enemy_strength = 12;
 	// ...
 }
 ```
@@ -61,16 +61,16 @@ or rather inconvenience:
 If we use multiple arrays for this purpose:
 
 ```cpp
-std::vector< std::string >	enemyNames;
-std::vector< float >		enemyHealth;
-std::vector< float >		enemyStrength;
+std::vector< std::string >	enemy_names;
+std::vector< float >		enemy_health;
+std::vector< float >		enemy_strength;
 ```
 
 then each opponent will be described under the same index in these tables:
 
-- `enemyNames[ index ]` describes the name
-- `enemyHealth[ index ]` describes life points
-- `enemyStrength[ index ]` describes the points of strength
+- `enemy_names[ index ]` describes the name
+- `enemy_health[ index ]` describes life points
+- `enemy_strength[ index ]` describes the points of strength
 
 :::important
 This method involves "spreading" information about a single opponent across multiple tables.
@@ -79,9 +79,9 @@ This method involves "spreading" information about a single opponent across mult
 Adding one enemy to a set in such a program would look like this:
 
 ```cpp
-enemyNames.push_back("Goblin");
-enemyHealth.push_back(50);
-enemyStrength.push_back(10);
+enemy_names.push_back("Goblin");
+enemy_health.push_back(50);
+enemy_strength.push_back(10);
 ```
 
 The more information we want to store about our opponents, the more bothersome
@@ -165,14 +165,14 @@ This means that it was created using `Enemy` structure as a formula.
 As mentioned above, it `boss` contains 3 things (fields), i.e. it consists of three variables.
 To get to a specific member of this object, we need to use the following notation:
 
-```cpp title="🔹 Set the name of the boss to 'Ogre'"
+```cpp title="Set the name of the boss to 'Ogre'"
 boss.name = "Ogre";
 ```
 
 We use a dot `.` to refer to the object's field. In the same way, we can e.g.
 modify the enemy's *strength*:
 
-```cpp title="🔹 Modifying the fields of an object"
+```cpp title="Modifying the fields of an object"
 boss.strength	= 50; // I set bosses strength to 50
 
 // Boss enables "fury" skill - strength increases
@@ -183,7 +183,7 @@ boss.health		*= 0.5f;
 
 ... or display information about it:
 
-```cpp title="🔹 Using object fields"
+```cpp title="Using object fields"
 #include <iostream>
 #include <string>
 
@@ -215,8 +215,8 @@ int main()
 Nothing prevents you from creating a function that takes an object of a certain structure
 as a parameter. A good example will be just displaying information about an enemy:
 
-```cpp title="🔹 A function that displays information about an opponent"
-void printEnemyInfo(Enemy enemy)
+```cpp title="A function that displays information about an opponent"
+void print_enemy_info(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " has "
 				<< enemy.health		<< " hp and "
@@ -226,7 +226,7 @@ void printEnemyInfo(Enemy enemy)
 ```
 
 :::danger Order
-`printEnemyInfo` requires a type `Enemy` to exist **before** the function itself is defined.
+`print_enemy_info` requires a type `Enemy` to exist **before** the function itself is defined.
 This means we need to put the function underneath the structure creation (see example below).
 :::
 
@@ -240,7 +240,7 @@ Using the above information, we will create a "game" that will have two opponent
 
 <CustomCodeBlock maxLines={25}>
 
-```cpp title="🔹 A fragment of a game code with an Ogre and a Goblin" showLineNumbers
+```cpp title="A fragment of a game code with an Ogre and a Goblin" showLineNumbers
 #include <iostream>
 #include <string>
 
@@ -253,7 +253,7 @@ struct Enemy
 };
 
 // Function that display information about an enemy
-void printEnemyInfo(Enemy enemy)
+void print_enemy_info(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " has "
 				<< enemy.health		<< " hp and "
@@ -279,8 +279,8 @@ int main()
 	boss.strength	= 50;
 
 	// and print information about them
-	printEnemyInfo(goblin);
-	printEnemyInfo(boss);
+	print_enemy_info(goblin);
+	print_enemy_info(boss);
 }
 ```
 
@@ -290,13 +290,13 @@ int main()
 
 We can put objects inside arrays just like normal variables:
 
-```cpp title="🔹 Vector of enemies"
+```cpp title="Vector of enemies"
 std::vector< Enemy > enemies;
 ```
 
 Below is an example of how to add to such an array:
 
-```cpp title="🔹 Adding objects inside vector"
+```cpp title="Adding objects inside vector"
 // ...
 
 int main()
@@ -322,7 +322,7 @@ int main()
 
 	// Print every enemy in the vector
 	for (Enemy enemy : enemies)
-		printEnemyInfo(enemy);
+		print_enemy_info(enemy);
 }
 ```
 
@@ -343,18 +343,18 @@ If you leave the structure field with no default value , e.g .:
 ```cpp
 struct Car
 {
-	int numberOfWheels;
+	int number_of_wheels;
 };
 ```
 
-it doesn't mean `numberOfWheels` will be set to `0` at the moment of object creation,
+it doesn't mean `number_of_wheels` will be set to `0` at the moment of object creation,
 you have to do it **manually**!
 :::
 
 To assign a default value to a structure field, we use the usual initialization,
 known for creating variables:
 
-```cpp title="🔹 Default value for 'totalDamage' ⚔"
+```cpp title="Default value for 'total_damage' ⚔"
 // Creating the structure
 struct Enemy
 {
@@ -363,7 +363,7 @@ struct Enemy
 	float		strength;
 
 	// highlight-next-line
-	float		totalDamage = 0;
+	float		total_damage = 0;
 };
 ```
 
@@ -373,10 +373,10 @@ Now when we create some enemy:
 Enemy snake; // snake as an example
 ```
 
-then the value of its field `totalDamage`
+then the value of its field `total_damage`
 
 ```cpp
-snake.totalDamage
+snake.total_damage
 ```
 
 will be set to `0` automatically.
@@ -391,11 +391,11 @@ You can find out about it, e.g. by printing it:
 int main() {
 	Enemy snake;
 	snake.name = "Snake";
-	// 🟡 Note, I'm not setting "totalDamage" manually
+	// 🟡 Note, I'm not setting "total_damage" manually
 
 	std::cout	<< snake.name
 				<< " has dealt "
-				<< snake.totalDamage
+				<< snake.total_damage
 				<< " total damage";
 }
 ```
@@ -403,7 +403,7 @@ int main() {
 </div>
 <div>
 
-```plaintext title="🔹 Result"
+```plaintext title="Result"
 Snake has dealt 0 total damage
 ```
 
@@ -429,7 +429,7 @@ Make sure the structure is defined **before** using it for the first time.
 ```cpp title="🔴 Incorrect order"
 // ❌ Error: usage of type "Enemy" before its definition
 // error-next-line
-void printEnemyInfo(Enemy enemy)
+void print_enemy_info(Enemy enemy)
 {
 	std::cout	<< enemy.name		<< " has "
 				<< enemy.health		<< " hp and "
@@ -448,7 +448,7 @@ struct Enemy
 
 :::tip
 This problem can be solved in a different, more convenient way than moving the function
-`printEnemyInfo` below the structure definition, with the so-called *forward declaration*.
+`print_enemy_info` below the structure definition, with the so-called *forward declaration*.
 We will mention it later in the course.
 :::
 
@@ -464,7 +464,7 @@ struct Enemy
 	float		health;
 	float		strength;
 
-	int			totalDamage = 0; // OK ✅
+	int			total_damage = 0; // OK ✅
 
 	// ❌ Error: Attempt to modify field in a wrong place
 	// error-next-line

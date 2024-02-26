@@ -7,24 +7,24 @@ int main()
 {
 	using std::vector, std::string, std::cout;
 
-	vector<string> playerNames = {
+	vector<string> player_names = {
 		"HappyBanana",
 		"AngryCrab",
 		"SadWolf",
 	};
 
 	// highlight-next-line
-	cout << "The array contains " << playerNames.size() << " elements\n";
+	cout << "The array contains " << player_names.size() << " elements\n";
 
 	// Adding a new player:
-	playerNames.push_back("WickedWitch");
+	player_names.push_back("WickedWitch");
 	cout << "Added new player.\n";
 	// highlight-next-line
-	cout << "The array contains " << playerNames.size() << " elements\n";
+	cout << "The array contains " << player_names.size() << " elements\n";
 
-	playerNames.insert(playerNames.begin() + 1, "BadPenguin");
+	player_names.insert(player_names.begin() + 1, "BadPenguin");
 
 	// Erase the first element:
-	playerNames.erase(playerNames.begin() + 0);
+	player_names.erase(player_names.begin() + 0);
 }
 ```

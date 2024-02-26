@@ -34,7 +34,7 @@ Pętle mają wiele zastosowań, oto kilka z nich:
 W lekcji o wektorach pokazaliśmy już jedną pętlę, która wyświetlała
 wszystkie elementy tablicy:
 
-```cpp title="🔹 Wyświetl każdą liczbę z tablicy"
+```cpp title="Wyświetl każdą liczbę z tablicy"
 for (int n : numbers)
 {
 	std::cout << n << ' ';
@@ -82,7 +82,7 @@ Tablica w rozumieniu C++ również jest takim zasięgiem, więc możemy śmiało
 
 Najprostszy przykład:
 
-```cpp title="🔹 Wyświetl każdą liczbę z tablicy"
+```cpp title="Wyświetl każdą liczbę z tablicy"
 std::vector<int> numbers = { 13, 42, -1, 0, -3, -5 };
 
 for (int n : numbers)
@@ -116,7 +116,7 @@ Pętla `while` wykonuje ciało pętli dopóki warunek jest spełniony:
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Wyświetl liczby od 0 do 3"
+```cpp title="Wyświetl liczby od 0 do 3"
 int number = 0;
 while (number <= 3)
 {
@@ -158,7 +158,7 @@ zazwyczaj używana do krokowego przejścia przez pewien zakres (np. liczbowy).
 
 Zacznijmy od przykładu:
 
-```cpp title="🔹 Wyświetl liczby od 0 do 9"
+```cpp title="Wyświetl liczby od 0 do 9"
 for (int i = 0; i < 10; i++)
 {
 	std::cout << i << ' ';
@@ -201,7 +201,7 @@ Pętli `for` bardzo często używamy do iterowania po tablicach, w sytuacji gdy
 albo potrzebujemy mieć dostęp do numeru iteracji lub gdy nie chcemy iterować
 po całym zakresie.
 
-```cpp title="🔹 Iteracja po całej tablicy"
+```cpp title="Iteracja po całej tablicy"
 std::vector<int> numbers = {10, 13, 15, 18, 60};
 for (int i = 0; i < numbers.size(); i++)
 {
@@ -209,7 +209,7 @@ for (int i = 0; i < numbers.size(); i++)
 }
 ```
 
-```cpp title="🔹 Iteracja po połowie tablicy"
+```cpp title="Iteracja po połowie tablicy"
 std::vector<int> numbers = {10, 13, 15, 18, 60};
 for (int i = 0; i < numbers.size() / 2; i++)
 {
@@ -221,7 +221,7 @@ for (int i = 0; i < numbers.size() / 2; i++)
 
 Kod podawany w nawiasie pętli `for` jest opcjonalny. **Średniki są wymagane**.
 
-```cpp title="🔹 Brak instrukcji w nawiasie"
+```cpp title="Brak instrukcji w nawiasie"
 for ( ; ; )
 {
 	// kod
@@ -395,7 +395,7 @@ Jeśli używamy `auto` lub `std::size_t` jako typ zmiennej iteracyjnej i chcemy 
 
 Rozważmy przykładowy kod wypisujący liczby z tablicy od tyłu:
 
-```cpp title="🔹 Niepoprawna pętla for"
+```cpp title="Niepoprawna pętla for"
 #include <iostream>
 #include <vector>
 
@@ -431,14 +431,14 @@ Później w kursie omówimy szczegóły tego problemu i inne jego rozwiązania.
 
 Nieskończoną pętlę możemy utworzyć na dwa sposoby:
 
-```cpp title="🔹 Nieskończona pętla for"
+```cpp title="Nieskończona pętla for"
 for(;;) 
 {
 	// ... kod
 }
 ```
 
-```cpp title="🔹 Nieskończona pętla while"
+```cpp title="Nieskończona pętla while"
 while(true) 
 {
 	// ... kod

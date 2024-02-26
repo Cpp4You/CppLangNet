@@ -51,10 +51,10 @@ struct Car
 	// car information
 	std::string	brand;
 	std::string	model;
-	int			yearOfProduction;
+	int			year_of_production;
 
 	// movement
-	float		topSpeed = 200;		// (km/h)
+	float		top_speed = 200;		// (km/h)
 	float		acceleration = 50;	// (km/h per second)
 	float		speed = 0;			// current one (km/h)
 };
@@ -69,7 +69,7 @@ int main()
 	Car car;
 	car.brand = "Ford";
 	car.model = "Focus";
-	car.yearOfProduction = 2010;
+	car.year_of_production = 2010;
 
 }
 ```
@@ -108,7 +108,7 @@ Now we can call `accelerate` on an object, like this:
 <Columns columns={['2fr', '1fr']}>
 <div>
 
-```cpp title="🔹 Calling the accelerate()"
+```cpp title="Calling the accelerate()"
 // prism-push-types:Car
 // ...
 
@@ -145,15 +145,15 @@ we pass any required arguments as necessary.
 <Columns columns={['1fr', '1fr']}>
 <div>
 
-```cpp title="🔸 Calling a method"
-object.methodName(arguments);
+```cpp title="Calling a method"
+object.method_name(arguments);
 ```
 
 </div>
 <div>
 
-```cpp title="🔹 Calling a function"
-functionName(arguments);
+```cpp title="Calling a function"
+function_name(arguments);
 ```
 
 </div>
@@ -202,7 +202,7 @@ which also belongs to this structure:
 <Tabs>
 <TabItem value="good1" label="✔ Good" default>
 
-Note the order in which the methods are defined: `limitSpeed` was used in `accelerate`,
+Note the order in which the methods are defined: `limit_speed` was used in `accelerate`,
 even though its definition is below. Similarly, the `speed` and `acceleration` fields
 have been used before their declaration, because it is in the code **under** this usage.
 This is allowed within the structure.
@@ -214,16 +214,16 @@ struct Car
 	void accelerate()
 	{
 		speed += acceleration;
-		limitSpeed();
+		limit_speed();
 	}
 
-	void limitSpeed() {
-		if (speed > topSpeed)
-			speed = topSpeed;
+	void limit_speed() {
+		if (speed > top_speed)
+			speed = top_speed;
 	}
 
 	// class data members
-	float topSpeed = 200;
+	float top_speed = 200;
 	float acceleration = 50;
 	float speed = 0;
 	// the rest...
@@ -239,21 +239,21 @@ The order of functions and variables is set according to their usage - also corr
 struct Car
 {
 	// class data members
-	float topSpeed = 200;
+	float top_speed = 200;
 	float acceleration = 50;
 	float speed = 0;
 	// the rest...
 
-	void limitSpeed() {
-		if (speed > topSpeed)
-			speed = topSpeed;
+	void limit_speed() {
+		if (speed > top_speed)
+			speed = top_speed;
 	}
 
 	// function that increases the speed
 	void accelerate()
 	{
 		speed += acceleration;
-		limitSpeed();
+		limit_speed();
 	}
 };
 ```
@@ -291,39 +291,39 @@ This way we are able to move their definitions outside of the structure body:
 struct Car
 {
 	// class data members
-	float topSpeed = 200;
+	float top_speed = 200;
 	float acceleration = 50;
 	float speed = 0;
 	// the rest...
 
 	// Methods declarations:
 	// highlight-start
-	void limitSpeed();
+	void limit_speed();
 	void accelerate();
 	// highlight-end
 };
 
 // highlight-next-line
-void Car::limitSpeed()
+void Car::limit_speed()
 {
-	if (speed > topSpeed)
-		speed = topSpeed;
+	if (speed > top_speed)
+		speed = top_speed;
 }
 
 // highlight-next-line
 void Car::accelerate()
 {
 	speed += acceleration;
-	limitSpeed();
+	limit_speed();
 }
 ```
 
 Note that in this case, we precede the method name with the structure name `Car`,
 and a double colon `::`, the so-called *scope resolution operator*.
 
-```cpp title="🔹 Definition outside the structure body scheme"
+```cpp title="Definition outside the structure body scheme"
 // prism-push-types:type
-type StructureName::methodName(parameters)
+type StructureName::method_name(parameters)
 {
 	// ...
 }

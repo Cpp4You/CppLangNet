@@ -103,7 +103,7 @@ Nazywając funkcję przestrzegamy tych samych zasad co przy [nazwach zmiennych](
 W ten sposób mamy już zdefiniowaną funkcję. Oznacza to, że gdy tylko będziemy tego chcieli, możemy
 ją **wywołać**. Robimy to w ten sposób:
 
-```cpp title="🔹 Wywołanie funkcji"
+```cpp title="Wywołanie funkcji"
 print();
 ```
 
@@ -136,10 +136,10 @@ w środku nawiasów okrągłych:
 Powyższy zapis
 
 ```cpp
-printEvenNumbers(10);
+print_even_numbers(10);
 ```
 
-oznacza, że w momencie wywołania, do parametru `howMany` wewnątrz tej funkcji
+oznacza, że w momencie wywołania, do parametru `how_many` wewnątrz tej funkcji
 zostanie przypisana wartość `10`. Możemy do funkcji przekazywać dowolną liczbę parametrów.
 Oddzielamy je przecinkami:
 
@@ -155,14 +155,14 @@ Częstym błędem wśród początkujących jest pominięcie typu w następnych p
 <TabItem label="❌ Źle" value="bad" default>
 
 ```cpp
-void printBiggerNumber(int a, b)
+void print_bigger_number(int a, b)
 ```
 
 </TabItem>
 <TabItem label="✔ Dobrze" value="good">
 
 ```cpp
-void printBiggerNumber(int a, int b)
+void print_bigger_number(int a, int b)
 ```
 
 </TabItem>
@@ -180,33 +180,33 @@ return;
 
 W momencie jej napotkania, program przestaje wykonywać kolejne instrukcje w funkcji
 i wraca do miejsca, z którego została ona wywołana. Przytoczmy stworzoną przez nas wcześniej
-funkcję `printEvenNumbers`:
+funkcję `print_even_numbers`:
 
 ```cpp
-void printEvenNumbers(int howMany)
+void print_even_numbers(int how_many)
 {
-	for (int i = 0; i < howMany; i++)
+	for (int i = 0; i < how_many; i++)
 		std::cout << (i * 2) << ' ';
 	std::cout << '\n';
 }
 ```
 
-Co się stanie, jeśli podamy ujemną liczbę do `howMany`?
+Co się stanie, jeśli podamy ujemną liczbę do `how_many`?
 
 ```cpp
-printEvenNumbers(-10);
+print_even_numbers(-10);
 ```
 
 Wykonywanie funkcji z taką wartością parametru nie ma sensu, dlatego możemy to już na samym początku
 wychwycić i wykonać powrót:
 
 ```cpp
-void printEvenNumbers(int howMany)
+void print_even_numbers(int how_many)
 {
-	if (howMany <= 0)
+	if (how_many <= 0)
 		return;
 
-	for (int i = 0; i < howMany; i++)
+	for (int i = 0; i < how_many; i++)
 		std::cout << (i * 2) << ' ';
 	std::cout << '\n';
 }
@@ -231,11 +231,11 @@ chcemy znać ich rezultat, czyli **wartość zwracaną**.
 
 Wymagane jest, aby określić jakiego typu jest wartość zwracana. Podajemy go **przed** nazwą funkcji, przykładowo:
 
-```cpp title="🔹 Zwracamy liczbę całkowitą" 
+```cpp title="Zwracamy liczbę całkowitą" 
 int sum(int from, int to)
 ```
 
-```cpp title="🔹 Brak zwracanej wartości"
+```cpp title="Brak zwracanej wartości"
 void print(int number)
 ```
 
@@ -269,13 +269,13 @@ int sum(int from, int to)
 
 Zwróconą wartość możemy użyć np. zapisując ją do zmiennej:
 
-```cpp title="🔹 Zapisywanie rezultatu do zmiennej"
+```cpp title="Zapisywanie rezultatu do zmiennej"
 int s = sum(10, 100);
 ```
 
 ... lub użyć w wyrażeniu (np. jako parametr funkcji):
 
-```cpp title="🔹 Używanie rezultatu"
+```cpp title="Używanie rezultatu"
 std::cout << "Suma liczb z zakresu [10; 100] wynosi: " << sum(10, 100);
 ```
 
@@ -748,7 +748,7 @@ Wszystko kompiluje się poprawnie, linkuje się poprawnie i wykonuje się popraw
 
 Weźmy pod lupę taki kod:
 
-```cpp title="🔹 Wiele definicji funkcji"
+```cpp title="Wiele definicji funkcji"
 #include <iostream>
 
 int sum(int from, int to)
@@ -1146,14 +1146,14 @@ error C4716: 'foo': must return a value
 Tak samo jak możemy użyć słówka kluczowego `auto` w przypadku zmiennych, aby typ zmiennej został wydedukowany przez kompilator,
 możemy również zamiast typu zwracanego funkcji dać `auto`, aby typ zwracanej wartości był wydedukowany, np.
 
-```cpp title="🔹 Dedukcja typu zwracanego funkcji"
+```cpp title="Dedukcja typu zwracanego funkcji"
 auto println(std::string msg) {
 	std::cout << msg << '\n';
 }
 ```
 Tutaj typ zwracany zostaje wydedukowany do `void`, bowiem nie zwracamy żadnej wartości.
 
-```cpp title="🔹 Dedukcja typu zwracanego funkcji"
+```cpp title="Dedukcja typu zwracanego funkcji"
 auto clamp(int value, int low, int high) {
 	if(value < low) return low;
 	if(value > high) return high;

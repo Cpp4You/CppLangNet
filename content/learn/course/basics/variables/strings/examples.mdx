@@ -11,29 +11,29 @@ import Image from "@site-comps/Image";
 int main()
 {
 	// Setup the four variables we will read the user's information into
-	std::string firstName;
-	std::string lastName;
-	std::string favoriteColor;
+	std::string first_name;
+	std::string last_name;
+	std::string favorite_color;
 	int age;
 
 	// Ask the user 4 questions and store their answers
 	std::cout << "What is your first name? ";
-	std::cin >> firstName;
+	std::cin >> first_name;
 
 	std::cout << "What is your last name? ";
-	std::cin >> lastName;
+	std::cin >> last_name;
 
 	std::cout << "What is your age? ";
 	std::cin >> age;
 
 	std::cout << "What is your favorite color? ";
-	std::cin >> favoriteColor;
+	std::cin >> favorite_color;
 
 	// Output the user's information whilst calculating the difference between their age and first name's length
-	std::cout << "\n\nWelcome, " << firstName << " " << lastName << "!\n";
-	std::cout << "You are " << age << " years old, and your favorite color is " << favoriteColor << "\n";
-	std::cout << "There are " << firstName.size() << " characters in your first name... ";
-	std::cout << (age - firstName.size()) << " less than your age!\n";
+	std::cout << "\n\nWelcome, " << first_name << " " << last_name << "!\n";
+	std::cout << "You are " << age << " years old, and your favorite color is " << favorite_color << "\n";
+	std::cout << "There are " << first_name.size() << " characters in your first name... ";
+	std::cout << (age - first_name.size()) << " less than your age!\n";
 }
 ```
 
@@ -47,7 +47,7 @@ int main()
 {
 	std::string animal;
 	std::string adjective;
-	int teamSize;
+	int team_size;
 
 	std::cout << "I'm going to help you make a team name!\n";
 
@@ -58,10 +58,10 @@ int main()
 	std::cin >> adjective;
 
 	std::cout << "Enter the size of the team: ";
-	std::cin >> teamSize;
+	std::cin >> team_size;
 
 	// Form the team name by concatenating the three answers we have so far
-	std::string teamName = adjective + animal + std::to_string(teamSize);
+	std::string teamName = adjective + animal + std::to_string(team_size);
 	std::cout << "Your current team name is \"" << teamName << "\"!";
 
 	std::string pluralNoun;
@@ -90,12 +90,12 @@ int main()
 
 	int sum = a + b;
 	// Use an int-to-string conversion to concatenate the two numbers
-	std::string concatStr = std::to_string(a) + std::to_string(b);
+	std::string concat_str = std::to_string(a) + std::to_string(b);
 
-	std::cout << "Their sum is " << sum << " and their concatenation is " << concatStr << "\n";
+	std::cout << "Their sum is " << sum << " and their concatenation is " << concat_str << "\n";
 
 	// Perform a string-to-int conversion and compute the difference
-	int concatVal = std::stoi(concatStr);
+	int concatVal = std::stoi(concat_str);
 	int diff = concatVal - sum;
 
 	std::cout << "Their difference is " << diff;
