@@ -4,7 +4,7 @@ indent_size = 2
 charset = utf-8
 end_of_line = lf
 
-[*.{c,h,cpp,hpp,cc,hh,hxx,cxx,json,md,mdx,js,jsx,ts,tsx,json}]
+[*.{c,h,cpp,hpp,cc,hh,hxx,cxx,json,css,scss,md,mdx,js,jsx,ts,tsx,json}]
 indent_style = space
 indent_size = 2
 
