@@ -11,7 +11,18 @@ const PRISM_PATCH_NAME = "cpp";
 
 const PUSH_TYPES_PREFIX = "// prism-push-types:";
 const POP_TYPES_PREFIX = "// prism-pop-types";
-const PASCAL_CASE_NAME_PATTERN = "[A-Z][a-zA-Z0-9_]+";
+
+/**
+ * Pattern for PascalCase names that are treated as class names
+ * in C++ code by our custom syntax highlighting.
+ */
+const PASCAL_CASE_NAME_PATTERN = "[A-Z][a-zA-Z_][a-zA-Z0-9_]*";
+
+/**
+ * Common short type name patterns that are used in C++ code
+ * like `T`, `T1`, `U`, `U1`, `V`, etc.
+ */
+const COMMON_TYPE_NAME_PATTERNS = ["[TUVWXYZ][0-9]?"];
 
 const CPP_KEYWORDS: string[] = [
   "alignas", "alignof", "and", "asm", "auto",
@@ -197,7 +208,6 @@ function applyTokenFixes(env: PrismNS.Environment) {
 
 function applyTokenFixesOn(token: PrismNS.Token | string): void {
   if (typeof token === "string") {
-    console.log(Date.now(), "String token: ", token);
     return;
   }
 
@@ -254,7 +264,7 @@ function handleSpecialComments(env: PrismNS.Environment) {
   }
 
   const customTypes: CppTypeNamesLayers = [
-    [PASCAL_CASE_NAME_PATTERN],
+    [PASCAL_CASE_NAME_PATTERN, ...COMMON_TYPE_NAME_PATTERNS],
   ];
 
   const walkTokens = (tokens: SingleToken[]) => {
@@ -360,7 +370,7 @@ function tryParsePopComment(token: PrismNS.Token, types: CppTypeNamesLayers): bo
 
 function collectTypesIn(token: string, types: CppTypeNamesLayers) {
   // search for words that match custom types, but not if they are part of a larger word
-  const regex = new RegExp(`\\b(${types.join("|")})\\b`, "g");
+  const regex = new RegExp(`\\b(${types.flat().join("|")})\\b`, "g");
   // search all occurrences
   let match;
   const matches: { start: number, end: number }[] = [];
