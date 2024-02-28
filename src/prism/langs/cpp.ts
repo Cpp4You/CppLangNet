@@ -152,8 +152,6 @@ type PrismExtended = typeof PrismNS & {
   };
 };
 
-const PRISM_PATCH_NAME = "cpp";
-
 export default function main(prism: PrismExtended) {
   prism.patches = prism.patches || {};
   if (prism.patches[PRISM_PATCH_NAME] === true) {
