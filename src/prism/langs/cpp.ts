@@ -126,7 +126,11 @@ const CPP_STD_TYPES: string[] = [
 
   "mutex",
   "thread",
-  "jthread"
+  "jthread",
+
+  // Traits
+  "allocator", "allocator_traits", "allocator_arg_t",
+  "iterator_traits", "pointer_traits", "common_type",
 ];
 
 const CPP_STD_SUB_NAMESPACES: string[] = [
