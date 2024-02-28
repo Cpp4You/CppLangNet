@@ -1,23 +1,23 @@
 ---
-sidebar_position:	2
-title:				std::unordered_multimap reference
-sidebar_label:		unordered_multimap
-hide_title:			true
-description:		Summary of a std::unordered_multimap (usage, methods, etc.) - C++ Language
-tags:				[unordered_multimap, container, associative, key, multi, unordered]
-
-cppreference_origin_rel: w/cpp/container/unordered_multimap
+title:                    std::unordered_multimap reference
+hide_title:               true
+description:              Summary of a std::unordered_multimap (usage, methods, etc.) - C++ Language
+tags:                     [unordered_multimap, container, associative, key, multi, unordered]
+defined_in_headers:       "<unordered_map>"
+cppreference_origin_rel:  w/cpp/container/unordered_multimap
 ---
 
-import ClassSummary				from "@site-comps/ClassSummary";
-import CustomCodeBlock			from "@site-comps/CustomCodeBlock";
-import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
-import Columns					from "@site-comps/Columns";
-import Tabs						from "@theme/Tabs";
-import TabItem					from "@theme/TabItem";
+{/* Theme components */}
+import Tabs                     from "@theme/Tabs";
+import TabItem                  from "@theme/TabItem";
 
-{/* Presets */}
-import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
+{/* Site components */}
+import ClassSummary             from "@site-comps/ClassSummary";
+import CustomCodeBlock          from "@site-comps/CustomCodeBlock";
+import SymbolTable, { Symbol }  from "@site-comps/SymbolTable";
+import Columns                  from "@site-comps/Columns";
+import HiddenHeading            from "@site-comps/HiddenHeading";
+
 
 {/* Codes */}
 
@@ -32,31 +32,24 @@ import OverviewDetailedPmr from "./unordered-multimap/_codes/main-page/overview/
 {/* Deduction Guides */}
 import DeductionGuides from "./unordered-multimap/_codes/main-page/deduction-guides.mdx"
 
-<NotFinished />
-
-## Overview
+<HiddenHeading>
+  ## Overview
+</HiddenHeading>
 
 <Tabs>
-<TabItem value="simplified" label="Simplified (since C++11)" default>
-
-	<OverviewSimplifiedRegular />
-
-</TabItem>
-<TabItem value="detailed" label="Detailed">
-	<Tabs>
-		<TabItem value="regular" label="Regular (since C++11)" default>
-
-			<OverviewDetailedRegular />
-
-		</TabItem>
-
-		<TabItem value="pmr" label="Polymorphic (since C++17)">
-
-			<OverviewDetailedPmr />
-
-		</TabItem>
-	</Tabs>
-</TabItem>
+  <TabItem value="simplified" label="Simplified (since C++11)" default>
+    <OverviewSimplifiedRegular />
+  </TabItem>
+  <TabItem value="detailed" label="Detailed">
+    <Tabs>
+      <TabItem value="regular" label="Regular (since C++11)" default>
+        <OverviewDetailedRegular />
+      </TabItem>
+      <TabItem value="pmr" label="Polymorphic (since C++17)">
+        <OverviewDetailedPmr />
+      </TabItem>
+    </Tabs>
+  </TabItem>
 </Tabs>
 
 
