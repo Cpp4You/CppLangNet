@@ -1,26 +1,29 @@
 ---
-sidebar_position:	2
-title:				std::string reference
-sidebar_label:		string
-hide_title:			true
-description:		Summary of a std::basic_string (usage, methods, etc.) - C++ Language
-tags:				[string, container, text, char, word, phrase]
-
-cppreference_origin_rel: w/cpp/string/basic_string
+title:                    std::string reference
+hide_title:               true
+description:              Summary of a std::basic_string (usage, methods, etc.) - C++ Language
+tags:                     [string, container, text, char, word, phrase]
+defined_in_headers:       <string>
+cppreference_origin_rel:  w/cpp/string/basic_string
 ---
 
-import ClassSummary							from "@site-comps/ClassSummary";
-import CustomCodeBlock						from "@site-comps/CustomCodeBlock";
-import SymbolTable, { Symbol }				from "@site-comps/SymbolTable";
-import Columns								from "@site-comps/Columns";
-import Image								from "@site-comps/Image";
-import Tooltip								from "@site-comps/Tooltip";
-import { Since, Until, Removed }            from "@site-comps/Versions";
+{/* Theme components */}
+import Tabs                       from "@theme/Tabs";
+import TabItem                    from "@theme/TabItem";
 
-import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
-import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
-import Tabs						from "@theme/Tabs";
-import TabItem						from "@theme/TabItem";
+{/* Site components */}
+import ClassSummary               from "@site-comps/ClassSummary";
+import CustomCodeBlock            from "@site-comps/CustomCodeBlock";
+import SymbolTable, { Symbol }    from "@site-comps/SymbolTable";
+import Columns                    from "@site-comps/Columns";
+import Image                      from "@site-comps/Image";
+import Tooltip                    from "@site-comps/Tooltip";
+import { Since, Until, Removed }  from "@site-comps/Versions";
+import HiddenHeading              from "@site-comps/HiddenHeading";
+
+{/* Presets */}
+import NotFinished                from "@site/i18n/en/presets/NotFinished.mdx";
+import ImproveSection             from "@site/i18n/en/presets/ImproveSection.mdx";
 
 {/* Codes */}
 
@@ -42,30 +45,24 @@ import OverviewDetailedPmr from "./string/_codes/main-page/overview/overview-det
 {/* Deduction Guides */}
 import DeductionGuides from "./string/_codes/main-page/deduction-guides.mdx"
 
-<NotFinished />
-
-## Overview
+<HiddenHeading>
+  ## Overview
+</HiddenHeading>
 
 <Tabs>
-<TabItem value="simplified" label="Simplified" default>
-
-	<OverviewSimplifiedRegular />
-
-</TabItem>
-<TabItem value="detailed" label="Detailed">
-	<Tabs>
-		<TabItem value="regular" label="Regular" default>
-
-			<OverviewDetailedReguler />
-
-		</TabItem>
-		<TabItem value="pmr" label="Polymorphic (since C++17)">
-
-			<OverviewDetailedPmr />
-
-		</TabItem>
-	</Tabs>
-</TabItem>
+  <TabItem value="simplified" label="Simplified" default>
+    <OverviewSimplifiedRegular />
+  </TabItem>
+  <TabItem value="detailed" label="Detailed">
+    <Tabs>
+      <TabItem value="regular" label="Regular" default>
+        <OverviewDetailedReguler />
+      </TabItem>
+      <TabItem value="pmr" label="Polymorphic (since C++17)">
+        <OverviewDetailedPmr />
+      </TabItem>
+    </Tabs>
+  </TabItem>
 </Tabs>
 
 A class that is used to store and manipulate sequence of characters.
@@ -77,30 +74,30 @@ This means that a pointer to an element of a `string` may be passed to any funct
 that expects a pointer to an element of an array of characters.
 
 <Image center border maxheight={250}
-		alt="String elements in memory"
-		src="/img/doc/string-elements-in-memory.png"
-	/>
+  alt="String elements in memory"
+  src="/img/doc/string-elements-in-memory.png"
+/>
 
 ### Aliases
 
 Type `std::string` is in fact an alias to: `std::basic_string<char>`.
 
 <details>
-	<summary>Available <code>std::basic_string</code> aliases</summary>
-	<div>
-		<SymbolTable noTraits>
-			<Symbol name="std::string"			desc={<code>std::basic_string&lt;char&gt;</code>}/>
-			<Symbol name="std::wstring" 		desc={<code>std::basic_string&lt;wchar_t&gt;</code>}/>
-			<Symbol name={<Since v='cpp20'>std::u8string</Since>}		desc={<code>std::basic_string&lt;char8_t&gt;</code>}/>
-			<Symbol name={<Since v='cpp11'>std::u16string</Since>}		desc={<code>std::basic_string&lt;char16_t&gt;</code>}/>
-			<Symbol name={<Since v='cpp11'>std::u32string</Since>}		desc={<code>std::basic_string&lt;char32_t&gt;</code>}/>
-			<Symbol name={<Since v='cpp17'>std::pmr::string</Since>}	desc={<code>std::pmr::basic_string&lt;char&gt;</code>}/>
-			<Symbol name={<Since v='cpp17'>std::pmr::wstring</Since>} 	desc={<code>std::pmr::basic_string&lt;wchar_t&gt;</code>}/>
-			<Symbol name={<Since v='cpp20'>std::pmr::u8string</Since>}	desc={<code>std::pmr::basic_string&lt;char8_t&gt;</code>}/>
-			<Symbol name={<Since v='cpp17'>std::pmr::u16string</Since>}	desc={<code>std::pmr::basic_string&lt;char16_t&gt;</code>}/>
-			<Symbol name={<Since v='cpp17'>std::pmr::u32string</Since>}	desc={<code>std::pmr::basic_string&lt;char32_t&gt;</code>}/>
-		</SymbolTable>
-	</div>
+  <summary>Available <code>std::basic_string</code> aliases</summary>
+  <div>
+    <SymbolTable noTraits>
+      <Symbol name="std::string"			desc={<code>std::basic_string&lt;char&gt;</code>}/>
+      <Symbol name="std::wstring" 		desc={<code>std::basic_string&lt;wchar_t&gt;</code>}/>
+      <Symbol name={<Since v='cpp20'>std::u8string</Since>}		desc={<code>std::basic_string&lt;char8_t&gt;</code>}/>
+      <Symbol name={<Since v='cpp11'>std::u16string</Since>}		desc={<code>std::basic_string&lt;char16_t&gt;</code>}/>
+      <Symbol name={<Since v='cpp11'>std::u32string</Since>}		desc={<code>std::basic_string&lt;char32_t&gt;</code>}/>
+      <Symbol name={<Since v='cpp17'>std::pmr::string</Since>}	desc={<code>std::pmr::basic_string&lt;char&gt;</code>}/>
+      <Symbol name={<Since v='cpp17'>std::pmr::wstring</Since>} 	desc={<code>std::pmr::basic_string&lt;wchar_t&gt;</code>}/>
+      <Symbol name={<Since v='cpp20'>std::pmr::u8string</Since>}	desc={<code>std::pmr::basic_string&lt;char8_t&gt;</code>}/>
+      <Symbol name={<Since v='cpp17'>std::pmr::u16string</Since>}	desc={<code>std::pmr::basic_string&lt;char16_t&gt;</code>}/>
+      <Symbol name={<Since v='cpp17'>std::pmr::u32string</Since>}	desc={<code>std::pmr::basic_string&lt;char32_t&gt;</code>}/>
+    </SymbolTable>
+  </div>
 </details>
 
 
