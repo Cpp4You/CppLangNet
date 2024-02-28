@@ -1,8 +1,9 @@
 ```cpp
+// prism-push-types:size_type
 // (1)
 template< class T, class Alloc, class U >
 constexpr typename std::vector<T,Alloc>::size_type
-    erase( std::vector<T,Alloc>& c, const U& value )
+    erase( std::vector<T,Alloc>& c, U const& value )
 
 // (2) 
 template< class T, class Alloc, class Pred >

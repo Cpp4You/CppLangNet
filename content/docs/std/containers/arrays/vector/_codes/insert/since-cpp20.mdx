@@ -1,12 +1,13 @@
 ```cpp
+// prism-push-types:const_iterator,iterator,size_type
 // (1) Non const version only
-constexpr iterator insert( const_iterator pos, const T& value );
+constexpr iterator insert( const_iterator pos, T const& value );
 
 // (2) Non const version only
 constexpr iterator insert( const_iterator pos, T&& value );
 
 // (3) Non const version only
-constexpr iterator insert( const_iterator pos, size_type count, const T& value );
+constexpr iterator insert( const_iterator pos, size_type count, T const& value );
 
 // (4) Non const version only
 template< class InputIt >
