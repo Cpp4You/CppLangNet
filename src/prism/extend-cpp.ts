@@ -122,134 +122,7 @@ const standardLibrarySubNamespaces = [
 ];
 type SingleToken = string | PrismNS.Token;
 
-function walkTokenStream(stream: PrismNS.TokenStream, tokenHandler: (t: SingleToken) => void) {
-
-  if (!Array.isArray(stream)) {
-    return tokenHandler(stream);
-  }
-
-  for (const token of stream) {
-    tokenHandler(token);
-  }
-}
-
-function applyTokenFixes(env: PrismNS.Environment) {
-  const handleToken = (token: PrismNS.Token | string) => {
-    if (typeof token === "string")
-      return;
-
-    if (token.type === "directive" && token.alias === "keyword") {
-      delete token.alias;
-    }
-    else if (token.type === "namespace" && token.content === "namespace") {
-      token.type = "keyword";
-    }
-
-    if (Array.isArray(token.content)) {
-      walkTokenStream(token.content, handleToken);
-    }
-  };
-
-  walkTokenStream(env.tokens, handleToken);
-}
-
-function handleSpecialComments(env: PrismNS.Environment) {
-  if (env.language !== "cpp") {
-    return;
-  }
-
-  const pushTypesPrefix = "// prism-push-types:";
-  const popTypes = "// prism-pop-types";
-
-  const customTypeNames = new Array<string[]>();
-
-  const walkTokens = (tokens: PrismNS.Token[]) => {
-    let lastLineWasSemanticComment = false;
-
-    const tryParsePushComment = (token: PrismNS.Token) => {
-      if (!token.content.startsWith(pushTypesPrefix))
-        return false;
-      // read types separated by a comma
-      const types = token.content.substring(pushTypesPrefix.length).split(",");
-      customTypeNames.push(...types);
-      return true;
-    };
-
-    const tryParsePopComment = (token: PrismNS.Token) => {
-      if (!token.content.startsWith(popTypes))
-        return false;
-
-      customTypeNames.pop();
-      return true;
-    };
-
-
-    for (let idx = 0; idx < tokens.length; ++idx) {
-      const token = tokens[idx];
-
-      const skipNewLine = lastLineWasSemanticComment;
-      lastLineWasSemanticComment = false;
-
-      if (typeof token === "string" && customTypeNames.length !== 0) {
-        // search for words that match custom types, but not if they are part of a larger word
-        const regex = new RegExp(`\\b(${customTypeNames.join("|")})\\b`, "g");
-        // search all occurrences
-        let match;
-        const matches: { start: number, end: number }[] = [];
-        while ((match = regex.exec(token)) !== null) {
-          matches.push({ start: match.index, end: regex.lastIndex });
-        }
-
-        // rebuild tokens with custom types
-        const newTokens: PrismNS.Token[] = [];
-        let lastEnd = 0;
-        for (const match of matches) {
-          if (match.start > lastEnd) {
-            newTokens.push(token.substring(lastEnd, match.start));
-          }
-          newTokens.push(new PrismNS.Token("class-name", token.substring(match.start, match.end)));
-          lastEnd = match.end;
-        }
-        if (lastEnd < token.length) {
-          newTokens.push(token.substring(lastEnd));
-        }
-
-        if (skipNewLine) {
-          if (newTokens.length > 0 && typeof newTokens[0] === "string") {
-            const splitted = newTokens[0].split("\n");
-            splitted.shift();
-            newTokens.shift();
-            if (splitted.length > 0) newTokens.unshift(splitted.join("\n"));
-          }
-        }
-        tokens.splice(idx, 1, ...newTokens);
-        continue;
-      }
-
-      if (Array.isArray(token.content)) {
-        walkTokens(token.content);
-        continue;
-      }
-
-      // At this point only try to parse special comments
-      if (token.type !== "comment") {
-        continue;
-      }
-
-      // Try parse a special comment
-      if (tryParsePushComment(token) || tryParsePopComment(token)) {
-        // Ignore that line
-        tokens.splice(idx, 1);
-
-        lastLineWasSemanticComment = true;
-        --idx;
-        continue;
-      }
-    }
-  };
-
-  walkTokens(env.tokens);
-}
+type WalkTokenCallback = (context: SingleToken) => void;
 
 type PrismExtended = typeof PrismNS & {
   patches?: {
@@ -292,4 +165,206 @@ export default function main(prism: PrismExtended) {
 
   prism.hooks.add("after-tokenize", handleSpecialComments);
   prism.hooks.add("after-tokenize", applyTokenFixes);
+}
+
+function walkTokenStream(stream: PrismNS.TokenStream, tokenHandler: WalkTokenCallback) {
+  if (!Array.isArray(stream)) {
+    return tokenHandler(stream);
+  }
+
+  for (const token of stream) {
+    tokenHandler(token);
+  }
+}
+
+function applyTokenFixes(env: PrismNS.Environment) {
+  if (env.language !== "cpp") {
+    return;
+  }
+
+  if (!Array.isArray(env.tokens)) {
+    return;
+  }
+
+  walkTokenStream(env.tokens, applyTokenFixesOn);
+}
+
+function applyTokenFixesOn(token: PrismNS.Token | string): void {
+  if (typeof token === "string") {
+    console.log(Date.now(), "String token: ", token);
+    return;
+  }
+
+  fixSingleToken(token);
+
+  if (Array.isArray(token.content)) {
+    walkTokenStream(token.content, applyTokenFixesOn);
+  }
+}
+
+function fixSingleToken(token: PrismNS.Token) {
+  fixDirectiveToken(token) || fixNamespaceToken(token);
+}
+
+/**
+ * Fixes the following highlighting issue:
+ * In the following code:
+ * ```cpp
+ * #include <iostream>
+ * ```
+ * the `include` directive is not highlighted as a directive.
+ */
+function fixDirectiveToken(token: PrismNS.Token): boolean {
+  if (token.type !== "directive" || token.alias !== "keyword") {
+    return false;
+  }
+  token.alias = "";
+  return true;
+}
+
+/**
+ * Fixes the following highlighting issue:
+ * In the following code:
+ * ```cpp
+ * using namespace ns_name;
+ * ```
+ * the `namespace` keyword is not highlighted as a keyword.
+ */
+function fixNamespaceToken(token: PrismNS.Token): boolean {
+  if (token.type !== "namespace" || token.content !== "namespace") {
+    return false;
+  }
+  token.type = "keyword";
+  return true;
+}
+
+type CppTypeNames = string[];
+
+type CppTypeNamesLayers = Array<CppTypeNames>;
+
+const PUSH_TYPES_PREFIX = "// prism-push-types:";
+const POP_TYPES_PREFIX = "// prism-pop-types";
+const PASCAL_CASE_NAME_PATTERN = "[A-Z][a-zA-Z0-9_]+";
+
+function handleSpecialComments(env: PrismNS.Environment) {
+  if (env.language !== "cpp") {
+    return;
+  }
+
+  const customTypes: CppTypeNamesLayers = [
+    [PASCAL_CASE_NAME_PATTERN],
+  ];
+
+  const walkTokens = (tokens: SingleToken[]) => {
+    let lastLineWasSemanticComment = false;
+
+    for (let idx = 0; idx < tokens.length; ++idx) {
+      const token = tokens[idx]!;
+
+      const skipNewLine = lastLineWasSemanticComment;
+      lastLineWasSemanticComment = false;
+
+      if (typeof token === "string") {
+        tryHighlightCustomTypes(tokens, idx, skipNewLine, customTypes);
+        continue;
+      }
+
+      if (Array.isArray(token.content)) {
+        walkTokens(token.content);
+        continue;
+      }
+
+      // At this point only try to parse special comments
+      if (token.type !== "comment") {
+        continue;
+      }
+
+      // Try parse a special comment
+      if (tryParsePushComment(token, customTypes) || tryParsePopComment(token, customTypes)) {
+        // Ignore that line
+        tokens.splice(idx, 1);
+
+        lastLineWasSemanticComment = true;
+        --idx;
+        continue;
+      }
+    }
+  };
+
+  walkTokens(env.tokens);
+}
+
+function tryHighlightCustomTypes(tokens: SingleToken[], idx: number, skipNewLine: boolean, types: CppTypeNamesLayers): boolean {
+  if (types.length === 0) {
+    return false;
+  }
+
+  const token = tokens[idx]!;
+  if (typeof token !== "string") {
+    return false;
+  }
+
+  const matches = collectTypesIn(token, types);
+
+  // rebuild tokens with custom types
+  const newTokens: SingleToken[] = [];
+  let lastEnd = 0;
+  for (const match of matches) {
+    if (match.start > lastEnd) {
+      newTokens.push(token.substring(lastEnd, match.start));
+    }
+    newTokens.push(new PrismNS.Token("class-name", token.substring(match.start, match.end)));
+    lastEnd = match.end;
+  }
+  if (lastEnd < token.length) {
+    newTokens.push(token.substring(lastEnd));
+  }
+
+  if (skipNewLine) {
+    if (newTokens.length > 0 && typeof newTokens[0] === "string") {
+      const splitted = newTokens[0].split("\n");
+      splitted.shift();
+      newTokens.shift();
+      if (splitted.length > 0) {
+        newTokens.unshift(splitted.join("\n"));
+      }
+    }
+  }
+
+  tokens.splice(idx, 1, ...newTokens);
+  return true;
+}
+
+function tryParsePushComment(token: PrismNS.Token, types: CppTypeNamesLayers): boolean {
+  if (typeof token.content !== "string")
+    return false;
+  if (!token.content.startsWith(PUSH_TYPES_PREFIX))
+    return false;
+  // read types separated by a comma
+  const toInsert = token.content.substring(PUSH_TYPES_PREFIX.length).split(",");
+  types.push(toInsert);
+  return true;
+}
+
+function tryParsePopComment(token: PrismNS.Token, types: CppTypeNamesLayers): boolean {
+  if (typeof token.content !== "string")
+    return false;
+  if (!token.content.startsWith(POP_TYPES_PREFIX))
+    return false;
+
+  types.pop();
+  return true;
+}
+
+function collectTypesIn(token: string, types: CppTypeNamesLayers) {
+  // search for words that match custom types, but not if they are part of a larger word
+  const regex = new RegExp(`\\b(${types.join("|")})\\b`, "g");
+  // search all occurrences
+  let match;
+  const matches: { start: number, end: number }[] = [];
+  while ((match = regex.exec(token)) !== null) {
+    matches.push({ start: match.index, end: regex.lastIndex });
+  }
+
+  return matches;
 }
