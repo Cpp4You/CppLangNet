@@ -1,9 +1,10 @@
 ```cpp
+// prism-push-types:iterator,size_type
 // (1) Non const version only
-iterator insert( iterator pos, const T& value );
+iterator insert( iterator pos, T const& value );
 
 // (3) Non const version only
-void insert( iterator pos, size_type count, const T& value );
+void insert( iterator pos, size_type count, T const& value );
 
 // (4) Non const version only
 template< class InputIt >
