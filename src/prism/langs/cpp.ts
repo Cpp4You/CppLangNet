@@ -126,16 +126,18 @@ type WalkTokenCallback = (context: SingleToken) => void;
 
 type PrismExtended = typeof PrismNS & {
   patches?: {
-    "extend-cpp"?: boolean;
+    [key in string]?: boolean;
   };
 };
 
+const PRISM_PATCH_NAME = "cpp";
+
 export default function main(prism: PrismExtended) {
   prism.patches = prism.patches || {};
-  if (prism.patches["extend-cpp"] === true) {
+  if (prism.patches[PRISM_PATCH_NAME] === true) {
     return;
   }
-  prism.patches["extend-cpp"] = true;
+  prism.patches[PRISM_PATCH_NAME] = true;
 
   if (typeof self === "undefined" || !self.document) {
     return;
