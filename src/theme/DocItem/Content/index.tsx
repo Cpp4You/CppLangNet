@@ -6,6 +6,7 @@ import { useDoc as useDocInternal } from "@docusaurus/theme-common/internal";
 
 import DocSettings from "@site/src/components/DocSettings";
 import CppRefAttribution from "@site-comps/CppRefAttribution";
+import DefinedIn from "@site-comps/DefinedIn";
 
 import BrowserOnly from "@docusaurus/BrowserOnly";
 // import useIsBrowser				from '@docusaurus/useIsBrowser';
@@ -21,6 +22,7 @@ interface FrontMatterData {
   "arrow_jumping"?: string;
   "arrow_jumping_preset"?: string;
 
+  "defined_in_headers"?: string | string[];
   // Possibly other
 }
 
@@ -74,17 +76,29 @@ export default function ContentWrapper(props: Props): JSX.Element {
           />
         )}
       </BrowserOnly>
+      <FrontMatterDefinedIn frontMatter={metadata.frontMatter} />
       <Content {...props} />
       <FrontMatterCppRefAttribution frontMatter={metadata.frontMatter} />
     </div>
   );
 }
 
-type AttrProps = {
+type FrontMatterProps = {
   frontMatter: FrontMatterData;
 }
 
-function FrontMatterCppRefAttribution(props: AttrProps) {
+function FrontMatterDefinedIn(props: FrontMatterProps) {
+  const headers = props.frontMatter.defined_in_headers;
+
+  if (!headers) {
+    return null;
+  }
+  return (
+    <DefinedIn headers={headers} />
+  );
+}
+
+function FrontMatterCppRefAttribution(props: FrontMatterProps) {
   const absolute = props.frontMatter["cppreference_origin"];
   const relative = props.frontMatter["cppreference_origin_rel"];
 
