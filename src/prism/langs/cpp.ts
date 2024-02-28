@@ -67,6 +67,7 @@ const CPP_STD_TYPES: string[] = [
   "forward_list", "list",
   "stack",
   "valarray",
+  "initializer_list",
 
   // Strings
   "basic_string",
