@@ -18,10 +18,7 @@ import Columns                    from "@site-comps/Columns";
 import Image                      from "@site-comps/Image";
 import VersionTabs                from "@site-comps/VersionTabs";
 import { Since, Until, Removed }  from "@site-comps/Versions";
-
-{/* Presets */}
-import NotFinished                from "@site/i18n/en/presets/NotFinished.mdx";
-import ImproveSection             from "@site/i18n/en/presets/ImproveSection.mdx";
+import HiddenHeading              from "@site-comps/HiddenHeading";
 
 {/* Codes */}
 
@@ -33,9 +30,9 @@ import OverviewDetailedPmr        from "./_codes/vector/main-page/overview/overv
 {/* Deduction Guides */}
 import DeductionGuides            from "./_codes/vector/main-page/deduction-guides.mdx"
 
-<NotFinished />
-
-## Overview
+<HiddenHeading>
+  ## Overview
+</HiddenHeading>
 
 <Tabs>
   <TabItem value="simplified" label="Simplified" default>
@@ -52,7 +49,6 @@ import DeductionGuides            from "./_codes/vector/main-page/deduction-guid
     </Tabs>
   </TabItem>
 </Tabs>
-
 
 `std::vector` is a container that encapsulates dynamic size arrays.
 
@@ -366,154 +362,103 @@ See [technical details](#technical-details) for more detailed information.
 
 ## Examples
 
-### Basic manipulation
+### Basic usage
 
-#### Creating and printing a simple string
+#### Calculate arithmetic mean
 
 <Columns spacing="20px" columns={['8fr', '4fr']}>
-<div>
+  <div>
+    ```cpp
+    #include <iostream>
+    #include <vector>
 
-```cpp
-#include <iostream>
-#include <string>
+    auto main() -> int
+    {
+      auto const numbers = std::vector<double>{
+        5, 2.4, 3.2, 1.8, 4.6,
+        3.1, 2.9, 4.7, 3.8, 2.2,
+      };
 
-int main()
-{
-	std::string s = "World";
-	std::cout << "Hello, " << s << "!" << std::endl;
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Result"
-Hello, World!
-```
-
-</div>
+      auto sum = 0.0;
+      for (auto number : numbers) {
+        sum += number;
+      }
+      
+      auto const mean = sum / numbers.size();
+      std::cout << "Mean: " << mean << '\n';
+    }
+    ```
+  </div>
+  <div>
+    ```plaintext title="Result"
+    Mean: 3.37
+    ```
+  </div>
 </Columns>
 
-#### Concatenating strings
+#### Find the maximum element
 
 <Columns spacing="20px" columns={['8fr', '4fr']}>
-<div>
+  <div>
+    ```cpp
+    #include <iostream>
+    #include <string>
+    #include <algorithm>
 
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string a = "Hello, ";
-	std::string b = "World!";
-	std::string c = a + b;
-	std::cout << c;
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Result"
-Hello, World!
-```
-
-</div>
+    auto main() -> int
+    {
+      auto const numbers = std::vector<int>{
+        5, 2, 8, 1, 14, 3, 2, 10, 3, 2
+      };
+      auto const max_it = std::max_element(
+        numbers.begin(),
+        numbers.end()
+      );
+      auto const max_index = std::distance(numbers.begin(), max_it);
+      std::cout << "Max: " << *max_it << " at index: " << max_index;
+    }
+    ```
+  </div>
+  <div>
+    ```plaintext title="Result"
+    Max: 14 at index: 4
+    ```
+  </div>
 </Columns>
 
-#### Splitting a string
+#### Erase nth element
 
 <Columns spacing="20px" columns={['8fr', '4fr']}>
-<div>
+  <div>
+    ```cpp
+    #include <iostream>
+    #include <vector>
+    #include <string>
 
-```cpp
-#include <iostream>
-#include <string>
+    auto main() -> int
+    {
+      auto player_names = std::vector<std::string>{
+        "Sad Crab", "Happy Wolf", "Angry Panda",
+        "Wicked Witch", "Crazy Clown", "Funny Monkey",
+      };
 
-int main()
-{
-	// Split by the comma.
-	//                    v
-	std::string a = "Hello, World!";
-	size_t pos = a.find(',');
+      auto const n = 2; // arbitrary, 0-based index
+      // Erase the nth element ("Angry Panda")
+      player_names.erase(player_names.begin() + n);
 
-	std::string hello = a.substr(0, pos);
-	// 1 for a comma, and 1 for a space before "World"
-	std::string world = a.substr(pos + 1 + 1);
-
-	std::cout << hello << '\n' << world;
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Result"
-Hello
-World!
-```
-
-</div>
-</Columns>
-
-
-### Conversions
-
-#### Convert `std::string` to `int`
-
-<Columns spacing="20px" columns={['8fr', '4fr']}>
-<div>
-
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string numberInString = "8314";
-
-	// Note: stoi can throw exception if failed!
-	int number = std::stoi(numberInString);
-	std::cout << "Number: " << number;
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Result"
-Number: 8314
-```
-
-</div>
-</Columns>
-
-#### Convert `std::string` to `float`
-
-<Columns spacing="20px" columns={['8fr', '4fr']}>
-<div>
-
-```cpp
-#include <iostream>
-#include <string>
-
-int main()
-{
-	std::string numberInString = "3.141";
-
-	// Note: stof can throw exception if failed!
-	float number = std::stof(numberInString);
-	std::cout << "Number: " << number;
-}
-```
-
-</div>
-<div>
-
-```plaintext title="Result"
-Number: 3.141
-```
-
-</div>
+      for (auto const& name : player_names) {
+        std::cout << name << '\n';
+      }
+    }
+    ```
+  </div>
+  <div>
+    ```plaintext title="Result"
+    Sad Crab
+    Happy Wolf
+    Wicked Witch
+    Crazy Clown
+    Funny Monkey
+    ```
+  </div>
 </Columns>
