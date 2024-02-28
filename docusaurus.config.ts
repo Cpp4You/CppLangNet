@@ -6,9 +6,7 @@ import type { Config } from "@docusaurus/types";
 import type * as Preset from "@docusaurus/preset-classic";
 
 // Custom
-import lightCodeTheme from "./src/prism/theme-vscode-light";
-import darkCodeTheme from "./src/prism/theme-vscode-dark";
-
+import * as Themes from "./src/prism/themes";
 
 const config = {
   title: "C++ Programming Language",
@@ -254,8 +252,8 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} <a href="https://github.com/PoetaKodu" target="_blank">Paweł Syska</a>, Inc. Built with Docusaurus.`,
       },
       prism: {
-        theme: lightCodeTheme,
-        darkTheme: darkCodeTheme,
+        theme: Themes.VSCodeLight,
+        darkTheme: Themes.VSCodeDark,
         magicComments: [
           {
             className: "code-block-highlighted-line",
