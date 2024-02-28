@@ -93,6 +93,7 @@ html[data-theme='dark']
 		&>a::after, &>div>a::after {
 			margin-left: auto;
 			content: $content;
+      white-space: nowrap;
 			border: 1px solid gray;
 			background-color: $backgroundColor;
 			border-radius: 15px;
@@ -117,6 +118,7 @@ html[data-theme='dark']
 @include GenerateSidebarFlag('cpp20', 'C++20', transparent); // rgb(152, 179, 255));
 @include GenerateSidebarFlag('cpp23', 'C++23', transparent); // rgb(183, 145, 255));
 
+// \00a0 is non-breaking space (nbsp)
 @include GenerateSidebarFlag('since-cpp98', '≥ C++98', transparent); // rgb(201, 201, 201));
 @include GenerateSidebarFlag('since-cpp11', '≥ C++11', transparent); // rgb(152, 252, 255));
 @include GenerateSidebarFlag('since-cpp14', '≥ C++14', transparent); // rgb(152, 255, 203));
