@@ -7,6 +7,12 @@
 
 import * as PrismNS from "prismjs";
 
+const PRISM_PATCH_NAME = "cpp";
+
+const PUSH_TYPES_PREFIX = "// prism-push-types:";
+const POP_TYPES_PREFIX = "// prism-pop-types";
+const PASCAL_CASE_NAME_PATTERN = "[A-Z][a-zA-Z0-9_]+";
+
 const CPP_KEYWORDS: string[] = [
   "alignas", "alignof", "and", "asm", "auto",
   "bool", "break",
@@ -130,8 +136,6 @@ type PrismExtended = typeof PrismNS & {
   };
 };
 
-const PRISM_PATCH_NAME = "cpp";
-
 export default function main(prism: PrismExtended) {
   prism.patches = prism.patches || {};
   if (prism.patches[PRISM_PATCH_NAME] === true) {
@@ -243,10 +247,6 @@ function fixNamespaceToken(token: PrismNS.Token): boolean {
 type CppTypeNames = string[];
 
 type CppTypeNamesLayers = Array<CppTypeNames>;
-
-const PUSH_TYPES_PREFIX = "// prism-push-types:";
-const POP_TYPES_PREFIX = "// prism-pop-types";
-const PASCAL_CASE_NAME_PATTERN = "[A-Z][a-zA-Z0-9_]+";
 
 function handleSpecialComments(env: PrismNS.Environment) {
   if (env.language !== "cpp") {
