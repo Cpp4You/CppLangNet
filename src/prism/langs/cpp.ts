@@ -7,7 +7,7 @@
 
 import * as PrismNS from "prismjs";
 
-const keywords = [
+const CPP_KEYWORDS: string[] = [
   "alignas", "alignof", "and", "asm", "auto",
   "bool", "break",
   "case", "catch", "char", "char16_t", "char32_t", "char8_t", "class", "co_await", "co_return", "co_yield", "compl", "concept", "const", "const_cast", "consteval", "constexpr", "constinit", "continue",
@@ -28,8 +28,7 @@ const keywords = [
   "wchar_t", "while",
 ];
 
-
-const standardLibraryTypes = [
+const CPP_STD_TYPES: string[] = [
   // Integers
   "int8_t", "uint8_t", "int_least8_t", "uint_least8_t", "int_fast8_t", "uint_fast8_t",
   "int16_t", "uint16_t", "int_least16_t", "uint_least16_t", "int_fast16_t", "uint_fast16_t",
@@ -112,7 +111,7 @@ const standardLibraryTypes = [
   "jthread"
 ];
 
-const standardLibrarySubNamespaces = [
+const CPP_STD_SUB_NAMESPACES: string[] = [
   "ranges",
   "chrono",
   "filesystem",
@@ -120,6 +119,7 @@ const standardLibrarySubNamespaces = [
   "string_literals",
   "string_view_literals"
 ];
+
 type SingleToken = string | PrismNS.Token;
 
 type WalkTokenCallback = (context: SingleToken) => void;
@@ -143,11 +143,11 @@ export default function main(prism: PrismExtended) {
     return;
   }
 
-  prism.languages.cpp["keyword"] = new RegExp(`\\b(?:${keywords.join("|")})\\b`);
+  prism.languages.cpp["keyword"] = new RegExp(`\\b(?:${CPP_KEYWORDS.join("|")})\\b`);
 
   prism.languages.cpp["class-name"] = [
     ...prism.languages.cpp["class-name"],
-    new RegExp(`\\b(${standardLibraryTypes.join("|")})\\b`),
+    new RegExp(`\\b(${CPP_STD_TYPES.join("|")})\\b`),
   ];
 
   prism.languages.insertBefore("cpp", "keyword", {
@@ -158,7 +158,7 @@ export default function main(prism: PrismExtended) {
       },
       {
         // ranges, chrono, filesystem preceded by std::
-        pattern: new RegExp(`(std::)(${standardLibrarySubNamespaces.join("|")})`),
+        pattern: new RegExp(`(std::)(${CPP_STD_SUB_NAMESPACES.join("|")})`),
         lookbehind: true,
       },
       { pattern: /\b(std)/g },
