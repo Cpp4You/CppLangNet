@@ -1,22 +1,22 @@
 ---
-sidebar_position:	2
-title:				std::set reference
-sidebar_label:		set
-hide_title:			true
-description:		Summary of a std::set (usage, methods, etc.) - C++ Language
-tags:				[set, container, associative, key]
-
-cppreference_origin_rel: w/cpp/container/set
+title:                    std::set reference
+hide_title:               true
+description:              Summary of a std::set (usage, methods, etc.) - C++ Language
+tags:                     [set, container, associative, key]
+defined_in_headers:       "<set>"
+cppreference_origin_rel:  w/cpp/container/set
 ---
 
-import ClassSummary				from "@site-comps/ClassSummary";
-import CustomCodeBlock				from "@site-comps/CustomCodeBlock";
-import SymbolTable, { Symbol }	from "@site-comps/SymbolTable";
-import Columns					from "@site-comps/Columns";
-import NotFinished				from "@site/i18n/en/presets/NotFinished.mdx";
-import ImproveSection			from "@site/i18n/en/presets/ImproveSection.mdx";
-import Tabs						from "@theme/Tabs";
-import TabItem					from "@theme/TabItem";
+{/* Theme components */}
+import Tabs                     from "@theme/Tabs";
+import TabItem                  from "@theme/TabItem";
+
+{/* Site components */}
+import ClassSummary             from "@site-comps/ClassSummary";
+import CustomCodeBlock          from "@site-comps/CustomCodeBlock";
+import SymbolTable, { Symbol }  from "@site-comps/SymbolTable";
+import Columns                  from "@site-comps/Columns";
+import HiddenHeading            from "@site-comps/HiddenHeading";
 
 {/* Codes */}
 
@@ -33,31 +33,24 @@ import OverviewDetailedPmr from "./set/_codes/main-page/overview/overview-detail
 {/* Deduction Guides */}
 import DeductionGuides from "./set/_codes/main-page/deduction-guides.mdx"
 
-<NotFinished />
-
-## Overview
+<HiddenHeading>
+  ## Overview
+</HiddenHeading>
 
 <Tabs>
-<TabItem value="simplified" label="Simplified (since C++98)" default>
-
-	<OverviewSimplifiedRegular />
-
-</TabItem>
-<TabItem value="detailed" label="Detailed">
-	<Tabs>
-		<TabItem value="regular" label="Regular (since C++98)" default>
-
-			<OverviewDetailedRegular/>
-
-		</TabItem>
-
-		<TabItem value="pmr" label="Polymorphic (since C++17)">
-
-			<OverviewDetailedPmr/>
-
-		</TabItem>
-	</Tabs>
-</TabItem>
+  <TabItem value="simplified" label="Simplified (since C++98)" default>
+    <OverviewSimplifiedRegular />
+  </TabItem>
+  <TabItem value="detailed" label="Detailed">
+    <Tabs>
+      <TabItem value="regular" label="Regular (since C++98)" default>
+        <OverviewDetailedRegular/>
+      </TabItem>
+      <TabItem value="pmr" label="Polymorphic (since C++17)">
+        <OverviewDetailedPmr/>
+      </TabItem>
+    </Tabs>
+  </TabItem>
 </Tabs>
 
 The `std::set` is a sorted associative container that stores unique objects, by default ordered ascending.
