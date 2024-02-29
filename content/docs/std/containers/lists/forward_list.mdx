@@ -24,11 +24,11 @@ import ImproveSection             from '@site/i18n/en/presets/ImproveSection.mdx
 
 {/* Codes */}
 
-import OverviewSimplifiedRegular  from "./forward-list/_codes/main-page/overview/overview-simplified-regular.mdx";
-import OverviewDetailedRegular    from "./forward-list/_codes/main-page/overview/overview-detailed-regular.mdx";
-import OverviewDetailedPmr        from "./forward-list/_codes/main-page/overview/overview-detailed-pmr.mdx";
+import OverviewSimplifiedRegular  from "./forward_list/_codes/main-page/overview/overview-simplified-regular.mdx";
+import OverviewDetailedRegular    from "./forward_list/_codes/main-page/overview/overview-detailed-regular.mdx";
+import OverviewDetailedPmr        from "./forward_list/_codes/main-page/overview/overview-detailed-pmr.mdx";
 
-import DeductionGuides            from "./forward-list/_codes/main-page/deduction-guides.mdx";
+import DeductionGuides            from "./forward_list/_codes/main-page/deduction-guides.mdx";
 
 <NotFinished />
 
@@ -63,11 +63,11 @@ Forward list is a container that supports fast insertion and removal of elements
 Fast random access is not supported.
 :::
 
-It is implemented as a singly-linked list. Compared to [`std::list`](forward-list.mdx) this container provides more space efficient storage when bidirectional iteration is not needed.
+It is implemented as a singly-linked list. Compared to [`std::list`](forward_list.mdx) this container provides more space efficient storage when bidirectional iteration is not needed.
 
-Adding, removing and moving the elements within the list, or across several lists, does not invalidate the iterators currently referring to other elements in the list. However, an iterator or reference referring to an element is invalidated when the corresponding element is removed (via [`erase_after`](forward-list/erase-after.mdx)) from the list.
+Adding, removing and moving the elements within the list, or across several lists, does not invalidate the iterators currently referring to other elements in the list. However, an iterator or reference referring to an element is invalidated when the corresponding element is removed (via [`erase_after`](forward_list/erase-after.mdx)) from the list.
 
-[`std::forward_list`](#) meets the requirements of [`Container`](/docs/named_req/Container) (except for the size member function and that [`operator==`](forward-list/operator_eq.mdx)'s complexity is always linear), [`AllocatorAwareContainer`](/docs/named_req/AllocatorAwareContainer) and [`SequenceContainer`](/docs/named_req/SequenceContainer).
+[`std::forward_list`](#) meets the requirements of [`Container`](/docs/named_req/Container) (except for the size member function and that [`operator==`](forward_list/operator_eq.mdx)'s complexity is always linear), [`AllocatorAwareContainer`](/docs/named_req/AllocatorAwareContainer) and [`SequenceContainer`](/docs/named_req/SequenceContainer).
 
 </div>
 </details>

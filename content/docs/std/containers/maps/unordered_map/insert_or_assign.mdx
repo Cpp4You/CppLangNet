@@ -25,7 +25,7 @@ import Method_SinceCpp17	from './_codes/insert_or_assign/since-cpp17.mdx';
  - **(1-3)** 
     If a key equivalent to `k` already exists in the container, assigns `std::forward<M>(obj)` to the `mapped_type` corresponding to the key `k`.
 
-    If the key does not exist, inserts the new value as if by [`insert()`](/docs/maps/unordered-map/insert), constructing it from `value_type(k, std::forward<M>(obj))`.
+    If the key does not exist, inserts the new value as if by [`insert()`](/docs/maps/unordered_map/insert), constructing it from `value_type(k, std::forward<M>(obj))`.
 
  - **(2-4)** 
     Same as **(1-3)**, except the mapped value is constructed from `value_type(std::move(k), std::forward<M>(obj))`.
@@ -72,7 +72,7 @@ Rehashing occurs only if the new number of elements is greater than `max_load_fa
 
 ### Notes
 
-[`insert_or_assign`](#) returns more information than [`operator[]`](/docs/std/containers/maps/unordered-map/operator_subscript) and does not require default-constructibility of the mapped type.
+[`insert_or_assign`](#) returns more information than [`operator[]`](/docs/std/containers/maps/unordered_map/operator_subscript) and does not require default-constructibility of the mapped type.
 
 Feature testing macro: [`__cpp_lib_unordered_map_try_emplace`](#).
 

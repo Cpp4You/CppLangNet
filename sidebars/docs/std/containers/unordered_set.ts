@@ -4,7 +4,7 @@ import {
   docsClassCat,
 } from "../../../common";
 
-const sidebar: SidebarItemConfig = docsClassCat("unordered_set", "std/containers/sets/unordered-set", "", [
+const sidebar: SidebarItemConfig = docsClassCat("unordered_set", "std/containers/sets/unordered_set", "", [
   "constructors",
   "destructors",
   "op:operator_assign",
