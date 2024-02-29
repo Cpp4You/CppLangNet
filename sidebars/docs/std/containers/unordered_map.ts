@@ -4,7 +4,7 @@ import {
   docsClassCat,
 } from "../../../common";
 
-const sidebar: SidebarItemConfig = docsClassCat("unordered_map", "std/containers/maps/unordered-map", "", [
+const sidebar: SidebarItemConfig = docsClassCat("unordered_map", "std/containers/maps/unordered_map", "", [
   "constructors",
   "destructors",
   "op:operator_assign",

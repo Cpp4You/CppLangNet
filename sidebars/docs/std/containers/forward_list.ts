@@ -4,7 +4,7 @@ import {
   docsClassCat,
 } from "../../../common";
 
-const sidebar: SidebarItemConfig = docsClassCat("forward_list", "std/containers/lists/forward-list", "", [
+const sidebar: SidebarItemConfig = docsClassCat("forward_list", "std/containers/lists/forward_list", "", [
   "constructors",
   "destructor",
   "op:operator_assign",
