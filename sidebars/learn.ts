@@ -1,12 +1,9 @@
 import type { SidebarItemConfig, SidebarsConfig } from "./types";
-import { cat } from "./common";
+import { lessonsSeparator, additionalSeparator } from "./common";
 
 function doc(sidebarLabel: string, docId: string): SidebarItemConfig {
   return { type: "doc", label: sidebarLabel, id: docId };
 }
-
-const lessonsSeparator = cat("Lessons:");
-const additionalSeparator = cat("Additional:");
 
 const sidebars: SidebarsConfig = {
   defaultSidebar: [

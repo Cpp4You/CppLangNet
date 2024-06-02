@@ -1,0 +1,45 @@
+---
+title:        "Preface"
+description:  "Using C and C++ with Nix: Preface"
+hide_title:   true
+---
+
+# Using C and C++ with Nix
+
+When it comes to using C++ with Nix, one may want to do several things:
+1. Create a development shell with tools and libraries which is then used in the development loop
+2. Package a new/existing project for other Nix and non-Nix users to use
+3. Contribute to nixpkgs, so that the packaged project is readily available from the centralized repository
+4. Create a CI/CD environment to evaluate the correctness of the project
+
+This series of articles explains all of these in detail, with focus on good practices.
+
+On top of that, we will show how to achieve each of those with flake and non-flake configurations and
+how the code may differ when contributed to nixpkgs.
+
+:::caution
+This series is **not** by any means a Nix tutorial, each section assumes the reader has a certain knowledge 
+acquired beforehand. We will be explaining some patterns and concepts, but you won't probably wont understand
+much without having some decent understanding.
+
+If you are unsure about your Nix basics this is what I would recommend:
+
+1. Get familiar with the Nix language first:
+    - https://learnxinyminutes.com/docs/nix/
+    - https://nix.dev/tutorials/nix-language#reading-nix-language
+    - https://nixcloud.io/tour/?id=introduction/nix
+
+2. Go through nix.dev to have a better grasp about Nix concepts and good practices:
+    - https://nix.dev
+
+3. You may want to read up on flakes as well, as they are ubiquitous in the community:
+    - https://nixos.wiki/wiki/Flakes
+    - https://nix.dev/concepts/flakes.html
+    - https://www.tweag.io/blog/2020-05-25-flakes/
+    - https://jvns.ca/blog/2023/11/11/notes-on-nix-flakes/
+
+4. For lower level knowledge, go through Nix pills:
+    - https://nixos.org/guides/nix-pills/
+
+5. Toy with and explore the ecosystem - most knowledge is gained through first-hand experience.
+:::
