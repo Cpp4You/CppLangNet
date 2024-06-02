@@ -60,6 +60,9 @@ export function cat(name: string): SidebarItemConfig {
   return separatorBase(`<span>${name}</span>`, "sidebar-separator sidebar-category");
 }
 
+export const lessonsSeparator = cat("Lessons:");
+export const additionalSeparator = cat("Additional:");
+
 export function parseClassItemShorthand(id: string, e, flags: Flags = []): SidebarItemConfig {
   if (typeof e !== "string") {
     if (Array.isArray(e))
