@@ -42,7 +42,7 @@ First, we have to open up the terminal; we can use the shortcut
 the menu
 
 **Command 1:** To begin, update the packages list using the below command
-```
+```sh
 sudo apt-get update
 ```
 This command is used to download package information from all configured
@@ -55,13 +55,13 @@ if required, enter your system password to proceed.
 :::
 
 **Command 2:** Now we will download Emacs by the following command
-```
+```sh
 sudo apt-get install emacs
 ```
 If required enter your system *password* to proceed.
 After download, you can check if Emacs is successfully installed in your
 system
-```
+```sh
 emacs --version
 ```
 If installed successfully, output would be like this
@@ -74,8 +74,8 @@ If installed successfully, output would be like this
     />
 
 
-```
 Now we're good to customize Emacs, just open the *initialization* file of Emacs
+```sh
 cd ~/.emacs.d && emacs init.el
 ```
 All the customizing code for Emacs will be written in `init.el` file.
