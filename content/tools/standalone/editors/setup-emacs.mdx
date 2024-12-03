@@ -15,18 +15,18 @@ In this article, we will discuss how to setup Emacs for C++ development on Linux
 ## Introduction
 
 Emacs is one of the oldest and most versatile text editors available for Linux and
-UNIX-based systems. It’s been around for a long time (more than twenty years for GNU emacs)
+UNIX-based systems. It’s been around for a long time (more than twenty years for GNU Emacs)
 and is well known for its powerful and rich editing features. Emacs is also more than just
 a text editor; it can be customized and extended with different “modes”, enabling it to be
 used like an Integrated Development Environment (IDE) for programming languages like C++, Java,
 C or Python.
 
 In this article, we will be configuring `lsp-mode` (Language Server Protocol) of emacs for
-C++ development. It is advised to learn the basic keybinds like saving a file, searchin a file,
-searching in a file, etc of Emacs before satrting using it.
+C++ development. It is advised to learn the basic keybinds like saving a file, searching a file,
+searching in a file, etc of Emacs before starting using it.
 
 :::important Note
-This article for setting up Emacs is deicated to novice programmers who want to do C++ development
+This article for setting up Emacs is dedicated to novice programmers who want to do C++ development
 in Emacs. After configuring Emacs according to this article, user will be able to get basic
 functionality like Code-Completion, Real-time Syntax checking, Code Navigation etc.
 For advance configuration of `lsp-mode` for C++ development, refer [here](https://emacs-lsp.github.io/lsp-mode/tutorials/CPP-guide/)
@@ -42,7 +42,7 @@ First, we have to open up the terminal; we can use the shortcut
 the menu
 
 **Command 1:** To begin, update the packages list using the below command
-```
+```sh
 sudo apt-get update
 ```
 This command is used to download package information from all configured
@@ -55,13 +55,13 @@ if required, enter your system password to proceed.
 :::
 
 **Command 2:** Now we will download Emacs by the following command
-```
+```sh
 sudo apt-get install emacs
 ```
 If required enter your system *password* to proceed.
 After download, you can check if Emacs is successfully installed in your
 system
-```
+```sh
 emacs --version
 ```
 If installed successfully, output would be like this
@@ -74,8 +74,8 @@ If installed successfully, output would be like this
     />
 
 
-Now we're good to customize Emacs, just open the *intitialization* file of Emacs
-```
+Now we're good to customize Emacs, just open the *initialization* file of Emacs
+```sh
 cd ~/.emacs.d && emacs init.el
 ```
 All the customizing code for Emacs will be written in `init.el` file.
@@ -105,7 +105,7 @@ Emacs for C++ Development.
 (package-initialize)
 ```
 After executing the above lines of code, 5000+ packages will be available to you for downloading
-inside emacs. You can see them by running following command
+inside Emacs. You can see them by running following command
 ```
 M-x package-list-packages RET
 ```
@@ -125,7 +125,7 @@ Add following code in `init.el` and execute it.
   (package-refresh-contents)
   (package-install 'use-package))
 ```
-Now we will be using `use-package` to download and install any other package for emacs. `use-package`
+Now we will be using `use-package` to download and install any other package for Emacs. `use-package`
 is a very popular package to organize the Emacs configuration and load the installed packages efficiently.
 
 
@@ -163,7 +163,7 @@ C++ development inside Emacs.
 (use-package lsp-treemacs
   :ensure t)
 
-;;; This will enable emacs to compile a simple cpp single file without any makefile by just pressing [f9] key
+;;; This will enable Emacs to compile a simple cpp single file without any makefile by just pressing [f9] key
 (defun code-compile()
   (interactive)
   (unless (file-exists-p "Makefile")
@@ -176,14 +176,14 @@ C++ development inside Emacs.
     (compile compile-command)))
 (global-set-key [f9] 'code-compile)
 ```
-For properly identing the whole file hit `C-x h`, this will select whole file and then hit `TAB`.
-Now save the file and exit the emacs (`C-x C-c`).
+For properly indenting the whole file hit `C-x h`, this will select whole file and then hit `TAB`.
+Now save the file and exit the Emacs (`C-x C-c`).
 
 
 Now make a `.cpp` file (like `a.cpp` but not in `.emacs.d/` directory). I recommend to create a directory
 dedicated to programming only and there create the file. First on opening the Emacs, many packages will get
 downloaded and get installed which can take some time. After that, `lsp-mode` will seek the language server
-for cpp development and since this is the first time startup of the emacs after `lsp-mode` installation,
+for cpp development and since this is the first time startup of the Emacs after `lsp-mode` installation,
 it will ask to download the required language server for cpp, that is, `clangd`. Below is the snapshot of
 Emacs asking to download `clangd` server.
 
@@ -229,7 +229,7 @@ int main() {
 
 We had already defined a function in our `init.el` file for compiling a simple cpp file by pressing `[f9]`
 key (See function `code-compile()` in the last of `init.el` file). So by pressing `[f9]` key, this
-simple code will get compiled without exiting emacs.
+simple code will get compiled without exiting Emacs.
 
 **Output:**
 <Image center
@@ -264,7 +264,7 @@ C++ development. In this section, we will just configuring looks of Emacs.
 :::
 
 
-When emacs is opened, it generally start with a startup message. If you want to disable it,
+When Emacs is opened, it generally start with a startup message. If you want to disable it,
 enter this in your `init.el` file
 ```lisp title="init.el"
 (setq inhibit-startup-message t)
@@ -276,7 +276,7 @@ For making scroll bar invisible
 (toggle-scroll-bar -1)
 ```
 Save the file and execute this line.
-For making it visibe again, just replace `-1` with `t`.
+For making it visible again, just replace `-1` with `t`.
 
 
 For making menu bar invisible
@@ -284,7 +284,7 @@ For making menu bar invisible
 (menu-bar-mode -1)
 ```
 Save the file and execute this line.
-For making it visibe again, just replace `-1` with `t`.
+For making it visible again, just replace `-1` with `t`.
 
 
 For making tool bar invisible
@@ -292,7 +292,7 @@ For making tool bar invisible
 (tool-bar-mode -1)
 ```
 Save the file and execute this line.
-For making it visibe again, just replace `-1` with `t`.
+For making it visible again, just replace `-1` with `t`.
 
 
 For making line number visible in front of every new line
@@ -300,7 +300,7 @@ For making line number visible in front of every new line
 (global-linum-mode t)
 ```
 Save the file and execute this line.
-For making it invisibe again, just replace `t` with `-1`.
+For making it invisible again, just replace `t` with `-1`.
 
 
 Emacs also provides variety of built-in themes. User can see and enable the theme which suites them the most.
