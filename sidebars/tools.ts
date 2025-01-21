@@ -1,4 +1,5 @@
 import type { SidebarsConfig } from "./types";
+import { lessonsSeparator } from "./common";
 
 const sidebars: SidebarsConfig = {
   defaultSidebar: [
@@ -49,6 +50,21 @@ const sidebars: SidebarsConfig = {
             "standalone/compilers/setup-gcc-macos",
             "standalone/compilers/setup-clang-linux",
             "standalone/compilers/setup-clang-macos",
+          ]
+        },
+        {
+          type: "category",
+          label: "Environments",
+          items: [
+            {
+              type: "category",
+              label: "Nix",
+              link: { type: "doc", id: "standalone/environments/nix" },
+              items: [
+                lessonsSeparator,
+                "standalone/environments/nix/shells",
+              ]
+            }
           ]
         },
       ]
