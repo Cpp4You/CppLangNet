@@ -2,14 +2,13 @@ import React from "react";
 import Content from "@theme-original/DocItem/Content";
 import type ContentType from "@theme/DocItem/Content";
 import type { WrapperProps } from "@docusaurus/types";
-import { useDoc as useDocInternal } from "@docusaurus/theme-common/internal";
+import { useDoc } from "@docusaurus/plugin-content-docs/client";
 
 import DocSettings from "@site/src/components/DocSettings";
 import CppRefAttribution from "@site-comps/CppRefAttribution";
 import DefinedIn from "@site-comps/DefinedIn";
 
 import BrowserOnly from "@docusaurus/BrowserOnly";
-// import useIsBrowser				from '@docusaurus/useIsBrowser';
 
 import { setCookie, getCookie } from "@site/src/helper/Cookies";
 
@@ -30,12 +29,6 @@ type DocMetadata = {
   frontMatter: FrontMatterData;
 };
 
-type useDocFn = () => {
-  metadata: DocMetadata;
-}
-
-const useDoc = useDocInternal as useDocFn;
-
 type Props = WrapperProps<typeof ContentType>;
 
 /**
@@ -43,7 +36,7 @@ type Props = WrapperProps<typeof ContentType>;
  * or extra FrontMatter-based features e.g. {@linkcode CppRefAttribution}.
  */
 export default function ContentWrapper(props: Props): JSX.Element {
-  const { metadata } = useDoc();
+  const { metadata } = useDoc() as { metadata: DocMetadata };
 
   const [textSize, setTextSize] = React.useState(5);
   React.useEffect(() => {
