@@ -4,6 +4,7 @@ import type ContentType from "@theme/DocItem/Content";
 import type { WrapperProps } from "@docusaurus/types";
 import { useDoc } from "@docusaurus/plugin-content-docs/client";
 
+import NotFinished from "@site-comps/admonitions/NotFinished";
 import DocSettings from "@site/src/components/DocSettings";
 import CppRefAttribution from "@site-comps/CppRefAttribution";
 import DefinedIn from "@site-comps/DefinedIn";
@@ -22,6 +23,8 @@ interface FrontMatterData {
   "arrow_jumping_preset"?: string;
 
   "defined_in_headers"?: string | string[];
+
+  "completion"?: boolean;
   // Possibly other
 }
 
@@ -70,6 +73,10 @@ export default function ContentWrapper(props: Props): JSX.Element {
         )}
       </BrowserOnly>
       <FrontMatterDefinedIn frontMatter={metadata.frontMatter} />
+      {
+        metadata.frontMatter.completion === false &&
+        <NotFinished />
+      }
       <Content {...props} />
       <FrontMatterCppRefAttribution frontMatter={metadata.frontMatter} />
     </div>
