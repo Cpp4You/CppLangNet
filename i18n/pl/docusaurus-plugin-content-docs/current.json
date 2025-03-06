@@ -80,11 +80,11 @@
     "description": "The label for category Members of string in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.Standard Library": {
-    "message": "Standard Library",
+    "message": "Biblioteka standardowa",
     "description": "The label for category Standard Library in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.Mathematical Functions": {
-    "message": "Mathematical Functions",
+    "message": "Funkcje matematyczne",
     "description": "The label for category Mathematical Functions in sidebar defaultSidebar"
   },
   "sidebar.defaultSidebar.category.Abs": {
@@ -166,5 +166,201 @@
   "sidebar.defaultSidebar.category.stack": {
     "message": "stack",
     "description": "The label for category stack in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Basic Operations": {
+    "message": "Podstawowe operacje",
+    "description": "The label for category Basic Operations in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Exponential Functions": {
+    "message": "Funkcje wykładnicze",
+    "description": "The label for category Exponential Functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Power Functions": {
+    "message": "Funkcje potęgowe",
+    "description": "The label for category Power Functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Trigonometric Functions": {
+    "message": "Funkcje trygonometryczne",
+    "description": "The label for category Trigonometric Functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Hyperbolic Functions": {
+    "message": "Funkcje hiperboliczne",
+    "description": "The label for category Hyperbolic Functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Error and Gamma Functions": {
+    "message": "Funkcje błędów i gamma",
+    "description": "The label for category Error and Gamma Functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Nearest integer floating point operations": {
+    "message": "Operacje na najbliższej liczbie całkowitej",
+    "description": "The label for category Nearest integer floating point operations in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Floating point manipulation functions": {
+    "message": "Funkcje manipulacji liczbami zmiennoprzecinkowymi",
+    "description": "The label for category Floating point manipulation functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Classification and comparison": {
+    "message": "Klasyfikacja i porównanie",
+    "description": "The label for category Classification and comparison in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Types": {
+    "message": "Types",
+    "description": "The label for category Types in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Macro Constants": {
+    "message": "Stałe (makra)",
+    "description": "The label for category Macro Constants in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.forward_list": {
+    "message": "forward_list",
+    "description": "The label for category forward_list in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Searching": {
+    "message": "Wyszukiwanie",
+    "description": "The label for category Searching in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Rangified": {
+    "message": "Rangified",
+    "description": "The label for category Rangified in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Ordinary": {
+    "message": "Zwykłe",
+    "description": "The label for category Ordinary in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Determining conditions": {
+    "message": "Determining conditions",
+    "description": "The label for category Determining conditions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Other non-modifying": {
+    "message": "Inne niemodyfikujące",
+    "description": "The label for category Other non-modifying in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Random operations": {
+    "message": "Operacje losowe",
+    "description": "The label for category Random operations in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Modifying": {
+    "message": "Modyfikujące",
+    "description": "The label for category Modifying in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Partitioning": {
+    "message": "Rozdzielające",
+    "description": "The label for category Partitioning in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Sorting": {
+    "message": "Sortujące",
+    "description": "The label for category Sorting in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Binary search": {
+    "message": "Wyszukiwanie binarne",
+    "description": "The label for category Binary search in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Set": {
+    "message": "Set",
+    "description": "The label for category Set in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Other operations on sorted ranges": {
+    "message": "Inne operacje na posortowanych zakresach",
+    "description": "The label for category Other operations on sorted ranges in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Heap": {
+    "message": "Heap",
+    "description": "The label for category Heap in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Min/max": {
+    "message": "Min/max",
+    "description": "The label for category Min/max in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Comparison": {
+    "message": "Porównania",
+    "description": "The label for category Comparison in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Permutation": {
+    "message": "Permutacje",
+    "description": "The label for category Permutation in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Numeric": {
+    "message": "Numeryczne",
+    "description": "The label for category Numeric in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Operations on uninitialized memory": {
+    "message": "Operacje na niezainicjalizowanej pamięci",
+    "description": "The label for category Operations on uninitialized memory in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.C algorithms": {
+    "message": "Algorytmy z C",
+    "description": "The label for category C algorithms in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Memory": {
+    "message": "Pamięć",
+    "description": "The label for category Memory in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Smart Pointers": {
+    "message": "Smart pointery",
+    "description": "The label for category Smart Pointers in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Pointer Categories": {
+    "message": "Kategorie wskaźników",
+    "description": "The label for category Pointer Categories in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Helper classes": {
+    "message": "Pomocnicze klasy",
+    "description": "The label for category Helper classes in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.owner_less": {
+    "message": "owner_less",
+    "description": "The label for category owner_less in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Smart pointer adaptors": {
+    "message": "Adaptory smart pointerów",
+    "description": "The label for category Smart pointer adaptors in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Allocators": {
+    "message": "Alokatory",
+    "description": "The label for category Allocators in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Named Requirements": {
+    "message": "Named Requirements",
+    "description": "The label for category Named Requirements in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Basic": {
+    "message": "Podstawowe",
+    "description": "The label for category Basic in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Type properties": {
+    "message": "Operacje na typach",
+    "description": "The label for category Type properties in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Library-wide": {
+    "message": "Library-wide",
+    "description": "The label for category Library-wide in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Container": {
+    "message": "Kontenery",
+    "description": "The label for category Container in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Container element": {
+    "message": "Element kontenera",
+    "description": "The label for category Container element in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Iterator": {
+    "message": "Iterator",
+    "description": "The label for category Iterator in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Stream I/O functions": {
+    "message": "Funkcje strumieni I/O",
+    "description": "The label for category Stream I/O functions in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Formatters": {
+    "message": "Formattery",
+    "description": "The label for category Formatters in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Random Number Generation": {
+    "message": "Generowanie Liczb Losowych",
+    "description": "The label for category Random Number Generation in sidebar defaultSidebar"
+  },
+  "sidebar.defaultSidebar.category.Concurrency": {
+    "message": "Współbieżność",
+    "description": "The label for category Concurrency in sidebar defaultSidebar"
   }
 }
