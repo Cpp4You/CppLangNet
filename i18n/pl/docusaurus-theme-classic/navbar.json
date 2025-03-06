@@ -26,5 +26,9 @@
   "item.label.Community": {
     "message": "Społeczność",
     "description": "Navbar item with label Community"
+  },
+  "logo.alt": {
+    "message": "Logo języka C++",
+    "description": "The alt text of navbar logo"
   }
 }

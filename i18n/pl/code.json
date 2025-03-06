@@ -260,7 +260,7 @@
   },
   "theme.ErrorPageContent.tryAgain": {
     "message": "Spróbuj ponownie",
-    "description": "The label of the button to try again when the page crashed"
+    "description": "The label of the button to try again rendering when the React error boundary captures an error"
   },
   "theme.BackToTopButton.buttonAriaLabel": {
     "message": "Powrót do góry strony",
@@ -354,27 +354,121 @@
     "description": "The ARIA label for the link to full blog posts from excerpts"
   },
   "removed in C++98": {
-    "message": "removed in C++98"
+    "message": "usunięto w C++98"
   },
   "removed in C++03": {
-    "message": "removed in C++03"
+    "message": "usunięto w C++03"
   },
   "removed in C++11": {
-    "message": "removed in C++11"
+    "message": "usunięto w C++11"
   },
   "removed in C++14": {
-    "message": "removed in C++14"
+    "message": "usunięto w C++14"
   },
   "removed in C++17": {
-    "message": "removed in C++17"
+    "message": "usunięto w C++17"
   },
   "removed in C++20": {
-    "message": "removed in C++20"
+    "message": "usunięto w C++20"
   },
   "removed in C++23": {
-    "message": "removed in C++23"
+    "message": "usunięto w C++23"
+  },
+  "removed in C++26": {
+    "message": "usunięto w C++26"
   },
   "See full code": {
     "message": "Zobacz pełen kod"
+  },
+  "Your completely free,": {
+    "message": "Całkowicie darmowa,"
+  },
+  "open source": {
+    "message": "otwarto-źródłowa"
+  },
+  "all-in-one website about C++.": {
+    "message": "pełna strona o języku C++."
+  },
+  "deprecated": {
+    "message": "przestarzały"
+  },
+  "deprecated in C++26": {
+    "message": "przestarzały od C++26"
+  },
+  "until C++26": {
+    "message": "przed C++26"
+  },
+  "since C++26": {
+    "message": "od C++26"
+  },
+  "deleted": {
+    "message": "usunięte"
+  },
+  "Note, this article is not finished! You can help by editing this doc page.": {
+    "message": "Uwaga, ten artykuł nie jest skończony! Możesz pomóc edytując tę stronę dokumentacji."
+  },
+  "theme.docs.DocCard.categoryDescription.plurals": {
+    "message": "1 element|{count} elementy|{count} elementów",
+    "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.admonition.warning": {
+    "message": "Uwaga",
+    "description": "The default label used for the Warning admonition (:::warning)"
+  },
+  "theme.DocSidebarItem.expandCategoryAriaLabel": {
+    "message": "Rozwiń kategorię panelu bocznego '{label}'",
+    "description": "The ARIA label to expand the sidebar category"
+  },
+  "theme.DocSidebarItem.collapseCategoryAriaLabel": {
+    "message": "Zwiń kategorię panelu bocznego '{label}'",
+    "description": "The ARIA label to collapse the sidebar category"
+  },
+  "theme.NavBar.navAriaLabel": {
+    "message": "Główny",
+    "description": "The ARIA label for the main navigation"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "Panel boczny dokumentów",
+    "description": "The ARIA label for the sidebar navigation"
+  },
+  "theme.docs.sidebar.closeSidebarButtonAriaLabel": {
+    "message": "Zamknij panel nawigacji",
+    "description": "The ARIA label for close button of mobile sidebar"
+  },
+  "theme.docs.sidebar.toggleSidebarButtonAriaLabel": {
+    "message": "Przełączanie panelu nawigacyjnego",
+    "description": "The ARIA label for hamburger menu button of mobile navigation"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.pageTitle": {
+    "message": "Autorzy",
+    "description": "The title of the authors page"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "Zobacz wszystkich autorów",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "Ta osoba nie napisała jeszcze żadnego posta.",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.contentVisibility.unlistedBanner.title": {
+    "message": "Niepubliczna strona",
+    "description": "The unlisted content banner title"
+  },
+  "theme.contentVisibility.unlistedBanner.message": {
+    "message": "Ta strona jest niepubliczna. Wyszukiwarki nie będą jej indeksować, a dostęp do niej będą mieli tylko użytkownicy posiadający bezpośredni link.",
+    "description": "The unlisted content banner message"
+  },
+  "theme.contentVisibility.draftBanner.title": {
+    "message": "Draft page",
+    "description": "The draft content banner title"
+  },
+  "theme.contentVisibility.draftBanner.message": {
+    "message": "Ta strona to szkic. Będzie widoczna tylko w trybie deweloperskim i zostanie wykluczona z wersji produkcyjnej.",
+    "description": "The draft content banner message"
   }
 }
