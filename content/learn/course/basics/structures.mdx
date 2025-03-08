@@ -47,9 +47,9 @@ information, we could do it like this:
 #include <string>
 
 int main() {
-	std::string	enemy_name = "Goblin";
-	float		enemy_health = 50;
-	float		enemy_strength = 12;
+	std::string enemy_name = "Goblin";
+	float enemy_health = 50;
+	float enemy_strength = 12;
 	// ...
 }
 ```
@@ -60,9 +60,9 @@ or rather inconvenience:
 If we use multiple arrays for this purpose:
 
 ```cpp
-std::vector< std::string >	enemy_names;
-std::vector< float >		enemy_health;
-std::vector< float >		enemy_strength;
+std::vector< std::string > enemy_names;
+std::vector< float > enemy_health;
+std::vector< float > enemy_strength;
 ```
 
 then each opponent will be described under the same index in these tables:
@@ -101,9 +101,9 @@ We are about to add a structure that allows us to create an object that contains
 
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 };
 
 int main()
@@ -131,9 +131,9 @@ Note the **obligatory** semicolon after the curly braces to close the structure 
 ```cpp
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 	// highlight-next-line
 };
 ```
@@ -188,9 +188,9 @@ boss.health		*= 0.5f;
 
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 };
 
 int main()
@@ -202,10 +202,10 @@ int main()
 	boss.health		= 250;
 	boss.strength	= 50;
 
-	std::cout	<< boss.name		<< " has "
-				<< boss.health		<< " hp and "
-				<< boss.strength	<< " strength."
-				<< std::endl;
+	std::cout	<< boss.name << " has "
+		<< boss.health << " hp and "
+		<< boss.strength << " strength."
+		<< std::endl;
 }
 ```
 
@@ -217,10 +217,10 @@ as a parameter. A good example will be just displaying information about an enem
 ```cpp title="A function that displays information about an opponent"
 void print_enemy_info(Enemy enemy)
 {
-	std::cout	<< enemy.name		<< " has "
-				<< enemy.health		<< " hp and "
-				<< enemy.strength	<< " strength."
-				<< std::endl;
+	std::cout	<< enemy.name << " has "
+		<< enemy.health << " hp and "
+		<< enemy.strength << " strength."
+		<< std::endl;
 }
 ```
 
@@ -246,18 +246,18 @@ Using the above information, we will create a "game" that will have two opponent
 // Creating struct
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 };
 
 // Function that display information about an enemy
 void print_enemy_info(Enemy enemy)
 {
-	std::cout	<< enemy.name		<< " has "
-				<< enemy.health		<< " hp and "
-				<< enemy.strength	<< " strength."
-				<< std::endl;
+	std::cout	<< enemy.name << " has "
+		<< enemy.health << " hp and "
+		<< enemy.strength << " strength."
+		<< std::endl;
 }
 
 // The main function
@@ -268,14 +268,14 @@ int main()
 	Enemy goblin;
 
 	// I setup goblin object fields
-	goblin.name		= "Goblin warrior";
-	goblin.health	= 60;
-	goblin.strength	= 14;
+	goblin.name = "Goblin warrior";
+	goblin.health = 60;
+	goblin.strength = 14;
 
 	// I setup boss object fields
-	boss.name		= "Ogre";
-	boss.health		= 250;
-	boss.strength	= 50;
+	boss.name = "Ogre";
+	boss.health = 250;
+	boss.strength = 50;
 
 	// and print information about them
 	print_enemy_info(goblin);
@@ -309,9 +309,9 @@ int main()
 		// I create goblin variable 👉 locally 👈
 		Enemy goblin;
 		// I setup the fields
-		goblin.name		= "Goblin warrior";
-		goblin.health	= 60;
-		goblin.strength	= 14;
+		goblin.name = "Goblin warrior";
+		goblin.health = 60;
+		goblin.strength = 14;
 
 		// I add the object to the vector
 		// highlight-next-line
@@ -357,18 +357,19 @@ known for creating variables:
 // Creating the structure
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 
 	// highlight-next-line
-	float		total_damage = 0;
+	float total_damage = 0;
 };
 ```
 
 Now when we create some enemy:
 
 ```cpp
+// prism-push-types:Enemy
 Enemy snake; // snake as an example
 ```
 
@@ -393,9 +394,9 @@ int main() {
 	// 🟡 Note, I'm not setting "total_damage" manually
 
 	std::cout	<< snake.name
-				<< " has dealt "
-				<< snake.total_damage
-				<< " total damage";
+		<< " has dealt "
+		<< snake.total_damage
+		<< " total damage";
 }
 ```
 
@@ -439,9 +440,9 @@ void print_enemy_info(Enemy enemy)
 // Creating the structure
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 };
 ```
 
@@ -459,11 +460,11 @@ It is only possible to assign an initial value:
 ```cpp title="🔴 Attempt to modify field in a wrong place"
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 
-	int			total_damage = 0; // OK ✅
+	int total_damage = 0; // OK ✅
 
 	// ❌ Error: Attempt to modify field in a wrong place
 	// error-next-line
