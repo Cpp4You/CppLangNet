@@ -5,46 +5,46 @@
 
 struct Vehicle
 {
-    std::string brand;
-    std::string model;
-    int production_year;
+	std::string brand;
+	std::string model;
+	int production_year;
 
-    // highlight-next-line
-    std::string complete_name()
-    {
-        return brand + " " + model;
-    }
+	// highlight-next-line
+	std::string complete_name()
+	{
+		return brand + " " + model;
+	}
 };
 
 struct Car : Vehicle
 {
-    bool is_cabrio;
+	bool is_cabrio;
 };
 
 struct Airplane : Vehicle
 {
-    int number_of_engines;
-    std::string airlines_name; 
+	int number_of_engines;
+	std::string airlines_name; 
 };
 
 int main()
 {
-    Car ford;
-    ford.brand = "Ford";
-    ford.model = "Fiesta";
-    ford.production_year = 2010;
-    ford.is_cabrio = false;
+	Car ford;
+	ford.brand = "Ford";
+	ford.model = "Fiesta";
+	ford.production_year = 2010;
+	ford.is_cabrio = false;
 
-    Airplane boeing;
-    boeing.brand = "Boeing";
-    boeing.model = "737";
-    boeing.production_year = 2010;
-    boeing.number_of_engines = 2;
-    boeing.airlines_name = "Air Canada";
-    
-    // highlight-next-line
-    std::cout << ford.complete_name() << '\n'; // "Ford Fiesta"
-    // highlight-next-line
-    std::cout << boeing.complete_name() << '\n'; // "Boeing 737"
+	Airplane boeing;
+	boeing.brand = "Boeing";
+	boeing.model = "737";
+	boeing.production_year = 2010;
+	boeing.number_of_engines = 2;
+	boeing.airlines_name = "Air Canada";
+	
+	// highlight-next-line
+	std::cout << ford.complete_name() << '\n'; // "Ford Fiesta"
+	// highlight-next-line
+	std::cout << boeing.complete_name() << '\n'; // "Boeing 737"
 }
 ```
