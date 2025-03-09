@@ -1,7 +1,6 @@
 ---
-title:			"Inheritance"
-description:	"Lesson: inheritance basics in C++"
-completion: false
+title: "Inheritance"
+description: "Lesson: inheritance basics in C++"
 ---
 
 # Inheritance
@@ -22,25 +21,25 @@ For an example if we make game with vehicles containing planes ✈ and cars 🚗
 ```cpp
 struct Car
 {
-    // highlight-start
-    std::string brand;
-    std::string model;
-    int production_year;
-    // highlight-end
+  // highlight-start
+  std::string brand;
+  std::string model;
+  int production_year;
+  // highlight-end
 
-    bool is_cabrio;
+  bool is_cabrio;
 };
 
 struct Airplane
 {
-    // highlight-start
-    std::string brand;
-    std::string model;
-    int production_year;
-	// highlight-end
+  // highlight-start
+  std::string brand;
+  std::string model;
+  int production_year;
+  // highlight-end
 
-    int number_of_engines;
-    std::string airlines_name;
+  int number_of_engines;
+  std::string airlines_name;
 };
 ```
 
@@ -59,9 +58,9 @@ Now when we pointed out common properties we can create structure that will cons
 ```cpp
 struct Vehicle
 {
-    std::string brand;
-    std::string model;
-    int production_year;
+  std::string brand;
+  std::string model;
+  int production_year;
 };
 ```
 
@@ -83,27 +82,22 @@ Instead of this, we will use `Vehicle` to make `Car` and `Airplane` structures s
 
 In order to create **derived structres** using inheritance, we have to put the base structure name after the colon:
 
+<CustomCodeBlock fullCode={<FullCode_DerivedStructs />}>
+
 ```cpp
 struct Car : Vehicle
 {
-    bool is_cabrio;
+  bool is_cabrio;
 };
 
 struct Airplane : Vehicle
 {
-    int number_of_engines;
-    std::string airlines_name;
+  int number_of_engines;
+  std::string airlines_name;
 }
 ```
 
-<details>
-    <summary>See full code</summary>
-    <div>
-        <CustomCodeBlock maxlines={25} resizable>
-            <FullCode_DerivedStructs />
-        </CustomCodeBlock>
-    </div>
-</details>
+</CustomCodeBlock>
 
 :::danger The order of definitions
 We have to place the `Vehicle` definition before the derived structures definitions.
@@ -117,6 +111,8 @@ The above scheme shows, that properties inherited from `Vehicle` are in both `Ca
 
 Because of this, when we create a car inside our code, we can use `brand`, `model` and `production_year` fields as if they were directly in `Car` structure:
 
+<CustomCodeBlock fullCode={<FullCode_DerivedStructsUsage />}>
+
 ```cpp
 // prism-push-types:Car
 Car ford;
@@ -126,7 +122,11 @@ ford.production_year = 2010;
 ford.is_cabrio = false;
 ```
 
+</CustomCodeBlock>
+
 The same applies to the plane:
+
+<CustomCodeBlock fullCode={<FullCode_DerivedStructsUsage />}>
 
 ```cpp showLineNumbers
 // prism-push-types:Airplane
@@ -138,14 +138,7 @@ boeing.number_of_engines = 2;
 boeing.airlines_name = "Air Canada";
 ```
 
-<details>
-    <summary>See full code</summary>
-    <div>
-        <CustomCodeBlock maxlines={25} resizable>
-            <FullCode_DerivedStructsUsage />
-        </CustomCodeBlock>
-    </div>
-</details>
+</CustomCodeBlock>
 
 ### Inheriting methods
 
@@ -154,12 +147,12 @@ Just like member variables, methods are also inherited. Let's add `complete_name
 ```cpp
 struct Vehicle 
 {
-    // ... 
+  // ... 
 
-    std::string complete_name() 
-    {
-        return brand + " " + model;
-    }
+  std::string complete_name() 
+  {
+    return brand + " " + model;
+  }
 };
 ```
 
@@ -175,10 +168,10 @@ std::cout << ford.complete_name(); // "Ford Fiesta"
 ```
 
 <details>
-    <summary>See full code</summary>
-    <div>
-        <CustomCodeBlock maxlines={25} resizable>
-            <FullCode_DerivedStructsMethods />
-        </CustomCodeBlock>
-    </div>
+  <summary>See full code</summary>
+  <div>
+    <CustomCodeBlock maxlines={25} resizable>
+      <FullCode_DerivedStructsMethods />
+    </CustomCodeBlock>
+  </div>
 </details>
