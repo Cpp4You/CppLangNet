@@ -1,0 +1,26 @@
+```cpp title="Using object fields"
+#include <iostream>
+#include <string>
+
+struct Enemy
+{
+	std::string name;
+	float health;
+	float strength;
+};
+
+int main()
+{
+	// I create boss object
+	Enemy boss;
+	// I assign values to its fields
+	boss.name = "Ogre";
+	boss.health = 250;
+	boss.strength = 50;
+
+	std::cout	<< boss.name << " has "
+		<< boss.health << " hp and "
+		<< boss.strength << " strength."
+		<< std::endl;
+}
+```

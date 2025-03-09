@@ -1,24 +1,23 @@
 ---
-sidebar_position:	8
-sidebar_label:		"8. Struktury"
-title:				Struktury
-description:		"Lekcja: struktury w języku C++"
-tags:				[struktura, obiekt, klasa, programowanie-obiektowe, oop]
-hide_title:			true
+sidebar_label: "8. Struktury"
+title: "Struktury"
+description: "Lekcja: podstawy struktur w C++"
+tags: [struktura, obiekt, klasa, programowanie-obiektowe, obiektowe, oop]
+hide_title: true
 ---
 
 {/* Components */}
-import Columns			from "@site-comps/Columns";
-import CustomCodeBlock	from "@site-comps/CustomCodeBlock";
-import Image			from "@site-comps/Image";
+import Columns from "@site-comps/Columns";
+import CustomCodeBlock from "@site-comps/CustomCodeBlock";
+import Image from "@site-comps/Image";
 
-{/* Presets */}
-import ImproveSection	from '@site/i18n/pl/presets/ImproveSection.mdx';
+{/* Codes */}
+import FullCode_UsingObjectFields from './_codes/structures/full-code-using-object-fields.mdx';
 
 # Struktury
 
-W tej lekcji nauczysz się tworzenia typów danych, złożonych z wielu mniejszych
-elementów, czyli tego co w C++ nazywamy strukturami.
+W tej lekcji dowiesz się, jak tworzyć typy danych składające się z wielu
+mniejszych elementów - to, co w C++ nazywamy strukturami.
 
 ## Motywacja
 
@@ -26,60 +25,54 @@ elementów, czyli tego co w C++ nazywamy strukturami.
 		maxheight={200}
 		alt="Prezentacja przeciwnika - Goblin"
 		src="/img/tutorials/course/basic/structures/GoblinEnemy.gif"
-		desc={<>Obrazek goblina wykonany przez <a href="https://luizmelo.itch.io/monsters-creatures-fantasy">LuizMelo</a></>}
+		desc={<>Obrazek goblina autorstwa <a href="https://luizmelo.itch.io/monsters-creatures-fantasy">LuizMelo</a></>}
 	/>
 <br/>
 
-Jeśli np. tworząc grę 🎮, chcemy zawrzeć w swoim programie przeciwników,
-zwykle będziemy musieli o każdym z nich zapisac kilka informacji.
+Jeśli na przykład, tworząc grę 🎮, chcemy umieścić w naszym programie przeciwników,
+zazwyczaj będziemy musieli zapisać pewne informacje o każdym z nich.
 
-Zastanów się: jakie dane o wrogach w grze mogą się przydać?
-Może to być np.:
+Zastanów się, jakie dane o wrogach w grze mogą być przydatne? Mogą to być na przykład:
 
 - nazwa 👾
-- życie 💚
+- punkty życia 💚
 - siła 💪
 
-itd...
+itp.
 
-Korzystając z dotychczas nabytej wiedzy, gdybyśmy chcieli napisać program,
-który przechowuje te informacje, moglibyśmy zrobić to np. tak:
+Wykorzystując dotychczas zdobytą wiedzę, gdybyśmy chcieli napisać program, który przechowuje te
+informacje, moglibyśmy to zrobić tak:
 
 ```cpp
 #include <string>
 
 int main() {
-	std::string	enemy_name = "Goblin";
-	float		enemy_health = 50;
-	float		enemy_strength = 12;
+	std::string enemy_name = "Goblin";
+	float enemy_health = 50;
+	float enemy_strength = 12;
 	// ...
 }
 ```
 
-Gdy będziemy chcieli mieć w grze więcej przeciwników, napotkamy na pewnien problem,
-a właściwie uniedogodnienie:
+Kiedy będziemy chcieli mieć więcej przeciwników w grze, napotkamy problem,
+a raczej niedogodność:
 
-Jeśli skorzystamy w tym celu z wielu tablic:
+Jeśli użyjemy do tego celu wielu tablic:
 
 ```cpp
-std::vector< std::string >	enemy_names;
-std::vector< float >		enemy_health;
-std::vector< float >		enemy_strength;
+std::vector< std::string > enemy_names;
+std::vector< float > enemy_health;
+std::vector< float > enemy_strength;
 ```
 
-to każdy przeciwnik będzie opisany pod jednakowym indeksem w tych tablicach:
+wtedy każdy przeciwnik będzie opisany pod tym samym indeksem w tych tablicach:
 
-- `enemy_names[ index ]` opisuje nazwę
+- `enemy_names[ index ]` opisuje imię
 - `enemy_health[ index ]` opisuje punkty życia
 - `enemy_strength[ index ]` opisuje punkty siły
 
-
-:::important Uwaga
-Ten sposób wiąże się z "rozrzuceniem" informacji o pojedynczym
-przeciwniku, po wielu tablicach.
-:::
-
-Dodanie jednego wroga do zbioru, w takim programie wyglądałoby tak:
+Konsekwencją skorzystania z tego sposobu jest "rozproszenie" informacji o jednym przeciwniku po wielu tablicach.
+Wtedy dodanie jednego wroga do zbioru w takim programie wyglądałoby tak:
 
 ```cpp
 enemy_names.push_back("Goblin");
@@ -87,67 +80,98 @@ enemy_health.push_back(50);
 enemy_strength.push_back(10);
 ```
 
-Im więcej różnych informacji chcemy o przeciwnikach przechować, tym będzie to
-bardziej uciążliwe. Na szczęście tutaj z pomocą przychodzą nam
-**struktury**.
+Im więcej informacji o naszych przeciwnikach chcemy przechowywać, tym bardziej uciążliwe
+to będzie. Na szczęście, z pomocą przychodzą nam **struktury**.
 
-## Tworzenie struktury
+## Terminologia
 
-Przypomnijmy sobie, jakie dane potrzebujemy przechować:
+- **Struktura** to przepis na to, jak stworzyć obiekt (w tym przypadku przeciwnika).
+  Grupuje ze sobą wiele zmiennych w jedną całość.
+- **Obiekt** to konkretna *instancja* struktury, np. konkretny wróg.
+  <details>
+    <summary>Bardziej szczegółowa definicja</summary>
+    <div>
+      W C++ obiekt to pośredni sposób dostępu do pamięci komputera. Reprezentuje obszar pamięci
+      który przechowuje dane określonego typu. Zwykła zmienna fundamentalnego typu (np. `int`, `float` itp.)
+      jest również obiektem, jednak w kontekście tej lekcji będziemy używać tego terminu w odniesieniu do struktur.
+      Zmienna jest obiektem z nazwą (identyfikatorem), której można użyć do uzyskania dostępu do jej wartości.
+      <a href="/docs/lang/object" target="_blank">Pełna definicja</a>.
+    </div>
+  </details>
 
-- nazwa 👾
-- życie 💚
-- siła 💪
 
-Zaraz dodamy strukturę, dzięki której, będziemy mogli utworzyć **obiekt**,
-który zawiera w sobie te 3 rzeczy.
+## Tworzenie struktur
+
+Przypomnijmy sobie, jakie dane musimy przechowywać:
+
+- nazwa
+- punkty życia
+- siła
+
+Zamierzamy dodać strukturę, która pozwoli nam stworzyć obiekt zawierający te 3 rzeczy.
 
 ```cpp
 #include <string>
 
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 };
 
 int main()
 {
-	// Na razie pusto
+	// Na razie zostawiamy puste
 }
 ```
 
 Powyższy kod wprowadza nową **strukturę** - `Enemy`.
 
-:::important Zapamiętaj
-**Struktura** to opis, wzorzec, receptura na to, jak utworzyć **obiekt** (w tym wypadku wroga).
-:::
+### Składnia
 
-Żeby utworzyć strukturę, piszemy po słowie kluczowym `struct` jej nazwę, następnie
-między nawiasami klamrowymi `{` `}` umieszczamy jej *zawartość*.
+Aby utworzyć strukturę, piszemy jej nazwę po słowie kluczowym `struct`, następnie umieszczamy jej zawartość
+między nawiasami klamrowymi `{` i `}`.
 
-Zawartością mogą być np. zmienne składowe.
+W C++ struktura może zawierać:
 
-<div id="srednik-po-definicji" />
+- dane składowe (zmienne)
+- funkcje składowe (metody)
 
-:::danger Średnik!
-Zwróć uwagę, na **obowiązkowy** średnik po nawiasie klamrowym, zamykającym definicję
-struktury:
-```cpp
-struct Enemy
-{
-	std::string	name;
-	float		health;
-	float		strength;
-	// highlight-next-line
-};
-```
+i inne, bardziej zaawansowane elementy, które omówimy później w kursie.
+
+<div id="semicolon-at-structure-end" />
+
+:::danger Średnik
+Zwróć uwagę na **obowiązkowy** średnik `;` po nawiasach klamrowych zamykających definicję struktury.
+
+<details>
+  <summary>Przykład</summary>
+  <div>
+    ```cpp
+    struct Enemy
+    {
+      std::string name;
+      float health;
+      float strength;
+      // highlight-next-line
+    };
+    ```
+  </div>
+</details>
+
 :::
 
 ## Obiekty
 
-Popatrz jak stworzyć obiekt, który korzysta ze wzoru `Enemy`:
+Aby tworzyć zmienne określonego typu, używaliśmy następującej składni:
+
+```cpp
+// prism-push-types:Typ
+Typ nazwa_zmiennej;
+```
+
+Używamy tej samej składni, aby utworzyć obiekt typu struktury:
 
 ```cpp
 int main()
@@ -156,138 +180,123 @@ int main()
 }
 ```
 
-W ten sposób, zawarliśmy te wszystkie 3 pola (`name`, `health` i `strength`)
-wewnątrz jednej zmiennej `boss`.
+W ten sposób zawarliśmy wszystkie te 3 składowe (`name`, `health` i `strength`) wewnątrz jednej zmiennej `boss`.
 
-:::note Nazewnictwo
-Od teraz będziemy mówili, że `boss` jest **obiektem** typu **`Enemy`**.
-To oznacza, że został stworzony według wzoru `Enemy`.
-:::
+Przypomnijmy terminologię. Biorąc pod uwagę powyższy kod, mówimy, że `boss` jest obiektem (instancją) typu `Enemy`.
+Oznacza to, że struktura `Enemy` została użyta jako przepis do stworzenia obiektu `boss`.
 
-### Dostęp do pól
+### Dostęp do składowych
 
-Tak jak wyżej wspomniałem, `boss` zawiera w sobie 3 rzeczy (pola) tj. składa się z trzech zmiennych.
-Żeby dostać się do konkretnej składowej tego obiektu, musimy użyć następującego zapisu:
+Jak wspomniano powyżej, `boss` zawiera 3 pola składowe.
+Aby uzyskać dostęp do konkretnego elementu tego obiektu, używamy operatora kropki `.`:
 
-```cpp title="Ustaw nazwę bossa na 'Ogr'"
+```cpp title="Ustaw imię bossa na 'Ogr'"
 boss.name = "Ogr";
+
+std::cout << boss.name; // Wypisuje Ogr
 ```
 
-Używamy kropki `.`, do odniesienia się do pola obiektu. W ten sam sposób,
-możemy np. *zmodyfikować siłę wroga*:
+W ten sam sposób możemy modyfikować *siłę* wroga:
 
-```cpp title="Modyfikowanie pól obiektu"
-boss.strength	= 50; // Ustawiam siłę na 50
+```cpp title="Modyfikowanie danych obiektu"
+boss.strength	= 50; // Ustawiam siłę bossa na 50
 
-// Boss włącza tryb "furia" - siła zwiększona
-// Życie zmniejszone o połowę
-boss.strength	+= 25;
-boss.health		*= 0.5f;
+// Boss włącza umiejętność "furia" - siła wzrasta
+// Zdrowie zmniejsza się o połowę
+boss.strength += 25;
+boss.health *= 0.5f;
 ```
 
-... lub wyświetlić informacje o nim:
+... lub wyświetlać o nim informacje:
 
-```cpp title="Korzystanie z pól obiektu"
-#include <iostream>
-#include <string>
+<CustomCodeBlock fullCode={<FullCode_UsingObjectFields/>}>
 
-struct Enemy
-{
-	std::string	name;
-	float		health;
-	float		strength;
-};
+```cpp title="Używanie danych składowych obiektu"
+// prism-push-types:Enemy
+// Tworze obiekt bossa
+Enemy boss;
+// i przypisuje wartości jego składowym
+boss.name = "Ogr";
+boss.health = 250;
+boss.strength = 50;
 
-int main()
-{
-	// Tworzę obiekt bossa
-	Enemy boss;
-	// Przypisuję temu obiektowi konkretne wartości
-	boss.name		= "Ogr";
-	boss.health		= 250;
-	boss.strength	= 50;
-
-	std::cout	<< boss.name		<< " posiada "
-				<< boss.health		<< " hp i "
-				<< boss.strength	<< " siły."
-				<< std::endl;
-}
+std::cout << boss.name << " ma "
+  << boss.health << " hp i "
+  << boss.strength << " sily."
+  << std::endl;
 ```
 
-### Przekazywanie do funkcji
+</CustomCodeBlock>
 
-Nic nie stoi na przeszkodzie, żeby stworzyć funkcję,
-która przyjmuje obiekt pewnej struktury jako parametr.
-Dobrym przykładem bedzie właśnie wyświetlanie informacji o wrogu:
+### Przekazywanie obiektów do funkcji
 
-```cpp title="Funkcja wyświetlająca informacje o przeciwniku"
+Nic nie stoi na przeszkodzie, aby stworzyć funkcję, która przyjmuje jako parametr obiekt określonej struktury.
+Dobrym przykładem będzie właśnie wyświetlanie informacji o wrogu:
+
+```cpp title="Funkcja, która wyświetla informacje o przeciwniku"
 void print_enemy_info(Enemy enemy)
 {
-	std::cout	<< enemy.name		<< " posiada "
-				<< enemy.health		<< " hp i "
-				<< enemy.strength	<< " siły."
-				<< std::endl;
+	std::cout << enemy.name << " ma "
+		<< enemy.health << " hp i "
+		<< enemy.strength << " sily."
+		<< std::endl;
 }
 ```
 
 :::danger Kolejność
-`print_enemy_info` wymaga istnienia typu `Enemy` **przed** zdefiniowaniem
-samej funkcji. Oznacza to, że musimy umieścić funkcję **pod**
-utworzeniem struktury (zobacz przykład niżej).
+`print_enemy_info` wymaga, aby typ `Enemy` istniał **zanim** funkcja sama zostanie zdefiniowana.
+Oznacza to, że musimy umieścić funkcję pod definicją struktury (patrz przykład poniżej).
 :::
 
+Wykorzystując powyższe informacje, stworzymy "grę", która będzie miała dwóch przeciwników:
 
-Korzystając w powyższych informacji, utworzymy sobie "grę",
-która będzie posiadała dwóch przeciwników:
-
-- zwykły przeciwnik 👹:  
-**Goblin wojownik**, `60` życia, `14` siły
+- zwykły wróg 👹:  
+**Wojownik Goblin**, `60` zdrowia, `14` siły
 
 - boss 💀:  
-**Ogr**, `250` życia, `50` siły
-
+**Ogr**, `250` zdrowia, `50` siły
 
 <CustomCodeBlock maxLines={25}>
 
-```cpp title="Fragment gry z Ogrem i Goblinem" showLineNumbers
+```cpp title="Fragment kodu gry z Ogrem i Goblinem" showLineNumbers
 #include <iostream>
 #include <string>
 
-/// Utworzenie struktury
+// Tworzenie struktury
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 };
 
-/// Funkcja wyświetlająca informacje o przeciwniku
+// Funkcja, która wyświetla informacje o wrogu
 void print_enemy_info(Enemy enemy)
 {
-	std::cout	<< enemy.name		<< " posiada "
-				<< enemy.health		<< " hp i "
-				<< enemy.strength	<< " siły."
-				<< std::endl;
+	std::cout << enemy.name << " ma "
+		<< enemy.health << " hp i "
+		<< enemy.strength << " sily."
+		<< std::endl;
 }
 
-/// Funkcja główna programu
+// Funkcja główna
 int main()
 {
-	// Tworzę obiekt goblina i bossa
+	// Tworzę obiekty bossa i goblina
 	Enemy boss;
 	Enemy goblin;
 
-	// Ustawiam goblinowi odpowiednie wartości
-	goblin.name		= "Goblin wojownik";
-	goblin.health	= 60;
-	goblin.strength	= 14;
+	// Konfiguruję pola obiektu goblina
+	goblin.name = "Wojownik Goblin";
+	goblin.health = 60;
+	goblin.strength = 14;
 
-	// Ustawiam bossowi odpowiednie wartości
-	boss.name		= "Ogr";
-	boss.health		= 250;
-	boss.strength	= 50;
+	// Konfiguruję pola obiektu bossa
+	boss.name = "Ogr";
+	boss.health = 250;
+	boss.strength = 50;
 
-	// Wyświetlam informacje o każdym z nich:
+	// i wyświetlam informacje o nich
 	print_enemy_info(goblin);
 	print_enemy_info(boss);
 }
@@ -295,17 +304,17 @@ int main()
 
 </CustomCodeBlock>
 
-### Umieszczanie wewnątrz tablicy
+### Obiekty wewnątrz tablic
 
-Obiekty możemy umieszczać wewnątrz tablic tak samo jak normalne zmienne:
+Możemy umieszczać obiekty wewnątrz tablic tak samo, jak zwykłe zmienne:
 
-```cpp title="Tablica przeciwników"
+```cpp title="Wektor wrogów"
 std::vector< Enemy > enemies;
 ```
 
-Poniżej przykład jak dodawać do takiej tablicy:
+Poniżej znajduje się przykład, jak dodać do takiej tablicy:
 
-```cpp title="Wykorzystanie tablicy"
+```cpp title="Dodawanie obiektów do wektora"
 // ...
 
 int main()
@@ -313,88 +322,84 @@ int main()
 	std::vector< Enemy > enemies;
 
 	// (opcjonalnie)
-	// Blok kodu, by ograniczyć widoczność
-	// zmiennych utworzonych wewnątrz
+	// Blok kodu, aby ograniczyć zakres
+	// zmiennych lokalnych wewnątrz
 	{
-		// Tworzę goblina 👉 lokalnie 👈
+		// Tworzę zmienną goblin 👉 lokalnie 👈
 		Enemy goblin;
-		// Ustawiam goblinowi odpowiednie wartości
-		goblin.name		= "Goblin wojownik";
-		goblin.health	= 60;
-		goblin.strength	= 14;
+		// Konfiguruję pola
+		goblin.name = "Wojownik Goblin";
+		goblin.health = 60;
+		goblin.strength = 14;
 
-		// Dodaję goblina do tablicy
+		// Dodaję obiekt do wektora
 		// highlight-next-line
 		enemies.push_back( goblin );
 	}
-	// 👈 od tego momentu goblin istnieje tylko w tablicy enemies
+	// 👈 od tego momentu goblin istnieje TYLKO wewnątrz wektora
 
-	// Wyświetl wszystkich przeciwników:
+	// Wyświetl każdego wroga w wektorze
 	for (Enemy enemy : enemies)
 		print_enemy_info(enemy);
 }
 ```
 
 :::tip Przykład
-Po zapoznaniu się z tą lekcją, przejrzyj ten przykładowy program:
-[**👾 Arena walki**](../example-programs/combat-arena) wraz z jego omówieniem.
-Zobaczysz tam zastosowanie tablic i struktur w praktyce.
+Po przeczytaniu tej lekcji, przejrzyj ten przykładowy program: [**👾 Arena Walk**](../example-programs/combat-arena)
+i jego omówienie. Tam zobaczysz, jak tablice i struktury są wykorzystywane w praktyce.
 :::
 
 ### Domyślne wartości pól
 
-Elementom struktury możemy nadać domyślne wartości, przez co
-nie będziemy musieli ich za każdym razem wypełniać.
+Możemy przypisać elementom struktury domyślne wartości, dzięki czemu nie będziemy musieli ich wypełniać za każdym razem.
 
-Dobrym przykładem użycia domyślnej wartości jest zmienna,
-która przechowuje całkowitą ilość obrażeń, które zadał
-przeciwnik. Na początek dla każdego wroga, ta wartość
-będzie musiała być równa `0`.
+Dobrym przykładem użycia wartości domyślnej jest zmienna, która przechowuje całkowitą ilość obrażeń,
+które zadał przeciwnik. Na początek, dla każdego wroga, ta wartość będzie musiała być równa `0`.
 
-:::caution Wartość zmiennych
-Jeśli pozostawisz pole struktury **bez domyślnej wartości**, np.:
+:::caution Wartości pól
+Jeśli pozostawisz pole struktury bez wartości domyślnej, np.:
 ```cpp
 struct Car
 {
-	int number_of_wheels; // ilośc kół samochodu
+	int number_of_wheels;
 };
 ```
 
-to nie oznacza to, że `number_of_wheels` na początku otrzyma wartość `0`, musisz to zrobić **ręcznie**!
+to nie oznacza, że `number_of_wheels` zostanie ustawione na `0` w momencie tworzenia obiektu,
+musisz to zrobić **ręcznie**!
 :::
 
-Żeby przypisać domyślną wartość do pola struktury
-używamy zwykłej inicjalizacji, znaną z tworzenia zmiennych:
-
+Aby przypisać wartość domyślną do pola struktury, używamy zwykłej inicjalizacji,
+znanej z tworzenia zmiennych:
 
 ```cpp title="Domyślna wartość dla 'total_damage' ⚔"
-/// Utworzenie struktury
+// Tworzenie struktury
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
 
 	// highlight-next-line
-	float		total_damage = 0; // ilość obrażeń
+	float total_damage = 0;
 };
 ```
 
-Teraz gdy stworzymy jakiegoś wroga:
+Teraz, gdy stworzymy jakiegoś wroga:
 
 ```cpp
-Enemy snake; // np. wąż
+Enemy snake; // wąż jako przykład
 ```
 
-to wartość
+to wartość jego pola `total_damage`
 
 ```cpp
 snake.total_damage
 ```
 
-będzie równa `0`.
+zostanie ustawiona automatycznie na `0`.
 
-Możesz się o tym przekonać, np. wyświetlając ją:
+Możesz się o tym przekonać, np. wypisując ją:
 
 <Columns columns={['2fr', '1fr']}>
 <div>
@@ -402,13 +407,13 @@ Możesz się o tym przekonać, np. wyświetlając ją:
 ```cpp
 int main() {
 	Enemy snake;
-	snake.name = "Wąż";
-	// 🟡 Uwaga, nie ustawiam ręcznie wartości total_damage
+	snake.name = "Snake";
+	// 🟡 Zwróć uwagę, że nie ustawiam "total_damage" ręcznie
 
-	std::cout	<< snake.name
-				<< " zadał łącznie "
-				<< snake.total_damage
-				<< " obrażeń";
+	std::cout << snake.name
+		<< " zadal lacznie "
+		<< snake.total_damage
+		<< " obrazen\n";
 }
 ```
 
@@ -416,72 +421,190 @@ int main() {
 <div>
 
 ```plaintext title="Wynik"
-Wąż zadał łącznie 0 obrażeń
+Snake zadal lacznie 0 obrazen
 ```
 
 </div>
 </Columns>
 
-## Potencjalne błędy
+## Funkcje w strukturze
 
-<ImproveSection />
+Struktury mogą zawierać również funkcje, które nazywamy **metodami**. Są one powiązane z obiektem, na którym są wywoływane.
 
-Oto lista popularnych błędów związanych z tą lekcją:
+<Image center
+		maxheight={250}
+		alt="Prezentacja przeciwnika i jego akcji - Goblin"
+		src="/img/tutorials/course/basic/structures/goblin-struct-data-and-methods.gif"
+		desc={<>Obrazek goblina autorstwa <a href="https://luizmelo.itch.io/monsters-creatures-fantasy">LuizMelo</a></>}
+	/>
+<br/>
 
-### Brak średnika po definicji
+Rozważmy nasz przykład z goblinem. Możemy dodać do struktury `Enemy` metody, które reprezentują czynność,
+jaką ten wróg może wykonać, np. atakowanie, bronienie się, czy ucieczka.
 
-[Tylko dla przypomnienia.](#srednik-po-definicji)
-
-### Nieprawidłowa kolejność
-
-Upewnij się, że struktura jest zdefiniowana **przed**
-jej pierwszym użyciem.
-
-Przykład **błędnego** kodu:
-
-```cpp title="🔴 Niepoprawna kolejność"
-// ❌ Błąd: użycie "Enemy" przed zdefiniowaniem
-// error-next-line
-void print_enemy_info(Enemy enemy)
-{
-	std::cout	<< enemy.name		<< " posiada "
-				<< enemy.health		<< " hp i "
-				<< enemy.strength	<< " siły."
-				<< std::endl;
-}
-
-/// Utworzenie struktury
+```cpp title="Dodanie metod do struktury"
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
+
+  // highlight-start
+	void attack()
+	{
+		// Logika ataku
+		std::cout << name << " atakuje z " << strength << " sily.\n";
+	}
+
+	void defend()
+	{
+		// Logika obrony
+		std::cout << name << " broni sie majac " << health << " hp.\n";
+	}
+
+  void run_away()
+	{
+		// Logika ucieczki
+		std::cout << name << " dokonuje odwrotu przy " << health << " pkt zycia.\n";
+	}
+  // highlight-end
 };
 ```
 
-:::tip Ciekawostka
-Ten problem jest możliwy do rozwiązania w inny, wygodniejszy
-sposób niż przenoszenie funkcji `print_enemy_info` pod definicję
-struktury, jednak o tzw. *forward declaration* wspomnimy
-w dalszej części kursu.
-:::
+W powyższym przykładzie dodaliśmy trzy metody do struktury `Enemy`: `attack`, `defend` i `run_away`.
+Każda z nich wypisuje komunikat do konsoli, symulując wykonanie danej akcji. Funkcje składowe otrzymują kontekst obiektu,
+na którym są wywoływane, dzięki czemu mogą operować na jego danych (np. `name`, `health`, `strength`).
 
-### Modyfikacja wewnątrz definicji struktury
+<details>
+  <summary>Kontekst obiektu</summary>
+  <div>
+    W przyszłości dowiesz się, że metody otrzymują "ukryty" argument, nazywający się `this` (jest to również słowo kluczowe),
+    który jest właśnie "kontekstem" obiektu, na którym metoda jest wywoływana.
+    Zawsze gdy odnosisz się do pola składowego wewnątrz metody, np. `name`, jest to ekwiwalentem zapisu:
 
-Zmiennych **nie możemy** modyfikować wewnątrz definicji struktury.
-Możliwe jest jedynie przypisanie początkowej wartości:
+    ```cpp
+    this->name
+    ```
 
-```cpp title="🔴 Próba modyfikacji w złym miejscu"
+    O wskaźnikach (w tym `this`) dowiesz się więcej w przyszłych lekcjach.
+  </div>
+</details>
+
+Wywołanie metod na obiekcie odbywa się za pomocą operatora kropki `.`, podobnie jak w przypadku dostępu do danych składowych:
+
+```cpp
+int main()
+{
+	Enemy boss;
+	boss.name = "Ogr";
+	boss.health = 250;
+	boss.strength = 50;
+
+  // highlight-next-line
+	boss.attack();
+
+  // highlight-next-line
+	boss.run_away();
+}
+```
+
+Mamy możliwość również wywołać inne metody wewnątrz tej samej struktury:
+
+```cpp title="Wywołanie metody w metodzie"
+void run_away()
+{
+  // najpierw obrona, potem ucieczka
+  // highlight-next-line
+  defend();
+  std::cout << name << " ucieka!\n";
+}
+```
+
+Więcej o metodach powiemy w dalszej części kursu.
+
+## Częste problemy
+
+Zebraliśmy następującą listę często występujących problemów, które dotyczą używania struktur w podstawowym zakresie.
+
+### Brak średnika po definicji
+
+[Tylko dla przypomnienia.](#semicolon-at-structure-end)
+
+### Nieprawidłowa kolejność
+
+Upewnij się, że struktura jest zdefiniowana **przed** pierwszym użyciem.
+
+Przykład **nieprawidłowego** kodu:
+
+```cpp title="Nieprawidłowa kolejność"
+// ❌ Błąd: użycie typu "Enemy" przed jego definicją
+// error-next-line
+void print_enemy_info(Enemy enemy)
+{
+	std::cout << enemy.name << " ma "
+		<< enemy.health		<< " hp i "
+		<< enemy.strength	<< " sily."
+		<< std::endl;
+}
+
+// Tworzenie struktury
 struct Enemy
 {
-	std::string	name;
-	float		health;
-	float		strength;
+	std::string name;
+	float health;
+	float strength;
+};
+```
 
-	int			total_damage = 0; // OK ✅
+Próba skompilowania tego programu zakończy się błędem kompilacji.
 
-	// ❌ Błąd: próba modyfikacji w złym miejscu
+:::tip
+Problem ten można rozwiązać w inny, wygodniejszy sposób niż przenoszenie funkcji
+`print_enemy_info` pod definicję struktury, za pomocą wcześniejszej *deklaracji* (ang. forward declaration).
+O tym wspomnimy później w kursie.
+:::
+
+### Modyfikowanie wewnątrz definicji struktury
+
+Zmiennych **nie można** modyfikować wewnątrz definicji struktury.
+Możliwe jest tylko przypisanie wartości początkowej:
+
+```cpp title="🔴 Próba modyfikacji pola w niewłaściwym miejscu"
+struct Enemy
+{
+	std::string name;
+	float health;
+	float strength;
+
+	int total_damage = 0; // OK ✅
+
+	// ❌ Błąd: Próba modyfikacji pola w niewłaściwym miejscu
 	// error-next-line
 	health = 250;
 };
+```
+
+### Niezainicjalizowane składowe
+
+Upewnij się, że wszystkie dane obiektu są zainicjalizowane przed użyciem.
+Podobnie jak w przypadku zwykłych zmiennych, niezainicjalizowane pola posiadają wartość, której
+nie możemy przewidzieć, co może prowadzić do nieoczekiwanych zachowań programu.
+Pamiętaj, że taki program mimo naruszenia zasad języka C++ **przejdzie** etap kompilacji.
+Kompilatory i inne narzędzia często ostrzegają przed takimi sytuacjami.
+
+```cpp title="Niezainicjalizowane pola"
+struct Enemy
+{
+  // ...
+  // highlight-next-line
+  float health; // ⚠️ Brak wartości początkowej
+};
+
+int main()
+{
+  Enemy boss;
+  // ❌ Użycie niezainicjalizowanego pola
+  // error-next-line
+  std::cout << "Boss ma " << boss.health << " pkt zycia.\n";
+}
 ```

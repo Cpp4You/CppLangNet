@@ -1,0 +1,27 @@
+```cpp title="Używanie danych składowych obiektu"
+#include <iostream>
+#include <string>
+
+struct Enemy
+{
+	std::string name;
+	float health;
+	float strength;
+};
+
+int main()
+{
+  // prism-push-types:Enemy
+	// Tworze obiekt bossa
+	Enemy boss;
+	// i przypisuje wartości jego składowym
+	boss.name = "Ogr";
+	boss.health = 250;
+	boss.strength = 50;
+
+	std::cout	<< boss.name << " ma "
+		<< boss.health << " hp i "
+		<< boss.strength << " sily."
+		<< std::endl;
+}
+```
