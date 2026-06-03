@@ -109,7 +109,16 @@ const sidebars: SidebarsConfig = {
                 doc("📚 Exercises 🚧", "course/basics/arrays/exercises"),
               ]
             },
-            "course/basics/loops",
+            // "course/basics/loops",
+            {
+              type: "category",
+              label: "6. Loops",
+              link: { type: "doc", id: "course/basics/loops/loops" },
+              items: [
+                additionalSeparator,
+                doc("📚 Exercises 🚧", "course/basics/loops/exercises"),
+              ]
+            },
             {
               type: "category",
               label: "7. Functions",
