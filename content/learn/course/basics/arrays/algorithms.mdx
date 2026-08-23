@@ -144,6 +144,17 @@ For the purposes of this algorithm, we're going to add one more value `13` to th
 
 [`count`](/docs/std/algo/ranges/count) is used to count the occurrences of elements, in this case, inside the vector. We use it like this:
 
+<VersionTabs content={
+		{
+			"cpp20": <CodeBlock language="cpp">{`
+std::cout << std::ranges::count(numbers, 13);
+`}</CodeBlock>,
+			"until-cpp20":	<CodeBlock language="cpp">{`
+std::cout << std::count(numbers.begin(), numbers.end(), 13);
+`}</CodeBlock>
+		}
+	}/>
+
 We can also write this result to a variable. We should use a special type `size_t` for this,
 which is simply a non-negative number (because the number of occurrences cannot be negative):
 
