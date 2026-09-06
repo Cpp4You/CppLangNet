@@ -1,0 +1,21 @@
+```cpp showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <string>
+#include <vector>
+
+auto main() -> int
+{
+    auto const words = std::vector<std::string>{
+        "some", "of", "these", "words", "are",
+        "of", "the", "same", "lengths"
+    };
+
+    auto const bySize = [](const std::string& s) {
+        return s.size();
+    };
+
+    auto const ofSize5 = std::ranges::find(words, 5, bySize);
+    std::cout << *ofSize5;
+}
+```

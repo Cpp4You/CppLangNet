@@ -7,18 +7,22 @@ constexpr I
 constexpr ranges::borrowed_iterator_t<R>
     find( R&& r, const T& value, Proj proj = {} );
 ```
+<details>
+<summary>Additional information regarding parameter constraints</summary>
 
 The type of arguments are generic and have the following constraints:
 - `I` - `std::input_iterator`
 - `S` - `std::sentinel_for<I>`
 - `T` - **(none)**
 - `Proj` - **(none)**
-- **(2)** - `R` - `std::ranges::input_range`
+- $(2)$ - `R` - `std::ranges::input_range`
 
 The `Proj` template argument has a default type of `std::identity` for all overloads.
 
 Additionally, each overload has the following constraints:
-- **(1)** - `indirect_binary_predicate<ranges::equal_to, projected<I, Proj>, const T*>>`
-- **(2)** - `indirect_binary_predicate<ranges::equal_to, projected<ranges::iterator_t<R>, Proj>, const T*>`
+- $(1)$ - `indirect_binary_predicate<ranges::equal_to, projected<I, Proj>, const T*>>`
+- $(2)$ - `indirect_binary_predicate<ranges::equal_to, projected<ranges::iterator_t<R>, Proj>, const T*>`
 
 (The `std::` namespace was ommitted here for readability)
+
+</details>

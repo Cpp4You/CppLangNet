@@ -22,3 +22,6 @@ yarn-error.log*
 # Custom
 .vscode/
 *.drawio.*
+
+# JetBrains' IDEs
+.idea

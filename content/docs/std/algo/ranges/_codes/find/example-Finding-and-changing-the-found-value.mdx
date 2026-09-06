@@ -1,0 +1,20 @@
+```cpp showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+int main()
+{
+    const auto println = [](std::vector<int> const& vec)
+    {
+        for (const int element : vec) std::cout << element << ' ';
+        std::cout << '\n';
+    };
+
+    std::vector<int> values{2, 4, 5, 8, 10};
+    println(values);
+    auto iteratorTo5 = std::ranges::find(values, 5);
+    *iteratorTo5 = 6;
+    println(values);
+}
+```

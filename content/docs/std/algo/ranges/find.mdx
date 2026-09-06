@@ -1,6 +1,6 @@
 ---
 title:         ranges::find algorithm
-sidebar_label: ranges::find(  )
+sidebar_label: ranges::find()
 description:   ranges::find algorithm C++ documentation
 hide_title:    true
 tags:          [ranges, algorithm, find, search]
@@ -11,13 +11,36 @@ cppreference_origin_rel: w/cpp/algorithm/ranges/find
 import SymbolTable, { Symbol } from "@site-comps/SymbolTable";
 import Columns                 from "@site-comps/Columns";
 import VersionTabs             from "@site-comps/VersionTabs";
+import CustomCodeBlock			   from "@site-comps/CustomCodeBlock";
+
 
 {/* Codes */}
 
-import Signature_SinceCpp20_Detailed   from './_codes/find/since-cpp20-detailed.mdx';
-import Signature_SinceCpp20_Simplified from './_codes/find/since-cpp20-simplified.mdx';
+import Signature_SinceCpp20_Detailed                                             from './_codes/find/since-cpp20-detailed.mdx';
+import Signature_SinceCpp20_Simplified                                           from './_codes/find/since-cpp20-simplified.mdx';
+import FullCode_FindingAndPrintingTheFoundValue                                  from './_codes/find/example-Finding-and-printing-the-found-value.mdx';
+import FullCode_FindingAndRemovingTheFoundValue                                  from './_codes/find/example-Finding-and-removing-the-found-value.mdx';
+import FullCode_FindingAndChangingTheFoundValue                                  from './_codes/find/example-Finding-and-changing-the-found-value.mdx';
+import FullCode_UsingAProjectionToFindAValueWithAGivenCharacteristic1            from './_codes/find/example-Using-a-projection-to-find-a-value-with-a-given-characteristic1.mdx';
+import FullCode_UsingAProjectionToFindAValueWithAGivenCharacteristic2            from './_codes/find/example-Using-a-projection-to-find-a-value-with-a-given-characteristic2.mdx';
+import FullCode_FailingToFindAValueSafely                                        from './_codes/find/example-Failing-to-find-a-value-safely.mdx';
+import FullCode_FailingToFindAValueUnsafely                                      from './_codes/find/example-Failing-to-find-a-value-unsafely.mdx';
+import FullCode_FindingTheLastSuitableValueThanksToReverseIterators              from './_codes/find/example-Finding-the-last-suitable-value-thanks-to-reverse-iterators.mdx';
+import FullCode_FailingToFindAValueSafelyWhenDealingWithAnIteratorPairSubrange   from './_codes/find/example-Failing-to-find-a-value-safely-when-dealing-with-an-iterator-pair-subrange.mdx';
+import FullCode_FailingToFindAValueWhenDealingWithAnIteratorPairSubrangeUnsafely from './_codes/find/example-Failing-to-find-a-value-when-dealing-with-an-iterator-pair-subrange-unsafely.mdx';
 
-# std::ranges::find() algorithm
+# <code>std::ranges::find()</code> algorithm
+
+### Explanation
+
+Used to _locate_ an element inside a range, providing direct access to it through the returned iterator.
+
+If there are multiple values that this algorithm could locate, it returns an iterator to the one that it first encounters.
+This is determined by the passed range / iterators behavior.
+
+If there is no suitable value, i.e., if the finding process fails, the algorithm returns an iterator equal to the end of the supplied range.
+
+### Signature
 
 <VersionTabs content={{
 	'since-cpp20': {
@@ -26,13 +49,14 @@ import Signature_SinceCpp20_Simplified from './_codes/find/since-cpp20-simplifie
 	}
 }} />
 
-Returns an iterator to the first element in the range satisfiying specific criteria (or `last` iterator if there is no such iterator):
+- $(1)$ Searches for an element equal to `value` (using `operator==`) in a range represented as $[\texttt{first}, \texttt{last})$. Returns `last` if no such element was found.
 
-- **(1)** Searches for an element equal to `value` (using `operator==`)
-
-- **(2)** Same as **(1)**, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
+- $(2)$ Same as $(1)$, but uses `r` as the source range, as if using `ranges::begin(r)` as `first` and `ranges::end(r)` as `last`.
 
 The function-like entities described on this page are [**niebloids**](/docs/std/algo/niebloids).
+
+The elements are passed through the projection `proj` before being compared.
+However, if no custom projection is specified (i.e., the default one (`std::identity`) is used), passing them through it doesn't do anything.
 
 ### Parameters
 
@@ -59,7 +83,7 @@ Iterator to the first element satisfying the condition or iterator equal to `las
 
 ### Complexity
 
-Exactly `last - first` applications of the predicate and projection.
+Linear. Exactly `last - first` applications of the predicate and projection.
 
 ### Exceptions
 
@@ -102,70 +126,264 @@ inline constexpr find_fn find;
 
 ### Examples
 
-<Columns columns={['8fr', '4fr']}>
-<div>
+#### Finding and printing the found value
 
-```cpp title='Main.cpp' showLineNumbers
-#include <algorithm>
-#include <iostream>
-#include <iterator>
+<CustomCodeBlock fullCode={<FullCode_FindingAndPrintingTheFoundValue/>}>
 
-int main()
+```cpp
+auto const values      = std::vector<int>{2, 4, 6, 1, 8, 10};
+auto const iteratorTo1 = std::ranges::find(values, 1);
+std::cout << *iteratorTo1;
+```
+
+</CustomCodeBlock>
+
+```plaintext title="Output"
+1
+```
+
+#### Finding and removing the found value
+
+<CustomCodeBlock fullCode={<FullCode_FindingAndRemovingTheFoundValue/>}>
+
+```cpp
+auto values = std::vector<int>{2, 4, 6, 1, 8, 10};
+auto text   = std::string("hello, there!");
+
+println(values);
+std::cout << text << '\n';
+
+auto const iteratorTo1 = std::ranges::find(values, 1);
+values.erase(iteratorTo1);
+
+auto const iteratorToComma = std::ranges::find(text, ',');
+text.erase(iteratorToComma);
+
+std::cout << '\n';
+println(values);
+std::cout << text << '\n';
+```
+
+</CustomCodeBlock>
+
+```plaintext title="Output"
+2 4 6 1 8 10
+hello, there!
+
+2 4 6 8 10
+hello there!
+```
+
+#### Finding and changing the found value
+
+<CustomCodeBlock fullCode={<FullCode_FindingAndChangingTheFoundValue/>}>
+
+```cpp
+auto values = std::vector<int>{2, 4, 5, 8, 10};
+println(values);
+auto const iteratorTo5 = std::ranges::find(values, 5);
+*iteratorTo5 = 6;
+println(values);
+```
+
+</CustomCodeBlock>
+
+```plaintext title="Output"
+2 4 5 8 10
+2 4 6 8 10
+```
+
+:::info
+Despite `iteratorTo5` being `const`, it's still fine to use it to alter the element it points to. That's because the `const` modifier in its declaration applies only to the iterator itself - we can't change **it** (we can't change *to which* element it points to), but we can alter _the object it points to_.
+:::
+
+#### Using a projection to find a value with a given characteristic #1
+
+<CustomCodeBlock fullCode={<FullCode_UsingAProjectionToFindAValueWithAGivenCharacteristic1/>}>
+
+```cpp
+auto const words = std::vector<std::string>{
+    "some", "of", "these", "words", "are",
+    "of", "the", "same", "lengths"
+};
+
+auto const ofSize5 = std::ranges::find(words, 5, bySize);
+std::cout << *ofSize5;
+```
+</CustomCodeBlock>
+
+```plaintext title="Output"
+these
+```
+
+#### Using a projection to find a value with a given characteristic #2
+
+<CustomCodeBlock fullCode={<FullCode_UsingAProjectionToFindAValueWithAGivenCharacteristic2/>}>
+
+```cpp
+auto const numbers = std::vector<int>{
+    5, 6, 7, 8
+};
+
+auto const withRemainder2 = std::ranges::find(numbers, 2, byModulus5);
+std::cout << *withRemainder2;
+```
+
+</CustomCodeBlock>
+
+```plaintext title="Output"
+7
+```
+
+#### Failing to find a value safely
+
+<CustomCodeBlock fullCode={<FullCode_FailingToFindAValueSafely/>}>
+
+```cpp
+auto const onlyEvens = std::vector<int>{
+    2, 4, 6, 8, 10
+};
+
+auto const positionOf1 = std::ranges::find(onlyEvens, 1);
+
+if (positionOf1 != onlyEvens.end())
 {
-    namespace ranges = std::ranges;
-
-    const int n1 = 3;
-    const int n2 = 5;
-    const auto v = {4, 1, 3, 2};
-
-    if (ranges::find(v, n1) != v.end())
-        std::cout << "v contains: " << n1 << '\n';
-    else
-        std::cout << "v does not contain: " << n1 << '\n';
-
-    if (ranges::find(v.begin(), v.end(), n2) != v.end())
-        std::cout << "v contains: " << n2 << '\n';
-    else
-        std::cout << "v does not contain: " << n2 << '\n';
-
-    auto is_even = [](int x) { return x % 2 == 0; };
-
-    if (auto result = ranges::find_if(v.begin(), v.end(), is_even); result != v.end())
-        std::cout << "First even element in v: " << *result << '\n';
-    else
-        std::cout << "No even elements in v\n";
-
-    if (auto result = ranges::find_if_not(v, is_even); result != v.end())
-        std::cout << "First odd element in v: " << *result << '\n';
-    else
-        std::cout << "No odd elements in v\n";
-
-    auto divides_13 = [](int x) { return x % 13 == 0; };
-
-    if (auto result = ranges::find_if(v, divides_13); result != v.end())
-        std::cout << "First element divisible by 13 in v: " << *result << '\n';
-    else
-        std::cout << "No elements in v are divisible by 13\n";
-
-    if (auto result = ranges::find_if_not(v.begin(), v.end(), divides_13);
-        result != v.end())
-        std::cout << "First element indivisible by 13 in v: " << *result << '\n';
-    else
-        std::cout << "All elements in v are divisible by 13\n";
+    std::cout << "odd element found: " << *positionOf1;
+}
+else
+{
+    std::cout << "no odd elements found";
 }
 ```
 
-</div>
-<div>
+</CustomCodeBlock>
 
 ```plaintext title="Output"
-v contains: 3
-v does not contain: 5
-First even element in v: 4
-First odd element in v: 1
-No elements in v are divisible by 13
-First element indivisible by 13 in v: 4
+no even elements found
 ```
 
-</div>
-</Columns>
+:::info
+Because finding _may_ fail, we should almost always compare the returned iterator with the _end_ of the supplied range before we use it.
+:::
+
+#### Failing to find a value unsafely
+
+<CustomCodeBlock fullCode={<FullCode_FailingToFindAValueUnsafely/>}>
+
+```cpp
+auto const onlyEvens = std::vector<int>{
+    2, 4, 6, 8, 10
+};
+
+auto const positionOf1 = std::ranges::find(onlyEvens, 1);
+
+// error-next-line
+std::cout << "odd element found: " << *positionOf1; // dereferencing end, undefined behavior
+```
+
+</CustomCodeBlock>
+
+:::danger
+Because `onlyEvens` does **not** contain the searched-for value `1`, it returns the _end_ of the supplied range, i.e., `onlyEvens.end()`. Dereferencing it invokes undefined behavior.
+:::
+
+#### Finding the last (instead of the first) suitable value thanks to reverse iterators
+
+<CustomCodeBlock fullCode={<FullCode_FindingTheLastSuitableValueThanksToReverseIterators/>}>
+
+```cpp
+auto numbers = std::vector<int>{
+    1, 2, 3, 2, 1
+};
+
+auto const first1 = std::ranges::find(numbers, 1);
+auto const last1  = std::ranges::find(numbers.rbegin(), numbers.rend(), 1);
+
+println(numbers);
+*first1 = 9;
+*last1  = 7;
+println(numbers);
+
+// can also use reverse_view from <ranges>
+auto numbersReversed = numbers | std::views::reverse;
+auto const last2 = std::ranges::find(numbersReversed, 2);
+*last2 = 0;
+println(numbers);
+}
+```
+
+</CustomCodeBlock>
+
+```plaintext title="Output"
+1 2 3 2 1
+9 2 3 2 7
+9 2 3 0 7
+```
+
+#### Failing to find a value safely when dealing with an iterator-pair subrange
+
+<CustomCodeBlock fullCode={<FullCode_FailingToFindAValueSafelyWhenDealingWithAnIteratorPairSubrange/>}>
+
+```cpp
+auto const numbers = std::vector<int>{
+    1, 2, 3, 4, 5, 0, 6
+};
+
+auto const zeroInFirstThree = std::ranges::find(
+    numbers.begin(), numbers.begin() + 3, 0
+);
+
+if (zeroInFirstThree != numbers.begin() + 3)
+{
+    std::cout << "there is a 0 in the first three elements";
+}
+else
+{
+    std::cout << "there are no 0s in the first three elements";
+}
+```
+
+</CustomCodeBlock>
+
+```plaintext title="Output"
+there are no 0s in the first three elements
+```
+
+:::info
+When dealing with an iterator-pair subrange, the _end_ of that subrange is the second iterator passed to the algorithm. Thus, in order to correctly test for the validity of the returned iterator, it needs to be compared with the second argument of the algorithm.
+:::
+
+
+#### Failing to find a value when dealing with an iterator-pair subrange unsafely
+
+<CustomCodeBlock fullCode={<FullCode_FailingToFindAValueWhenDealingWithAnIteratorPairSubrangeUnsafely/>}>
+
+```cpp
+auto const numbers = std::vector<int>{
+    1, 2, 3, 4, 5, 0, 6
+};
+
+auto const zeroInFirstThree = std::ranges::find(
+    numbers.begin(), numbers.begin() + 3, 0
+);
+
+// error-next-line
+if (zeroInFirstThree != numbers.end())
+{
+    std::cout << "there is a 0 in the first three elements";
+}
+else
+{
+    std::cout << "there are no 0s in the first three elements";
+}
+```
+
+</CustomCodeBlock>
+
+```plaintext title="Output"
+there is a 0 in the first three elements
+```
+
+:::danger
+Here, instead of comparing the resulting iterator with the correct _end_, it was compared to the `numbers.end()`, which it had no chance of reaching. Thus, it is not equal to it, mistakenly suggesting that there indeed does exist a `0` value in the first three elements of `numbers`.
+:::

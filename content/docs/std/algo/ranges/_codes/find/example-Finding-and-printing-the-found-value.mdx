@@ -1,0 +1,12 @@
+```cpp showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+auto main() -> int
+{
+    auto const values      = std::vector<int>{2, 4, 6, 1, 8, 10};
+    auto const iteratorTo1 = std::ranges::find(values, 1);
+    std::cout << *iteratorTo1;
+}
+```

@@ -1,0 +1,25 @@
+```cpp showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+auto main() -> int
+{
+    auto const numbers = std::vector<int>{
+        1, 2, 3, 4, 5, 0, 6
+    };
+
+    auto const zeroInFirstThree = std::ranges::find(
+        numbers.begin(), numbers.begin() + 3, 0
+    );
+
+    if (zeroInFirstThree != numbers.begin() + 3)
+    {
+        std::cout << "there is a 0 in the first three elements";
+    }
+    else
+    {
+        std::cout << "there are no 0s in the first three elements";
+    }
+}
+```

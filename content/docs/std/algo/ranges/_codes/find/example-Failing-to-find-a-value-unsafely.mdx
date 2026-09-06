@@ -1,0 +1,17 @@
+```cpp showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+auto main() -> int
+{
+    auto const onlyEvens = std::vector<int>{
+        2, 4, 6, 8, 10
+    };
+
+    auto const positionOf1 = std::ranges::find(onlyEvens, 1);
+
+    // error-next-line
+    std::cout << "odd element found: " << *positionOf1; // dereferencing end, undefined behavior
+}
+```

@@ -1,0 +1,19 @@
+```cpp showLineNumbers
+#include <algorithm>
+#include <iostream>
+#include <vector>
+
+auto main() -> int
+{
+    auto const numbers = std::vector<int>{
+        5, 6, 7, 8
+    };
+
+    auto const byModulus5 = [](const int n) {
+        return n % 5;
+    };
+
+    auto const withRemainder2 = std::ranges::find(numbers, 2, byModulus5);
+    std::cout << *withRemainder2;
+}
+```
